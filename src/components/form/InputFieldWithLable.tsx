@@ -44,6 +44,7 @@ const InputField: React.FC<InputFieldProps> = memo(({
                 return;
             }
 
+            
             if (id === 'appServiceName') {
                 Validator.validateAppServiceName(inputValue);
             } else if (id === "planName") {

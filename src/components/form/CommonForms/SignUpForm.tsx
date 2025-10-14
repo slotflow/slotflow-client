@@ -85,7 +85,7 @@ const SignUpForm: React.FC<signUpFormProps> = ({ role }) => {
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                <div className="border-2 shadow-lg rounded-xl p-8">
+                <div className="p-8">
                     <FormHeading title={"Sign Up"} description="Sign Up with your credentials" />
                     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                         <form onSubmit={handleSubmit} className="space-y-3">
@@ -133,6 +133,11 @@ const SignUpForm: React.FC<signUpFormProps> = ({ role }) => {
                             />
                             <FormButton text={"Sign Up"} loading={loading} />
                         </form>
+                        <div className="flex items-center my-4">
+                            <div className="flex-grow border-t"></div>
+                            <span className="mx-3 text-sm text-[var(--textTwo)]">OR CONTINUE WITH</span>
+                            <div className="flex-grow border-t"></div>
+                        </div>
                         <GoogleButton onClick={(e) => handleGoogleLogin({ e, role })} text={"Sign in with Google"} />
                         <p className="mt-10 text-center text-sm/6 text-[var(--textOne)] hover:text-[var(--textOneHover)]">
                             Already a Slotflow member?

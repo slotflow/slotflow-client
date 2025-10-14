@@ -67,8 +67,8 @@ const EmailVerificationForm: React.FC<EmailVerificationFormProps> = ({ role }) =
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                <div className="border-2 shadow-lg rounded-xl p-8">            <FormHeading title={"Verify Email"} description='An Otp will send to this email id' />
-
+                <div className="p-8">            
+                    <FormHeading title={"Verify Email"} description='An Otp will send to this email id' />
                     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                         <form onSubmit={handleSubmit} className="space-y-3">
                             <InputField

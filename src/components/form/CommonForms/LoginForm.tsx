@@ -51,7 +51,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
                 .unwrap()
                 .then((res) => {
                     if (res.success) {
-                        if(res.authUser.isBlocked) {
+                        if (res.authUser.isBlocked) {
                             toast.error("Your account is blocked, please contact us");
                             return;
                         }
@@ -83,14 +83,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                <div className="border-2 shadow-lg rounded-xl p-8">
+                <div className="p-8">
                     <FormHeading title="Sign In" description="Sign In with your credentials" />
                     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                         <form onSubmit={handleSubmit} className="space-y-3">
                             <InputField
                                 label="Email address"
                                 id="email"
-                                placeholder="midhun@gmail.com"
+                                placeholder="example@gmail.com"
                                 type="email"
                                 value={formData.email}
                                 onChange={handleChange}
@@ -113,6 +113,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
 
                             <FormButton text={"Sign In"} loading={loading} />
                         </form>
+                        <div className="flex items-center my-4">
+                            <div className="flex-grow border-t"></div>
+                            <span className="mx-3 text-sm text-[var(--textTwo)]">OR CONTINUE WITH</span>
+                            <div className="flex-grow border-t"></div>
+                        </div>
                         <GoogleButton onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => handleGoogleLogin({ e, role })} text={"Sign up with Google"} />
                         {!isAdmin && (
                             <p className="mt-10 text-center text-sm/6 text-[var(--textOne)] hover:text-[var(--textOneHover)]">

@@ -21,8 +21,8 @@ const AuthPage: React.FC<AuthPageProp> = ({
     useAuthCheckInLogin();
 
     return (
-        <div className='h-[100vh] flex bg-[var(--background)] justify-center items-center'>
-            <div className="w-full md:w-6/12 flex justify-center items-center">
+        <div className='h-[100vh] flex bg-[var(--background)]'>
+            <div className="w-full md:6/12 lg:w-4/12 flex justify-center items-center bg-[#f5f5f5] dark:bg-[#171717]">
                 {signInForm && <LoginForm role={role} />}
                 {role !== "ADMIN" && (
                     <>
@@ -32,6 +32,9 @@ const AuthPage: React.FC<AuthPageProp> = ({
                         {verifyOtpForm && <OtpVerificatioForm />}
                     </>
                 )}
+            </div>
+            <div className='w-0 md:w6/12 lg:w-8/12'>
+
             </div>
         </div>
     )

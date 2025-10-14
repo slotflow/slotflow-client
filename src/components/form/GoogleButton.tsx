@@ -19,7 +19,7 @@ const GoogleButton: React.FC<GoogleButtonProps> = ({
             type="button"
             className={`${className} my-2
                 relative flex items-center justify-center
-                px-3 py-2
+                px-2 py-2 md:px-3 md:py-2.5
                 bg-white dark:bg-[var(--inputBg)]
                 rounded-md border-none
                 shadow-sm 
