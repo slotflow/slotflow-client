@@ -1,62 +1,58 @@
 import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
 import InputField from "../InputFieldWithLable";
-import React, { useCallback, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { FormButton, FormHeading } from "../FormSplits";
-import { HandleChangeFunction } from "@/utils/interface/commonInterface";
-import { Service } from "@/utils/interface/entityInterface/appServiceInterface";
+import { adminAddServiceXZodSchema } from "@/utils/zod/adminZod";
 import { useAdminServiceActions } from "@/utils/hooks/adminHooks/useAdminServiceActions";
+import { AdminAddNewAppServiceRequest } from "@/utils/interface/api/adminServiceApiInterface";
 
-const ServiceAddingForm:React.FC = () => {
-
-  const [loading, setLoading] = useState<boolean>(false);
-  const [hasErrors, setHasErrors] = useState<boolean>(false);
-  const [formData, setFormData] = useState<{appServiceName : Service["serviceName"] }>({
-    appServiceName: "",
-  });
-
-  const handleChange = useCallback<HandleChangeFunction>((e) => {
-    setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
-    setHasErrors(false);
-  }, []);
-
+const ServiceAddingForm: React.FC = () => {
   const { handleAdminServiceAdding } = useAdminServiceActions();
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    if(hasErrors){
-      toast.error("Please fix the form errors.");
-      setLoading(false);
-      return;
-    }
-    handleAdminServiceAdding(formData.appServiceName, setLoading);
-    setFormData({ appServiceName: '' });
-  };
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<AdminAddNewAppServiceRequest>({
+    resolver: zodResolver(adminAddServiceXZodSchema),
+    defaultValues: {
+      serviceName: "",
+    },
+    mode: "onChange",
+  });
 
-  const handleErrorChange = (hasError: boolean) => {
-    setHasErrors(hasError);
+  const onSubmit = async (data: AdminAddNewAppServiceRequest) => {
+    try {
+      await handleAdminServiceAdding({ serviceName: data.serviceName }, () => { });
+      toast.success("Service added successfully!");
+      reset();
+    } catch {
+      toast.error("Failed to add service.");
+    }
   };
 
   return (
     <div className="flex p-4 flex-1 flex-col justify-center border-[1px] rounded-md">
-      <FormHeading title={"Add New Service"} />
+      <FormHeading title="Add New Service" />
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <InputField
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <InputField<AdminAddNewAppServiceRequest>
             label="Service Name"
-            id="appServiceName"
+            id="serviceName"
+            name="serviceName"
             placeholder="Software Engineer"
             type="text"
-            value={formData.appServiceName}
-            onChange={handleChange}
-            required={true}
-            onHasError={handleErrorChange}
+            required
+            register={register}
+            error={errors.serviceName?.message}
           />
-          <FormButton text={"Add"} loading={loading} />
+          <FormButton text="Add" loading={isSubmitting} />
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ServiceAddingForm
+export default ServiceAddingForm;

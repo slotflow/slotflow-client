@@ -1,146 +1,122 @@
+import { useState } from "react";
 import { toast } from "react-toastify";
-import { Validator } from "@/utils/validator";
 import InputField from "../InputFieldWithLable";
-import React, { useCallback, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, Controller } from "react-hook-form";
 import { FormButton, FormHeading } from "../FormSplits";
 import SelectFiledWithLabel from "../SelectFiledWithLabel";
+import { adminAddNewPlanZodSchema } from "@/utils/zod/adminZod";
 import { useAdminPlanActions } from "@/utils/hooks/adminHooks/useAdminPlanActions";
-import { AdminAddNewPlanApiRequestPayload } from "@/utils/interface/api/adminPlanApiInterface";
-import { HandleChangeFunction, HandleFeatureChangeFunction } from "@/utils/interface/commonInterface";
+import { AdminAddNewPlanRequest } from "@/utils/interface/api/adminPlanApiInterface";
 
-const PlanForm:React.FC = () => {
-
-    const [loading, setLoading] = useState<boolean>(false);
-    const [hasErrors, setHasErrors] = useState<boolean>(false);
-    const [formData, setFormData] = useState<AdminAddNewPlanApiRequestPayload>({
-        planName: "",
-        description: "",
-        price: 0,
-        features: ["", "", "", "", ""],
-        maxBookingPerMonth: 0,
-        adVisibility: false,
-    });
-
-    const handleChange = useCallback<HandleChangeFunction>((e) => {
-        const { id, value, type } = e.target;
-        let newValue: string | boolean | number;
-        const booleanFields = ["adVisibility"];
-
-    if (booleanFields.includes(id)) {
-    newValue = value === "true";
-  } else if (type === "number") {
-    newValue = Number(value);
-  } else {
-    newValue = value;
-  }
-
-        setFormData((prev) => ({ ...prev, [id]: newValue }));
-        setHasErrors(false);
-    }, []);
-
-    const handleFeatureChange = useCallback<HandleFeatureChangeFunction>((e, index) => {
-        const newFeatures = [...formData.features];
-        newFeatures[index] = e.target.value;
-        setFormData((prev) => ({ ...prev, features: newFeatures }));
-        setHasErrors(false);
-    }, [formData.features]);
-
-
+const PlanForm: React.FC = () => {
     const { handleAdminPlanAdding } = useAdminPlanActions();
+    const [loading, setLoading] = useState(false);
 
-    const handleSubmit = async (e: React.SyntheticEvent) => {
-        e.preventDefault();
-        setLoading(true);
-        if (hasErrors) {
-            toast.error("Please fix the form errors.");
-            return;
-        }
-
-        Validator.validatePlanFeatures(formData.features);
-
-        handleAdminPlanAdding(formData, setLoading);
-        setFormData({
+    const {
+        register,
+        handleSubmit,
+        control,
+        formState: { errors, isSubmitting },
+        reset,
+    } = useForm<AdminAddNewPlanRequest>({
+        resolver: zodResolver(adminAddNewPlanZodSchema),
+        mode: "onChange",
+        defaultValues: {
             planName: "",
             description: "",
             price: 0,
             features: ["", "", "", "", ""],
             maxBookingPerMonth: 0,
             adVisibility: false,
-        });
-    };
+        },
+    });
 
-    const handleErrorChange = (hasError: boolean) => {
-        setHasErrors(hasError);
+    const onSubmit = async (data: AdminAddNewPlanRequest) => {
+        setLoading(true);
+        try {
+            await handleAdminPlanAdding(data, setLoading);
+            toast.success("Plan added successfully!");
+            reset();
+        } catch {
+            toast.error("Failed to add plan.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
         <div className="flex p-4 flex-1 flex-col justify-center border-[1px] rounded-md">
-            <FormHeading title={"Add New Plan"} />
+            <FormHeading title="Add New Plan" />
             <div className="sm:mx-auto sm:w-full">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                    <InputField
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                    <InputField<AdminAddNewPlanRequest>
                         label="Plan Name"
                         id="planName"
                         placeholder="Premium Plan"
                         type="text"
-                        value={formData.planName}
-                        onChange={handleChange}
-                        required={true}
-                        onHasError={handleErrorChange}
+                        required
+                        register={register}
+                        error={errors.planName?.message}
                     />
-                    <InputField
+                    <InputField<AdminAddNewPlanRequest>
                         label="Description"
                         id="description"
                         placeholder="Description of the plan"
                         type="text"
-                        value={formData.description}
-                        onChange={handleChange}
-                        required={true}
-                        onHasError={handleErrorChange}
+                        required
+                        register={register}
+                        error={errors.description?.message}
                     />
-                    <InputField
+                    <InputField<AdminAddNewPlanRequest>
                         label="Price"
                         id="price"
                         placeholder="99"
                         type="number"
-                        value={formData.price}
-                        onChange={handleChange}
-                        required={true}
-                        onHasError={handleErrorChange}
+                        required
+                        register={register}
+                        error={errors.price?.message}
                     />
-                    {formData.features.map((feature, index) => (
-                        <InputField
+
+                    {Array.from({ length: 5 }).map((_, index) => (
+                        <InputField<AdminAddNewPlanRequest>
                             key={index}
                             label={`Feature ${index + 1}`}
-                            id={`features[${index}]`}
+                            id={`features.${index}` as const}
                             placeholder={`Feature ${index + 1}`}
                             type="text"
-                            value={feature}
-                            onChange={(e) => handleFeatureChange(e, index)}
                             required={index < 2}
-                            onHasError={handleErrorChange}
+                            register={register}
+                            error={errors.features?.[index]?.message}
                         />
                     ))}
-                    <InputField
+
+                    <InputField<AdminAddNewPlanRequest>
                         label="Max Bookings Per Month"
                         id="maxBookingPerMonth"
                         placeholder="100"
                         type="number"
-                        value={formData.maxBookingPerMonth}
-                        onChange={handleChange}
-                        required={true}
-                        onHasError={handleErrorChange}
+                        required
+                        register={register}
+                        error={errors.maxBookingPerMonth?.message}
                     />
-                    <SelectFiledWithLabel
-                        label="Ad Visibility"
-                        id="adVisibility"
-                        value={formData.adVisibility}
-                        onChange={handleChange}
-                        options={[true, false]}
-                        required={true}
-                        onHasError={handleErrorChange}
+
+                    <Controller
+                        name="adVisibility"
+                        control={control}
+                        render={({ field }) => (
+                            <SelectFiledWithLabel
+                                label="Ad Visibility"
+                                id="adVisibility"
+                                value={field.value}
+                                onChange={(e) => field.onChange(e.target.value === "true")}
+                                options={[true, false]}
+                                required
+                            />
+                        )}
                     />
-                    <FormButton text={"Add"} loading={loading} />
+
+                    <FormButton text="Add" loading={loading || isSubmitting} />
                 </form>
             </div>
         </div>

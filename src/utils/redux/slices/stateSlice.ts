@@ -3,7 +3,6 @@ import { appStateVariables } from "@/utils/interface/sliceInterface";
 
 const initialState: appStateVariables = {
     lightTheme: true,
-    signinForm: true,
     sidebarOpen: true,
     filterSideBarOpen: true,
     authModal: false,

@@ -3,11 +3,6 @@ import { SignUpFormStateVariables } from "@/utils/interface/sliceInterface";
 import { resendOtp, signin, signup, verifyOtp, updatePassword } from '../../apis/auth.api'
 
 const initialState: SignUpFormStateVariables = {
-    signInForm: true,
-    signUpForm: false,
-    verifyOtpForm: false,
-    verifyEmailForm: false,
-    resetPasswordForm: false,
     forgotPassword: false,
     otpRemainingTime: 0,
     otpTimerIsRunning: false,
@@ -18,25 +13,6 @@ const signFormSlice = createSlice({
     name: "signForm",
     initialState,
     reducers: {
-        setSignUpForm: (state: SignUpFormStateVariables, action: PayloadAction<boolean>) => {
-            state.signUpForm = action.payload;
-        },
-        setsignInForm: (state: SignUpFormStateVariables, action: PayloadAction<boolean>) => {
-            state.signInForm = action.payload;
-        },
-        toggleForm: (state: SignUpFormStateVariables) => {
-            state.signInForm = !state.signInForm;
-            state.signUpForm = !state.signUpForm;
-        },
-        setVerifyOtpForm: (state: SignUpFormStateVariables, action: PayloadAction<boolean>) => {
-            state.verifyOtpForm = action.payload;
-        },
-        setVerifyEmailForm: (state: SignUpFormStateVariables, action: PayloadAction<boolean>) => {
-            state.verifyEmailForm = action.payload;
-        },
-        setResetPasswordForm: (state: SignUpFormStateVariables, action: PayloadAction<boolean>) => {
-            state.resetPasswordForm = action.payload;
-        },
         setForgotPassword: (state: SignUpFormStateVariables, action: PayloadAction<boolean>) => {
             state.forgotPassword = action.payload;
         },
@@ -55,11 +31,6 @@ const signFormSlice = createSlice({
             state.otpTimerIsRunning = false;
         },
         clearSignFormSlice: (state) => {
-            state.signInForm = true;
-            state.signUpForm = false;
-            state.verifyOtpForm = false;
-            state.verifyEmailForm = false;
-            state.resetPasswordForm = false;
             state.forgotPassword = false;
             state.otpRemainingTime = 0;
             state.otpTimerIsRunning = false;
@@ -127,14 +98,8 @@ const signFormSlice = createSlice({
 export const {
     stopTimer,
     startTimer,
-    toggleForm,
     updateTimer,
-    setSignUpForm,
-    setsignInForm,
-    setVerifyOtpForm,
     setForgotPassword,
-    setVerifyEmailForm,
-    setResetPasswordForm,
     clearSignFormSlice,
 } = signFormSlice.actions;
 

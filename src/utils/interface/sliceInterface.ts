@@ -35,11 +35,6 @@ export interface AuthState {
 
 // **** Sign Form Interface **** \\
 export interface SignUpFormStateVariables {
-    signInForm: boolean;
-    signUpForm: boolean;
-    verifyOtpForm: boolean;
-    verifyEmailForm: boolean;
-    resetPasswordForm: boolean;
     forgotPassword: boolean;
     otpRemainingTime: number;
     otpTimerIsRunning: boolean;
@@ -51,7 +46,6 @@ export interface SignUpFormStateVariables {
 // **** App state slice **** \\
 export interface appStateVariables {
     lightTheme: boolean;
-    signinForm: boolean;
     sidebarOpen: boolean;
     filterSideBarOpen: boolean;
     authModal: boolean;

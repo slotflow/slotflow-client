@@ -4,7 +4,7 @@ import { FormEvent, useState } from "react";
 import { AppDispatch } from "@/utils/redux/appStore";
 import RightSideBox from "@/components/provider/SideBox";
 import { providerAddProviderAddress } from "@/utils/apis/provider.api";
-import AddAddress, { AddressFormProps } from "@/components/common/AddAddress";
+import AddAddressForm, { AddressFormProps } from "@/components/common/AddAddress";
 
 const ProviderAddAddressPage = () => {
 
@@ -37,7 +37,7 @@ const ProviderAddAddressPage = () => {
                 props={{ pageNumber: 1 }}
             />
             <div className="w-full md:w-8/12 md:px-10">
-                <AddAddress
+                <AddAddressForm
                     onSubmit={handleSubmit}
                     formClassNames={"md:mt-10 px-4 md:px-12"}
                     headingSize={"xs:text-md md:text-xl lg:text-2xl"}

@@ -1,10 +1,10 @@
 import { axiosInstance } from "@/lib/axios";
 import {
+    AdminAddNewAppServiceRequest,
     AdminFetchAllServicesResponse,
     AdminChangeServiceBlockStatusRequest,
 } from "../interface/api/adminServiceApiInterface";
 import { buildQueryParams, parseNewCommonResponse } from "../helper";
-import { Service } from "../interface/entityInterface/appServiceInterface";
 import { FetchFunctionParams, ApiPaginatedResponse, ApiBaseResponse } from "../interface/commonInterface";
 
 export const adminFetchAllServices = async (params?: FetchFunctionParams): Promise<ApiPaginatedResponse<AdminFetchAllServicesResponse>> => {
@@ -13,7 +13,7 @@ export const adminFetchAllServices = async (params?: FetchFunctionParams): Promi
     return parseNewCommonResponse<AdminFetchAllServicesResponse>(response.data);
 }
 
-export const adminAddNewService = async (data : {appServiceName: Service["serviceName"]}): Promise<ApiBaseResponse> => {
+export const adminAddNewService = async (data : AdminAddNewAppServiceRequest): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.post('/admin/services', data );
     return response.data;
 }

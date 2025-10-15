@@ -1,83 +1,57 @@
 import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
 import GoogleButton from "../GoogleButton";
+import { useDispatch, } from "react-redux";
 import { signin } from "@/utils/apis/auth.api";
 import { useNavigate } from "react-router-dom";
 import InputField from "../InputFieldWithLable";
-import { useDispatch, useSelector } from "react-redux";
+import { Button } from "@/components/ui/button";
+import { LoginZodSchema } from '@/utils/zod/authZod';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AppDispatch } from "@/utils/redux/appStore";
 import { FormButton, FormHeading } from "../FormSplits";
-import { FormEvent, useCallback, useState } from "react";
 import { handleGoogleLogin } from "@/utils/helper/googleLogin";
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { HandleChangeFunction, LoginFormData, LoginFormProps } from "@/utils/interface/commonInterface";
-import { setResetPasswordForm, setsignInForm, setSignUpForm, setVerifyEmailForm, setVerifyOtpForm } from "@/utils/redux/slices/signFormSlice";
-
+import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
+import { AuthFormType, LoginFormData, LoginFormProps } from "@/utils/interface/commonInterface";
 
 const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
 
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
-    const loading: boolean = useSelector((store: RootState) => store.signform.loading);
-    const [hasErrors, setHasErrors] = useState<boolean>(false);
+    const { goToAuthPage } = useAuthNavigation();
 
-    const [formData, setFormData] = useState<LoginFormData>({
-        email: "",
-        password: "",
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting },
+    } = useForm<LoginFormData>({
+        resolver: zodResolver(LoginZodSchema),
+        defaultValues: {
+            email: "",
+            password: "",
+        }
     });
 
-    const handleChange = useCallback<HandleChangeFunction>((e) => {
-        setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
-        setHasErrors(false);
-    }, []);
-
-    const handleNavigation = (role: string) => {
-        console.log("navigating");
-        if (role === "ADMIN") navigate("/admin/overview", { replace: true });
-        else if (role === "USER") navigate("/user", { replace: true });
-        else if (role === "PROVIDER") navigate("/provider/dashboard", { replace: true });
+    const handleNavigation = (userRole: string) => {
+        if (userRole === "ADMIN") navigate("/admin/overview", { replace: true });
+        else if (userRole === "USER") navigate("/user", { replace: true });
+        else if (userRole === "PROVIDER") navigate("/provider/dashboard", { replace: true });
     };
 
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        if (hasErrors) {
-            toast.error("Please fix the form errors.");
-            return;
+    const onSubmit = async (data: LoginFormData) => {
+        try {
+            const res = await dispatch(signin({ ...data, role })).unwrap();
+            if (res.success) {
+                if (res.authUser.isBlocked) {
+                    toast.error("Your account is blocked, please contact us");
+                    return;
+                }
+                toast.success(res.message);
+                handleNavigation(res.authUser.role);
+            } else toast.error(res.message);
+        } catch {
+            toast.error("An error occurred during login");
         }
-        if (role) {
-            dispatch(signin({
-                email: formData.email,
-                password: formData.password,
-                role
-            }))
-                .unwrap()
-                .then((res) => {
-                    if (res.success) {
-                        if (res.authUser.isBlocked) {
-                            toast.error("Your account is blocked, please contact us");
-                            return;
-                        }
-                        toast.success(res.message);
-                        handleNavigation(res.authUser.role);
-                    } else {
-                        toast.error(res.message);
-                    }
-                })
-                .catch((error) => toast.error(error || "An error occurred."));
-            return;
-        } else {
-            toast.info("select your account type");
-        }
-    };
-
-    const changeToSingUpForm = (): void => {
-        dispatch(setSignUpForm(true));
-        dispatch(setsignInForm(false));
-        dispatch(setVerifyEmailForm(false));
-        dispatch(setVerifyOtpForm(false));
-        dispatch(setResetPasswordForm(false));
-    };
-
-    const handleErrorChange = (hasError: boolean) => {
-        setHasErrors(hasError);
     };
 
     return (
@@ -86,48 +60,66 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
                 <div className="p-8">
                     <FormHeading title="Sign In" description="Sign In with your credentials" />
                     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                        <form onSubmit={handleSubmit} className="space-y-3">
-                            <InputField
-                                label="Email address"
-                                id="email"
-                                placeholder="example@gmail.com"
-                                type="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                required={true}
-                                onHasError={handleErrorChange}
-                            />
+                        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+                            <fieldset disabled={isSubmitting} className="space-y-3">
+                                <InputField<LoginFormData>
+                                    label="Email address"
+                                    id="email"
+                                    name="email"
+                                    placeholder="example@gmail.com"
+                                    type="email"
+                                    required
+                                    register={register}
+                                    error={errors.email?.message}
+                                />
 
-                            <InputField
-                                label="Password"
-                                id="password"
-                                placeholder="Enter your password"
-                                type="password"
-                                value={formData.password}
-                                onChange={handleChange}
-                                required={true}
-                                isPassword={true}
-                                forgotPassword={true}
-                                onHasError={handleErrorChange}
-                            />
+                                <InputField<LoginFormData>
+                                    label="Password"
+                                    id="password"
+                                    name="password"
+                                    placeholder="Enter your password"
+                                    type="password"
+                                    required
+                                    isPassword
+                                    register={register}
+                                    error={errors.password?.message}
+                                />
 
-                            <FormButton text={"Sign In"} loading={loading} />
+
+                                <Button
+                                    variant="link"
+                                    className="px-0 block text-xs md:text-sm font-medium text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
+                                    onClick={() => goToAuthPage(role, AuthFormType.VERIFY_EMAIL)}
+                                >
+                                    Forgot Password ?
+                                </Button>
+
+                                <FormButton text="Sign In" loading={isSubmitting} />
+                            </fieldset>
                         </form>
+
                         <div className="flex items-center my-4">
                             <div className="flex-grow border-t"></div>
                             <span className="mx-3 text-sm text-[var(--textTwo)]">OR CONTINUE WITH</span>
                             <div className="flex-grow border-t"></div>
                         </div>
-                        <GoogleButton onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => handleGoogleLogin({ e, role })} text={"Sign up with Google"} />
+
+                        <GoogleButton
+                            onClick={(e) => handleGoogleLogin({ e, role })}
+                            text="Sign up with Google"
+                        />
+
                         {!isAdmin && (
-                            <p className="mt-10 text-center text-sm/6 text-[var(--textOne)] hover:text-[var(--textOneHover)]">
-                                New to Slotflow?
-                                <span className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer" onClick={changeToSingUpForm}>
-                                    {" "}Sign Up
+                            <p className="mt-10 text-center text-sm text-[var(--textOne)] hover:text-[var(--textOneHover)]">
+                                New to Slotflow ?
+                                <span
+                                    className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
+                                    onClick={() => goToAuthPage(role, AuthFormType.REGISTER)}
+                                >
+                                    {" "} Sign Up
                                 </span>
                             </p>
                         )}
-
                     </div>
                 </div>
             </div>
@@ -135,4 +127,4 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
     )
 }
 
-export default LoginForm
+export default LoginForm;

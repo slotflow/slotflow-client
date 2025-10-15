@@ -1,6 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/utils/redux/appStore';
 import { Role } from '@/utils/interface/commonInterface';
 import LoginForm from '@/components/form/CommonForms/LoginForm';
 import SignUpForm from '@/components/form/CommonForms/SignUpForm';
@@ -10,34 +8,33 @@ import OtpVerificatioForm from '@/components/form/CommonForms/OtpVerificatioForm
 import EmailVerificationForm from '@/components/form/CommonForms/EmailVerificationForm';
 
 interface AuthPageProp {
-    role: Role
+    role: Role,
+    formType: number,
 }
 
 const AuthPage: React.FC<AuthPageProp> = ({
-    role
+    role,
+    formType
 }) => {
 
-    const { resetPasswordForm, signInForm, verifyEmailForm, verifyOtpForm, signUpForm } = useSelector((store: RootState) => store.signform);
     useAuthCheckInLogin();
+
+    const formMap: Record<number, React.ReactNode> = {
+        0: <LoginForm role={role} />,
+        1: <SignUpForm role={role} />,
+        2: <EmailVerificationForm role={role} />,
+        3: <ResetPasswordForm role={role} />,
+        4: <OtpVerificatioForm role={role} />,
+    };
 
     return (
         <div className='h-[100vh] flex bg-[var(--background)]'>
-            <div className="w-full md:6/12 lg:w-4/12 flex justify-center items-center bg-[#f5f5f5] dark:bg-[#171717]">
-                {signInForm && <LoginForm role={role} />}
-                {role !== "ADMIN" && (
-                    <>
-                        {signUpForm && <SignUpForm role={role} />}
-                        {verifyEmailForm && <EmailVerificationForm role={role} />}
-                        {resetPasswordForm && <ResetPasswordForm />}
-                        {verifyOtpForm && <OtpVerificatioForm />}
-                    </>
-                )}
+            <div className="w-full md:w-6/12 lg:w-4/12 flex justify-center items-center bg-[#f5f5f5] dark:bg-[#171717]">
+                {role === "ADMIN" ? formMap[0] : formMap[formType]}
             </div>
-            <div className='w-0 md:w6/12 lg:w-8/12'>
-
-            </div>
+            <div className='w-0 md:w-6/12 lg:w-8/12'></div>
         </div>
-    )
+    );
 }
 
 export default AuthPage

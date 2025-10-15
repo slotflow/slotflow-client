@@ -21,18 +21,17 @@ const ProviderAddServiceAvailabilityPage = () => {
 
   const dispatch = useDispatch<AppDispatch>();
   const { dataUpdating } = useSelector((store: RootState) => store.auth);
-
   const [selectedDay, setSelectedDay] = useState<string>('Sunday');
   const [selectedDuration, setSelectedDuration] = useState<string>("15 minutes");
   const [timeSlots, setTimeSlots] = useState<string[]>([]);
-  const [newTimeSlot, setNewTimeSlot] = useState<TimeSlot>({
-    startTime: new Date(),
-    endTime: new Date(),
-  });
   const [selectedTimeSlots, setSelectedTimeSlots] = useState<string[]>([]);
   const { availabilities } = useSelector((store: RootState) => store.provider);
   const [modes, setModes] = useState<string[]>([]);
   const [selectAllSlots, setSelectAllSlots] = useState<boolean>(false);
+  const [newTimeSlot, setNewTimeSlot] = useState<TimeSlot>({
+    startTime: new Date(),
+    endTime: new Date(),
+  });
 
   useEffect(() => {
   }, [selectedTimeSlots]);
@@ -245,6 +244,7 @@ const ProviderAddServiceAvailabilityPage = () => {
                 </div>
               </div>
             </div>
+
             <div className="flex justify-center md:justify-end mt-4 md:mt-6">
               <Button
                 type="button"

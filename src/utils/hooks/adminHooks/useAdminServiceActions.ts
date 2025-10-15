@@ -1,11 +1,10 @@
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
-import { Service } from "@/utils/interface/entityInterface/appServiceInterface";
 import { adminAddNewService, adminChangeServiceBlockStatus } from "../../apis/adminService.api";
-import { AdminChangeServiceBlockStatusRequest } from "@/utils/interface/api/adminServiceApiInterface";
+import { AdminAddNewAppServiceRequest, AdminChangeServiceBlockStatusRequest } from "@/utils/interface/api/adminServiceApiInterface";
 
 interface UseAdminServiceActionReturnType {
-  handleAdminServiceAdding: (serviceName: Service["serviceName"], setLoading: (loading: boolean) => void) => void;
+  handleAdminServiceAdding: (data: AdminAddNewAppServiceRequest, setLoading: (loading: boolean) => void) => void;
   handleAdminChangeServiceStatus: (data: AdminChangeServiceBlockStatusRequest) => void;
 }
 
@@ -13,8 +12,8 @@ export const useAdminServiceActions = (): UseAdminServiceActionReturnType => {
 
   const queryClient = useQueryClient();
 
-  const handleAdminServiceAdding = (appServiceName: Service["serviceName"], setLoading: (loading: boolean) => void) => {
-    adminAddNewService({ appServiceName })
+  const handleAdminServiceAdding = ({ serviceName }: AdminAddNewAppServiceRequest, setLoading: (loading: boolean) => void) => {
+    adminAddNewService({ serviceName })
       .then((res) => {
         if(res.success) {
           setLoading(false);

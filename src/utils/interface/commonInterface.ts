@@ -4,6 +4,8 @@ import { ChartConfig } from "@/components/ui/chart";
 import { Plan } from "./entityInterface/planInterface";
 import { LucideIcon } from "lucide-react";
 import { Booking } from "./entityInterface/bookingInterface";
+import z from "zod";
+import { LoginZodSchema, resetPasswordZodSchema, signupZodSchema, verifyEmailZodSchema, verifyOtpZodSchema } from "../zod/authZod";
 
 // **** 1.  Common Response interface
 export interface ApiBaseResponse {
@@ -28,7 +30,7 @@ interface CommonFormFields {
   password: string;
   confirmPassword: string;
   otp: string;
-  role: string;
+  role: Role;
   verificationToken: string;
 }
 
@@ -36,7 +38,7 @@ interface CommonFormFields {
 // **** 4.1  Signup form props type
 export type signUpFormProps = Pick<CommonFormFields, "role">;
 // **** 4.2  Sign up form FormData type
-export type SignUpFormData = Pick<CommonFormFields, "username" | "email" | "password" | "confirmPassword">;
+export type SignUpFormData = z.infer<typeof signupZodSchema>;
 
 
 
@@ -48,7 +50,7 @@ export interface OtpVerificationUseSelector {
   forgotPassword: boolean;
 }
 // **** 5.2  Otp verification form useSelector type
-export type OtpVerificationFormData = Pick<CommonFormFields, "otp">;
+export type OtpVerificationFormData = z.infer<typeof verifyOtpZodSchema>;
 
 
 // **** 6.1  Login form props interface
@@ -56,17 +58,19 @@ export interface LoginFormProps extends Pick<CommonFormFields, "role"> {
   isAdmin?: boolean;
 }
 // **** 6.2  Login form data type
-export type LoginFormData = Pick<CommonFormFields, "email" | "password">;
+export type LoginFormData = z.infer<typeof LoginZodSchema>;
 
 
 // **** 7.1  Email verification form props type
 export type EmailVerificationFormProps = Pick<CommonFormFields, "role">;
 // **** 7.2  Email verification form data type
-export type EmailVerificationFormData = Pick<CommonFormFields, "email">;
+export type EmailVerificationFormData = z.infer<typeof verifyEmailZodSchema>;
 
+export type OtpVerificatioFormProps = Pick<CommonFormFields, "role">;
+export type ResetPasswordFormProps = Pick<CommonFormFields, "role">;
 
 // **** 8.  Password reset form props type
-export type PasswordResetFormDataProps = Pick<CommonFormFields, "password" | "confirmPassword">;
+export type PasswordResetFormDataProps = z.infer<typeof resetPasswordZodSchema>;
 
 
 // **** 9.1 Authtication form heading component props interface
@@ -91,7 +95,6 @@ export interface InputFieldProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   required: boolean;
   isPassword?: boolean;
-  forgotPassword?: boolean;
   onHasError?: (hasError: boolean) => void;
   readonly?: boolean;
 }
@@ -224,7 +227,11 @@ export interface dataSelectListItemInterface {
 
 
 // **** 23. role type and plan types
-export type Role = "USER" | "PROVIDER" | "ADMIN";
+export enum Role {
+  admin = "ADMIN",
+  user = "USER",
+  provider = "PROVIDER"
+}
 export type LimitedRoles = "ADMIN" | "PROVIDER";
 export type limitedPlans = "Starter" | "Professional" | "Enterprise" | "NoSubscription";
 
@@ -400,4 +407,12 @@ export interface CommonTabInterface {
   label: string;
   icon?: LucideIcon;
   role?: Role[];
+}
+
+export enum AuthFormType {
+  LOGIN = 0,
+  REGISTER = 1,
+  VERIFY_EMAIL = 2,
+  RESET_PASSWORD = 3,
+  VERIFY_OTP = 4,
 }

@@ -9,7 +9,7 @@ import { AppDispatch } from "recharts/types/state/store";
 import { Edit, MapPinHouse, Plus, X } from 'lucide-react';
 import { setAuthUser } from "@/utils/redux/slices/authSlice";
 import AddressListing from "@/components/common/profile/AddressListing";
-import AddAddress, { AddressFormProps } from "@/components/common/AddAddress";
+import AddAddressForm, { AddressFormProps } from "@/components/common/AddAddress";
 import { UpdateAddressResponse } from '@/utils/interface/api/commonApiInterface';
 import { UserAddUserAddressResponse } from '@/utils/interface/api/userApiInterface';
 import { userAddUserAddress, userFetchUserAddress, userUpdateUserAddress } from "@/utils/apis/user.api";
@@ -92,7 +92,7 @@ const Address: React.FC = () => {
       </div>
 
       {addAddress ? (
-        <AddAddress
+        <AddAddressForm
           onSubmit={handleAAddAddress}
           formClassNames={"my-4 border rounded-lg py-6"}
           headingSize={"xs:text-md md:text-xl"}

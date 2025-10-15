@@ -46,4 +46,4 @@ const AccountSecurity: React.FC = () => {
   )
 }
 
-export default AccountSecurity
+export default AccountSecurity;

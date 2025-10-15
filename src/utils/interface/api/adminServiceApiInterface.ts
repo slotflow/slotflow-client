@@ -6,8 +6,8 @@ export type BasicAppServiceInfo = Pick<Service, "_id" | "serviceName" | "isBlock
 export type AdminFetchAllServicesResponse = BasicAppServiceInfo;
 
 
-// **** 2.  Inline interface used for the adminAddNewService api
-
+// **** 2. Used as the request type of adminAddNewService api
+export type AdminAddNewAppServiceRequest = Pick<Service, "serviceName">
 
 // **** 3.  Used as the request type for the admin change app service block status api
 export type AdminChangeServiceBlockStatusRequest = {

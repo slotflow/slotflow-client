@@ -5,6 +5,7 @@ import { ProtectedRoute } from "./protectedRoutes.tsx";
 import IntegrationsPage from "@/pages/common/IntegrationsPage.tsx";
 import SettingsPage from "@/pages/common/SettingsPage.tsx";
 import StripeConfirmPage from "@/pages/common/StripeConfirmPage.tsx";
+import { Role } from "@/utils/interface/commonInterface.ts";
 
 const AuthPage = lazy(() => import("@/pages/common/AuthPage.tsx"));
 const AboutPage = lazy(() => import("@/pages/common/AboutPage.tsx"));
@@ -67,9 +68,17 @@ export const appRouter = createBrowserRouter([
             { path: "/contact", element: <ContactPage /> },
             { path: "/privacy-policy", element: <PrivacyPolicyPage /> },
             { path: "/terms-and-conditions", element: <TermsAndConditionsPage /> },
-            { path: "/admin/login", element: <AuthPage role={"ADMIN"} /> },
-            { path: "/user/login", element: <AuthPage role={"USER"} /> },
-            { path: "/provider/login", element: <AuthPage role={"PROVIDER"} /> },
+            { path: "/admin/login", element: <AuthPage role={Role.admin} formType={0} /> },
+            { path: "/user/login", element: <AuthPage role={Role.user} formType={0} /> },
+            { path: "/user/register", element: <AuthPage role={Role.user} formType={1} /> },
+            { path: "/user/verify/email", element: <AuthPage role={Role.user} formType={2} /> },
+            { path: "/user/reset/password", element: <AuthPage role={Role.user} formType={3} /> },
+            { path: "/user/verify/otp", element: <AuthPage role={Role.user} formType={4} /> },
+            { path: "/provider/login", element: <AuthPage role={Role.provider} formType={0} /> },
+            { path: "/provider/register", element: <AuthPage role={Role.provider} formType={1} /> },
+            { path: "/provider/verify/email", element: <AuthPage role={Role.provider} formType={2} /> },
+            { path: "/provider/reset/password", element: <AuthPage role={Role.provider} formType={3} /> },
+            { path: "/provider/verify/otp", element: <AuthPage role={Role.provider} formType={4} /> },
             { path: "*", element: <Error404Page /> },
             {
                 path: "/admin",
