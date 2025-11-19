@@ -1,26 +1,22 @@
-import { useState } from "react";
+import FormField from "../FormField";
 import { toast } from "react-toastify";
-import InputField from "../InputFieldWithLable";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, Controller } from "react-hook-form";
+import { SelectField } from "../SelectFiledWithLabel";
 import { FormButton, FormHeading } from "../FormSplits";
-import SelectFiledWithLabel from "../SelectFiledWithLabel";
-import { adminAddNewPlanZodSchema } from "@/utils/zod/adminZod";
 import { useAdminPlanActions } from "@/utils/hooks/adminHooks/useAdminPlanActions";
-import { AdminAddNewPlanRequest } from "@/utils/interface/api/adminPlanApiInterface";
+import { AdminCreatePlanForm, adminCreatePlanZodSchema } from "@/utils/zod/adminZod";
 
 const PlanForm: React.FC = () => {
     const { handleAdminPlanAdding } = useAdminPlanActions();
-    const [loading, setLoading] = useState(false);
 
     const {
         register,
         handleSubmit,
-        control,
-        formState: { errors, isSubmitting },
+        formState: { errors, isSubmitting, isValid },
         reset,
-    } = useForm<AdminAddNewPlanRequest>({
-        resolver: zodResolver(adminAddNewPlanZodSchema),
+    } = useForm<AdminCreatePlanForm>({
+        resolver: zodResolver(adminCreatePlanZodSchema),
         mode: "onChange",
         defaultValues: {
             planName: "",
@@ -32,16 +28,12 @@ const PlanForm: React.FC = () => {
         },
     });
 
-    const onSubmit = async (data: AdminAddNewPlanRequest) => {
-        setLoading(true);
+    const onSubmit = async (data: AdminCreatePlanForm) => {
         try {
-            await handleAdminPlanAdding(data, setLoading);
-            toast.success("Plan added successfully!");
+            await handleAdminPlanAdding(data);
             reset();
         } catch {
             toast.error("Failed to add plan.");
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -50,73 +42,75 @@ const PlanForm: React.FC = () => {
             <FormHeading title="Add New Plan" />
             <div className="sm:mx-auto sm:w-full">
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                    <InputField<AdminAddNewPlanRequest>
-                        label="Plan Name"
+                    <FormField<AdminCreatePlanForm>
                         id="planName"
-                        placeholder="Premium Plan"
+                        label="Plan Name"
+                        placeholder="Enter Plan Name"
                         type="text"
-                        required
                         register={register}
                         error={errors.planName?.message}
+                        readOnly={false}
+                        required={true}
                     />
-                    <InputField<AdminAddNewPlanRequest>
-                        label="Description"
+                    <FormField<AdminCreatePlanForm>
                         id="description"
-                        placeholder="Description of the plan"
+                        label="Plan Description"
+                        placeholder="Enter Plan Description"
                         type="text"
-                        required
                         register={register}
                         error={errors.description?.message}
+                        readOnly={false}
+                        required={true}
                     />
-                    <InputField<AdminAddNewPlanRequest>
-                        label="Price"
+                    <FormField<AdminCreatePlanForm>
                         id="price"
-                        placeholder="99"
+                        label="Plan Price"
+                        placeholder="Enter Plan Price"
                         type="number"
-                        required
                         register={register}
                         error={errors.price?.message}
+                        readOnly={false}
+                        required={true}
                     />
 
                     {Array.from({ length: 5 }).map((_, index) => (
-                        <InputField<AdminAddNewPlanRequest>
+
+                        <FormField<AdminCreatePlanForm>
                             key={index}
-                            label={`Feature ${index + 1}`}
+                            label={`Plan Feature ${index + 1}`}
                             id={`features.${index}` as const}
-                            placeholder={`Feature ${index + 1}`}
+                            placeholder={`Enter Feature ${index + 1}`}
                             type="text"
-                            required={index < 2}
                             register={register}
                             error={errors.features?.[index]?.message}
+                            readOnly={false}
+                            required={index < 2}
                         />
                     ))}
 
-                    <InputField<AdminAddNewPlanRequest>
-                        label="Max Bookings Per Month"
+                    <FormField<AdminCreatePlanForm>
                         id="maxBookingPerMonth"
-                        placeholder="100"
+                        label="Plan Maximum Booking"
+                        placeholder="Enter Plan Maximum Booking"
                         type="number"
-                        required
                         register={register}
                         error={errors.maxBookingPerMonth?.message}
+                        readOnly={false}
+                        required={true}
                     />
 
-                    <Controller
-                        name="adVisibility"
-                        control={control}
-                        render={({ field }) => (
-                            <SelectFiledWithLabel
-                                label="Ad Visibility"
-                                id="adVisibility"
-                                value={field.value}
-                                onChange={(e) => field.onChange(e.target.value === "true")}
-                                options={[true, false]}
-                                required
-                            />
-                        )}
+                    <SelectField<AdminCreatePlanForm>
+                        id="adVisibility"
+                        label="Advertisement Visibility"
+                        register={register}
+                        error={errors.adVisibility}
+                        options={[
+                            { label: "Ad Visible", value: true },
+                            { label: "No Ad Visibility", value: false },
+                        ]}
+                        required
                     />
-
-                    <FormButton text="Add" loading={loading || isSubmitting} />
+                    <FormButton text="Add" loading={isSubmitting} disabled={isSubmitting || !isValid} />
                 </form>
             </div>
         </div>

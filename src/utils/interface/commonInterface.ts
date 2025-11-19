@@ -82,6 +82,7 @@ export interface AuthFormsHeadingProps {
 export interface AuthFormsButtonProps {
   text: string;
   loading: boolean;
+  disabled?: boolean;
 }
 
 
@@ -416,3 +417,5 @@ export enum AuthFormType {
   RESET_PASSWORD = 3,
   VERIFY_OTP = 4,
 }
+
+export type SelectOptions = Array<{label: string, value: string}>

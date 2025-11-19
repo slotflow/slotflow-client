@@ -53,7 +53,7 @@ import {
   BarChart,
 } from "lucide-react";
 import { ProviderFetchDashboardStatsDataResponse } from "./interface/api/providerApiInterface";
-import { CommonTabInterface, dataSelectListItemInterface, DayMapInterface, FeatureContentInterface, FooterColumnDataInterface, FooterLinkInterface, gsapBigSvgYDirectionAnimationInterface, HeaderCompoenentNavsProps, PlanFeatureInterface, PlanListType, ProviderApprovalMessageInterface, Route, StatsMapForAdminInterface, statsMapIntrface } from "./interface/commonInterface";
+import { CommonTabInterface, dataSelectListItemInterface, DayMapInterface, FeatureContentInterface, FooterColumnDataInterface, FooterLinkInterface, gsapBigSvgYDirectionAnimationInterface, HeaderCompoenentNavsProps, PlanFeatureInterface, PlanListType, ProviderApprovalMessageInterface, Role, Route, SelectOptions, StatsMapForAdminInterface, statsMapIntrface } from "./interface/commonInterface";
 
 import chatImage from '../assets/heroImages/caht.jpg';
 import gCalendar from '../assets/iconImages/gCalendar.png';
@@ -1139,10 +1139,10 @@ export const adminOverviewTabs: CommonTabInterface[] = [
 
 // Profile tabs list
 export const profileTabs: CommonTabInterface[] = [
-  { value: "tab1", label: "Profile", icon: User, role: ["PROVIDER" , "USER"] },
-  { value: "tab2", label: "Address", icon: Home, role: ["PROVIDER" , "USER"] },
-  { value: "tab3", label: "Service", icon: Briefcase, role: ["PROVIDER"] },
-  { value: "tab4", label: "Availability", icon: Clock, role: ["PROVIDER"] },
+  { value: "tab1", label: "Profile", icon: User, role: [Role.provider , Role.user] },
+  { value: "tab2", label: "Address", icon: Home, role: [Role.provider , Role.user] },
+  { value: "tab3", label: "Service", icon: Briefcase, role: [Role.provider] },
+  { value: "tab4", label: "Availability", icon: Clock, role: [Role.provider] },
 ]
 
 // Provider dashboard tabs
@@ -1175,3 +1175,9 @@ export const settingsTabs: CommonTabInterface[] = [
     icon: Palette,
   },
 ]
+
+// Advertisement visibility select field options
+export const adVisibilityOptions: SelectOptions = [
+  { label: "Ad Visible", value: "true" },
+  { label: "No Ad Visibility", value: "false" },
+];

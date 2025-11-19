@@ -1,11 +1,13 @@
 import React from "react";
+import { Button } from "../ui/button";
+import { Loader } from "lucide-react";
 import logo from '../../assets/logos/logo-transparent.png';
 import { CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { AuthFormsButtonProps, AuthFormsHeadingProps } from "@/utils/interface/commonInterface";
 
 export const FormHeading: React.FC<AuthFormsHeadingProps> = React.memo(({ title, description }) => {
     return (
-         <CardHeader>
+        <CardHeader>
             <div className='flex items-center justify-center'>
                 <img src={logo} className='size-16' />
             </div>
@@ -15,15 +17,24 @@ export const FormHeading: React.FC<AuthFormsHeadingProps> = React.memo(({ title,
             </CardDescription>
         </CardHeader>
     )
-})
+});
 
-export const FormButton: React.FC<AuthFormsButtonProps> = React.memo(({ text, loading = false }) => {
+export const FormButton: React.FC<AuthFormsButtonProps> = React.memo(({ text, loading = false, disabled }) => {
     return (
-        <button
+        <Button
+            variant="outline"
             type="submit"
-            className="mt-5 flex w-full justify-center rounded-md bg-[var(--mainColor)] hover:bg-[var(--mainColorHover)] px-3 py-2 text-sm/6 font-semibold text-white shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--mainColor)] cursor-pointer"
+            disabled={disabled}
+            className="w-full flex items-center justify-center bg-[var(--mainColor)] hover:bg-[var(--mainColorHover)] cursor-pointer text-white"
         >
-            {loading ? "Loading" : text}
-        </button>
+            {loading ? (
+                <span className="flex items-center gap-2">
+                    <Loader className="animate-spin size-4" />
+                    <span>Loading</span>
+                </span>
+            ) : (
+                text
+            )}
+        </Button>
     )
-})
+});

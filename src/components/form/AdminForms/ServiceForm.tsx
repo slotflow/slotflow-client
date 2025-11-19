@@ -1,32 +1,33 @@
+import FormField from "../FormField";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import InputField from "../InputFieldWithLable";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormButton, FormHeading } from "../FormSplits";
-import { adminAddServiceXZodSchema } from "@/utils/zod/adminZod";
+import { handleFormError } from "@/utils/helper/formErrorCatcher";
+import { AdminCreateServiceForm, adminCreateServiceZodSchema } from "@/utils/zod/adminZod";
 import { useAdminServiceActions } from "@/utils/hooks/adminHooks/useAdminServiceActions";
-import { AdminAddNewAppServiceRequest } from "@/utils/interface/api/adminServiceApiInterface";
 
 const ServiceAddingForm: React.FC = () => {
+
   const { handleAdminServiceAdding } = useAdminServiceActions();
 
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting },
-  } = useForm<AdminAddNewAppServiceRequest>({
-    resolver: zodResolver(adminAddServiceXZodSchema),
+    setFocus,
+    formState: { errors, isSubmitting, isValid },
+  } = useForm<AdminCreateServiceForm>({
+    resolver: zodResolver(adminCreateServiceZodSchema),
+    mode: "onChange",
     defaultValues: {
       serviceName: "",
     },
-    mode: "onChange",
   });
 
-  const onSubmit = async (data: AdminAddNewAppServiceRequest) => {
+  const onSubmit = async (data: AdminCreateServiceForm) => {
     try {
-      await handleAdminServiceAdding({ serviceName: data.serviceName }, () => { });
-      toast.success("Service added successfully!");
+      handleAdminServiceAdding({ serviceName: data.serviceName }, () => { });
       reset();
     } catch {
       toast.error("Failed to add service.");
@@ -35,20 +36,20 @@ const ServiceAddingForm: React.FC = () => {
 
   return (
     <div className="flex p-4 flex-1 flex-col justify-center border-[1px] rounded-md">
-      <FormHeading title="Add New Service" />
+      <FormHeading title="Create New Service" />
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          <InputField<AdminAddNewAppServiceRequest>
-            label="Service Name"
+        <form onSubmit={handleSubmit(onSubmit, handleFormError(setFocus))} className="space-y-6">
+          <FormField<AdminCreateServiceForm>
             id="serviceName"
-            name="serviceName"
-            placeholder="Software Engineer"
+            label="Service Name"
+            placeholder="Enter Service Name"
             type="text"
-            required
             register={register}
             error={errors.serviceName?.message}
+            readOnly={false}
+            required={true}
           />
-          <FormButton text="Add" loading={isSubmitting} />
+          <FormButton text="Save" loading={isSubmitting} disabled={isSubmitting || !isValid} />
         </form>
       </div>
     </div>

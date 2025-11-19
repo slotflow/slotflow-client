@@ -4,7 +4,7 @@ import { adminAddNewPlan, adminChangePlanBlockStatus } from "../../apis/adminPla
 import { AdminAddNewPlanRequest, AdminChangePlanBlockStatusRequest } from "@/utils/interface/api/adminPlanApiInterface";
 
 interface UseAdminPlanActionsReturnType {
-    handleAdminPlanAdding: (formData: AdminAddNewPlanRequest, setLoading: (loading: boolean) => void) => void;
+    handleAdminPlanAdding: (formData: AdminAddNewPlanRequest) => void;
     handleAdminChangePlanStatus: (data: AdminChangePlanBlockStatusRequest) => void;
 }
 
@@ -12,17 +12,16 @@ export const useAdminPlanActions = (): UseAdminPlanActionsReturnType => {
 
   const queryClient = useQueryClient();
 
-  const handleAdminPlanAdding = (formData: AdminAddNewPlanRequest, setLoading: (loading: boolean) => void) => {
+  const handleAdminPlanAdding = (formData: AdminAddNewPlanRequest) => {
       adminAddNewPlan(formData)
       .then((res) => {
         if(res.success) {
-          setLoading(false);
           toast.success(res.message);
           queryClient.invalidateQueries({ queryKey: ["plans"] });
         }
       })
-      .catch(() => {
-        setLoading(false);
+      .catch((res) => {
+        toast.success(res.message);
       });
     };
 
