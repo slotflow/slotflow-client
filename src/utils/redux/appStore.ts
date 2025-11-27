@@ -1,10 +1,9 @@
 import authReducer from "./slices/authSlice";
 import chatReducer from './slices/chatSlice';
 import userReducer from './slices/userSlice';
-import stateReducer from './slices/stateSlice';
+import appReducer from './slices/appSlice';
 import adminReducer from './slices/adminSlice';
 import videoReducer from './slices/videoSlice';
-import signFormReducer from "./slices/signFormSlice";
 import localStorage from 'redux-persist/lib/storage';
 import providerReducer from './slices/providerSlice';
 import integrationReducer from './slices/integrationSlice';
@@ -19,8 +18,7 @@ const persistConfig = {
 
 const rootReducers = {
     auth: authReducer,
-    signform: signFormReducer,
-    state: stateReducer,
+    app: appReducer,
     admin: adminReducer,
     user: userReducer,
     provider: providerReducer,

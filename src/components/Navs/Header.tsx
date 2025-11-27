@@ -6,14 +6,14 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import logo from '../../assets/logos/logo-transparent.png';
 import { AppDispatch, RootState } from '../../utils/redux/appStore';
-import { setAuthModal, toggleTheme } from '@/utils/redux/slices/stateSlice';
+import { setAuthModal, toggleTheme } from '@/utils/redux/slices/appSlice';
 
 const Header: React.FC = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
-  const themeMode: boolean = useSelector((store: RootState) => store.state.lightTheme);
+  const themeMode: boolean = useSelector((store: RootState) => store.app.lightTheme);
 
   const changeTheme = (): void => {
     dispatch(toggleTheme());
@@ -63,7 +63,7 @@ const Header: React.FC = () => {
 
         <div className='w-3/12 flex justify-end items-center'>
           <Button
-          variant={"ghost"}
+            variant={"ghost"}
             onClick={handleAuthClick}
             className="cursor-pointer px-4 py-2 rounded-lg text-sm font-semibold bg-[var(--mainColor)] text-white hover:opacity-90 transition border border-[var(--mainColor)] hover:text-[var(--mainColor)] "
           >
@@ -71,7 +71,7 @@ const Header: React.FC = () => {
           </Button>
 
           <Button
-          variant={"ghost"}
+            variant={"ghost"}
             onClick={handleAuthClick}
             className="ml-2 cursor-pointer px-4 py-2 rounded-lg text-sm font-semibold border border-[var(--mainColor)] text-[var(--mainColor)] hover:bg-[var(--mainColor)] hover:text-white transition"
           >

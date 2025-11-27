@@ -1,33 +1,32 @@
+import FormField from "../FormField";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import InputField from "../InputFieldWithLable";
+import { useDispatch } from "react-redux";
 import { resendOtp } from "@/utils/apis/auth.api";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "@/utils/redux/appStore";
 import { FormButton, FormHeading } from "../FormSplits";
-import { verifyEmailZodSchema } from "@/utils/zod/authZod";
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
-import { AuthFormType, EmailVerificationFormProps, EmailVerificationFormData } from "@/utils/interface/commonInterface";
+import { VerifyEmailFormData, verifyEmailZodSchema } from "@/utils/zod/authZod";
+import { AuthFormType, EmailVerificationFormProps } from "@/utils/interface/commonInterface";
 
 const EmailVerificationForm: React.FC<EmailVerificationFormProps> = ({ role }) => {
     const dispatch = useDispatch<AppDispatch>();
     const { goToAuthPage } = useAuthNavigation();
-    const loading: boolean = useSelector((store: RootState) => store.signform.loading);
 
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting },
-    } = useForm<EmailVerificationFormData>({
+        formState: { errors, isSubmitting, isValid },
+    } = useForm<VerifyEmailFormData>({
         resolver: zodResolver(verifyEmailZodSchema),
+        mode: "onChange",
         defaultValues: {
             email: ""
         },
-        mode: "onChange",
     });
 
-    const onSubmit = async (data: EmailVerificationFormData) => {
+    const onSubmit = async (data: VerifyEmailFormData) => {
         if (!role) {
             toast.info("Select your account type.");
             return;
@@ -38,11 +37,9 @@ const EmailVerificationForm: React.FC<EmailVerificationFormProps> = ({ role }) =
             if (res.success) {
                 toast.success(res.message);
                 goToAuthPage(role, AuthFormType.VERIFY_OTP);
-            } else {
-                toast.error(res.message);
             }
-        } catch {
-            toast.error("An error occurred.");
+        } catch (error) {
+            if(import.meta.env.DEV)console.log("An error occurred during email verification ",error);
         }
     };
 
@@ -53,17 +50,16 @@ const EmailVerificationForm: React.FC<EmailVerificationFormProps> = ({ role }) =
                     <FormHeading title="Verify Email" description="An OTP will be sent to this email ID" />
                     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                         <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-                            <InputField<EmailVerificationFormData>
-                                label="Email address"
+                            <FormField<VerifyEmailFormData>
+                                label="Email Address"
                                 id="email"
-                                name="email"
-                                placeholder="example@gmail.com"
+                                placeholder="Enter your registered email"
                                 type="email"
-                                required
                                 register={register}
                                 error={errors.email?.message}
+                                required={true}
                             />
-                            <FormButton text="Submit" loading={isSubmitting || loading} />
+                            <FormButton text="Submit" loading={isSubmitting} disabled={isSubmitting || !isValid} />
                         </form>
 
                         <p className="mt-6 flex justify-between text-xs md:text-sm/6 text-[var(--textTwo)] px-2">

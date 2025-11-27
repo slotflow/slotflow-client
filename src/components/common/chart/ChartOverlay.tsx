@@ -13,7 +13,7 @@ const ChartOverlay: React.FC<ChartOverlay> = ({
     chartTitle
 }) => {
 
-    const themeMode = useSelector((store: RootState) => store.state.lightTheme);
+    const themeMode = useSelector((store: RootState) => store.app.lightTheme);
     const navigate = useNavigate();
 
     return (

@@ -1,10 +1,10 @@
-import { signin, signout } from "@/utils/apis/auth.api";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AuthState, UserData } from "@/utils/interface/sliceInterface";
-import { SigninResponse } from "@/utils/interface/api/authApiInterface";
+import { resendOtp, signin, signout, signup } from "@/utils/apis/auth.api";
 import { UserUpdateUserInfoResponse } from "@/utils/interface/api/userApiInterface";
 import { userUpdateUserInfo, userUpdateUserProfileImage } from "@/utils/apis/user.api";
 import { ProviderUpdateProviderInfoResponse } from "@/utils/interface/api/providerApiInterface";
+import { ResendOtpResponse, SigninResponse, SignupResponse } from "@/utils/interface/api/authApiInterface";
 import { providerAddProviderAddress, providerAddProviderServiceAvailabilities, providerAddProviderServiceDetails, providerUpdateProviderInfo, providerUpdateProviderProfileImage } from "@/utils/apis/provider.api";
 
 const initialState: AuthState = {
@@ -21,33 +21,72 @@ const authSlice = createSlice({
             state.authUser = action.payload;
         },
         setProfileImage: (state, action: PayloadAction<string>) => {
-            if(state.authUser){
+            if (state.authUser) {
                 state.authUser.profileImage = action.payload;
             }
         },
         updateAuthUserName: (state, action: PayloadAction<string>) => {
-            if(state.authUser) {
+            if (state.authUser) {
                 state.authUser.username = action.payload;
             }
         },
         updateProviderSubscription: (state, action: PayloadAction<string>) => {
-            if(state.authUser) {
+            if (state.authUser) {
                 state.authUser.providerSubscription = action.payload;
             }
         },
         updateGoogleConnect: (state) => {
-            if(state.authUser) {
+            if (state.authUser) {
                 state.authUser.googleConnected = true;
             }
-        }
+        },
     },
     extraReducers: (builder) => {
+        // Sign Up Api
         builder
-            .addCase(signin.pending, () => {})
+            .addCase(signup.pending, (state: AuthState) => {
+                state.authUser = null
+            })
+            .addCase(signup.fulfilled, (state: AuthState, action: PayloadAction<SignupResponse>) => {
+                state.authUser = {
+                    ...state.authUser,
+                    verificationToken: action.payload.authUser.verificationToken,
+                    role: action.payload.authUser.role,
+                };
+            })
+            .addCase(signup.rejected, (state: AuthState) => {
+                state.authUser = null
+            });
+
+        // Sign In Api
+        builder
+            .addCase(signin.pending, () => { })
             .addCase(signin.fulfilled, (state, action: PayloadAction<SigninResponse>) => {
                 state.authUser = action.payload.authUser;
             })
-            .addCase(signin.rejected, () => {});
+            .addCase(signin.rejected, () => { });
+
+        // Resend Otp Ap
+        builder
+            .addCase(resendOtp.pending, () => { })
+            .addCase(resendOtp.fulfilled, (state, action: PayloadAction<ResendOtpResponse>) => {
+                state.authUser = {
+                    ...state.authUser,
+                    verificationToken: action.payload.authUser.verificationToken,
+                    role: action.payload.authUser.role,
+                };
+            })
+            .addCase(resendOtp.rejected, () => { });
+
+        // Sign Out Api
+         builder
+            .addCase(signout.pending, () => { })
+            .addCase(signout.fulfilled, (state) => {
+                state.authUser = null;
+                state.dataUpdating = false;
+                state.profileImageUpdating = false;
+            })
+            .addCase(signout.rejected, () => { });
 
         builder
             .addCase(providerUpdateProviderProfileImage.pending, (state) => {
@@ -55,7 +94,7 @@ const authSlice = createSlice({
             })
             .addCase(providerUpdateProviderProfileImage.fulfilled, (state, action) => {
                 state.profileImageUpdating = false;
-                if(state.authUser){
+                if (state.authUser) {
                     state.authUser.profileImage = action.payload.data;
                 }
             })
@@ -69,7 +108,7 @@ const authSlice = createSlice({
             })
             .addCase(userUpdateUserProfileImage.fulfilled, (state, action) => {
                 state.profileImageUpdating = false;
-                if(state.authUser){
+                if (state.authUser) {
                     state.authUser.profileImage = action.payload.data;
                 }
             })
@@ -83,7 +122,7 @@ const authSlice = createSlice({
             })
             .addCase(providerAddProviderAddress.fulfilled, (state, action) => {
                 state.dataUpdating = false;
-                if(state.authUser){
+                if (state.authUser) {
                     state.authUser.isAddressAdded = action.payload.success;
                 }
             })
@@ -97,7 +136,7 @@ const authSlice = createSlice({
             })
             .addCase(providerAddProviderServiceDetails.fulfilled, (state, action) => {
                 state.dataUpdating = false;
-                if(state.authUser){
+                if (state.authUser) {
                     state.authUser.isServiceDetailsAdded = action.payload.success;
                 }
             })
@@ -111,7 +150,7 @@ const authSlice = createSlice({
             })
             .addCase(providerAddProviderServiceAvailabilities.fulfilled, (state, action) => {
                 state.dataUpdating = false;
-                if(state.authUser){
+                if (state.authUser) {
                     state.authUser.isServiceAvailabilityAdded = action.payload.success;
                 }
             })
@@ -125,7 +164,7 @@ const authSlice = createSlice({
             })
             .addCase(providerUpdateProviderInfo.fulfilled, (state, action: PayloadAction<ProviderUpdateProviderInfoResponse>) => {
                 state.dataUpdating = false;
-                if(state.authUser) {
+                if (state.authUser) {
                     state.authUser.username = action.payload.data.username;
                     state.authUser.phone = action.payload.data.phone;
                 }
@@ -140,7 +179,7 @@ const authSlice = createSlice({
             })
             .addCase(userUpdateUserInfo.fulfilled, (state, action: PayloadAction<UserUpdateUserInfoResponse>) => {
                 state.dataUpdating = false;
-                if(state.authUser) {
+                if (state.authUser) {
                     state.authUser.username = action.payload.data.username;
                     state.authUser.phone = action.payload.data.phone;
                 }
@@ -148,24 +187,15 @@ const authSlice = createSlice({
             .addCase(userUpdateUserInfo.rejected, (state) => {
                 state.dataUpdating = false;
             });
-
-        builder
-            .addCase(signout.pending, () => {})
-            .addCase(signout.fulfilled, (state) => {
-                state.authUser = null;
-                state.dataUpdating = false;
-                state.profileImageUpdating = false;
-            })
-            .addCase(signout.rejected, () => {});
     },
 });
 
-export const { 
-    setAuthUser, 
+export const {
+    setAuthUser,
     setProfileImage,
     updateAuthUserName,
     updateProviderSubscription,
-    updateGoogleConnect
+    updateGoogleConnect,
 } = authSlice.actions;
 
 export default authSlice.reducer;

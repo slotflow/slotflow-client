@@ -33,7 +33,7 @@ const SidebarNew: React.FC<SideBarProps> = ({
   const resetRedux = useResetRedux();
 
   const user: UserData | null = useSelector((store: RootState) => store.auth?.authUser);
-  const themeMode: boolean = useSelector((store: RootState) => store.state.lightTheme);
+  const themeMode: boolean = useSelector((store: RootState) => store.app.lightTheme);
   const basePath = user?.role === "ADMIN" ? "/admin" : user?.role === "PROVIDER" ? "/provider" : "/user";
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const SidebarNew: React.FC<SideBarProps> = ({
     }
   }, [themeMode]);
 
-  if (!user) return;
+  if (!user || !user.role) return;
 
   return (
     <Sidebar collapsible="icon" className="">
@@ -135,7 +135,7 @@ const SidebarNew: React.FC<SideBarProps> = ({
                   <span>Settings</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={() => handleSignoutHelper({ role: user.role, dispatch, resetRedux, navigate })}
+                  onClick={() => handleSignoutHelper({ role: user?.role, dispatch, resetRedux, navigate })}
                 >
                   <span>Sign out</span>
                 </DropdownMenuItem>

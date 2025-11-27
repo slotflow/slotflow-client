@@ -7,17 +7,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { Bounce, ToastContainer } from "react-toastify";
 import { UserData } from "@/utils/interface/sliceInterface";
 import { setAuthUser } from "@/utils/redux/slices/authSlice";
-import { setAuthModal } from "@/utils/redux/slices/stateSlice";
+import { setAuthModal } from "@/utils/redux/slices/appSlice";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import AuthSelectionModal from "@/components/common/landing/AuthSelectionModal";
+import { Role } from "@/utils/interface/commonInterface";
 
 const LandingLayout = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const state = useSelector((state: RootState) => state.state);
-  const themeMode = useSelector((store: RootState) => store.state?.lightTheme);
+  const state = useSelector((state: RootState) => state.app);
+  const themeMode = useSelector((store: RootState) => store.app?.lightTheme);
   const shouldHideFooter = pathNames.some((path) => location.pathname.startsWith(path));
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const LandingLayout = () => {
         email: rawUser.email,
         profileImage: rawUser.profileImage,
         isBlocked: rawUser.isBlocked,
-        role: rawUser.role as "USER" | "PROVIDER",
+        role: rawUser.role as Role.user | Role.provider,
         isLoggedIn: true,
         isAddressAdded: rawUser.addressId ? true : false,
         isServiceDetailsAdded: rawUser.serviceId ? true : false,
@@ -51,8 +52,8 @@ const LandingLayout = () => {
   }, []);
 
   const handleCloseModal = () => {
-          dispatch(setAuthModal(false));
-      };
+    dispatch(setAuthModal(false));
+  };
 
   return (
     <>

@@ -15,7 +15,7 @@ interface DashboardCardOneProps {
 
 const StatsCard: React.FC<DashboardCardOneProps> = ({ title, value, icon: Icon, price, isShow }) => {
 
-  const themeMode = useSelector((store: RootState) => store.state.lightTheme);
+  const themeMode = useSelector((store: RootState) => store.app.lightTheme);
 
   return (
     <Card className='relative'>

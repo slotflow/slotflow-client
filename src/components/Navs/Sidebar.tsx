@@ -10,7 +10,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logos/logo-transparent.png';
 import { UserData } from '@/utils/interface/sliceInterface';
 import { handleSignoutHelper } from '@/utils/helper/signout';
-import { toggleTheme } from '@/utils/redux/slices/stateSlice';
+import { toggleTheme } from '@/utils/redux/slices/appSlice';
 import { AppDispatch, RootState } from '@/utils/redux/appStore';
 import { SideBarProps } from '@/utils/interface/commonInterface';
 import { useResetRedux } from '@/utils/hooks/systemHooks/useResetRedux';
@@ -24,9 +24,9 @@ const Sidebar: React.FC<SideBarProps> = ({
     const navigate = useNavigate();
     const resetRedux = useResetRedux();
 
-    const sidebarOpen: boolean = useSelector((store: RootState) => store.state.sidebarOpen);
-    const user: UserData | null = useSelector((store: RootState) => store.auth?.authUser);
-    const themeMode: boolean = useSelector((store: RootState) => store.state.lightTheme);
+    const sidebarOpen: boolean = useSelector((store: RootState) => store.app.sidebarOpen);
+    const user: Partial<UserData> | null = useSelector((store: RootState) => store.auth?.authUser);
+    const themeMode: boolean = useSelector((store: RootState) => store.app.lightTheme);
 
     const changeTheme = (): void => {
         dispatch(toggleTheme());
@@ -96,9 +96,9 @@ const Sidebar: React.FC<SideBarProps> = ({
                                 locked={isLocked}
                             />
                         );
-                        
+
                     })}
-                    
+
 
                 </ul>
             </div>
@@ -114,7 +114,7 @@ const Sidebar: React.FC<SideBarProps> = ({
                     <SingleTab
                         icon={LogOut}
                         text="Logout"
-                        onClick={() => handleSignoutHelper({ role: user?.role, dispatch, resetRedux, navigate })}
+                        onClick={() => handleSignoutHelper({ role: user?.role!, dispatch, resetRedux, navigate })}
                         sidebarOpen={sidebarOpen}
                     />
                 </ul>

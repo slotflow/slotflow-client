@@ -14,7 +14,7 @@ const FilterRightSideBar: React.FC<FilterRightSideBarProps> = ({ onClose }) => {
 
     const [range, setRange] = useState<number>(500);
     const [slotFlowTrusted, setSlotFlowTrusted] = useState<boolean>(false);
-    const filterSideBarOpen: boolean = useSelector((store: RootState) => store.state.filterSideBarOpen);
+    const filterSideBarOpen: boolean = useSelector((store: RootState) => store.app.filterSideBarOpen);
 
     const handleChangeRange = (value: number[]) => {
         setRange(value[0]);

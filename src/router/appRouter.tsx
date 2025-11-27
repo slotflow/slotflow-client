@@ -2,10 +2,10 @@ import { lazy } from "react";
 import PlanGuard from "./planGuard.tsx";
 import { createBrowserRouter } from "react-router-dom";
 import { ProtectedRoute } from "./protectedRoutes.tsx";
-import IntegrationsPage from "@/pages/common/IntegrationsPage.tsx";
 import SettingsPage from "@/pages/common/SettingsPage.tsx";
-import StripeConfirmPage from "@/pages/common/StripeConfirmPage.tsx";
 import { Role } from "@/utils/interface/commonInterface.ts";
+import IntegrationsPage from "@/pages/common/IntegrationsPage.tsx";
+import StripeConfirmPage from "@/pages/common/StripeConfirmPage.tsx";
 
 const AuthPage = lazy(() => import("@/pages/common/AuthPage.tsx"));
 const AboutPage = lazy(() => import("@/pages/common/AboutPage.tsx"));

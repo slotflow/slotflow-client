@@ -1,60 +1,47 @@
+import FormField from "../FormField";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import GoogleButton from "../GoogleButton";
 import { signup } from "@/utils/apis/auth.api";
-import InputField from "../InputFieldWithLable";
 import { AppDispatch } from "@/utils/redux/appStore";
-import { signupZodSchema } from "@/utils/zod/authZod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormButton, FormHeading } from "../FormSplits";
 import { handleGoogleLogin } from "@/utils/helper/googleLogin";
-import { startTimer } from "@/utils/redux/slices/signFormSlice";
+import { SignupFormData, signupZodSchema } from "@/utils/zod/authZod";
 import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
-import { AuthFormType, SignUpFormData, signUpFormProps } from "@/utils/interface/commonInterface";
+import { AuthFormType, signUpFormProps } from "@/utils/interface/commonInterface";
 
 const SignUpForm: React.FC<signUpFormProps> = ({ role }) => {
-    
+
     const dispatch = useDispatch<AppDispatch>();
     const { goToAuthPage } = useAuthNavigation();
 
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting },
+        formState: { errors, isSubmitting, isValid },
         watch,
-    } = useForm<SignUpFormData>({
+    } = useForm<SignupFormData>({
         resolver: zodResolver(signupZodSchema),
+        mode: "onChange",
         defaultValues: {
             username: "",
             email: "",
             password: "",
             confirmPassword: "",
         },
-        mode: "onChange",
     });
 
-    const onSubmit = async (data: SignUpFormData) => {
-        if (!role) {
-            toast.error("Select your account type.");
-            return;
-        }
-
-        if (data.password !== data.confirmPassword) {
-            toast.error("Password mismatch");
-            return;
-        }
-
+    const onSubmit = async (data: SignupFormData) => {
         try {
             const res = await dispatch(signup({ ...data, role })).unwrap();
-            if (res.success) {
+            if(res.success) {
                 toast.success(res.message);
-                dispatch(startTimer(300));
                 goToAuthPage(role, AuthFormType.VERIFY_OTP);
-            } else toast.error(res.message);
-        } catch(error) {
-            console.log("error : ",error);
-            toast.error("An error occurred during signup.");
+            }
+        } catch (error) {
+            if(import.meta.env.DEV)console.log("An error occurred while sign up ",error);
         }
     };
 
@@ -68,55 +55,51 @@ const SignUpForm: React.FC<signUpFormProps> = ({ role }) => {
                     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                         <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
                             <fieldset disabled={isSubmitting} className="space-y-3">
-                                <InputField<SignUpFormData>
+                                <FormField<SignupFormData>
                                     label="Username"
                                     id="username"
-                                    name="username"
-                                    placeholder="Midhun K Paniker"
+                                    placeholder="Enter username"
                                     type="text"
-                                    required
+                                    required={true}
                                     register={register}
                                     error={errors.username?.message}
                                 />
 
-                                <InputField<SignUpFormData>
-                                    label="Email address"
+                                <FormField<SignupFormData>
+                                    label="Email Address"
                                     id="email"
-                                    name="email"
-                                    placeholder="midhun@gmail.com"
+                                    placeholder="Enter email"
                                     type="email"
-                                    required
+                                    required={true}
                                     register={register}
                                     error={errors.email?.message}
                                 />
 
-                                <InputField<SignUpFormData>
+                                <FormField<SignupFormData>
                                     label="Password"
                                     id="password"
-                                    name="password"
-                                    placeholder="Enter your password"
+                                    placeholder="Enter password"
                                     type="password"
-                                    required
-                                    isPassword
+                                    showTogglePassword
                                     register={register}
                                     error={errors.password?.message}
+                                    required={true}
                                 />
 
-                                <InputField<SignUpFormData>
+                                <FormField<SignupFormData>
                                     label="Confirm Password"
                                     id="confirmPassword"
-                                    name="confirmPassword"
-                                    placeholder="Confirm your password"
+                                    placeholder="Confirm password"
                                     type="password"
-                                    required
-                                    isPassword
+                                    showTogglePassword
                                     register={register}
                                     error={
                                         errors.confirmPassword?.message ??
                                         (watch("confirmPassword") !== passwordValue ? "Passwords do not match" : undefined)
                                     }
+                                    required={true}
                                 />
-                                <FormButton text={"Sign Up"} loading={isSubmitting} />
+                                <FormButton text={"Sign Up"} loading={isSubmitting} disabled={isSubmitting || !isValid} />
                             </fieldset>
                         </form>
 

@@ -7,7 +7,7 @@ import CommonButton from '@/components/common/CommonButton';
 import { AppDispatch, RootState } from '@/utils/redux/appStore';
 import { userSearchServiceProviders } from '@/utils/apis/user.api';
 import DataFetchingError from '@/components/common/DataFetchingError';
-import { toggleFilterSideBar } from '@/utils/redux/slices/stateSlice';
+import { toggleFilterSideBar } from '@/utils/redux/slices/appSlice';
 import UserViewProviderCard from '@/components/user/UserViewProviderCard';
 
 const UserDashboardPage = () => {

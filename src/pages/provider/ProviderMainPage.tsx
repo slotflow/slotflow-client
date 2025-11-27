@@ -15,7 +15,7 @@ import ProviderAddServiceAvailabilityPage from "./ProviderAddServiceAvailability
 
 const ProviderMainPage = () => {
 
-  const sidebarOpen = useSelector((store: RootState) => store.state.sidebarOpen);
+  const sidebarOpen = useSelector((store: RootState) => store.app.sidebarOpen);
   const user = useSelector((store: RootState) => store.auth.authUser);
   const dispatch = useDispatch<AppDispatch>();
   const location = useLocation();

@@ -8,7 +8,6 @@ import { clearUserSlice } from "../redux/slices/userSlice";
 import { clearChatSlice } from "../redux/slices/chatSlice";
 import { clearAdminSlice } from "../redux/slices/adminSlice";
 import { clearProviderSlice } from "../redux/slices/providerSlice";
-import { clearSignFormSlice } from "../redux/slices/signFormSlice";
 
 export const handleSignoutHelper = async ({
   role,
@@ -27,7 +26,6 @@ export const handleSignoutHelper = async ({
       toast.success(res.message);
       dispatch(clearChatSlice());
       dispatch(clearProviderSlice());
-      dispatch(clearSignFormSlice());
       dispatch(clearAdminSlice());
       dispatch(clearUserSlice());
       queryClient.clear();

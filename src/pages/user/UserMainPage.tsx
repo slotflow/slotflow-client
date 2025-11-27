@@ -8,7 +8,7 @@ import LoadingFallback from "../common/LoadingFallback";
 import avatar from '../../assets/defaultImages/avatar.png';
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import FilterRightSideBar from "@/components/Navs/FilterRightSideBar";
-import { toggleFilterSideBar } from "@/utils/redux/slices/stateSlice";
+import { toggleFilterSideBar } from "@/utils/redux/slices/appSlice";
 import ReviewForm from "@/components/user/ReviewForm";
 
 const UserMainPage = () => {
@@ -16,7 +16,7 @@ const UserMainPage = () => {
   const location = useLocation();
   const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((store: RootState) => store.auth.authUser);
-  const { sidebarOpen } = useSelector((store: RootState) => store.state);
+  const { sidebarOpen } = useSelector((store: RootState) => store.app);
   const { isReviewAddFormOpen } = useSelector((store: RootState) => store.user);
 
   return (

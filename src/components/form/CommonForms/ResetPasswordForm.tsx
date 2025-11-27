@@ -1,14 +1,15 @@
+import FormField from "../FormField";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import InputField from "../InputFieldWithLable";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePassword } from "@/utils/apis/auth.api";
 import { FormButton, FormHeading } from "../FormSplits";
-import { resetPasswordZodSchema } from "@/utils/zod/authZod";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
+import { setForgotPassword } from "@/utils/redux/slices/appSlice";
 import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
-import { AuthFormType, PasswordResetFormDataProps, ResetPasswordFormProps } from "@/utils/interface/commonInterface";
+import { ResetPasswordFormData, resetPasswordZodSchema } from "@/utils/zod/authZod";
+import { AuthFormType, ResetPasswordFormProps } from "@/utils/interface/commonInterface";
 
 const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ role }) => {
 
@@ -21,17 +22,17 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ role }) => {
         register,
         handleSubmit,
         watch,
-        formState: { errors, isSubmitting },
-    } = useForm<PasswordResetFormDataProps>({
+        formState: { errors, isSubmitting, isValid },
+    } = useForm<ResetPasswordFormData>({
         resolver: zodResolver(resetPasswordZodSchema),
+        mode: "onChange",
         defaultValues: {
             password: "",
             confirmPassword: "",
         },
-        mode: "onChange",
     });
 
-    const onSubmit = async (data: PasswordResetFormDataProps) => {
+    const onSubmit = async (data: ResetPasswordFormData) => {
         if (!role || !verificationToken) {
             toast.error("Something went wrong. Please try again.");
             return;
@@ -47,11 +48,10 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ role }) => {
             if (res.success) {
                 toast.success(res.message);
                 goToAuthPage(role, AuthFormType.LOGIN);
-            } else {
-                toast.error(res.message);
+                dispatch(setForgotPassword(false));
             }
-        } catch {
-            toast.error("An error occurred while updating password.");
+        } catch (error){
+            if(import.meta.env.DEV)console.log("An error occurred while updating password.",error);
         }
     };
 
@@ -65,25 +65,23 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ role }) => {
 
                     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                         <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-                            <InputField
+                            <FormField<ResetPasswordFormData>
                                 label="Password"
                                 id="password"
-                                name="password"
-                                placeholder="Enter your password"
+                                placeholder="Enter new password"
                                 type="password"
-                                required
-                                isPassword
+                                required={true}
+                                showTogglePassword
                                 register={register}
                                 error={errors.password?.message}
                             />
-                            <InputField
+                            <FormField<ResetPasswordFormData>
                                 label="Confirm Password"
                                 id="confirmPassword"
-                                name="confirmPassword"
-                                placeholder="Confirm your password"
+                                placeholder="Confirm new password"
                                 type="password"
-                                required
-                                isPassword
+                                required={true}
+                                showTogglePassword
                                 register={register}
                                 error={
                                     errors.confirmPassword?.message ??
@@ -91,7 +89,7 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ role }) => {
                                 }
                             />
 
-                            <FormButton text="Update" loading={isSubmitting} />
+                            <FormButton text="Update" loading={isSubmitting} disabled={isSubmitting || !isValid} />
                         </form>
 
                         <p className="mt-6 flex justify-between text-xs md:text-sm/6 text-[var(--textTwo)] px-2">

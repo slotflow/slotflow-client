@@ -1,31 +1,33 @@
+import FormField from "../FormField";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import GoogleButton from "../GoogleButton";
 import { useDispatch, } from "react-redux";
 import { signin } from "@/utils/apis/auth.api";
 import { useNavigate } from "react-router-dom";
-import InputField from "../InputFieldWithLable";
 import { Button } from "@/components/ui/button";
-import { LoginZodSchema } from '@/utils/zod/authZod';
-import { zodResolver } from "@hookform/resolvers/zod";
 import { AppDispatch } from "@/utils/redux/appStore";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { FormButton, FormHeading } from "../FormSplits";
 import { handleGoogleLogin } from "@/utils/helper/googleLogin";
+import { LoginFormData, LoginZodSchema } from '@/utils/zod/authZod';
 import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
-import { AuthFormType, LoginFormData, LoginFormProps } from "@/utils/interface/commonInterface";
+import { AuthFormType, LoginFormProps } from "@/utils/interface/commonInterface";
+import { setForgotPassword } from "@/utils/redux/slices/appSlice";
 
 const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
 
-    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
     const { goToAuthPage } = useAuthNavigation();
 
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting },
+        formState: { errors, isSubmitting, isValid },
     } = useForm<LoginFormData>({
         resolver: zodResolver(LoginZodSchema),
+        mode: "onChange",
         defaultValues: {
             email: "",
             password: "",
@@ -49,8 +51,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
                 toast.success(res.message);
                 handleNavigation(res.authUser.role);
             } else toast.error(res.message);
-        } catch {
-            toast.error("An error occurred during login");
+        } catch (error) {
+            if (import.meta.env.DEV) console.log("An error occurred during login ", error);
         }
     };
 
@@ -62,39 +64,39 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
                     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                         <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
                             <fieldset disabled={isSubmitting} className="space-y-3">
-                                <InputField<LoginFormData>
-                                    label="Email address"
+                                <FormField<LoginFormData>
+                                    label="Email Address"
                                     id="email"
-                                    name="email"
-                                    placeholder="example@gmail.com"
+                                    placeholder="Enter email address"
                                     type="email"
-                                    required
                                     register={register}
                                     error={errors.email?.message}
+                                    required={true}
                                 />
 
-                                <InputField<LoginFormData>
+                                <FormField<LoginFormData>
                                     label="Password"
                                     id="password"
-                                    name="password"
-                                    placeholder="Enter your password"
+                                    placeholder="Enter password"
                                     type="password"
-                                    required
-                                    isPassword
+                                    showTogglePassword
                                     register={register}
                                     error={errors.password?.message}
+                                    required={true}
                                 />
-
 
                                 <Button
                                     variant="link"
                                     className="px-0 block text-xs md:text-sm font-medium text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
-                                    onClick={() => goToAuthPage(role, AuthFormType.VERIFY_EMAIL)}
+                                    onClick={() => {
+                                        dispatch(setForgotPassword(true));
+                                        goToAuthPage(role, AuthFormType.VERIFY_EMAIL)
+                                    }}
                                 >
                                     Forgot Password ?
                                 </Button>
 
-                                <FormButton text="Sign In" loading={isSubmitting} />
+                                <FormButton text="Sign In" loading={isSubmitting} disabled={isSubmitting || !isValid} />
                             </fieldset>
                         </form>
 

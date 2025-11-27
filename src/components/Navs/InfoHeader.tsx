@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { AppDispatch } from '@/utils/redux/appStore';
 import avatar from '../../assets/defaultImages/avatar.png';
 import { Circle, CircleOff, PanelLeft } from 'lucide-react';
-import { toggleSidebar } from '@/utils/redux/slices/stateSlice';
+import { toggleSidebar } from '@/utils/redux/slices/appSlice';
 
 interface InfoHeaderProps {
     profileImage?: string;

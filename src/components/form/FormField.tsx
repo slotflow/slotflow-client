@@ -1,35 +1,11 @@
-import {
-  type Path,
-  type FieldValues,
-  type UseFormRegister,
-  type RegisterOptions,
-} from "react-hook-form";
 import { useState } from "react";
 import { Textarea } from "../ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, Info } from "lucide-react";
+import { type FieldValues } from "react-hook-form";
 import { CustomValidator } from "@/utils/validator";
-
-interface FormFieldProps<T extends FieldValues> {
-  id: Path<T>;
-  label: string;
-  type?: string;
-  placeholder?: string;
-  autoComplete?: string;
-  error?: string;
-  register: UseFormRegister<T>;
-  registerOptions?: RegisterOptions<T, Path<T>>;
-  showTogglePassword?: boolean;
-  onFileSelect?: (url: string) => void;
-  rows?: number;
-  defaultValue?: string | number | boolean | string[] | FileList;
-  readOnly?: boolean;
-  required?: boolean;
-  accept?: string;
-  labelInfo?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
+import { FormFieldProps } from "@/utils/interface/componentInterface/commonComponentInterface";
 
 const FormField = <T extends FieldValues>({
   id,
@@ -110,7 +86,7 @@ const FormField = <T extends FieldValues>({
           }}
           className={`${error ? "border-destructive" : ""}`}
         />
-      ) : type === "text" || type === "password" || type === "number" ? (
+      ) : type === "text" || type === "password" || type === "number" || type === "email" ? (
         <div className="relative">
           <Input
             id={id}

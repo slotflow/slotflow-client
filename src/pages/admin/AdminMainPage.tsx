@@ -10,7 +10,7 @@ import avatar from '../../assets/defaultImages/avatar.png';
 
 const AdminMainPage = () => {
 
-  const sidebarOpen: boolean = useSelector((store: RootState) => store.state.sidebarOpen);
+  const sidebarOpen: boolean = useSelector((store: RootState) => store.app.sidebarOpen);
 
   return (
     <div className="flex h-screen bg-[var(--background)] transition-all duration-300">
