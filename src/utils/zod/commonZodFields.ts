@@ -1,6 +1,6 @@
 import z from "zod";
 import { Role } from "../interface/commonInterface";
-import { addressLineRegex, cityRegex, countryRegex, districtRegex, phoneRegex, pincodeRegex, placeRegex, stateRegex } from "./regex";
+import { addressLineRegex, cityRegex, countryRegex, districtRegex, landMarkRegex, phoneRegex, pincodeRegex, placeRegex, stateRegex } from "./regex";
 
 export const roleField = z.enum([Role.user, Role.provider, Role.admin] as const, {
     required_error: "Role is required",
@@ -13,7 +13,9 @@ export const limitedRoleField = z.enum([Role.user, Role.provider], {
 });
 
 // Address Zod Schema (Final)
-export const AddAddressZodSchema = z.object({
+export const CreateAddressZodSchema = z.object({
+  _id: z.string(),
+
   addressLine: z
     .string()
     .min(10, "Address line must be at least 10 characters")
@@ -21,6 +23,15 @@ export const AddAddressZodSchema = z.object({
     .regex(
       addressLineRegex,
       "Address line must be 10–150 characters long and can include letters, numbers, spaces, and . , # -"
+    ),
+
+  landMark: z
+    .string()
+    .min(5, "Landmark line must be at least 5 characters")
+    .max(150, "Landmark line cannot exceed 150 characters")
+    .regex(
+      landMarkRegex,
+      "Landmark must be 5–150 characters long and can include letters, numbers, spaces, and . , # -"
     ),
 
   phone: z
@@ -68,12 +79,12 @@ export const AddAddressZodSchema = z.object({
     .max(50, "Country cannot exceed 50 characters")
     .regex(countryRegex, "Country must only contain letters and spaces"),
 
-  googleMapLink: z
-    .string({
-      required_error: "Google Map link is required",
-      invalid_type_error: "Google Map link must be a string",
-    })
-    .url("Invalid Google Map link"),
+   location: z.object({
+    type: z.literal("Point"),
+    coordinates: z
+      .tuple([z.number(), z.number()])
+      .refine((arr) => arr.length === 2, "Coordinates must be [lon, lat]"),
+  }),
 });
 
-export type AddAddressForm = z.infer<typeof AddAddressZodSchema>;
+export type CreateAddressFormData = z.infer<typeof CreateAddressZodSchema>;

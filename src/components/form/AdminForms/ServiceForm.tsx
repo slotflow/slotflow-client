@@ -1,5 +1,4 @@
 import FormField from "../FormField";
-import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormButton, FormHeading } from "../FormSplits";
@@ -27,10 +26,10 @@ const ServiceAddingForm: React.FC = () => {
 
   const onSubmit = async (data: AdminCreateServiceForm) => {
     try {
-      handleAdminServiceAdding({ serviceName: data.serviceName }, () => { });
+      handleAdminServiceAdding({ serviceName: data.serviceName });
       reset();
-    } catch {
-      toast.error("Failed to add service.");
+    } catch (error) {
+      if (import.meta.env.DEV) console.log("An error occured while saving Service : ", error);
     }
   };
 

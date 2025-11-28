@@ -4,10 +4,12 @@ import {
   type UseFormRegister,
   type RegisterOptions,
 } from "react-hook-form";
+import { FormEvent } from "react";
 import { LucideIcon } from "lucide-react";
 import { ChartConfig } from "@/components/ui/chart";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Provider } from "../entityInterface/providerInterface";
+import { CreateAddressFormData } from "@/utils/zod/commonZodFields";
 import { BaseChartData, ChatComponentProps, TimeRange } from "../commonInterface";
 import { AdminFetchProviderAvailabilityResponse, AdminFetchProviderServiceResponse } from "../api/adminProviderApiInterface";
 import { UpdateUserProfileImageResponse, UserFetchProviderAvailabilityResponse, UserFetchProviderServiceResponse } from "../api/userApiInterface";
@@ -154,4 +156,15 @@ export interface FormFieldProps<T extends FieldValues> {
   accept?: string;
   labelInfo?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+
+// **** Address Form Props Interface
+export interface AddressFormProps {
+    formClassNames: string;
+    heading: string;
+    headingSize: string;
+    buttonText: string;
+    onSubmit: (e: FormEvent<HTMLFormElement>, data: CreateAddressFormData) => void;
+    setHasErrors: (hasError: boolean) => void;
 }

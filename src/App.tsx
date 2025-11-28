@@ -9,6 +9,8 @@ import { PersistGate } from "redux-persist/integration/react";
 import { appStore, persistAppStore } from './utils/redux/appStore';
 import AosAnimation from './components/common/AosAnimation';
 
+import "leaflet/dist/leaflet.css";
+
 function App() {
 
   return (

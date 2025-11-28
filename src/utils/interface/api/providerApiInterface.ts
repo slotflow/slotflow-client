@@ -9,10 +9,10 @@ import { Availability, AvailabilityForResponse } from "../entityInterface/servic
 import { Booking } from "../entityInterface/bookingInterface";
 
 // **** Used as the request interface for adding address api
-export type ProviderAddProviderAddressRequest = Pick<Address, "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "googleMapLink">;
+export type ProviderAddProviderAddressRequest = Pick<Address, "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country">;
 
 // **** Used as the response type of provider fetch address api
-export type ProviderFetchAddressResponse = Pick<Address, "_id" | "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "googleMapLink" | "updatedAt">;
+export type ProviderFetchAddressResponse = Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "updatedAt">;
 
 
 // **** Used as the response type of fetch all services api

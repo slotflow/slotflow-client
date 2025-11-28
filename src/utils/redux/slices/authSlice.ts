@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ApiBaseResponse } from "@/utils/interface/commonInterface";
 import { AuthState, UserData } from "@/utils/interface/sliceInterface";
 import { resendOtp, signin, signout, signup } from "@/utils/apis/auth.api";
 import { UserUpdateUserInfoResponse } from "@/utils/interface/api/userApiInterface";
@@ -79,7 +80,7 @@ const authSlice = createSlice({
             .addCase(resendOtp.rejected, () => { });
 
         // Sign Out Api
-         builder
+        builder
             .addCase(signout.pending, () => { })
             .addCase(signout.fulfilled, (state) => {
                 state.authUser = null;
@@ -116,11 +117,15 @@ const authSlice = createSlice({
                 state.profileImageUpdating = false;
             });
 
+        // Provider address saving api
         builder
             .addCase(providerAddProviderAddress.pending, (state) => {
                 state.dataUpdating = true;
+                if (state.authUser) {
+                    state.authUser.isAddressAdded = false;
+                }
             })
-            .addCase(providerAddProviderAddress.fulfilled, (state, action) => {
+            .addCase(providerAddProviderAddress.fulfilled, (state, action: PayloadAction<ApiBaseResponse>) => {
                 state.dataUpdating = false;
                 if (state.authUser) {
                     state.authUser.isAddressAdded = action.payload.success;
@@ -128,6 +133,9 @@ const authSlice = createSlice({
             })
             .addCase(providerAddProviderAddress.rejected, (state) => {
                 state.dataUpdating = false;
+                if (state.authUser) {
+                    state.authUser.isAddressAdded = false;
+                }
             });
 
         builder

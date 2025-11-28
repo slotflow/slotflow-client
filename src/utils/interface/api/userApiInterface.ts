@@ -26,15 +26,15 @@ export interface UserUpdateUserInfoResponse extends ApiBaseResponse {
 
 
 // **** Used as the request interface of the user add address api
-export type AddUserAddressRequest = Pick<Address, "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "googleMapLink">;
+export type AddUserAddressRequest = Pick<Address, "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country">;
 export interface UserAddUserAddressResponse extends ApiBaseResponse {
-  data: Pick<Address, "_id" | "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "googleMapLink" | "updatedAt">;
+  data: Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "updatedAt">;
 }
 
 
 
 // **** Used as the response type of the user fetching api
-export type UserFetchUserAddressResponse = Pick<Address, "_id" | "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "googleMapLink">;
+export type UserFetchUserAddressResponse = Pick<Address, "_id" | "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country">;
 
 
 // **** Used as the response type of the user fetch all services for the service selecting page fetching api
@@ -64,7 +64,7 @@ export type UserFetchProviderProfileDetailsResponse = Pick<Provider, "_id" | "us
 
 
 // **** Used as the response type of the user fetching service providers address fetching api
-export type UserFetchProviderAddressResponse = Pick<Address, "userId" | "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "googleMapLink">;
+export type UserFetchProviderAddressResponse = Pick<Address, "userId" | "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country">;
 
 
 // **** Used as the response interface of the user fetching service providers service details fetching api

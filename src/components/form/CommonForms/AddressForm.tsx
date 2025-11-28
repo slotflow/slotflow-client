@@ -1,28 +1,29 @@
-import { Button } from '../ui/button';
+import FormField from '../FormField';
+import { Button } from '../../ui/button';
+import React, { useEffect } from "react";
 import { useSelector } from 'react-redux';
-import NotificationBox from './NotificationBox';
-import { PhoneInput } from '../form/phone-input';
+import { PhoneInput } from '../phone-input';
 import { ChevronRight, Info } from 'lucide-react';
 import { RootState } from '@/utils/redux/appStore';
-import React, { FormEvent, useEffect } from "react";
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from "react-hook-form";
 import { useQueryClient } from '@tanstack/react-query';
-import InputField from '@/components/form/InputFieldWithLable';
-import { Address } from '@/utils/interface/entityInterface/addressInterface';
+import NotificationBox from '../../common/NotificationBox';
+import { CountryDropdown } from '../../ui/country-dropdown';
+import LocationPicker from '@/components/common/LocationPicker';
+import { CreateAddressFormData, CreateAddressZodSchema } from '@/utils/zod/commonZodFields';
+import { AddressFormProps } from '@/utils/interface/componentInterface/commonComponentInterface';
 import { addAddressGoogleMapLinkInfo, addAddressGoogleMapLinkInfoHeading } from '@/utils/constants';
+import { countries } from 'country-data-list';
 
-export type AddressFormProps = Pick<Address, "_id" | "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "googleMapLink">
-
-export interface AddAddressProps {
-    formClassNames: string;
-    heading: string;
-    headingSize: string;
-    buttonText: string;
-    onSubmit: (e: FormEvent<HTMLFormElement>, formData: AddressFormProps) => void;
-    setHasErrors: (hasError: boolean) => void;
-}
-
-const AddAddressForm: React.FC<AddAddressProps> = ({ formClassNames, heading, headingSize, buttonText, onSubmit, setHasErrors }) => {
+const AddressForm: React.FC<AddressFormProps> = ({
+    formClassNames,
+    heading,
+    headingSize,
+    buttonText,
+    onSubmit,
+    setHasErrors
+}) => {
 
     const queryClient = useQueryClient();
     const { dataUpdating } = useSelector((store: RootState) => store.auth);
@@ -32,11 +33,14 @@ const AddAddressForm: React.FC<AddAddressProps> = ({ formClassNames, heading, he
         handleSubmit,
         control,
         reset,
+        setValue,
         formState: { errors, isSubmitting, isValid }
-    } = useForm<AddressFormProps>({
+    } = useForm<CreateAddressFormData>({
+        resolver: zodResolver(CreateAddressZodSchema),
         defaultValues: {
             _id: "",
             addressLine: "",
+            landMark: "",
             phone: "",
             place: "",
             city: "",
@@ -44,17 +48,40 @@ const AddAddressForm: React.FC<AddAddressProps> = ({ formClassNames, heading, he
             pincode: "",
             state: "",
             country: "",
-            googleMapLink: "",
+            location: {
+                type: "Point",
+                coordinates: [0, 0],
+            },
         }
     });
 
+    const handleLocationSelect = (location: any) => {
+        console.log("location : ", location);
+        setValue("location", {
+            type: "Point",
+            coordinates: [location.lon, location.lat],
+        });
+        const countryObj = countries.all.find(
+            c => c.alpha2.toLowerCase() === location.address.country_code?.toLowerCase()
+        );
+
+        if (countryObj) {
+            setValue("country", countryObj.alpha3);
+        }
+        setValue("state", location?.address?.state)
+        setValue("district", location?.address?.state_district);
+        setValue("pincode", location?.address?.postcode);
+    };
+
+
     useEffect(() => {
-        const cachedData = queryClient.getQueryData<AddressFormProps>(["userAddress"]);
+        const cachedData = queryClient.getQueryData<CreateAddressFormData>(["userAddress"]);
         if (cachedData) reset(cachedData);
-        console.log("cachedData : ",cachedData)
     }, [queryClient, reset]);
 
-    const submitHandler = (data: AddressFormProps) => {
+    const submitHandler = (data: CreateAddressFormData) => {
+        console.log("data : ", data);
+        return;
         onSubmit({ preventDefault: () => { } } as React.FormEvent<HTMLFormElement>, data);
     };
 
@@ -64,11 +91,20 @@ const AddAddressForm: React.FC<AddAddressProps> = ({ formClassNames, heading, he
             <div className="flex flex-col md:flex-row gap-4 md:gap-6 w-full">
 
                 <div className="flex-1 space-y-4 md:space-y-6 px-6 pt-6 md:p-6">
-                    <InputField
+                    <FormField<CreateAddressFormData>
                         label="Address Line"
                         id="addressLine"
-                        name="addressLine"
-                        placeholder="Address"
+                        placeholder="Enter address line"
+                        type="text"
+                        required
+                        register={register}
+                        error={errors.addressLine?.message}
+                    />
+
+                    <FormField<CreateAddressFormData>
+                        label="Landmark"
+                        id="landMark"
+                        placeholder="Enter landmark"
                         type="text"
                         required
                         register={register}
@@ -82,7 +118,7 @@ const AddAddressForm: React.FC<AddAddressProps> = ({ formClassNames, heading, he
                         render={({ field }) => (
                             <div className="space-y-2">
                                 <label className="block text-xs md:text-sm font-medium text-[var(--textTwo)] hover:text-[var(--textTwoHover)]">
-                                    Phone
+                                    Phone {<span className="mx-1 text-red-500">*</span>}
                                 </label>
                                 <PhoneInput
                                     value={field.value}
@@ -100,79 +136,83 @@ const AddAddressForm: React.FC<AddAddressProps> = ({ formClassNames, heading, he
                         )}
                     />
 
-                    <InputField
+                    <FormField<CreateAddressFormData>
                         label="Place"
                         id="place"
-                        name="place"
-                        placeholder="Place"
+                        placeholder="Enter place"
                         type="text"
                         required
                         register={register}
                         error={errors.place?.message}
                     />
-                    <InputField
+                    <FormField<CreateAddressFormData>
                         label="City"
                         id="city"
-                        name="city"
-                        placeholder="City"
+                        placeholder="Enter city"
                         type="text"
                         required
                         register={register}
                         error={errors.city?.message}
                     />
-                    <InputField
+                    <FormField<CreateAddressFormData>
                         label="District"
                         id="district"
-                        name="district"
-                        placeholder="District"
+                        placeholder="Enter district"
                         type="text"
                         required
                         register={register}
                         error={errors.district?.message}
                     />
-                    <InputField
+                    <FormField<CreateAddressFormData>
                         label="Pincode"
                         id="pincode"
-                        name="pincode"
                         placeholder="000000"
                         type="text"
                         required
                         register={register}
                         error={errors.pincode?.message}
                     />
-                    <InputField
+                    <FormField<CreateAddressFormData>
                         label="State"
                         id="state"
-                        name="state"
-                        placeholder="State"
+                        placeholder="Enter state"
                         type="text"
                         required
                         register={register}
                         error={errors.state?.message}
                     />
-                    <InputField
-                        label="Country"
-                        id="country"
+
+                    <Controller
                         name="country"
-                        placeholder="Country"
-                        type="text"
-                        required
-                        register={register}
-                        error={errors.country?.message}
+                        control={control}
+                        rules={{ required: "Country is required" }}
+                        render={({ field }) => (
+                            <div className="flex flex-col space-y-2">
+                                <label className="text-sm font-medium">
+                                    Country {<span className="mx-1 text-red-500">*</span>}
+                                </label>
+                                <CountryDropdown
+                                    placeholder="Select Country"
+                                    defaultValue={field.value || "IN"}
+                                    onChange={(country) => {
+                                        field.onChange(country.alpha3);
+                                    }}
+                                />
+                                {errors.country && (
+                                    <span className="text-xs text-red-500">
+                                        {errors.country.message}
+                                    </span>
+                                )}
+                            </div>
+                        )}
                     />
                 </div>
 
                 <div className="flex-1 space-y-4 md:space-y-6 px-6 md:px-0 md:p-6">
-                    <InputField
-                        label="Google Map Link"
-                        id="googleMapLink"
-                        name="googleMapLink"
-                        placeholder="https://googlemap"
-                        type="text"
-                        required
-                        register={register}
-                        error={errors.googleMapLink?.message}
-                    />
+                    <label className="text-sm font-medium">
+                        Select Location{<span className="mx-1 text-red-500">*</span>}
+                    </label>
+                    <LocationPicker onLocationSelect={handleLocationSelect} />
                     <NotificationBox
                         icon={Info}
                         heading={addAddressGoogleMapLinkInfoHeading}
@@ -186,7 +226,7 @@ const AddAddressForm: React.FC<AddAddressProps> = ({ formClassNames, heading, he
                 <Button
                     type="submit"
                     variant="outline"
-                    className="w-10/12 md:w-2/12 text-xs md:text-sm cursor-pointer hover:bg-[var(--mainColor)] hover:text-white border-[var(--mainColor)] flex items-center gap-2"
+                    className="text-xs md:text-sm cursor-pointer hover:bg-[var(--mainColor)] hover:text-white border-[var(--mainColor)] flex items-center gap-2"
                     disabled={!isValid || isSubmitting || dataUpdating}
                 >
                     {dataUpdating ? "Loading" : buttonText} <ChevronRight />
@@ -196,4 +236,4 @@ const AddAddressForm: React.FC<AddAddressProps> = ({ formClassNames, heading, he
     );
 };
 
-export default AddAddressForm;
+export default AddressForm;

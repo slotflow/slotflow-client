@@ -3,6 +3,7 @@ export interface Address {
     _id: string;
     userId: string;
     addressLine: string;
+    landMark: string
     phone: string;
     place: string;
     city: string;
@@ -10,7 +11,10 @@ export interface Address {
     pincode: string;
     state: string;
     country: string;
-    googleMapLink: string;
+    location: {
+        type: "Point",
+        coordinates: [lon: number, lat: number]
+    },
     createdAt: string;
     updatedAt: string;
 }

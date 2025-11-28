@@ -1,5 +1,6 @@
 import { User } from "../entityInterface/userInterface";
 import { Plan } from "../entityInterface/planInterface";
+import { Review } from "../entityInterface/reviewInterface";
 import { Payment } from "../entityInterface/paymentInterface";
 import { Booking } from "../entityInterface/bookingInterface";
 import { Address } from "../entityInterface/addressInterface";
@@ -7,7 +8,6 @@ import { Provider } from "../entityInterface/providerInterface";
 import { Subscription } from "../entityInterface/subscriptionInterface";
 import { ApiBaseResponse, FetchFunctionParams, Role } from "../commonInterface";
 import { Availability } from "../entityInterface/serviceAvailabilityInterface";
-import { Review } from "../entityInterface/reviewInterface";
 
 // **** Used as the response type of fetch provider subscriptions for admin side and provider side
 export type FetchProviderSubscriptionsResponse = Pick<Subscription, "_id" | "startDate" | "endDate" | "subscriptionStatus"> & Pick<Plan, "planName">;
@@ -33,9 +33,9 @@ export type FetchOnlineBookingsForUserResponse = Pick<Booking, "_id" | "appointm
 
 
 // **** AddressUpdating request type and response interface used by user and provider
-export type UpdateAddressRequest = Pick<Address, "_id" | "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "googleMapLink">;
+export type UpdateAddressRequest = Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country">;
 export interface UpdateAddressResponse extends ApiBaseResponse {
-  data: Pick<Address, "_id" | "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "googleMapLink" | "updatedAt">;
+  data: Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "updatedAt">;
 }
 
 
@@ -80,7 +80,7 @@ export interface FetchReviewsResponse extends Pick<Review, "_id" | "createdAt" |
 
 
 // **** Used as the response type of the admin fetch provider or user address api
-export type AdminFetchddressResponse = Pick<Address, "userId" | "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "googleMapLink">;
+export type AdminFetchddressResponse = Pick<Address, "userId" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country">;
 
 
 // **** Used as the response type of the booking details fetching

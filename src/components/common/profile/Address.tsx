@@ -6,10 +6,11 @@ import { RootState } from "@/utils/redux/appStore";
 import { useDispatch, useSelector } from "react-redux";
 import { useQueryClient } from "@tanstack/react-query";
 import { AppDispatch } from "recharts/types/state/store";
+import AddressForm from "@/components/form/CommonForms/AddressForm";
 import { Edit, MapPinHouse, Plus, X } from 'lucide-react';
 import { setAuthUser } from "@/utils/redux/slices/authSlice";
+import { CreateAddressFormData } from '@/utils/zod/commonZodFields';
 import AddressListing from "@/components/common/profile/AddressListing";
-import AddAddressForm, { AddressFormProps } from "@/components/common/AddAddress";
 import { UpdateAddressResponse } from '@/utils/interface/api/commonApiInterface';
 import { UserAddUserAddressResponse } from '@/utils/interface/api/userApiInterface';
 import { userAddUserAddress, userFetchUserAddress, userUpdateUserAddress } from "@/utils/apis/user.api";
@@ -25,7 +26,7 @@ const Address: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
 
-  const handleAAddAddress = async (e: FormEvent<HTMLFormElement>, formData: AddressFormProps) => {
+  const handleAAddAddress = async (e: FormEvent<HTMLFormElement>, data: CreateAddressFormData) => {
 
     e.preventDefault();
     if (hasErrors) {
@@ -38,12 +39,12 @@ const Address: React.FC = () => {
 
       if (authUser?.role === "USER") {
         if (isUpdating) {
-          res = await userUpdateUserAddress(formData);
+          res = await userUpdateUserAddress(data);
         } else {
-          res = await userAddUserAddress(formData);
+          res = await userAddUserAddress(data);
         }
       } else if (authUser?.role === "PROVIDER") {
-        res = await providerUpdateProviderAddress(formData);
+        res = await providerUpdateProviderAddress(data);
       } else {
         throw new Error("Unknown role");
       }
@@ -92,7 +93,7 @@ const Address: React.FC = () => {
       </div>
 
       {addAddress ? (
-        <AddAddressForm
+        <AddressForm
           onSubmit={handleAAddAddress}
           formClassNames={"my-4 border rounded-lg py-6"}
           headingSize={"xs:text-md md:text-xl"}

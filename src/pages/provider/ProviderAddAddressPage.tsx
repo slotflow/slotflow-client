@@ -3,32 +3,29 @@ import { useDispatch } from "react-redux";
 import { FormEvent, useState } from "react";
 import { AppDispatch } from "@/utils/redux/appStore";
 import RightSideBox from "@/components/provider/SideBox";
+import AddressForm from "@/components/form/CommonForms/AddressForm";
+import { CreateAddressFormData } from "@/utils/zod/commonZodFields";
 import { providerAddProviderAddress } from "@/utils/apis/provider.api";
-import AddAddressForm, { AddressFormProps } from "@/components/common/AddAddress";
 
 const ProviderAddAddressPage = () => {
 
     const dispatch = useDispatch<AppDispatch>()
     const [hasErrors, setHasErrors] = useState(false);
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>, formData: AddressFormProps) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>, data: CreateAddressFormData) => {
         e.preventDefault();
-        if (hasErrors) {
-            toast.error("Please fix the form errors.");
-            return;
+        try {
+            if (hasErrors) {
+                toast.error("Please fix the form errors.");
+                return;
+            }
+            const res = await dispatch(providerAddProviderAddress(data)).unwrap();
+            if (res.success) {
+                toast.success(res.message)
+            }
+        } catch (error) {
+            if (import.meta.env.DEV) console.log("Failed to Save Address");
         }
-        await dispatch(providerAddProviderAddress(formData))
-            .unwrap()
-            .then((res) => {
-                if (res.success) {
-                    toast.success(res.message);
-                } else {
-                    toast.error(res.message);
-                }
-            })
-            .catch((error) => {
-                toast.error(error.response.data.message);
-            })
     }
 
     return (
@@ -37,9 +34,9 @@ const ProviderAddAddressPage = () => {
                 props={{ pageNumber: 1 }}
             />
             <div className="w-full md:w-8/12 md:px-10">
-                <AddAddressForm
+                <AddressForm
                     onSubmit={handleSubmit}
-                    formClassNames={"md:mt-10 px-4 md:px-12"}
+                    formClassNames={"md:mt-4 px-4 md:px-12"}
                     headingSize={"xs:text-md md:text-xl lg:text-2xl"}
                     heading={"Address Form"}
                     buttonText={"Next"}

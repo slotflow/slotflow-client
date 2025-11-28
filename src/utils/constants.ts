@@ -1047,10 +1047,11 @@ export const pageDescriptions: { [key: number]: string } = {
   4: 'Our team is reviewing your service registration request. You will be notified via email once your request is approved. Thank you for your patience..',
 };
 
-export const addAddressGoogleMapLinkInfoHeading: string = "Google Maps Selection Unavailable";
-export const addAddressGoogleMapLinkInfo: string = `Currently, we don’t support selecting your location directly from Google Maps.  
-Please open Google Maps, click on "Share" → "Embed a map", copy the iframe **src** URL,  
-and paste it in the field below. If your location is marked on Google Maps, it will be more helpful for offline services. Give it a try on Google Maps!`;
+export const addAddressGoogleMapLinkInfoHeading: string = "Select Your Exact Location";
+export const addAddressGoogleMapLinkInfo: string = `Use the map to select your exact location.  
+Click on the map to drop a marker at your address.  
+This helps us provide accurate location based services and ensures more precise search results.  
+Your selected location will also be used to automatically fill address details wherever possible.`;
 
 
 // Hero section

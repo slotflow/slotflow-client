@@ -130,11 +130,6 @@ export class Validator {
         if (!/^[a-zA-Z ]{2,50}$/.test(country)) throw new Error("Country should only contain alphabets and spaces");
     }
 
-    // Google Map Link
-    static validateGoogleMapLink(googleMapLink: string): void {
-        if (!validator.isURL(googleMapLink)) throw new Error("Invalid Google Map link.");
-    }
-
 
 
 

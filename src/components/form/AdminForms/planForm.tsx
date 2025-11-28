@@ -32,8 +32,8 @@ const PlanForm: React.FC = () => {
         try {
             await handleAdminPlanAdding(data);
             reset();
-        } catch {
-            toast.error("Failed to add plan.");
+        } catch (error) {
+             if(import.meta.env.DEV)console.log("An error occured while saving plan : ",error);
         }
     };
 
