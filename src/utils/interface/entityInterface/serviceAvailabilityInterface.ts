@@ -3,7 +3,7 @@
 // 1. Provider service availability interface used in the AdminProviderServiceAvailability compoenent
 export interface Availability {
     day: string;
-    duration: string;
+    duration: number; // changed from string to number
     startTime: string;
     endTime: string;
     modes: string[];

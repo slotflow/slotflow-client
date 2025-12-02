@@ -127,8 +127,9 @@ import {
   Path,
   UseFormRegister,
 } from "react-hook-form";
+import { Input } from '../ui/input';
 
-type OptionType = {
+export type OptionType = {
   label: string;
   value: string | number | boolean;
 };
@@ -174,7 +175,7 @@ export const SelectField = <T extends FieldValues>({
         {label} {required && <span className="text-red-500">*</span>}
       </Label>
 
-      <input
+      <Input
         type="hidden"
         name={reg.name}
         ref={reg.ref}

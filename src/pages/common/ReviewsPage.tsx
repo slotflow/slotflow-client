@@ -7,9 +7,9 @@ import {
 } from "@/components/ui/card";
 import { toast } from "react-toastify";
 import {
+  RoleType,
   ApiPaginatedResponse,
   FetchFunctionParams,
-  Role,
 } from "@/utils/interface/commonInterface";
 import { Button } from "@/components/ui/button";
 import { userDeleteReview } from "@/utils/apis/user.api";
@@ -27,7 +27,7 @@ interface ReviewsPageProps {
   isUser?: boolean;
   isProvider?: boolean;
   isAdmin?: boolean;
-  role: Role;
+  role: RoleType;
   fetchFun: (
     query: FetchFunctionParams
   ) => Promise<ApiPaginatedResponse<FetchReviewsResponse>>;

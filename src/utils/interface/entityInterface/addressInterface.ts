@@ -13,10 +13,21 @@ export interface Address {
     country: string;
     location: {
         type: "Point",
-        coordinates: [lon: number, lat: number]
+        coordinates: [number, number]
     },
     createdAt: string;
     updatedAt: string;
 }
+
+export interface Location {
+        address: {
+            country_code: string;
+            state: string;
+            state_district: string;
+            postcode: string;
+        },
+        lon: number,
+        lat: number,
+    }
 
 

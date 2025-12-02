@@ -8,7 +8,7 @@ import { providerSaveSubscription } from "@/utils/apis/provider.api";
 import { userSaveAppointmentBooking } from "@/utils/apis/user.api";
 import { PaymentConfirmPageProps } from "@/utils/interface/entityInterface/providerInterface";
 import { useDispatch } from "react-redux";
-import { updateProviderSubscription } from "@/utils/redux/slices/authSlice";
+import { setProviderSubscription } from "@/utils/redux/slices/authSlice";
 
 const PaymentConfirmPage: React.FC<PaymentConfirmPageProps> = ({ status, userType }) => {
 
@@ -31,7 +31,7 @@ const PaymentConfirmPage: React.FC<PaymentConfirmPageProps> = ({ status, userTyp
         const response = await providerSaveSubscription(sessionId);
         if (response.success) {
           toast.success(response.message);
-          dispatch(updateProviderSubscription(response.planName))
+          dispatch(setProviderSubscription(response.planName))
         }
       } else if (userType === "user") {
         const response = await userSaveAppointmentBooking(sessionId);

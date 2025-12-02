@@ -18,11 +18,12 @@ import {
     ProviderFetchDashboardStatsDataResponse,
     ProviderFetchUsersForChatSidebarResponse,
     ProviderFetchServiceAvailabilityResponse,
+    ProviderCreateServiceDetailsRequest,
 } from "../interface/api/providerApiInterface";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { buildQueryParams, parseNewCommonResponse } from "../helper";
 import { ApiBaseResponse, FetchFunctionParams, ApiPaginatedResponse } from "../interface/commonInterface";
-import { FetchBookingDetailsResponse, FetchBookingsResponse, FetchOnlineBookingParams, FetchOnlineBookingsForProviderResponse, FetchPaymentsResponse, FetchProviderSubscriptionsResponse, FetchReviewsResponse, FetchSubscriptionDetailsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, UpdateAddressRequest, UpdateAddressResponse, ValidateRoomId } from "../interface/api/commonApiInterface";
+import { FetchBookingDetailsResponse, FetchBookingsResponse, FetchOnlineBookingParams, FetchOnlineBookingsForProviderResponse, FetchPaymentsResponse, FetchProviderSubscriptionsResponse, FetchReviewsResponse, FetchSubscriptionDetailsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, UpdateAddressRequest, UpdateAddressResponse, UpdateFileDataRequest, UpdateFileDataResponse, ValidateRoomId } from "../interface/api/commonApiInterface";
 import { Subscription } from "../interface/entityInterface/subscriptionInterface";
 import { Booking } from "../interface/entityInterface/bookingInterface";
 import { Review } from "../interface/entityInterface/reviewInterface";
@@ -64,7 +65,6 @@ export const providerFetchBookingAppoinments = async <T extends FetchBookingsRes
 
 export const adminFetchBookingDetails = async(bookingId: Booking["_id"]): Promise<FetchBookingDetailsResponse> => {
     const response = await axiosInstance.get(`/provider/bookings/${bookingId}`);
-    console.log("Response : ",response);
     return response.data.data;
 }
 
@@ -90,9 +90,9 @@ export const providerJoinOrLeftRoomCallBack = async (data: JoinRoomCallbackReque
 
 
 // **** Provider services apis
-export const providerAddProviderServiceDetails = createAsyncThunk<ApiBaseResponse, { formData: FormData }>("/provider/addServiceDetails",
-    async ({ formData }: { formData: FormData }) => {
-        const response = await axiosInstance.post(`/provider/service`, formData);
+export const providerAddProviderServiceDetails = createAsyncThunk<ApiBaseResponse, ProviderCreateServiceDetailsRequest>("/provider/addServiceDetails",
+    async (data: ProviderCreateServiceDetailsRequest) => {
+        const response = await axiosInstance.post(`/provider/service`, data);
         return response.data;
     }
 )
@@ -119,7 +119,7 @@ export const providerFetchProviderServiceAvailability = async (date: Date): Prom
 
 // **** Provider profile apis
 export const providerFetchProviderProfileDetails = async (): Promise<ProviderFetchProfileDetailsResponse> => {
-    const response = await axiosInstance.get('/provider/profile');
+    const response = await axiosInstance.get('/provider/');
     return response.data.data;
 }
 
@@ -133,10 +133,21 @@ export const providerUpdateProviderProfileImage = createAsyncThunk<ProviderUpdat
 
 export const providerUpdateProviderInfo = createAsyncThunk<ProviderUpdateProviderInfoResponse, ProviderUpdateProviderInfoRequest>('/provider/profile',
     async (data: ProviderUpdateProviderInfoRequest) => {
-        const response = await axiosInstance.patch('/provider/profile', data);
+        const response = await axiosInstance.patch('/provider/profile/info', data);
         return response.data;
     }
 )
+
+export const providerUpdateIdentityProof = async(data: UpdateFileDataRequest): Promise<UpdateFileDataResponse> => {
+    console.log("data : ",data);
+    const response = await axiosInstance.patch('/provider/profile/identity', data);
+    return response.data;
+}
+
+export const providerUpdateProofServiceProof = async(data: UpdateFileDataRequest): Promise<UpdateFileDataResponse> => {
+    const response = await axiosInstance.patch('/provider/profile/identity', data);
+    return response.data;
+}
 
 
 // **** Provider plans apis
@@ -207,7 +218,7 @@ export const providerFetchDashboardGraphData = async (subscription?: string,date
 }
 
 
-// provider review api
+// **** provider review api
 export const providerFetchAllReviews = async (query: FetchFunctionParams): Promise<ApiPaginatedResponse<FetchReviewsResponse>> => {
     const refactoredQuery = buildQueryParams(query);
     const response = await axiosInstance.get(`/provider/reviews${refactoredQuery ? `?${refactoredQuery}` : ''}`);
@@ -220,9 +231,8 @@ export const providerReportReview = async (reviewId: Review["_id"]): Promise<Api
 }
 
 
-// provider integration api
+// **** provider integration api
 export const connectStripeAccount = async (): Promise<{ url: string }> => {
   const response = await axiosInstance.post("/provider/stripe/connect");
-  console.log("response : ",response);
   return response.data.data;
 };

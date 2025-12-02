@@ -1,35 +1,27 @@
-import { z } from "zod";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import SideBox from "@/components/provider/SideBox";
+import FormField from "@/components/form/FormField";
 import { approvalMessages } from "@/utils/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
-import InputField from "@/components/form/InputFieldWithLable";
+import { QueryForm, QueryZodSchema } from "@/utils/zod/providerZod";
 
 const ProviderApprovalPendingPage = () => {
-  const QuerySchema = z.object({
-    query: z
-      .string()
-      .min(5, "Query must be at least 5 characters long")
-      .max(500, "Query is too long"),
-  });
-
-  type QueryFormData = z.infer<typeof QuerySchema>;
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<QueryFormData>({
-    resolver: zodResolver(QuerySchema),
+  } = useForm<QueryForm>({
+    resolver: zodResolver(QueryZodSchema),
     defaultValues: {
       query: "",
     },
   });
 
-  const onSubmit = async (data: QueryFormData) => {
+  const onSubmit = async (data: QueryForm) => {
     try {
       toast.success("Query submitted successfully!");
       console.log("Submitted data:", data);
@@ -41,7 +33,7 @@ const ProviderApprovalPendingPage = () => {
 
   return (
     <div className="h-screen flex w-full bg-[var(--background)] text-[var(--textOne)]">
-      <SideBox props={{ pageNumber: 4 }} />
+      <SideBox props={{ pageNumber: 5 }} />
 
       <div className="md:w-8/12 flex justify-center items-center">
         <div className="p-8 rounded-lg text-center max-w-md">
@@ -53,12 +45,11 @@ const ProviderApprovalPendingPage = () => {
           <p className="mt-4 text-sm">{approvalMessages.footerNote}</p>
 
           <form onSubmit={handleSubmit(onSubmit)} className="mt-4 space-y-4">
-            <InputField<QueryFormData>
-              label="Query"
+            <FormField<QueryForm>
+              label=""
               id="query"
               placeholder="Enter your query here"
               type="text"
-              required
               register={register}
               error={errors.query?.message}
             />

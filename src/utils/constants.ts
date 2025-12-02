@@ -53,14 +53,62 @@ import {
   BarChart,
 } from "lucide-react";
 import { ProviderFetchDashboardStatsDataResponse } from "./interface/api/providerApiInterface";
-import { CommonTabInterface, dataSelectListItemInterface, DayMapInterface, FeatureContentInterface, FooterColumnDataInterface, FooterLinkInterface, gsapBigSvgYDirectionAnimationInterface, HeaderCompoenentNavsProps, PlanFeatureInterface, PlanListType, ProviderApprovalMessageInterface, Role, Route, SelectOptions, StatsMapForAdminInterface, statsMapIntrface } from "./interface/commonInterface";
+import { 
+  Route, 
+  PlanListType, 
+  SelectOptions, 
+  DayMapInterface, 
+  statsMapIntrface,
+  CommonTabInterface, 
+  FooterLinkInterface, 
+  PlanFeatureInterface, 
+  FeatureContentInterface, 
+  StatsMapForAdminInterface, 
+  FooterColumnDataInterface, 
+  HeaderCompoenentNavsProps, 
+  dataSelectListItemInterface, 
+  ProviderApprovalMessageInterface, 
+  gsapBigSvgYDirectionAnimationInterface, 
+} from "./interface/commonInterface";
 
 import chatImage from '../assets/heroImages/caht.jpg';
 import gCalendar from '../assets/iconImages/gCalendar.png';
 import videoCallImage from '../assets/heroImages/videoCall.jpg';
 import calendarImage from '../assets/heroImages/calendar2.png';;
+import { OptionType } from "@/components/form/SelectFiledWithLabel";
 import bookingImage from '../assets/heroImages/heroSectionOneImg2.png';
 import { ContactItem } from "./interface/componentInterface/commonComponentInterface";
+
+export const PLAN_TIERS = ["free", "starter", "professional", "enterprise"] as const;
+
+export const roleArray = ["ADMIN", "USER", "PROVIDER"] as const;
+
+export const limitedRolesArray = ["ADMIN", "PROVIDER"] as const;
+
+export const plansArray = ["Starter", "Professional", "Enterprise", "NoSubscription"] as const;
+
+export const serviceTypeArray = ["one-time", "recurring"] as const;
+
+export const serviceModeArray = ["online", "offline", "both"] as const;
+
+export const appointmentStatusArray = [
+  "Booked",
+  "Completed",
+  "Cancelled",
+  "RejectedByProvider",
+  "NotAttended",
+  "Confirmed",
+] as const;
+
+export const paymentForArray = [
+  "ProviderSubscription",
+  "AppointmentBooking",
+  "ProviderPayout",
+  "CancelBooking",
+] as const;
+
+export const paymentGatewayArray = ["Stripe", "Razorpay", "Paypal"] as const;
+
 
 // **** Routes for admin **** \\
 export const adminRoutes: Route[] = [
@@ -1031,12 +1079,13 @@ export const progressBars: { [key: number]: boolean[] } = {
   4: [true, true, true, false],
 };
 
-const sidebarHeadings: string[] = ['Address Details', 'Service Details', 'Availability', "Approval in progress"];
+const sidebarHeadings: string[] = ['Address', 'Service', 'Availability', "Upload Proofs" ,"Approval"];
 export const pageLabels: { [key: number]: string[] } = {
   1: sidebarHeadings,
   2: sidebarHeadings,
   3: sidebarHeadings,
   4: sidebarHeadings,
+  5: sidebarHeadings
 };
 
 
@@ -1044,7 +1093,8 @@ export const pageDescriptions: { [key: number]: string } = {
   1: 'Add your service address accurately to ensure seamless customer bookings.',
   2: 'Provide detailed information about your services for clarity and transparency.',
   3: 'Set your service availability to manage customer appointments efficiently.',
-  4: 'Our team is reviewing your service registration request. You will be notified via email once your request is approved. Thank you for your patience..',
+  4: 'Upload your proof of identity. Make sure to upload the current documents within the specified size and format limits.',
+  5: 'Our team is reviewing your service registration request. You will be notified via email once your request is approved. Thank you for your patience.',
 };
 
 export const addAddressGoogleMapLinkInfoHeading: string = "Select Your Exact Location";
@@ -1140,10 +1190,10 @@ export const adminOverviewTabs: CommonTabInterface[] = [
 
 // Profile tabs list
 export const profileTabs: CommonTabInterface[] = [
-  { value: "tab1", label: "Profile", icon: User, role: [Role.provider , Role.user] },
-  { value: "tab2", label: "Address", icon: Home, role: [Role.provider , Role.user] },
-  { value: "tab3", label: "Service", icon: Briefcase, role: [Role.provider] },
-  { value: "tab4", label: "Availability", icon: Clock, role: [Role.provider] },
+  { value: "tab1", label: "Profile", icon: User, role: [roleArray[2] , roleArray[1]] },
+  { value: "tab2", label: "Address", icon: Home, role: [roleArray[2] , roleArray[1]] },
+  { value: "tab3", label: "Service", icon: Briefcase, role: [roleArray[2]] },
+  { value: "tab4", label: "Availability", icon: Clock, role: [roleArray[2]] },
 ]
 
 // Provider dashboard tabs
@@ -1181,4 +1231,55 @@ export const settingsTabs: CommonTabInterface[] = [
 export const adVisibilityOptions: SelectOptions = [
   { label: "Ad Visible", value: "true" },
   { label: "No Ad Visibility", value: "false" },
+];
+
+
+// 
+export const serviceTypeOptions: OptionType[] = [
+  { label: "One Time", value: "one-time" },
+  { label: "Recurring", value: "recurring" },
+];
+
+//
+export const serviceModeOptions: OptionType[] = [
+  { label: "Online", value: "online" },
+  { label: "Offline", value: "offline" },
+  { label: "Both", value: "both" },
+];
+
+//
+export const groupOptions: OptionType[] = [
+  { label: "Group", value: "true" },
+  { label: "Individual", value: "false" },
+];
+
+
+// Days of Week Options
+export const daysOfWeekOptions: OptionType[] = [
+  { label: "Sunday", value: "Sunday" },
+  { label: "Monday", value: "Monday" },
+  { label: "Tuesday", value: "Tuesday" },
+  { label: "Wednesday", value: "Wednesday" },
+  { label: "Thursday", value: "Thursday" },
+  { label: "Friday", value: "Friday" },
+  { label: "Saturday", value: "Saturday" }
+];
+
+// Service Duration Options
+export const serviceDurationsOptions: OptionType[] = [
+  { label: "10 minutes", value: 10 },
+  { label: "15 minutes", value: 15 },
+  { label: "30 minutes", value: 30 },
+  { label: "45 minutes", value: 45 },
+  { label: "1 hour", value: 60 },
+  { label: "1 hour 15 minutes", value: 75 },
+  { label: "1 hour 30 minutes", value: 90 },
+  { label: "1 hour 45 minutes", value: 105 },
+  { label: "2 hours", value: 120 },
+  { label: "3 hours", value: 180 },
+  { label: "4hour", value: 240 },
+  { label: "5 hours", value: 300 },
+  { label: "6 hours", value: 360 },
+  { label: "7 hours", value: 420 },
+  { label: "8 hours", value: 480 }
 ];

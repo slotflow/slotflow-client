@@ -7,10 +7,11 @@ import {
 import { FormEvent } from "react";
 import { LucideIcon } from "lucide-react";
 import { ChartConfig } from "@/components/ui/chart";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { Provider } from "../entityInterface/providerInterface";
 import { CreateAddressFormData } from "@/utils/zod/commonZodFields";
 import { BaseChartData, ChatComponentProps, TimeRange } from "../commonInterface";
+import { UpdateFileDataRequest, UpdateFileDataResponse } from "../api/commonApiInterface";
 import { AdminFetchProviderAvailabilityResponse, AdminFetchProviderServiceResponse } from "../api/adminProviderApiInterface";
 import { UpdateUserProfileImageResponse, UserFetchProviderAvailabilityResponse, UserFetchProviderServiceResponse } from "../api/userApiInterface";
 import { ProviderFetchServiceAvailabilityResponse, ProviderFetchServiceDetailsResponse, ProviderUpdateProfileImageResponse } from "../api/providerApiInterface";
@@ -167,4 +168,14 @@ export interface AddressFormProps {
     buttonText: string;
     onSubmit: (e: FormEvent<HTMLFormElement>, data: CreateAddressFormData) => void;
     setHasErrors: (hasError: boolean) => void;
+}
+
+
+// ****
+export interface FileUploaderProps {
+    folderName: string;
+    uploadFunction: (data: UpdateFileDataRequest) => Promise<UpdateFileDataResponse>;
+    message?: string;
+    setStateFunction: (data: string) => PayloadAction<string>;
+    fileUploaded: boolean;
 }

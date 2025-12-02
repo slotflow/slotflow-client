@@ -1,4 +1,4 @@
-import { ApiBaseResponse, Role } from "../commonInterface";
+import { ApiBaseResponse, RoleType } from "../commonInterface";
 
 interface UserBaseInterface {
     username: string;
@@ -16,7 +16,7 @@ export type SignupRequest = Pick<UserBaseInterface, "username" | "email" | "pass
 export interface SignupResponse extends ApiBaseResponse {
     authUser: {
         verificationToken: string;
-        role: Role;
+        role: RoleType;
     };
 }
 
@@ -33,7 +33,7 @@ export interface SigninResponse extends ApiBaseResponse {
         username: string;
         profileImage: string;
         phone: string;
-        role: Role;
+        role: RoleType;
         isBlocked: boolean;
         isLoggedIn: boolean;
         isAddressAdded?: boolean,
@@ -56,7 +56,7 @@ export type ResendOtpRequest = Pick<UserBaseInterface, "role"> & Partial<Pick<Us
 export interface ResendOtpResponse extends ApiBaseResponse {
     authUser: {
         verificationToken: string;
-        role: Role;
+        role: RoleType;
     };
 }
 

@@ -1,5 +1,5 @@
-import { Suspense, useEffect } from "react";
 import Sidebar from "@/components/Navs/Sidebar";
+import React, { Suspense, useEffect } from "react";
 import InfoHeader from "@/components/Navs/InfoHeader";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useLocation } from "react-router-dom";
@@ -9,11 +9,12 @@ import avatar from '../../assets/defaultImages/avatar.png';
 import ProviderAddAddressPage from "./ProviderAddAddressPage";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { planAccessMap, providerRoutes } from "@/utils/constants";
+import ProviderProofSubmitionPage from "./ProviderProofSubmitionPage";
 import ProviderApprovalPendingPage from "./ProviderApprovalPendingPage";
-import ProviderAddServiceDetailsPage from "./ProviderAddServiceDetailsPage";
-import ProviderAddServiceAvailabilityPage from "./ProviderAddServiceAvailabilityPage";
+import ProviderCreateServiceDetailsPage from "./ProviderCreateServiceDetailsPage";
+import ProviderCreateServiceAvailabilityPage from "./ProviderCreateServiceAvailabilityPage";
 
-const ProviderMainPage = () => {
+const ProviderMainPage: React.FC = () => {
 
   const sidebarOpen = useSelector((store: RootState) => store.app.sidebarOpen);
   const user = useSelector((store: RootState) => store.auth.authUser);
@@ -28,7 +29,7 @@ const ProviderMainPage = () => {
     if (user?.isLoggedIn) {
       dispatch(checkUserStatus());
     }
-  }, [dispatch, location]);
+  }, [dispatch, location, user?.isLoggedIn]);
 
   if (!user?.isAdminApproved) {
     if (!user?.isAddressAdded) {
@@ -37,11 +38,15 @@ const ProviderMainPage = () => {
       );
     } else if (!user?.isServiceDetailsAdded) {
       return (
-        <ProviderAddServiceDetailsPage />
+        <ProviderCreateServiceDetailsPage />
       );
     } else if (!user?.isServiceAvailabilityAdded) {
       return (
-        <ProviderAddServiceAvailabilityPage />
+        <ProviderCreateServiceAvailabilityPage />
+      )
+    } else if (!user?.isProofSubmitted) {
+      return (
+        <ProviderProofSubmitionPage />
       )
     } else {
       return (

@@ -1,23 +1,24 @@
-
 // Provider
 export interface Provider {
-    _id: string;
-    username: string;
-    email: string;
-    password: string;
-    isBlocked: boolean;
-    isEmailVerified: boolean;
-    isAdminVerified: boolean;
-    phone: string;
-    profileImage: string;
-    addressId: string;
-    serviceId: string;
-    serviceAvailabilityId: string;
-    subscription: [string];
-    verificationToken: string;
-    trustedBySlotflow: boolean;
-    createdAt: string;
-    updatedAt: string;
+  _id: string;
+  username: string;
+  email: string;
+  password: string;
+  isBlocked: boolean;
+  isEmailVerified: boolean;
+  isAdminVerified: boolean;
+  phone: string;
+  profileImage: string;
+  addressId: string;
+  serviceId: string;
+  serviceAvailabilityId: string;
+  subscription: [string];
+  verificationToken: string;
+  trustedBySlotflow: boolean;
+  identityProof: string | FileList;
+  serviceProof: string | FileList;
+  createdAt: string;
+  updatedAt: string;
 }
 
 
@@ -28,10 +29,10 @@ export interface Provider {
 
 // This is the interface of a right side showing compoenent in the provider address adding, service adding and availability adding page
 export interface SideBoxProps {
-    props: {
-      pageNumber: number;
-    };
-  }
+  props: {
+    pageNumber: number;
+  };
+}
 
 
 

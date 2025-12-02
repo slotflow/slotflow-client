@@ -2,14 +2,14 @@ import { ApiBaseResponse } from "../commonInterface";
 import { Plan } from "../entityInterface/planInterface";
 import { User } from "../entityInterface/userInterface";
 import { Address } from "../entityInterface/addressInterface";
+import { Booking } from "../entityInterface/bookingInterface";
 import { Provider } from "../entityInterface/providerInterface";
 import { Service } from "../entityInterface/appServiceInterface";
 import { ProviderService } from "../entityInterface/providerServiceInterface";
 import { Availability, AvailabilityForResponse } from "../entityInterface/serviceAvailabilityInterface";
-import { Booking } from "../entityInterface/bookingInterface";
 
 // **** Used as the request interface for adding address api
-export type ProviderAddProviderAddressRequest = Pick<Address, "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country">;
+export type ProviderAddProviderAddressRequest = Pick<Address, "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location">;
 
 // **** Used as the response type of provider fetch address api
 export type ProviderFetchAddressResponse = Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "updatedAt">;
@@ -19,11 +19,12 @@ export type ProviderFetchAddressResponse = Pick<Address, "_id" | "addressLine" |
 export type ProviderFetchAllServicesResponse = Array<Pick<Service, "_id" | "serviceName">>;
 
 
-// **** Inline interface used for providerAddProviderServiceDetails api
+// **** Used as the request interface for providerAddProviderServiceDetails api
+export type ProviderCreateServiceDetailsRequest = Pick<ProviderService, "isGroupService" | "maxParticipants" | "requirements" | "serviceCategory" | "serviceDescription" | "serviceExperience" | "serviceMode" | "serviceName" | "servicePrice" | "serviceType" | "tags" | "videoUrl">;
 
 
 // **** Used as the response type for provider fetch self service details
-type FetchServiceDetailsResponse = Pick<ProviderService, "serviceName" | "serviceDescription" | "servicePrice" | "providerAdhaar" | "providerExperience" | "providerCertificateUrl">;
+type FetchServiceDetailsResponse = Pick<ProviderService, "serviceName" | "serviceDescription" | "servicePrice" | "serviceExperience">;
 export interface ProviderFetchServiceDetailsResponse extends FetchServiceDetailsResponse {
   serviceCategory: Pick<Service, "serviceName">
 }

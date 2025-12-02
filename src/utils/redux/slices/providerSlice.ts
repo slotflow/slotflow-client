@@ -9,6 +9,8 @@ const initialState: ProviderState = {
   paymentSelectionOpen: false,
   isTrialPlan: false,
   paymentPageOpen: false,
+  identityProof: null,
+  serviceProof: null,
 };
 
 const providerSlice = createSlice({
@@ -49,6 +51,12 @@ const providerSlice = createSlice({
     setPaymentSelectionPage: (state, action: PayloadAction<boolean>) => {
       state.paymentSelectionOpen = action.payload;
     },
+    setProviderIdentityProofs: (state, action: PayloadAction<string>) => {
+      state.identityProof = action.payload
+    },
+    setProviderServiceProofs: (state, action: PayloadAction<string>) => {
+      state.serviceProof = action.payload
+    },
     clearProviderSlice: (state) => {
       state.availabilities = [];
       state.planId = null;
@@ -66,6 +74,8 @@ export const {
   setSubscriptionPlanDuration,
   setPaymentSelectionPage,
   setSubscriptionIsTrailPlan,
+  setProviderIdentityProofs,
+  setProviderServiceProofs,
   clearProviderSlice,
 } = providerSlice.actions;
 

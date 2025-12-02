@@ -1,19 +1,8 @@
 import z from "zod";
-import { Role } from "../interface/commonInterface";
 import { addressLineRegex, cityRegex, countryRegex, districtRegex, landMarkRegex, phoneRegex, pincodeRegex, placeRegex, stateRegex } from "./regex";
 
-export const roleField = z.enum([Role.user, Role.provider, Role.admin] as const, {
-    required_error: "Role is required",
-    invalid_type_error: "Invalid role"
-});
-
-export const limitedRoleField = z.enum([Role.user, Role.provider], {
-    required_error: "Role is required",
-    invalid_type_error: "Invalid role"
-});
-
 // Address Zod Schema (Final)
-export const CreateAddressZodSchema = z.object({
+export const createAddressZodSchema = z.object({
   _id: z.string(),
 
   addressLine: z
@@ -87,4 +76,4 @@ export const CreateAddressZodSchema = z.object({
   }),
 });
 
-export type CreateAddressFormData = z.infer<typeof CreateAddressZodSchema>;
+export type CreateAddressFormData = z.infer<typeof createAddressZodSchema>;

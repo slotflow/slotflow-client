@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/utils/redux/appStore";
-import { Role } from "@/utils/interface/commonInterface";
 import { addService } from "@/utils/redux/slices/userSlice";
 import { setAuthUser } from "@/utils/redux/slices/authSlice";
+import { RoleType } from "@/utils/interface/commonInterface";
 import { setMessages, setOnlineUsers, setSelectedUser } from "@/utils/redux/slices/chatSlice";
 import { addAvailability, setPaymentSelectionPage, setSubscriptionIsTrailPlan, setSubscriptionPlanDuration, setSubscriptionPlanId } from "@/utils/redux/slices/providerSlice";
 
@@ -33,7 +33,7 @@ export const useResetRedux = () => {
     // Add admin-specific dispatches here if needed
   };
 
-  return (role: Role) => {
+  return (role: RoleType) => {
 
     resetCommon();
 

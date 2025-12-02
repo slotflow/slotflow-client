@@ -32,7 +32,7 @@ export type AdminFetchProviderProfileDetailsResponse = Pick<Provider, "_id" | "u
 
 
 // **** Used as the response type of the admin fetch provider serivde details api
-type FetchProviderServiceApiResponse = Pick<ProviderService, "serviceName" | "serviceDescription" | "servicePrice" | "providerAdhaar" | "providerExperience" | "providerCertificateUrl">;
+type FetchProviderServiceApiResponse = Pick<ProviderService, "serviceName" | "serviceDescription" | "servicePrice" | "serviceExperience">;
 export interface AdminFetchProviderServiceResponse extends FetchProviderServiceApiResponse {
     serviceCategory: Pick<Service, "serviceName">
 }

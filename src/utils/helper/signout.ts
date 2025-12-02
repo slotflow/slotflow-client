@@ -2,8 +2,8 @@ import { toast } from "react-toastify";
 import { signout } from "../apis/auth.api";
 import { queryClient } from "@/lib/queryClient";
 import { NavigateFunction } from "react-router-dom";
-import { Role } from "../interface/commonInterface";
 import { AppDispatch } from "@/utils/redux/appStore";
+import { RoleType } from "../interface/commonInterface";
 import { clearUserSlice } from "../redux/slices/userSlice";
 import { clearChatSlice } from "../redux/slices/chatSlice";
 import { clearAdminSlice } from "../redux/slices/adminSlice";
@@ -15,9 +15,9 @@ export const handleSignoutHelper = async ({
   resetRedux,
   navigate,
 }: {
-  role: Role;
+  role: RoleType;
   dispatch: AppDispatch;
-  resetRedux: (role: Role) => void;
+  resetRedux: (role: RoleType) => void;
   navigate: NavigateFunction;
 }) => {
   try {

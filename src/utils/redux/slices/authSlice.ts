@@ -26,19 +26,24 @@ const authSlice = createSlice({
                 state.authUser.profileImage = action.payload;
             }
         },
-        updateAuthUserName: (state, action: PayloadAction<string>) => {
+        setAuthUserName: (state, action: PayloadAction<string>) => {
             if (state.authUser) {
                 state.authUser.username = action.payload;
             }
         },
-        updateProviderSubscription: (state, action: PayloadAction<string>) => {
+        setProviderSubscription: (state, action: PayloadAction<string>) => {
             if (state.authUser) {
                 state.authUser.providerSubscription = action.payload;
             }
         },
-        updateGoogleConnect: (state) => {
+        setGoogleConnect: (state) => {
             if (state.authUser) {
                 state.authUser.googleConnected = true;
+            }
+        },
+        setIsProofSubmitted: (state) => {
+            if(state.authUser) {
+                state.authUser.isProofSubmitted = true;
             }
         },
     },
@@ -201,9 +206,10 @@ const authSlice = createSlice({
 export const {
     setAuthUser,
     setProfileImage,
-    updateAuthUserName,
-    updateProviderSubscription,
-    updateGoogleConnect,
+    setAuthUserName,
+    setProviderSubscription,
+    setGoogleConnect,
+    setIsProofSubmitted
 } = authSlice.actions;
 
 export default authSlice.reducer;

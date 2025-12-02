@@ -3,6 +3,7 @@ import { Button } from '../../ui/button';
 import React, { useEffect } from "react";
 import { useSelector } from 'react-redux';
 import { PhoneInput } from '../phone-input';
+import { countries } from 'country-data-list';
 import { ChevronRight, Info } from 'lucide-react';
 import { RootState } from '@/utils/redux/appStore';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -11,10 +12,10 @@ import { useQueryClient } from '@tanstack/react-query';
 import NotificationBox from '../../common/NotificationBox';
 import { CountryDropdown } from '../../ui/country-dropdown';
 import LocationPicker from '@/components/common/LocationPicker';
-import { CreateAddressFormData, CreateAddressZodSchema } from '@/utils/zod/commonZodFields';
+import { Location } from '@/utils/interface/entityInterface/addressInterface';
+import { CreateAddressFormData, createAddressZodSchema } from '@/utils/zod/commonZodFields';
 import { AddressFormProps } from '@/utils/interface/componentInterface/commonComponentInterface';
 import { addAddressGoogleMapLinkInfo, addAddressGoogleMapLinkInfoHeading } from '@/utils/constants';
-import { countries } from 'country-data-list';
 
 const AddressForm: React.FC<AddressFormProps> = ({
     formClassNames,
@@ -36,7 +37,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
         setValue,
         formState: { errors, isSubmitting, isValid }
     } = useForm<CreateAddressFormData>({
-        resolver: zodResolver(CreateAddressZodSchema),
+        resolver: zodResolver(createAddressZodSchema),
         defaultValues: {
             _id: "",
             addressLine: "",
@@ -55,8 +56,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
         }
     });
 
-    const handleLocationSelect = (location: any) => {
-        console.log("location : ", location);
+    const handleLocationSelect = (location: Location) => {
         setValue("location", {
             type: "Point",
             coordinates: [location.lon, location.lat],
@@ -80,15 +80,13 @@ const AddressForm: React.FC<AddressFormProps> = ({
     }, [queryClient, reset]);
 
     const submitHandler = (data: CreateAddressFormData) => {
-        console.log("data : ", data);
-        return;
         onSubmit({ preventDefault: () => { } } as React.FormEvent<HTMLFormElement>, data);
     };
 
     return (
         <form onSubmit={handleSubmit(submitHandler)} className={`${formClassNames} py-6`}>
             <h4 className={`${headingSize} font-semibold text-start px-6`}>{heading}</h4>
-            <div className="flex flex-col md:flex-row gap-4 md:gap-6 w-full">
+            <div className="flex flex-col lg:flex-row gap-4 md:gap-6 w-full">
 
                 <div className="flex-1 space-y-4 md:space-y-6 px-6 pt-6 md:p-6">
                     <FormField<CreateAddressFormData>
@@ -226,7 +224,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
                 <Button
                     type="submit"
                     variant="outline"
-                    className="text-xs md:text-sm cursor-pointer hover:bg-[var(--mainColor)] hover:text-white border-[var(--mainColor)] flex items-center gap-2"
+                    className="cursor-pointer w-10/12 md:w-auto text-xs md:text-sm hover:bg-[var(--mainColor)] hover:text-white border-[var(--mainColor)] flex items-center gap-2"
                     disabled={!isValid || isSubmitting || dataUpdating}
                 >
                     {dataUpdating ? "Loading" : buttonText} <ChevronRight />

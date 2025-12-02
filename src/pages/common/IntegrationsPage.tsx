@@ -7,7 +7,7 @@ import { AppDispatch } from 'recharts/types/state/store';
 import stripeLogo from '../../assets/iconImages/Stripe.jpeg';
 import IntegrationCard from '@/components/common/Integrations';
 import googleCalendar from '../../assets/iconImages/gCalendar.png';
-import { updateGoogleConnect } from '@/utils/redux/slices/authSlice';
+import { setGoogleConnect } from '@/utils/redux/slices/authSlice';
 import { setGoogleConnectionLoading, setStripeConnectionLoading } from '@/utils/redux/slices/integrationSlice';
 import { handleConnectGoogle, handleStripeConnect } from '@/utils/helper/integrationHandles';
 import { Button } from '@/components/ui/button';
@@ -28,7 +28,7 @@ const IntegrationsPage: React.FC = () => {
             if (!response.success) {
                 toast.error("Connection failed, please try again");
             } else {
-                dispatch(updateGoogleConnect());
+                dispatch(setGoogleConnect());
                 dispatch(setGoogleConnectionLoading(false));
                 toast.success("Successfully connected!");
             }

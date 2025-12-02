@@ -10,7 +10,7 @@ import {
 import Heading from "./Heading";
 import PlanCard from "../PlanCard";
 import { CheckIcon, MinusIcon } from "lucide-react";
-import { planFeatures, PlanList } from "@/utils/constants";
+import { PLAN_TIERS, planFeatures, PlanList } from "@/utils/constants";
 
 export default function SectionPricing() {
   return (
@@ -79,4 +79,3 @@ const PlanCheck: React.FC<{ available: boolean }> = ({ available }) => (
   </div>
 );
 
-const PLAN_TIERS = ["free", "starter", "professional", "enterprise"] as const;

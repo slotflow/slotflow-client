@@ -10,7 +10,6 @@ import { setAuthUser } from "@/utils/redux/slices/authSlice";
 import { setAuthModal } from "@/utils/redux/slices/appSlice";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import AuthSelectionModal from "@/components/common/landing/AuthSelectionModal";
-import { Role } from "@/utils/interface/commonInterface";
 
 const LandingLayout = () => {
 
@@ -34,7 +33,7 @@ const LandingLayout = () => {
         email: rawUser.email,
         profileImage: rawUser.profileImage,
         isBlocked: rawUser.isBlocked,
-        role: rawUser.role as Role.user | Role.provider,
+        role: rawUser.role,
         isLoggedIn: true,
         isAddressAdded: rawUser.addressId ? true : false,
         isServiceDetailsAdded: rawUser.serviceId ? true : false,

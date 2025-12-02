@@ -24,7 +24,7 @@ const ProviderAddAddressPage = () => {
                 toast.success(res.message)
             }
         } catch (error) {
-            if (import.meta.env.DEV) console.log("Failed to Save Address");
+            if (import.meta.env.DEV) console.log("Failed to Save Address : ",error);
         }
     }
 
@@ -47,4 +47,4 @@ const ProviderAddAddressPage = () => {
     )
 }
 
-export default ProviderAddAddressPage
+export default ProviderAddAddressPage;

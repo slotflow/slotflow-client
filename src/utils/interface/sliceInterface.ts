@@ -1,4 +1,4 @@
-import { Role } from "./commonInterface";
+import { RoleType } from "./commonInterface";
 import { Plan } from "./entityInterface/planInterface";
 import { ProviderService } from "./entityInterface/providerServiceInterface";
 import { Availability } from "./entityInterface/serviceAvailabilityInterface";
@@ -11,12 +11,13 @@ export interface UserData {
   phone?: string;
   email?: string;
   verificationToken?: string;
-  role: Role;
+  role: RoleType;
   isBlocked?: boolean;
   isLoggedIn?: boolean;
   isAddressAdded?: boolean;
   isServiceDetailsAdded?: boolean;
   isServiceAvailabilityAdded?: boolean;
+  isProofSubmitted?: boolean;
   isAdminApproved?: boolean;
   providerSubscription?: Plan["planName"];
   serviceDescription?: ProviderService["serviceDescription"];
@@ -53,6 +54,8 @@ export interface ProviderState {
   paymentSelectionOpen: boolean;
   isTrialPlan: boolean;
   paymentPageOpen: boolean;
+  identityProof: string | null;
+  serviceProof: string | null;
 }
 
 

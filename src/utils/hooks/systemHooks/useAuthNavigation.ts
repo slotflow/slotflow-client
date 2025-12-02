@@ -1,11 +1,11 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthFormType, Role } from "@/utils/interface/commonInterface";
+import { AuthFormType, RoleType } from "@/utils/interface/commonInterface";
 
 export const useAuthNavigation = () => {
   const navigate = useNavigate();
 
-  const goToAuthPage = useCallback((role: Role, formType: AuthFormType) => {
+  const goToAuthPage = useCallback((role: RoleType, formType: AuthFormType) => {
     let basePath = "";
 
     if (role === "ADMIN") basePath = "/admin";

@@ -26,9 +26,9 @@ export interface UserUpdateUserInfoResponse extends ApiBaseResponse {
 
 
 // **** Used as the request interface of the user add address api
-export type AddUserAddressRequest = Pick<Address, "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country">;
+export type AddUserAddressRequest = Pick<Address, "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location">;
 export interface UserAddUserAddressResponse extends ApiBaseResponse {
-  data: Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "updatedAt">;
+    data: Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location" | "updatedAt">;
 }
 
 
@@ -38,7 +38,7 @@ export type UserFetchUserAddressResponse = Pick<Address, "_id" | "addressLine" |
 
 
 // **** Used as the response type of the user fetch all services for the service selecting page fetching api
-export type UserFetchAllServicesResponse = Pick<Service, "_id" | "serviceName"> ;
+export type UserFetchAllServicesResponse = Pick<Service, "_id" | "serviceName">;
 
 
 // **** Used as the response interface of the user fetching service providers for the dashboard fetching api
@@ -68,7 +68,7 @@ export type UserFetchProviderAddressResponse = Pick<Address, "userId" | "address
 
 
 // **** Used as the response interface of the user fetching service providers service details fetching api
-type FetchServiceDetailsProps = Pick<ProviderService, "serviceName" | "serviceDescription" | "servicePrice" | "providerExperience" >;
+type FetchServiceDetailsProps = Pick<ProviderService, "serviceName" | "serviceDescription" | "servicePrice" | "serviceExperience">;
 export interface UserFetchProviderServiceResponse extends FetchServiceDetailsProps {
     serviceCategory: Pick<Service, "serviceName">
 }
@@ -81,13 +81,13 @@ export type UserFetchProviderAvailabilityResponse = AvailabilityForResponse;
 // **** Used as the request type of the user book an appointment api
 export type UserBookAnAppointmentRequest = {
     providerId: Provider["_id"];
-    slotId : string;
-    date : Date;
-    selectedServiceMode : string;
+    slotId: string;
+    date: Date;
+    selectedServiceMode: string;
 }
 // **** Used as the response interface of the user book an appointment api
 export interface UserBookAppointmentResponse extends ApiBaseResponse {
-    data : string
+    data: string
 }
 
 
@@ -104,11 +104,11 @@ export interface UserBookAppointmentResponse extends ApiBaseResponse {
 
 
 // **** Used as the return type of the user fetch providers for the chat side bar
-export type UserFetchProvidersForChatSidebarResponse = Array<Pick<Provider, "_id" | "username" | "profileImage" >>;
+export type UserFetchProvidersForChatSidebarResponse = Array<Pick<Provider, "_id" | "username" | "profileImage">>;
 
 
 // **** Address updating interfaces are in common interface file
 
 
 // **** Used as the request type of the user adding review
-export type UserAddReviewRequest = Pick<Review, "reviewText" | "rating" | "bookingId" | "providerId" >;
+export type UserAddReviewRequest = Pick<Review, "reviewText" | "rating" | "bookingId" | "providerId">;

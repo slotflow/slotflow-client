@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ChartConfig } from "@/components/ui/chart";
 import { Plan } from "./entityInterface/planInterface";
 import { Booking } from "./entityInterface/bookingInterface";
+import { appointmentStatusArray, limitedRolesArray, paymentForArray, paymentGatewayArray, plansArray, roleArray, serviceModeArray, serviceTypeArray } from "../constants";
 
 // **** Common Response interface
 export interface ApiBaseResponse {
@@ -28,7 +29,7 @@ interface CommonFormFields {
   password: string;
   confirmPassword: string;
   otp: string;
-  role: Role;
+  role: RoleType;
   verificationToken: string;
 }
 
@@ -176,7 +177,7 @@ export interface CommonTableComponentProps<T> {
 // **** Api common request parameter interface
 export interface FetchFunctionParams<T = string> {
   id?: T;
-  role?: Role;
+  role?: RoleType;
   pagination?: {
     page: number;
     limit: number;
@@ -202,15 +203,18 @@ export interface dataSelectListItemInterface {
 }
 
 
-// **** Role type and plan types
-export enum Role {
-  admin = "ADMIN",
-  user = "USER",
-  provider = "PROVIDER"
-}
 export type LimitedRoles = "ADMIN" | "PROVIDER";
-export type limitedPlans = "Starter" | "Professional" | "Enterprise" | "NoSubscription";
+export type plans = "Starter" | "Professional" | "Enterprise" | "NoSubscription";
 
+
+export type RoleType = typeof roleArray[number];
+export type PlansType = typeof plansArray[number];
+export type PaymentForType = typeof paymentForArray[number];
+export type ServiceTypeType = typeof serviceTypeArray[number];
+export type ServiceModeType = typeof serviceModeArray[number];
+export type LimitedRolesType = typeof limitedRolesArray[number];
+export type PaymentGatewayType = typeof paymentGatewayArray[number];
+export type AppointmentStatusType = typeof appointmentStatusArray[number];
 
 // **** AppointmentOverTimeInterface
 export interface AppointmentOverTimeInterface {
@@ -382,7 +386,7 @@ export interface CommonTabInterface {
   value: string;
   label: string;
   icon?: LucideIcon;
-  role?: Role[];
+  role?: RoleType[];
 }
 
 export enum AuthFormType {

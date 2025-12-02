@@ -1,5 +1,5 @@
 import React from 'react';
-import { Role } from '@/utils/interface/commonInterface';
+import { RoleType } from '@/utils/interface/commonInterface';
 import LoginForm from '@/components/form/CommonForms/LoginForm';
 import SignUpForm from '@/components/form/CommonForms/SignUpForm';
 import { useAuthCheckInLogin } from '@/utils/hooks/useAuthCheckInLogin';
@@ -8,7 +8,7 @@ import OtpVerificatioForm from '@/components/form/CommonForms/OtpVerificatioForm
 import EmailVerificationForm from '@/components/form/CommonForms/EmailVerificationForm';
 
 interface AuthPageProp {
-    role: Role,
+    role: RoleType,
     formType: number,
 }
 
