@@ -35,9 +35,11 @@ const AddressForm: React.FC<AddressFormProps> = ({
         control,
         reset,
         setValue,
+        watch,
         formState: { errors, isSubmitting, isValid }
     } = useForm<CreateAddressFormData>({
         resolver: zodResolver(createAddressZodSchema),
+        mode: "onChange",
         defaultValues: {
             _id: "",
             addressLine: "",
@@ -49,6 +51,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
             pincode: "",
             state: "",
             country: "",
+            countryCode: "",
             location: {
                 type: "Point",
                 coordinates: [0, 0],
@@ -66,7 +69,8 @@ const AddressForm: React.FC<AddressFormProps> = ({
         );
 
         if (countryObj) {
-            setValue("country", countryObj.alpha3);
+            setValue("country", countryObj.name);
+            setValue("countryCode", countryObj.alpha3);
         }
         setValue("state", location?.address?.state)
         setValue("district", location?.address?.state_district);
@@ -187,15 +191,18 @@ const AddressForm: React.FC<AddressFormProps> = ({
                         render={({ field }) => (
                             <div className="flex flex-col space-y-2">
                                 <label className="text-sm font-medium">
-                                    Country {<span className="mx-1 text-red-500">*</span>}
+                                    Country <span className="mx-1 text-red-500">*</span>
                                 </label>
+
                                 <CountryDropdown
                                     placeholder="Select Country"
-                                    defaultValue={field.value || "IN"}
+                                    defaultValue={watch("countryCode")}
                                     onChange={(country) => {
-                                        field.onChange(country.alpha3);
+                                        field.onChange(country.name);
+                                        setValue("countryCode", country.alpha3);
                                     }}
                                 />
+
                                 {errors.country && (
                                     <span className="text-xs text-red-500">
                                         {errors.country.message}

@@ -1,12 +1,9 @@
 import L from "leaflet";
 import { useEffect, useRef } from "react";
+import { Location } from "@/utils/interface/entityInterface/addressInterface";
 
 interface LocationPickerProps {
-  onLocationSelect: (location: {
-    lat: number;
-    lon: number;
-    address: any;
-  }) => void;
+  onLocationSelect: (location: Location) => void;
 }
 
 export default function LocationPicker({ onLocationSelect }: LocationPickerProps) {
@@ -19,7 +16,7 @@ export default function LocationPicker({ onLocationSelect }: LocationPickerProps
   useEffect(() => {
     if (!mapRef.current || mapInstance.current) return;
 
-    mapInstance.current = L.map(mapRef.current).setView([20.5937, 78.9629], 5); // India center
+    mapInstance.current = L.map(mapRef.current).setView([20.5937, 78.9629], 5);
 
     L.tileLayer(
       `https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?key=${LOCATIONIQ_KEY}`,

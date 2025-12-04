@@ -80,7 +80,7 @@ export interface FetchReviewsResponse extends Pick<Review, "_id" | "createdAt" |
 
 
 // **** Used as the response type of the admin fetch provider or user address api
-export type AdminFetchddressResponse = Pick<Address, "userId" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country">;
+export type AdminFetchddressResponse = Pick<Address, "userId" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "landMark" | "location">;
 
 
 // **** Used as the response type of the booking details fetching
@@ -98,3 +98,7 @@ export interface UpdateFileDataRequest {
 export interface UpdateFileDataResponse extends ApiBaseResponse {
   data: string;
 }
+
+
+// **** Used as the response type admin or provider fetching providers proofs
+export type FetchProvidersProofsResponse = Pick<Provider, "identityProof" | "serviceProof">;

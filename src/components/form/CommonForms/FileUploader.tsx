@@ -107,7 +107,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
                         />
                     )}
                 </CardContent>
-                {profileImageFile && (
+                {(!fileUploaded &&profileImageFile) && (
                     <CardFooter className='flex justify-end'>
                         <Button
                             variant="outline"

@@ -8,6 +8,8 @@ import CommonPaymentSelection from "../CommonPaymentSelection";
 import { Slot } from "@/utils/interface/entityInterface/serviceAvailabilityInterface";
 import ProviderAvailabilityShimmer from "@/components/shimmers/ProviderAvailabilityShimmer";
 import { ProviderApiFunctionForPSAcomponent, ProviderServiceAvailabilityComponentProps, UserOrAdminApiFunctionForPSAcomponent } from "@/utils/interface/componentInterface/commonComponentInterface";
+import { roleArray } from "@/utils/constants";
+import { Button } from "@/components/ui/button";
 
 
 const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponentProps> = ({
@@ -59,6 +61,7 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
         setOpenPayment(true);
     }
 
+    console.log("role : ",role);
     return (
         <>
             <div className="flex w-full mt-2 space-x-1 md:mt-0">
@@ -98,30 +101,34 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
                                         </tbody>
                                     </table>
                                 </div>
-                                {data.slots.length > 0 && (
+
+                                {role === roleArray[1] && data.slots.length > 0 && (
                                     <p className="p-2">Please ensure that you book the slot at least 2 hours in advance.</p>
                                 )}
-
-                                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mt-2">
+                                
+                                <div className="mt-2 space-y-4 p-2">
+                                <h3 className="font-bold text-lg">Time Slots for your selected date</h3>
+                                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                                     {data?.slots?.length ? (
                                         data?.slots.map((slot: Slot) => {
-                                            const commonClasses = `text-xs text-center border rounded-md py-2 px-4 hover:bg-[var(--mainColor)] hover:text-white transition-colors duration-200 ${slot.available
+                                            const commonClasses = `text-sm font-semibold text-center border rounded-md py-3 px-4 hover:bg-[var(--mainColor)] hover:text-white transition-colors duration-200 ${slot.available
                                                 ? 'bg-[var(--mainColor)/20] border-[var(--mainColor)]'
                                                 : 'border-gray-300'
-                                                }`;
-
+                                            }`;
+                                            
                                             return role === "User" ? (
-                                                <button
-                                                    key={slot._id}
-                                                    onClick={(e) => {
-                                                        e.preventDefault();
-                                                        e.stopPropagation();
-                                                        handleBookAnAppoint(slot._id, slot.available);
-                                                    }}
-                                                    className={`${commonClasses} ${slot.available ? 'cursor-pointer' : ''}`}
+                                                <Button
+                                                key={slot._id}
+                                                variant="outline"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    e.stopPropagation();
+                                                    handleBookAnAppoint(slot._id, slot.available);
+                                                }}
+                                                className={`${commonClasses} ${slot.available ? 'cursor-pointer' : ''}`}
                                                 >
                                                     {slot.time}
-                                                </button>
+                                                </Button>
                                             ) : (
                                                 <div key={slot._id} className={commonClasses}>
                                                     {slot.time}
@@ -132,6 +139,7 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
                                         <p className="col-span-full text-sm text-gray-500 text-center">No slots available</p>
                                     )}
                                 </div>
+                                    </div>
                             </>
                         )}
                     </div>

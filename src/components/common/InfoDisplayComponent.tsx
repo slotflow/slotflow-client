@@ -4,6 +4,7 @@ import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { InfoDisplayComponentRowProps } from "@/utils/interface/commonInterface";
 
 const InfoDisplayComponent: React.FC<InfoDisplayComponentRowProps> = ({
+    defaultValue,
     label,
     value,
     formatDate,
@@ -74,7 +75,7 @@ const InfoDisplayComponent: React.FC<InfoDisplayComponentRowProps> = ({
     } else if (link && typeof value === "string") {
         displayValue = (
             <a href={value} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
-                {value}
+                {defaultValue || value}
             </a>
         );
     } else {

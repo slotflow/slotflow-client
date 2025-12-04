@@ -1,6 +1,7 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import DataFetchingError from '../DataFetchingError';
+import { serviceModeArray } from '@/utils/constants';
 import InfoDisplayComponent from '../InfoDisplayComponent';
 import ProfileDetailsShimmer from '../../shimmers/ProfileDetailsShimmer';
 import { ProviderFetchServiceDetailsResponse } from '@/utils/interface/api/providerApiInterface';
@@ -36,22 +37,34 @@ const ProviderServiceDetails: React.FC<ProviderServiceDetailsComponentProps> = (
         return <DataFetchingError message="No service found." />;
     }
 
-    let serviceData: AdminFetchProviderServiceResponse | ProviderFetchServiceDetailsResponse | null = null;
-    if (!isUser) {
-        serviceData = data as (AdminFetchProviderServiceResponse | ProviderFetchServiceDetailsResponse);
-    }
-
     return (
-        <div className=" border rounded-md overflow-hidden w-full mt-2 md:mt-0">
+        <div className="border rounded-md overflow-hidden w-full mt-2 md:mt-0">
             <table className="table-auto w-full">
                 <tbody className="w-1/2">
-                    <>
-                        <InfoDisplayComponent label="Service Category" value={data?.serviceCategory?.serviceName} />
-                        <InfoDisplayComponent label="Service Name" value={data?.serviceName} />
-                        <InfoDisplayComponent label="Service Description" value={data?.serviceDescription} />
-                        <InfoDisplayComponent label="Service Price" value={data?.servicePrice} isPrice={true} />
-                        <InfoDisplayComponent label="Service Experience" value={data?.serviceExperience} isLast />
-                    </>
+                    <InfoDisplayComponent label="Category" value={data?.serviceCategory?.serviceName} />
+                    <InfoDisplayComponent label="Name" value={data?.serviceName} />
+                    <InfoDisplayComponent label="Description" value={data?.serviceDescription} />
+                    {data?.isGroupService && (
+                        <InfoDisplayComponent label="Group Service" value={data?.isGroupService} isBoolean />
+                    )}
+                    {data?.maxParticipants && (
+                        <InfoDisplayComponent label="Maximum Participants" value={data?.maxParticipants} />
+                    )}
+                    {data?.requirements && (
+                        <InfoDisplayComponent label="Requirements" value={data?.requirements} />
+                    )}
+                    <InfoDisplayComponent label="Mode" value={data?.serviceMode === serviceModeArray[2] ? "Online & Offline" : data?.serviceMode} />
+                    {data?.serviceType && (
+                        <InfoDisplayComponent label="Type" value={data?.serviceType} />
+                    )}
+                    {data?.videoUrl && (
+                        <InfoDisplayComponent label="Demo" value={data?.videoUrl} link defaultValue="Watch Demo" />
+                    )}
+                    {!isUser && (
+                        <InfoDisplayComponent label="Service Description" value={(data as AdminFetchProviderServiceResponse | ProviderFetchServiceDetailsResponse)?.tags} />
+                    )}
+                    <InfoDisplayComponent label="Service Price" value={data?.servicePrice} isPrice={true} />
+                    <InfoDisplayComponent label="Service Experience" value={data?.serviceExperience} isLast />
                 </tbody>
             </table>
         </div>

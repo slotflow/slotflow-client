@@ -18,6 +18,7 @@ const ProviderMainPage: React.FC = () => {
 
   const sidebarOpen = useSelector((store: RootState) => store.app.sidebarOpen);
   const user = useSelector((store: RootState) => store.auth.authUser);
+  const providerSlice = useSelector((store: RootState) => store.provider);
   const dispatch = useDispatch<AppDispatch>();
   const location = useLocation();
 
@@ -25,6 +26,8 @@ const ProviderMainPage: React.FC = () => {
   const allowedRouteNames = planName ? planAccessMap[planName] : planAccessMap["NoSubscription"];
   const filteredRoutes = providerRoutes.filter(route => allowedRouteNames.includes(route.name));
 
+  console.log("providerSlice : ",providerSlice);
+  
   useEffect(() => {
     if (user?.isLoggedIn) {
       dispatch(checkUserStatus());

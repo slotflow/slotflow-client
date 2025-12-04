@@ -34,7 +34,7 @@ export interface UserAddUserAddressResponse extends ApiBaseResponse {
 
 
 // **** Used as the response type of the user fetching api
-export type UserFetchUserAddressResponse = Pick<Address, "_id" | "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country">;
+export type UserFetchUserAddressResponse = Pick<Address, "_id" | "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "landMark" | "location">;
 
 
 // **** Used as the response type of the user fetch all services for the service selecting page fetching api
@@ -64,11 +64,11 @@ export type UserFetchProviderProfileDetailsResponse = Pick<Provider, "_id" | "us
 
 
 // **** Used as the response type of the user fetching service providers address fetching api
-export type UserFetchProviderAddressResponse = Pick<Address, "userId" | "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country">;
+export type UserFetchProviderAddressResponse = Pick<Address, "userId" | "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "landMark" | "location">;
 
 
 // **** Used as the response interface of the user fetching service providers service details fetching api
-type FetchServiceDetailsProps = Pick<ProviderService, "serviceName" | "serviceDescription" | "servicePrice" | "serviceExperience">;
+type FetchServiceDetailsProps = Pick<ProviderService, "serviceName" | "serviceDescription" | "servicePrice" | "serviceExperience" | "videoUrl" | "serviceType" | "serviceMode" | "requirements" | "maxParticipants" | "isGroupService">;
 export interface UserFetchProviderServiceResponse extends FetchServiceDetailsProps {
     serviceCategory: Pick<Service, "serviceName">
 }

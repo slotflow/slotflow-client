@@ -6,9 +6,9 @@ import ProviderServiceDetails from '@/components/common/profile/ProviderServiceD
 const ProviderService = () => {
 
   return (
-    <div className="min-h-full p-2 flex flex-col">
+    <div className="min-h-full flex flex-col w-full">
 
-      <div className='border rounded-md my-2 p-2'>
+      <div className='border rounded-md p-2'>
         <div className='flex justify-between items-center'>
           <div className='flex space-x-2'>
             <SquareChartGantt />

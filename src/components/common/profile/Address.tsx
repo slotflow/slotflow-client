@@ -67,9 +67,9 @@ const Address: React.FC = () => {
   }
 
   return (
-    <div className="min-h-full flex flex-col">
+    <div className="min-h-full flex flex-col w-full">
 
-      <div className='border rounded-md my-2 p-2'>
+      <div className='border rounded-md p-2'>
         <div className='flex justify-between items-center'>
           <div className='flex space-x-2'>
             <MapPinHouse />

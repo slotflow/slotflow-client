@@ -94,6 +94,7 @@ export interface SelectFieldWithLabelProps {
 
 // **** InfoDisplay component props interface
 export interface InfoDisplayComponentRowProps {
+  defaultValue?: string;
   label: string;
   value: string | boolean | number | string[] | Date | undefined | null;
   formatDate?: (dateString: string) => string;
@@ -163,6 +164,7 @@ export type HandleRoleSelectionFunction = (url: string) => void;
 
 // **** Common Table compoenent
 export interface CommonTableComponentProps<T> {
+  parentDivCalssName?: string;
   fetchApiFunction: (params?: FetchFunctionParams) => Promise<ApiPaginatedResponse<T>>;
   queryKey: string;
   heading?: string;

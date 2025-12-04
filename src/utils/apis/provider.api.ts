@@ -23,7 +23,7 @@ import {
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { buildQueryParams, parseNewCommonResponse } from "../helper";
 import { ApiBaseResponse, FetchFunctionParams, ApiPaginatedResponse } from "../interface/commonInterface";
-import { FetchBookingDetailsResponse, FetchBookingsResponse, FetchOnlineBookingParams, FetchOnlineBookingsForProviderResponse, FetchPaymentsResponse, FetchProviderSubscriptionsResponse, FetchReviewsResponse, FetchSubscriptionDetailsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, UpdateAddressRequest, UpdateAddressResponse, UpdateFileDataRequest, UpdateFileDataResponse, ValidateRoomId } from "../interface/api/commonApiInterface";
+import { FetchBookingDetailsResponse, FetchBookingsResponse, FetchOnlineBookingParams, FetchOnlineBookingsForProviderResponse, FetchPaymentsResponse, FetchProvidersProofsResponse, FetchProviderSubscriptionsResponse, FetchReviewsResponse, FetchSubscriptionDetailsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, UpdateAddressRequest, UpdateAddressResponse, UpdateFileDataRequest, UpdateFileDataResponse, ValidateRoomId } from "../interface/api/commonApiInterface";
 import { Subscription } from "../interface/entityInterface/subscriptionInterface";
 import { Booking } from "../interface/entityInterface/bookingInterface";
 import { Review } from "../interface/entityInterface/reviewInterface";
@@ -145,8 +145,13 @@ export const providerUpdateIdentityProof = async(data: UpdateFileDataRequest): P
 }
 
 export const providerUpdateProofServiceProof = async(data: UpdateFileDataRequest): Promise<UpdateFileDataResponse> => {
-    const response = await axiosInstance.patch('/provider/profile/identity', data);
+    const response = await axiosInstance.patch('/provider/profile/service', data);
     return response.data;
+}
+
+export const providerFetchProviderProofs = async(): Promise<FetchProvidersProofsResponse> => {
+    const response = await axiosInstance.get(`/provider/profile/proofs`);
+    return response.data.data;
 }
 
 

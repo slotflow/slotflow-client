@@ -21,6 +21,7 @@ export interface Address {
 
 export interface Location {
         address: {
+            country: string;
             country_code: string;
             state: string;
             state_district: string;

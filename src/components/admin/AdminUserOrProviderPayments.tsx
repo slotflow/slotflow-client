@@ -17,6 +17,7 @@ const AdminUserOrProviderPayments: React.FC<AdminFetchProviderPaymentsComponentP
             column={column}
             columnsCount={7}
             id={id}
+            parentDivCalssName="p-0"
         />
     )
 }

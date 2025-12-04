@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import MapPreview from '../MapPreview';
 import { useQuery } from '@tanstack/react-query';
 import DataFetchingError from '../DataFetchingError';
 import InfoDisplayComponent from '../InfoDisplayComponent';
@@ -48,7 +49,7 @@ const AddressListing: React.FC<UserOrProviderAddressDetailsComponentProps> = ({
 
     useEffect(() => {
         if(setIsUpdating) {
-            if(data) {
+            if(data && Object.values(data).length !== 0) {
                 setIsUpdating(true);
             } else {
                 setIsUpdating(false)
@@ -72,8 +73,8 @@ const AddressListing: React.FC<UserOrProviderAddressDetailsComponentProps> = ({
         <div className=" border rounded-md overflow-hidden w-full mt-2 md:mt-0">
             <table className="table-auto w-full">
                 <tbody className="w-1/2">
-                    <>
                         <InfoDisplayComponent label="Address Line" value={data?.addressLine} />
+                        <InfoDisplayComponent label="Landmark" value={data?.landMark} />
                         <InfoDisplayComponent label="Place" value={data?.place} />
                         <InfoDisplayComponent label="City" value={data?.city} />
                         <InfoDisplayComponent label="Phone" value={data?.phone} />
@@ -81,12 +82,14 @@ const AddressListing: React.FC<UserOrProviderAddressDetailsComponentProps> = ({
                         <InfoDisplayComponent label="Pincode" value={data?.pincode} />
                         <InfoDisplayComponent label="Distrcit" value={data?.district} />
                         <InfoDisplayComponent label="Country" value={data?.country} />
-                    </>
                 </tbody>
             </table>
+                        {data?.location?.coordinates && (
+                            <MapPreview lat={data?.location.coordinates[1]} lon={data?.location.coordinates[0]} />
+                        )}
         </div>
 
     )
 };
 
-export default AddressListing
+export default AddressListing;

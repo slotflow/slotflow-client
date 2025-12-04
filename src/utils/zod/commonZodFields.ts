@@ -67,6 +67,11 @@ export const createAddressZodSchema = z.object({
     .min(2, "Country must be at least 2 characters")
     .max(50, "Country cannot exceed 50 characters")
     .regex(countryRegex, "Country must only contain letters and spaces"),
+    
+  countryCode: z
+    .string()
+    .min(2, "Country code must be at least 2 characters")
+    .max(10, "Country code cannot exceed 50 characters"),
 
    location: z.object({
     type: z.literal("Point"),

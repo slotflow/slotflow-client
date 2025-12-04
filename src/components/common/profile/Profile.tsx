@@ -24,9 +24,9 @@ const Profile: React.FC = () => {
   if (!authUser) return null;
 
   return (
-    <div className="min-h-full flex flex-col">
+    <div className="min-h-full flex flex-col w-full">
 
-      <div className='flex justify-between border rounded-md my-2 p-2 items-center'>
+      <div className='flex justify-between border rounded-md p-2 items-center'>
         <div className="flex space-x-2">
           <UserRoundPen />
           <h2 className="text-xl font-semibold"> Profile Details</h2>

@@ -41,7 +41,7 @@ export const ProviderProofSubmissionPage = () => {
                 uploadFunction={providerUpdateProofServiceProof}
                 message="If you are offering a service, upload a valid certification or an experience document that verifies your professional qualifications."
                 setStateFunction={setProviderServiceProofs}
-                fileUploaded={!!identityProof}
+                fileUploaded={!!serviceProof}
               />
 
               <div className="flex justify-end">

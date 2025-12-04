@@ -5,14 +5,15 @@ import { providerTabs } from "@/utils/constants";
 import ProfileHead from "@/components/common/profile/ProfileHead";
 import { adminFetchAllReviews } from "@/utils/apis/adminReview.api";
 import DataFetchingError from "@/components/common/DataFetchingError";
+import AddressListing from "@/components/common/profile/AddressListing";
+import ProfileListing from "@/components/common/profile/ProfileListing";
 import ProfileHorizontalTabs from "@/components/common/ProfileHorizontalTabs";
 import AdminProviderSubscriptions from "@/components/admin/AdminProviderSubscriptions";
 import ProviderServiceDetails from "@/components/common/profile/ProviderServiceDetails";
 import AdminUserOrProviderPayments from "@/components/admin/AdminUserOrProviderPayments";
 import ProviderServiceAvailability from "@/components/common/profile/ProviderServiceAvailability";
-import AddressListing from "@/components/common/profile/AddressListing";
-import ProfileListing from "@/components/common/profile/ProfileListing";
-import { adminFetchProviderServiceAvailability, adminFetchProviderAddress, adminFetchProviderProfileDetails, adminFetchProviderService, adminFetchProviderPayments } from "@/utils/apis/adminProvider.api";
+import { adminFetchProviderServiceAvailability, adminFetchProviderAddress, adminFetchProviderProfileDetails, adminFetchProviderService, adminFetchProviderPayments, adminFetchProviderProofs } from "@/utils/apis/adminProvider.api";
+import ProviderProofs from "@/components/common/profile/ProviderProofs";
 
 const AdminServiceProviderDetailPage = () => {
 
@@ -53,6 +54,8 @@ const AdminServiceProviderDetailPage = () => {
                         <AdminProviderSubscriptions providerId={providerId} />
                     ) || tab === 6 && (
                         <AdminUserOrProviderPayments id={providerId} fethFunction={adminFetchProviderPayments} />
+                    ) || tab === 7 && (
+                        <ProviderProofs fetchApiFunction={() => adminFetchProviderProofs(providerId)} providerId={providerId} />
                     )}
                 </div>
             </div>

@@ -12,7 +12,7 @@ import { Availability, AvailabilityForResponse } from "../entityInterface/servic
 export type ProviderAddProviderAddressRequest = Pick<Address, "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location">;
 
 // **** Used as the response type of provider fetch address api
-export type ProviderFetchAddressResponse = Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "updatedAt">;
+export type ProviderFetchAddressResponse = Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "updatedAt" | "landMark" | "location">;
 
 
 // **** Used as the response type of fetch all services api
@@ -24,7 +24,7 @@ export type ProviderCreateServiceDetailsRequest = Pick<ProviderService, "isGroup
 
 
 // **** Used as the response type for provider fetch self service details
-type FetchServiceDetailsResponse = Pick<ProviderService, "serviceName" | "serviceDescription" | "servicePrice" | "serviceExperience">;
+type FetchServiceDetailsResponse = Pick<ProviderService, "serviceName" | "serviceDescription" | "servicePrice" | "serviceExperience" | "isGroupService" | "maxParticipants" | "requirements" | "serviceMode" | "serviceType" | "tags" | "videoUrl">;
 export interface ProviderFetchServiceDetailsResponse extends FetchServiceDetailsResponse {
   serviceCategory: Pick<Service, "serviceName">
 }

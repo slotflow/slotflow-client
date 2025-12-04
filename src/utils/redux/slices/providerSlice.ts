@@ -57,14 +57,7 @@ const providerSlice = createSlice({
     setProviderServiceProofs: (state, action: PayloadAction<string>) => {
       state.serviceProof = action.payload
     },
-    clearProviderSlice: (state) => {
-      state.availabilities = [];
-      state.planId = null;
-      state.planDuration = null;
-      state.paymentSelectionOpen = false;
-      state.isTrialPlan = false;
-      state.paymentPageOpen = false;
-    }
+    clearProviderSlice: () => initialState,
   },
 });
 

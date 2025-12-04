@@ -23,6 +23,7 @@ const AdminProviderSubscriptions: React.FC<AdminFetchProviderSubscriptionsCompon
             column={column}
             columnsCount={7}
             id={providerId}
+            parentDivCalssName="p-0"
         />
     )
 })

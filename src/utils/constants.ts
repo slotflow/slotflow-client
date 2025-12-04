@@ -259,7 +259,8 @@ export const providerTabs: { tabName: string, admin: boolean, user: boolean }[] 
   { tabName: "Availability", admin: true, user: true },
   { tabName: "Reviews", admin: true, user: true },
   { tabName: "Subscriptions", admin: true, user: false },
-  { tabName: "Payments", admin: true, user: false }
+  { tabName: "Payments", admin: true, user: false },
+  { tabName: "Proofs", admin: true, user: false }
 ];
 
 export const userTabs: { tabName: string, admin: boolean, user: boolean }[] = [

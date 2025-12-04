@@ -49,6 +49,7 @@ export const userUpdateUserInfo = createAsyncThunk<UserUpdateUserInfoResponse, U
 
 // **** user address apis
 export const userAddUserAddress = async (data: AddUserAddressRequest): Promise<UserAddUserAddressResponse> => {
+    console.log("creating address");
     const response = await axiosInstance.post('/user/addresses', data);
     return response.data;
 }
@@ -74,6 +75,7 @@ export const userFetchAllServicesForServiceSelectPage = async (): Promise<Array<
 // **** user service providers apis
 // const response = await axiosInstance.get(`/user/providers/${selectedServices.join(",")}`);
 export const userSearchServiceProviders = async (selectedServices: string[]): Promise<UserFetchServiceProvidersResponse[]> => {
+    console.log("Searching service providers");
     const response = await axiosInstance.get(`/user/providers`,{
         params : {selectedServices}
     });

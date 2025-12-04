@@ -121,8 +121,8 @@ const SideBox: React.FC<SideBoxProps> = ({ props }) => {
       </div>
 
       <div className="mt-6 border-t pt-6">
-        <h4 className="text-lg font-semibold text-gray-800">Midhun Kalarikkal</h4>
-        <p className="text-sm text-gray-600">Founder, Slotflow</p>
+        {/* <h4 className="text-lg font-semibold text-gray-800">Midhun Kalarikkal</h4> */}
+        <p className="text-sm text-gray-600">We Offer</p>
 
         <blockquote className="text-gray-700 italic text-sm leading-relaxed mt-2">
           "At Slotflow, we're dedicated to simplifying service bookings.
