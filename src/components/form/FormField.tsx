@@ -26,9 +26,9 @@ const FormField = <T extends FieldValues>({
   labelInfo,
   onChange
 }: FormFieldProps<T>) => {
+
   const [show, setShow] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState<number | null>(null);
-
 
   const handlePasswordStrength = (val: string) => {
     if (type === "password" && val) {
@@ -125,7 +125,7 @@ const FormField = <T extends FieldValues>({
             <button
               type="button"
               onClick={() => setShow(!show)}
-              className="absolute inset-y-0 right-0 pr-3 flex items-center text-muted-foreground hover:text-foreground"
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-muted-foreground"
             >
               {show ? <EyeOff /> : <Eye />}
             </button>

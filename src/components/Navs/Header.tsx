@@ -15,6 +15,8 @@ const Header: React.FC = () => {
 
   const themeMode: boolean = useSelector((store: RootState) => store.app.lightTheme);
 
+  console.log("themeMode : ",themeMode);
+
   const changeTheme = (): void => {
     dispatch(toggleTheme());
   }
