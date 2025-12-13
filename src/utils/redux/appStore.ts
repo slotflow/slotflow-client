@@ -1,7 +1,7 @@
+import appReducer from './slices/appSlice';
 import authReducer from "./slices/authSlice";
 import chatReducer from './slices/chatSlice';
 import userReducer from './slices/userSlice';
-import appReducer from './slices/appSlice';
 import adminReducer from './slices/adminSlice';
 import videoReducer from './slices/videoSlice';
 import localStorage from 'redux-persist/lib/storage';
@@ -12,7 +12,7 @@ import { setupAxiosInterceptors } from "@/lib/axiosInterceptor";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 const persistConfig = {
-    key: "root",
+    key: "slotflow",
     storage: localStorage,
 };
 

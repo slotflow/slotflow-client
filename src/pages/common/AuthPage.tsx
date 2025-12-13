@@ -25,9 +25,9 @@ const AuthPage: React.FC<AuthPageProp> = ({ role, formType }) => {
   const beamRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState<"beam" | "map">("beam");
-  const themeMode: boolean = useSelector((state: RootState) => state.app.lightTheme);
+  const lightTheme: boolean = useSelector((state: RootState) => state.app.lightTheme);
 
-  console.log("themeMode : ",themeMode);
+  console.log("lightTheme : ",lightTheme);
 
   useEffect(() => {
     const fadeInOut = (el: HTMLDivElement, onComplete: () => void) => {
@@ -86,12 +86,13 @@ const AuthPage: React.FC<AuthPageProp> = ({ role, formType }) => {
 
   return (
     <div className="h-[100vh] flex">
-      <div className={`w-full md:w-6/12 lg:w-4/12 flex justify-center items-center ${!themeMode ? "bg-[#171717]" : "bg-[#f5f5f5]"}`}>
+
+      <div className={`w-full md:w-6/12 lg:w-4/12 flex justify-center items-center ${lightTheme ? "bg-[#f5f5f5]" : "bg-[#171717]"}`}>
         {role === "ADMIN" ? formMap[0] : formMap[formType]}
       </div>
 
       <div className="w-0 md:w-6/12 lg:w-8/12 relative flex h-full items-center justify-center overflow-hidden bg-[var(--background)]">
-        <Meteors number={30} />
+        {/* <Meteors number={30} />
 
         <div
           ref={beamRef}
@@ -109,7 +110,7 @@ const AuthPage: React.FC<AuthPageProp> = ({ role, formType }) => {
           }`}
         >
           <WorldMapWrapper />
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -3,14 +3,14 @@ import {
     Sun,
     Moon,
 } from 'lucide-react';
+import React from 'react';
 import { SingleTab } from './SingleTab';
-import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logos/logo-transparent.png';
 import { UserData } from '@/utils/interface/sliceInterface';
-import { handleSignoutHelper } from '@/utils/helper/signout';
 import { toggleTheme } from '@/utils/redux/slices/appSlice';
+import { handleSignoutHelper } from '@/utils/helper/signout';
 import { AppDispatch, RootState } from '@/utils/redux/appStore';
 import { SideBarProps } from '@/utils/interface/commonInterface';
 import { useResetRedux } from '@/utils/hooks/systemHooks/useResetRedux';
@@ -33,14 +33,6 @@ const Sidebar: React.FC<SideBarProps> = ({
     }
 
     const basePath = user?.role === "ADMIN" ? "/admin" : user?.role === "PROVIDER" ? "/provider" : "/user";
-
-    useEffect(() => {
-        if (themeMode) {
-            document.documentElement.classList.remove('dark');
-        } else {
-            document.documentElement.classList.add('dark');
-        }
-    }, [themeMode]);
 
     return (
         <div className={` ${sidebarOpen ? 'w-[18%]' : 'w-[5%]'} overflow-y-scroll no-scrollbar border-r transition-all duration-600 flex flex-col bg-[var(--menuBg)]`} >

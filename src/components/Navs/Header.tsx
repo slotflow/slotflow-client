@@ -1,5 +1,5 @@
+import React from 'react';
 import { Button } from '../ui/button';
-import React, { useEffect } from 'react';
 import { Moon, Sun } from 'lucide-react';
 import { navigation } from '@/utils/constants';
 import { useNavigate } from 'react-router-dom';
@@ -15,8 +15,6 @@ const Header: React.FC = () => {
 
   const themeMode: boolean = useSelector((store: RootState) => store.app.lightTheme);
 
-  console.log("themeMode : ",themeMode);
-
   const changeTheme = (): void => {
     dispatch(toggleTheme());
   }
@@ -24,14 +22,6 @@ const Header: React.FC = () => {
   const handleAuthClick = () => {
     dispatch(setAuthModal(true));
   }
-
-  useEffect(() => {
-    if (themeMode) {
-      document.documentElement.classList.remove('dark');
-    } else {
-      document.documentElement.classList.add('dark');
-    }
-  }, [themeMode]);
 
   return (
     <nav className={`w-full bg-[var(--background)] fixed transition-colors duration-300 ease-in-out z-50`}>
