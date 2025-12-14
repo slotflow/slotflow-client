@@ -2,24 +2,26 @@ import { useState } from "react";
 import { Loader } from "lucide-react";
 import { Button } from "../ui/button";
 import { toast } from "react-toastify";
+import FormField from "../form/FormField";
+import { FormButton } from "../form/FormSplits";
 import { PhoneInput } from "../form/phone-input";
-import InputField from "../form/InputFieldWithLable";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
 import { userUpdateInfo } from "@/utils/apis/user.api";
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
+import { slideOut } from "@/utils/helper/gsapAnimationSlide";
 import { providerUpdateInfo } from "@/utils/apis/provider.api";
-import { UserInfoFormData, userInfoZodSchema } from "@/utils/zod/commonZodFields";
+import { AppDispatch, RootState } from "@/utils/redux/appStore";
+import { UserInfoForm, userInfoZodSchema } from "@/utils/zod/commonZodFields";
 
 interface UserInfoCRUDProps {
-    title: string;
-    setOpenUserInfoForm: (open: boolean) => void;
+    onClose: () => void;
+    formRef: React.RefObject<HTMLDivElement | null>;
 }
 
 const UserInfoCRUDForm: React.FC<UserInfoCRUDProps> = ({
-    title,
-    setOpenUserInfoForm,
+    onClose,
+    formRef
 }) => {
     const dispatch = useDispatch<AppDispatch>();
     const authUser = useSelector((store: RootState) => store.auth.authUser);
@@ -32,7 +34,7 @@ const UserInfoCRUDForm: React.FC<UserInfoCRUDProps> = ({
         handleSubmit,
         control,
         formState: { errors, isValid, isSubmitting },
-    } = useForm<UserInfoFormData>({
+    } = useForm<UserInfoForm>({
         resolver: zodResolver(userInfoZodSchema),
         mode: "onChange",
         defaultValues: {
@@ -41,7 +43,13 @@ const UserInfoCRUDForm: React.FC<UserInfoCRUDProps> = ({
         },
     });
 
-    const onSubmit = async (data: UserInfoFormData) => {
+    const handleCloseForm = () => {
+        slideOut(formRef.current, {
+            onComplete: onClose,
+        });
+    };
+
+    const onSubmit = async (data: UserInfoForm) => {
         if (!role) {
             toast.error("User role not found. Please try again.");
             return;
@@ -59,7 +67,7 @@ const UserInfoCRUDForm: React.FC<UserInfoCRUDProps> = ({
             const res = await dispatch(updateFn(data)).unwrap();
             if (res.success) {
                 toast.success(res.message || "Info updated successfully");
-                setOpenUserInfoForm(false);
+                handleCloseForm();
             } else {
                 toast.error(res.message || "Failed to update info");
             }
@@ -71,16 +79,18 @@ const UserInfoCRUDForm: React.FC<UserInfoCRUDProps> = ({
     };
 
     return (
-        <div className="p-4 border w-1/2">
-            <h1 className="my-4 text-xl font-semibold">{title}</h1>
+        <div
+            ref={formRef}
+            className="w-auto md:w-lg rounded-lg bg-[var(--background)] p-6 shadow-xl border-1"
+        >
+            <h3 className="text-lg lg:text-2xl font-bold text-center my-4">Update Info</h3>
             {loading ? (
                 <Loader className="animate-spin size-5" />
             ) : (
                 <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-4">
-                    <InputField<UserInfoFormData>
+                    <FormField<UserInfoForm>
                         label="Username"
                         id="username"
-                        name="username"
                         placeholder="Midhun K Paniker"
                         type="text"
                         required
@@ -111,14 +121,17 @@ const UserInfoCRUDForm: React.FC<UserInfoCRUDProps> = ({
                             </div>
                         )}
                     />
-                    <Button
-                        disabled={!isValid || isSubmitting}
-                        type="submit"
-                        variant="outline"
-                        className="w-10/12 md:w-2/12 text-xs md:text-sm cursor-pointer hover:bg-[var(--mainColor)] hover:text-white border-[var(--mainColor)] flex items-center gap-2"
-                    >
-                        {isSubmitting ? "Updating..." : "Update"}
-                    </Button>
+
+                    <div className="space-y-2">
+                        <FormButton
+                            text="Update"
+                            loading={isSubmitting}
+                            disabled={isSubmitting || !isValid}
+                        />
+                        <Button variant="destructive" className="cursor-pointer w-full" type="button" onClick={handleCloseForm}>
+                            Cancel
+                        </Button>
+                    </div>
                 </form>
             )}
         </div>

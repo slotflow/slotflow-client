@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AppDispatch } from "@/utils/redux/appStore";
 import { FormButton, FormHeading } from "../FormSplits";
 import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
-import { VerifyEmailFormData, verifyEmailZodSchema } from "@/utils/zod/authZod";
+import { VerifyEmailForm, verifyEmailZodSchema } from "@/utils/zod/authZod";
 import { AuthFormType, EmailVerificationFormProps } from "@/utils/interface/commonInterface";
 
 const EmailVerificationForm: React.FC<EmailVerificationFormProps> = ({ role }) => {
@@ -18,7 +18,7 @@ const EmailVerificationForm: React.FC<EmailVerificationFormProps> = ({ role }) =
         register,
         handleSubmit,
         formState: { errors, isSubmitting, isValid },
-    } = useForm<VerifyEmailFormData>({
+    } = useForm<VerifyEmailForm>({
         resolver: zodResolver(verifyEmailZodSchema),
         mode: "onChange",
         defaultValues: {
@@ -26,7 +26,7 @@ const EmailVerificationForm: React.FC<EmailVerificationFormProps> = ({ role }) =
         },
     });
 
-    const onSubmit = async (data: VerifyEmailFormData) => {
+    const onSubmit = async (data: VerifyEmailForm) => {
         if (!role) {
             toast.info("Select your account type.");
             return;
@@ -50,7 +50,7 @@ const EmailVerificationForm: React.FC<EmailVerificationFormProps> = ({ role }) =
                     <FormHeading title="Verify Email" description="An OTP will be sent to this email ID" />
                     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                         <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-                            <FormField<VerifyEmailFormData>
+                            <FormField<VerifyEmailForm>
                                 label="Email Address"
                                 id="email"
                                 placeholder="Enter your registered email"

@@ -10,7 +10,7 @@ import { AppDispatch } from "@/utils/redux/appStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormButton, FormHeading } from "../FormSplits";
 import { handleGoogleLogin } from "@/utils/helper/googleLogin";
-import { LoginFormData, LoginZodSchema } from '@/utils/zod/authZod';
+import { LoginForm, LoginZodSchema } from '@/utils/zod/authZod';
 import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
 import { AuthFormType, LoginFormProps } from "@/utils/interface/commonInterface";
 import { setForgotPassword } from "@/utils/redux/slices/appSlice";
@@ -25,7 +25,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
         register,
         handleSubmit,
         formState: { errors, isSubmitting, isValid },
-    } = useForm<LoginFormData>({
+    } = useForm<LoginForm>({
         resolver: zodResolver(LoginZodSchema),
         mode: "onChange",
         defaultValues: {
@@ -40,7 +40,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
         else if (userRole === "PROVIDER") navigate("/provider/dashboard", { replace: true });
     };
 
-    const onSubmit = async (data: LoginFormData) => {
+    const onSubmit = async (data: LoginForm) => {
         try {
             const res = await dispatch(signin({ ...data, role })).unwrap();
             if (res.success) {
@@ -64,7 +64,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
                     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                         <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
                             <fieldset disabled={isSubmitting} className="space-y-3">
-                                <FormField<LoginFormData>
+                                <FormField<LoginForm>
                                     label="Email Address"
                                     id="email"
                                     placeholder="Enter email address"
@@ -74,7 +74,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
                                     required={true}
                                 />
 
-                                <FormField<LoginFormData>
+                                <FormField<LoginForm>
                                     label="Password"
                                     id="password"
                                     placeholder="Enter password"

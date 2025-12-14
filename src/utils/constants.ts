@@ -75,7 +75,7 @@ import chatImage from '../assets/heroImages/caht.jpg';
 import gCalendar from '../assets/iconImages/gCalendar.png';
 import videoCallImage from '../assets/heroImages/videoCall.jpg';
 import calendarImage from '../assets/heroImages/calendar2.png';;
-import { OptionType } from "@/components/form/SelectFiledWithLabel";
+import { OptionType } from "@/components/form/SelectField";
 import bookingImage from '../assets/heroImages/heroSectionOneImg2.png';
 import { ContactItem } from "./interface/componentInterface/commonComponentInterface";
 
@@ -253,14 +253,6 @@ export const navigation: HeaderCompoenentNavsProps[] = [
   { name: 'About', href: '/about', current: false },
   { name: 'Contact', href: '/contact', current: false },
 ]
-
-// **** Provider plan subscription duration array **** \\
-export const planDurations: { durationName: string; durationMonth: number }[] = [
-  { durationName: "1 Month", durationMonth: 1 },
-  { durationName: "3 Months", durationMonth: 3 },
-  { durationName: "6 Months", durationMonth: 6 },
-  { durationName: "12 Months", durationMonth: 12 }
-];
 
 // **** Tabs for provider profile showing in admin side and provider side **** \\
 export const providerTabs: { tabName: string, admin: boolean, user: boolean }[] = [
@@ -1308,4 +1300,13 @@ export const serviceCategoryOptions: OptionType[] = [
   { label: "Events & Creative Services", value: "Events & Creative Services" },
   { label: "Technology Services", value: "Technology Services" },
   { label: "Real Estate & Property", value: "Real Estate & Property" },
+];
+
+
+// Planduration options
+export const planDurations: OptionType[] = [
+  { label: "1 Month", value: 1 },
+  { label: "3 Months", value: 3 },
+  { label: "6 Months", value: 6 },
+  { label: "1 Year", value: 12 }
 ];

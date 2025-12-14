@@ -9,7 +9,7 @@ import FormField from "@/components/form/FormField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { SelectField } from "@/components/form/SelectFiledWithLabel";
+import { SelectField } from "@/components/form/SelectField";
 import { providerFetchAllAppServices, providerCreateServiceDetails } from "@/utils/apis/provider.api";
 import { serviceCategoryOptions, groupOptions, serviceModeOptions, serviceTypeOptions } from "@/utils/constants";
 import { providerCreateServiceDetailsZodSchema, ProviderCreateServiceDetailsForm } from "@/utils/zod/providerZod";

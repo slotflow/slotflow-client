@@ -9,15 +9,14 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { profileTabs } from '@/utils/constants';
 import { RootState } from '@/utils/redux/appStore';
-// import { ScrollArea } from '@/components/ui/scroll-area';
 import Address from '@/components/common/profile/Address';
 import Profile from '@/components/common/profile/Profile';
-import ProfileHead from '@/components/common/profile/ProfileHead';
 import { userUpdateProfileImage } from '@/utils/apis/user.api';
+import ProfileHead from '@/components/common/profile/ProfileHead';
 import ProviderService from '@/components/provider/ProviderService';
 import DataFetchingError from '@/components/common/DataFetchingError';
-import ProviderAvailability from '@/components/provider/ProviderAvailability';
 import { providerUpdateProfileImage } from '@/utils/apis/provider.api';
+import ProviderAvailability from '@/components/provider/ProviderAvailability';
 
 const AccountPage: React.FC = () => {
 
@@ -79,7 +78,6 @@ const AccountPage: React.FC = () => {
                         ))}
                 </div>
 
-                {/* <ScrollArea className="flex-1 h-[70vh] rounded-md border p-4"> */}
                     {selectedTab === "tab1" && <Profile />}
                     {selectedTab === "tab2" && <Address />}
                     {isProvider && (
@@ -88,7 +86,6 @@ const AccountPage: React.FC = () => {
                             {selectedTab === "tab4" && <ProviderAvailability />}
                         </>
                     )}
-                {/* </ScrollArea> */}
             </div>
         </div>
     );

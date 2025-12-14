@@ -13,7 +13,7 @@ import NotificationBox from '../../common/NotificationBox';
 import { CountryDropdown } from '../../ui/country-dropdown';
 import LocationPicker from '@/components/common/LocationPicker';
 import { Location } from '@/utils/interface/entityInterface/addressInterface';
-import { CreateAddressFormData, createAddressZodSchema } from '@/utils/zod/commonZodFields';
+import { CreateAddressForm, createAddressZodSchema } from '@/utils/zod/commonZodFields';
 import { AddressFormProps } from '@/utils/interface/componentInterface/commonComponentInterface';
 import { addAddressGoogleMapLinkInfo, addAddressGoogleMapLinkInfoHeading } from '@/utils/constants';
 
@@ -37,7 +37,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
         setValue,
         watch,
         formState: { errors, isSubmitting, isValid }
-    } = useForm<CreateAddressFormData>({
+    } = useForm<CreateAddressForm>({
         resolver: zodResolver(createAddressZodSchema),
         mode: "onChange",
         defaultValues: {
@@ -79,11 +79,11 @@ const AddressForm: React.FC<AddressFormProps> = ({
 
 
     useEffect(() => {
-        const cachedData = queryClient.getQueryData<CreateAddressFormData>(["userAddress"]);
+        const cachedData = queryClient.getQueryData<CreateAddressForm>(["userAddress"]);
         if (cachedData) reset(cachedData);
     }, [queryClient, reset]);
 
-    const submitHandler = (data: CreateAddressFormData) => {
+    const submitHandler = (data: CreateAddressForm) => {
         onSubmit({ preventDefault: () => { } } as React.FormEvent<HTMLFormElement>, data);
     };
 
@@ -93,7 +93,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
             <div className="flex flex-col lg:flex-row gap-4 md:gap-6 w-full">
 
                 <div className="flex-1 space-y-4 md:space-y-6 px-6 pt-6 md:p-6">
-                    <FormField<CreateAddressFormData>
+                    <FormField<CreateAddressForm>
                         label="Address Line"
                         id="addressLine"
                         placeholder="Enter address line"
@@ -103,7 +103,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
                         error={errors.addressLine?.message}
                     />
 
-                    <FormField<CreateAddressFormData>
+                    <FormField<CreateAddressForm>
                         label="Landmark"
                         id="landMark"
                         placeholder="Enter landmark"
@@ -138,7 +138,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
                         )}
                     />
 
-                    <FormField<CreateAddressFormData>
+                    <FormField<CreateAddressForm>
                         label="Place"
                         id="place"
                         placeholder="Enter place"
@@ -147,7 +147,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
                         register={register}
                         error={errors.place?.message}
                     />
-                    <FormField<CreateAddressFormData>
+                    <FormField<CreateAddressForm>
                         label="City"
                         id="city"
                         placeholder="Enter city"
@@ -156,7 +156,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
                         register={register}
                         error={errors.city?.message}
                     />
-                    <FormField<CreateAddressFormData>
+                    <FormField<CreateAddressForm>
                         label="District"
                         id="district"
                         placeholder="Enter district"
@@ -165,7 +165,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
                         register={register}
                         error={errors.district?.message}
                     />
-                    <FormField<CreateAddressFormData>
+                    <FormField<CreateAddressForm>
                         label="Pincode"
                         id="pincode"
                         placeholder="000000"
@@ -174,7 +174,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
                         register={register}
                         error={errors.pincode?.message}
                     />
-                    <FormField<CreateAddressFormData>
+                    <FormField<CreateAddressForm>
                         label="State"
                         id="state"
                         placeholder="Enter state"

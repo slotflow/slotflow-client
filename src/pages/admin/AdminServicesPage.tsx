@@ -15,7 +15,7 @@ const AdminServicesPage = () => {
   const [showForm, setShowForm] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
+  useEffect(() => {
     if (showForm && formRef.current) {
       slideIn(formRef.current);
     }

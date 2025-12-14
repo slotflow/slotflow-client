@@ -65,33 +65,6 @@ export interface AuthFormsButtonProps {
 }
 
 
-// **** InputFieldWithLabel common component props interface
-export interface InputFieldProps {
-  label?: string;
-  id: string;
-  placeholder: string;
-  type: string;
-  value: string | number;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  required: boolean;
-  isPassword?: boolean;
-  onHasError?: (hasError: boolean) => void;
-  readonly?: boolean;
-}
-
-
-// **** SelectFieldWithLabel common component props interface
-export interface SelectFieldWithLabelProps {
-  label: string;
-  id: string;
-  value: string | boolean | number;
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  options: string[] | boolean[] | number[] | { label: string; value: string; }[];
-  required?: boolean;
-  onHasError?: (hasError: boolean) => void;
-}
-
-
 // **** InfoDisplay component props interface
 export interface InfoDisplayComponentRowProps {
   defaultValue?: string;

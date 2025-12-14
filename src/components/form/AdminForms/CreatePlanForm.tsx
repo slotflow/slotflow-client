@@ -1,9 +1,9 @@
 import FormField from "../FormField";
 import { useForm } from "react-hook-form";
+import { FormButton } from "../FormSplits";
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SelectField } from "../SelectFiledWithLabel";
-import { FormButton, FormHeading } from "../FormSplits";
+import { SelectField } from "../SelectField";
 import { slideOut } from "@/utils/helper/gsapAnimationSlide";
 import { useAdminPlanActions } from "@/utils/hooks/adminHooks/useAdminPlanActions";
 import { AdminCreatePlanForm, adminCreatePlanZodSchema } from "@/utils/zod/adminZod";
@@ -57,7 +57,7 @@ const CreatePlanForm: React.FC<CreatePlanFormProps> = ({
             ref={formRef}
             className="w-auto md:w-4xl rounded-lg bg-[var(--background)] p-6 shadow-xl border-1"
         >
-            <FormHeading title="Add New Plan" />
+           <h3 className="text-lg lg:text-2xl font-bold text-center my-4">Create New Plan</h3>
             <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                 <FormField<AdminCreatePlanForm>
                     id="planName"

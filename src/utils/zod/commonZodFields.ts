@@ -81,7 +81,7 @@ export const createAddressZodSchema = z.object({
   }),
 });
 
-export type CreateAddressFormData = z.infer<typeof createAddressZodSchema>;
+export type CreateAddressForm = z.infer<typeof createAddressZodSchema>;
 
 
 export const userInfoZodSchema = z.object({
@@ -89,4 +89,11 @@ export const userInfoZodSchema = z.object({
     phone: z.string().min(1, "Phone number is required"),
 });
 
-export type UserInfoFormData = z.infer<typeof userInfoZodSchema>;
+export type UserInfoForm = z.infer<typeof userInfoZodSchema>;
+
+
+export const paymentModeZodSchema = z.object({
+  serviceMode: z.string().min(1, "Please select a service mode"),
+});
+
+export type PaymentModeForm = z.infer<typeof paymentModeZodSchema>;

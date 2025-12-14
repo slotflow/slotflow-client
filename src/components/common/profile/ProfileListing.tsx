@@ -135,7 +135,6 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
                                 <InfoDisplayComponent label="Email Verified" value={providerProfileData.isEmailVerified} isBoolean={true} />
                                 <InfoDisplayComponent label="Account Blocked" value={providerProfileData.isBlocked} isBoolean={true} />
                                 <InfoDisplayComponent label="Admin Verified" value={providerProfileData.isAdminVerified} isBoolean={true} />
-                                <InfoDisplayComponent label="Details Updated On" value={authUser?.updatedAt} formatDate={formatDate} isLast />
                             </>
                         );
                     })()}
@@ -164,7 +163,6 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
                                 <InfoDisplayComponent label="Joined On" value={userProfileData?.createdAt} formatDate={formatDate} />
                                 <InfoDisplayComponent label="Email Verified" value={userProfileData?.isEmailVerified} isBoolean={true} />
                                 <InfoDisplayComponent label="Account Blocked" value={userProfileData?.isBlocked} isBoolean={true} />
-                                <InfoDisplayComponent label="Details Updated On" value={authUser?.updatedAt} formatDate={formatDate} isLast />
                             </>
                         );
                     })()}

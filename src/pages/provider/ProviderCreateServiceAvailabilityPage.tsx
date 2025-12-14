@@ -9,7 +9,7 @@ import { TimePicker } from '@/components/ui/TimePicker';
 import { Check, ChevronRight, Goal } from 'lucide-react';
 import React, { useEffect, FormEvent, useMemo } from 'react';
 import { AppDispatch, RootState } from '@/utils/redux/appStore';
-import { SelectField } from '@/components/form/SelectFiledWithLabel';
+import { SelectField } from '@/components/form/SelectField';
 import { daysOfWeekOptions, serviceDurationsOptions } from '@/utils/constants';
 import { providerCreateServiceAvailabilities } from '@/utils/apis/provider.api';
 import { useAddAvailability } from '@/utils/hooks/providerHooks/useServiceAvailability';

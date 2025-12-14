@@ -9,7 +9,7 @@ import { LucideIcon } from "lucide-react";
 import { ChartConfig } from "@/components/ui/chart";
 import { createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { Provider } from "../entityInterface/providerInterface";
-import { CreateAddressFormData } from "@/utils/zod/commonZodFields";
+import { CreateAddressForm } from "@/utils/zod/commonZodFields";
 import { BaseChartData, ChatComponentProps, TimeRange } from "../commonInterface";
 import { UpdateFileDataRequest, UpdateFileDataResponse } from "../api/commonApiInterface";
 import { AdminFetchProviderAvailabilityResponse, AdminFetchProviderServiceResponse } from "../api/adminProviderApiInterface";
@@ -166,7 +166,7 @@ export interface AddressFormProps {
     heading: string;
     headingSize: string;
     buttonText: string;
-    onSubmit: (e: FormEvent<HTMLFormElement>, data: CreateAddressFormData) => void;
+    onSubmit: (e: FormEvent<HTMLFormElement>, data: CreateAddressForm) => void;
     setHasErrors: (hasError: boolean) => void;
 }
 

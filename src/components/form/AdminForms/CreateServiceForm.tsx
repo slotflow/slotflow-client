@@ -1,9 +1,9 @@
 import FormField from "../FormField";
 import { useForm } from "react-hook-form";
+import { FormButton } from "../FormSplits";
 import { Button } from "@/components/ui/button";
-import { SelectField } from "../SelectFiledWithLabel";
+import { SelectField } from "../SelectField";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormButton, FormHeading } from "../FormSplits";
 import { serviceCategoryOptions } from "@/utils/constants";
 import { slideOut } from "@/utils/helper/gsapAnimationSlide";
 import { handleFormError } from "@/utils/helper/formErrorCatcher";
@@ -59,8 +59,7 @@ const CreateServiceForm: React.FC<CreateServiceFormProps> = ({
       ref={formRef}
       className="w-auto md:w-lg rounded-lg bg-[var(--background)] p-6 shadow-xl border-1"
     >
-      <FormHeading title="Create New Service" />
-
+      <h3 className="text-lg lg:text-2xl font-bold text-center my-4">Create New Service</h3>
       <form
         onSubmit={handleSubmit(onSubmit, handleFormError(setFocus))}
         className="space-y-6"

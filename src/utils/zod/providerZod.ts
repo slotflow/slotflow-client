@@ -120,3 +120,10 @@ export const QueryZodSchema = z.object({
   });
 
 export type QueryForm = z.infer<typeof QueryZodSchema>;
+
+
+export const planDurationZodSchema = z.object({
+  planDuration: z.string().min(1, "Please select a plan duration"),
+});
+
+export type PlanDurationForm = z.infer<typeof planDurationZodSchema>;

@@ -29,7 +29,7 @@ export const signupZodSchema = z
     path: ["confirmPassword"],
   });
 
-export type SignupFormData = z.infer<typeof signupZodSchema>;
+export type SignupForm = z.infer<typeof signupZodSchema>;
 
 
 // Login Schema
@@ -43,7 +43,7 @@ export const LoginZodSchema = z.object({
     .regex(strongPasswordRegex, "Invalid Password"),
 });
 
-export type LoginFormData = z.infer<typeof LoginZodSchema>;
+export type LoginForm = z.infer<typeof LoginZodSchema>;
 
 
 // Verify OTP Schema
@@ -53,7 +53,7 @@ export const verifyOtpZodSchema = z.object({
     .length(6, "OTP must be exactly 6 digits"),
 });
 
-export type VerifyOtpFormData = z.infer<typeof verifyOtpZodSchema>;
+export type VerifyOtpForm = z.infer<typeof verifyOtpZodSchema>;
 
 
 // Reset Password Schema
@@ -76,7 +76,7 @@ export const resetPasswordZodSchema = z
     path: ["confirmPassword"],
   });
 
-export type ResetPasswordFormData = z.infer<typeof resetPasswordZodSchema>;
+export type ResetPasswordForm = z.infer<typeof resetPasswordZodSchema>;
 
 
 // Verify Email Schema
@@ -84,4 +84,4 @@ export const verifyEmailZodSchema = z.object({
   email: z.string().email("Invalid email address"),
 });
 
-export type VerifyEmailFormData = z.infer<typeof verifyEmailZodSchema>;
+export type VerifyEmailForm = z.infer<typeof verifyEmailZodSchema>;
