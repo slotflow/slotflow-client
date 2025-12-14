@@ -5,7 +5,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userBookAnAppointment } from "@/utils/apis/user.api";
 import { SelectField, OptionType } from "../form/SelectField";
-import { PaymentModeForm, paymentModeZodSchema } from "@/utils/zod/commonZodFields";
+import { PaymentModeFormType, paymentModeZodSchema } from "@/utils/zod/commonZodFields";
 
 interface UserPaymentSelect {
   modes: OptionType[];
@@ -28,7 +28,7 @@ const UserPaymentSelection: React.FC<UserPaymentSelect> = ({
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<PaymentModeForm>({
+  } = useForm<PaymentModeFormType>({
     resolver: zodResolver(paymentModeZodSchema),
     defaultValues: {
       serviceMode: modes[0]?.value as string ?? "",
@@ -97,7 +97,7 @@ const UserPaymentSelection: React.FC<UserPaymentSelect> = ({
               Choose Payment Gateway
             </h2>
 
-            <SelectField<PaymentModeForm>
+            <SelectField<PaymentModeFormType>
               id="serviceMode"
               label="Select service mode"
               options={modes}

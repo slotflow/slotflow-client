@@ -11,7 +11,7 @@ import { FormButton, FormHeading } from "../FormSplits";
 import { updateTimer } from "@/utils/redux/slices/appSlice";
 import { resendOtp, verifyOtp } from "@/utils/apis/auth.api";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { VerifyOtpForm, verifyOtpZodSchema } from "@/utils/zod/authZod";
+import { VerifyOtpFormType, verifyOtpZodSchema } from "@/utils/zod/authZod";
 import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
 import { AuthFormType, OtpVerificatioFormProps } from "@/utils/interface/commonInterface";
 
@@ -32,7 +32,7 @@ const OtpVerificatioForm: React.FC<OtpVerificatioFormProps> = ({ role }) => {
         register,
         setValue, formState: { errors, isSubmitting, isValid }
     } =
-        useForm<VerifyOtpForm>({
+        useForm<VerifyOtpFormType>({
             resolver: zodResolver(verifyOtpZodSchema),
             mode: "onChange",
             defaultValues: {
@@ -49,7 +49,7 @@ const OtpVerificatioForm: React.FC<OtpVerificatioFormProps> = ({ role }) => {
         }
     }, [otpTimerIsRunning, dispatch]);
 
-    const onSubmit = async (data: VerifyOtpForm) => {
+    const onSubmit = async (data: VerifyOtpFormType) => {
         if (!verificationToken || !role) {
             toast.error("Something went wrong. Try again.");
             return;

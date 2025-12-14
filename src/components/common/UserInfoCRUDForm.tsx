@@ -12,7 +12,7 @@ import { userUpdateInfo } from "@/utils/apis/user.api";
 import { slideOut } from "@/utils/helper/gsapAnimationSlide";
 import { providerUpdateInfo } from "@/utils/apis/provider.api";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { UserInfoForm, userInfoZodSchema } from "@/utils/zod/commonZodFields";
+import { UserInfoFormType, userInfoZodSchema } from "@/utils/zod/commonZodFields";
 
 interface UserInfoCRUDProps {
     onClose: () => void;
@@ -34,7 +34,7 @@ const UserInfoCRUDForm: React.FC<UserInfoCRUDProps> = ({
         handleSubmit,
         control,
         formState: { errors, isValid, isSubmitting },
-    } = useForm<UserInfoForm>({
+    } = useForm<UserInfoFormType>({
         resolver: zodResolver(userInfoZodSchema),
         mode: "onChange",
         defaultValues: {
@@ -49,7 +49,7 @@ const UserInfoCRUDForm: React.FC<UserInfoCRUDProps> = ({
         });
     };
 
-    const onSubmit = async (data: UserInfoForm) => {
+    const onSubmit = async (data: UserInfoFormType) => {
         if (!role) {
             toast.error("User role not found. Please try again.");
             return;
@@ -88,7 +88,7 @@ const UserInfoCRUDForm: React.FC<UserInfoCRUDProps> = ({
                 <Loader className="animate-spin size-5" />
             ) : (
                 <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-4">
-                    <FormField<UserInfoForm>
+                    <FormField<UserInfoFormType>
                         label="Username"
                         id="username"
                         placeholder="Midhun K Paniker"

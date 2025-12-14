@@ -8,7 +8,7 @@ import { FormButton, FormHeading } from "../FormSplits";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { setForgotPassword } from "@/utils/redux/slices/appSlice";
 import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
-import { ResetPasswordForm, resetPasswordZodSchema } from "@/utils/zod/authZod";
+import { ResetPasswordFormType, resetPasswordZodSchema } from "@/utils/zod/authZod";
 import { AuthFormType, ResetPasswordFormProps } from "@/utils/interface/commonInterface";
 
 const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ role }) => {
@@ -23,7 +23,7 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ role }) => {
         handleSubmit,
         watch,
         formState: { errors, isSubmitting, isValid },
-    } = useForm<ResetPasswordForm>({
+    } = useForm<ResetPasswordFormType>({
         resolver: zodResolver(resetPasswordZodSchema),
         mode: "onChange",
         defaultValues: {
@@ -32,7 +32,7 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ role }) => {
         },
     });
 
-    const onSubmit = async (data: ResetPasswordForm) => {
+    const onSubmit = async (data: ResetPasswordFormType) => {
         if (!role || !verificationToken) {
             toast.error("Something went wrong. Please try again.");
             return;
@@ -65,7 +65,7 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ role }) => {
 
                     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                         <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-                            <FormField<ResetPasswordForm>
+                            <FormField<ResetPasswordFormType>
                                 label="Password"
                                 id="password"
                                 placeholder="Enter new password"
@@ -75,7 +75,7 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ role }) => {
                                 register={register}
                                 error={errors.password?.message}
                             />
-                            <FormField<ResetPasswordForm>
+                            <FormField<ResetPasswordFormType>
                                 label="Confirm Password"
                                 id="confirmPassword"
                                 placeholder="Confirm new password"

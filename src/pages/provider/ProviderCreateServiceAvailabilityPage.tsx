@@ -7,13 +7,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch, useSelector } from 'react-redux';
 import { TimePicker } from '@/components/ui/TimePicker';
 import { Check, ChevronRight, Goal } from 'lucide-react';
+import { SelectField } from '@/components/form/SelectField';
 import React, { useEffect, FormEvent, useMemo } from 'react';
 import { AppDispatch, RootState } from '@/utils/redux/appStore';
-import { SelectField } from '@/components/form/SelectField';
 import { daysOfWeekOptions, serviceDurationsOptions } from '@/utils/constants';
 import { providerCreateServiceAvailabilities } from '@/utils/apis/provider.api';
 import { useAddAvailability } from '@/utils/hooks/providerHooks/useServiceAvailability';
-import { ProviderServiceAvailabilityForm, providerServiceAvailabilityZodSchema } from '@/utils/zod/providerZod';
+import { ProviderServiceAvailabilityFormType, providerServiceAvailabilityZodSchema } from '@/utils/zod/providerZod';
 
 const ProviderCreateServiceAvailabilityPage: React.FC = () => {
 
@@ -28,7 +28,7 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
     setValue,
     getValues,
     formState: { isSubmitting, isValid }
-  } = useForm<ProviderServiceAvailabilityForm>({
+  } = useForm<ProviderServiceAvailabilityFormType>({
     resolver: zodResolver(providerServiceAvailabilityZodSchema),
     mode: 'onChange',
     defaultValues: {
@@ -54,17 +54,17 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
     }
   }, [timeSlots, selectedTimeSlots, setValue]);
 
-   const handleAllSlots = (push: boolean) => {
-        if (push) {
-          if (timeSlots && timeSlots.length > 0) {
-            setValue('selectedTimeSlots', timeSlots.slice(), { shouldDirty: true });
-          } else {
-            toast.error("Please generate slots");
-          }
-        } else {
-          setValue('selectedTimeSlots', [], { shouldDirty: true });
-        }
-      };
+  const handleAllSlots = (push: boolean) => {
+    if (push) {
+      if (timeSlots && timeSlots.length > 0) {
+        setValue('selectedTimeSlots', timeSlots.slice(), { shouldDirty: true });
+      } else {
+        toast.error("Please generate slots");
+      }
+    } else {
+      setValue('selectedTimeSlots', [], { shouldDirty: true });
+    }
+  };
 
   const {
     handleAddAvailability,
@@ -106,7 +106,7 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
             <div className="space-y-4 md:space-y-0 w-full md:flex space-x-2 px-6 pt-6 md:px-6">
               <div className="md:w-6/12">
 
-                <SelectField
+                <SelectField<ProviderServiceAvailabilityFormType>
                   label="Select Day"
                   id="day"
                   register={register}
@@ -115,7 +115,7 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
                 />
               </div>
               <div className="md:w-6/12">
-                <SelectField
+                <SelectField<ProviderServiceAvailabilityFormType>
                   label="Select Duration"
                   id="duration"
                   register={register}

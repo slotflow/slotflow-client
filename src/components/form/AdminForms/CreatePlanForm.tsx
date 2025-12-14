@@ -1,12 +1,12 @@
 import FormField from "../FormField";
 import { useForm } from "react-hook-form";
 import { FormButton } from "../FormSplits";
+import { SelectField } from "../SelectField";
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SelectField } from "../SelectField";
 import { slideOut } from "@/utils/helper/gsapAnimationSlide";
 import { useAdminPlanActions } from "@/utils/hooks/adminHooks/useAdminPlanActions";
-import { AdminCreatePlanForm, adminCreatePlanZodSchema } from "@/utils/zod/adminZod";
+import { AdminCreatePlanFormType, adminCreatePlanZodSchema } from "@/utils/zod/adminZod";
 
 interface CreatePlanFormProps {
     onClose: () => void;
@@ -30,7 +30,7 @@ const CreatePlanForm: React.FC<CreatePlanFormProps> = ({
         handleSubmit,
         formState: { errors, isSubmitting, isValid },
         reset,
-    } = useForm<AdminCreatePlanForm>({
+    } = useForm<AdminCreatePlanFormType>({
         resolver: zodResolver(adminCreatePlanZodSchema),
         mode: "onChange",
         defaultValues: {
@@ -43,7 +43,7 @@ const CreatePlanForm: React.FC<CreatePlanFormProps> = ({
         },
     });
 
-    const onSubmit = async (data: AdminCreatePlanForm) => {
+    const onSubmit = async (data: AdminCreatePlanFormType) => {
         try {
             await handleAdminPlanCreating(data);
             reset();
@@ -59,7 +59,7 @@ const CreatePlanForm: React.FC<CreatePlanFormProps> = ({
         >
            <h3 className="text-lg lg:text-2xl font-bold text-center my-4">Create New Plan</h3>
             <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-                <FormField<AdminCreatePlanForm>
+                <FormField<AdminCreatePlanFormType>
                     id="planName"
                     label="Plan Name"
                     placeholder="Enter Plan Name"
@@ -69,7 +69,7 @@ const CreatePlanForm: React.FC<CreatePlanFormProps> = ({
                     readOnly={false}
                     required={true}
                 />
-                <FormField<AdminCreatePlanForm>
+                <FormField<AdminCreatePlanFormType>
                     id="description"
                     label="Plan Description"
                     placeholder="Enter Plan Description"
@@ -79,7 +79,7 @@ const CreatePlanForm: React.FC<CreatePlanFormProps> = ({
                     readOnly={false}
                     required={true}
                 />
-                <FormField<AdminCreatePlanForm>
+                <FormField<AdminCreatePlanFormType>
                     id="price"
                     label="Plan Price"
                     placeholder="Enter Plan Price"
@@ -92,7 +92,7 @@ const CreatePlanForm: React.FC<CreatePlanFormProps> = ({
 
                 {Array.from({ length: 5 }).map((_, index) => (
 
-                    <FormField<AdminCreatePlanForm>
+                    <FormField<AdminCreatePlanFormType>
                         key={index}
                         label={`Plan Feature ${index + 1}`}
                         id={`features.${index}` as const}
@@ -105,7 +105,7 @@ const CreatePlanForm: React.FC<CreatePlanFormProps> = ({
                     />
                 ))}
 
-                <FormField<AdminCreatePlanForm>
+                <FormField<AdminCreatePlanFormType>
                     id="maxBookingPerMonth"
                     label="Plan Maximum Booking"
                     placeholder="Enter Plan Maximum Booking"
@@ -116,7 +116,7 @@ const CreatePlanForm: React.FC<CreatePlanFormProps> = ({
                     required={true}
                 />
 
-                <SelectField<AdminCreatePlanForm>
+                <SelectField<AdminCreatePlanFormType>
                     id="adVisibility"
                     label="Advertisement Visibility"
                     register={register}

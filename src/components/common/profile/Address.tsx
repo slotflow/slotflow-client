@@ -8,7 +8,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { AppDispatch } from "recharts/types/state/store";
 import { Edit, MapPinHouse, Plus, X } from 'lucide-react';
 import { setAuthUser } from "@/utils/redux/slices/authSlice";
-import { CreateAddressForm } from '@/utils/zod/commonZodFields';
+import { CreateAddressFormType } from '@/utils/zod/commonZodFields';
 import AddressForm from "@/components/form/CommonForms/AddressForm";
 import AddressListing from "@/components/common/profile/AddressListing";
 import { UpdateAddressResponse } from '@/utils/interface/api/commonApiInterface';
@@ -26,7 +26,7 @@ const Address: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
 
-  const handleAAddAddress = async (e: FormEvent<HTMLFormElement>, data: CreateAddressForm) => {
+  const handleAAddAddress = async (e: FormEvent<HTMLFormElement>, data: CreateAddressFormType) => {
 
     e.preventDefault();
     if (hasErrors) {

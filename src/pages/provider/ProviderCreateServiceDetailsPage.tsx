@@ -12,7 +12,7 @@ import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { SelectField } from "@/components/form/SelectField";
 import { providerFetchAllAppServices, providerCreateServiceDetails } from "@/utils/apis/provider.api";
 import { serviceCategoryOptions, groupOptions, serviceModeOptions, serviceTypeOptions } from "@/utils/constants";
-import { providerCreateServiceDetailsZodSchema, ProviderCreateServiceDetailsForm } from "@/utils/zod/providerZod";
+import { providerCreateServiceDetailsZodSchema, ProviderCreateServiceDetailsFormType } from "@/utils/zod/providerZod";
 
 const ProviderCreateServiceDetailsPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -26,7 +26,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
     setValue,
     watch,
     formState: { errors }
-  } = useForm<ProviderCreateServiceDetailsForm>({
+  } = useForm<ProviderCreateServiceDetailsFormType>({
     resolver: zodResolver(providerCreateServiceDetailsZodSchema),
     mode: "onChange",
     defaultValues: {
@@ -70,7 +70,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
     fetchServices();
   }, [serviceCategory]);
 
-  const onSubmit = async (data: ProviderCreateServiceDetailsForm) => {
+  const onSubmit = async (data: ProviderCreateServiceDetailsFormType) => {
     try {
       const res = await dispatch(providerCreateServiceDetails(data)).unwrap();
       if (res.success) {
@@ -91,7 +91,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
           <div className="md:flex w-full space-y-6">
             <div className="space-y-4 w-full space-x-2 px-6 pt-6">
 
-              <SelectField
+              <SelectField<ProviderCreateServiceDetailsFormType>
                 id="serviceCategory"
                 label="Service Category"
                 options={serviceCategoryOptions}
@@ -99,7 +99,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 error={errors.serviceCategory}
               />
 
-              <SelectField
+              <SelectField<ProviderCreateServiceDetailsFormType>
                 id="service"
                 label="Service"
                 options={services}
@@ -107,7 +107,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 error={errors.service}
               />
 
-              <FormField
+              <FormField<ProviderCreateServiceDetailsFormType>
                 label="Service Name"
                 id="serviceName"
                 placeholder="Enter service name"
@@ -116,7 +116,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 error={errors.serviceName?.message}
               />
 
-              <FormField
+              <FormField<ProviderCreateServiceDetailsFormType>
                 label="Service Description"
                 id="serviceDescription"
                 placeholder="Enter description"
@@ -125,7 +125,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 error={errors.serviceDescription?.message}
               />
 
-              <FormField
+              <FormField<ProviderCreateServiceDetailsFormType>
                 label="Service Price"
                 id="servicePrice"
                 placeholder="₹ 1000"
@@ -134,7 +134,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 error={errors.servicePrice?.message}
               />
 
-              <FormField
+              <FormField<ProviderCreateServiceDetailsFormType>
                 label="Service Experience (descriptive)"
                 id="serviceExperience"
                 placeholder="Enter experience"
@@ -143,7 +143,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 error={errors.serviceExperience?.message}
               />
 
-              <FormField
+              <FormField<ProviderCreateServiceDetailsFormType>
                 label="Requirements"
                 id="requirements"
                 placeholder="What do users need?"
@@ -152,7 +152,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 error={errors.requirements?.message}
               />
 
-              <SelectField
+              <SelectField<ProviderCreateServiceDetailsFormType>
                 id="serviceType"
                 label="Service Type"
                 options={serviceTypeOptions}
@@ -160,7 +160,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 error={errors.serviceType}
               />
 
-              <SelectField
+              <SelectField<ProviderCreateServiceDetailsFormType>
                 id="serviceMode"
                 label="Service Mode"
                 options={serviceModeOptions}
@@ -170,7 +170,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
             </div>
             <div className="space-y-4 w-full space-x-2 px-6 md:pt-6 md:px-6">
 
-              <FormField
+              <FormField<ProviderCreateServiceDetailsFormType>
                 label="Intro Video URL"
                 id="videoUrl"
                 placeholder="https://"
@@ -179,7 +179,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 error={errors.videoUrl?.message}
               />
 
-              <FormField
+              <FormField<ProviderCreateServiceDetailsFormType>
                 label="Max Participants"
                 id="maxParticipants"
                 type="number"
@@ -188,7 +188,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 error={errors.maxParticipants?.message}
               />
 
-              <SelectField
+              <SelectField<ProviderCreateServiceDetailsFormType>
                 id="isGroupService"
                 label="Is this a group service?"
                 options={groupOptions}

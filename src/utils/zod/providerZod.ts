@@ -78,7 +78,7 @@ export const providerCreateServiceDetailsZodSchema = z.object({
     .optional(),
 });
 
-export type ProviderCreateServiceDetailsForm = z.infer<  typeof providerCreateServiceDetailsZodSchema>;
+export type ProviderCreateServiceDetailsFormType = z.infer<  typeof providerCreateServiceDetailsZodSchema>;
 
 
 export const providerServiceAvailabilityZodSchema = z.object({
@@ -91,7 +91,7 @@ export const providerServiceAvailabilityZodSchema = z.object({
   selectedTimeSlots: z.array(z.string().min(1).max(30).regex(/^(0[1-9]|1[0-2]):[0-5][0-9] (AM|PM)$/)),
 });
 
-export type ProviderServiceAvailabilityForm = z.infer<typeof providerServiceAvailabilityZodSchema>;
+export type ProviderServiceAvailabilityFormType = z.infer<typeof providerServiceAvailabilityZodSchema>;
 
 
 export const imageFileZodeSchema = z.object({
@@ -109,7 +109,7 @@ export const imageFileZodeSchema = z.object({
     ),
 });
 
-export type ImageFileForm = z.infer<typeof imageFileZodeSchema>;
+export type ImageFileFormType = z.infer<typeof imageFileZodeSchema>;
 
 
 export const QueryZodSchema = z.object({
@@ -119,11 +119,11 @@ export const QueryZodSchema = z.object({
       .max(500, "Query is too long"),
   });
 
-export type QueryForm = z.infer<typeof QueryZodSchema>;
+export type QueryFormType = z.infer<typeof QueryZodSchema>;
 
 
 export const planDurationZodSchema = z.object({
   planDuration: z.string().min(1, "Please select a plan duration"),
 });
 
-export type PlanDurationForm = z.infer<typeof planDurationZodSchema>;
+export type PlanDurationFormType = z.infer<typeof planDurationZodSchema>;

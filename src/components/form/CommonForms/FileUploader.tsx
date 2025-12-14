@@ -1,7 +1,7 @@
-import { Check, Info } from 'lucide-react';
 import { toast } from 'react-toastify';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Check, Info } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -11,7 +11,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { getUploadUrl, uploadToS3 } from '@/utils/apis/s3.api';
 import NotificationBox from '@/components/common/NotificationBox';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
-import { ImageFileForm, imageFileZodeSchema } from '@/utils/zod/providerZod';
+import { ImageFileFormType, imageFileZodeSchema } from '@/utils/zod/providerZod';
 import { FileUploaderProps } from '@/utils/interface/componentInterface/commonComponentInterface';
 
 const FileUploader: React.FC<FileUploaderProps> = ({
@@ -29,7 +29,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
     formState: { errors, isSubmitting, isValid },
     setValue,
     watch,
-  } = useForm<ImageFileForm>({
+  } = useForm<ImageFileFormType>({
     resolver: zodResolver(imageFileZodeSchema),
     defaultValues: {
       file: undefined,
@@ -46,7 +46,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
     }
   };
 
-    const onSubmit: SubmitHandler<ImageFileForm> = async (data) => {
+    const onSubmit: SubmitHandler<ImageFileFormType> = async (data) => {
         const file = data.file;
         if (!file) return;
 

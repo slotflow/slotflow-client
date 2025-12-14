@@ -3,16 +3,16 @@ import { useDispatch } from "react-redux";
 import { FormEvent, useState } from "react";
 import { AppDispatch } from "@/utils/redux/appStore";
 import RightSideBox from "@/components/provider/SideBox";
-import AddressForm from "@/components/form/CommonForms/AddressForm";
-import { CreateAddressForm } from "@/utils/zod/commonZodFields";
 import { providerCreateAddress } from "@/utils/apis/provider.api";
+import AddressForm from "@/components/form/CommonForms/AddressForm";
+import { CreateAddressFormType } from "@/utils/zod/commonZodFields";
 
 const ProviderAddAddressPage = () => {
 
     const dispatch = useDispatch<AppDispatch>()
     const [hasErrors, setHasErrors] = useState(false);
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>, data: CreateAddressForm) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>, data: CreateAddressFormType) => {
         e.preventDefault();
         try {
             if (hasErrors) {

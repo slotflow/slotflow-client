@@ -51,7 +51,7 @@ export const adminCreatePlanZodSchema = z.object({
   }),
 });
 
-export type AdminCreatePlanForm = z.infer<typeof adminCreatePlanZodSchema>;
+export type AdminCreatePlanFormType = z.infer<typeof adminCreatePlanZodSchema>;
 
 
 // Admin Create Service Schema
@@ -67,4 +67,4 @@ export const adminCreateServiceZodSchema = z.object({
   serviceCategory: z.enum(serviceCategoryArray),
 });
 
-export type AdminCreateServiceForm = z.infer<typeof adminCreateServiceZodSchema>;
+export type AdminCreateServiceFormType = z.infer<typeof adminCreateServiceZodSchema>;

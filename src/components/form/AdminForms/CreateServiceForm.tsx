@@ -1,14 +1,14 @@
 import FormField from "../FormField";
 import { useForm } from "react-hook-form";
 import { FormButton } from "../FormSplits";
-import { Button } from "@/components/ui/button";
 import { SelectField } from "../SelectField";
+import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { serviceCategoryOptions } from "@/utils/constants";
 import { slideOut } from "@/utils/helper/gsapAnimationSlide";
 import { handleFormError } from "@/utils/helper/formErrorCatcher";
 import { useAdminServiceActions } from "@/utils/hooks/adminHooks/useAdminServiceActions";
-import { AdminCreateServiceForm, adminCreateServiceZodSchema } from "@/utils/zod/adminZod";
+import { AdminCreateServiceFormType, adminCreateServiceZodSchema } from "@/utils/zod/adminZod";
 
 interface CreateServiceFormProps {
   onClose: () => void;
@@ -33,7 +33,7 @@ const CreateServiceForm: React.FC<CreateServiceFormProps> = ({
     reset,
     setFocus,
     formState: { errors, isSubmitting, isValid },
-  } = useForm<AdminCreateServiceForm>({
+  } = useForm<AdminCreateServiceFormType>({
     resolver: zodResolver(adminCreateServiceZodSchema),
     mode: "onChange",
     defaultValues: {
@@ -42,7 +42,7 @@ const CreateServiceForm: React.FC<CreateServiceFormProps> = ({
     },
   });
 
-  const onSubmit = async (data: AdminCreateServiceForm) => {
+  const onSubmit = async (data: AdminCreateServiceFormType) => {
     try {
       await handleAdminServiceCreating(data);
       reset();
@@ -64,7 +64,7 @@ const CreateServiceForm: React.FC<CreateServiceFormProps> = ({
         onSubmit={handleSubmit(onSubmit, handleFormError(setFocus))}
         className="space-y-6"
       >
-        <FormField<AdminCreateServiceForm>
+        <FormField<AdminCreateServiceFormType>
           id="serviceName"
           label="Service Name"
           placeholder="Enter Service Name"
@@ -74,7 +74,7 @@ const CreateServiceForm: React.FC<CreateServiceFormProps> = ({
           required
         />
 
-        <SelectField
+        <SelectField<AdminCreateServiceFormType>
           id="serviceCategory"
           label="Service Category"
           options={serviceCategoryOptions}

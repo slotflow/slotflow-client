@@ -5,7 +5,7 @@ import SideBox from "@/components/provider/SideBox";
 import FormField from "@/components/form/FormField";
 import { approvalMessages } from "@/utils/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { QueryForm, QueryZodSchema } from "@/utils/zod/providerZod";
+import { QueryFormType, QueryZodSchema } from "@/utils/zod/providerZod";
 
 const ProviderApprovalPendingPage = () => {
 
@@ -14,14 +14,14 @@ const ProviderApprovalPendingPage = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<QueryForm>({
+  } = useForm<QueryFormType>({
     resolver: zodResolver(QueryZodSchema),
     defaultValues: {
       query: "",
     },
   });
 
-  const onSubmit = async (data: QueryForm) => {
+  const onSubmit = async (data: QueryFormType) => {
     try {
       toast.success("Query submitted successfully!");
       console.log("Submitted data:", data);
@@ -45,7 +45,7 @@ const ProviderApprovalPendingPage = () => {
           <p className="mt-4 text-sm">{approvalMessages.footerNote}</p>
 
           <form onSubmit={handleSubmit(onSubmit)} className="mt-4 space-y-4">
-            <FormField<QueryForm>
+            <FormField<QueryFormType>
               label=""
               id="query"
               placeholder="Enter your query here"

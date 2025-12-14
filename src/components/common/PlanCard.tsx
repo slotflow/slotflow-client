@@ -5,11 +5,11 @@ import { CheckIcon } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { planDurations } from "@/utils/constants";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { SelectField } from "../form/SelectField";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { formatNumberToPrice } from "@/utils/helper/formatter";
 import { Plan } from "@/utils/interface/entityInterface/planInterface";
-import { PlanDurationForm, planDurationZodSchema } from "@/utils/zod/providerZod";
+import { PlanDurationFormType, planDurationZodSchema } from "@/utils/zod/providerZod";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
 import { setSubscriptionPlanId, setPaymentSelectionPage, setSubscriptionIsTrailPlan } from "@/utils/redux/slices/providerSlice";
 
@@ -34,7 +34,7 @@ const PlanCard: React.FC<ProviderPlanCardProps> = ({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<PlanDurationForm>({
+  } = useForm<PlanDurationFormType>({
     resolver: zodResolver(planDurationZodSchema),
     defaultValues: {
       planDuration: "",
@@ -87,7 +87,7 @@ const PlanCard: React.FC<ProviderPlanCardProps> = ({
       </CardContent>
 
       {!isTrial && (
-        <SelectField<PlanDurationForm>
+        <SelectField<PlanDurationFormType>
           id="planDuration"
           label="Select Plan Duration"
           options={planDurations}

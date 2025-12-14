@@ -8,7 +8,7 @@ import { AppDispatch } from "@/utils/redux/appStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormButton, FormHeading } from "../FormSplits";
 import { handleGoogleLogin } from "@/utils/helper/googleLogin";
-import { SignupForm, signupZodSchema } from "@/utils/zod/authZod";
+import { SignupFormType, signupZodSchema } from "@/utils/zod/authZod";
 import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
 import { AuthFormType, signUpFormProps } from "@/utils/interface/commonInterface";
 
@@ -22,7 +22,7 @@ const SignUpForm: React.FC<signUpFormProps> = ({ role }) => {
         handleSubmit,
         formState: { errors, isSubmitting, isValid },
         watch,
-    } = useForm<SignupForm>({
+    } = useForm<SignupFormType>({
         resolver: zodResolver(signupZodSchema),
         mode: "onChange",
         defaultValues: {
@@ -33,7 +33,7 @@ const SignUpForm: React.FC<signUpFormProps> = ({ role }) => {
         },
     });
 
-    const onSubmit = async (data: SignupForm) => {
+    const onSubmit = async (data: SignupFormType) => {
         try {
             const res = await dispatch(signup({ ...data, role })).unwrap();
             if(res.success) {
@@ -55,7 +55,7 @@ const SignUpForm: React.FC<signUpFormProps> = ({ role }) => {
                     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                         <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
                             <fieldset disabled={isSubmitting} className="space-y-3">
-                                <FormField<SignupForm>
+                                <FormField<SignupFormType>
                                     label="Username"
                                     id="username"
                                     placeholder="Enter username"
@@ -65,7 +65,7 @@ const SignUpForm: React.FC<signUpFormProps> = ({ role }) => {
                                     error={errors.username?.message}
                                 />
 
-                                <FormField<SignupForm>
+                                <FormField<SignupFormType>
                                     label="Email Address"
                                     id="email"
                                     placeholder="Enter email"
@@ -75,7 +75,7 @@ const SignUpForm: React.FC<signUpFormProps> = ({ role }) => {
                                     error={errors.email?.message}
                                 />
 
-                                <FormField<SignupForm>
+                                <FormField<SignupFormType>
                                     label="Password"
                                     id="password"
                                     placeholder="Enter password"
@@ -86,7 +86,7 @@ const SignUpForm: React.FC<signUpFormProps> = ({ role }) => {
                                     required={true}
                                 />
 
-                                <FormField<SignupForm>
+                                <FormField<SignupFormType>
                                     label="Confirm Password"
                                     id="confirmPassword"
                                     placeholder="Confirm password"
