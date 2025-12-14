@@ -26,15 +26,15 @@ export interface UserUpdateUserInfoResponse extends ApiBaseResponse {
 
 
 // **** Used as the request interface of the user add address api
-export type AddUserAddressRequest = Pick<Address, "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location">;
-export interface UserAddUserAddressResponse extends ApiBaseResponse {
+export type CreateUserAddressRequest = Pick<Address, "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location">;
+export interface UserCreateAddressResponse extends ApiBaseResponse {
     data: Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location" | "updatedAt">;
 }
 
 
 
 // **** Used as the response type of the user fetching api
-export type UserFetchUserAddressResponse = Pick<Address, "_id" | "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "landMark" | "location">;
+export type UserFetchAddressResponse = Pick<Address, "_id" | "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "landMark" | "location">;
 
 
 // **** Used as the response type of the user fetch all services for the service selecting page fetching api
@@ -50,11 +50,12 @@ export interface UserFetchServiceProvidersResponse {
         profileImage: string | null,
         trustedBySlotflow: boolean,
     },
-    service: {
-        serviceCategory: string,
-        serviceName: string,
-        servicePrice: number,
-        categoryName: string
+     serviceDetails: {
+        serviceId: string;
+        service: string;
+        serviceCategory: string;
+        serviceName: string;
+        servicePrice: number;
     }
 }
 
@@ -70,7 +71,7 @@ export type UserFetchProviderAddressResponse = Pick<Address, "userId" | "address
 // **** Used as the response interface of the user fetching service providers service details fetching api
 type FetchServiceDetailsProps = Pick<ProviderService, "serviceName" | "serviceDescription" | "servicePrice" | "serviceExperience" | "videoUrl" | "serviceType" | "serviceMode" | "requirements" | "maxParticipants" | "isGroupService">;
 export interface UserFetchProviderServiceResponse extends FetchServiceDetailsProps {
-    serviceCategory: Pick<Service, "serviceName">
+    service: Pick<Service, "serviceName">
 }
 
 
@@ -110,5 +111,5 @@ export type UserFetchProvidersForChatSidebarResponse = Array<Pick<Provider, "_id
 // **** Address updating interfaces are in common interface file
 
 
-// **** Used as the request type of the user adding review
-export type UserAddReviewRequest = Pick<Review, "reviewText" | "rating" | "bookingId" | "providerId">;
+// **** Used as the request type of the user creating review
+export type UserCreateReviewRequest = Pick<Review, "reviewText" | "rating" | "bookingId" | "providerId">;

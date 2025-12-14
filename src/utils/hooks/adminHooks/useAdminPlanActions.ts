@@ -4,7 +4,7 @@ import { adminAddNewPlan, adminChangePlanBlockStatus } from "../../apis/adminPla
 import { AdminAddNewPlanRequest, AdminChangePlanBlockStatusRequest } from "@/utils/interface/api/adminPlanApiInterface";
 
 interface UseAdminPlanActionsReturnType {
-    handleAdminPlanAdding: (formData: AdminAddNewPlanRequest) => void;
+    handleAdminPlanCreating: (formData: AdminAddNewPlanRequest) => void;
     handleAdminChangePlanStatus: (data: AdminChangePlanBlockStatusRequest) => void;
 }
 
@@ -12,7 +12,7 @@ export const useAdminPlanActions = (): UseAdminPlanActionsReturnType => {
 
   const queryClient = useQueryClient();
 
-  const handleAdminPlanAdding = (formData: AdminAddNewPlanRequest) => {
+  const handleAdminPlanCreating = (formData: AdminAddNewPlanRequest) => {
       adminAddNewPlan(formData)
       .then((res) => {
         if(res.success) {
@@ -38,5 +38,5 @@ export const useAdminPlanActions = (): UseAdminPlanActionsReturnType => {
       });
   }
 
-  return { handleAdminPlanAdding, handleAdminChangePlanStatus };
+  return { handleAdminPlanCreating, handleAdminChangePlanStatus };
 }

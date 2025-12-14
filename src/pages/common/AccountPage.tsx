@@ -13,11 +13,11 @@ import { RootState } from '@/utils/redux/appStore';
 import Address from '@/components/common/profile/Address';
 import Profile from '@/components/common/profile/Profile';
 import ProfileHead from '@/components/common/profile/ProfileHead';
-import { userUpdateUserProfileImage } from '@/utils/apis/user.api';
+import { userUpdateProfileImage } from '@/utils/apis/user.api';
 import ProviderService from '@/components/provider/ProviderService';
 import DataFetchingError from '@/components/common/DataFetchingError';
 import ProviderAvailability from '@/components/provider/ProviderAvailability';
-import { providerUpdateProviderProfileImage } from '@/utils/apis/provider.api';
+import { providerUpdateProfileImage } from '@/utils/apis/provider.api';
 
 const AccountPage: React.FC = () => {
 
@@ -27,8 +27,8 @@ const AccountPage: React.FC = () => {
     const isProvider = authUser?.role === "PROVIDER";
 
     const updateProfileImageApiFunction = isProvider
-        ? providerUpdateProviderProfileImage
-        : userUpdateUserProfileImage;
+        ? providerUpdateProfileImage
+        : userUpdateProfileImage;
 
     if (!authUser) return <DataFetchingError message="User not found" />;
 

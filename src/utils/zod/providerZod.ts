@@ -1,9 +1,10 @@
 import z from "zod";
-import { serviceModeArray, serviceTypeArray } from "../constants";
+import { serviceCategoryArray, serviceModeArray, serviceTypeArray } from "../constants";
 import { serviceExperienceRegex, serviceDescriptionRegex, serviceNameRegex } from "./regex";
 
-// Provider add service details controller zod schema
-export const providerAddServiceDetailsZodSchema = z.object({
+export const providerCreateServiceDetailsZodSchema = z.object({
+  serviceCategory: z.enum(serviceCategoryArray),
+  
   serviceName: z
     .string()
     .min(4, "Service name must be at least 4 characters")
@@ -45,7 +46,7 @@ export const providerAddServiceDetailsZodSchema = z.object({
       "Invalid experience. Only alphanumeric characters, spaces, and symbols allowed (1–500 chars)."
     ),
 
-  serviceCategory: z
+  service: z
     .string()
     .min(1, "Service Category ID is required")
     .max(100, "Service Category ID cannot exceed 100 characters"),
@@ -77,7 +78,7 @@ export const providerAddServiceDetailsZodSchema = z.object({
     .optional(),
 });
 
-export type ProviderAddServiceDetailsForm = z.infer<  typeof providerAddServiceDetailsZodSchema>;
+export type ProviderCreateServiceDetailsForm = z.infer<  typeof providerCreateServiceDetailsZodSchema>;
 
 
 export const providerServiceAvailabilityZodSchema = z.object({

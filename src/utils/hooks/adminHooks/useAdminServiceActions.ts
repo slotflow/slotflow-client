@@ -4,7 +4,7 @@ import { adminAddNewService, adminChangeServiceBlockStatus } from "../../apis/ad
 import { AdminAddNewAppServiceRequest, AdminChangeServiceBlockStatusRequest } from "@/utils/interface/api/adminServiceApiInterface";
 
 interface UseAdminServiceActionReturnType {
-  handleAdminServiceAdding: (data: AdminAddNewAppServiceRequest) => void;
+  handleAdminServiceCreating: (data: AdminAddNewAppServiceRequest) => void;
   handleAdminChangeServiceStatus: (data: AdminChangeServiceBlockStatusRequest) => void;
 }
 
@@ -12,16 +12,15 @@ export const useAdminServiceActions = (): UseAdminServiceActionReturnType => {
 
   const queryClient = useQueryClient();
 
-  const handleAdminServiceAdding = ({ serviceName }: AdminAddNewAppServiceRequest) => {
-    adminAddNewService({ serviceName })
+  const handleAdminServiceCreating = ({ serviceName, serviceCategory }: AdminAddNewAppServiceRequest) => {
+    adminAddNewService({ serviceName, serviceCategory })
       .then((res) => {
         if(res.success) {
           toast.success(res.message);
           queryClient.invalidateQueries({ queryKey: ["appServices"] });
         }
       })
-      .catch(() => {
-      });
+      .catch(() => {});
   };
 
   const handleAdminChangeServiceStatus = ({ serviceId, isBlocked }: AdminChangeServiceBlockStatusRequest) => {
@@ -38,5 +37,5 @@ export const useAdminServiceActions = (): UseAdminServiceActionReturnType => {
   }
 
 
-  return { handleAdminServiceAdding, handleAdminChangeServiceStatus };
+  return { handleAdminServiceCreating, handleAdminChangeServiceStatus };
 }

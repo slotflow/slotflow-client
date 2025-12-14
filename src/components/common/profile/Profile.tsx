@@ -3,11 +3,11 @@ import { useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { RootState } from "@/utils/redux/appStore";
 import { Edit, UserRoundPen, X } from "lucide-react";
-import { userFetchUserProfileDetails } from "@/utils/apis/user.api";
+import { userFetchProfileDetails } from "@/utils/apis/user.api";
+import UserInfoCRUDForm from "@/components/common/UserInfoCRUDForm";
 import ProfileListing from "@/components/common/profile/ProfileListing";
 import { handleUpdatedAtCheck } from "@/utils/helper/checkUpdatedAtDate";
-import { providerFetchProviderProfileDetails } from "@/utils/apis/provider.api";
-import UserInfoAddingOrUpdating from "@/components/common/UserInfoAddingOrUpdating";
+import { providerFetchProfileDetails } from "@/utils/apis/provider.api";
 
 const Profile: React.FC = () => {
 
@@ -16,8 +16,8 @@ const Profile: React.FC = () => {
   const isProvider = authUser?.role === "PROVIDER";
 
   const fetchApiFunction = isProvider
-    ? providerFetchProviderProfileDetails
-    : userFetchUserProfileDetails;
+    ? providerFetchProfileDetails
+    : userFetchProfileDetails;
 
   const shimmerRow = isProvider ? 8 : 6;
 
@@ -60,7 +60,7 @@ const Profile: React.FC = () => {
       />
 
       {openUserInfoForm && (
-        <UserInfoAddingOrUpdating
+        <UserInfoCRUDForm
           title="Update your username and phone"
           setOpenUserInfoForm={setOpenUserInfoForm}
         />

@@ -41,7 +41,7 @@ const ProviderServiceDetails: React.FC<ProviderServiceDetailsComponentProps> = (
         <div className="border rounded-md overflow-hidden w-full mt-2 md:mt-0">
             <table className="table-auto w-full">
                 <tbody className="w-1/2">
-                    <InfoDisplayComponent label="Category" value={data?.serviceCategory?.serviceName} />
+                    <InfoDisplayComponent label="Category" value={data?.service?.serviceName} />
                     <InfoDisplayComponent label="Name" value={data?.serviceName} />
                     <InfoDisplayComponent label="Description" value={data?.serviceDescription} />
                     {data?.isGroupService && (

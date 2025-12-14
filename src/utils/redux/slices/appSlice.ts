@@ -14,7 +14,7 @@ const initialState: appState = {
 }
 
 const stateSlice = createSlice({
-    name: "state",
+    name: "app",
     initialState,
     reducers: {
         toggleTheme: (state) => {

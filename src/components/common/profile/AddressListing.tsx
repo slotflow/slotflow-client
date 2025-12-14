@@ -6,14 +6,14 @@ import InfoDisplayComponent from '../InfoDisplayComponent';
 import ProfileDetailsShimmer from '@/components/shimmers/ProfileDetailsShimmer';
 import { AdminFetchddressResponse } from '@/utils/interface/api/commonApiInterface';
 import { ProviderFetchAddressResponse } from '@/utils/interface/api/providerApiInterface';
-import { UserFetchProviderAddressResponse, UserFetchUserAddressResponse } from '@/utils/interface/api/userApiInterface';
+import { UserFetchProviderAddressResponse, UserFetchAddressResponse } from '@/utils/interface/api/userApiInterface';
 
 interface UserOrProviderAddressDetailsComponentProps {
     userOrProviderId?: string;
     fetchApiFunction: (userOrProviderId?: string) => Promise<
         AdminFetchddressResponse |
         ProviderFetchAddressResponse |
-        UserFetchUserAddressResponse |
+        UserFetchAddressResponse |
         UserFetchProviderAddressResponse
     >;
     queryKey: string;

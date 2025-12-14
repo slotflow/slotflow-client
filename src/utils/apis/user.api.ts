@@ -1,11 +1,11 @@
 import { 
-    UserAddReviewRequest,
-    AddUserAddressRequest, 
+    UserCreateReviewRequest,
+    CreateUserAddressRequest, 
+    UserFetchAddressResponse, 
     UserUpdateUserInfoRequest,
+    UserCreateAddressResponse,
     UserUpdateUserInfoResponse,
-    UserAddUserAddressResponse,
     UserBookAppointmentResponse, 
-    UserFetchUserAddressResponse, 
     UserBookAnAppointmentRequest, 
     UserFetchAllServicesResponse,
     UpdateUserProfileImageResponse, 
@@ -27,19 +27,19 @@ import { ApiBaseResponse, FetchFunctionParams, ApiPaginatedResponse } from "../i
 import { FetchBookingDetailsResponse, FetchBookingsResponse, FetchOnlineBookingParams, FetchOnlineBookingsForUserResponse, FetchPaymentsResponse, FetchReviewsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, UpdateAddressRequest, UpdateAddressResponse, ValidateRoomId } from "../interface/api/commonApiInterface";
 
 // **** User profile apis
-export const userFetchUserProfileDetails = async (): Promise<UserFetchUserProfileDetailsResponse> => {
+export const userFetchProfileDetails = async (): Promise<UserFetchUserProfileDetailsResponse> => {
     const response = await axiosInstance.get('/user/profile');
     return response.data.data;
 }
 
-export const userUpdateUserProfileImage = createAsyncThunk<UpdateUserProfileImageResponse, FormData>("/user/updateProfileImage",
+export const userUpdateProfileImage = createAsyncThunk<UpdateUserProfileImageResponse, FormData>("/user/updateProfileImage",
     async (payload: FormData) => {
         const response = await axiosInstance.post('/user/profile/image', payload);
         return response.data;
     }
 )
 
-export const userUpdateUserInfo = createAsyncThunk<UserUpdateUserInfoResponse, UserUpdateUserInfoRequest>('/user/updaterUserInfo',
+export const userUpdateInfo = createAsyncThunk<UserUpdateUserInfoResponse, UserUpdateUserInfoRequest>('/user/updaterUserInfo',
     async (data: UserUpdateUserInfoRequest) => {
         const response = await axiosInstance.patch('/user/profile', data);
         return response.data;
@@ -48,18 +48,17 @@ export const userUpdateUserInfo = createAsyncThunk<UserUpdateUserInfoResponse, U
 
 
 // **** user address apis
-export const userAddUserAddress = async (data: AddUserAddressRequest): Promise<UserAddUserAddressResponse> => {
-    console.log("creating address");
+export const userCreateUserAddress = async (data: CreateUserAddressRequest): Promise<UserCreateAddressResponse> => {
     const response = await axiosInstance.post('/user/addresses', data);
     return response.data;
 }
 
-export const userFetchUserAddress = async (): Promise<UserFetchUserAddressResponse> => {
+export const userFetchAddress = async (): Promise<UserFetchAddressResponse> => {
     const response = await axiosInstance.get('/user/address');
     return response.data.data;
 }
 
-export const userUpdateUserAddress = async (data: UpdateAddressRequest): Promise<UpdateAddressResponse> => {
+export const userUpdateAddress = async (data: UpdateAddressRequest): Promise<UpdateAddressResponse> => {
     const response = await axiosInstance.patch(`/user/addresses/${data._id}`, data);
     return response.data;
 }
@@ -75,7 +74,6 @@ export const userFetchAllServicesForServiceSelectPage = async (): Promise<Array<
 // **** user service providers apis
 // const response = await axiosInstance.get(`/user/providers/${selectedServices.join(",")}`);
 export const userSearchServiceProviders = async (selectedServices: string[]): Promise<UserFetchServiceProvidersResponse[]> => {
-    console.log("Searching service providers");
     const response = await axiosInstance.get(`/user/providers`,{
         params : {selectedServices}
     });
@@ -160,7 +158,7 @@ export const UserFetchProvidersForChatSideBar = async () : Promise<UserFetchProv
 
 
 // user review api
-export const userAddReview = async (data: UserAddReviewRequest): Promise<ApiBaseResponse> => {
+export const userCreateReview = async (data: UserCreateReviewRequest): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.post('/user/reviews/', data );
     return response.data;
 }

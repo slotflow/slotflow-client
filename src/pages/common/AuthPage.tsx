@@ -92,7 +92,7 @@ const AuthPage: React.FC<AuthPageProp> = ({ role, formType }) => {
       </div>
 
       <div className="w-0 md:w-6/12 lg:w-8/12 relative flex h-full items-center justify-center overflow-hidden bg-[var(--background)]">
-        {/* <Meteors number={30} />
+        <Meteors number={30} />
 
         <div
           ref={beamRef}
@@ -110,7 +110,7 @@ const AuthPage: React.FC<AuthPageProp> = ({ role, formType }) => {
           }`}
         >
           <WorldMapWrapper />
-        </div> */}
+        </div>
       </div>
     </div>
   );

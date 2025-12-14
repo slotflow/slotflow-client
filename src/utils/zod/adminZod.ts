@@ -1,5 +1,6 @@
 import z from "zod";
 import { descriptionRegex, planNameRegex, appServiceNameRegex } from "./regex";
+import { serviceCategoryArray } from "../constants";
 
 // Admin Create Plan Schema
 export const adminCreatePlanZodSchema = z.object({
@@ -63,6 +64,7 @@ export const adminCreateServiceZodSchema = z.object({
       appServiceNameRegex,
       "Service name can only contain letters, numbers, and spaces"
     ),
+  serviceCategory: z.enum(serviceCategoryArray),
 });
 
 export type AdminCreateServiceForm = z.infer<typeof adminCreateServiceZodSchema>;

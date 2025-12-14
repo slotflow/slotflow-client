@@ -1,12 +1,12 @@
 import React from "react";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
+import FormField from "../form/FormField";
 import { Button } from "@/components/ui/button";
-import { userAddReview } from "@/utils/apis/user.api";
+import { userCreateReview } from "@/utils/apis/user.api";
 import { useDispatch, useSelector } from "react-redux";
-import InputFieldWithLable from "../form/InputFieldWithLable";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { toggleReviewAddForm } from "@/utils/redux/slices/userSlice";
+import { toggleReviewCreateForm } from "@/utils/redux/slices/userSlice";
 import { Review } from "@/utils/interface/entityInterface/reviewInterface";
 import { useModalAnimation } from "@/utils/hooks/systemHooks/useModalAnimation";
 
@@ -19,7 +19,7 @@ const ReviewForm: React.FC = () => {
     );
 
     const { closeModal, modalRef } = useModalAnimation(() => {
-        dispatch(toggleReviewAddForm({ id: null, isOpen: false, providerId: null }));
+        dispatch(toggleReviewCreateForm({ id: null, isOpen: false, providerId: null }));
     });
 
     const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -45,7 +45,7 @@ const ReviewForm: React.FC = () => {
         }
 
         try {
-            const res = await userAddReview({
+            const res = await userCreateReview({
                 bookingId: selectedBookingId,
                 reviewText,
                 rating,
@@ -54,12 +54,10 @@ const ReviewForm: React.FC = () => {
 
             if (res.success) {
                 toast.success(res.message);
-                dispatch(toggleReviewAddForm({ id: null, isOpen: false, providerId: null }));
-            } else {
-                toast.error(res.message || "Review adding failed");
-            }
+                dispatch(toggleReviewCreateForm({ id: null, isOpen: false, providerId: null }));
+            } 
         } catch {
-            toast.error("Review adding failed");
+            toast.error("Review creating failed");
         }
     };
 
@@ -75,7 +73,7 @@ const ReviewForm: React.FC = () => {
                 >
                     <h4 className="text-xl">Review Form</h4>
 
-                    <InputFieldWithLable<ReviewFormValues>
+                    <FormField<ReviewFormValues>
                         label="Review"
                         id="reviewText"
                         placeholder="Write your review..."
@@ -85,7 +83,7 @@ const ReviewForm: React.FC = () => {
                         error={errors.reviewText?.message}
                     />
 
-                    <InputFieldWithLable<ReviewFormValues>
+                    <FormField<ReviewFormValues>
                         label="Rating"
                         id="rating"
                         placeholder="Enter rating (1-5)"

@@ -4,17 +4,17 @@ import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "@/utils/redux/appStore";
 import { useQueryClient } from "@tanstack/react-query";
 import { connectVideoSocket } from "@/utils/apis/video.api";
-import { toggleReviewAddForm } from "@/utils/redux/slices/userSlice";
+import { toggleReviewCreateForm } from "@/utils/redux/slices/userSlice";
 import { ValidateRoomId } from "@/utils/interface/api/commonApiInterface";
 import { Booking } from "@/utils/interface/entityInterface/bookingInterface";
-import { UserAddReviewRequest } from "@/utils/interface/api/userApiInterface";
-import { userAddReview, userCancelBooking, userValidateRoomId } from "@/utils/apis/user.api";
+import { UserCreateReviewRequest } from "@/utils/interface/api/userApiInterface";
+import { userCreateReview, userCancelBooking, userValidateRoomId } from "@/utils/apis/user.api";
 
 interface UseUserBookingActionsCustomHookReturnType {
     handleUserCancelBooking: (bookingId: Booking["_id"]) => void;
     handleUserJoinCall: (data: ValidateRoomId) => void;
     handleNavigateToBookingDetailPage: (bookingId: Booking["_id"]) => void;
-    handleAddReview: (data: UserAddReviewRequest) => void;
+    handleAddReview: (data: UserCreateReviewRequest) => void;
     handleReviewAddFormToggle: (e: React.MouseEvent<HTMLDivElement>, bookingId: string, providerId: string) => void;
 }
 
@@ -55,8 +55,8 @@ export const useUserBookingActions = (): UseUserBookingActionsCustomHookReturnTy
         navigate(`/user/bookings/${bookingId}`)
     }
 
-    const handleAddReview = async ({ bookingId, rating, reviewText, providerId }: UserAddReviewRequest) => {
-        await userAddReview({ bookingId, rating, reviewText, providerId })
+    const handleAddReview = async ({ bookingId, rating, reviewText, providerId }: UserCreateReviewRequest) => {
+        await userCreateReview({ bookingId, rating, reviewText, providerId })
             .then((res) => {
                 if (res.success) {
                     queryClient.invalidateQueries({ queryKey: ["reviews"] });
@@ -70,7 +70,7 @@ export const useUserBookingActions = (): UseUserBookingActionsCustomHookReturnTy
 
     const handleReviewAddFormToggle = (e: React.MouseEvent<HTMLDivElement>, bookingId: string, providerId: string) => {
         e.preventDefault();
-        dispatch(toggleReviewAddForm({
+        dispatch(toggleReviewCreateForm({
             id: bookingId,
             isOpen: true,
             providerId: providerId

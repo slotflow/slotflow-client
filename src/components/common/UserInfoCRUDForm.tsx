@@ -1,4 +1,3 @@
-import { z } from "zod";
 import { useState } from "react";
 import { Loader } from "lucide-react";
 import { Button } from "../ui/button";
@@ -8,23 +7,17 @@ import InputField from "../form/InputFieldWithLable";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
-import { userUpdateUserInfo } from "@/utils/apis/user.api";
+import { userUpdateInfo } from "@/utils/apis/user.api";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { providerUpdateProviderInfo } from "@/utils/apis/provider.api";
+import { providerUpdateInfo } from "@/utils/apis/provider.api";
+import { UserInfoFormData, userInfoZodSchema } from "@/utils/zod/commonZodFields";
 
-interface UserInfoAddingOrUpdatingProps {
+interface UserInfoCRUDProps {
     title: string;
     setOpenUserInfoForm: (open: boolean) => void;
 }
 
-const userInfoSchema = z.object({
-    username: z.string().min(1, "Username is required"),
-    phone: z.string().min(1, "Phone number is required"),
-});
-
-type UserInfoFormData = z.infer<typeof userInfoSchema>;
-
-const UserInfoAddingOrUpdating: React.FC<UserInfoAddingOrUpdatingProps> = ({
+const UserInfoCRUDForm: React.FC<UserInfoCRUDProps> = ({
     title,
     setOpenUserInfoForm,
 }) => {
@@ -40,7 +33,7 @@ const UserInfoAddingOrUpdating: React.FC<UserInfoAddingOrUpdatingProps> = ({
         control,
         formState: { errors, isValid, isSubmitting },
     } = useForm<UserInfoFormData>({
-        resolver: zodResolver(userInfoSchema),
+        resolver: zodResolver(userInfoZodSchema),
         mode: "onChange",
         defaultValues: {
             username: authUser?.username || "",
@@ -56,8 +49,8 @@ const UserInfoAddingOrUpdating: React.FC<UserInfoAddingOrUpdatingProps> = ({
         setLoading(true);
         try {
             let updateFn;
-            if (role === "PROVIDER") updateFn = providerUpdateProviderInfo;
-            else if (role === "USER") updateFn = userUpdateUserInfo;
+            if (role === "PROVIDER") updateFn = providerUpdateInfo;
+            else if (role === "USER") updateFn = userUpdateInfo;
             else {
                 toast.error("Invalid user role");
                 return;
@@ -132,4 +125,4 @@ const UserInfoAddingOrUpdating: React.FC<UserInfoAddingOrUpdatingProps> = ({
     );
 };
 
-export default UserInfoAddingOrUpdating;
+export default UserInfoCRUDForm;

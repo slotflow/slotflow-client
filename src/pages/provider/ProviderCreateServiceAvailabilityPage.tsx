@@ -11,7 +11,7 @@ import React, { useEffect, FormEvent, useMemo } from 'react';
 import { AppDispatch, RootState } from '@/utils/redux/appStore';
 import { SelectField } from '@/components/form/SelectFiledWithLabel';
 import { daysOfWeekOptions, serviceDurationsOptions } from '@/utils/constants';
-import { providerAddProviderServiceAvailabilities } from '@/utils/apis/provider.api';
+import { providerCreateServiceAvailabilities } from '@/utils/apis/provider.api';
 import { useAddAvailability } from '@/utils/hooks/providerHooks/useServiceAvailability';
 import { ProviderServiceAvailabilityForm, providerServiceAvailabilityZodSchema } from '@/utils/zod/providerZod';
 
@@ -84,7 +84,7 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
       toast.info("You didn't add any availability.");
       return;
     }
-    dispatch(providerAddProviderServiceAvailabilities({ data: availabilities }))
+    dispatch(providerCreateServiceAvailabilities({ data: availabilities }))
       .unwrap()
       .then((res) => {
         if (res.success) {

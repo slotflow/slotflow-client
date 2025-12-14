@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
-import { addService } from "@/utils/redux/slices/userSlice";
+import { pushService } from "@/utils/redux/slices/userSlice";
 import CommonButton from "@/components/common/CommonButton";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import DataFetchingError from "@/components/common/DataFetchingError";
@@ -26,9 +26,9 @@ const UserServiceSelectPage = () => {
     const handleServiceToggle = (serviceId: string) => {
         const currentServices = selectedServices ?? [];
         if (currentServices.includes(serviceId)) {
-            dispatch(addService(currentServices.filter((id) => id !== serviceId)));
+            dispatch(pushService(currentServices.filter((id) => id !== serviceId)));
         } else {
-            dispatch(addService([...currentServices, serviceId]));
+            dispatch(pushService([...currentServices, serviceId]));
         }
     };
 

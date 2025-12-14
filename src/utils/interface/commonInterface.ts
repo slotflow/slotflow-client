@@ -167,8 +167,6 @@ export interface CommonTableComponentProps<T> {
   parentDivCalssName?: string;
   fetchApiFunction: (params?: FetchFunctionParams) => Promise<ApiPaginatedResponse<T>>;
   queryKey: string;
-  heading?: string;
-  headingClassName?: string;
   column: ColumnDef<T>[];
   columnsCount: number;
   id?: string;

@@ -5,11 +5,11 @@ import { toast } from 'react-toastify';
 import { CheckIcon } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { planDurations } from '@/utils/constants';
-import SelectFiledWithLabel from '../form/SelectFiledWithLabel';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card';
-import { Plan } from '@/utils/interface/entityInterface/planInterface';
-import { setPaymentSelectionPage, setSubscriptionIsTrailPlan, setSubscriptionPlanDuration, setSubscriptionPlanId } from '@/utils/redux/slices/providerSlice';
 import { formatNumberToPrice } from '@/utils/helper/formatter';
+import SelectFiledWithLabel from '../form/SelectFiledWithLabel';
+import { Plan } from '@/utils/interface/entityInterface/planInterface';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card';
+import { setPaymentSelectionPage, setSubscriptionIsTrailPlan, setSubscriptionPlanDuration, setSubscriptionPlanId } from '@/utils/redux/slices/providerSlice';
 
 type CardProps = Pick<Plan, "_id" | "planName" | "description" | "features" | "price">;
 interface ProviderPlanCardProps {
@@ -31,7 +31,6 @@ const PlanCard: React.FC<ProviderPlanCardProps> = ({ plan, isTrial, dummy, popul
 
     const handleGoToPayment = (e: React.MouseEvent<HTMLButtonElement>, planName: string) => {
         e.preventDefault();
-        console.log("planName : ",planName);
         if (planName !== "Free" && (!selectedPlanDuration || !selectedPlanDuration.trim())) { // TODO PLANNAME
             toast.warning("Please select an plan duration");
             return;

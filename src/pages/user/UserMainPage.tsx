@@ -17,7 +17,7 @@ const UserMainPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((store: RootState) => store.auth.authUser);
   const { sidebarOpen } = useSelector((store: RootState) => store.app);
-  const { isReviewAddFormOpen } = useSelector((store: RootState) => store.user);
+  const { isReviewCreateFormOpen } = useSelector((store: RootState) => store.user);
 
   return (
     <div className="flex h-screen bg-[var(--background)] transition all duration-300">
@@ -31,7 +31,7 @@ const UserMainPage = () => {
           {location?.pathname === '/user/dashboard' && (
             <FilterRightSideBar onClose={() => dispatch(toggleFilterSideBar())} />
           )}
-          {isReviewAddFormOpen && (
+          {isReviewCreateFormOpen && (
             <ReviewForm />
           )}
         </div>

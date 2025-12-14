@@ -4,7 +4,7 @@ import { ServiceModeType, ServiceTypeType } from "../commonInterface";
 export interface ProviderService {
     _id: string;
     providerId: string;
-    serviceCategory: string;
+    service: string; // id of the appservice
     serviceName: string;
     serviceDescription: string;
     servicePrice: number;

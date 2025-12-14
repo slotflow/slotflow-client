@@ -1,5 +1,5 @@
 export const addressLineRegex = /^[a-zA-Z0-9 .,#-]{10,150}$/;
-export const landMarkRegex = /^[A-Za-z0-9 ,./#@()\-]{5,150}$/
+export const landMarkRegex = /^[A-Za-z0-9 ,./#@()-]{5,150}$/;
 export const phoneRegex = /^\+?[0-9\s\-().]{7,20}$/;
 export const placeRegex = /^[a-zA-Z .-]{3,50}$/;
 export const cityRegex = /^[a-zA-Z ]{3,50}$/;

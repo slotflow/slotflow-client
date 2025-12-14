@@ -109,6 +109,17 @@ export const paymentForArray = [
 
 export const paymentGatewayArray = ["Stripe", "Razorpay", "Paypal"] as const;
 
+export const serviceCategoryArray = ["Healthcare & Wellness",
+  "Professional Services",
+  "Education & Training",
+  "Home & Maintenance",
+  "Beauty & Personal Care",
+  "Fitness & Lifestyle",
+  "Automotive Services",
+  "Events & Creative Services",
+  "Technology Services",
+  "Real Estate & Property",] as const;
+
 
 // **** Routes for admin **** \\
 export const adminRoutes: Route[] = [
@@ -1072,7 +1083,7 @@ export const AppointmentsStatsMapForAdmin: StatsMapForAdminInterface[] = [
 ];
 
 
-// Address adding, service details adding and service availability adding page side box data
+// Address creating, service details creating and service availability creating page side box data
 export const progressBars: { [key: number]: boolean[] } = {
   1: [true, false, false, false],
   2: [true, true, false, false],
@@ -1283,4 +1294,18 @@ export const serviceDurationsOptions: OptionType[] = [
   { label: "6 hours", value: 360 },
   { label: "7 hours", value: 420 },
   { label: "8 hours", value: 480 }
+];
+
+// Service Categories Options
+export const serviceCategoryOptions: OptionType[] = [
+  { label: "Healthcare & Wellness", value: "Healthcare & Wellness" },
+  { label: "Professional Services", value: "Professional Services" },
+  { label: "Education & Training", value: "Education & Training" },
+  { label: "Home & Maintenance", value: "Home & Maintenance" },
+  { label: "Beauty & Personal Care", value: "Beauty & Personal Care" },
+  { label: "Fitness & Lifestyle", value: "Fitness & Lifestyle" },
+  { label: "Automotive Services", value: "Automotive Services" },
+  { label: "Events & Creative Services", value: "Events & Creative Services" },
+  { label: "Technology Services", value: "Technology Services" },
+  { label: "Real Estate & Property", value: "Real Estate & Property" },
 ];

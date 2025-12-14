@@ -10,9 +10,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { SelectField } from "@/components/form/SelectFiledWithLabel";
-import { groupOptions, serviceModeOptions, serviceTypeOptions } from "@/utils/constants";
-import { providerFetchAllAppServices, providerAddProviderServiceDetails } from "@/utils/apis/provider.api";
-import { providerAddServiceDetailsZodSchema, ProviderAddServiceDetailsForm } from "@/utils/zod/providerZod";
+import { providerFetchAllAppServices, providerCreateServiceDetails } from "@/utils/apis/provider.api";
+import { serviceCategoryOptions, groupOptions, serviceModeOptions, serviceTypeOptions } from "@/utils/constants";
+import { providerCreateServiceDetailsZodSchema, ProviderCreateServiceDetailsForm } from "@/utils/zod/providerZod";
 
 const ProviderCreateServiceDetailsPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -26,11 +26,12 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
     setValue,
     watch,
     formState: { errors }
-  } = useForm<ProviderAddServiceDetailsForm>({
-    resolver: zodResolver(providerAddServiceDetailsZodSchema),
+  } = useForm<ProviderCreateServiceDetailsForm>({
+    resolver: zodResolver(providerCreateServiceDetailsZodSchema),
     mode: "onChange",
     defaultValues: {
-      serviceCategory: "",
+      serviceCategory: undefined,
+      service: "",
       serviceName: "",
       serviceDescription: "",
       servicePrice: 0,
@@ -46,11 +47,16 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
   });
 
   const tags = watch("tags");
+  const serviceCategory = watch("serviceCategory");
 
   useEffect(() => {
+    if (!serviceCategory || serviceCategory.length === 0) {
+    setServices([]);
+    return;
+  }
     const fetchServices = async () => {
       try {
-        const res = await providerFetchAllAppServices();
+        const res = await providerFetchAllAppServices({serviceCategory});
         const transformed = res.map((srv: { _id: string; serviceName: string }) => ({
           label: srv.serviceName,
           value: srv._id
@@ -62,11 +68,11 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
       }
     };
     fetchServices();
-  }, []);
+  }, [serviceCategory]);
 
-  const onSubmit = async (data: ProviderAddServiceDetailsForm) => {
+  const onSubmit = async (data: ProviderCreateServiceDetailsForm) => {
     try {
-      const res = await dispatch(providerAddProviderServiceDetails(data)).unwrap();
+      const res = await dispatch(providerCreateServiceDetails(data)).unwrap();
       if (res.success) {
         toast.success(res.message);
       }
@@ -88,9 +94,17 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
               <SelectField
                 id="serviceCategory"
                 label="Service Category"
-                options={services}
+                options={serviceCategoryOptions}
                 register={register}
                 error={errors.serviceCategory}
+              />
+
+              <SelectField
+                id="service"
+                label="Service"
+                options={services}
+                register={register}
+                error={errors.service}
               />
 
               <FormField

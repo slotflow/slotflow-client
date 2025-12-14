@@ -12,9 +12,9 @@ import { CreateAddressFormData } from '@/utils/zod/commonZodFields';
 import AddressForm from "@/components/form/CommonForms/AddressForm";
 import AddressListing from "@/components/common/profile/AddressListing";
 import { UpdateAddressResponse } from '@/utils/interface/api/commonApiInterface';
-import { UserAddUserAddressResponse } from '@/utils/interface/api/userApiInterface';
-import { userAddUserAddress, userFetchUserAddress, userUpdateUserAddress } from "@/utils/apis/user.api";
-import { providerFetchProviderAddress, providerUpdateProviderAddress } from "@/utils/apis/provider.api";
+import { UserCreateAddressResponse } from '@/utils/interface/api/userApiInterface';
+import { userCreateUserAddress, userFetchAddress, userUpdateAddress } from "@/utils/apis/user.api";
+import { providerFetchAddress, providerUpdateAddress } from "@/utils/apis/provider.api";
 
 const Address: React.FC = () => {
 
@@ -35,16 +35,16 @@ const Address: React.FC = () => {
     }
     try {
       setLoading(true);
-      let res: UserAddUserAddressResponse | UpdateAddressResponse;
+      let res: UserCreateAddressResponse | UpdateAddressResponse;
 
       if (authUser?.role === "USER") {
         if (isUpdating) {
-          res = await userUpdateUserAddress(data);
+          res = await userUpdateAddress(data);
         } else {
-          res = await userAddUserAddress(data);
+          res = await userCreateUserAddress(data);
         }
       } else if (authUser?.role === "PROVIDER") {
-        res = await providerUpdateProviderAddress(data);
+        res = await providerUpdateAddress(data);
       } else {
         throw new Error("Unknown role");
       }
@@ -105,8 +105,8 @@ const Address: React.FC = () => {
         <AddressListing
           fetchApiFunction={
             authUser?.role === "USER" ?
-              userFetchUserAddress
-              : providerFetchProviderAddress
+              userFetchAddress
+              : providerFetchAddress
           }
           queryKey="userAddress"
           setLoading={setLoading}

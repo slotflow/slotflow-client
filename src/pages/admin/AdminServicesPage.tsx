@@ -1,38 +1,51 @@
-import CommonTable from '@/components/common/CommonTable';
-import { adminFetchAllServices } from '@/utils/apis/adminService.api';
-import ServiceAddingForm from '@/components/form/AdminForms/ServiceForm';
-import { useAdminServiceActions } from '@/utils/hooks/adminHooks/useAdminServiceActions';
-import { AdminFetchAllServicesResponse } from '@/utils/interface/api/adminServiceApiInterface';
-import { AdminAppServicesTableColumns } from '@/components/table/tableColumns/AdminAppServicesTableColumn';
+import { useEffect, useRef, useState } from "react";
+import TableHeader from "@/components/table/TableHeader";
+import CommonTable from "@/components/common/CommonTable";
+import { slideIn } from "@/utils/helper/gsapAnimationSlide";
+import { adminFetchAllServices } from "@/utils/apis/adminService.api";
+import CreateServiceForm from "@/components/form/AdminForms/CreateServiceForm";
+import { useAdminServiceActions } from "@/utils/hooks/adminHooks/useAdminServiceActions";
+import { AdminFetchAllServicesResponse } from "@/utils/interface/api/adminServiceApiInterface";
+import { AdminAppServicesTableColumns } from "@/components/table/tableColumns/AdminAppServicesTableColumn";
 
 const AdminServicesPage = () => {
+  const { handleAdminChangeServiceStatus } = useAdminServiceActions();
+  const column = AdminAppServicesTableColumns(handleAdminChangeServiceStatus);
 
-  const {
-    handleAdminChangeServiceStatus
-  } = useAdminServiceActions();
+  const [showForm, setShowForm] = useState(false);
+  const formRef = useRef<HTMLDivElement>(null);
 
-  const column = AdminAppServicesTableColumns(
-    handleAdminChangeServiceStatus
-  )
+    useEffect(() => {
+    if (showForm && formRef.current) {
+      slideIn(formRef.current);
+    }
+  }, [showForm]);
 
   return (
-    <>
-      <div className='flex'>
-        <div className='w-8/12'>
-          <CommonTable<AdminFetchAllServicesResponse>
-            fetchApiFunction={adminFetchAllServices}
-            queryKey="appServices"
-            heading="Services"
-            column={column}
-            columnsCount={4}
+    <div className="relative">
+      <TableHeader
+        title="Services"
+        actionLabel="Create New Service"
+        onActionClick={() => setShowForm(true)}
+      />
+
+      <CommonTable<AdminFetchAllServicesResponse>
+        fetchApiFunction={adminFetchAllServices}
+        queryKey="appServices"
+        column={column}
+        columnsCount={5}
+      />
+
+      {showForm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <CreateServiceForm
+            onClose={() => setShowForm(false)}
+            formRef={formRef}
           />
         </div>
-        <div className='w-4/12 mx-2 mt-14'>
-          <ServiceAddingForm />
-        </div>
-      </div>
-    </>
-  )
-}
+      )}
+    </div>
+  );
+};
 
-export default AdminServicesPage
+export default AdminServicesPage;

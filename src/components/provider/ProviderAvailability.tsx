@@ -1,6 +1,6 @@
 import { Button } from "../ui/button";
 import { BetweenHorizontalStart } from "lucide-react";
-import { providerFetchProviderServiceAvailability } from "@/utils/apis/provider.api";
+import { providerFetchServiceAvailability } from "@/utils/apis/provider.api";
 import ProviderServiceAvailability from "@/components/common/profile/ProviderServiceAvailability";
 
 const ProviderAvailability = () => {
@@ -23,7 +23,7 @@ const ProviderAvailability = () => {
                 </div>
             </div>
             
-            <ProviderServiceAvailability fetchApiFuntion={providerFetchProviderServiceAvailability} queryKey="serviceAvailability" role="Provider" />
+            <ProviderServiceAvailability fetchApiFuntion={providerFetchServiceAvailability} queryKey="serviceAvailability" role="Provider" />
         </div>
     )
 

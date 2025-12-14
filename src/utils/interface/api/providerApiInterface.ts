@@ -8,30 +8,31 @@ import { Service } from "../entityInterface/appServiceInterface";
 import { ProviderService } from "../entityInterface/providerServiceInterface";
 import { Availability, AvailabilityForResponse } from "../entityInterface/serviceAvailabilityInterface";
 
-// **** Used as the request interface for adding address api
-export type ProviderAddProviderAddressRequest = Pick<Address, "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location">;
+// **** Used as the request interface for creating address api
+export type ProviderCreateAddressRequest = Pick<Address, "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location">;
 
 // **** Used as the response type of provider fetch address api
 export type ProviderFetchAddressResponse = Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "updatedAt" | "landMark" | "location">;
 
 
 // **** Used as the response type of fetch all services api
+export type ProviderFetchAllAppServiceRequest = Pick<Service, "serviceCategory">;
 export type ProviderFetchAllServicesResponse = Array<Pick<Service, "_id" | "serviceName">>;
 
 
-// **** Used as the request interface for providerAddProviderServiceDetails api
-export type ProviderCreateServiceDetailsRequest = Pick<ProviderService, "isGroupService" | "maxParticipants" | "requirements" | "serviceCategory" | "serviceDescription" | "serviceExperience" | "serviceMode" | "serviceName" | "servicePrice" | "serviceType" | "tags" | "videoUrl">;
+// **** Used as the request interface for providerCreateServiceDetails api
+export type ProviderCreateServiceDetailsRequest = Pick<ProviderService, "isGroupService" | "maxParticipants" | "requirements" | "service" | "serviceDescription" | "serviceExperience" | "serviceMode" | "serviceName" | "servicePrice" | "serviceType" | "tags" | "videoUrl">;
 
 
 // **** Used as the response type for provider fetch self service details
 type FetchServiceDetailsResponse = Pick<ProviderService, "serviceName" | "serviceDescription" | "servicePrice" | "serviceExperience" | "isGroupService" | "maxParticipants" | "requirements" | "serviceMode" | "serviceType" | "tags" | "videoUrl">;
 export interface ProviderFetchServiceDetailsResponse extends FetchServiceDetailsResponse {
-  serviceCategory: Pick<Service, "serviceName">
+  service: Pick<Service, "serviceName">
 }
 
 
-// **** Used as the request interface for provider service availability adding api
-export interface AddProviderServiceAvailabilitiesRequest {
+// **** Used as the request interface for provider service availability creating api
+export interface CreateProviderServiceAvailabilitiesRequest {
   data: Availability[];
 }
 
@@ -70,13 +71,13 @@ export interface ProviderSaveSubscriptionResponse extends ApiBaseResponse {
   planName: Plan["planName"]
 };
 
-// **** Interfaces for providerFetchProviderSubscriptions api is in common interface api file
+// **** Interfaces for providerFetchSubscriptions api is in common interface api file
 
 
 // **** Inline interfaces used for the providerSubscribeToTrialPlan api
 
 
-// **** Interfaces for providerFetchProviderPayments api is in common interface api file
+// **** Interfaces for providerFetchPayments api is in common interface api file
 
 
 // **** Interfaces for providerFetchProviderBookingAppointments api is in common interface api file

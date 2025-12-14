@@ -10,8 +10,6 @@ const CommonTable = <T,>({
   parentDivCalssName,
   fetchApiFunction,
   queryKey,
-  heading,
-  headingClassName,
   column,
   columnsCount,
   id,
@@ -42,9 +40,6 @@ const CommonTable = <T,>({
 
   return (
     <div className={`${parentDivCalssName || "p-4"}`}>
-      {heading && (
-        <h2 className={`text-2xl font-bold ${headingClassName}`}>{heading}</h2>
-      )}
       {isLoading ? (
         <div className="mt-2">
           <TableShimmer columnsCount={columnsCount} />

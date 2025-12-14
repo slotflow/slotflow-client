@@ -23,7 +23,7 @@ const InfoDisplayComponent: React.FC<InfoDisplayComponentRowProps> = ({
     let displayValue: React.ReactNode;
 
     if (value === null || value === undefined) {
-        displayValue = "Not Yet added";
+        displayValue = "Not Yet provided";
     } else if (isRadioGroup && Array.isArray(value)) {
         displayValue = role === "Admin" ? (
             <div className="flex space-x-2">
@@ -51,7 +51,7 @@ const InfoDisplayComponent: React.FC<InfoDisplayComponentRowProps> = ({
         displayValue = (
             <div className="flex items-center">
                 <p className="mr-2">{value}</p>
-                {value !== "Not Yet added" && (
+                {value !== "Not Yet provided" && (
                     <button
                         className="text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
                         onClick={() => copyToClipboard(value)}

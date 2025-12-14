@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/utils/redux/appStore";
-import { addService } from "@/utils/redux/slices/userSlice";
+import { pushService } from "@/utils/redux/slices/userSlice";
 import { setAuthUser } from "@/utils/redux/slices/authSlice";
 import { RoleType } from "@/utils/interface/commonInterface";
 import { setMessages, setOnlineUsers, setSelectedUser } from "@/utils/redux/slices/chatSlice";
@@ -19,7 +19,7 @@ export const useResetRedux = () => {
   };
 
   const resetUser = () => {
-    dispatch(addService(null));
+    dispatch(pushService(null));
   };
 
   const resetProvider = () => {

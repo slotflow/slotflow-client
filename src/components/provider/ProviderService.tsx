@@ -1,6 +1,6 @@
 import { Button } from '../ui/button';
 import { SquareChartGantt } from 'lucide-react';
-import { providerFetchProviderServiceDetails } from '@/utils/apis/provider.api';
+import { providerFetchServiceDetails } from '@/utils/apis/provider.api';
 import ProviderServiceDetails from '@/components/common/profile/ProviderServiceDetails';
 
 const ProviderService = () => {
@@ -23,7 +23,7 @@ const ProviderService = () => {
         </div>
       </div>
 
-      <ProviderServiceDetails fetchApiFunction={providerFetchProviderServiceDetails} queryKey="providerService" />
+      <ProviderServiceDetails fetchApiFunction={providerFetchServiceDetails} queryKey="providerService" />
     </div>
   )
 

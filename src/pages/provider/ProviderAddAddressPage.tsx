@@ -5,7 +5,7 @@ import { AppDispatch } from "@/utils/redux/appStore";
 import RightSideBox from "@/components/provider/SideBox";
 import AddressForm from "@/components/form/CommonForms/AddressForm";
 import { CreateAddressFormData } from "@/utils/zod/commonZodFields";
-import { providerAddProviderAddress } from "@/utils/apis/provider.api";
+import { providerCreateAddress } from "@/utils/apis/provider.api";
 
 const ProviderAddAddressPage = () => {
 
@@ -19,7 +19,7 @@ const ProviderAddAddressPage = () => {
                 toast.error("Please fix the form errors.");
                 return;
             }
-            const res = await dispatch(providerAddProviderAddress(data)).unwrap();
+            const res = await dispatch(providerCreateAddress(data)).unwrap();
             if (res.success) {
                 toast.success(res.message)
             }

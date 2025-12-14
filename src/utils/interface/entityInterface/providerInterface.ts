@@ -27,7 +27,7 @@ export interface Provider {
 
 //  **** PROVIDER COMPONENT / PAGES INTERFACES START **** //
 
-// This is the interface of a right side showing compoenent in the provider address adding, service adding and availability adding page
+// This is the interface of a right side showing compoenent in the provider address creating, service creating and availability creating page
 export interface SideBoxProps {
   props: {
     pageNumber: number;

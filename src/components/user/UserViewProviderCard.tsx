@@ -12,16 +12,17 @@ export interface UserViewProviderCardComponentProps {
         profileImage: string | null,
         trustedBySlotflow: boolean,
     },
-    service: {
-        serviceCategory: string,
-        serviceName: string,
-        servicePrice: number,
-        categoryName: string
+     serviceDetails: {
+        serviceId: string;
+        service: string;
+        serviceCategory: string;
+        serviceName: string;
+        servicePrice: number;
     }
 }
 
 const UserViewProviderCard: React.FC<UserViewProviderCardComponentProps> = ({
-    provider, service
+    provider, serviceDetails
 }) => {
 
     const navigate = useNavigate();
@@ -39,7 +40,7 @@ const UserViewProviderCard: React.FC<UserViewProviderCardComponentProps> = ({
                         {provider?.username}
                     </CardTitle>
                     <Badge variant="secondary" className="text-xs capitalize w-fit">
-                        {service?.categoryName}
+                        {serviceDetails?.service}
                     </Badge>
                 </div>
 
@@ -53,10 +54,10 @@ const UserViewProviderCard: React.FC<UserViewProviderCardComponentProps> = ({
             <div className="my-3 border-t" />
 
             <div className="space-y-1 text-sm">
-                <p className="font-medium">{service?.serviceName}</p>
+                <p className="font-medium">{serviceDetails?.serviceName}</p>
 
                 <div className="flex justify-between items-center">
-                    <p>{formatNumberToPrice(service?.servicePrice)}</p>
+                    <p>{formatNumberToPrice(serviceDetails?.servicePrice)}</p>
                     {provider?.trustedBySlotflow && (
                         <span className="text-xs text-green-600 font-medium whitespace-nowrap">
                             ✅ Trusted by Slotflow

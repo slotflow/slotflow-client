@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialState = null;
+
 const adminSlice = createSlice({
     name: "admin",
-    initialState: null,
+    initialState,
     reducers: {
-        clearAdminSlice: () => {
-
-        }
+        clearAdminSlice: () => initialState,
     },
 });
 

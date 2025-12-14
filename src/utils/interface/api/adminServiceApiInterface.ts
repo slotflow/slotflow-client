@@ -1,13 +1,11 @@
 import { Service } from "../entityInterface/appServiceInterface";
 
-export type BasicAppServiceInfo = Pick<Service, "_id" | "serviceName" | "isBlocked">;
-
 // **** Used as the response type for the admin fetch all app services api
-export type AdminFetchAllServicesResponse = BasicAppServiceInfo;
+export type AdminFetchAllServicesResponse =  Pick<Service, "_id" | "serviceName" | "isBlocked" | "serviceCategory">;
 
 
 // **** Used as the request type of adminAddNewService api
-export type AdminAddNewAppServiceRequest = Pick<Service, "serviceName">
+export type AdminAddNewAppServiceRequest = Pick<Service, "serviceName" | "serviceCategory">
 
 // **** Used as the request type for the admin change app service block status api
 export type AdminChangeServiceBlockStatusRequest = {
