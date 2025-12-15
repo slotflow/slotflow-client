@@ -98,7 +98,12 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
                                 <InfoDisplayComponent label="Joined On" value={providerProfileData.createdAt} formatDate={formatDate} />
                                 <InfoDisplayComponent label="Email Verified" value={providerProfileData.isEmailVerified} isBoolean={true} />
                                 <InfoDisplayComponent label="Account Blocked" value={providerProfileData.isBlocked} isBoolean={true} />
-                                <InfoDisplayComponent label="Admin Verified" value={providerProfileData.isAdminVerified} isBoolean={true} isLast />
+                                <InfoDisplayComponent label="Admin Verified" value={providerProfileData.isAdminVerified} isBoolean={true} />
+                                <InfoDisplayComponent label="Verification Status" value={providerProfileData.adminVerificationStatus} />
+                                <InfoDisplayComponent label="Address Verified" value={providerProfileData.isAddressVerified} isBoolean={true} />
+                                <InfoDisplayComponent label="Service Details Verified" value={providerProfileData.isServiceDetailsVerified} isBoolean={true} />
+                                <InfoDisplayComponent label="Availability Verified" value={providerProfileData.isAvailabilityVerified} isBoolean={true} />
+                                <InfoDisplayComponent label="Proofs Verified" value={providerProfileData.isProofsVerified} isBoolean={true} isLast />
                             </>
                         );
                     })()}
@@ -135,6 +140,11 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
                                 <InfoDisplayComponent label="Email Verified" value={providerProfileData.isEmailVerified} isBoolean={true} />
                                 <InfoDisplayComponent label="Account Blocked" value={providerProfileData.isBlocked} isBoolean={true} />
                                 <InfoDisplayComponent label="Admin Verified" value={providerProfileData.isAdminVerified} isBoolean={true} />
+                                <InfoDisplayComponent label="Verification Status" value={providerProfileData.adminVerificationStatus} />
+                                <InfoDisplayComponent label="Address Verified" value={providerProfileData.isAddressVerified} isBoolean={true} />
+                                <InfoDisplayComponent label="Service Details Verified" value={providerProfileData.isServiceDetailsVerified} isBoolean={true} />
+                                <InfoDisplayComponent label="Availability Verified" value={providerProfileData.isAvailabilityVerified} isBoolean={true} />
+                                <InfoDisplayComponent label="Proofs Verified" value={providerProfileData.isProofsVerified} isBoolean={true} isLast />
                             </>
                         );
                     })()}

@@ -26,9 +26,8 @@ export const adminApproveProvider = async (providerId: Provider["_id"]): Promise
 }
 
 export const adminRejectProvider = async (data: AdminRejectProviderRequest): Promise<ApiBaseResponse> => {
-    const response = await axiosInstance.patch(`/admin/providers/${data.providerId}/reject`, {
-        verificationRejectionReason: data.verificationRejectionReason
-    });
+    const { providerId, ...payload } = data;
+    const response = await axiosInstance.patch(`/admin/providers/${providerId}/reject`, {...payload});
     return response.data;
 }
 

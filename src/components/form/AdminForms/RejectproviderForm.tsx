@@ -3,9 +3,11 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { FormButton } from "../FormSplits";
+import { SelectField } from "../SelectField";
 import { Button } from "@/components/ui/button";
 import { RootState } from "@/utils/redux/appStore";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { verificationOptions } from "@/utils/constants";
 import { slideOut } from "@/utils/helper/gsapAnimationSlide";
 import { handleFormError } from "@/utils/helper/formErrorCatcher";
 import { useAdminProviderActions } from "@/utils/hooks/adminHooks/useAdminProviderActions";
@@ -41,6 +43,10 @@ const RejectproviderForm: React.FC<RejectproviderFormProps> = ({
     mode: "onChange",
     defaultValues: {
       verificationRejectionReason: "",
+      isAddressVerified: false,
+      isAvailabilityVerified: false,
+      isProofsVerified: false,
+      isServiceDetailsVerified: false,
     },
   });
 
@@ -50,7 +56,7 @@ const RejectproviderForm: React.FC<RejectproviderFormProps> = ({
             toast.error("Provider is not selected");
             return;
         }
-      await handleAdminRejectProvider({ providerId: rejectProviderId, verificationRejectionReason: data.verificationRejectionReason});
+      await handleAdminRejectProvider({ providerId: rejectProviderId, ...data });
       reset();
       handleCloseForm();
     } catch (error) {
@@ -70,6 +76,39 @@ const RejectproviderForm: React.FC<RejectproviderFormProps> = ({
         onSubmit={handleSubmit(onSubmit, handleFormError(setFocus))}
         className="space-y-6"
       >
+
+        <SelectField<AdminRejectProviderFormType>
+          id="isAddressVerified"
+          label="Address Verification"
+          options={verificationOptions}
+          register={register}
+          error={errors.isAddressVerified?.message}
+        />
+
+        <SelectField<AdminRejectProviderFormType>
+          id="isServiceDetailsVerified"
+          label="Service Details Verification"
+          options={verificationOptions}
+          register={register}
+          error={errors.isServiceDetailsVerified?.message}
+        />
+
+        <SelectField<AdminRejectProviderFormType>
+          id="isAvailabilityVerified"
+          label="Availability Verification"
+          options={verificationOptions}
+          register={register}
+          error={errors.isAvailabilityVerified?.message}
+        />
+
+        <SelectField<AdminRejectProviderFormType>
+          id="isProofsVerified"
+          label="Proofs Verification"
+          options={verificationOptions}
+          register={register}
+          error={errors.isProofsVerified?.message}
+        />
+
         <FormField<AdminRejectProviderFormType>
           id="verificationRejectionReason"
           label="Rejection Reason"

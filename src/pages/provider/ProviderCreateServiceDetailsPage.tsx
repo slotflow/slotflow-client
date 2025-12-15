@@ -54,6 +54,10 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
     setServices([]);
     return;
   }
+  
+  console.log("serviceCategory : ",serviceCategory);
+  
+  return;
     const fetchServices = async () => {
       try {
         const res = await providerFetchAllAppServices({serviceCategory});

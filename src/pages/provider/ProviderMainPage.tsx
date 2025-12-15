@@ -16,17 +16,14 @@ import ProviderCreateServiceAvailabilityPage from "./ProviderCreateServiceAvaila
 
 const ProviderMainPage: React.FC = () => {
 
-  const sidebarOpen = useSelector((store: RootState) => store.app.sidebarOpen);
-  const user = useSelector((store: RootState) => store.auth.authUser);
-  const providerSlice = useSelector((store: RootState) => store.provider);
+  const {authUser: user} = useSelector((store: RootState) => store.auth);
+  const { sidebarOpen } = useSelector((store: RootState) => store.app);
   const dispatch = useDispatch<AppDispatch>();
   const location = useLocation();
 
   const planName = user?.providerSubscription;
   const allowedRouteNames = planName ? planAccessMap[planName] : planAccessMap["NoSubscription"];
   const filteredRoutes = providerRoutes.filter(route => allowedRouteNames.includes(route.name));
-
-  console.log("providerSlice : ",providerSlice);
   
   useEffect(() => {
     if (user?.isLoggedIn) {
@@ -73,4 +70,4 @@ const ProviderMainPage: React.FC = () => {
   )
 }
 
-export default ProviderMainPage
+export default ProviderMainPage;

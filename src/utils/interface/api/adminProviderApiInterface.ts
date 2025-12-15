@@ -4,16 +4,15 @@ import { ProviderService } from "../entityInterface/providerServiceInterface";
 import { AvailabilityForResponse } from "../entityInterface/serviceAvailabilityInterface";
 
 // **** Used as the response type of admin fetch all providers api
-export type AdminFetchAllProvidersResponse = Pick<Provider, "_id" | "username" | "email" | "isBlocked" | "isAdminVerified" | "isEmailVerified" | "trustedBySlotflow">;
+export type AdminFetchAllProvidersResponse = Pick<Provider, "_id" | "username" | "email" | "isBlocked" | "isAdminVerified" | "isEmailVerified" | "trustedBySlotflow" | "adminVerificationStatus">;
 
 
 // **** Inline interfaces used for the adminApproveProvider api
 
 
 // **** Used as the request interfaces of admin reject provider
-export interface AdminRejectProviderRequest {
+export type AdminRejectProviderRequest = Pick<Provider, "verificationRejectionReason" | "isAddressVerified" | "isServiceDetailsVerified" | "isAvailabilityVerified" | "isProofsVerified"> & {
     providerId: Provider["_id"];
-    verificationRejectionReason: Provider["verificationRejectionReason"];
 }
 
 
@@ -32,7 +31,7 @@ export type AdminChangeProviderTrustTagRequest = {
 
 
 // **** Used as the response type of the admin fetch provider profile profile details api
-export type AdminFetchProviderProfileDetailsResponse = Pick<Provider, "_id" | "username" | "email" | "isBlocked" | "isEmailVerified" | "isAdminVerified" | "phone" | "profileImage" | "createdAt" | "trustedBySlotflow">;
+export type AdminFetchProviderProfileDetailsResponse = Pick<Provider, "_id" | "username" | "email" | "isBlocked" | "isEmailVerified" | "isAdminVerified" | "phone" | "profileImage" | "createdAt" | "trustedBySlotflow" | "adminVerificationStatus" | "isAddressVerified" | "isAvailabilityVerified" | "isProofsVerified" | "isServiceDetailsVerified">;
 
 
 // **** Interface for the admin fetch provider address is in common interface file

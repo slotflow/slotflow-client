@@ -77,6 +77,10 @@ export const adminRejectProviderZodSchema = z.object({
     .min(5, "Rejection reason must be at least 5 characters long")
     .max(500, "Rejection reason must not exceed 500 characters")
     .regex(verificationRejectionReasonRegex, "Rejection reason may include letters, numbers, spaces, and common symbols"),
+  isAddressVerified: z.boolean(),
+  isServiceDetailsVerified: z.boolean(),
+  isAvailabilityVerified: z.boolean(),
+  isProofsVerified: z.boolean(),
 });
 
 export type AdminRejectProviderFormType = z.infer<typeof adminRejectProviderZodSchema>;

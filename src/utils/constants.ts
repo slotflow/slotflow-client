@@ -120,6 +120,8 @@ export const serviceCategoryArray = ["Healthcare & Wellness",
   "Technology Services",
   "Real Estate & Property",] as const;
 
+export const adminVerificationStatsArray = ["REQUESTED", "UNDER_REVIEW", "APPROVED", "REJECTED", "RESUBMITTED", "NOT_REQUESTED"] as const;
+
 
 // **** Routes for admin **** \\
 export const adminRoutes: Route[] = [
@@ -1309,4 +1311,11 @@ export const planDurations: OptionType[] = [
   { label: "3 Months", value: 3 },
   { label: "6 Months", value: 6 },
   { label: "1 Year", value: 12 }
+];
+
+
+// admin provider verification boolean options
+export const verificationOptions: OptionType[] = [
+  { label: "Verified", value: "true" },
+  { label: "Rejected", value: "false" }
 ];

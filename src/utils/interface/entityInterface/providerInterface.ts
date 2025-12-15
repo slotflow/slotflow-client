@@ -1,3 +1,5 @@
+import { AdminVerificationStatusType } from "../commonInterface";
+
 // Provider
 export interface Provider {
   _id: string;
@@ -6,8 +8,16 @@ export interface Provider {
   password: string;
   isBlocked: boolean;
   isEmailVerified: boolean;
+
   isAdminVerified: boolean;
   verificationRejectionReason: string;
+
+  adminVerificationStatus: AdminVerificationStatusType,
+  isAddressVerified: boolean,
+  isServiceDetailsVerified: boolean,
+  isAvailabilityVerified: boolean,
+  isProofsVerified: boolean,
+
   phone: string;
   profileImage: string;
   addressId: string;
