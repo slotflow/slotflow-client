@@ -13,7 +13,7 @@ import { handleGoogleLogin } from "@/utils/helper/googleLogin";
 import { setForgotPassword } from "@/utils/redux/slices/appSlice";
 import { LoginFormType, LoginZodSchema } from '@/utils/zod/authZod';
 import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
-import { AuthFormType, LoginFormProps } from "@/utils/interface/commonInterface";
+import { RedirectTo, LoginFormProps } from "@/utils/interface/commonInterface";
 
 const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
 
@@ -37,7 +37,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
     const handleNavigation = (userRole: string) => {
         if (userRole === "ADMIN") navigate("/admin/overview", { replace: true });
         else if (userRole === "USER") navigate("/user", { replace: true });
-        else if (userRole === "PROVIDER") navigate("/provider/dashboard", { replace: true });
+        else if (userRole === "PROVIDER") navigate("/provider", { replace: true });
     };
 
     const onSubmit = async (data: LoginFormType) => {
@@ -90,7 +90,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
                                     className="px-0 block text-xs md:text-sm font-medium text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
                                     onClick={() => {
                                         dispatch(setForgotPassword(true));
-                                        goToAuthPage(role, AuthFormType.VERIFY_EMAIL)
+                                        goToAuthPage(role, RedirectTo.VERIFY_EMAIL)
                                     }}
                                 >
                                     Forgot Password ?
@@ -116,7 +116,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
                                 New to Slotflow ?
                                 <span
                                     className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
-                                    onClick={() => goToAuthPage(role, AuthFormType.REGISTER)}
+                                    onClick={() => goToAuthPage(role, RedirectTo.REGISTER)}
                                 >
                                     {" "} Sign Up
                                 </span>

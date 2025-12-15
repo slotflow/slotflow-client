@@ -3,6 +3,7 @@ import {
     ProviderFetchPlansResponse,
     ProviderFetchAddressResponse,
     ProviderCreateAddressRequest,
+    ProviderSubmitDetailsResponse,
     ProviderSubscribeToPlanRequest,
     ProviderDashboardGraphResponse,
     ProviderSubscribeToPlanResponse,
@@ -55,7 +56,7 @@ export const providerUpdateAddress = async (data: UpdateAddressRequest): Promise
 export const providerFetchAllAppServices = async (data: ProviderFetchAllAppServiceRequest): Promise<ProviderFetchAllServicesResponse> => {
     const response = await axiosInstance.get('/provider/appservices', {
         params: {
-            serviceCategory: JSON.stringify(data.serviceCategory)
+            serviceCategory: data.serviceCategory
         }
     });
     return response.data.data;
@@ -145,7 +146,6 @@ export const providerUpdateInfo = createAsyncThunk<ProviderUpdateProviderInfoRes
 )
 
 export const providerUpdateIdentityProof = async(data: UpdateFileDataRequest): Promise<UpdateFileDataResponse> => {
-    console.log("data : ",data);
     const response = await axiosInstance.patch('/provider/profile/identity', data);
     return response.data;
 }
@@ -159,6 +159,13 @@ export const providerFetchProviderProofs = async(): Promise<FetchProvidersProofs
     const response = await axiosInstance.get(`/provider/profile/proofs`);
     return response.data.data;
 }
+
+export const providerSubmitDetailsForReview = createAsyncThunk<ProviderSubmitDetailsResponse>('/provider/profile/details',
+    async () => {
+        const response = await axiosInstance.patch('/provider/profile/approval');
+        return response.data;
+    }
+)
 
 
 // **** Provider plans apis

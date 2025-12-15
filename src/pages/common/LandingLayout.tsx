@@ -5,7 +5,7 @@ import FooterBar from "@/components/Navs/FooterBar";
 import { RootState } from "../../utils/redux/appStore";
 import { useDispatch, useSelector } from "react-redux";
 import { Bounce, ToastContainer } from "react-toastify";
-import { UserData } from "@/utils/interface/sliceInterface";
+import { AuthUser } from "@/utils/interface/sliceInterface";
 import { setAuthUser } from "@/utils/redux/slices/authSlice";
 import { setAuthModal } from "@/utils/redux/slices/appSlice";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -27,7 +27,7 @@ const LandingLayout = () => {
     if (authUserStr) {
       const rawUser = JSON.parse(decodeURIComponent(authUserStr));
       if (!rawUser || !rawUser.googleId) return;
-      const authUser: UserData = {
+      const authUser: AuthUser = {
         uid: rawUser._id,
         username: rawUser.username,
         email: rawUser.email,
@@ -38,7 +38,7 @@ const LandingLayout = () => {
         isAddressAdded: rawUser.addressId ? true : false,
         isServiceDetailsAdded: rawUser.serviceId ? true : false,
         isServiceAvailabilityAdded: rawUser.serviceAvailabilityId ? true : false,
-        isAdminApproved: rawUser.isAdminVerified,
+        isAdminVerified: rawUser.isAdminVerified,
         googleId: rawUser.googleId,
         googleConnected: rawUser.googleConnected,
         updatedAt: rawUser.updatedAt,

@@ -8,7 +8,7 @@ import { SingleTab } from './SingleTab';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logos/logo-transparent.png';
-import { UserData } from '@/utils/interface/sliceInterface';
+import { AuthUser } from '@/utils/interface/sliceInterface';
 import { toggleTheme } from '@/utils/redux/slices/appSlice';
 import { handleSignoutHelper } from '@/utils/helper/signout';
 import { AppDispatch, RootState } from '@/utils/redux/appStore';
@@ -25,7 +25,7 @@ const Sidebar: React.FC<SideBarProps> = ({
     const resetRedux = useResetRedux();
 
     const sidebarOpen: boolean = useSelector((store: RootState) => store.app.sidebarOpen);
-    const user: Partial<UserData> | null = useSelector((store: RootState) => store.auth?.authUser);
+    const user: Partial<AuthUser> | null = useSelector((store: RootState) => store.auth?.authUser);
     const themeMode: boolean = useSelector((store: RootState) => store.app.lightTheme);
 
     const changeTheme = (): void => {

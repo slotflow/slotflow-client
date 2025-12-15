@@ -1,69 +1,154 @@
+import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { useForm } from "react-hook-form";
+import { Edit, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SideBox from "@/components/provider/SideBox";
-import FormField from "@/components/form/FormField";
-import { approvalMessages } from "@/utils/constants";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { QueryFormType, QueryZodSchema } from "@/utils/zod/providerZod";
+import { useDispatch, useSelector } from "react-redux";
+import { Card, CardContent } from "@/components/ui/card";
+import { RedirectTo } from "@/utils/interface/commonInterface";
+import { AppDispatch, RootState } from "@/utils/redux/appStore";
+import { providerSubmitDetailsForReview } from "@/utils/apis/provider.api";
+import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { adminVerificationStatsArray, blockBackStatuses, roleArray, verificationStatusTextMap } from "@/utils/constants";
 
 const ProviderApprovalPendingPage = () => {
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    reset,
-  } = useForm<QueryFormType>({
-    resolver: zodResolver(QueryZodSchema),
-    defaultValues: {
-      query: "",
-    },
-  });
+  const dispatch = useDispatch<AppDispatch>();
+  const { authUser } = useSelector((state: RootState) => state.auth);
+  const adminStatus = authUser?.adminVerificationStatus;
+  const isBackBlocked = adminStatus !== undefined && (blockBackStatuses as readonly string[]).includes(adminStatus);
+  const { goToAuthPage } = useAuthNavigation();
 
-  const onSubmit = async (data: QueryFormType) => {
-    try {
-      toast.success("Query submitted successfully!");
-      console.log("Submitted data:", data);
-      reset();
-    } catch {
-      toast.error("Failed to submit your query. Try again.");
-    }
-  };
+  useEffect(() => {
+    if (!isBackBlocked) return;
+
+    const blockNavigation = () => {
+      window.history.pushState(null, "", window.location.href);
+    };
+
+    blockNavigation();
+    window.addEventListener("popstate", blockNavigation);
+
+    return () => {
+      window.removeEventListener("popstate", blockNavigation);
+    };
+  }, [isBackBlocked]);
+
+  const verificationRows = [
+    {
+      label: "Address Verification",
+      verified: authUser?.isAddressVerified,
+      redirect: RedirectTo.PROVIDER_ADDRESS
+    },
+    {
+      label: "Service Details Verification",
+      verified: authUser?.isServiceDetailsVerified,
+      redirect: RedirectTo.PROVIDER_SERVICE_DETAILS
+    },
+    {
+      label: "Availability Verification",
+      verified: authUser?.isAvailabilityVerified,
+      redirect: RedirectTo.PROVIDER_AVAILABILITY
+    },
+    {
+      label: "Proofs Verification",
+      verified: authUser?.isProofsVerified,
+      redirect: RedirectTo.PROVIDER_PROOFS
+    },
+  ];
+
+  const handleSubmit = async () => {
+    await dispatch(providerSubmitDetailsForReview()).unwrap()
+      .then((res) => {
+        if (res.success) {
+          toast.success(res.message);
+        }
+      })
+  }
 
   return (
-    <div className="h-screen flex w-full bg-[var(--background)] text-[var(--textOne)]">
+    <div className="md:h-screen md:flex justify-center w-full bg-[var(--background)]">
       <SideBox props={{ pageNumber: 5 }} />
 
-      <div className="md:w-8/12 flex justify-center items-center">
-        <div className="p-8 rounded-lg text-center max-w-md">
-          <h1 className="text-2xl font-bold mb-4 text-[var(--mainColor)]">
-            {approvalMessages.heading}
-          </h1>
-          <p className="mb-4">{approvalMessages.message1}</p>
-          <p className="mb-4">{approvalMessages.message2}</p>
-          <p className="mt-4 text-sm">{approvalMessages.footerNote}</p>
+      <div className="w-full md:w-8/12 overflow-y-scroll no-scrollbar md:mt-10 px-4 md:px-12 py-6 md:py-0">
+        <h4 className="xs:text-md md:text-xl lg:text-2xl font-semibold text-start px-6">Approval</h4>
+        <Card className="w-full my-4">
 
-          <form onSubmit={handleSubmit(onSubmit)} className="mt-4 space-y-4">
-            <FormField<QueryFormType>
-              label=""
-              id="query"
-              placeholder="Enter your query here"
-              type="text"
-              register={register}
-              error={errors.query?.message}
-            />
+          <CardContent className="space-y-6">
 
-            <Button
-              type="submit"
-              disabled={isSubmitting}
-              variant="outline"
-              className="text-xs md:text-sm cursor-pointer hover:bg-[var(--mainColor)] hover:text-white border-[var(--mainColor)]"
-            >
-              {isSubmitting ? "Submitting..." : "Submit"}
-            </Button>
-          </form>
-        </div>
+            <div className="flex space-x-4">
+              <p className="text-sm font-medium">Overall Status</p>
+              <p className="text-sm">
+                {verificationStatusTextMap[adminStatus ?? "NOT_REQUESTED"]}
+              </p>
+            </div>
+
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Section</TableHead>
+                  <TableHead>Status</TableHead>
+                  {adminStatus === adminVerificationStatsArray[3] && (
+                    <TableHead>Update</TableHead>
+                  )}
+                </TableRow>
+              </TableHeader>
+
+              <TableBody>
+                {verificationRows.map((row) => (
+                  <TableRow key={row.label}>
+                    <TableCell>{row.label}</TableCell>
+                    <TableCell>
+                      {row.verified ? "Verified" : "Pending"}
+                    </TableCell>
+                    {adminStatus === adminVerificationStatsArray[3] && (
+                      <TableCell>
+                        <Button
+                          variant="outline"
+                          className="cursor-pointer"
+                          onClick={() => goToAuthPage(roleArray[2], row.redirect)}
+                        ><Edit />
+                        </Button>
+                      </TableCell>
+                    )}
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+
+            {adminStatus === adminVerificationStatsArray[5] && (
+              <div className="flex flex-row justify-between items-center">
+                <p className="text-sm text-center">
+                  Please submit your details. We will review them and inform you via email within one business day.
+                </p>
+                <Button
+                  variant="outline"
+                  className="cursor-pointer"
+                  onClick={handleSubmit}
+                >
+                  Submit for Review
+                </Button>
+              </div>
+            )}
+
+            {adminStatus !== adminVerificationStatsArray[3] &&
+              (<div className="flex space-x-4">
+                <p className="text-sm">
+                  <span className="font-semibold text-red-500">Rejection Reason</span>{" "}
+                  <span className="ml-4">
+                  {authUser?.verificationRejectionReason}
+                  </span>
+                </p>
+              </div>)}
+
+            {isBackBlocked && (
+              <p className="text-sm text-center flex items-center spac">
+                <Info className="mr-4" /> Your details are under review. Navigation is temporarily disabled.
+              </p>
+            )}
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

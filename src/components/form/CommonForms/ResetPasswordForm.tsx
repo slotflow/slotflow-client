@@ -9,7 +9,7 @@ import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { setForgotPassword } from "@/utils/redux/slices/appSlice";
 import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
 import { ResetPasswordFormType, resetPasswordZodSchema } from "@/utils/zod/authZod";
-import { AuthFormType, ResetPasswordFormProps } from "@/utils/interface/commonInterface";
+import { RedirectTo, ResetPasswordFormProps } from "@/utils/interface/commonInterface";
 
 const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ role }) => {
 
@@ -47,7 +47,7 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ role }) => {
 
             if (res.success) {
                 toast.success(res.message);
-                goToAuthPage(role, AuthFormType.LOGIN);
+                goToAuthPage(role, RedirectTo.LOGIN);
                 dispatch(setForgotPassword(false));
             }
         } catch (error){
@@ -95,7 +95,7 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ role }) => {
                         <p className="mt-6 flex justify-between text-xs md:text-sm/6 text-[var(--textTwo)] px-2">
                             <span
                                 className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
-                                onClick={() => goToAuthPage(role, AuthFormType.LOGIN)}
+                                onClick={() => goToAuthPage(role, RedirectTo.LOGIN)}
                             >
                                 Cancel
                             </span>

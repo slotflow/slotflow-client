@@ -10,7 +10,7 @@ import { FormButton, FormHeading } from "../FormSplits";
 import { handleGoogleLogin } from "@/utils/helper/googleLogin";
 import { SignupFormType, signupZodSchema } from "@/utils/zod/authZod";
 import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
-import { AuthFormType, signUpFormProps } from "@/utils/interface/commonInterface";
+import { RedirectTo, signUpFormProps } from "@/utils/interface/commonInterface";
 
 const SignUpForm: React.FC<signUpFormProps> = ({ role }) => {
 
@@ -38,7 +38,7 @@ const SignUpForm: React.FC<signUpFormProps> = ({ role }) => {
             const res = await dispatch(signup({ ...data, role })).unwrap();
             if(res.success) {
                 toast.success(res.message);
-                goToAuthPage(role, AuthFormType.VERIFY_OTP);
+                goToAuthPage(role, RedirectTo.VERIFY_OTP);
             }
         } catch (error) {
             if(import.meta.env.DEV)console.log("An error occurred while sign up ",error);
@@ -118,7 +118,7 @@ const SignUpForm: React.FC<signUpFormProps> = ({ role }) => {
                             Already a Slotflow member?
                             <span
                                 className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
-                                onClick={() => goToAuthPage(role, AuthFormType.LOGIN)}
+                                onClick={() => goToAuthPage(role, RedirectTo.LOGIN)}
                             >
                                 {" "}Sign In
                             </span>

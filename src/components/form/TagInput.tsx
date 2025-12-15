@@ -45,16 +45,17 @@ const TagInput: React.FC<TagInputProps> = ({ value, onChange }) => {
         {value.map((tag, index) => (
           <span
             key={index}
-            className="px-2 py-1 bg-gray-200 rounded-full text-xs flex items-center gap-1"
+            className="px-2 py-1 border-1 rounded-lg text-sm flex items-center gap-1"
           >
             {tag}
-            <button
+            <Button
               type="button"
+              variant="ghost"
               onClick={() => removeTag(tag)}
-              className="text-red-600 font-bold text-xs"
+              className="text-red-600 font-bold text-xs cursor-pointer"
             >
               ×
-            </button>
+            </Button>
           </span>
         ))}
       </div>

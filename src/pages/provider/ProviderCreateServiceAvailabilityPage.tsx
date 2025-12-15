@@ -10,16 +10,23 @@ import { Check, ChevronRight, Goal } from 'lucide-react';
 import { SelectField } from '@/components/form/SelectField';
 import React, { useEffect, FormEvent, useMemo } from 'react';
 import { AppDispatch, RootState } from '@/utils/redux/appStore';
-import { daysOfWeekOptions, serviceDurationsOptions } from '@/utils/constants';
+import { RedirectTo } from '@/utils/interface/commonInterface';
 import { providerCreateServiceAvailabilities } from '@/utils/apis/provider.api';
+import { useAuthNavigation } from '@/utils/hooks/systemHooks/useAuthNavigation';
 import { useAddAvailability } from '@/utils/hooks/providerHooks/useServiceAvailability';
+import { daysOfWeekOptions, roleArray, serviceDurationsOptions, updatableStatuses } from '@/utils/constants';
 import { ProviderServiceAvailabilityFormType, providerServiceAvailabilityZodSchema } from '@/utils/zod/providerZod';
 
 const ProviderCreateServiceAvailabilityPage: React.FC = () => {
 
   const dispatch = useDispatch<AppDispatch>();
+  const { goToAuthPage } = useAuthNavigation();
   const { dataUpdating } = useSelector((store: RootState) => store.auth);
   const { availabilities } = useSelector((store: RootState) => store.provider);
+  const { authUser } = useSelector((state: RootState) => state.auth);
+  const adminStatus = authUser?.adminVerificationStatus;
+  const isUpdatable = adminStatus !== undefined && (updatableStatuses as readonly string[]).includes(adminStatus);
+  const redirectUrl: RedirectTo = isUpdatable ? RedirectTo.PROVIDER_APPROVAL_PENDING : RedirectTo.PROVIDER_PROOFS;
 
   const {
     control,
@@ -89,6 +96,7 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
       .then((res) => {
         if (res.success) {
           toast.success(res.message);
+          goToAuthPage(roleArray[2],redirectUrl);
         }
       })
       .catch((error) => {

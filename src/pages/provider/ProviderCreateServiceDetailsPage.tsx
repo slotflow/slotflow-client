@@ -8,17 +8,24 @@ import SideBox from "@/components/provider/SideBox";
 import FormField from "@/components/form/FormField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { SelectField } from "@/components/form/SelectField";
+import { RedirectTo } from "@/utils/interface/commonInterface";
+import { AppDispatch, RootState } from "@/utils/redux/appStore";
+import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
 import { providerFetchAllAppServices, providerCreateServiceDetails } from "@/utils/apis/provider.api";
-import { serviceCategoryOptions, groupOptions, serviceModeOptions, serviceTypeOptions } from "@/utils/constants";
 import { providerCreateServiceDetailsZodSchema, ProviderCreateServiceDetailsFormType } from "@/utils/zod/providerZod";
+import { serviceCategoryOptions, groupOptions, serviceModeOptions, serviceTypeOptions, roleArray, updatableStatuses } from "@/utils/constants";
 
 const ProviderCreateServiceDetailsPage: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { dataUpdating } = useSelector((store: RootState) => store.auth);
 
+  const dispatch = useDispatch<AppDispatch>();
+  const { goToAuthPage } = useAuthNavigation();
+  const { dataUpdating } = useSelector((store: RootState) => store.auth);
   const [services, setServices] = useState<{ label: string; value: string }[]>([]);
+  const { authUser } = useSelector((state: RootState) => state.auth);
+  const adminStatus = authUser?.adminVerificationStatus;
+  const isUpdatable = adminStatus !== undefined && (updatableStatuses as readonly string[]).includes(adminStatus);
+  const redirectUrl: RedirectTo = isUpdatable ? RedirectTo.PROVIDER_APPROVAL_PENDING : RedirectTo.PROVIDER_AVAILABILITY;
 
   const {
     register,
@@ -57,7 +64,6 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
   
   console.log("serviceCategory : ",serviceCategory);
   
-  return;
     const fetchServices = async () => {
       try {
         const res = await providerFetchAllAppServices({serviceCategory});
@@ -79,6 +85,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
       const res = await dispatch(providerCreateServiceDetails(data)).unwrap();
       if (res.success) {
         toast.success(res.message);
+        goToAuthPage(roleArray[2],redirectUrl);
       }
     } catch (error) {
       if (import.meta.env.DEV) console.log("An unexpected error occured while saving data : ", error);

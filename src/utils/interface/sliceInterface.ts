@@ -1,11 +1,11 @@
-import { RoleType } from "./commonInterface";
+import { AdminVerificationStatusType, RoleType } from "./commonInterface";
 import { Plan } from "./entityInterface/planInterface";
 import { Provider } from "./entityInterface/providerInterface";
 import { ProviderService } from "./entityInterface/providerServiceInterface";
 import { Availability } from "./entityInterface/serviceAvailabilityInterface";
 
 // **** Auth slice state
-export interface UserData {
+export interface AuthUser {
   uid?: string;
   username?: string;
   profileImage?: string;
@@ -19,7 +19,15 @@ export interface UserData {
   isServiceDetailsAdded?: boolean;
   isServiceAvailabilityAdded?: boolean;
   isProofSubmitted?: boolean;
-  isAdminApproved?: boolean;
+  isAdminVerified?: boolean;
+  verificationRejectionReason?: string;
+
+  adminVerificationStatus?: AdminVerificationStatusType,
+  isAddressVerified?: boolean,
+  isServiceDetailsVerified?: boolean,
+  isAvailabilityVerified?: boolean,
+  isProofsVerified?: boolean,
+
   providerSubscription?: Plan["planName"];
   serviceDescription?: ProviderService["serviceDescription"];
   googleId?: string;
@@ -28,7 +36,7 @@ export interface UserData {
 }
 
 export interface AuthState {
-  authUser: UserData | null;
+  authUser: AuthUser | null;
   profileImageUpdating: boolean;
   dataUpdating: boolean; // used for the data update loading state in provider add address, provider add service availability, provider add service details, profile info updating
 }

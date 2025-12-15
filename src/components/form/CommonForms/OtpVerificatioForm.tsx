@@ -13,7 +13,7 @@ import { resendOtp, verifyOtp } from "@/utils/apis/auth.api";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { VerifyOtpFormType, verifyOtpZodSchema } from "@/utils/zod/authZod";
 import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
-import { AuthFormType, OtpVerificatioFormProps } from "@/utils/interface/commonInterface";
+import { RedirectTo, OtpVerificatioFormProps } from "@/utils/interface/commonInterface";
 
 const OtpVerificatioForm: React.FC<OtpVerificatioFormProps> = ({ role }) => {
 
@@ -59,8 +59,8 @@ const OtpVerificatioForm: React.FC<OtpVerificatioFormProps> = ({ role }) => {
             const res = await dispatch(verifyOtp({ otp: data.otp, verificationToken, role })).unwrap();
             if (res.success) {
                 toast.success(res.message);
-                if (forgotPassword) goToAuthPage(role, AuthFormType.RESET_PASSWORD);
-                else goToAuthPage(role, AuthFormType.LOGIN);
+                if (forgotPassword) goToAuthPage(role, RedirectTo.RESET_PASSWORD);
+                else goToAuthPage(role, RedirectTo.LOGIN);
             }
         } catch (error) {
             if (import.meta.env.DEV) console.log("An error occurred during OTP verification ", error);
@@ -145,7 +145,7 @@ const OtpVerificatioForm: React.FC<OtpVerificatioFormProps> = ({ role }) => {
                         <p className="mt-6 flex justify-between text-xs md:text-sm/6 text-[var(--textTwo)] px-2">
                             <span
                                 className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
-                                onClick={() => goToAuthPage(role, AuthFormType.LOGIN)}
+                                onClick={() => goToAuthPage(role, RedirectTo.LOGIN)}
                             >
                                 Cancel
                             </span>

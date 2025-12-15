@@ -8,7 +8,7 @@ import { AppDispatch } from "@/utils/redux/appStore";
 import { FormButton, FormHeading } from "../FormSplits";
 import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
 import { VerifyEmailFormType, verifyEmailZodSchema } from "@/utils/zod/authZod";
-import { AuthFormType, EmailVerificationFormProps } from "@/utils/interface/commonInterface";
+import { RedirectTo, EmailVerificationFormProps } from "@/utils/interface/commonInterface";
 
 const EmailVerificationForm: React.FC<EmailVerificationFormProps> = ({ role }) => {
     const dispatch = useDispatch<AppDispatch>();
@@ -36,7 +36,7 @@ const EmailVerificationForm: React.FC<EmailVerificationFormProps> = ({ role }) =
             const res = await dispatch(resendOtp({ role, email: data.email })).unwrap();
             if (res.success) {
                 toast.success(res.message);
-                goToAuthPage(role, AuthFormType.VERIFY_OTP);
+                goToAuthPage(role, RedirectTo.VERIFY_OTP);
             }
         } catch (error) {
             if(import.meta.env.DEV)console.log("An error occurred during email verification ",error);
@@ -65,7 +65,7 @@ const EmailVerificationForm: React.FC<EmailVerificationFormProps> = ({ role }) =
                         <p className="mt-6 flex justify-between text-xs md:text-sm/6 text-[var(--textTwo)] px-2">
                             <span
                                 className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
-                                onClick={() => goToAuthPage(role, AuthFormType.LOGIN)}
+                                onClick={() => goToAuthPage(role, RedirectTo.LOGIN)}
                             >
                                 Cancel
                             </span>

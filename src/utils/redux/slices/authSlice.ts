@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ApiBaseResponse } from "@/utils/interface/commonInterface";
-import { AuthState, UserData } from "@/utils/interface/sliceInterface";
+import { AuthState, AuthUser } from "@/utils/interface/sliceInterface";
 import { resendOtp, signin, signout, signup } from "@/utils/apis/auth.api";
-import { UserUpdateUserInfoResponse } from "@/utils/interface/api/userApiInterface";
 import { userUpdateInfo, userUpdateProfileImage } from "@/utils/apis/user.api";
-import { ProviderUpdateProviderInfoResponse } from "@/utils/interface/api/providerApiInterface";
+import { UserUpdateUserInfoResponse } from "@/utils/interface/api/userApiInterface";
 import { ResendOtpResponse, SigninResponse, SignupResponse } from "@/utils/interface/api/authApiInterface";
-import { providerCreateAddress, providerCreateServiceAvailabilities, providerCreateServiceDetails, providerUpdateInfo, providerUpdateProfileImage } from "@/utils/apis/provider.api";
+import { ProviderSubmitDetailsResponse, ProviderUpdateProviderInfoResponse } from "@/utils/interface/api/providerApiInterface";
+import { providerCreateAddress, providerCreateServiceAvailabilities, providerCreateServiceDetails, providerSubmitDetailsForReview, providerUpdateInfo, providerUpdateProfileImage } from "@/utils/apis/provider.api";
 
 const initialState: AuthState = {
     authUser: null,
@@ -18,7 +18,7 @@ const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        setAuthUser: (state, action: PayloadAction<UserData | null>) => {
+        setAuthUser: (state, action: PayloadAction<AuthUser | null>) => {
             state.authUser = action.payload;
         },
         setProfileImage: (state, action: PayloadAction<string>) => {
@@ -200,6 +200,16 @@ const authSlice = createSlice({
             .addCase(userUpdateInfo.rejected, (state) => {
                 state.dataUpdating = false;
             });
+
+        builder
+            .addCase(providerSubmitDetailsForReview.pending, () => {})
+            .addCase(providerSubmitDetailsForReview.fulfilled, (state, action: PayloadAction<ProviderSubmitDetailsResponse>) => {
+                state.dataUpdating = false;
+                if (state.authUser) {
+                    state.authUser.adminVerificationStatus = action.payload.data.adminVerificationStatus;
+                }
+            })
+            .addCase(providerSubmitDetailsForReview.rejected, () => {});
     },
 });
 

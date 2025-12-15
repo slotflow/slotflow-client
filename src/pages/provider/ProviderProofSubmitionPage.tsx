@@ -1,15 +1,19 @@
+import { roleArray } from "@/utils/constants";
 import { Button } from "@/components/ui/button";
 import SideBox from "@/components/provider/SideBox";
 import { useDispatch, useSelector } from "react-redux";
+import { RedirectTo } from "@/utils/interface/commonInterface";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { setIsProofSubmitted } from "@/utils/redux/slices/authSlice";
 import FileUploader from "@/components/form/CommonForms/FileUploader";
+import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
 import { providerUpdateIdentityProof, providerUpdateProofServiceProof } from "@/utils/apis/provider.api";
 import { setProviderIdentityProofs, setProviderServiceProofs } from "@/utils/redux/slices/providerSlice";
 
 export const ProviderProofSubmissionPage = () => {
 
   const dispatch = useDispatch<AppDispatch>();
+  const { goToAuthPage } = useAuthNavigation();
   const { authUser } = useSelector((state: RootState) => state.auth);
   const { identityProof, serviceProof } = useSelector((state: RootState) => state.provider);
 
@@ -18,6 +22,7 @@ export const ProviderProofSubmissionPage = () => {
   const handleNextutton = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     dispatch(setIsProofSubmitted());
+    goToAuthPage(roleArray[2],RedirectTo.PROVIDER_APPROVAL_PENDING);
   }
 
   return (

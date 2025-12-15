@@ -39,7 +39,7 @@ export interface SigninResponse extends ApiBaseResponse {
         isAddressAdded?: boolean,
         isServiceDetailsAdded?: boolean,
         isServiceAvailabilityAdded?: boolean,
-        isAdminApproved?: boolean,
+        isAdminVerified?: boolean,
         providerSubscription?: string;
         updatedAt: string;
         googleConnected: boolean;

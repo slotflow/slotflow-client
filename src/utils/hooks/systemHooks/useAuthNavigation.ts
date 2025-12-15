@@ -1,34 +1,50 @@
 import { useCallback } from "react";
+import { roleArray } from "@/utils/constants";
 import { useNavigate } from "react-router-dom";
-import { AuthFormType, RoleType } from "@/utils/interface/commonInterface";
+import { RedirectTo, RoleType } from "@/utils/interface/commonInterface";
 
 export const useAuthNavigation = () => {
   const navigate = useNavigate();
 
-  const goToAuthPage = useCallback((role: RoleType, formType: AuthFormType) => {
+  const goToAuthPage = useCallback((role: RoleType, redirectPage: RedirectTo) => {
     let basePath = "";
 
-    if (role === "ADMIN") basePath = "/admin";
-    else if (role === "USER") basePath = "/user";
-    else if (role === "PROVIDER") basePath = "/provider";
+    if (role === roleArray[0]) basePath = "/admin";
+    else if (role === roleArray[1]) basePath = "/user";
+    else if (role === roleArray[2]) basePath = "/provider";
 
     let path = "";
 
-    switch (formType) {
-      case AuthFormType.LOGIN:
+    switch (redirectPage) {
+      case RedirectTo.LOGIN:
         path = "/login";
         break;
-      case AuthFormType.REGISTER:
+      case RedirectTo.REGISTER:
         path = "/register";
         break;
-      case AuthFormType.VERIFY_EMAIL:
+      case RedirectTo.VERIFY_EMAIL:
         path = "/verify/email";
         break;
-      case AuthFormType.RESET_PASSWORD:
+      case RedirectTo.RESET_PASSWORD:
         path = "/reset/password";
         break;
-      case AuthFormType.VERIFY_OTP:
+      case RedirectTo.VERIFY_OTP:
         path = "/verify/otp";
+        break;
+      case RedirectTo.PROVIDER_ADDRESS:
+        path = "/onboarding/address";
+        break;
+      case RedirectTo.PROVIDER_SERVICE_DETAILS:
+        path = "/onboarding/service";
+        break;
+      case RedirectTo.PROVIDER_AVAILABILITY:
+        path = "/onboarding/availability";
+        break;
+      case RedirectTo.PROVIDER_PROOFS:
+        path = "/onboarding/proofs";
+        break;
+      case RedirectTo.PROVIDER_APPROVAL_PENDING:
+        path = "/onboarding/pending";
         break;
       default:
         path = "/login";

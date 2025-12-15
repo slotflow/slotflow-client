@@ -364,12 +364,17 @@ export interface CommonTabInterface {
   role?: RoleType[];
 }
 
-export enum AuthFormType {
+export enum RedirectTo {
   LOGIN = 0,
   REGISTER = 1,
   VERIFY_EMAIL = 2,
   RESET_PASSWORD = 3,
   VERIFY_OTP = 4,
+  PROVIDER_ADDRESS = 5,
+  PROVIDER_SERVICE_DETAILS = 6,
+  PROVIDER_AVAILABILITY = 7,
+  PROVIDER_PROOFS = 8,
+  PROVIDER_APPROVAL_PENDING = 9
 }
 
 export type SelectOptions = Array<{ label: string, value: string }>

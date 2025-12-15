@@ -122,6 +122,10 @@ export const serviceCategoryArray = ["Healthcare & Wellness",
 
 export const adminVerificationStatsArray = ["REQUESTED", "UNDER_REVIEW", "APPROVED", "REJECTED", "RESUBMITTED", "NOT_REQUESTED"] as const;
 
+export const blockBackStatuses = ["REQUESTED", "UNDER_REVIEW", "RESUBMITTED"] as const;
+
+export const updatableStatuses = ["NOT_REQUESTED", "REJECTED"] as const;
+
 
 // **** Routes for admin **** \\
 export const adminRoutes: Route[] = [
@@ -1319,3 +1323,14 @@ export const verificationOptions: OptionType[] = [
   { label: "Verified", value: "true" },
   { label: "Rejected", value: "false" }
 ];
+
+
+// Status text mapper
+export const verificationStatusTextMap: Record<string, string> = {
+  REQUESTED: "Submitted for review",
+  UNDER_REVIEW: "Currently under review",
+  APPROVED: "Approved",
+  REJECTED: "Rejected",
+  RESUBMITTED: "Re-submitted for review",
+  NOT_REQUESTED: "Not submitted",
+};

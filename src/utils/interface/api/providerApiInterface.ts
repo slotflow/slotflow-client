@@ -94,6 +94,12 @@ export interface ProviderUpdateProviderInfoResponse extends ApiBaseResponse {
 }
 
 
+// **** Used as the request interface of provider submit detials for review
+export interface ProviderSubmitDetailsResponse extends ApiBaseResponse {
+  data: Pick<Provider, "adminVerificationStatus">;
+}
+
+
 // **** Used as the return type for the provider fetch users for the chat side bar
 export type ProviderFetchUsersForChatSidebarResponse = Array<Pick<User, "_id" | "username" | "profileImage">>
 

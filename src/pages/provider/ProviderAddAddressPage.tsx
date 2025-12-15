@@ -1,27 +1,29 @@
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { FormEvent, useState } from "react";
-import { AppDispatch } from "@/utils/redux/appStore";
+import { useDispatch, useSelector } from "react-redux";
 import RightSideBox from "@/components/provider/SideBox";
+import { RedirectTo } from "@/utils/interface/commonInterface";
+import { AppDispatch, RootState } from "@/utils/redux/appStore";
+import { roleArray, updatableStatuses } from "@/utils/constants";
 import { providerCreateAddress } from "@/utils/apis/provider.api";
 import AddressForm from "@/components/form/CommonForms/AddressForm";
 import { CreateAddressFormType } from "@/utils/zod/commonZodFields";
+import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
 
 const ProviderAddAddressPage = () => {
 
-    const dispatch = useDispatch<AppDispatch>()
-    const [hasErrors, setHasErrors] = useState(false);
+    const dispatch = useDispatch<AppDispatch>();
+    const { goToAuthPage } = useAuthNavigation();
+    const { authUser } = useSelector((state: RootState) => state.auth);
+    const adminStatus = authUser?.adminVerificationStatus;
+    const isUpdatable = adminStatus !== undefined && (updatableStatuses as readonly string[]).includes(adminStatus);
+    const redirectUrl: RedirectTo = isUpdatable ? RedirectTo.PROVIDER_APPROVAL_PENDING : RedirectTo.PROVIDER_SERVICE_DETAILS;
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>, data: CreateAddressFormType) => {
-        e.preventDefault();
+    const handleSubmit = async (data: CreateAddressFormType) => {
         try {
-            if (hasErrors) {
-                toast.error("Please fix the form errors.");
-                return;
-            }
             const res = await dispatch(providerCreateAddress(data)).unwrap();
             if (res.success) {
-                toast.success(res.message)
+                toast.success(res.message);
+                goToAuthPage(roleArray[2],redirectUrl);
             }
         } catch (error) {
             if (import.meta.env.DEV) console.log("Failed to Save Address : ",error);
@@ -40,7 +42,6 @@ const ProviderAddAddressPage = () => {
                     headingSize={"xs:text-md md:text-xl lg:text-2xl"}
                     heading={"Address Form"}
                     buttonText={"Next"}
-                    setHasErrors={setHasErrors}
                 />
             </div>
         </div>

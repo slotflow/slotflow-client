@@ -15,7 +15,7 @@ import { ChevronUp, Lock, User2 } from "lucide-react";
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import avatar from '../../assets/defaultImages/avatar.png';
-import { UserData } from '@/utils/interface/sliceInterface';
+import { AuthUser } from '@/utils/interface/sliceInterface';
 import { handleSignoutHelper } from '@/utils/helper/signout';
 import { AppDispatch, RootState } from '@/utils/redux/appStore';
 import { SideBarProps } from '@/utils/interface/commonInterface';
@@ -32,7 +32,7 @@ const SidebarNew: React.FC<SideBarProps> = ({
   const navigate = useNavigate();
   const resetRedux = useResetRedux();
 
-  const user: UserData | null = useSelector((store: RootState) => store.auth?.authUser);
+  const user: AuthUser | null = useSelector((store: RootState) => store.auth?.authUser);
   const themeMode: boolean = useSelector((store: RootState) => store.app.lightTheme);
   const basePath = user?.role === "ADMIN" ? "/admin" : user?.role === "PROVIDER" ? "/provider" : "/user";
 
