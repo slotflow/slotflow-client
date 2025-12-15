@@ -167,7 +167,7 @@ const OtpVerificatioForm: React.FC<OtpVerificatioFormProps> = ({ role }) => {
                         </p>
                         <Button
                             variant="link"
-                            className="px-0 block text-xs md:text-sm font-medium text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer px-2"
+                            className="block text-xs md:text-sm font-medium text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer px-2"
                             onClick={() => {
                                 navigate('/contact')
                             }}

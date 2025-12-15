@@ -4,7 +4,6 @@ import {
   type UseFormRegister,
   type RegisterOptions,
 } from "react-hook-form";
-import { FormEvent } from "react";
 import { LucideIcon } from "lucide-react";
 import { ChartConfig } from "@/components/ui/chart";
 import { Provider } from "../entityInterface/providerInterface";
@@ -13,8 +12,8 @@ import { CreateAddressFormType } from "@/utils/zod/commonZodFields";
 import { BaseChartData, ChatComponentProps, TimeRange } from "../commonInterface";
 import { UpdateFileDataRequest, UpdateFileDataResponse } from "../api/commonApiInterface";
 import { AdminFetchProviderAvailabilityResponse, AdminFetchProviderServiceResponse } from "../api/adminProviderApiInterface";
-import { UpdateUserProfileImageResponse, UserFetchProviderAvailabilityResponse, UserFetchProviderServiceResponse } from "../api/userApiInterface";
-import { ProviderFetchServiceAvailabilityResponse, ProviderFetchServiceDetailsResponse, ProviderUpdateProfileImageResponse } from "../api/providerApiInterface";
+import { UserUpdateProfileImageResponse, UserFetchProviderAvailabilityResponse, UserFetchProviderServiceResponse, UserUpdateProfileImageRequest } from "../api/userApiInterface";
+import { ProviderFetchServiceAvailabilityResponse, ProviderFetchServiceDetailsResponse, ProviderUpdateProfileImageRequest, ProviderUpdateProfileImageResponse } from "../api/providerApiInterface";
 
 // **** Common component interfaces **** \\
 // **** Used in components / common **** \\
@@ -23,10 +22,7 @@ import { ProviderFetchServiceAvailabilityResponse, ProviderFetchServiceDetailsRe
 // **** profile head compoenent props interface
 export interface ProfileHeaderComponentProps {
     updation: boolean;
-    updateProfileImageApiFunction?: ReturnType<typeof createAsyncThunk<
-        ProviderUpdateProfileImageResponse | UpdateUserProfileImageResponse,
-        FormData
-    >>;
+    updateProfileImageApiFunction?: ReturnType<typeof createAsyncThunk<ProviderUpdateProfileImageResponse | UserUpdateProfileImageResponse, ProviderUpdateProfileImageRequest | UserUpdateProfileImageRequest>>;
     showDetails?: boolean;
     isMyProfile?: boolean;
     selectedUserData?: {selectedUserName: string, selectedUserProfileImage: string| null};
@@ -166,8 +162,7 @@ export interface AddressFormProps {
     heading: string;
     headingSize: string;
     buttonText: string;
-    onSubmit: (e: FormEvent<HTMLFormElement>, data: CreateAddressFormType) => void;
-    setHasErrors: (hasError: boolean) => void;
+    onSubmit: (data: CreateAddressFormType) => void;
 }
 
 

@@ -46,6 +46,9 @@ export type ProviderFetchServiceAvailabilityResponse = AvailabilityForResponse;
 
 
 // **** Used as the response type for Provider profile image updating api
+export interface ProviderUpdateProfileImageRequest {
+  s3FileKey: string
+}
 export interface ProviderUpdateProfileImageResponse extends ApiBaseResponse {
   data: Provider["profileImage"]
 }

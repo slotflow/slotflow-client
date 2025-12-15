@@ -12,7 +12,10 @@ export type UserFetchUserProfileDetailsResponse = Pick<User, "username" | "email
 
 
 // **** Used as the response type of the user profile image updating api
-export interface UpdateUserProfileImageResponse extends ApiBaseResponse {
+export interface UserUpdateProfileImageRequest {
+    s3FileKey: string;
+}
+export interface UserUpdateProfileImageResponse extends ApiBaseResponse {
     data: User["profileImage"]
 }
 

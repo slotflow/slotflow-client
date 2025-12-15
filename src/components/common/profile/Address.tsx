@@ -1,57 +1,50 @@
 import React from 'react';
+import { useState } from "react";
 import { toast } from "react-toastify";
-import { FormEvent, useState } from "react";
+import { roleArray } from '@/utils/constants';
 import { Button } from '@/components/ui/button';
-import { RootState } from "@/utils/redux/appStore";
 import { useDispatch, useSelector } from "react-redux";
 import { useQueryClient } from "@tanstack/react-query";
-import { AppDispatch } from "recharts/types/state/store";
 import { Edit, MapPinHouse, Plus, X } from 'lucide-react';
 import { setAuthUser } from "@/utils/redux/slices/authSlice";
-import { CreateAddressFormType } from '@/utils/zod/commonZodFields';
+import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import AddressForm from "@/components/form/CommonForms/AddressForm";
+import { CreateAddressFormType } from '@/utils/zod/commonZodFields';
 import AddressListing from "@/components/common/profile/AddressListing";
 import { UpdateAddressResponse } from '@/utils/interface/api/commonApiInterface';
 import { UserCreateAddressResponse } from '@/utils/interface/api/userApiInterface';
-import { userCreateUserAddress, userFetchAddress, userUpdateAddress } from "@/utils/apis/user.api";
 import { providerFetchAddress, providerUpdateAddress } from "@/utils/apis/provider.api";
+import { userCreateUserAddress, userFetchAddress, userUpdateAddress } from "@/utils/apis/user.api";
 
 const Address: React.FC = () => {
 
   const queryClient = useQueryClient();
   const dispatch = useDispatch<AppDispatch>();
-  const { authUser } = useSelector((state: RootState) => state.auth);
-  const [hasErrors, setHasErrors] = useState<boolean>(false);
-  const [addAddress, setAddAddress] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
+  const [showAddressForm, setShowAddressForm] = useState(false);
+  const authUser = useSelector((state: RootState) => state.auth.authUser);
 
-  const handleAAddAddress = async (e: FormEvent<HTMLFormElement>, data: CreateAddressFormType) => {
-
-    e.preventDefault();
-    if (hasErrors) {
-      toast.error("Please fix the form errors.");
-      return;
-    }
+  const handleAddress = async (data: CreateAddressFormType) => {
     try {
       setLoading(true);
       let res: UserCreateAddressResponse | UpdateAddressResponse;
 
-      if (authUser?.role === "USER") {
+      if (authUser?.role === roleArray[1]) {
         if (isUpdating) {
           res = await userUpdateAddress(data);
         } else {
           res = await userCreateUserAddress(data);
         }
-      } else if (authUser?.role === "PROVIDER") {
+      } else if (authUser?.role === roleArray[2]) {
         res = await providerUpdateAddress(data);
       } else {
         throw new Error("Unknown role");
       }
       if (res.success) {
         toast.success(res.message);
-        queryClient.setQueryData(["userAddress"], res.data);
-        setAddAddress(false);
+        queryClient.invalidateQueries({ queryKey: ["userAddress"] });
+        setShowAddressForm(false);
         if (authUser) {
           dispatch(setAuthUser({
             ...authUser,
@@ -69,7 +62,7 @@ const Address: React.FC = () => {
   return (
     <div className="min-h-full flex flex-col w-full">
 
-      <div className='border rounded-md p-2'>
+      <div className='border rounded-md p-2 mb-2'>
         <div className='flex justify-between items-center'>
           <div className='flex space-x-2'>
             <MapPinHouse />
@@ -78,9 +71,9 @@ const Address: React.FC = () => {
           <Button
             variant="outline"
             disabled={loading}
-            onClick={() => setAddAddress(!addAddress)}
+            onClick={() => setShowAddressForm(!showAddressForm)}
             className="cursor-pointer"
-          >{addAddress
+          >{showAddressForm
             ? <span className='flex items-center'><X className='mr-2' />Close</span>
             : authUser?.isAddressAdded
               ? <span className='flex items-center'><Edit className='mr-2' />  Edit Address</span>
@@ -92,14 +85,13 @@ const Address: React.FC = () => {
         )}
       </div>
 
-      {addAddress ? (
+      {showAddressForm ? (
         <AddressForm
-          onSubmit={handleAAddAddress}
-          formClassNames={"my-4 border rounded-lg py-6"}
+          onSubmit={handleAddress}
+          formClassNames={"border rounded-lg py-6"}
           headingSize={"xs:text-md md:text-xl"}
           heading={"Address Form"}
           buttonText={"Submit"}
-          setHasErrors={setHasErrors}
         />
       ) : (
         <AddressListing

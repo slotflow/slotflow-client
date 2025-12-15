@@ -2,24 +2,25 @@ import { axiosInstance } from "@/lib/axios";
 import {
     ProviderFetchPlansResponse,
     ProviderFetchAddressResponse,
+    ProviderCreateAddressRequest,
     ProviderSubscribeToPlanRequest,
     ProviderDashboardGraphResponse,
     ProviderSubscribeToPlanResponse,
     ProviderFetchAllServicesResponse,
     ProviderSaveSubscriptionResponse,
-    ProviderCreateAddressRequest,
     ProviderUpdateProviderInfoRequest,
+    ProviderFetchAllAppServiceRequest,
+    ProviderUpdateProfileImageRequest,
     ProviderUpdateProviderInfoResponse,
     ProviderUpdateProfileImageResponse,
     ProviderFetchProfileDetailsResponse,
     ProviderFetchServiceDetailsResponse,
+    ProviderCreateServiceDetailsRequest,
     ProviderChangeAppointmentStatusRequest,
-    CreateProviderServiceAvailabilitiesRequest,
     ProviderFetchDashboardStatsDataResponse,
     ProviderFetchUsersForChatSidebarResponse,
     ProviderFetchServiceAvailabilityResponse,
-    ProviderCreateServiceDetailsRequest,
-    ProviderFetchAllAppServiceRequest,
+    CreateProviderServiceAvailabilitiesRequest,
 } from "../interface/api/providerApiInterface";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { buildQueryParams, parseNewCommonResponse } from "../helper";
@@ -129,9 +130,9 @@ export const providerFetchProfileDetails = async (): Promise<ProviderFetchProfil
 }
 
 
-export const providerUpdateProfileImage = createAsyncThunk<ProviderUpdateProfileImageResponse, FormData>('/provider/profile/image',
-    async (formData: FormData) => {
-        const response = await axiosInstance.patch('/provider/profile/image', formData);
+export const providerUpdateProfileImage = createAsyncThunk<ProviderUpdateProfileImageResponse, ProviderUpdateProfileImageRequest>('/provider/profile/image',
+    async (data: ProviderUpdateProfileImageRequest) => {
+        const response = await axiosInstance.patch('/provider/profile/image', data);
         return response.data;
     }
 )

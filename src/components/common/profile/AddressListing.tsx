@@ -38,24 +38,24 @@ const AddressListing: React.FC<UserOrProviderAddressDetailsComponentProps> = ({
     });
 
     useEffect(() => {
-        if(setLoading) {
-            if(isLoading) {
+        if (setLoading) {
+            if (isLoading) {
                 setLoading(true);
             } else {
                 setLoading(false)
             }
         }
-    },[isLoading, setLoading])
+    }, [isLoading, setLoading])
 
     useEffect(() => {
-        if(setIsUpdating) {
-            if(data && Object.values(data).length !== 0) {
+        if (setIsUpdating) {
+            if (data && Object.values(data).length !== 0) {
                 setIsUpdating(true);
             } else {
                 setIsUpdating(false)
             }
         }
-    },[data, setIsUpdating])
+    }, [data, setIsUpdating])
 
     if (isError) {
         return <DataFetchingError message={error?.message} />
@@ -73,20 +73,20 @@ const AddressListing: React.FC<UserOrProviderAddressDetailsComponentProps> = ({
         <div className=" border rounded-md overflow-hidden w-full mt-2 md:mt-0">
             <table className="table-auto w-full">
                 <tbody className="w-1/2">
-                        <InfoDisplayComponent label="Address Line" value={data?.addressLine} />
-                        <InfoDisplayComponent label="Landmark" value={data?.landMark} />
-                        <InfoDisplayComponent label="Place" value={data?.place} />
-                        <InfoDisplayComponent label="City" value={data?.city} />
-                        <InfoDisplayComponent label="Phone" value={data?.phone} />
-                        <InfoDisplayComponent label="State" value={data?.state} />
-                        <InfoDisplayComponent label="Pincode" value={data?.pincode} />
-                        <InfoDisplayComponent label="Distrcit" value={data?.district} />
-                        <InfoDisplayComponent label="Country" value={data?.country} />
+                    <InfoDisplayComponent label="Address Line" value={data?.addressLine} />
+                    <InfoDisplayComponent label="Landmark" value={data?.landMark} />
+                    <InfoDisplayComponent label="Place" value={data?.place} />
+                    <InfoDisplayComponent label="City" value={data?.city} />
+                    <InfoDisplayComponent label="Phone" value={data?.phone} />
+                    <InfoDisplayComponent label="State" value={data?.state} />
+                    <InfoDisplayComponent label="Pincode" value={data?.pincode} />
+                    <InfoDisplayComponent label="Distrcit" value={data?.district} />
+                    <InfoDisplayComponent label="Country" value={data?.country} />
                 </tbody>
             </table>
-                        {data?.location?.coordinates && (
-                            <MapPreview lat={data?.location.coordinates[1]} lon={data?.location.coordinates[0]} />
-                        )}
+            {data?.location?.coordinates && (
+                <MapPreview lat={data?.location.coordinates[1]} lon={data?.location.coordinates[0]} />
+            )}
         </div>
 
     )

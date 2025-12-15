@@ -187,7 +187,9 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
 
   if (reviews.length === 0) {
     return (
-      <DataFetchingError message="No data found in database" className="p-4" />
+      <div className="h-full flex-1 flex justify-center items-center">
+        <DataFetchingError message="No data found in database" className="p-4" />
+      </div>
     )
   }
 

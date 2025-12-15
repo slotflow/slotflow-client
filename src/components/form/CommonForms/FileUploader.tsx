@@ -21,30 +21,30 @@ const FileUploader: React.FC<FileUploaderProps> = ({
     setStateFunction,
     fileUploaded
 }) => {
-   const dispatch = useDispatch<AppDispatch>();
-   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+    const dispatch = useDispatch<AppDispatch>();
+    const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
     const {
-    handleSubmit,
-    formState: { errors, isSubmitting, isValid },
-    setValue,
-    watch,
-  } = useForm<ImageFileFormType>({
-    resolver: zodResolver(imageFileZodeSchema),
-    defaultValues: {
-      file: undefined,
-    },
-  });
+        handleSubmit,
+        formState: { errors, isSubmitting, isValid },
+        setValue,
+        watch,
+    } = useForm<ImageFileFormType>({
+        resolver: zodResolver(imageFileZodeSchema),
+        defaultValues: {
+            file: undefined,
+        },
+    });
 
-   const profileImageFile = watch("file");
+    const proofFile = watch("file");
 
-   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setSelectedImage(URL.createObjectURL(file));
-      setValue("file", file, { shouldValidate: true });
-    }
-  };
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setSelectedImage(URL.createObjectURL(file));
+            setValue("file", file, { shouldValidate: true });
+        }
+    };
 
     const onSubmit: SubmitHandler<ImageFileFormType> = async (data) => {
         const file = data.file;
@@ -53,8 +53,8 @@ const FileUploader: React.FC<FileUploaderProps> = ({
         try {
             console.log("presignedUrl and key");
             const { uploadUrl, key } = await getUploadUrl({ file: file, folder: folderName });
-            console.log("presignedUrl : ",uploadUrl);
-            console.log("key : ",key);
+            console.log("presignedUrl : ", uploadUrl);
+            console.log("key : ", key);
             await uploadToS3(file, uploadUrl);
             const res = await uploadFunction({ field: "identityProof", s3FileKey: key });
             if (res.success) {
@@ -76,11 +76,10 @@ const FileUploader: React.FC<FileUploaderProps> = ({
                     </Label>
                     {!fileUploaded ? (
                         <Input
-                        type="file"
-                        id="file"
-                        accept="image/png, image/jpeg"
-                        onChange={handleFileChange}
-                        // Remove register from here - using manual control instead
+                            type="file"
+                            id="file"
+                            accept="image/png, image/jpeg"
+                            onChange={handleFileChange}
                         />
                     ) : (
                         <h6 className='flex justify-center'><Check className="mx-2" /> File Uploaded </h6>
@@ -92,7 +91,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
                         </p>
                     )}
 
-                    {(profileImageFile && selectedImage) && (
+                    {(proofFile && selectedImage) && (
                         <img
                             src={selectedImage}
                             alt="Identity Preview"
@@ -107,7 +106,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
                         />
                     )}
                 </CardContent>
-                {(!fileUploaded &&profileImageFile) && (
+                {(!fileUploaded && proofFile) && (
                     <CardFooter className='flex justify-end'>
                         <Button
                             variant="outline"

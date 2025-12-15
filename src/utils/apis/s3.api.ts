@@ -4,7 +4,7 @@ import { ApiBaseResponse } from "../interface/commonInterface";
 
 export const getUploadUrl = async (
   data: { file: File; folder: string }
-) => {
+): Promise<{key: string, uploadUrl: string}> => {
   const apiData = {
         fileName: data.file.name,
         fileType: data.file.type,

@@ -23,7 +23,6 @@ const AddressForm: React.FC<AddressFormProps> = ({
     headingSize,
     buttonText,
     onSubmit,
-    setHasErrors
 }) => {
 
     const queryClient = useQueryClient();
@@ -84,7 +83,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
     }, [queryClient, reset]);
 
     const submitHandler = (data: CreateAddressFormType) => {
-        onSubmit({ preventDefault: () => { } } as React.FormEvent<HTMLFormElement>, data);
+        onSubmit(data);
     };
 
     return (
@@ -126,7 +125,6 @@ const AddressForm: React.FC<AddressFormProps> = ({
                                     value={field.value}
                                     onChange={(value) => {
                                         field.onChange(value || "");
-                                        setHasErrors(false);
                                     }}
                                     defaultCountry="IN"
                                     international

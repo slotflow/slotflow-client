@@ -136,7 +136,7 @@ export const adminRoutes: Route[] = [
 
 // **** Routes for user **** \\
 export const userRoutes: Route[] = [
-  { path: "dashboard", name: "Dashboard", icon: Gauge },
+  { path: "dashboard", name: "Services", icon: Gauge },
   { path: "profile", name: "Profile", icon: User },
   { path: "bookings", name: "Bookings", icon: CalendarCheck },
   { path: "payments", name: "Payments", icon: CreditCard },

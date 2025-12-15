@@ -8,7 +8,8 @@ import {
     UserBookAppointmentResponse, 
     UserBookAnAppointmentRequest, 
     UserFetchAllServicesResponse,
-    UpdateUserProfileImageResponse, 
+    UserUpdateProfileImageRequest,
+    UserUpdateProfileImageResponse, 
     UserFetchProviderAddressResponse, 
     UserFetchProviderServiceResponse, 
     UserFetchServiceProvidersResponse, 
@@ -32,9 +33,9 @@ export const userFetchProfileDetails = async (): Promise<UserFetchUserProfileDet
     return response.data.data;
 }
 
-export const userUpdateProfileImage = createAsyncThunk<UpdateUserProfileImageResponse, FormData>("/user/updateProfileImage",
-    async (payload: FormData) => {
-        const response = await axiosInstance.post('/user/profile/image', payload);
+export const userUpdateProfileImage = createAsyncThunk<UserUpdateProfileImageResponse, UserUpdateProfileImageRequest>("/user/updateProfileImage",
+    async (data: UserUpdateProfileImageRequest) => {
+        const response = await axiosInstance.post('/user/profile/image', data);
         return response.data;
     }
 )
