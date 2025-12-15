@@ -12,7 +12,6 @@ const AdminPaymentsPage = () => {
         <CommonTable<FetchPaymentsResponse>
             fetchApiFunction={adminFetchAllPayments}
             queryKey='payments'
-            heading='Payments'
             column={column}
             columnsCount={6}
         />

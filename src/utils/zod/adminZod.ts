@@ -1,6 +1,6 @@
 import z from "zod";
-import { descriptionRegex, planNameRegex, appServiceNameRegex } from "./regex";
 import { serviceCategoryArray } from "../constants";
+import { descriptionRegex, planNameRegex, appServiceNameRegex, verificationRejectionReasonRegex } from "./regex";
 
 // Admin Create Plan Schema
 export const adminCreatePlanZodSchema = z.object({
@@ -68,3 +68,15 @@ export const adminCreateServiceZodSchema = z.object({
 });
 
 export type AdminCreateServiceFormType = z.infer<typeof adminCreateServiceZodSchema>;
+
+
+// Admin Create Service Schema
+export const adminRejectProviderZodSchema = z.object({
+  verificationRejectionReason: z
+    .string()
+    .min(5, "Rejection reason must be at least 5 characters long")
+    .max(500, "Rejection reason must not exceed 500 characters")
+    .regex(verificationRejectionReasonRegex, "Rejection reason may include letters, numbers, spaces, and common symbols"),
+});
+
+export type AdminRejectProviderFormType = z.infer<typeof adminRejectProviderZodSchema>;

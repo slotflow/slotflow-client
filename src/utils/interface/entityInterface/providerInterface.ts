@@ -7,6 +7,7 @@ export interface Provider {
   isBlocked: boolean;
   isEmailVerified: boolean;
   isAdminVerified: boolean;
+  verificationRejectionReason: string;
   phone: string;
   profileImage: string;
   addressId: string;

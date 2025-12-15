@@ -6,7 +6,6 @@ import { ProvidersSubscriptionsTableColumns } from '@/components/table/tableColu
 
 const AdminSubscriptionsPage = () => {
 
-
     const {
         handleAdminGetProviderDetailPage
     } = useCommonHook();
@@ -19,7 +18,6 @@ const AdminSubscriptionsPage = () => {
         <CommonTable<FetchProviderSubscriptionsResponse>
             fetchApiFunction={adminFetchAllSubscriptions}
             queryKey="subscriptions"
-            heading="Subscriptions"
             column={column}
             columnsCount={6}
         />

@@ -1,5 +1,6 @@
 import { RoleType } from "./commonInterface";
 import { Plan } from "./entityInterface/planInterface";
+import { Provider } from "./entityInterface/providerInterface";
 import { ProviderService } from "./entityInterface/providerServiceInterface";
 import { Availability } from "./entityInterface/serviceAvailabilityInterface";
 
@@ -42,6 +43,18 @@ export interface appState {
   forgotPassword: boolean;
   otpRemainingTime: number;
   otpTimerIsRunning: boolean;
+}
+
+
+// **** Admin slice
+export interface AdminState {
+  rejectProviderId: string | null;
+  isProviderRejectModalOpen: boolean;
+}
+
+export interface SetProviderRejectModalType {
+  modalState: boolean,
+  providerId: Provider["_id"] | null,
 }
 
 

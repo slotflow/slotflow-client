@@ -3,11 +3,12 @@ import { MoreHorizontal } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
 import { Provider } from "@/utils/interface/entityInterface/providerInterface";
-import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminFetchAllProvidersResponse } from "@/utils/interface/api/adminProviderApiInterface";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
+import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminFetchAllProvidersResponse } from "@/utils/interface/api/adminProviderApiInterface";
 
 export const AdminProvidersTableColumns = (
     handleAdminApproveProvider: (providerId: Provider["_id"]) => void,
+    handleOpenProviderRejectModal: (providerId: Provider["_id"]) => void,
     hanldeAdminChangeProviderBlockStatus: (data: AdminChangeProviderBlockStatusRequest) => void,
     handleGetProviderDetailPage: (providerId: Provider["_id"]) => void,
     hanldeAdminChangeProviderSlotflowTrustTag: (data: AdminChangeProviderTrustTagRequest) => void,
@@ -91,6 +92,11 @@ export const AdminProvidersTableColumns = (
                             {!provider.isAdminVerified && (
                                 <DropdownMenuItem onClick={() => handleAdminApproveProvider(provider._id)}>
                                     Approve
+                                </DropdownMenuItem>
+                            )}
+                            {!provider.isAdminVerified && (
+                                <DropdownMenuItem onClick={() => handleOpenProviderRejectModal(provider._id)}>
+                                    Reject
                                 </DropdownMenuItem>
                             )}
                             <DropdownMenuItem onClick={() => hanldeAdminChangeProviderBlockStatus({ isBlocked: provider.isBlocked, providerId: provider._id })}>

@@ -1,5 +1,6 @@
 import { axiosInstance } from "@/lib/axios";
 import {
+    AdminRejectProviderRequest,
     AdminFetchAllProvidersResponse,
     AdminFetchProviderServiceResponse,
     AdminChangeProviderTrustTagRequest,
@@ -19,8 +20,15 @@ export const adminFetchAllProviders = async (params?: FetchFunctionParams): Prom
     return parseNewCommonResponse<AdminFetchAllProvidersResponse>(response.data);
 };
 
-export const adminApproveProvider = async (providerId : Provider["_id"]): Promise<ApiBaseResponse> => {
+export const adminApproveProvider = async (providerId: Provider["_id"]): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.patch(`/admin/providers/${providerId}/approve`);
+    return response.data;
+}
+
+export const adminRejectProvider = async (data: AdminRejectProviderRequest): Promise<ApiBaseResponse> => {
+    const response = await axiosInstance.patch(`/admin/providers/${data.providerId}/reject`, {
+        verificationRejectionReason: data.verificationRejectionReason
+    });
     return response.data;
 }
 
@@ -49,16 +57,16 @@ export const adminFetchProviderService = async (providerId: Provider["_id"]): Pr
     return response.data.data;
 }
 
-export const adminFetchProviderServiceAvailability = async ({date, providerId}: AdminFetchProviderAvailabilityRequest): Promise<AdminFetchProviderAvailabilityResponse> => {
+export const adminFetchProviderServiceAvailability = async ({ date, providerId }: AdminFetchProviderAvailabilityRequest): Promise<AdminFetchProviderAvailabilityResponse> => {
     const response = await axiosInstance.get(`/admin/providers/${providerId}/availability`, {
-        params : {
-            date : date.toISOString()
+        params: {
+            date: date.toISOString()
         }
     });
     return response.data.data;
 }
 
-export const adminFetchProviderSubscriptions = async (params: FetchFunctionParams<Provider["_id"]>) : Promise<ApiPaginatedResponse<FetchProviderSubscriptionsResponse>> => {
+export const adminFetchProviderSubscriptions = async (params: FetchFunctionParams<Provider["_id"]>): Promise<ApiPaginatedResponse<FetchProviderSubscriptionsResponse>> => {
     const { id, pagination } = params;
     const query = buildQueryParams({ pagination });
     const response = await axiosInstance.get(`/admin/providers/${id}/subscriptions${query ? `?${query}` : ''}`);
@@ -72,7 +80,7 @@ export const adminFetchProviderPayments = async (params: FetchFunctionParams<Pro
     return parseNewCommonResponse<FetchPaymentsResponse>(response.data);
 }
 
-export const adminFetchProviderProofs = async(providerId: Provider["_id"]): Promise<FetchProvidersProofsResponse> => {
+export const adminFetchProviderProofs = async (providerId: Provider["_id"]): Promise<FetchProvidersProofsResponse> => {
     const response = await axiosInstance.get(`/admin/providers/${providerId}/proofs`);
     return response.data.data;
 }

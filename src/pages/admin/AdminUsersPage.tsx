@@ -20,7 +20,6 @@ const AdminUsersPage = () => {
     <CommonTable<AdminfetchAllUsersResponse>
       fetchApiFunction={adminFetchAllUsers}
       queryKey="users"
-      heading="Users"
       column={column}
       columnsCount={6}
     />

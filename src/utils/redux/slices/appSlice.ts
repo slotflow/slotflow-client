@@ -4,9 +4,9 @@ import { resendOtp, signup, verifyOtp } from "@/utils/apis/auth.api";
 
 const initialState: appState = {
     lightTheme: true,
-    sidebarOpen: true,
-    filterSideBarOpen: true,
-    authModal: false,
+    sidebarOpen: true, // TODO make it starting with is
+    filterSideBarOpen: true, // TODO make it starting with is
+    authModal: false,  // TODO make it starting with is and end with open
 
     forgotPassword: false,
     otpRemainingTime: 0,

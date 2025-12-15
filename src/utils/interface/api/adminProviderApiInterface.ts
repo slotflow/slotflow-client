@@ -10,6 +10,13 @@ export type AdminFetchAllProvidersResponse = Pick<Provider, "_id" | "username" |
 // **** Inline interfaces used for the adminApproveProvider api
 
 
+// **** Used as the request interfaces of admin reject provider
+export interface AdminRejectProviderRequest {
+    providerId: Provider["_id"];
+    verificationRejectionReason: Provider["verificationRejectionReason"];
+}
+
+
 // **** Used as the request type for the admin change provider block status api
 export type AdminChangeProviderBlockStatusRequest = {
     providerId: Provider["_id"];
