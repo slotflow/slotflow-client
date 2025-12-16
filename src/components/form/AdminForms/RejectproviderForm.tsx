@@ -77,7 +77,7 @@ const RejectproviderForm: React.FC<RejectproviderFormProps> = ({
         className="space-y-6"
       >
 
-        <SelectField<AdminRejectProviderFormType>
+        <SelectField<AdminRejectProviderFormType,boolean>
           id="isAddressVerified"
           label="Address Verification"
           options={verificationOptions}
@@ -85,7 +85,7 @@ const RejectproviderForm: React.FC<RejectproviderFormProps> = ({
           error={errors.isAddressVerified?.message}
         />
 
-        <SelectField<AdminRejectProviderFormType>
+        <SelectField<AdminRejectProviderFormType, boolean>
           id="isServiceDetailsVerified"
           label="Service Details Verification"
           options={verificationOptions}
@@ -93,7 +93,7 @@ const RejectproviderForm: React.FC<RejectproviderFormProps> = ({
           error={errors.isServiceDetailsVerified?.message}
         />
 
-        <SelectField<AdminRejectProviderFormType>
+        <SelectField<AdminRejectProviderFormType, boolean>
           id="isAvailabilityVerified"
           label="Availability Verification"
           options={verificationOptions}
@@ -101,7 +101,7 @@ const RejectproviderForm: React.FC<RejectproviderFormProps> = ({
           error={errors.isAvailabilityVerified?.message}
         />
 
-        <SelectField<AdminRejectProviderFormType>
+        <SelectField<AdminRejectProviderFormType, boolean>
           id="isProofsVerified"
           label="Proofs Verification"
           options={verificationOptions}

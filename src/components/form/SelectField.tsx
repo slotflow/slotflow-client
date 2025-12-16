@@ -14,15 +14,15 @@ import {
 } from "react-hook-form";
 import { Input } from '../ui/input';
 
-export type OptionType = {
+export type OptionType<K> = {
   label: string;
-  value: string | number | boolean;
+  value: K;
 };
 
-interface SelectFieldProps<T extends FieldValues> {
+interface SelectFieldProps<T extends FieldValues, K> {
   id: Path<T>;
   label: string;
-  options: OptionType[];
+  options: OptionType<K>[];
   placeholder?: string;
   error?: FieldError | string;
   register: UseFormRegister<T>;
@@ -30,7 +30,7 @@ interface SelectFieldProps<T extends FieldValues> {
   defaultValue?: string | number | boolean;
 }
 
-export const SelectField = <T extends FieldValues>({
+export const SelectField = <T extends FieldValues,K>({
   id,
   label,
   options,
@@ -39,7 +39,7 @@ export const SelectField = <T extends FieldValues>({
   register,
   required = false,
   defaultValue,
-}: SelectFieldProps<T>) => {
+}: SelectFieldProps<T,K>) => {
   const reg = register(id);
 
   // FULLY TYPE-SAFE PARSER — NO ANY

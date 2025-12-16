@@ -1,6 +1,6 @@
-import React from 'react';
 import { useState } from "react";
 import { toast } from "react-toastify";
+import React, { useEffect } from 'react';
 import { roleArray } from '@/utils/constants';
 import { Button } from '@/components/ui/button';
 import { useDispatch, useSelector } from "react-redux";
@@ -24,6 +24,7 @@ const Address: React.FC = () => {
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [showAddressForm, setShowAddressForm] = useState(false);
   const authUser = useSelector((state: RootState) => state.auth.authUser);
+  const [oldAddress, setOldAddress] = useState<CreateAddressFormType>();
 
   const handleAddress = async (data: CreateAddressFormType) => {
     try {
@@ -59,6 +60,22 @@ const Address: React.FC = () => {
     }
   }
 
+  useEffect(() => {
+
+    async function fetchOldAddress() {
+      if (authUser?.role === roleArray[1]) {
+        const result = await userFetchAddress();
+        setOldAddress(result);
+      } else if (authUser?.role === roleArray[2]) {
+        const result = await providerFetchAddress();
+        setOldAddress(result);
+      }
+    }
+
+    fetchOldAddress();
+
+  },[authUser?.role, isUpdating]);
+
   return (
     <div className="min-h-full flex flex-col w-full">
 
@@ -92,14 +109,11 @@ const Address: React.FC = () => {
           headingSize={"xs:text-md md:text-xl"}
           heading={"Address Form"}
           buttonText={"Submit"}
+          setData={oldAddress}
         />
       ) : (
         <AddressListing
-          fetchApiFunction={
-            authUser?.role === "USER" ?
-              userFetchAddress
-              : providerFetchAddress
-          }
+          fetchApiFunction={authUser?.role === "USER" ? userFetchAddress : providerFetchAddress}
           queryKey="userAddress"
           setLoading={setLoading}
           setIsUpdating={setIsUpdating}

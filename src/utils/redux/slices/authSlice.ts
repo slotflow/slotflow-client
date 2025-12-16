@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ApiBaseResponse } from "@/utils/interface/commonInterface";
 import { AuthState, AuthUser } from "@/utils/interface/sliceInterface";
 import { resendOtp, signin, signout, signup } from "@/utils/apis/auth.api";
 import { userUpdateInfo, userUpdateProfileImage } from "@/utils/apis/user.api";
 import { UserUpdateUserInfoResponse } from "@/utils/interface/api/userApiInterface";
+import { AdminVerificationStatusType, ApiBaseResponse } from "@/utils/interface/commonInterface";
 import { ResendOtpResponse, SigninResponse, SignupResponse } from "@/utils/interface/api/authApiInterface";
 import { ProviderSubmitDetailsResponse, ProviderUpdateProviderInfoResponse } from "@/utils/interface/api/providerApiInterface";
 import { providerCreateAddress, providerCreateServiceAvailabilities, providerCreateServiceDetails, providerSubmitDetailsForReview, providerUpdateInfo, providerUpdateProfileImage } from "@/utils/apis/provider.api";
@@ -46,6 +46,11 @@ const authSlice = createSlice({
                 state.authUser.isProofSubmitted = true;
             }
         },
+        setAdminVerificationState: (state, action: PayloadAction<AdminVerificationStatusType>) => {
+            if(state.authUser) {
+                state.authUser.adminVerificationStatus = action.payload;
+            }
+        }
     },
     extraReducers: (builder) => {
         // Sign Up Api
@@ -219,7 +224,8 @@ export const {
     setAuthUserName,
     setProviderSubscription,
     setGoogleConnect,
-    setIsProofSubmitted
+    setIsProofSubmitted,
+    setAdminVerificationState
 } = authSlice.actions;
 
 export default authSlice.reducer;

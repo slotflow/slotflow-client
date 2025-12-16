@@ -7,7 +7,7 @@ import { ProtectedRoute } from "./protectedRoutes.tsx";
 import SettingsPage from "@/pages/common/SettingsPage.tsx";
 import IntegrationsPage from "@/pages/common/IntegrationsPage.tsx";
 import StripeConfirmPage from "@/pages/common/StripeConfirmPage.tsx";
-import ProviderAddAddressPage from "@/pages/provider/ProviderAddAddressPage.tsx";
+import ProviderAddAddressPage from "@/pages/provider/ProviderCreateAddressPage.tsx";
 import ProviderCreateServiceDetailsPage from "@/pages/provider/ProviderCreateServiceDetailsPage.tsx";
 import ProviderCreateServiceAvailabilityPage from "@/pages/provider/ProviderCreateServiceAvailabilityPage.tsx";
 import ProviderApprovalPendingPage from "@/pages/provider/ProviderApprovalPendingPage.tsx";

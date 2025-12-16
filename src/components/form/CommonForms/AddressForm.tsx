@@ -8,7 +8,6 @@ import { ChevronRight, Info } from 'lucide-react';
 import { RootState } from '@/utils/redux/appStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from "react-hook-form";
-import { useQueryClient } from '@tanstack/react-query';
 import NotificationBox from '../../common/NotificationBox';
 import { CountryDropdown } from '../../ui/country-dropdown';
 import LocationPicker from '@/components/common/LocationPicker';
@@ -23,9 +22,10 @@ const AddressForm: React.FC<AddressFormProps> = ({
     headingSize,
     buttonText,
     onSubmit,
+    setData
 }) => {
 
-    const queryClient = useQueryClient();
+    // const queryClient = useQueryClient();
     const { dataUpdating } = useSelector((store: RootState) => store.auth);
 
     const {
@@ -76,11 +76,9 @@ const AddressForm: React.FC<AddressFormProps> = ({
         setValue("pincode", location?.address?.postcode);
     };
 
-
     useEffect(() => {
-        const cachedData = queryClient.getQueryData<CreateAddressFormType>(["userAddress"]);
-        if (cachedData) reset(cachedData);
-    }, [queryClient, reset]);
+        reset(setData)
+    },[setData, reset])
 
     const submitHandler = (data: CreateAddressFormType) => {
         onSubmit(data);

@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { slideOut } from "@/utils/helper/gsapAnimationSlide";
 import { useAdminPlanActions } from "@/utils/hooks/adminHooks/useAdminPlanActions";
 import { AdminCreatePlanFormType, adminCreatePlanZodSchema } from "@/utils/zod/adminZod";
+import { adVisibility } from "@/utils/constants";
 
 interface CreatePlanFormProps {
     onClose: () => void;
@@ -116,15 +117,12 @@ const CreatePlanForm: React.FC<CreatePlanFormProps> = ({
                     required={true}
                 />
 
-                <SelectField<AdminCreatePlanFormType>
+                <SelectField<AdminCreatePlanFormType, boolean>
                     id="adVisibility"
                     label="Advertisement Visibility"
                     register={register}
                     error={errors.adVisibility}
-                    options={[
-                        { label: "Ad Visible", value: true },
-                        { label: "No Ad Visibility", value: false },
-                    ]}
+                    options={adVisibility}
                     required
                 />
                 <FormButton text="Save" loading={isSubmitting} disabled={isSubmitting || !isValid} />

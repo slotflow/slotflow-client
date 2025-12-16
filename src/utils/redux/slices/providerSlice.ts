@@ -11,6 +11,8 @@ const initialState: ProviderState = {
   paymentPageOpen: false,
   identityProof: null,
   serviceProof: null,
+  identityProofLoading: false,
+  serviceProofLoading: false,
 };
 
 const providerSlice = createSlice({
@@ -51,11 +53,17 @@ const providerSlice = createSlice({
     setPaymentSelectionPage: (state, action: PayloadAction<boolean>) => {
       state.paymentSelectionOpen = action.payload;
     },
-    setProviderIdentityProofs: (state, action: PayloadAction<string>) => {
+    setProviderIdentityProofs: (state, action: PayloadAction<string | null>) => {
       state.identityProof = action.payload
     },
-    setProviderServiceProofs: (state, action: PayloadAction<string>) => {
+    setProviderServiceProofs: (state, action: PayloadAction<string | null>) => {
       state.serviceProof = action.payload
+    },
+    setIdentityProofLoading: (state, action: PayloadAction<boolean>) => {
+      state.identityProofLoading = action.payload;
+    },
+    setServiceProofLoading: (state, action: PayloadAction<boolean>) => {
+      state.serviceProofLoading = action.payload;
     },
     clearProviderSlice: () => initialState,
   },
@@ -70,6 +78,8 @@ export const {
   setProviderIdentityProofs,
   setProviderServiceProofs,
   clearProviderSlice,
+  setIdentityProofLoading,
+  setServiceProofLoading
 } = providerSlice.actions;
 
 export default providerSlice.reducer;

@@ -1,7 +1,7 @@
 import { Button } from "../../ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
-import { adminVerificationStatsArray } from "@/utils/constants";
+import { adminVerificationStatusArray } from "@/utils/constants";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
 import { Provider } from "@/utils/interface/entityInterface/providerInterface";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
@@ -52,17 +52,17 @@ export const AdminProvidersTableColumns = (
             cell: ({ row }) => {
                 const status = row.original.adminVerificationStatus;
                 switch (status) {
-                    case adminVerificationStatsArray[0]:
-                        return <span className="text-blue-500 font-semibold">Requested By Provider</span>;
-                    case adminVerificationStatsArray[1]:
+                    case adminVerificationStatusArray[0]:
+                        return <span className="font-semibold">Requested By Provider</span>;
+                    case adminVerificationStatusArray[1]:
                         return <span className="text-yellow-500 font-semibold">Under Review</span>;
-                    case adminVerificationStatsArray[2]:
+                    case adminVerificationStatusArray[2]:
                         return <span className="text-green-500 font-semibold">Approved</span>;
-                    case adminVerificationStatsArray[3]:
+                    case adminVerificationStatusArray[3]:
                         return <span className="text-red-500 font-semibold">Rejected</span>;
-                    case adminVerificationStatsArray[4]:
-                        return <span className="text-purple-500 font-semibold">ReSubmitted By Provider</span>;
-                    case adminVerificationStatsArray[5]:
+                    case adminVerificationStatusArray[4]:
+                        return <span className="font-semibold">ReSubmitted By Provider</span>;
+                    case adminVerificationStatusArray[5]:
                         return <span className="text-gray-500 font-semibold">Not Requested</span>;
                     default:
                         return <span>{status}</span>;
@@ -113,12 +113,14 @@ export const AdminProvidersTableColumns = (
                             <DropdownMenuItem onClick={() => handleGetProviderDetailPage(provider._id)}>
                                 Details
                             </DropdownMenuItem>
-                            {!provider.isAdminVerified && (
+                            {(!provider.isAdminVerified && 
+                            (provider.adminVerificationStatus === adminVerificationStatusArray[0] || provider.adminVerificationStatus === adminVerificationStatusArray[4] || provider.adminVerificationStatus === adminVerificationStatusArray[1])) && (
                                 <DropdownMenuItem onClick={() => handleAdminApproveProvider(provider._id)}>
                                     Approve
                                 </DropdownMenuItem>
                             )}
-                            {!provider.isAdminVerified && (
+                            {(!provider.isAdminVerified &&
+                                (provider.adminVerificationStatus === adminVerificationStatusArray[0] || provider.adminVerificationStatus === adminVerificationStatusArray[4] || provider.adminVerificationStatus === adminVerificationStatusArray[1])) && (
                                 <DropdownMenuItem onClick={() => handleOpenProviderRejectModal(provider._id)}>
                                     Reject
                                 </DropdownMenuItem>

@@ -17,20 +17,21 @@ import {
     ProviderFetchProfileDetailsResponse,
     ProviderFetchServiceDetailsResponse,
     ProviderCreateServiceDetailsRequest,
+    ProviderUpdateServiceDetailsRequest,
     ProviderChangeAppointmentStatusRequest,
     ProviderFetchDashboardStatsDataResponse,
     ProviderFetchUsersForChatSidebarResponse,
     ProviderFetchServiceAvailabilityResponse,
     CreateProviderServiceAvailabilitiesRequest,
 } from "../interface/api/providerApiInterface";
+import { DateRange } from "react-day-picker";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { buildQueryParams, parseNewCommonResponse } from "../helper";
+import { Review } from "../interface/entityInterface/reviewInterface";
+import { Booking } from "../interface/entityInterface/bookingInterface";
+import { Subscription } from "../interface/entityInterface/subscriptionInterface";
 import { ApiBaseResponse, FetchFunctionParams, ApiPaginatedResponse } from "../interface/commonInterface";
 import { FetchBookingDetailsResponse, FetchBookingsResponse, FetchOnlineBookingParams, FetchOnlineBookingsForProviderResponse, FetchPaymentsResponse, FetchProvidersProofsResponse, FetchProviderSubscriptionsResponse, FetchReviewsResponse, FetchSubscriptionDetailsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, UpdateAddressRequest, UpdateAddressResponse, UpdateFileDataRequest, UpdateFileDataResponse, ValidateRoomId } from "../interface/api/commonApiInterface";
-import { Subscription } from "../interface/entityInterface/subscriptionInterface";
-import { Booking } from "../interface/entityInterface/bookingInterface";
-import { Review } from "../interface/entityInterface/reviewInterface";
-import { DateRange } from "react-day-picker";
 
 
 // **** Address apis
@@ -104,10 +105,17 @@ export const providerCreateServiceDetails = createAsyncThunk<ApiBaseResponse, Pr
     }
 )
 
+export const providerUpdateServiceDetails = async (data: ProviderUpdateServiceDetailsRequest): Promise<ApiBaseResponse> => {
+    console.log("provider updating service details");
+    const response = await axiosInstance.patch(`/provider/service/${data._id}`, data);
+    return response.data;
+}
+
 export const providerFetchServiceDetails = async (): Promise<ProviderFetchServiceDetailsResponse> => {
     const response = await axiosInstance.get('/provider/service');
     return response.data.data;
 }
+
 
 
 // **** Provider service availability apis
@@ -155,9 +163,19 @@ export const providerUpdateProofServiceProof = async(data: UpdateFileDataRequest
     return response.data;
 }
 
-export const providerFetchProviderProofs = async(): Promise<FetchProvidersProofsResponse> => {
+export const providerFetchProofs = async(): Promise<FetchProvidersProofsResponse> => {
     const response = await axiosInstance.get(`/provider/profile/proofs`);
     return response.data.data;
+}
+
+export const providerDeleteIdentityProof = async(): Promise<ApiBaseResponse> => {
+    const response = await axiosInstance.delete('/provider/profile/identity');
+    return response.data;
+}
+
+export const providerDeleteServiceProof = async(): Promise<ApiBaseResponse> => {
+    const response = await axiosInstance.delete('/provider/profile/service');
+    return response.data;
 }
 
 export const providerSubmitDetailsForReview = createAsyncThunk<ProviderSubmitDetailsResponse>('/provider/profile/details',

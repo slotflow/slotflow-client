@@ -87,7 +87,7 @@ const PlanCard: React.FC<ProviderPlanCardProps> = ({
       </CardContent>
 
       {!isTrial && (
-        <SelectField<PlanDurationFormType>
+        <SelectField<PlanDurationFormType, number>
           id="planDuration"
           label="Select Plan Duration"
           options={planDurations}

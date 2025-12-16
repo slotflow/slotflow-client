@@ -114,7 +114,7 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
             <div className="space-y-4 md:space-y-0 w-full md:flex space-x-2 px-6 pt-6 md:px-6">
               <div className="md:w-6/12">
 
-                <SelectField<ProviderServiceAvailabilityFormType>
+                <SelectField<ProviderServiceAvailabilityFormType, string>
                   label="Select Day"
                   id="day"
                   register={register}
@@ -123,7 +123,7 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
                 />
               </div>
               <div className="md:w-6/12">
-                <SelectField<ProviderServiceAvailabilityFormType>
+                <SelectField<ProviderServiceAvailabilityFormType, number>
                   label="Select Duration"
                   id="duration"
                   register={register}

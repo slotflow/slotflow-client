@@ -37,7 +37,7 @@ export interface UserCreateAddressResponse extends ApiBaseResponse {
 
 
 // **** Used as the response type of the user fetching api
-export type UserFetchAddressResponse = Pick<Address, "_id" | "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "landMark" | "location">;
+export type UserFetchAddressResponse = Pick<Address, "_id" | "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "landMark" | "location" | "countryCode">;
 
 
 // **** Used as the response type of the user fetch all services for the service selecting page fetching api

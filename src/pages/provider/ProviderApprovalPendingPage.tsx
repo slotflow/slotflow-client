@@ -10,7 +10,7 @@ import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { providerSubmitDetailsForReview } from "@/utils/apis/provider.api";
 import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { adminVerificationStatsArray, blockBackStatuses, roleArray, verificationStatusTextMap } from "@/utils/constants";
+import { adminVerificationStatusArray, blockBackStatuses, roleArray, verificationStatusTextMap } from "@/utils/constants";
 
 const ProviderApprovalPendingPage = () => {
 
@@ -89,7 +89,7 @@ const ProviderApprovalPendingPage = () => {
                 <TableRow>
                   <TableHead>Section</TableHead>
                   <TableHead>Status</TableHead>
-                  {adminStatus === adminVerificationStatsArray[3] && (
+                  {adminStatus === adminVerificationStatusArray[3] && (
                     <TableHead>Update</TableHead>
                   )}
                 </TableRow>
@@ -102,7 +102,7 @@ const ProviderApprovalPendingPage = () => {
                     <TableCell>
                       {row.verified ? "Verified" : "Pending"}
                     </TableCell>
-                    {adminStatus === adminVerificationStatsArray[3] && (
+                    {adminStatus === adminVerificationStatusArray[3] && (
                       <TableCell>
                         <Button
                           variant="outline"
@@ -117,7 +117,7 @@ const ProviderApprovalPendingPage = () => {
               </TableBody>
             </Table>
 
-            {adminStatus === adminVerificationStatsArray[5] && (
+            {(adminStatus === adminVerificationStatusArray[5] || adminStatus === adminVerificationStatusArray[3]) && (
               <div className="flex flex-row justify-between items-center">
                 <p className="text-sm text-center">
                   Please submit your details. We will review them and inform you via email within one business day.
@@ -127,12 +127,12 @@ const ProviderApprovalPendingPage = () => {
                   className="cursor-pointer"
                   onClick={handleSubmit}
                 >
-                  Submit for Review
+                  {adminStatus === adminVerificationStatusArray[5] ? "Submit for Review" : "Resubmit for Review"}
                 </Button>
               </div>
             )}
 
-            {adminStatus !== adminVerificationStatsArray[3] &&
+            {adminStatus === adminVerificationStatusArray[3] &&
               (<div className="flex space-x-4">
                 <p className="text-sm">
                   <span className="font-semibold text-red-500">Rejection Reason</span>{" "}

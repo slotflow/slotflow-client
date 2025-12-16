@@ -4,7 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ChartConfig } from "@/components/ui/chart";
 import { Plan } from "./entityInterface/planInterface";
 import { Booking } from "./entityInterface/bookingInterface";
-import { adminVerificationStatsArray, appointmentStatusArray, limitedRolesArray, paymentForArray, paymentGatewayArray, plansArray, roleArray, serviceModeArray, serviceTypeArray } from "../constants";
+import { adminVerificationStatusArray, appointmentStatusArray, limitedRolesArray, paymentForArray, paymentGatewayArray, plansArray, roleArray, serviceCategoryArray, serviceModeArray, serviceTypeArray } from "../constants";
 
 // **** Common Response interface
 export interface ApiBaseResponse {
@@ -188,7 +188,8 @@ export type ServiceModeType = typeof serviceModeArray[number];
 export type LimitedRolesType = typeof limitedRolesArray[number];
 export type PaymentGatewayType = typeof paymentGatewayArray[number];
 export type AppointmentStatusType = typeof appointmentStatusArray[number];
-export type AdminVerificationStatusType = typeof adminVerificationStatsArray[number];
+export type AdminVerificationStatusType = typeof adminVerificationStatusArray[number];
+export type ServiceCategoryType = typeof serviceCategoryArray[number];
 
 
 // **** AppointmentOverTimeInterface

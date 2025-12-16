@@ -11,6 +11,7 @@ export interface Address {
     pincode: string;
     state: string;
     country: string;
+    countryCode: string;
     location: {
         type: "Point",
         coordinates: [number, number]

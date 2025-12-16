@@ -9,6 +9,7 @@ import { slideOut } from "@/utils/helper/gsapAnimationSlide";
 import { handleFormError } from "@/utils/helper/formErrorCatcher";
 import { useAdminServiceActions } from "@/utils/hooks/adminHooks/useAdminServiceActions";
 import { AdminCreateServiceFormType, adminCreateServiceZodSchema } from "@/utils/zod/adminZod";
+import { ServiceCategoryType } from "@/utils/interface/commonInterface";
 
 interface CreateServiceFormProps {
   onClose: () => void;
@@ -74,7 +75,7 @@ const CreateServiceForm: React.FC<CreateServiceFormProps> = ({
           required
         />
 
-        <SelectField<AdminCreateServiceFormType>
+        <SelectField<AdminCreateServiceFormType, ServiceCategoryType>
           id="serviceCategory"
           label="Service Category"
           options={serviceCategoryOptions}

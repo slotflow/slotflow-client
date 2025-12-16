@@ -1,5 +1,7 @@
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
+import { roleArray } from "@/utils/constants";
+import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { Calendar } from "@/components/ui/calendar";
 import DataFetchingError from "../DataFetchingError";
@@ -8,8 +10,6 @@ import CommonPaymentSelection from "../CommonPaymentSelection";
 import { Slot } from "@/utils/interface/entityInterface/serviceAvailabilityInterface";
 import ProviderAvailabilityShimmer from "@/components/shimmers/ProviderAvailabilityShimmer";
 import { ProviderApiFunctionForPSAcomponent, ProviderServiceAvailabilityComponentProps, UserOrAdminApiFunctionForPSAcomponent } from "@/utils/interface/componentInterface/commonComponentInterface";
-import { roleArray } from "@/utils/constants";
-import { Button } from "@/components/ui/button";
 
 
 const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponentProps> = ({
@@ -41,7 +41,6 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
     });
 
     useEffect(() => {
-        console.log("Date : ",date);
         if (!data || !date || date === null || !data.modes) {
             return;
         }

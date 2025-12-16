@@ -3,7 +3,9 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "@/utils/redux/appStore";
 import { useQueryClient } from "@tanstack/react-query";
+import { adminVerificationStatusArray } from "@/utils/constants";
 import { setProviderRejectModal } from "@/utils/redux/slices/adminSlice";
+import { setAdminVerificationState } from "@/utils/redux/slices/authSlice";
 import { Provider } from "@/utils/interface/entityInterface/providerInterface";
 import { adminApproveProvider, adminChangeProviderBlockStatus, adminChangeProviderTrustTag, adminRejectProvider } from "@/utils/apis/adminProvider.api";
 import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminRejectProviderRequest } from "@/utils/interface/api/adminProviderApiInterface";
@@ -47,6 +49,7 @@ export const useAdminProviderActions = (): UseAdminProviderActionReturnType => {
       .then((res) => {
         if (res.success) {
           toast.success(res.message);
+          dispatch(setAdminVerificationState(adminVerificationStatusArray[3]));
           queryClient.invalidateQueries({ queryKey: ["providers"] });
         }
       })

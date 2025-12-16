@@ -19,7 +19,11 @@ const FileUploader: React.FC<FileUploaderProps> = ({
     uploadFunction,
     message,
     setStateFunction,
-    fileUploaded
+    setLoadingFunction,
+    fileUploaded,
+    deleteFunction,
+    loading,
+    data,
 }) => {
     const dispatch = useDispatch<AppDispatch>();
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -51,10 +55,8 @@ const FileUploader: React.FC<FileUploaderProps> = ({
         if (!file) return;
 
         try {
-            console.log("presignedUrl and key");
+            dispatch(setLoadingFunction(true));
             const { uploadUrl, key } = await getUploadUrl({ file: file, folder: folderName });
-            console.log("presignedUrl : ", uploadUrl);
-            console.log("key : ", key);
             await uploadToS3(file, uploadUrl);
             const res = await uploadFunction({ field: "identityProof", s3FileKey: key });
             if (res.success) {
@@ -64,8 +66,27 @@ const FileUploader: React.FC<FileUploaderProps> = ({
         } catch (error) {
             if (import.meta.env.DEV) console.error("Upload error:", error);
             toast.error("Upload failed! Please try again.");
+        } finally {
+            dispatch(setLoadingFunction(false));
         }
     };
+
+    const handleDeleteFile = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        try {
+            dispatch(setLoadingFunction(true));
+            const res = await deleteFunction();
+            if (res.success) {
+                toast.success("File deleted successfully!");
+                dispatch(setStateFunction(null));
+            }
+        } catch (error) {
+            if (import.meta.env.DEV) console.error("Deletion error:", error);
+            toast.error("Deletion failed! Please try again.");
+        } finally {
+            dispatch(setLoadingFunction(false));
+        }
+    }
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -91,13 +112,46 @@ const FileUploader: React.FC<FileUploaderProps> = ({
                         </p>
                     )}
 
-                    {(proofFile && selectedImage) && (
-                        <img
-                            src={selectedImage}
-                            alt="Identity Preview"
-                            className="w-full h-48 object-contain rounded-xl border"
-                        />
+                    {(selectedImage) && (
+                        <>
+                            <h5>Selected File</h5>
+                            {!loading ? (
+                                <img
+                                    src={selectedImage}
+                                    alt="Proof Preview"
+                                    className="w-full h-48 object-contain rounded-xl border"
+                                />
+                            ) : (
+                                <div className='w-full h-48 shimmer'></div>
+                            )
+                            }
+                        </>
                     )}
+
+                    {data && (
+                        <>
+                            <h5>Uploaded File</h5>
+                            {!loading ? (
+                                <img
+                                    src={data}
+                                    alt="Proof Preview"
+                                    className="w-full h-48 object-contain rounded-xl border"
+                                />
+                            ) : (
+                                <div className='w-full h-48 shimmer'></div>
+                            )
+                            }
+                            <Button
+                                type="button"
+                                variant="destructive"
+                                className='cursor-pointer'
+                                onClick={handleDeleteFile}
+                            >
+                                Delete File
+                            </Button>
+                        </>
+                    )}
+
                     {message && (
                         <NotificationBox
                             icon={Info}

@@ -77,6 +77,8 @@ export interface ProviderState {
   paymentPageOpen: boolean;
   identityProof: string | null;
   serviceProof: string | null;
+  identityProofLoading: boolean;
+  serviceProofLoading: boolean;
 }
 
 

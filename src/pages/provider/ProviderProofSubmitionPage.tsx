@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { roleArray } from "@/utils/constants";
 import { Button } from "@/components/ui/button";
 import SideBox from "@/components/provider/SideBox";
@@ -7,22 +8,36 @@ import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { setIsProofSubmitted } from "@/utils/redux/slices/authSlice";
 import FileUploader from "@/components/form/CommonForms/FileUploader";
 import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
-import { providerUpdateIdentityProof, providerUpdateProofServiceProof } from "@/utils/apis/provider.api";
-import { setProviderIdentityProofs, setProviderServiceProofs } from "@/utils/redux/slices/providerSlice";
+import { setIdentityProofLoading, setProviderIdentityProofs, setProviderServiceProofs, setServiceProofLoading } from "@/utils/redux/slices/providerSlice";
+import { providerDeleteIdentityProof, providerDeleteServiceProof, providerFetchProofs, providerUpdateIdentityProof, providerUpdateProofServiceProof } from "@/utils/apis/provider.api";
 
 export const ProviderProofSubmissionPage = () => {
 
   const dispatch = useDispatch<AppDispatch>();
   const { goToAuthPage } = useAuthNavigation();
   const { authUser } = useSelector((state: RootState) => state.auth);
-  const { identityProof, serviceProof } = useSelector((state: RootState) => state.provider);
+  const { identityProof, serviceProof, identityProofLoading, serviceProofLoading } = useSelector((state: RootState) => state.provider);
+
+  useEffect(() => {
+    if (!authUser?.isProofSubmitted) return;
+
+    async function fetchOldProofs() {
+      const result = await providerFetchProofs();
+      if (result) {
+        dispatch(setProviderIdentityProofs(result.identityProof as string))
+        dispatch(setProviderServiceProofs(result.serviceProof as string))
+      }
+    }
+
+    fetchOldProofs();
+  }, [authUser?.isProofSubmitted, dispatch]);
 
   if (!authUser) return;
 
   const handleNextutton = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     dispatch(setIsProofSubmitted());
-    goToAuthPage(roleArray[2],RedirectTo.PROVIDER_APPROVAL_PENDING);
+    goToAuthPage(roleArray[2], RedirectTo.PROVIDER_APPROVAL_PENDING);
   }
 
   return (
@@ -39,14 +54,22 @@ export const ProviderProofSubmissionPage = () => {
                 uploadFunction={providerUpdateIdentityProof}
                 message="Please upload a valid identity document issued in your country. Make sure the document is clear and readable for verification."
                 setStateFunction={setProviderIdentityProofs}
+                setLoadingFunction={setIdentityProofLoading}
                 fileUploaded={!!identityProof}
+                deleteFunction={providerDeleteIdentityProof}
+                loading={identityProofLoading}
+                data={identityProof}
               />
               <FileUploader
                 folderName="provider-proof"
                 uploadFunction={providerUpdateProofServiceProof}
                 message="If you are offering a service, upload a valid certification or an experience document that verifies your professional qualifications."
                 setStateFunction={setProviderServiceProofs}
+                setLoadingFunction={setServiceProofLoading}
                 fileUploaded={!!serviceProof}
+                deleteFunction={providerDeleteServiceProof}
+                loading={serviceProofLoading}
+                data={serviceProof}
               />
 
               <div className="flex justify-end">

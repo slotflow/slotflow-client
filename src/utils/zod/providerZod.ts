@@ -3,6 +3,8 @@ import { serviceCategoryArray, serviceModeArray, serviceTypeArray } from "../con
 import { serviceExperienceRegex, serviceDescriptionRegex, serviceNameRegex } from "./regex";
 
 export const providerCreateServiceDetailsZodSchema = z.object({
+  _id: z.string(),
+  
   serviceCategory: z.enum(serviceCategoryArray),
   
   serviceName: z

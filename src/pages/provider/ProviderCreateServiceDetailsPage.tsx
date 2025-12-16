@@ -8,35 +8,34 @@ import SideBox from "@/components/provider/SideBox";
 import FormField from "@/components/form/FormField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
-import { SelectField } from "@/components/form/SelectField";
-import { RedirectTo } from "@/utils/interface/commonInterface";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
+import { OptionType, SelectField } from "@/components/form/SelectField";
 import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
-import { providerFetchAllAppServices, providerCreateServiceDetails } from "@/utils/apis/provider.api";
+import { RedirectTo, ServiceCategoryType, ServiceModeType, ServiceTypeType } from "@/utils/interface/commonInterface";
 import { providerCreateServiceDetailsZodSchema, ProviderCreateServiceDetailsFormType } from "@/utils/zod/providerZod";
-import { serviceCategoryOptions, groupOptions, serviceModeOptions, serviceTypeOptions, roleArray, updatableStatuses } from "@/utils/constants";
+import { serviceCategoryOptions, serviceModeOptions, roleArray, serviceTypeOptions, groupOptions } from "@/utils/constants";
+import { providerFetchAllAppServices, providerCreateServiceDetails, providerFetchServiceDetails, providerUpdateServiceDetails } from "@/utils/apis/provider.api";
 
 const ProviderCreateServiceDetailsPage: React.FC = () => {
 
   const dispatch = useDispatch<AppDispatch>();
   const { goToAuthPage } = useAuthNavigation();
   const { dataUpdating } = useSelector((store: RootState) => store.auth);
-  const [services, setServices] = useState<{ label: string; value: string }[]>([]);
+  const [ services, setServices] = useState<OptionType<string>[]>([]);
   const { authUser } = useSelector((state: RootState) => state.auth);
-  const adminStatus = authUser?.adminVerificationStatus;
-  const isUpdatable = adminStatus !== undefined && (updatableStatuses as readonly string[]).includes(adminStatus);
-  const redirectUrl: RedirectTo = isUpdatable ? RedirectTo.PROVIDER_APPROVAL_PENDING : RedirectTo.PROVIDER_AVAILABILITY;
 
   const {
     register,
     handleSubmit,
     setValue,
     watch,
+    reset,
     formState: { errors }
   } = useForm<ProviderCreateServiceDetailsFormType>({
     resolver: zodResolver(providerCreateServiceDetailsZodSchema),
     mode: "onChange",
     defaultValues: {
+      _id: "",
       serviceCategory: undefined,
       service: "",
       serviceName: "",
@@ -58,15 +57,13 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
 
   useEffect(() => {
     if (!serviceCategory || serviceCategory.length === 0) {
-    setServices([]);
-    return;
-  }
-  
-  console.log("serviceCategory : ",serviceCategory);
-  
+      setServices([]);
+      return;
+    }
+
     const fetchServices = async () => {
       try {
-        const res = await providerFetchAllAppServices({serviceCategory});
+        const res = await providerFetchAllAppServices({ serviceCategory });
         const transformed = res.map((srv: { _id: string; serviceName: string }) => ({
           label: srv.serviceName,
           value: srv._id
@@ -80,12 +77,44 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
     fetchServices();
   }, [serviceCategory]);
 
+  useEffect(() => {
+    if(!authUser?.isServiceDetailsAdded) return;
+
+    async function fetchOldServiceDetails() {
+      const result = await providerFetchServiceDetails();
+      reset({
+        _id: result._id,
+        isGroupService: result.isGroupService,
+        maxParticipants: result.maxParticipants,
+        requirements: result.requirements,
+        serviceDescription: result.serviceDescription, 
+        serviceExperience: result.serviceExperience,
+        serviceMode: result.serviceMode,
+        serviceName: result.serviceName,
+        servicePrice: result.servicePrice,
+        serviceType: result.serviceType, 
+        videoUrl: result.videoUrl,
+        tags: result.tags,
+      })
+    }
+
+    fetchOldServiceDetails();
+  },[authUser?.isServiceDetailsAdded, reset]);
+
   const onSubmit = async (data: ProviderCreateServiceDetailsFormType) => {
     try {
-      const res = await dispatch(providerCreateServiceDetails(data)).unwrap();
-      if (res.success) {
-        toast.success(res.message);
-        goToAuthPage(roleArray[2],redirectUrl);
+      if(authUser?.isServiceDetailsAdded) {
+       const res = await providerUpdateServiceDetails(data);
+        if (res.success) {
+          toast.success(res.message);
+          goToAuthPage(roleArray[2], RedirectTo.PROVIDER_APPROVAL_PENDING);
+        }
+      } else {
+        const res = await dispatch(providerCreateServiceDetails(data)).unwrap();
+        if (res.success) {
+          toast.success(res.message);
+          goToAuthPage(roleArray[2], RedirectTo.PROVIDER_AVAILABILITY);
+        }
       }
     } catch (error) {
       if (import.meta.env.DEV) console.log("An unexpected error occured while saving data : ", error);
@@ -102,7 +131,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
           <div className="md:flex w-full space-y-6">
             <div className="space-y-4 w-full space-x-2 px-6 pt-6">
 
-              <SelectField<ProviderCreateServiceDetailsFormType>
+              <SelectField<ProviderCreateServiceDetailsFormType, ServiceCategoryType>
                 id="serviceCategory"
                 label="Service Category"
                 options={serviceCategoryOptions}
@@ -110,7 +139,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 error={errors.serviceCategory}
               />
 
-              <SelectField<ProviderCreateServiceDetailsFormType>
+              <SelectField<ProviderCreateServiceDetailsFormType,string>
                 id="service"
                 label="Service"
                 options={services}
@@ -163,7 +192,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 error={errors.requirements?.message}
               />
 
-              <SelectField<ProviderCreateServiceDetailsFormType>
+              <SelectField<ProviderCreateServiceDetailsFormType,ServiceTypeType>
                 id="serviceType"
                 label="Service Type"
                 options={serviceTypeOptions}
@@ -171,7 +200,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 error={errors.serviceType}
               />
 
-              <SelectField<ProviderCreateServiceDetailsFormType>
+              <SelectField<ProviderCreateServiceDetailsFormType,ServiceModeType>
                 id="serviceMode"
                 label="Service Mode"
                 options={serviceModeOptions}
@@ -199,7 +228,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 error={errors.maxParticipants?.message}
               />
 
-              <SelectField<ProviderCreateServiceDetailsFormType>
+              <SelectField<ProviderCreateServiceDetailsFormType,boolean>
                 id="isGroupService"
                 label="Is this a group service?"
                 options={groupOptions}

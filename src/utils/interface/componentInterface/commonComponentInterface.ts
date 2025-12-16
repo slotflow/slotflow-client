@@ -9,8 +9,8 @@ import { ChartConfig } from "@/components/ui/chart";
 import { Provider } from "../entityInterface/providerInterface";
 import { createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { CreateAddressFormType } from "@/utils/zod/commonZodFields";
-import { BaseChartData, ChatComponentProps, TimeRange } from "../commonInterface";
 import { UpdateFileDataRequest, UpdateFileDataResponse } from "../api/commonApiInterface";
+import { ApiBaseResponse, BaseChartData, ChatComponentProps, TimeRange } from "../commonInterface";
 import { AdminFetchProviderAvailabilityResponse, AdminFetchProviderServiceResponse } from "../api/adminProviderApiInterface";
 import { UserUpdateProfileImageResponse, UserFetchProviderAvailabilityResponse, UserFetchProviderServiceResponse, UserUpdateProfileImageRequest } from "../api/userApiInterface";
 import { ProviderFetchServiceAvailabilityResponse, ProviderFetchServiceDetailsResponse, ProviderUpdateProfileImageRequest, ProviderUpdateProfileImageResponse } from "../api/providerApiInterface";
@@ -163,6 +163,7 @@ export interface AddressFormProps {
     headingSize: string;
     buttonText: string;
     onSubmit: (data: CreateAddressFormType) => void;
+    setData?: CreateAddressFormType
 }
 
 
@@ -171,6 +172,10 @@ export interface FileUploaderProps {
     folderName: string;
     uploadFunction: (data: UpdateFileDataRequest) => Promise<UpdateFileDataResponse>;
     message?: string;
-    setStateFunction: (data: string) => PayloadAction<string>;
+    setStateFunction: (data: string | null) => PayloadAction<string | null>;
+    setLoadingFunction: (data: boolean) => PayloadAction<boolean>;
     fileUploaded: boolean;
+    deleteFunction: () => Promise<ApiBaseResponse>;
+    loading: boolean;
+    data: string | null;
 }

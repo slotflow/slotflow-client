@@ -12,7 +12,7 @@ import { Availability, AvailabilityForResponse } from "../entityInterface/servic
 export type ProviderCreateAddressRequest = Pick<Address, "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location">;
 
 // **** Used as the response type of provider fetch address api
-export type ProviderFetchAddressResponse = Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "updatedAt" | "landMark" | "location">;
+export type ProviderFetchAddressResponse = Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "updatedAt" | "landMark" | "location" | "countryCode">;
 
 
 // **** Used as the response type of fetch all services api
@@ -23,9 +23,12 @@ export type ProviderFetchAllServicesResponse = Array<Pick<Service, "_id" | "serv
 // **** Used as the request interface for providerCreateServiceDetails api
 export type ProviderCreateServiceDetailsRequest = Pick<ProviderService, "isGroupService" | "maxParticipants" | "requirements" | "service" | "serviceDescription" | "serviceExperience" | "serviceMode" | "serviceName" | "servicePrice" | "serviceType" | "tags" | "videoUrl">;
 
+// **** Used as the request interface for providerUpdateServiceDetails api
+export type ProviderUpdateServiceDetailsRequest = Pick<ProviderService, "_id" | "isGroupService" | "maxParticipants" | "requirements" | "service" | "serviceDescription" | "serviceExperience" | "serviceMode" | "serviceName" | "servicePrice" | "serviceType" | "tags" | "videoUrl">;
+
 
 // **** Used as the response type for provider fetch self service details
-type FetchServiceDetailsResponse = Pick<ProviderService, "serviceName" | "serviceDescription" | "servicePrice" | "serviceExperience" | "isGroupService" | "maxParticipants" | "requirements" | "serviceMode" | "serviceType" | "tags" | "videoUrl">;
+type FetchServiceDetailsResponse = Pick<ProviderService, "_id" | "serviceName" | "serviceDescription" | "servicePrice" | "serviceExperience" | "isGroupService" | "maxParticipants" | "requirements" | "serviceMode" | "serviceType" | "tags" | "videoUrl">;
 export interface ProviderFetchServiceDetailsResponse extends FetchServiceDetailsResponse {
   service: Pick<Service, "serviceName">
 }

@@ -56,7 +56,6 @@ import { ProviderFetchDashboardStatsDataResponse } from "./interface/api/provide
 import { 
   Route, 
   PlanListType, 
-  SelectOptions, 
   DayMapInterface, 
   statsMapIntrface,
   CommonTabInterface, 
@@ -68,7 +67,10 @@ import {
   HeaderCompoenentNavsProps, 
   dataSelectListItemInterface, 
   ProviderApprovalMessageInterface, 
-  gsapBigSvgYDirectionAnimationInterface, 
+  gsapBigSvgYDirectionAnimationInterface,
+  ServiceCategoryType,
+  ServiceModeType,
+  ServiceTypeType, 
 } from "./interface/commonInterface";
 
 import chatImage from '../assets/heroImages/caht.jpg';
@@ -120,7 +122,7 @@ export const serviceCategoryArray = ["Healthcare & Wellness",
   "Technology Services",
   "Real Estate & Property",] as const;
 
-export const adminVerificationStatsArray = ["REQUESTED", "UNDER_REVIEW", "APPROVED", "REJECTED", "RESUBMITTED", "NOT_REQUESTED"] as const;
+export const adminVerificationStatusArray = ["REQUESTED", "UNDER_REVIEW", "APPROVED", "REJECTED", "RESUBMITTED", "NOT_REQUESTED"] as const;
 
 export const blockBackStatuses = ["REQUESTED", "UNDER_REVIEW", "RESUBMITTED"] as const;
 
@@ -1238,34 +1240,33 @@ export const settingsTabs: CommonTabInterface[] = [
 ]
 
 // Advertisement visibility select field options
-export const adVisibilityOptions: SelectOptions = [
-  { label: "Ad Visible", value: "true" },
-  { label: "No Ad Visibility", value: "false" },
+export const adVisibilityOptions: OptionType<boolean>[] = [
+  { label: "Ad Visible", value: true },
+  { label: "No Ad Visibility", value: false },
 ];
 
-
 // 
-export const serviceTypeOptions: OptionType[] = [
+export const serviceTypeOptions: OptionType<ServiceTypeType>[] = [
   { label: "One Time", value: "one-time" },
   { label: "Recurring", value: "recurring" },
 ];
 
 //
-export const serviceModeOptions: OptionType[] = [
+export const serviceModeOptions: OptionType<ServiceModeType>[] = [
   { label: "Online", value: "online" },
   { label: "Offline", value: "offline" },
   { label: "Both", value: "both" },
 ];
 
 //
-export const groupOptions: OptionType[] = [
-  { label: "Group", value: "true" },
-  { label: "Individual", value: "false" },
+export const groupOptions: OptionType<boolean>[] = [
+  { label: "Group", value: true },
+  { label: "Individual", value: false },
 ];
 
 
 // Days of Week Options
-export const daysOfWeekOptions: OptionType[] = [
+export const daysOfWeekOptions: OptionType<string>[] = [
   { label: "Sunday", value: "Sunday" },
   { label: "Monday", value: "Monday" },
   { label: "Tuesday", value: "Tuesday" },
@@ -1276,7 +1277,7 @@ export const daysOfWeekOptions: OptionType[] = [
 ];
 
 // Service Duration Options
-export const serviceDurationsOptions: OptionType[] = [
+export const serviceDurationsOptions: OptionType<number>[] = [
   { label: "10 minutes", value: 10 },
   { label: "15 minutes", value: 15 },
   { label: "30 minutes", value: 30 },
@@ -1295,7 +1296,7 @@ export const serviceDurationsOptions: OptionType[] = [
 ];
 
 // Service Categories Options
-export const serviceCategoryOptions: OptionType[] = [
+export const serviceCategoryOptions: OptionType<ServiceCategoryType>[] = [
   { label: "Healthcare & Wellness", value: "Healthcare & Wellness" },
   { label: "Professional Services", value: "Professional Services" },
   { label: "Education & Training", value: "Education & Training" },
@@ -1308,20 +1309,25 @@ export const serviceCategoryOptions: OptionType[] = [
   { label: "Real Estate & Property", value: "Real Estate & Property" },
 ];
 
-
 // Planduration options
-export const planDurations: OptionType[] = [
+export const planDurations: OptionType<number>[] = [
   { label: "1 Month", value: 1 },
   { label: "3 Months", value: 3 },
   { label: "6 Months", value: 6 },
   { label: "1 Year", value: 12 }
 ];
 
+// Planduration options
+export const adVisibility: OptionType<boolean>[] = [
+  { label: "Ad Visisble", value: true },
+  { label: "Ad Not Visible", value: false },
+];
+
 
 // admin provider verification boolean options
-export const verificationOptions: OptionType[] = [
-  { label: "Verified", value: "true" },
-  { label: "Rejected", value: "false" }
+export const verificationOptions: OptionType<boolean>[] = [
+  { label: "Verified", value: true },
+  { label: "Rejected", value: false }
 ];
 
 
