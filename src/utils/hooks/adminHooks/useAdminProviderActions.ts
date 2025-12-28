@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "@/utils/redux/appStore";
 import { useQueryClient } from "@tanstack/react-query";
-import { adminVerificationStatusArray } from "@/utils/constants";
+import { AdminVerificationStatus } from "@/utils/interface/enums";
 import { setProviderRejectModal } from "@/utils/redux/slices/adminSlice";
 import { setAdminVerificationState } from "@/utils/redux/slices/authSlice";
 import { Provider } from "@/utils/interface/entityInterface/providerInterface";
@@ -49,7 +49,7 @@ export const useAdminProviderActions = (): UseAdminProviderActionReturnType => {
       .then((res) => {
         if (res.success) {
           toast.success(res.message);
-          dispatch(setAdminVerificationState(adminVerificationStatusArray[3]));
+          dispatch(setAdminVerificationState(AdminVerificationStatus.REJECTED));
           queryClient.invalidateQueries({ queryKey: ["providers"] });
         }
       })

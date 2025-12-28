@@ -11,5 +11,5 @@ export const adminFetchRevenueReport = async (payload: AdmminFetchRevenueReportR
             endDate: endDate?.toISOString(),
         }
     });
-    return response.data as AdminFetchRevenueReportResponse;
+    return response.data.data as AdminFetchRevenueReportResponse;
 }

@@ -68,7 +68,7 @@ export const providerFetchAllAppServices = async (data: ProviderFetchAllAppServi
 export const providerFetchBookingAppoinments = async <T extends FetchBookingsResponse | FetchOnlineBookingsForProviderResponse>(params?: FetchOnlineBookingParams): Promise<ApiPaginatedResponse<T>> => {
     const query = buildQueryParams<FetchOnlineBookingParams>(params);
     const response = await axiosInstance.get(`/provider/bookings/${query ? `?${query}` : ''}`);
-    return parseNewCommonResponse<T>(response.data);
+    return parseNewCommonResponse<T>(response.data.data);
 }
 
 export const adminFetchBookingDetails = async(bookingId: Booking["_id"]): Promise<FetchBookingDetailsResponse> => {
@@ -181,6 +181,7 @@ export const providerDeleteServiceProof = async(): Promise<ApiBaseResponse> => {
 export const providerSubmitDetailsForReview = createAsyncThunk<ProviderSubmitDetailsResponse>('/provider/profile/details',
     async () => {
         const response = await axiosInstance.patch('/provider/profile/approval');
+        console.log("response : ",response);
         return response.data;
     }
 )
@@ -209,7 +210,7 @@ export const providerSaveSubscription = async (sessionId: string): Promise<Provi
 export const providerFetchSubscriptions = async (params?: FetchFunctionParams): Promise<ApiPaginatedResponse<FetchProviderSubscriptionsResponse>> => {
     const query = buildQueryParams(params);
     const response = await axiosInstance.get(`/provider/subscriptions${query ? `?${query}` : ''}`);
-    return parseNewCommonResponse<FetchProviderSubscriptionsResponse>(response.data);
+    return parseNewCommonResponse<FetchProviderSubscriptionsResponse>(response.data.data);
 }
 
 export const providerSubscribeToTrialPlan = async (): Promise<ApiBaseResponse> => {
@@ -219,7 +220,7 @@ export const providerSubscribeToTrialPlan = async (): Promise<ApiBaseResponse> =
 
 export const providerFetchSubscriptionDetails = async (subscriptionId: Subscription["_id"]): Promise<FetchSubscriptionDetailsResponse> => {
     const response = await axiosInstance.get(`/provider/subscriptions/${subscriptionId}`);
-    return response.data.subscriptionDetails;
+    return response.data.data;
 }
 
 
@@ -227,7 +228,7 @@ export const providerFetchSubscriptionDetails = async (subscriptionId: Subscript
 export const providerFetchPayments = async (params?: FetchFunctionParams): Promise<ApiPaginatedResponse<FetchPaymentsResponse>> => {
     const query = buildQueryParams(params);
     const response = await axiosInstance.get(`/provider/payments${query ? `?${query}` : ''}`);
-    return parseNewCommonResponse<FetchPaymentsResponse>(response.data);
+    return parseNewCommonResponse<FetchPaymentsResponse>(response.data.data);
 }
 
 
@@ -258,7 +259,7 @@ export const providerFetchDashboardGraphData = async (subscription?: string,date
 export const providerFetchAllReviews = async (query: FetchFunctionParams): Promise<ApiPaginatedResponse<FetchReviewsResponse>> => {
     const refactoredQuery = buildQueryParams(query);
     const response = await axiosInstance.get(`/provider/reviews${refactoredQuery ? `?${refactoredQuery}` : ''}`);
-    return response.data
+    return response.data.data;
 }
 
 export const providerReportReview = async (reviewId: Review["_id"]): Promise<ApiBaseResponse> => {

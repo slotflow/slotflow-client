@@ -1,5 +1,6 @@
 import { toast } from 'react-toastify';
 import React, { useEffect } from 'react';
+import { Button } from '@/components/ui/button';
 import { RootState } from '@/utils/redux/appStore';
 import { Separator } from '@/components/ui/separator';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,9 +9,8 @@ import stripeLogo from '../../assets/iconImages/Stripe.jpeg';
 import IntegrationCard from '@/components/common/Integrations';
 import googleCalendar from '../../assets/iconImages/gCalendar.png';
 import { setGoogleConnect } from '@/utils/redux/slices/authSlice';
-import { setGoogleConnectionLoading, setStripeConnectionLoading } from '@/utils/redux/slices/integrationSlice';
 import { handleConnectGoogle, handleStripeConnect } from '@/utils/helper/integrationHandles';
-import { Button } from '@/components/ui/button';
+import { setGoogleConnectionLoading, setStripeConnectionLoading } from '@/utils/redux/slices/integrationSlice';
 
 const IntegrationsPage: React.FC = () => {
 
@@ -78,12 +78,13 @@ const IntegrationsPage: React.FC = () => {
                     isConnected={authUser.googleConnected}
                 />
 
-                <Button onClick={() => {
-                     dispatch(setStripeConnectionLoading(false));
-                }}>Make loading false</Button>
+                <Button
+                    className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
+                    onClick={() => { dispatch(setStripeConnectionLoading(false)); }}>
+                    Make loading false
+                </Button>
 
             </div>
-
         </div>
     )
 }

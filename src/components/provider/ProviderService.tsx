@@ -15,10 +15,10 @@ const ProviderService = () => {
             <h2 className="text-xl font-semibold">Service Details</h2>
           </div>
           <Button
-            variant="outline"
+            variant="default"
             // disabled={loading}
             // onClick={}
-            className="cursor-pointer"
+            className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
           >Edit Details</Button>
         </div>
       </div>

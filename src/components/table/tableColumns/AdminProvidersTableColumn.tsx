@@ -1,11 +1,11 @@
 import { Button } from "../../ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
-import { adminVerificationStatusArray } from "@/utils/constants";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
 import { Provider } from "@/utils/interface/entityInterface/providerInterface";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminFetchAllProvidersResponse } from "@/utils/interface/api/adminProviderApiInterface";
+import { AdminVerificationStatus } from "@/utils/interface/enums";
 
 export const AdminProvidersTableColumns = (
     handleAdminApproveProvider: (providerId: Provider["_id"]) => void,
@@ -52,17 +52,17 @@ export const AdminProvidersTableColumns = (
             cell: ({ row }) => {
                 const status = row.original.adminVerificationStatus;
                 switch (status) {
-                    case adminVerificationStatusArray[0]:
+                    case AdminVerificationStatus.REQUESTED:
                         return <span className="font-semibold">Requested By Provider</span>;
-                    case adminVerificationStatusArray[1]:
+                    case AdminVerificationStatus.UNDER_REVIEW:
                         return <span className="text-yellow-500 font-semibold">Under Review</span>;
-                    case adminVerificationStatusArray[2]:
+                    case AdminVerificationStatus.APPROVED:
                         return <span className="text-green-500 font-semibold">Approved</span>;
-                    case adminVerificationStatusArray[3]:
+                    case AdminVerificationStatus.REJECTED:
                         return <span className="text-red-500 font-semibold">Rejected</span>;
-                    case adminVerificationStatusArray[4]:
+                    case AdminVerificationStatus.RESUBMITTED:
                         return <span className="font-semibold">ReSubmitted By Provider</span>;
-                    case adminVerificationStatusArray[5]:
+                    case AdminVerificationStatus.NOT_REQUESTED:
                         return <span className="text-gray-500 font-semibold">Not Requested</span>;
                     default:
                         return <span>{status}</span>;
@@ -114,13 +114,13 @@ export const AdminProvidersTableColumns = (
                                 Details
                             </DropdownMenuItem>
                             {(!provider.isAdminVerified && 
-                            (provider.adminVerificationStatus === adminVerificationStatusArray[0] || provider.adminVerificationStatus === adminVerificationStatusArray[4] || provider.adminVerificationStatus === adminVerificationStatusArray[1])) && (
+                            (provider.adminVerificationStatus === AdminVerificationStatus.REQUESTED || provider.adminVerificationStatus === AdminVerificationStatus.RESUBMITTED || provider.adminVerificationStatus === AdminVerificationStatus.UNDER_REVIEW)) && (
                                 <DropdownMenuItem onClick={() => handleAdminApproveProvider(provider._id)}>
                                     Approve
                                 </DropdownMenuItem>
                             )}
                             {(!provider.isAdminVerified &&
-                                (provider.adminVerificationStatus === adminVerificationStatusArray[0] || provider.adminVerificationStatus === adminVerificationStatusArray[4] || provider.adminVerificationStatus === adminVerificationStatusArray[1])) && (
+                                (provider.adminVerificationStatus === AdminVerificationStatus.REQUESTED || provider.adminVerificationStatus === AdminVerificationStatus.RESUBMITTED || provider.adminVerificationStatus === AdminVerificationStatus.UNDER_REVIEW)) && (
                                 <DropdownMenuItem onClick={() => handleOpenProviderRejectModal(provider._id)}>
                                     Reject
                                 </DropdownMenuItem>

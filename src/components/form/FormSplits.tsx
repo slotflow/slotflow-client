@@ -22,10 +22,10 @@ export const FormHeading: React.FC<AuthFormsHeadingProps> = React.memo(({ title,
 export const FormButton: React.FC<AuthFormsButtonProps> = React.memo(({ text, loading = false, disabled }) => {
     return (
         <Button
-            variant="outline"
+            variant="default"
             type="submit"
             disabled={disabled}
-            className="border-0 w-full flex items-center justify-center bg-[var(--mainColor)] hover:bg-[var(--mainColorHover)] cursor-pointer text-white"
+            className="border-0 w-full flex items-center justify-center cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
         >
             {loading ? (
                 <span className="flex items-center gap-2">

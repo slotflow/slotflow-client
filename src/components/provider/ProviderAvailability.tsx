@@ -3,6 +3,8 @@ import { BetweenHorizontalStart } from "lucide-react";
 import { providerFetchServiceAvailability } from "@/utils/apis/provider.api";
 import ProviderServiceAvailability from "@/components/common/profile/ProviderServiceAvailability";
 
+// TODO 
+
 const ProviderAvailability = () => {
 
     return (
@@ -15,10 +17,10 @@ const ProviderAvailability = () => {
                         <h2 className="text-xl font-semibold">Service Availability</h2>
                     </div>
                     <Button
-                        variant="outline"
+                        variant="default"
                         // disabled={loading}
                         // onClick={}
-                        className="cursor-pointer"
+                        className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
                     >Edit Details</Button>
                 </div>
             </div>

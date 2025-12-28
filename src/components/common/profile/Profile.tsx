@@ -40,8 +40,8 @@ const Profile: React.FC = () => {
           <h2 className="text-xl font-semibold"> Profile Details</h2>
         </div>
         <Button
-          variant="outline"
-          className="cursor-pointer"
+          variant="default"
+          className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
           onClick={(e) => {
             e.preventDefault();
             setShowForm(true);

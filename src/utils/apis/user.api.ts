@@ -61,6 +61,7 @@ export const userFetchAddress = async (): Promise<UserFetchAddressResponse> => {
 
 export const userUpdateAddress = async (data: UpdateAddressRequest): Promise<UpdateAddressResponse> => {
     const response = await axiosInstance.patch(`/user/addresses/${data._id}`, data);
+    console.log("response : ",response);
     return response.data;
 }
 
@@ -120,7 +121,7 @@ export const userSaveAppointmentBooking = async (sessionId: string) : Promise<Ap
 export const userFetchBookings = async <T extends FetchBookingsResponse | FetchOnlineBookingsForUserResponse> (query?: FetchOnlineBookingParams) : Promise<ApiPaginatedResponse<T>> => {
     const refactoredQuery = buildQueryParams<FetchOnlineBookingParams>(query);
     const response = await axiosInstance.get(`/user/bookings${refactoredQuery ? `?${refactoredQuery}` : ''}`);
-    return parseNewCommonResponse<T>(response.data);
+    return parseNewCommonResponse<T>(response.data.data);
 }
 
 export const userFetchBookingDetails = async(bookingId: Booking["_id"]): Promise<FetchBookingDetailsResponse> => {
@@ -147,7 +148,7 @@ export const userJoinOrLeftRoomCallBack = async (data: JoinRoomCallbackRequest):
 export const userFetchPayments = async (query?: FetchFunctionParams) : Promise<ApiPaginatedResponse<FetchPaymentsResponse>> => {
     const refactoredQuery = buildQueryParams(query);
     const response = await axiosInstance.get(`/user/payments${refactoredQuery ? `?${refactoredQuery}` : ''}`);
-    return parseNewCommonResponse<FetchPaymentsResponse>(response.data);
+    return parseNewCommonResponse<FetchPaymentsResponse>(response.data.data);
 }
 
 
@@ -168,7 +169,7 @@ export const userFetchAllReviews = async (payload : FetchFunctionParams): Promis
     const { id } = payload;
     const refactoredQuery = buildQueryParams(payload);
     const response = await axiosInstance.get(`/user/reviews/${id}${refactoredQuery ? `?${refactoredQuery}` : ''}`);
-    return response.data;
+    return response.data.data;
 }
 
 export const userDeleteReview = async (reviewId: Review["_id"]): Promise<ApiBaseResponse> => {

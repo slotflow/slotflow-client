@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
-import { roleArray } from "@/utils/constants";
+import { Role } from "@/utils/interface/enums";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { Calendar } from "@/components/ui/calendar";
@@ -10,7 +10,6 @@ import CommonPaymentSelection from "../CommonPaymentSelection";
 import { Slot } from "@/utils/interface/entityInterface/serviceAvailabilityInterface";
 import ProviderAvailabilityShimmer from "@/components/shimmers/ProviderAvailabilityShimmer";
 import { ProviderApiFunctionForPSAcomponent, ProviderServiceAvailabilityComponentProps, UserOrAdminApiFunctionForPSAcomponent } from "@/utils/interface/componentInterface/commonComponentInterface";
-
 
 const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponentProps> = ({
     providerId,
@@ -47,9 +46,13 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
         setSelectedMode(data?.modes[0]);
     }, [data, date])
 
-    if (isError) {
-        return <DataFetchingError message={error.message} />
+    if(!data) {
+        return <DataFetchingError message={"Data not found"} />
     }
+
+    if (isError && error) {
+        return <DataFetchingError message={error.message} />
+    };
 
     const handleBookAnAppoint = (slotId: string, availability: boolean) => {
         if (!availability) {
@@ -58,9 +61,8 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
         }
         setSelectedSlotId(slotId);
         setOpenPayment(true);
-    }
+    };
 
-    console.log("role : ",role);
     return (
         <>
             <div className="flex w-full mt-2 space-x-1 md:mt-0">
@@ -77,9 +79,7 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
                     <ProviderAvailabilityShimmer slotCount={20} />
                 ) : (
                     <div className="w-full flex flex-col">
-                        {!data ? (
-                            <DataFetchingError message="No availability found." />
-                        ) : (
+                        {(
                             <>
                                 <div className=" border rounded-md overflow-hidden w-full">
                                     <table className="table-auto w-full">
@@ -101,44 +101,44 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
                                     </table>
                                 </div>
 
-                                {role === roleArray[1] && data.slots.length > 0 && (
+                                {role === Role.User && data && data.slots.length > 0 && (
                                     <p className="p-2">Please ensure that you book the slot at least 2 hours in advance.</p>
                                 )}
-                                
+
                                 <div className="mt-2 space-y-4 p-2">
-                                <h3 className="font-bold text-lg">Time Slots for your selected date</h3>
-                                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                                    {data?.slots?.length ? (
-                                        data?.slots.map((slot: Slot) => {
-                                            const commonClasses = `text-sm font-semibold text-center border rounded-md py-3 px-4 hover:bg-[var(--mainColor)] hover:text-white transition-colors duration-200 ${slot.available
-                                                ? 'bg-[var(--mainColor)/20] border-[var(--mainColor)]'
-                                                : 'border-gray-300'
-                                            }`;
-                                            
-                                            return role === "User" ? (
-                                                <Button
-                                                key={slot._id}
-                                                variant="outline"
-                                                onClick={(e) => {
-                                                    e.preventDefault();
-                                                    e.stopPropagation();
-                                                    handleBookAnAppoint(slot._id, slot.available);
-                                                }}
-                                                className={`${commonClasses} ${slot.available ? 'cursor-pointer' : ''}`}
-                                                >
-                                                    {slot.time}
-                                                </Button>
-                                            ) : (
-                                                <div key={slot._id} className={commonClasses}>
-                                                    {slot.time}
-                                                </div>
-                                            );
-                                        })
-                                    ) : (
-                                        <p className="col-span-full text-sm text-gray-500 text-center">No slots available</p>
-                                    )}
-                                </div>
+                                    <h3 className="font-bold text-lg">Time Slots for your selected date</h3>
+                                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                                        {data?.slots?.length ? (
+                                            data?.slots.map((slot: Slot) => {
+                                                const commonClasses = `text-sm font-semibold text-center border rounded-md py-3 px-4 hover:bg-[var(--mainColor)] hover:text-white transition-colors duration-200 ${slot.available
+                                                    ? 'bg-[var(--mainColor)/20] border-[var(--mainColor)]'
+                                                    : 'border-gray-300'
+                                                    }`;
+
+                                                return role === "User" ? (
+                                                    <Button
+                                                        key={slot._id}
+                                                        variant="default"
+                                                        onClick={(e) => {
+                                                            e.preventDefault();
+                                                            e.stopPropagation();
+                                                            handleBookAnAppoint(slot._id, slot.available);
+                                                        }}
+                                                        className={`${commonClasses} ${slot.available ? 'cursor-pointer' : ''}`}
+                                                    >
+                                                        {slot.time}
+                                                    </Button>
+                                                ) : (
+                                                    <div key={slot._id} className={commonClasses}>
+                                                        {slot.time}
+                                                    </div>
+                                                );
+                                            })
+                                        ) : (
+                                            <p className="col-span-full text-sm text-gray-500 text-center">No slots available</p>
+                                        )}
                                     </div>
+                                </div>
                             </>
                         )}
                     </div>

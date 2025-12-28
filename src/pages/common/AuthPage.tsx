@@ -1,9 +1,9 @@
 import gsap from "gsap";
 import { useSelector } from "react-redux";
+import { Role } from "@/utils/interface/enums";
 import { Meteors } from "@/components/ui/meteors";
 import { RootState } from "@/utils/redux/appStore";
 import React, { useEffect, useRef, useState } from "react";
-import { RoleType } from "@/utils/interface/commonInterface";
 import LoginForm from "@/components/form/CommonForms/LoginForm";
 import SignUpForm from "@/components/form/CommonForms/SignUpForm";
 import WorldMapWrapper from "@/components/common/WorldMapWrapper";
@@ -14,7 +14,7 @@ import AnimatedBeamIntegrations from "@/components/common/AnimatedCircleWithBeam
 import EmailVerificationForm from "@/components/form/CommonForms/EmailVerificationForm";
 
 interface AuthPageProp {
-  role: RoleType;
+  role: Role;
   formType: number;
 }
 
@@ -26,8 +26,6 @@ const AuthPage: React.FC<AuthPageProp> = ({ role, formType }) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState<"beam" | "map">("beam");
   const lightTheme: boolean = useSelector((state: RootState) => state.app.lightTheme);
-
-  console.log("lightTheme : ",lightTheme);
 
   useEffect(() => {
     const fadeInOut = (el: HTMLDivElement, onComplete: () => void) => {

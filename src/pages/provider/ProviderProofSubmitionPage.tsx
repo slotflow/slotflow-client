@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { roleArray } from "@/utils/constants";
+import { Role } from "@/utils/interface/enums";
 import { Button } from "@/components/ui/button";
 import SideBox from "@/components/provider/SideBox";
 import { useDispatch, useSelector } from "react-redux";
@@ -37,7 +37,7 @@ export const ProviderProofSubmissionPage = () => {
   const handleNextutton = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     dispatch(setIsProofSubmitted());
-    goToAuthPage(roleArray[2], RedirectTo.PROVIDER_APPROVAL_PENDING);
+    goToAuthPage(Role.Provider, RedirectTo.PROVIDER_APPROVAL_PENDING);
   }
 
   return (
@@ -75,9 +75,9 @@ export const ProviderProofSubmissionPage = () => {
               <div className="flex justify-end">
                 {(identityProof && serviceProof) && (
                   <Button
-                    variant="outline"
+                    variant="default"
                     onClick={handleNextutton}
-                    className="cursor-pointer w-full md:w-auto text-xs md:text-sm hover:bg-[var(--mainColor)] hover:text-white border-[var(--mainColor)] flex items-center gap-2"
+                    className="cursor-pointer w-full md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
                     type="button"
                   >
                     Next

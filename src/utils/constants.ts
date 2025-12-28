@@ -68,9 +68,6 @@ import {
   dataSelectListItemInterface, 
   ProviderApprovalMessageInterface, 
   gsapBigSvgYDirectionAnimationInterface,
-  ServiceCategoryType,
-  ServiceModeType,
-  ServiceTypeType, 
 } from "./interface/commonInterface";
 
 import chatImage from '../assets/heroImages/caht.jpg';
@@ -80,53 +77,13 @@ import calendarImage from '../assets/heroImages/calendar2.png';;
 import { OptionType } from "@/components/form/SelectField";
 import bookingImage from '../assets/heroImages/heroSectionOneImg2.png';
 import { ContactItem } from "./interface/componentInterface/commonComponentInterface";
+import { AdminVerificationStatus, Role, ServiceCategory, ServiceMode, ServiceType } from "./interface/enums";
 
 export const PLAN_TIERS = ["free", "starter", "professional", "enterprise"] as const;
 
-export const roleArray = ["ADMIN", "USER", "PROVIDER"] as const;
+export const blockBackStatuses = [AdminVerificationStatus.REQUESTED, AdminVerificationStatus.UNDER_REVIEW, AdminVerificationStatus.RESUBMITTED] as const;
 
-export const limitedRolesArray = ["ADMIN", "PROVIDER"] as const;
-
-export const plansArray = ["Starter", "Professional", "Enterprise", "NoSubscription"] as const;
-
-export const serviceTypeArray = ["one-time", "recurring"] as const;
-
-export const serviceModeArray = ["online", "offline", "both"] as const;
-
-export const appointmentStatusArray = [
-  "Booked",
-  "Completed",
-  "Cancelled",
-  "RejectedByProvider",
-  "NotAttended",
-  "Confirmed",
-] as const;
-
-export const paymentForArray = [
-  "ProviderSubscription",
-  "AppointmentBooking",
-  "ProviderPayout",
-  "CancelBooking",
-] as const;
-
-export const paymentGatewayArray = ["Stripe", "Razorpay", "Paypal"] as const;
-
-export const serviceCategoryArray = ["Healthcare & Wellness",
-  "Professional Services",
-  "Education & Training",
-  "Home & Maintenance",
-  "Beauty & Personal Care",
-  "Fitness & Lifestyle",
-  "Automotive Services",
-  "Events & Creative Services",
-  "Technology Services",
-  "Real Estate & Property",] as const;
-
-export const adminVerificationStatusArray = ["REQUESTED", "UNDER_REVIEW", "APPROVED", "REJECTED", "RESUBMITTED", "NOT_REQUESTED"] as const;
-
-export const blockBackStatuses = ["REQUESTED", "UNDER_REVIEW", "RESUBMITTED"] as const;
-
-export const updatableStatuses = ["NOT_REQUESTED", "REJECTED"] as const;
+export const updatableStatuses = [AdminVerificationStatus.NOT_REQUESTED, AdminVerificationStatus.REJECTED] as const;
 
 
 // **** Routes for admin **** \\
@@ -1202,17 +1159,17 @@ export const adminOverviewTabs: CommonTabInterface[] = [
 
 // Profile tabs list
 export const profileTabs: CommonTabInterface[] = [
-  { value: "tab1", label: "Profile", icon: User, role: [roleArray[2] , roleArray[1]] },
-  { value: "tab2", label: "Address", icon: Home, role: [roleArray[2] , roleArray[1]] },
-  { value: "tab3", label: "Service", icon: Briefcase, role: [roleArray[2]] },
-  { value: "tab4", label: "Availability", icon: Clock, role: [roleArray[2]] },
-]
+  { value: "tab1", label: "Profile", icon: User, role: [Role.Provider, Role.User] },
+  { value: "tab2", label: "Address", icon: Home, role: [Role.Provider, Role.User] },
+  { value: "tab3", label: "Service", icon: Briefcase, role: [Role.Provider] },
+  { value: "tab4", label: "Availability", icon: Clock, role: [Role.Provider] },
+];
 
 // Provider dashboard tabs
 export const providerDashboardTabs: CommonTabInterface[] = [
   { value: "stats", label: "Stats", icon: Activity },
   { value: "graphs", label: "Graphs", icon: BarChart },
-]
+];
 
 
 // Settings Page Tabs
@@ -1246,16 +1203,16 @@ export const adVisibilityOptions: OptionType<boolean>[] = [
 ];
 
 // 
-export const serviceTypeOptions: OptionType<ServiceTypeType>[] = [
-  { label: "One Time", value: "one-time" },
-  { label: "Recurring", value: "recurring" },
+export const serviceTypeOptions: OptionType<ServiceType>[] = [
+  { label: "One Time", value: ServiceType.OneTime },
+  { label: "Recurring", value: ServiceType.Recurring },
 ];
 
 //
-export const serviceModeOptions: OptionType<ServiceModeType>[] = [
-  { label: "Online", value: "online" },
-  { label: "Offline", value: "offline" },
-  { label: "Both", value: "both" },
+export const serviceModeOptions: OptionType<ServiceMode>[] = [
+  { label: "Online", value: ServiceMode.Online },
+  { label: "Offline", value: ServiceMode.Offline },
+  { label: "Both", value: ServiceMode.Both },
 ];
 
 //
@@ -1296,18 +1253,49 @@ export const serviceDurationsOptions: OptionType<number>[] = [
 ];
 
 // Service Categories Options
-export const serviceCategoryOptions: OptionType<ServiceCategoryType>[] = [
-  { label: "Healthcare & Wellness", value: "Healthcare & Wellness" },
-  { label: "Professional Services", value: "Professional Services" },
-  { label: "Education & Training", value: "Education & Training" },
-  { label: "Home & Maintenance", value: "Home & Maintenance" },
-  { label: "Beauty & Personal Care", value: "Beauty & Personal Care" },
-  { label: "Fitness & Lifestyle", value: "Fitness & Lifestyle" },
-  { label: "Automotive Services", value: "Automotive Services" },
-  { label: "Events & Creative Services", value: "Events & Creative Services" },
-  { label: "Technology Services", value: "Technology Services" },
-  { label: "Real Estate & Property", value: "Real Estate & Property" },
+export const serviceCategoryOptions: OptionType<ServiceCategory>[] = [
+  {
+    label: "Healthcare & Wellness",
+    value: ServiceCategory.HealthcareAndWellness,
+  },
+  {
+    label: "Professional Services",
+    value: ServiceCategory.ProfessionalServices,
+  },
+  {
+    label: "Education & Training",
+    value: ServiceCategory.EducationAndTraining,
+  },
+  {
+    label: "Home & Maintenance",
+    value: ServiceCategory.HomeAndMaintenance,
+  },
+  {
+    label: "Beauty & Personal Care",
+    value: ServiceCategory.BeautyAndPersonalCare,
+  },
+  {
+    label: "Fitness & Lifestyle",
+    value: ServiceCategory.FitnessAndLifestyle,
+  },
+  {
+    label: "Automotive Services",
+    value: ServiceCategory.AutomotiveServices,
+  },
+  {
+    label: "Events & Creative Services",
+    value: ServiceCategory.EventsAndCreativeServices,
+  },
+  {
+    label: "Technology Services",
+    value: ServiceCategory.TechnologyServices,
+  },
+  {
+    label: "Real Estate & Property",
+    value: ServiceCategory.RealEstateAndProperty,
+  },
 ];
+
 
 // Planduration options
 export const planDurations: OptionType<number>[] = [
@@ -1333,10 +1321,10 @@ export const verificationOptions: OptionType<boolean>[] = [
 
 // Status text mapper
 export const verificationStatusTextMap: Record<string, string> = {
-  REQUESTED: "Submitted for review",
-  UNDER_REVIEW: "Currently under review",
-  APPROVED: "Approved",
-  REJECTED: "Rejected",
-  RESUBMITTED: "Re-submitted for review",
-  NOT_REQUESTED: "Not submitted",
+  Requested: "Submitted for review",
+  Under_review: "Currently under review",
+  Approved: "Approved",
+  Rejected: "Rejected",
+  Resubmitted: "Re-submitted for review",
+  Not_requested: "Not submitted",
 };

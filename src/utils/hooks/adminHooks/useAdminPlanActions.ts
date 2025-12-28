@@ -12,16 +12,16 @@ export const useAdminPlanActions = (): UseAdminPlanActionsReturnType => {
 
   const queryClient = useQueryClient();
 
-  const handleAdminPlanCreating = (formData: AdminAddNewPlanRequest) => {
-      adminAddNewPlan(formData)
+  const handleAdminPlanCreating = async (formData: AdminAddNewPlanRequest) => {
+      await adminAddNewPlan(formData)
       .then((res) => {
         if(res.success) {
           toast.success(res.message);
           queryClient.invalidateQueries({ queryKey: ["plans"] });
         }
       })
-      .catch((res) => {
-        toast.success(res.message);
+      .catch((error) => {
+        if (import.meta.env.DEV) console.log("An error occured while saving plan : ", error);
       });
     };
 
@@ -33,8 +33,8 @@ export const useAdminPlanActions = (): UseAdminPlanActionsReturnType => {
           queryClient.invalidateQueries({ queryKey: ["plans"] });
         }
       })
-      .catch(() => {
-        toast.error("Please try again");
+      .catch((error) => {
+        if (import.meta.env.DEV) console.log("An error occured while change plan block status : ", error);
       });
   }
 

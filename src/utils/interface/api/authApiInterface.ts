@@ -1,4 +1,5 @@
-import { ApiBaseResponse, RoleType } from "../commonInterface";
+import { Role } from "../enums";
+import { ApiBaseResponse } from "../commonInterface";
 
 interface UserBaseInterface {
     username: string;
@@ -14,9 +15,9 @@ interface UserBaseInterface {
 export type SignupRequest = Pick<UserBaseInterface, "username" | "email" | "password" | "role">;
 // **** Used as the response interface of the user or provider sign up api
 export interface SignupResponse extends ApiBaseResponse {
-    authUser: {
+    data: {
         verificationToken: string;
-        role: RoleType;
+        role: Role;
     };
 }
 
@@ -29,11 +30,11 @@ export type VerifyOtpRequest = Pick<UserBaseInterface, "otp" | "verificationToke
 export type SigninRequest = Pick<UserBaseInterface, "email" | "password" | "role">;
 // **** Used as the response interface of user or provider or admin sign in api
 export interface SigninResponse extends ApiBaseResponse {
-    authUser: {
+    data: {
         username: string;
         profileImage: string;
         phone: string;
-        role: RoleType;
+        role: Role;
         isBlocked: boolean;
         isLoggedIn: boolean;
         isAddressAdded?: boolean,
@@ -41,7 +42,6 @@ export interface SigninResponse extends ApiBaseResponse {
         isServiceAvailabilityAdded?: boolean,
         isAdminVerified?: boolean,
         providerSubscription?: string;
-        updatedAt: string;
         googleConnected: boolean;
     };
 }
@@ -54,9 +54,9 @@ export interface SigninResponse extends ApiBaseResponse {
 export type ResendOtpRequest = Pick<UserBaseInterface, "role"> & Partial<Pick<UserBaseInterface, "verificationToken" | "email">>;
 // **** Used as the response interface of the resend otp api
 export interface ResendOtpResponse extends ApiBaseResponse {
-    authUser: {
+    data: {
         verificationToken: string;
-        role: RoleType;
+        role: Role;
     };
 }
 

@@ -10,7 +10,7 @@ import { FetchFunctionParams, ApiPaginatedResponse, ApiBaseResponse } from "../i
 export const adminFetchAllServices = async (params?: FetchFunctionParams): Promise<ApiPaginatedResponse<AdminFetchAllServicesResponse>> => {
     const query = buildQueryParams(params);
     const response = await axiosInstance.get(`/admin/services${query ? `?${query}` : ''}`);
-    return parseNewCommonResponse<AdminFetchAllServicesResponse>(response.data);
+    return parseNewCommonResponse<AdminFetchAllServicesResponse>(response.data.data);
 }
 
 export const adminAddNewService = async (data : AdminAddNewAppServiceRequest): Promise<ApiBaseResponse> => {

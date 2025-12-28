@@ -9,7 +9,6 @@ export interface User {
     phone: string;
     profileImage: string;
     addressId: string;
-    bookingsId: string;
     verificationToken: string;
     createdAt: string;
     updatedAt: string;

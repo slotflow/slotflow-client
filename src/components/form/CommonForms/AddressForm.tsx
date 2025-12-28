@@ -226,8 +226,8 @@ const AddressForm: React.FC<AddressFormProps> = ({
             <div className="flex justify-center md:justify-end mt-4 md:mt-6">
                 <Button
                     type="submit"
-                    variant="outline"
-                    className="cursor-pointer w-10/12 md:w-auto text-xs md:text-sm hover:bg-[var(--mainColor)] hover:text-white border-[var(--mainColor)] flex items-center gap-2"
+                    variant="default"
+                    className="cursor-pointer w-10/12 md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
                     disabled={!isValid || isSubmitting || dataUpdating}
                 >
                     {dataUpdating ? "Loading" : buttonText} <ChevronRight />

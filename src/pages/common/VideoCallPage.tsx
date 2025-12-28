@@ -41,7 +41,6 @@ const VideoCallPage: React.FC = () => {
           providerFetchBookingAppoinments({ ...params, online: true })
         }
         columnsCount={6}
-        heading="Online Bookings"
         column={providerColumns}
         queryKey="onlineBookings"
       />
@@ -51,7 +50,6 @@ const VideoCallPage: React.FC = () => {
           userFetchBookings({ ...params, online: true })
         }
         columnsCount={6}
-        heading="Online Bookings"
         column={userColumns}
         queryKey="onlineBookings"
       />

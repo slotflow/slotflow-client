@@ -121,6 +121,7 @@ export const useAddAvailability = (getValues: UseFormGetValues<{
     };
 
     const toggleMode = (mode: string) => {
+        console.log("mode : ",mode);
         const current = getValues('modes') || [];
         if (current.includes(mode)) {
             setValue('modes', current.filter(m => m !== mode), { shouldDirty: true });

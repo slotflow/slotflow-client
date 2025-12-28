@@ -52,9 +52,9 @@ const IntegrationCard: React.FC<IntegrationCardProps> = ({
                     </span>
                 ) : (
                     <Button
-                        variant="outline"
+                        variant="default"
                         onClick={(e) => connectOnClick(e, dispatch)}
-                        className="px-3 py-1 text-sm rounded-md transition w-full cursor-pointer"
+                        className="px-3 py-1 text-sm rounded-md w-full cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
                     >Connect</Button>
                 )}
             </CardFooter>

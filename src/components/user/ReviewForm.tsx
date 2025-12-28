@@ -3,8 +3,8 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import FormField from "../form/FormField";
 import { Button } from "@/components/ui/button";
-import { userCreateReview } from "@/utils/apis/user.api";
 import { useDispatch, useSelector } from "react-redux";
+import { userCreateReview } from "@/utils/apis/user.api";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { toggleReviewCreateForm } from "@/utils/redux/slices/userSlice";
 import { Review } from "@/utils/interface/entityInterface/reviewInterface";
@@ -103,13 +103,13 @@ const ReviewForm: React.FC = () => {
                     <div className="flex gap-3 justify-end">
                         <Button
                             type="button"
-                            variant="outline"
+                            variant="destructive"
                             className="cursor-pointer"
                             onClick={handleCancel}
                         >
                             Cancel
                         </Button>
-                        <Button type="submit" className="cursor-pointer">
+                        <Button type="submit" className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]">
                             Submit
                         </Button>
                     </div>

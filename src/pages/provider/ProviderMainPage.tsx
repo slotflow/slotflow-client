@@ -20,9 +20,7 @@ const ProviderMainPage: React.FC = () => {
   const filteredRoutes = providerRoutes.filter(route => allowedRouteNames.includes(route.name));
   
   // useEffect(() => {
-  //   if (user?.isLoggedIn) {
-  //     dispatch(checkUserStatus());
-  //   }
+
   // }, [dispatch, location, user?.isLoggedIn]);
 
   // if (!user?.isAdminVerified) {

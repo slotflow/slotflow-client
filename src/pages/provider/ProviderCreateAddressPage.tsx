@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
-import { roleArray } from "@/utils/constants";
+import { Role } from "@/utils/interface/enums";
 import { useDispatch, useSelector } from "react-redux";
 import RightSideBox from "@/components/provider/SideBox";
 import { RedirectTo } from "@/utils/interface/commonInterface";
@@ -23,13 +23,13 @@ const ProviderAddAddressPage = () => {
                 const res = await providerUpdateAddress(data);
                 if (res.success) {
                     toast.success(res.message);
-                    goToAuthPage(roleArray[2], RedirectTo.PROVIDER_APPROVAL_PENDING);
+                    goToAuthPage(Role.Provider, RedirectTo.PROVIDER_APPROVAL_PENDING);
                 }
             } else {
                 const res = await dispatch(providerCreateAddress(data)).unwrap();
                 if (res.success) {
                     toast.success(res.message);
-                    goToAuthPage(roleArray[2], RedirectTo.PROVIDER_SERVICE_DETAILS);
+                    goToAuthPage(Role.Provider, RedirectTo.PROVIDER_SERVICE_DETAILS);
                 }
             }
         } catch (error) {

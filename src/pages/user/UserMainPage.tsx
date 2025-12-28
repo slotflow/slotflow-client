@@ -28,14 +28,14 @@ const UserMainPage = () => {
           <Suspense fallback={<LoadingFallback />}>
             <Outlet />
           </Suspense>
-          {location?.pathname === '/user/dashboard' && (
-            <FilterRightSideBar onClose={() => dispatch(toggleFilterSideBar())} />
-          )}
           {isReviewCreateFormOpen && (
             <ReviewForm />
           )}
         </div>
       </div>
+      {location?.pathname === '/user/dashboard' && (
+        <FilterRightSideBar onClose={() => dispatch(toggleFilterSideBar())} />
+      )}
     </div>
   )
 }

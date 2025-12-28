@@ -1,11 +1,11 @@
 import z from "zod";
-import { serviceCategoryArray, serviceModeArray, serviceTypeArray } from "../constants";
+import { ServiceCategory, ServiceMode, ServiceType } from "../interface/enums";
 import { serviceExperienceRegex, serviceDescriptionRegex, serviceNameRegex } from "./regex";
 
 export const providerCreateServiceDetailsZodSchema = z.object({
   _id: z.string(),
   
-  serviceCategory: z.enum(serviceCategoryArray),
+  serviceCategory: z.nativeEnum(ServiceCategory),
   
   serviceName: z
     .string()
@@ -53,9 +53,9 @@ export const providerCreateServiceDetailsZodSchema = z.object({
     .min(1, "Service Category ID is required")
     .max(100, "Service Category ID cannot exceed 100 characters"),
 
-  serviceType: z.enum(serviceTypeArray),
+  serviceType: z.nativeEnum(ServiceType),
 
-  serviceMode: z.enum(serviceModeArray),
+  serviceMode: z.nativeEnum(ServiceMode),
 
  tags: z
   .array(z.string())

@@ -1,10 +1,10 @@
+import { Role } from "./enums";
 import { ChangeEvent } from "react";
 import { LucideIcon } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { ChartConfig } from "@/components/ui/chart";
 import { Plan } from "./entityInterface/planInterface";
 import { Booking } from "./entityInterface/bookingInterface";
-import { adminVerificationStatusArray, appointmentStatusArray, limitedRolesArray, paymentForArray, paymentGatewayArray, plansArray, roleArray, serviceCategoryArray, serviceModeArray, serviceTypeArray } from "../constants";
 
 // **** Common Response interface
 export interface ApiBaseResponse {
@@ -29,7 +29,7 @@ interface CommonFormFields {
   password: string;
   confirmPassword: string;
   otp: string;
-  role: RoleType;
+  role: Role;
   verificationToken: string;
 }
 
@@ -150,7 +150,7 @@ export interface CommonTableComponentProps<T> {
 // **** Api common request parameter interface
 export interface FetchFunctionParams<T = string> {
   id?: T;
-  role?: RoleType;
+  role?: Role;
   pagination?: {
     page: number;
     limit: number;
@@ -176,20 +176,7 @@ export interface dataSelectListItemInterface {
 }
 
 
-export type LimitedRoles = "ADMIN" | "PROVIDER";
 export type plans = "Starter" | "Professional" | "Enterprise" | "NoSubscription";
-
-
-export type RoleType = typeof roleArray[number];
-export type PlansType = typeof plansArray[number];
-export type PaymentForType = typeof paymentForArray[number];
-export type ServiceTypeType = typeof serviceTypeArray[number];
-export type ServiceModeType = typeof serviceModeArray[number];
-export type LimitedRolesType = typeof limitedRolesArray[number];
-export type PaymentGatewayType = typeof paymentGatewayArray[number];
-export type AppointmentStatusType = typeof appointmentStatusArray[number];
-export type AdminVerificationStatusType = typeof adminVerificationStatusArray[number];
-export type ServiceCategoryType = typeof serviceCategoryArray[number];
 
 
 // **** AppointmentOverTimeInterface
@@ -362,7 +349,7 @@ export interface CommonTabInterface {
   value: string;
   label: string;
   icon?: LucideIcon;
-  role?: RoleType[];
+  role?: Role[];
 }
 
 export enum RedirectTo {

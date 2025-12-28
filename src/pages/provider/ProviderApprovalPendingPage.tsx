@@ -7,10 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Card, CardContent } from "@/components/ui/card";
 import { RedirectTo } from "@/utils/interface/commonInterface";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
+import { AdminVerificationStatus, Role } from "@/utils/interface/enums";
 import { providerSubmitDetailsForReview } from "@/utils/apis/provider.api";
 import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
+import { blockBackStatuses, verificationStatusTextMap } from "@/utils/constants";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { adminVerificationStatusArray, blockBackStatuses, roleArray, verificationStatusTextMap } from "@/utils/constants";
 
 const ProviderApprovalPendingPage = () => {
 
@@ -89,7 +90,7 @@ const ProviderApprovalPendingPage = () => {
                 <TableRow>
                   <TableHead>Section</TableHead>
                   <TableHead>Status</TableHead>
-                  {adminStatus === adminVerificationStatusArray[3] && (
+                  {adminStatus === AdminVerificationStatus.REJECTED && (
                     <TableHead>Update</TableHead>
                   )}
                 </TableRow>
@@ -102,12 +103,12 @@ const ProviderApprovalPendingPage = () => {
                     <TableCell>
                       {row.verified ? "Verified" : "Pending"}
                     </TableCell>
-                    {adminStatus === adminVerificationStatusArray[3] && (
+                    {adminStatus === AdminVerificationStatus.REJECTED && (
                       <TableCell>
                         <Button
-                          variant="outline"
-                          className="cursor-pointer"
-                          onClick={() => goToAuthPage(roleArray[2], row.redirect)}
+                          variant="default"
+                          className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
+                          onClick={() => goToAuthPage(Role.Provider, row.redirect)}
                         ><Edit />
                         </Button>
                       </TableCell>
@@ -117,22 +118,22 @@ const ProviderApprovalPendingPage = () => {
               </TableBody>
             </Table>
 
-            {(adminStatus === adminVerificationStatusArray[5] || adminStatus === adminVerificationStatusArray[3]) && (
+            {(adminStatus === AdminVerificationStatus.NOT_REQUESTED || adminStatus === AdminVerificationStatus.REJECTED) && (
               <div className="flex flex-row justify-between items-center">
                 <p className="text-sm text-center">
                   Please submit your details. We will review them and inform you via email within one business day.
                 </p>
                 <Button
-                  variant="outline"
-                  className="cursor-pointer"
+                  variant="default"
+                  className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
                   onClick={handleSubmit}
                 >
-                  {adminStatus === adminVerificationStatusArray[5] ? "Submit for Review" : "Resubmit for Review"}
+                  {adminStatus === AdminVerificationStatus.NOT_REQUESTED ? "Submit for Review" : "Resubmit for Review"}
                 </Button>
               </div>
             )}
 
-            {adminStatus === adminVerificationStatusArray[3] &&
+            {adminStatus === AdminVerificationStatus.REJECTED &&
               (<div className="flex space-x-4">
                 <p className="text-sm">
                   <span className="font-semibold text-red-500">Rejection Reason</span>{" "}

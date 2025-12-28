@@ -38,10 +38,6 @@ const ProviderProofs: React.FC<ProviderProofsProps> = ({
         return <ProfileDetailsShimmer row={2} className="mt-2" />;
     }
 
-    if (!data) {
-        return <DataFetchingError message="No service found." />;
-    }
-
     const identityProof = data?.identityProof || noImage;
     const serviceProof = data?.serviceProof || noImage;
 
@@ -55,7 +51,7 @@ const ProviderProofs: React.FC<ProviderProofsProps> = ({
                 <CardHeader className="flex flex-row justify-between items-center">
                     <CardTitle className="text-base font-semibold">Identity Proof</CardTitle>
                     <Button
-                        variant="outline"
+                        variant="default"
                         size="sm"
                         onClick={() => setExpandIdentity(!expandIdentity)}
                     >
@@ -89,7 +85,7 @@ const ProviderProofs: React.FC<ProviderProofsProps> = ({
                 <CardHeader className="flex flex-row justify-between items-center">
                     <CardTitle className="text-base font-semibold">Service Proof</CardTitle>
                     <Button
-                        variant="outline"
+                        variant="default"
                         size="sm"
                         onClick={() => setExpandService(!expandService)}
                     >

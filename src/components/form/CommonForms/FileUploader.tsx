@@ -163,9 +163,9 @@ const FileUploader: React.FC<FileUploaderProps> = ({
                 {(!fileUploaded && proofFile) && (
                     <CardFooter className='flex justify-end'>
                         <Button
-                            variant="outline"
+                            variant="default"
                             disabled={isSubmitting || !isValid}
-                            className="cursor-pointer w-auto text-xs md:text-sm hover:bg-[var(--mainColor)] hover:text-white border-[var(--mainColor)] flex items-center gap-2"
+                            className="cursor-pointer w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
                             type="submit"
                         >
                             {isSubmitting ? "Uploading" : "Upload"}

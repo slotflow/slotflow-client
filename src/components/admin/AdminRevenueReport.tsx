@@ -49,6 +49,8 @@ const AdminRevenueReport: React.FC = () => {
 
     const column = AdminRevenueTableColumn();
 
+    console.log("data : ",data);
+
     return (
         <div className="p-2">
             <h2 className={`text-2xl font-bold mb-4`}>Revenue Report</h2>
@@ -56,7 +58,7 @@ const AdminRevenueReport: React.FC = () => {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
                 <Popover>
                     <PopoverTrigger asChild>
-                        <Button variant="outline" className="w-full md:w-auto justify-start text-left font-normal cursor-pointer">
+                        <Button variant="default" className="w-full md:w-auto justify-start text-left font-normal cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]">
                             <CalendarIcon className="mr-2 h-4 w-4" />
                             {dateRange?.from && dateRange?.to ? (
                                 <>
@@ -78,13 +80,13 @@ const AdminRevenueReport: React.FC = () => {
                 </Popover>
 
                 <div className="flex gap-2">
-                    <Button className='cursor-pointer' onClick={() => refetch()}>
+                    <Button className='cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]' onClick={() => refetch()}>
                         <RotateCcw />
                         Reset
                     </Button>
                     <Button
-                        variant="outline"
-                        className="cursor-pointer"
+                        variant="default"
+                        className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
                         onClick={(e) => handleExportPDF(e, data?.data?.rows || [], "Revenue")}
                         >
                         <NotebookText />
@@ -92,8 +94,8 @@ const AdminRevenueReport: React.FC = () => {
                     </Button>
 
                     <Button
-                        variant="outline"
-                        className="cursor-pointer"
+                        variant="default"
+                        className="cursor-pointerhover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
                         onClick={(e) => handleExportExcel(e, data?.data?.rows || [], "Revenue")}
                     >
                         <FileSpreadsheet />

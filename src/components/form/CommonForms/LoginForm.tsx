@@ -44,12 +44,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
         try {
             const res = await dispatch(signin({ ...data, role })).unwrap();
             if (res.success) {
-                if (res.authUser.isBlocked) {
-                    toast.error("Your account is blocked, please contact us");
-                    return;
-                }
                 toast.success(res.message);
-                handleNavigation(res.authUser.role);
+                handleNavigation(res.data.role);
             } else toast.error(res.message);
         } catch (error) {
             if (import.meta.env.DEV) console.log("An error occurred during login ", error);

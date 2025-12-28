@@ -1,8 +1,8 @@
 import { lazy } from "react";
-import PlanGuard from "./planGuard.tsx";
-import { roleArray } from "@/utils/constants.ts";
-import { createBrowserRouter, Outlet } from "react-router-dom";
+import PlanGuard from "./PlanGuard.tsx";
+import { Role } from "@/utils/interface/enums.ts";
 import { ProtectedRoute } from "./protectedRoutes.tsx";
+import { createBrowserRouter, Outlet } from "react-router-dom";
 
 import SettingsPage from "@/pages/common/SettingsPage.tsx";
 import IntegrationsPage from "@/pages/common/IntegrationsPage.tsx";
@@ -13,7 +13,6 @@ import ProviderCreateServiceAvailabilityPage from "@/pages/provider/ProviderCrea
 import ProviderApprovalPendingPage from "@/pages/provider/ProviderApprovalPendingPage.tsx";
 import ProviderProofSubmitionPage from "@/pages/provider/ProviderProofSubmitionPage.tsx";
 import ProviderOnboardingGuard from "./ProviderOnboardingGuard.tsx";
-
 
 const AuthPage = lazy(() => import("@/pages/common/AuthPage.tsx"));
 const AboutPage = lazy(() => import("@/pages/common/AboutPage.tsx"));
@@ -76,17 +75,17 @@ export const appRouter = createBrowserRouter([
             { path: "/contact", element: <ContactPage /> },
             { path: "/privacy-policy", element: <PrivacyPolicyPage /> },
             { path: "/terms-and-conditions", element: <TermsAndConditionsPage /> },
-            { path: "/admin/login", element: <AuthPage role={roleArray[0]} formType={0} /> },
-            { path: "/user/login", element: <AuthPage role={roleArray[1]} formType={0} /> },
-            { path: "/user/register", element: <AuthPage role={roleArray[1]} formType={1} /> },
-            { path: "/user/verify/email", element: <AuthPage role={roleArray[1]} formType={2} /> },
-            { path: "/user/reset/password", element: <AuthPage role={roleArray[1]} formType={3} /> },
-            { path: "/user/verify/otp", element: <AuthPage role={roleArray[1]} formType={4} /> },
-            { path: "/provider/login", element: <AuthPage role={roleArray[2]} formType={0} /> },
-            { path: "/provider/register", element: <AuthPage role={roleArray[2]} formType={1} /> },
-            { path: "/provider/verify/email", element: <AuthPage role={roleArray[2]} formType={2} /> },
-            { path: "/provider/reset/password", element: <AuthPage role={roleArray[2]} formType={3} /> },
-            { path: "/provider/verify/otp", element: <AuthPage role={roleArray[2]} formType={4} /> },
+            { path: "/admin/login", element: <AuthPage role={Role.Admin} formType={0} /> },
+            { path: "/user/login", element: <AuthPage role={Role.User} formType={0} /> },
+            { path: "/user/register", element: <AuthPage role={Role.User} formType={1} /> },
+            { path: "/user/verify/email", element: <AuthPage role={Role.User} formType={2} /> },
+            { path: "/user/reset/password", element: <AuthPage role={Role.User} formType={3} /> },
+            { path: "/user/verify/otp", element: <AuthPage role={Role.User} formType={4} /> },
+            { path: "/provider/login", element: <AuthPage role={Role.Provider} formType={0} /> },
+            { path: "/provider/register", element: <AuthPage role={Role.Provider} formType={1} /> },
+            { path: "/provider/verify/email", element: <AuthPage role={Role.Provider} formType={2} /> },
+            { path: "/provider/reset/password", element: <AuthPage role={Role.Provider} formType={3} /> },
+            { path: "/provider/verify/otp", element: <AuthPage role={Role.Provider} formType={4} /> },
             { path: "*", element: <Error404Page /> },
             {
                 path: "/admin",

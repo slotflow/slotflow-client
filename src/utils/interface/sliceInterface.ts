@@ -1,4 +1,4 @@
-import { AdminVerificationStatusType, RoleType } from "./commonInterface";
+import { AdminVerificationStatus, Role } from "./enums";
 import { Plan } from "./entityInterface/planInterface";
 import { Provider } from "./entityInterface/providerInterface";
 import { ProviderService } from "./entityInterface/providerServiceInterface";
@@ -12,7 +12,7 @@ export interface AuthUser {
   phone?: string;
   email?: string;
   verificationToken?: string;
-  role: RoleType;
+  role: Role;
   isBlocked?: boolean;
   isLoggedIn?: boolean;
   isAddressAdded?: boolean;
@@ -22,7 +22,7 @@ export interface AuthUser {
   isAdminVerified?: boolean;
   verificationRejectionReason?: string;
 
-  adminVerificationStatus?: AdminVerificationStatusType,
+  adminVerificationStatus?: AdminVerificationStatus,
   isAddressVerified?: boolean,
   isServiceDetailsVerified?: boolean,
   isAvailabilityVerified?: boolean,
@@ -32,7 +32,6 @@ export interface AuthUser {
   serviceDescription?: ProviderService["serviceDescription"];
   googleId?: string;
   googleConnected?: boolean;
-  updatedAt?: string
 }
 
 export interface AuthState {

@@ -1,4 +1,4 @@
-import { AdminVerificationStatusType } from "../commonInterface";
+import { AdminVerificationStatus } from "../enums";
 
 // Provider
 export interface Provider {
@@ -12,7 +12,7 @@ export interface Provider {
   isAdminVerified: boolean;
   verificationRejectionReason: string;
 
-  adminVerificationStatus: AdminVerificationStatusType,
+  adminVerificationStatus: AdminVerificationStatus,
   isAddressVerified: boolean,
   isServiceDetailsVerified: boolean,
   isAvailabilityVerified: boolean,

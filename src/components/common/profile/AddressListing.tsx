@@ -65,10 +65,6 @@ const AddressListing: React.FC<UserOrProviderAddressDetailsComponentProps> = ({
         return <ProfileDetailsShimmer row={9} className='mt-2' />
     };
 
-    if (!data) {
-        return <DataFetchingError message="No address found." />;
-    };
-
     return (
         <div className=" border rounded-md overflow-hidden w-full mt-2 md:mt-0">
             <table className="table-auto w-full">

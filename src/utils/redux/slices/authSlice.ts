@@ -3,10 +3,11 @@ import { AuthState, AuthUser } from "@/utils/interface/sliceInterface";
 import { resendOtp, signin, signout, signup } from "@/utils/apis/auth.api";
 import { userUpdateInfo, userUpdateProfileImage } from "@/utils/apis/user.api";
 import { UserUpdateUserInfoResponse } from "@/utils/interface/api/userApiInterface";
-import { AdminVerificationStatusType, ApiBaseResponse } from "@/utils/interface/commonInterface";
+import { ApiBaseResponse } from "@/utils/interface/commonInterface";
 import { ResendOtpResponse, SigninResponse, SignupResponse } from "@/utils/interface/api/authApiInterface";
 import { ProviderSubmitDetailsResponse, ProviderUpdateProviderInfoResponse } from "@/utils/interface/api/providerApiInterface";
 import { providerCreateAddress, providerCreateServiceAvailabilities, providerCreateServiceDetails, providerSubmitDetailsForReview, providerUpdateInfo, providerUpdateProfileImage } from "@/utils/apis/provider.api";
+import { AdminVerificationStatus } from "@/utils/interface/enums";
 
 const initialState: AuthState = {
     authUser: null,
@@ -46,7 +47,7 @@ const authSlice = createSlice({
                 state.authUser.isProofSubmitted = true;
             }
         },
-        setAdminVerificationState: (state, action: PayloadAction<AdminVerificationStatusType>) => {
+        setAdminVerificationState: (state, action: PayloadAction<AdminVerificationStatus>) => {
             if(state.authUser) {
                 state.authUser.adminVerificationStatus = action.payload;
             }
@@ -61,8 +62,8 @@ const authSlice = createSlice({
             .addCase(signup.fulfilled, (state: AuthState, action: PayloadAction<SignupResponse>) => {
                 state.authUser = {
                     ...state.authUser,
-                    verificationToken: action.payload.authUser.verificationToken,
-                    role: action.payload.authUser.role,
+                    verificationToken: action.payload.data.verificationToken,
+                    role: action.payload.data.role,
                 };
             })
             .addCase(signup.rejected, (state: AuthState) => {
@@ -73,7 +74,7 @@ const authSlice = createSlice({
         builder
             .addCase(signin.pending, () => { })
             .addCase(signin.fulfilled, (state, action: PayloadAction<SigninResponse>) => {
-                state.authUser = action.payload.authUser;
+                state.authUser = action.payload.data;
             })
             .addCase(signin.rejected, () => { });
 
@@ -83,8 +84,8 @@ const authSlice = createSlice({
             .addCase(resendOtp.fulfilled, (state, action: PayloadAction<ResendOtpResponse>) => {
                 state.authUser = {
                     ...state.authUser,
-                    verificationToken: action.payload.authUser.verificationToken,
-                    role: action.payload.authUser.role,
+                    verificationToken: action.payload.data.verificationToken,
+                    role: action.payload.data.role,
                 };
             })
             .addCase(resendOtp.rejected, () => { });

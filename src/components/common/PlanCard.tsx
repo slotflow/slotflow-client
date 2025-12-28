@@ -98,15 +98,15 @@ const PlanCard: React.FC<ProviderPlanCardProps> = ({
 
       {!dummy ? (
         <div className="mt-auto">
-          <Button className="w-full cursor-pointer" onClick={handleGoToPayment}>
+          <Button className="w-full cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]" onClick={handleGoToPayment}>
             Choose Plan
           </Button>
         </div>
       ) : (
         <CardFooter>
           <Button
-            className="w-full cursor-pointer hover:bg-[var(--mainColor)]"
-            variant="outline"
+            className="w-full cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
+            variant="default"
           >
             Sign up
           </Button>

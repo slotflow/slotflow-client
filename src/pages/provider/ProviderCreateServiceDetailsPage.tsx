@@ -10,10 +10,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { OptionType, SelectField } from "@/components/form/SelectField";
+import { Role, ServiceCategory, ServiceMode, ServiceType } from "@/utils/interface/enums";
 import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
-import { RedirectTo, ServiceCategoryType, ServiceModeType, ServiceTypeType } from "@/utils/interface/commonInterface";
+import { RedirectTo } from "@/utils/interface/commonInterface";
+import { serviceCategoryOptions, serviceModeOptions, serviceTypeOptions, groupOptions } from "@/utils/constants";
 import { providerCreateServiceDetailsZodSchema, ProviderCreateServiceDetailsFormType } from "@/utils/zod/providerZod";
-import { serviceCategoryOptions, serviceModeOptions, roleArray, serviceTypeOptions, groupOptions } from "@/utils/constants";
 import { providerFetchAllAppServices, providerCreateServiceDetails, providerFetchServiceDetails, providerUpdateServiceDetails } from "@/utils/apis/provider.api";
 
 const ProviderCreateServiceDetailsPage: React.FC = () => {
@@ -107,13 +108,13 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
        const res = await providerUpdateServiceDetails(data);
         if (res.success) {
           toast.success(res.message);
-          goToAuthPage(roleArray[2], RedirectTo.PROVIDER_APPROVAL_PENDING);
+          goToAuthPage(Role.Provider, RedirectTo.PROVIDER_APPROVAL_PENDING);
         }
       } else {
         const res = await dispatch(providerCreateServiceDetails(data)).unwrap();
         if (res.success) {
           toast.success(res.message);
-          goToAuthPage(roleArray[2], RedirectTo.PROVIDER_AVAILABILITY);
+          goToAuthPage(Role.Provider, RedirectTo.PROVIDER_AVAILABILITY);
         }
       }
     } catch (error) {
@@ -131,7 +132,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
           <div className="md:flex w-full space-y-6">
             <div className="space-y-4 w-full space-x-2 px-6 pt-6">
 
-              <SelectField<ProviderCreateServiceDetailsFormType, ServiceCategoryType>
+              <SelectField<ProviderCreateServiceDetailsFormType, ServiceCategory>
                 id="serviceCategory"
                 label="Service Category"
                 options={serviceCategoryOptions}
@@ -192,7 +193,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 error={errors.requirements?.message}
               />
 
-              <SelectField<ProviderCreateServiceDetailsFormType,ServiceTypeType>
+              <SelectField<ProviderCreateServiceDetailsFormType,ServiceType>
                 id="serviceType"
                 label="Service Type"
                 options={serviceTypeOptions}
@@ -200,7 +201,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 error={errors.serviceType}
               />
 
-              <SelectField<ProviderCreateServiceDetailsFormType,ServiceModeType>
+              <SelectField<ProviderCreateServiceDetailsFormType,ServiceMode>
                 id="serviceMode"
                 label="Service Mode"
                 options={serviceModeOptions}
@@ -245,8 +246,8 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
           <div className="flex justify-center md:justify-end mt-6">
             <Button
               type="submit"
-              variant="outline"
-              className="cursor-pointer w-10/12 md:w-auto text-sm hover:bg-[var(--mainColor)] hover:text-white border-[var(--mainColor)] flex items-center gap-2"
+              variant="default"
+              className="cursor-pointer w-10/12 md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
             >
               {dataUpdating ? "Loading" : "Next"}
               <ChevronRight />

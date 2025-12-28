@@ -21,13 +21,10 @@ export default function WorldMap({
 
   const { lightTheme } = useSelector((state: RootState) => state.app);
 
-  console.log("lightTheme : ",lightTheme);
-
   const svgMap = map.getSVG({
     radius: 0.22,
     color: !lightTheme ? "#FFFFFF40" : "#00000040",
     shape: "circle",
-    // backgroundColor: lightTheme ? "white" : "black",
   });
 
   const projectPoint = (lat: number, lng: number) => {

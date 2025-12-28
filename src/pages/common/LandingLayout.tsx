@@ -41,7 +41,6 @@ const LandingLayout = () => {
         isAdminVerified: rawUser.isAdminVerified,
         googleId: rawUser.googleId,
         googleConnected: rawUser.googleConnected,
-        updatedAt: rawUser.updatedAt,
       };
       dispatch(setAuthUser(authUser));
       window.history.replaceState({}, document.title, window.location.pathname);

@@ -1,14 +1,13 @@
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { pushService } from "@/utils/redux/slices/userSlice";
-import CommonButton from "@/components/common/CommonButton";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import DataFetchingError from "@/components/common/DataFetchingError";
 import ServiceSelectShimmer from "@/components/shimmers/ServiceSelectShimmer";
 import { userFetchAllServicesForServiceSelectPage } from "@/utils/apis/user.api";
 import { UserFetchAllServicesResponse } from "@/utils/interface/api/userApiInterface";
-
 
 const UserServiceSelectPage = () => {
 
@@ -72,7 +71,9 @@ const UserServiceSelectPage = () => {
             )}
             {data && data.length > 0 && (
                 <div className="flex justify-end mt-6">
-                    <CommonButton text={"Next"} onClick={handleSubmitSelectedServices} />
+                    <Button
+                        className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
+                        onClick={handleSubmitSelectedServices} >Next</Button>
                 </div>
             )}
         </div>

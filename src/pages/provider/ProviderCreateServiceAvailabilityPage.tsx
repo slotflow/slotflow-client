@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import { Role } from '@/utils/interface/enums';
 import { Button } from '@/components/ui/button';
 import SideBox from '@/components/provider/SideBox';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -14,7 +15,7 @@ import { RedirectTo } from '@/utils/interface/commonInterface';
 import { providerCreateServiceAvailabilities } from '@/utils/apis/provider.api';
 import { useAuthNavigation } from '@/utils/hooks/systemHooks/useAuthNavigation';
 import { useAddAvailability } from '@/utils/hooks/providerHooks/useServiceAvailability';
-import { daysOfWeekOptions, roleArray, serviceDurationsOptions, updatableStatuses } from '@/utils/constants';
+import { daysOfWeekOptions, serviceDurationsOptions, updatableStatuses } from '@/utils/constants';
 import { ProviderServiceAvailabilityFormType, providerServiceAvailabilityZodSchema } from '@/utils/zod/providerZod';
 
 const ProviderCreateServiceAvailabilityPage: React.FC = () => {
@@ -96,7 +97,7 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
       .then((res) => {
         if (res.success) {
           toast.success(res.message);
-          goToAuthPage(roleArray[2],redirectUrl);
+          goToAuthPage(Role.Provider,redirectUrl);
         }
       })
       .catch((error) => {
@@ -137,16 +138,16 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
               <h6 className='text-sm font-semibold'>Select service modes {<span className="text-red-500"> *</span>}</h6>
               <div className="w-1/2 flex space-x-4 mt-2">
                 <div
-                  className={`w-1/2 text-xs text-center border rounded-md py-2 px-4 hover:bg-[var(--mainColor)/10] transition-colors duration-200 cursor-pointer ${isModeSelected('online') ? 'bg-[var(--mainColor)/20] border-[var(--mainColor)]' : 'border-gray-300'
+                  className={`w-1/2 text-xs text-center border rounded-md py-2 px-4 hover:bg-[var(--mainColor)/10] transition-colors duration-200 cursor-pointer ${isModeSelected('Online') ? 'bg-[var(--mainColor)/20] border-[var(--mainColor)]' : 'border-gray-300'
                     }`}
-                  onClick={() => toggleMode('online')}
+                  onClick={() => toggleMode('Online')}
                 >
                   Online
                 </div>
                 <div
-                  className={`w-1/2 text-xs text-center border rounded-md py-2 px-4 hover:bg-[var(--mainColor)/10] transition-colors duration-200 cursor-pointer ${isModeSelected('offline') ? 'bg-[var(--mainColor)/20] border-[var(--mainColor)]' : 'border-gray-300'
+                  className={`w-1/2 text-xs text-center border rounded-md py-2 px-4 hover:bg-[var(--mainColor)/10] transition-colors duration-200 cursor-pointer ${isModeSelected('Offline') ? 'bg-[var(--mainColor)/20] border-[var(--mainColor)]' : 'border-gray-300'
                     }`}
-                  onClick={() => toggleMode('offline')}
+                  onClick={() => toggleMode('Offline')}
                 >
                   Offline
                 </div>
@@ -189,10 +190,10 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
             <div className="flex justify-center md:justify-end mt-4 md:mt-6">
               <Button
                 type="button"
-                variant="outline"
+                variant="default"
                 disabled={isSubmitting}
                 onClick={() => generateTimeSlots(getValues('startTime'), getValues('endTime'), getValues('duration'))}
-                className="w-10/12 md:w-auto text-xs md:text-sm cursor-pointer hover:bg-[var(--mainColor)] hover:text-white border-[var(--mainColor)] flex items-center gap-2"
+                className="w-10/12 md:w-auto cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
               >
                 Generate Slots <Goal />
               </Button>
@@ -248,12 +249,12 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
               <div className="flex space-x-2 justify-center md:justify-end mt-4 md:mt-6">
                 <Button
                   type="button"
-                  variant="outline"
+                  variant="default"
                   disabled={isSubmitting}
                   onClick={handleAddAvailability}
-                  className="cursor-pointer w-10/12 md:w-auto text-xs md:text-sm hover:bg-[var(--mainColor)] hover:text-white border-[var(--mainColor)] flex items-center gap-2"
+                  className="cursor-pointer w-10/12 md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
                 >
-                  Add <Check />
+                  Confirm <Check />
                 </Button>
               </div>
             )}
@@ -261,9 +262,9 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
               <div className="flex space-x-2 justify-center md:justify-end mt-4 md:mt-6 ">
                 <Button
                   type="submit"
-                  variant="outline"
+                  variant="default"
                   disabled={isSubmitting || !isValid}
-                  className="cursor-pointer w-10/12 md:w-auto text-xs md:text-sm hover:bg-[var(--mainColor)] hover:text-white border-[var(--mainColor)] flex items-center gap-2"
+                  className="cursor-pointer w-10/12 md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
                 >
                   {dataUpdating ? "Loading" : "Submit"} <ChevronRight />
                 </Button>

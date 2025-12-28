@@ -1,17 +1,17 @@
 import { useCallback } from "react";
-import { roleArray } from "@/utils/constants";
 import { useNavigate } from "react-router-dom";
-import { RedirectTo, RoleType } from "@/utils/interface/commonInterface";
+import { Role } from "@/utils/interface/enums";
+import { RedirectTo } from "@/utils/interface/commonInterface";
 
 export const useAuthNavigation = () => {
   const navigate = useNavigate();
 
-  const goToAuthPage = useCallback((role: RoleType, redirectPage: RedirectTo) => {
+  const goToAuthPage = useCallback((role: Role, redirectPage: RedirectTo) => {
     let basePath = "";
 
-    if (role === roleArray[0]) basePath = "/admin";
-    else if (role === roleArray[1]) basePath = "/user";
-    else if (role === roleArray[2]) basePath = "/provider";
+    if (role === Role.Admin) basePath = "/admin";
+    else if (role === Role.User) basePath = "/user";
+    else if (role === Role.Provider) basePath = "/provider";
 
     let path = "";
 

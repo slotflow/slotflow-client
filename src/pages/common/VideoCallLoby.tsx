@@ -187,7 +187,7 @@ const LobbyPage = () => {
         </p>
         <Button
           onClick={handleJoin}
-          className="cursor-pointer hover:bg-[var(--mainColor)] dark:hover:text-white"
+          className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
         >
           Join Now
         </Button>

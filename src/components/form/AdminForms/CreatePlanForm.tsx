@@ -44,13 +44,10 @@ const CreatePlanForm: React.FC<CreatePlanFormProps> = ({
         },
     });
 
-    const onSubmit = async (data: AdminCreatePlanFormType) => {
-        try {
-            await handleAdminPlanCreating(data);
-            reset();
-        } catch (error) {
-            if (import.meta.env.DEV) console.log("An error occured while saving plan : ", error);
-        }
+    const onSubmit = (data: AdminCreatePlanFormType) => {
+        handleAdminPlanCreating(data);
+        reset();
+        onClose();
     };
 
     return (

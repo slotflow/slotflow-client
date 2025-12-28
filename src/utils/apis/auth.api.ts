@@ -19,6 +19,7 @@ export const verifyOtp = createAsyncThunk<ApiBaseResponse,VerifyOtpRequest>("aut
 
 export const signin = createAsyncThunk<SigninResponse, SigninRequest>("auth/signin",
     async (userData: SigninRequest) => {
+        console.log("auth singin api calling");
         const response = await axiosInstance.post('/auth/signin', userData);
         return response.data;
     }
@@ -44,12 +45,6 @@ export const updatePassword = createAsyncThunk<ApiBaseResponse,UpdatePasswordReq
         return response.data;
     }
 )
-
-export const checkUserStatus = createAsyncThunk("auth/checkUserStatus",
-    async () => {
-        await axiosInstance.post("/auth/status");
-    }
-);
 
 // export const handleGoogleLogin = async () : Promise<any> => {
 //     const response = axiosInstance.get()

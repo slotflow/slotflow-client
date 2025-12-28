@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import React, { useEffect } from 'react';
-import { roleArray } from '@/utils/constants';
+import { Role } from "@/utils/interface/enums";
 import { Button } from '@/components/ui/button';
 import { useDispatch, useSelector } from "react-redux";
 import { useQueryClient } from "@tanstack/react-query";
@@ -31,13 +31,13 @@ const Address: React.FC = () => {
       setLoading(true);
       let res: UserCreateAddressResponse | UpdateAddressResponse;
 
-      if (authUser?.role === roleArray[1]) {
+      if (authUser?.role === Role.User) {
         if (isUpdating) {
           res = await userUpdateAddress(data);
         } else {
           res = await userCreateUserAddress(data);
         }
-      } else if (authUser?.role === roleArray[2]) {
+      } else if (authUser?.role === Role.Provider) {
         res = await providerUpdateAddress(data);
       } else {
         throw new Error("Unknown role");
@@ -63,10 +63,10 @@ const Address: React.FC = () => {
   useEffect(() => {
 
     async function fetchOldAddress() {
-      if (authUser?.role === roleArray[1]) {
+      if (authUser?.role === Role.User) {
         const result = await userFetchAddress();
         setOldAddress(result);
-      } else if (authUser?.role === roleArray[2]) {
+      } else if (authUser?.role === Role.Provider) {
         const result = await providerFetchAddress();
         setOldAddress(result);
       }
@@ -86,10 +86,10 @@ const Address: React.FC = () => {
             <h2 className="text-xl font-semibold"> Address</h2>
           </div>
           <Button
-            variant="outline"
+            variant="default"
             disabled={loading}
             onClick={() => setShowAddressForm(!showAddressForm)}
-            className="cursor-pointer"
+            className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
           >{showAddressForm
             ? <span className='flex items-center'><X className='mr-2' />Close</span>
             : authUser?.isAddressAdded

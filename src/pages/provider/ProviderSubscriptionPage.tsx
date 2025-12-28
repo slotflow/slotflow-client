@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { Button } from "@/components/ui/button";
 import { RootState } from "@/utils/redux/appStore";
-import CommonButton from "@/components/common/CommonButton";
 import ProviderPlanList from "@/components/provider/ProviderPlanList";
 import CommonPaymentSelection from "@/components/common/CommonPaymentSelection";
 import ProviderFreeSubscription from "@/components/provider/ProviderFreeSubscription";
@@ -25,7 +25,9 @@ const ProviderSubscriptionPage = () => {
                 />
             )}
 
-            <CommonButton onClick={() => setShowPlans(!showPlans)} text={showPlans ? "Hide Plans" : "Show Plans"} />
+            <Button
+                className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
+                onClick={() => setShowPlans(!showPlans)} >{showPlans ? "Hide Plans" : "Show Plans"}</Button>
             <ProviderPlanList
                 showPlans={showPlans}
             />

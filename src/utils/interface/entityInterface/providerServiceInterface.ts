@@ -1,4 +1,4 @@
-import { ServiceModeType, ServiceTypeType } from "../commonInterface";
+import { ServiceMode, ServiceType } from "../enums";
 
 // Provider service interface
 export interface ProviderService {
@@ -10,8 +10,8 @@ export interface ProviderService {
     servicePrice: number;
     serviceExperience: string;
     requirements?: string;
-    serviceType?: ServiceTypeType;
-    serviceMode: ServiceModeType;
+    serviceType?: ServiceType;
+    serviceMode: ServiceMode;
     tags?: string[];
     videoUrl?: string;
     maxParticipants?: number;

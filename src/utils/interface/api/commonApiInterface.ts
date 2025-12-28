@@ -1,3 +1,4 @@
+import { Role } from "../enums";
 import { User } from "../entityInterface/userInterface";
 import { Plan } from "../entityInterface/planInterface";
 import { Review } from "../entityInterface/reviewInterface";
@@ -6,8 +7,8 @@ import { Booking } from "../entityInterface/bookingInterface";
 import { Address } from "../entityInterface/addressInterface";
 import { Provider } from "../entityInterface/providerInterface";
 import { Subscription } from "../entityInterface/subscriptionInterface";
+import { ApiBaseResponse, FetchFunctionParams } from "../commonInterface";
 import { Availability } from "../entityInterface/serviceAvailabilityInterface";
-import { ApiBaseResponse, FetchFunctionParams, RoleType } from "../commonInterface";
 
 // **** Used as the response type of fetch provider subscriptions for admin side and provider side
 export type FetchProviderSubscriptionsResponse = Pick<Subscription, "_id" | "startDate" | "endDate" | "subscriptionStatus"> & Pick<Plan, "planName">;
@@ -61,7 +62,7 @@ export interface FetchSubscriptionDetailsResponse extends SubscriptionProps {
 // **** Used as the request interface for the join room callback api
 export interface JoinRoomCallbackRequest {
     videoCallRoomId: Booking["videoCallRoomId"],
-    role: RoleType,
+    role: Role,
     joined: boolean;
     joinedTime?: Date;
     leftCallTime?: Date;

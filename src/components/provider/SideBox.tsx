@@ -42,7 +42,7 @@ const SideBox: React.FC<SideBoxProps> = ({ props }) => {
           <h3 className="text-3xl font-bold italic text-[var(--mainColor)]">Slotflow</h3>
           {user && (
             <Button
-              variant="outline"
+              variant="default"
               onClick={() =>
                 handleSignoutHelper({
                   role: user?.role,
@@ -51,7 +51,7 @@ const SideBox: React.FC<SideBoxProps> = ({ props }) => {
                   navigate,
                 })
               }
-              className="cursor-pointer text-xs md:text-sm hover:bg-[var(--mainColor)] hover:text-white border-[var(--mainColor)]"
+              className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
             >
               Logout
             </Button>

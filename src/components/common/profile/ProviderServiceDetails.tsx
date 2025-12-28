@@ -1,12 +1,12 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import DataFetchingError from '../DataFetchingError';
-import { serviceModeArray } from '@/utils/constants';
 import InfoDisplayComponent from '../InfoDisplayComponent';
 import ProfileDetailsShimmer from '../../shimmers/ProfileDetailsShimmer';
 import { ProviderFetchServiceDetailsResponse } from '@/utils/interface/api/providerApiInterface';
 import { AdminFetchProviderServiceResponse } from '@/utils/interface/api/adminProviderApiInterface';
 import { ProviderServiceDetailsComponentProps } from '@/utils/interface/componentInterface/commonComponentInterface';
+import { ServiceMode } from '@/utils/interface/enums';
 
 const ProviderServiceDetails: React.FC<ProviderServiceDetailsComponentProps> = ({
     providerId,
@@ -33,10 +33,6 @@ const ProviderServiceDetails: React.FC<ProviderServiceDetailsComponentProps> = (
         return (<ProfileDetailsShimmer row={shimmerRow || 6} className='mt-2' />)
     }
 
-    if (!data) {
-        return <DataFetchingError message="No service found." />;
-    }
-
     return (
         <div className="border rounded-md overflow-hidden w-full mt-2 md:mt-0">
             <table className="table-auto w-full">
@@ -53,7 +49,7 @@ const ProviderServiceDetails: React.FC<ProviderServiceDetailsComponentProps> = (
                     {data?.requirements && (
                         <InfoDisplayComponent label="Requirements" value={data?.requirements} />
                     )}
-                    <InfoDisplayComponent label="Mode" value={data?.serviceMode === serviceModeArray[2] ? "Online & Offline" : data?.serviceMode} />
+                    <InfoDisplayComponent label="Mode" value={data?.serviceMode === ServiceMode.Both ? "Online & Offline" : data?.serviceMode} />
                     {data?.serviceType && (
                         <InfoDisplayComponent label="Type" value={data?.serviceType} />
                     )}

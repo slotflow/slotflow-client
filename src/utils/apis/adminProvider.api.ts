@@ -17,7 +17,7 @@ import { AdminFetchddressResponse, FetchPaymentsResponse, FetchProvidersProofsRe
 export const adminFetchAllProviders = async (params?: FetchFunctionParams): Promise<ApiPaginatedResponse<AdminFetchAllProvidersResponse>> => {
     const query = buildQueryParams(params);
     const response = await axiosInstance.get(`/admin/providers${query ? `?${query}` : ''}`);
-    return parseNewCommonResponse<AdminFetchAllProvidersResponse>(response.data);
+    return parseNewCommonResponse<AdminFetchAllProvidersResponse>(response.data.data);
 };
 
 export const adminApproveProvider = async (providerId: Provider["_id"]): Promise<ApiBaseResponse> => {
@@ -69,14 +69,14 @@ export const adminFetchProviderSubscriptions = async (params: FetchFunctionParam
     const { id, pagination } = params;
     const query = buildQueryParams({ pagination });
     const response = await axiosInstance.get(`/admin/providers/${id}/subscriptions${query ? `?${query}` : ''}`);
-    return parseNewCommonResponse<FetchProviderSubscriptionsResponse>(response.data);
+    return parseNewCommonResponse<FetchProviderSubscriptionsResponse>(response.data.data);
 }
 
 export const adminFetchProviderPayments = async (params: FetchFunctionParams<Provider["_id"]>): Promise<ApiPaginatedResponse<FetchPaymentsResponse>> => {
     const { id, pagination } = params;
     const query = buildQueryParams({ pagination });
     const response = await axiosInstance.get(`/admin/providers/${id}/payments${query ? `?${query}` : ''}`);
-    return parseNewCommonResponse<FetchPaymentsResponse>(response.data);
+    return parseNewCommonResponse<FetchPaymentsResponse>(response.data.data);
 }
 
 export const adminFetchProviderProofs = async (providerId: Provider["_id"]): Promise<FetchProvidersProofsResponse> => {
