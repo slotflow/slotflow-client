@@ -46,14 +46,6 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
         setSelectedMode(data?.modes[0]);
     }, [data, date])
 
-    if(!data) {
-        return <DataFetchingError message={"Data not found"} />
-    }
-
-    if (isError && error) {
-        return <DataFetchingError message={error.message} />
-    };
-
     const handleBookAnAppoint = (slotId: string, availability: boolean) => {
         if (!availability) {
             toast.info("Slot is unavailable.");
@@ -75,9 +67,13 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
                     />
                 </div>
 
-                {isLoading ? (
-                    <ProviderAvailabilityShimmer slotCount={20} />
-                ) : (
+                 {isLoading ? (
+        <ProviderAvailabilityShimmer slotCount={20} />
+      ) : isError && error ? (
+        <DataFetchingError message={error.message} />
+      ) : !data ? (
+        <DataFetchingError message="Data not found" />
+      ) : (
                     <div className="w-full flex flex-col">
                         {(
                             <>

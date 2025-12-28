@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { Role } from "@/utils/interface/enums";
 import ReviewsPage from "../common/ReviewsPage";
 import { providerTabs } from "@/utils/constants";
 import ProfileHead from "@/components/common/profile/ProfileHead";
@@ -49,7 +50,7 @@ const AdminServiceProviderDetailPage = () => {
                     ) || tab === 3 && (
                         <ProviderServiceAvailability providerId={providerId} fetchApiFuntion={adminFetchProviderServiceAvailability} queryKey="providerServiceAvailability" role="Admin" />
                     ) || tab === 4 && (
-                        <ReviewsPage isAdmin fetchFun={adminFetchAllReviews} id={providerId} role={"PROVIDER"} className="mt-2 md:mt-0" />
+                        <ReviewsPage isAdmin fetchFun={adminFetchAllReviews} id={providerId} role={Role.Provider} className="mt-2 md:mt-0" />
                     ) || tab === 5 && (
                         <AdminProviderSubscriptions providerId={providerId} />
                     ) || tab === 6 && (
