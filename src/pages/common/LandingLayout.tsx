@@ -10,6 +10,7 @@ import { setAuthUser } from "@/utils/redux/slices/authSlice";
 import { setAuthModal } from "@/utils/redux/slices/appSlice";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import AuthSelectionModal from "@/components/common/landing/AuthSelectionModal";
+import { Role } from "@/utils/interface/enums";
 
 const LandingLayout = () => {
 
@@ -35,17 +36,25 @@ const LandingLayout = () => {
         isBlocked: rawUser.isBlocked,
         role: rawUser.role,
         isLoggedIn: true,
-        isAddressAdded: rawUser.addressId ? true : false,
-        isServiceDetailsAdded: rawUser.serviceId ? true : false,
-        isServiceAvailabilityAdded: rawUser.serviceAvailabilityId ? true : false,
+        isAddressAdded: rawUser.isAddressAdded,
+        isServiceDetailsAdded: rawUser.isServiceDetailsAdded,
+        isServiceAvailabilityAdded: rawUser.isServiceAvailabilityAdded,
+        isProofSubmitted: rawUser.isProofSubmitted,
         isAdminVerified: rawUser.isAdminVerified,
         googleId: rawUser.googleId,
         googleConnected: rawUser.googleConnected,
+        providerSubscription: rawUser.providerSubscription,
+        isAddressVerified: rawUser.isAddressVerified,
+        isAvailabilityVerified: rawUser.isAvailabilityVerified,
+        isProofsVerified: rawUser.isProofsVerified,
+        isServiceDetailsVerified: rawUser.isServiceDetailsVerified,
+        verificationRejectionReason: rawUser.verificationRejectionReason,
+        adminVerificationStatus: rawUser.adminVerificationStatus
       };
       dispatch(setAuthUser(authUser));
       window.history.replaceState({}, document.title, window.location.pathname);
-      if (authUser.role === "USER") navigate('/user');
-      else if (authUser.role === "PROVIDER") navigate('/provider/dashboard');
+      if (authUser.role === Role.User) navigate('/user');
+      else if (authUser.role === Role.Provider) navigate('/provider');
     }
   }, []);
 

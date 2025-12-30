@@ -12,7 +12,7 @@ import ProviderCreateServiceDetailsPage from "@/pages/provider/ProviderCreateSer
 import ProviderCreateServiceAvailabilityPage from "@/pages/provider/ProviderCreateServiceAvailabilityPage.tsx";
 import ProviderApprovalPendingPage from "@/pages/provider/ProviderApprovalPendingPage.tsx";
 import ProviderProofSubmitionPage from "@/pages/provider/ProviderProofSubmitionPage.tsx";
-import ProviderOnboardingGuard from "./ProviderOnboardingGuard.tsx";
+import ProviderMainPage from "@/pages/provider/ProviderMainPage.tsx";
 
 const AuthPage = lazy(() => import("@/pages/common/AuthPage.tsx"));
 const AboutPage = lazy(() => import("@/pages/common/AboutPage.tsx"));
@@ -164,8 +164,7 @@ export const appRouter = createBrowserRouter([
                 path: "/provider",
                 element: (
                     <ProtectedRoute allowedRoles={["PROVIDER"]}>
-                        {/* <ProviderMainPage /> */}
-                        <ProviderOnboardingGuard />
+                        <ProviderMainPage />
                     </ProtectedRoute>
                 ),
                 children: [

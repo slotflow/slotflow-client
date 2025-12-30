@@ -1,6 +1,6 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Sidebar from "@/components/Navs/Sidebar";
 import { RootState } from "@/utils/redux/appStore";
 import InfoHeader from "@/components/Navs/InfoHeader";
@@ -10,42 +10,54 @@ import { planAccessMap, providerRoutes } from "@/utils/constants";
 
 const ProviderMainPage: React.FC = () => {
 
+  console.log("provider main page");
+
   const {authUser: user} = useSelector((store: RootState) => store.auth);
   const { sidebarOpen } = useSelector((store: RootState) => store.app);
-  // const dispatch = useDispatch<AppDispatch>();
-  // const location = useLocation();
+  const navigate = useNavigate();
 
   const planName = user?.providerSubscription;
   const allowedRouteNames = planName ? planAccessMap[planName] : planAccessMap["NoSubscription"];
   const filteredRoutes = providerRoutes.filter(route => allowedRouteNames.includes(route.name));
+
+useEffect(() => {
+  console.log("useEffect");
   
-  // useEffect(() => {
+  if (!user) return;
 
-  // }, [dispatch, location, user?.isLoggedIn]);
+  if (!user.isAddressAdded && !user.isAddressVerified) {
+    navigate("/provider/onboarding/address");
+    return;
+  }
 
-  // if (!user?.isAdminVerified) {
-  //   if (!user?.isAddressAdded) {
-  //     return (
-  //       <ProviderAddAddressPage />
-  //     );
-  //   } else if (!user?.isServiceDetailsAdded) {
-  //     return (
-  //       <ProviderCreateServiceDetailsPage />
-  //     );
-  //   } else if (!user?.isServiceAvailabilityAdded) {
-  //     return (
-  //       <ProviderCreateServiceAvailabilityPage />
-  //     )
-  //   } else if (!user?.isProofSubmitted) {
-  //     return (
-  //       <ProviderProofSubmitionPage />
-  //     )
-  //   } else {
-  //     return (
-  //       <ProviderApprovalPendingPage />
-  //     )
-  //   }
-  // }
+  if (!user.isServiceDetailsAdded && !user.isServiceDetailsVerified) {
+    navigate("/provider/onboarding/service");
+    return;
+  }
+
+  if (
+    !user.isServiceAvailabilityAdded &&
+    !user.isAvailabilityVerified
+  ) {
+    navigate("/provider/onboarding/availability");
+    return;
+  }
+
+  if (!user.isProofSubmitted && !user.isProofsVerified) {
+    navigate("/provider/onboarding/proofs");
+    return;
+  }
+
+  if (!user.isAdminVerified) {
+    navigate("/provider/onboarding/pending");
+    return;
+  }
+
+  if(user.isAdminVerified) {
+    navigate("/provider/dashboard");
+    return;
+  }
+}, [user, navigate]);
 
   return (
     <div className="flex h-screen bg-[var(--background)] transition-all duration-300">

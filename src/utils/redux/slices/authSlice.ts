@@ -51,7 +51,7 @@ const authSlice = createSlice({
             if(state.authUser) {
                 state.authUser.adminVerificationStatus = action.payload;
             }
-        }
+        },
     },
     extraReducers: (builder) => {
         // Sign Up Api
