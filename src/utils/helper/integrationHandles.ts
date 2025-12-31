@@ -13,7 +13,7 @@ export const handleConnectGoogle = (e: React.MouseEvent<HTMLButtonElement>, disp
         window.location.href = `${apiUrl}/google/connect`;
     } catch {
         dispatch(setGoogleConnectionLoading(false));
-        toast.error("Google calendar connecting failed");
+        toast.error("Failed to connect google calendar");
     }
 }
 
@@ -29,7 +29,7 @@ export const handleStripeConnect = async (e: React.MouseEvent<HTMLButtonElement>
         window.location.href = res.url;
     } catch {
         dispatch(setStripeConnectionLoading(false));
-        toast.error("Stripe connecting failed");
+        toast.error("Failed to connect stripe");
     } finally {
         dispatch(setStripeConnectionLoading(false));
     }

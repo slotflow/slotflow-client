@@ -1,6 +1,5 @@
 import { toast } from 'react-toastify';
 import React, { useEffect } from 'react';
-import { Button } from '@/components/ui/button';
 import { RootState } from '@/utils/redux/appStore';
 import { Separator } from '@/components/ui/separator';
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,9 +27,14 @@ const IntegrationsPage: React.FC = () => {
             if (!response.success) {
                 toast.error("Connection failed, please try again");
             } else {
-                dispatch(setGoogleConnect());
-                dispatch(setGoogleConnectionLoading(false));
-                toast.success("Successfully connected!");
+                if (response.connectType === "GoogleCalendar") {
+                     dispatch(setGoogleConnect());
+                    dispatch(setGoogleConnectionLoading(false));
+                    toast.success("Successfully connected!");
+                }
+                if(response.connectType === "Stripe") {
+                   toast.success("Stripe connected successfully");
+                }
             }
         } catch (err) {
             toast.error("Connecting failed");
@@ -50,7 +54,7 @@ const IntegrationsPage: React.FC = () => {
             <div className='mb-2'>
                 <div className='flex justify-between items-center'>
                     <div className='flex space-x-2'>
-                        <h2 className="text-2xl font-bold tracking-tighter"> Integrations</h2>
+                        <h2 className="text-2xl font-bold tracking-tighter">Integrations</h2>
                     </div>
                 </div>
                 <p className='w-8/12 mt-2 text-gray-500 text-sm'>List of all integrations, you can use based on your subscription</p>
@@ -66,23 +70,17 @@ const IntegrationsPage: React.FC = () => {
                     connectingLoading={googleConnectionLoding}
                     description='Connect your Google calendar to enable calendar syncing and manage your appointments automatically avoid overlapping.'
                     heading='Google Calendar'
-                    isConnected={authUser.googleConnected}
+                    isConnected={authUser.googleConnected ?? false}
                 />
 
                 <IntegrationCard
                     image={stripeLogo}
                     connectOnClick={handleStripeConnect}
                     connectingLoading={stripeConnectionLoading}
-                    description='Connect your Google calendar to enable calendar syncing and manage your appointments automatically avoid overlapping.'
-                    heading='Google Calendar'
-                    isConnected={authUser.googleConnected}
+                    description='Connect your Stripe account to securely manage payments, payouts, and transaction tracking.'
+                    heading='Stripe'
+                    isConnected={authUser.googleConnected ?? false}
                 />
-
-                <Button
-                    className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
-                    onClick={() => { dispatch(setStripeConnectionLoading(false)); }}>
-                    Make loading false
-                </Button>
 
             </div>
         </div>
