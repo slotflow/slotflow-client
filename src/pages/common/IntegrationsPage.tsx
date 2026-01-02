@@ -9,7 +9,9 @@ import IntegrationCard from '@/components/common/Integrations';
 import googleCalendar from '../../assets/iconImages/gCalendar.png';
 import { setGoogleConnect } from '@/utils/redux/slices/authSlice';
 import { handleConnectGoogle, handleStripeConnect } from '@/utils/helper/integrationHandles';
-import { setGoogleConnectionLoading, setStripeConnectionLoading } from '@/utils/redux/slices/integrationSlice';
+import { setGoogleConnectionLoading, 
+    // setStripeConnectionLoading
+ } from '@/utils/redux/slices/integrationSlice';
 
 const IntegrationsPage: React.FC = () => {
 
