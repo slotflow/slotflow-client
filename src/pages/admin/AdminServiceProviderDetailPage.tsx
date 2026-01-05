@@ -46,9 +46,9 @@ const AdminServiceProviderDetailPage = () => {
                     ) || tab === 1 && (
                         <AddressListing userOrProviderId={providerId} fetchApiFunction={() => adminFetchProviderAddress(providerId)} queryKey="providerAddress" />
                     ) || tab === 2 && (
-                        <ProviderServiceDetails providerId={providerId} fetchApiFunction={() => adminFetchProviderService(providerId)} queryKey="providerService" />
+                        <ProviderServiceDetails providerId={providerId} fetchApiFunction={() => adminFetchProviderService(providerId)} queryKey="providerService" isUser={false} />
                     ) || tab === 3 && (
-                        <ProviderServiceAvailability providerId={providerId} fetchApiFuntion={adminFetchProviderServiceAvailability} queryKey="providerServiceAvailability" role="Admin" />
+                        <ProviderServiceAvailability providerId={providerId} fetchApiFuntion={adminFetchProviderServiceAvailability} queryKey="providerServiceAvailability" role={Role.Admin} />
                     ) || tab === 4 && (
                         <ReviewsPage isAdmin fetchFun={adminFetchAllReviews} id={providerId} role={Role.Provider} className="mt-2 md:mt-0" />
                     ) || tab === 5 && (

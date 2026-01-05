@@ -1,5 +1,6 @@
 import { Copy } from "lucide-react";
-import { formatBoolean } from "@/utils/helper";
+import { Role } from "@/utils/interface/enums";
+import { formatBoolean, formatDuration } from "@/utils/helper";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { InfoDisplayComponentRowProps } from "@/utils/interface/commonInterface";
 
@@ -15,9 +16,11 @@ const InfoDisplayComponent: React.FC<InfoDisplayComponentRowProps> = ({
     isLast,
     isIframe,
     isRadioGroup,
+    isTime,
     selectedRadioValue,
     onRadioChange,
-    role
+    role,
+    tags
 }) => {
 
     let displayValue: React.ReactNode;
@@ -25,7 +28,7 @@ const InfoDisplayComponent: React.FC<InfoDisplayComponentRowProps> = ({
     if (value === null || value === undefined) {
         displayValue = "Not Yet provided";
     } else if (isRadioGroup && Array.isArray(value)) {
-        displayValue = role === "Admin" ? (
+        displayValue = role === Role.Admin ? (
             <div className="flex space-x-2">
                 {value.map((item) => (
                     <label key={item} htmlFor={item} className="text-sm font-medium leading-none">
@@ -78,9 +81,13 @@ const InfoDisplayComponent: React.FC<InfoDisplayComponentRowProps> = ({
                 {defaultValue || value}
             </a>
         );
+    } else if(isTime){
+        displayValue = formatDuration(value as number);
+    } else if(tags) {
+        displayValue = (value as string[]).map((tag: string) => tag+" ")
     } else {
         displayValue = value as string;
-    }
+    };
 
     return (
         <tr className={`${!isLast ? "border-b " : ""}`}>
@@ -88,6 +95,6 @@ const InfoDisplayComponent: React.FC<InfoDisplayComponentRowProps> = ({
             <td className="p-4 w-8/12">{displayValue}</td>
         </tr>
     );
-}
+};
 
-export default InfoDisplayComponent
+export default InfoDisplayComponent;

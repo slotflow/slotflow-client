@@ -4,6 +4,7 @@ import {
   type UseFormRegister,
   type RegisterOptions,
 } from "react-hook-form";
+import { Role } from "../enums";
 import { LucideIcon } from "lucide-react";
 import { ChartConfig } from "@/components/ui/chart";
 import { Provider } from "../entityInterface/providerInterface";
@@ -41,7 +42,7 @@ export interface ProviderServiceAvailabilityComponentProps {
     providerId?: string
     fetchApiFuntion: FetchApiFunction;
     queryKey: string;
-    role?: string;
+    role?: Role;
 }
 
 

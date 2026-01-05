@@ -106,7 +106,7 @@ export const appRouter = createBrowserRouter([
                     { path: "subscriptions", element: <AdminSubscriptionsPage /> },
                     { path: "payments", element: <AdminPaymentsPage /> },
                     { path: "subscription/:subscriptionId", element: <AdminSubcriptionDetailedViewPage /> },
-                    { path: "api-strength", element: <AdminApiStrengthPage /> },
+                    { path: "health", element: <AdminApiStrengthPage /> },
                     { path: "*", element: <Error404Page /> },
                 ],
             },

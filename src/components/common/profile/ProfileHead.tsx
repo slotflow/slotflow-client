@@ -48,6 +48,8 @@ const ProfileHead: React.FC<ProfileHeaderComponentProps> = ({
         }
     };
 
+    console.log("selectedUserData : ",selectedUserData);
+    
     const profileImage = isMyProfile
         ? authUser?.profileImage
         : selectedUserData?.selectedUserProfileImage || authUser?.profileImage;

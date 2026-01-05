@@ -12,4 +12,4 @@ export type AdminChangeUserStatusRequest = {
 }
 
 // **** Used as the response type of admin fetch user profile details
-export type AdminFetchUserProfileDetailsResponse = Pick<User, "username" | "phone" | "profileImage" | "isEmailVerified" | "isBlocked" | "email" | "createdAt">;
+export type AdminFetchUserProfileDetailsResponse = Pick<User, "username" | "phone" | "profileImage" | "isEmailVerified" | "isBlocked" | "email">;

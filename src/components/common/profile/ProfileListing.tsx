@@ -48,34 +48,36 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
     const { authUser } = useSelector((state: RootState) => state.auth);
     const { data, isLoading, isError, error } = useQuery({
         queryFn: () => fetchApiFunction(userOrProviderId),
-        queryKey: [queryKey],
+        queryKey: [queryKey,userOrProviderId],
         staleTime: 60 * 60 * 1000,
         refetchOnWindowFocus: false,
-    })
+    });
+
+    console.log("data : ",data);
 
     useEffect(() => {
         if (data) {
             if (setProfileImage && "profileImage" in data && data.profileImage) {
                 setProfileImage(data.profileImage);
-            }
+            };
 
             if ((userLookingProvider || adminLookingProvider || adminLookingUser)&& "username" in data && setSelectedUserData) {
                 setSelectedUserData({
                     selectedUserName: data.username,
                     selectedUserProfileImage: "profileImage" in data ? data.profileImage : null
                 });
-            }
-        }
+            };
+        };
 
     }, [data, setProfileImage, setSelectedUserData, userLookingProvider, adminLookingProvider,adminLookingUser]);
 
     if (isError) {
         return <DataFetchingError message={error?.message} />
-    }
+    };
 
     if (isLoading) {
         return <ProfileDetailsShimmer row={shimmerRow || 7} className="mt-2" />
-    }
+    };
 
     return (
         <div className=" border rounded-md overflow-hidden w-full mt-2 md:mt-0">
@@ -91,7 +93,6 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
                                 <InfoDisplayComponent label="Email" value={providerProfileData.email} copyToClipboard={copyToClipboard} />
                                 <InfoDisplayComponent label="Phone Number" value={providerProfileData.phone ?? 'Not yet added'} />
                                 <InfoDisplayComponent label="Slotflow Trusted" value={providerProfileData.trustedBySlotflow} isBoolean={true} />
-                                <InfoDisplayComponent label="Joined On" value={providerProfileData.createdAt} formatDate={formatDate} />
                                 <InfoDisplayComponent label="Email Verified" value={providerProfileData.isEmailVerified} isBoolean={true} />
                                 <InfoDisplayComponent label="Account Blocked" value={providerProfileData.isBlocked} isBoolean={true} />
                                 <InfoDisplayComponent label="Admin Verified" value={providerProfileData.isAdminVerified} isBoolean={true} />
@@ -99,7 +100,8 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
                                 <InfoDisplayComponent label="Address Verified" value={providerProfileData.isAddressVerified} isBoolean={true} />
                                 <InfoDisplayComponent label="Service Details Verified" value={providerProfileData.isServiceDetailsVerified} isBoolean={true} />
                                 <InfoDisplayComponent label="Availability Verified" value={providerProfileData.isAvailabilityVerified} isBoolean={true} />
-                                <InfoDisplayComponent label="Proofs Verified" value={providerProfileData.isProofsVerified} isBoolean={true} isLast />
+                                <InfoDisplayComponent label="Proofs Verified" value={providerProfileData.isProofsVerified} isBoolean={true} />
+                                <InfoDisplayComponent label="Joined On" value={providerProfileData.createdAt} formatDate={formatDate} isLast />
                             </>
                         );
                     })()}
@@ -112,7 +114,6 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
                             <InfoDisplayComponent label="Username" value={userProfileData.username} />
                             <InfoDisplayComponent label="Email" value={userProfileData.email} copyToClipboard={copyToClipboard} />
                             <InfoDisplayComponent label="Phone Number" value={userProfileData.phone ?? 'Not yet added'} />
-                            <InfoDisplayComponent label="Joined On" value={userProfileData.createdAt} formatDate={formatDate} />
                             <InfoDisplayComponent label="Email Verified" value={userProfileData.isEmailVerified} isBoolean={true} />
                             <InfoDisplayComponent label="Account Blocked" value={userProfileData.isBlocked} isBoolean={true} isLast />
                             </>

@@ -1,12 +1,12 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import DataFetchingError from '../DataFetchingError';
+import { ServiceMode } from '@/utils/interface/enums';
 import InfoDisplayComponent from '../InfoDisplayComponent';
 import ProfileDetailsShimmer from '../../shimmers/ProfileDetailsShimmer';
 import { ProviderFetchServiceDetailsResponse } from '@/utils/interface/api/providerApiInterface';
 import { AdminFetchProviderServiceResponse } from '@/utils/interface/api/adminProviderApiInterface';
 import { ProviderServiceDetailsComponentProps } from '@/utils/interface/componentInterface/commonComponentInterface';
-import { ServiceMode } from '@/utils/interface/enums';
 
 const ProviderServiceDetails: React.FC<ProviderServiceDetailsComponentProps> = ({
     providerId,
@@ -18,20 +18,20 @@ const ProviderServiceDetails: React.FC<ProviderServiceDetailsComponentProps> = (
 
     const { data, isLoading, isError, error } = useQuery({
         queryFn: () => fetchApiFunction(providerId),
-        queryKey: [queryKey],
+        queryKey: [queryKey, providerId],
         staleTime: 1 * 60 * 1000,
         refetchOnWindowFocus: false,
-    })
+    });
 
     if (isError) {
         return (
             <DataFetchingError message={error.message} />
         )
-    }
+    };
 
     if (isLoading) {
         return (<ProfileDetailsShimmer row={shimmerRow || 6} className='mt-2' />)
-    }
+    };
 
     return (
         <div className="border rounded-md overflow-hidden w-full mt-2 md:mt-0">
@@ -57,10 +57,10 @@ const ProviderServiceDetails: React.FC<ProviderServiceDetailsComponentProps> = (
                         <InfoDisplayComponent label="Demo" value={data?.videoUrl} link defaultValue="Watch Demo" />
                     )}
                     {!isUser && (
-                        <InfoDisplayComponent label="Service Description" value={(data as AdminFetchProviderServiceResponse | ProviderFetchServiceDetailsResponse)?.tags} />
+                        <InfoDisplayComponent label="Tags" value={(data as AdminFetchProviderServiceResponse | ProviderFetchServiceDetailsResponse)?.tags} tags />
                     )}
-                    <InfoDisplayComponent label="Service Price" value={data?.servicePrice} isPrice={true} />
-                    <InfoDisplayComponent label="Service Experience" value={data?.serviceExperience} isLast />
+                    <InfoDisplayComponent label="Price" value={data?.servicePrice} isPrice={true} />
+                    <InfoDisplayComponent label="Experience" value={data?.serviceExperience} isLast />
                 </tbody>
             </table>
         </div>

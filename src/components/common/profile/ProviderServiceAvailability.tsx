@@ -26,14 +26,14 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
     const { data, isLoading, isError, error } = useQuery({
         queryFn: () => {
             if (!date) throw new Error("Missing date");
-            if (role === "User" || role === "Admin") {
+            if (role === Role.User || role === Role.Admin) {
                 if (!providerId) throw new Error("Missing provider _id for user/admin fetch");
                 return (fetchApiFuntion as UserOrAdminApiFunctionForPSAcomponent)({ date, providerId });
-            } else if (role === "Provider") {
+            } else if (role === Role.Provider) {
                 return (fetchApiFuntion as ProviderApiFunctionForPSAcomponent)(date);
             }
         },
-        queryKey: [queryKey, date],
+        queryKey: [queryKey, date, providerId],
         staleTime: 1 * 60 * 1000,
         refetchOnWindowFocus: false,
         enabled: !!date,
@@ -83,7 +83,7 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
                                             <InfoDisplayComponent label="Day" value={data?.day} />
                                             <InfoDisplayComponent label="Start Time" value={data?.startTime} />
                                             <InfoDisplayComponent label="End Time" value={data?.endTime} />
-                                            <InfoDisplayComponent label="Duration" value={data?.duration} />
+                                            <InfoDisplayComponent label="Duration" value={data?.duration} isTime />
                                             <InfoDisplayComponent
                                                 label="Service Modes"
                                                 value={data?.modes}
@@ -111,7 +111,7 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
                                                     : 'border-gray-300'
                                                     }`;
 
-                                                return role === "User" ? (
+                                                return role === Role.User ? (
                                                     <Button
                                                         key={slot._id}
                                                         variant="default"

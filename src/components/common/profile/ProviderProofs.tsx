@@ -26,7 +26,6 @@ const ProviderProofs: React.FC<ProviderProofsProps> = ({
         gcTime: 1000 * 60 * 60,
     });
 
-    // expand states
     const [expandIdentity, setExpandIdentity] = useState(false);
     const [expandService, setExpandService] = useState(false);
 

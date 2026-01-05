@@ -57,7 +57,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
     isLoading,
     isError,
   } = useInfiniteQuery<ApiPaginatedResponse<FetchReviewsResponse>>({
-    queryKey: ["reviews"],
+    queryKey: ["reviews",id],
     queryFn: ({ pageParam = 1 }) =>
       fetchFun({
         id,

@@ -31,7 +31,7 @@ const AddressListing: React.FC<UserOrProviderAddressDetailsComponentProps> = ({
 
     const { data, isLoading, isError, error } = useQuery({
         queryFn: () => fetchApiFunction(userOrProviderId),
-        queryKey: [queryKey],
+        queryKey: [queryKey, userOrProviderId],
         refetchOnWindowFocus: false,
         staleTime: 1000 * 60 * 60,
         gcTime: 1000 * 60 * 60,

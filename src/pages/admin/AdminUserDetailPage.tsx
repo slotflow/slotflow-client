@@ -9,6 +9,7 @@ import ProfileListing from '@/components/common/profile/ProfileListing';
 import AddressListing from '@/components/common/profile/AddressListing';
 import ProfileHorizontalTabs from '@/components/common/ProfileHorizontalTabs';
 import { adminFetchUserAddress, adminFetchUserProfileDetails } from '@/utils/apis/adminUser.api';
+import { Role } from '@/utils/interface/enums';
 
 const AdminUserDetailPage: React.FC = () => {
 
@@ -40,7 +41,7 @@ const AdminUserDetailPage: React.FC = () => {
                     ) || tab === 1 && (
                         <AddressListing fetchApiFunction={() => adminFetchUserAddress(userId)} queryKey='' userOrProviderId={userId} />
                     ) || tab === 2 && (
-                        <ReviewsPage isAdmin fetchFun={adminFetchAllReviews} id={userId} role={"USER"} className='mt-2 md:mt-0' />
+                        <ReviewsPage isAdmin fetchFun={adminFetchAllReviews} id={userId} role={Role.User} className='mt-2 md:mt-0' />
                     )}
                 </div>
             </div>

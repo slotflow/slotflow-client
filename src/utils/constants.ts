@@ -96,7 +96,7 @@ export const adminRoutes: Route[] = [
   { path: "plans", name: "Plans", icon: LayoutGrid },
   { path: "subscriptions", name: "Subscriptions", icon: CreditCard },
   { path: "payments", name: "Payments", icon: Handshake },
-  { path: "api-strength", name: "Api Strength", icon: ScanHeart },
+  { path: "health", name: "Health", icon: ScanHeart },
 ]
 
 // **** Routes for user **** \\
