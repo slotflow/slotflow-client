@@ -18,7 +18,6 @@ const ProviderSubscriptionHistory = () => {
         <CommonTable<FetchProviderSubscriptionsResponse>
             fetchApiFunction={providerFetchSubscriptions}
             queryKey='subscriptions'
-            heading='Subscription History'
             column={column}
             columnsCount={5}
         />

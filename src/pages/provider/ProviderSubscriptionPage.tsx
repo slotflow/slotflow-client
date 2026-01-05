@@ -24,13 +24,13 @@ const ProviderSubscriptionPage = () => {
                     isProviderSubscription
                 />
             )}
-
-            <Button
-                className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
-                onClick={() => setShowPlans(!showPlans)} >{showPlans ? "Hide Plans" : "Show Plans"}</Button>
-            <ProviderPlanList
-                showPlans={showPlans}
-            />
+            <div className="p-4">
+                <Button className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
+                    onClick={() => setShowPlans(!showPlans)} >{showPlans ? "Hide Plans" : "Show Plans"}</Button>
+                <ProviderPlanList
+                    showPlans={showPlans}
+                />
+            </div>
 
             {isTrialPlan && paymentSelectionOpen && (
                 <ProviderFreeSubscription />

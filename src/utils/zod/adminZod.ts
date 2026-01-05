@@ -1,17 +1,10 @@
 import z from "zod";
-import { descriptionRegex, planNameRegex, appServiceNameRegex, verificationRejectionReasonRegex } from "./regex";
-import { ServiceCategory } from "../interface/enums";
+import { PlanName, ServiceCategory } from "../interface/enums";
+import { descriptionRegex, appServiceNameRegex, verificationRejectionReasonRegex } from "./regex";
 
 // Admin Create Plan Schema
 export const adminCreatePlanZodSchema = z.object({
-  planName: z
-    .string()
-    .min(4, "Plan name must be at least 4 characters")
-    .max(20, "Plan name cannot exceed 20 characters")
-    .regex(
-      planNameRegex,
-      "Invalid plan name. Only alphabets and spaces are allowed, length between 4 and 20."
-    ),
+  planName: z.nativeEnum(PlanName),
 
   description: z
     .string()

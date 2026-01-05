@@ -1,7 +1,5 @@
-import { AdminVerificationStatus, Role } from "./enums";
-import { Plan } from "./entityInterface/planInterface";
 import { Provider } from "./entityInterface/providerInterface";
-import { ProviderService } from "./entityInterface/providerServiceInterface";
+import { AdminVerificationStatus, PlanName, Role } from "./enums";
 import { Availability } from "./entityInterface/serviceAvailabilityInterface";
 
 // **** Auth slice state
@@ -28,8 +26,8 @@ export interface AuthUser {
   isAvailabilityVerified?: boolean,
   isProofsVerified?: boolean,
 
-  providerSubscription?: Plan["planName"];
-  serviceDescription?: ProviderService["serviceDescription"];
+  providerSubscription?: PlanName;
+  serviceDescription?: string;
   googleId?: string;
   googleConnected?: boolean;
 }

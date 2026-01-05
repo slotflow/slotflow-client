@@ -1,4 +1,4 @@
-import { Role } from "../enums";
+import { PlanName, Role } from "../enums";
 import { ApiBaseResponse } from "../commonInterface";
 
 interface UserBaseInterface {
@@ -41,7 +41,7 @@ export interface SigninResponse extends ApiBaseResponse {
         isServiceDetailsAdded?: boolean,
         isServiceAvailabilityAdded?: boolean,
         isAdminVerified?: boolean,
-        providerSubscription?: string;
+        providerSubscription?: PlanName;
         googleConnected: boolean;
     };
 }

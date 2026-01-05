@@ -26,7 +26,7 @@ const ProviderPlanList: React.FC<ProviderPlanListProps> = ({ showPlans }) => {
                 ShimmerCount.map((_, index) => (
                     <ProviderPlanCardShimmer key={index} />
                 ))
-            ) : isError ? (
+            ) : isError && error ? (
                 <DataFetchingError message={(error as Error).message} />
             ) : data ? (
                 data.map((plan) => {

@@ -90,7 +90,7 @@ export const appRouter = createBrowserRouter([
             {
                 path: "/admin",
                 element: (
-                    <ProtectedRoute allowedRoles={["ADMIN"]}>
+                    <ProtectedRoute allowedRoles={[Role.Admin]}>
                         <AdminMainPage />
                     </ProtectedRoute>
                 ),
@@ -113,7 +113,7 @@ export const appRouter = createBrowserRouter([
             {
                 path: "/user",
                 element: (
-                    <ProtectedRoute allowedRoles={["USER"]}>
+                    <ProtectedRoute allowedRoles={[Role.User]}>
                         <UserMainPage />
                     </ProtectedRoute>
                 ),
@@ -148,7 +148,7 @@ export const appRouter = createBrowserRouter([
             {
                 path: "/provider/onboarding",
                 element: (
-                    <ProtectedRoute allowedRoles={["PROVIDER"]}>
+                    <ProtectedRoute allowedRoles={[Role.Provider]}>
                         <Outlet />
                     </ProtectedRoute>
                 ),
@@ -163,7 +163,7 @@ export const appRouter = createBrowserRouter([
             {
                 path: "/provider",
                 element: (
-                    <ProtectedRoute allowedRoles={["PROVIDER"]}>
+                    <ProtectedRoute allowedRoles={[Role.Provider]}>
                         <ProviderMainPage />
                     </ProtectedRoute>
                 ),

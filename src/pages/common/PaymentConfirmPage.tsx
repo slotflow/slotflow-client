@@ -32,21 +32,21 @@ const PaymentConfirmPage: React.FC<PaymentConfirmPageProps> = ({ status, userTyp
         if (response.success) {
           toast.success(response.message);
           dispatch(setProviderSubscription(response.planName))
-        }
+        };
       } else if (userType === "user") {
         const response = await userSaveAppointmentBooking(sessionId);
         if (response.success) {
           toast.success(response.message);
-        }
-      }
+        };
+      };
     } catch {
       toast.error("Subscription failed");
-    }
-  }
+    };
+  };
 
   useEffect(() => {
     save();
-  }, [])
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center h-full p-4">
@@ -65,7 +65,7 @@ const PaymentConfirmPage: React.FC<PaymentConfirmPageProps> = ({ status, userTyp
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default PaymentConfirmPage;

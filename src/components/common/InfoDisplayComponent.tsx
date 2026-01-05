@@ -26,7 +26,7 @@ const InfoDisplayComponent: React.FC<InfoDisplayComponentRowProps> = ({
     let displayValue: React.ReactNode;
 
     if (value === null || value === undefined) {
-        displayValue = "Not Yet provided";
+        displayValue = "__ No Data Found __";
     } else if (isRadioGroup && Array.isArray(value)) {
         displayValue = role === Role.Admin ? (
             <div className="flex space-x-2">

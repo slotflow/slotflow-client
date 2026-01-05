@@ -13,8 +13,6 @@ export const usernameRegex = /^[a-zA-Z ]{4,30}$/;
 export const strongPasswordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,50}$/;
 
-export const planNameRegex = /^[a-zA-Z ]{4,20}$/;
-
 export const descriptionRegex =
     /^[\w\d\s!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]{10,200}$/;
 

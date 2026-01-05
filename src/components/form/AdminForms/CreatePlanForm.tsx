@@ -3,11 +3,12 @@ import { useForm } from "react-hook-form";
 import { FormButton } from "../FormSplits";
 import { SelectField } from "../SelectField";
 import { Button } from "@/components/ui/button";
+import { adVisibility } from "@/utils/constants";
+import { PlanName } from "@/utils/interface/enums";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { slideOut } from "@/utils/helper/gsapAnimationSlide";
 import { useAdminPlanActions } from "@/utils/hooks/adminHooks/useAdminPlanActions";
 import { AdminCreatePlanFormType, adminCreatePlanZodSchema } from "@/utils/zod/adminZod";
-import { adVisibility } from "@/utils/constants";
 
 interface CreatePlanFormProps {
     onClose: () => void;
@@ -35,7 +36,7 @@ const CreatePlanForm: React.FC<CreatePlanFormProps> = ({
         resolver: zodResolver(adminCreatePlanZodSchema),
         mode: "onChange",
         defaultValues: {
-            planName: "",
+            planName: PlanName.Starter,
             description: "",
             price: 0,
             features: ["", "", "", "", ""],

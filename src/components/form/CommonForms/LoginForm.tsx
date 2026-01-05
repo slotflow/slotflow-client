@@ -14,6 +14,7 @@ import { setForgotPassword } from "@/utils/redux/slices/appSlice";
 import { LoginFormType, LoginZodSchema } from '@/utils/zod/authZod';
 import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
 import { RedirectTo, LoginFormProps } from "@/utils/interface/commonInterface";
+import { Role } from "@/utils/interface/enums";
 
 const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
 
@@ -34,10 +35,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
         }
     });
 
-    const handleNavigation = (userRole: string) => {
-        if (userRole === "ADMIN") navigate("/admin/overview", { replace: true });
-        else if (userRole === "USER") navigate("/user", { replace: true });
-        else if (userRole === "PROVIDER") navigate("/provider", { replace: true });
+    const handleNavigation = (userRole: Role) => {
+        console.log("navigating role : ",userRole);
+        if (userRole === Role.Admin) navigate("/admin/overview", { replace: true });
+        else if (userRole === Role.User) navigate("/user", { replace: true });
+        else if (userRole === Role.Provider) navigate("/provider", { replace: true });
     };
 
     const onSubmit = async (data: LoginFormType) => {

@@ -1,9 +1,10 @@
-import React, { Suspense, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Outlet, useNavigate } from "react-router-dom";
 import Sidebar from "@/components/Navs/Sidebar";
 import { RootState } from "@/utils/redux/appStore";
+import React, { Suspense, useEffect } from "react";
+import { PlanName } from "@/utils/interface/enums";
 import InfoHeader from "@/components/Navs/InfoHeader";
+import { Outlet, useNavigate } from "react-router-dom";
 import LoadingFallback from "../common/LoadingFallback";
 import avatar from '../../assets/defaultImages/avatar.png';
 import { planAccessMap, providerRoutes } from "@/utils/constants";
@@ -11,17 +12,18 @@ import { planAccessMap, providerRoutes } from "@/utils/constants";
 const ProviderMainPage: React.FC = () => {
 
   console.log("provider main page");
-
   const {authUser: user} = useSelector((store: RootState) => store.auth);
   const { sidebarOpen } = useSelector((store: RootState) => store.app);
   const navigate = useNavigate();
 
   const planName = user?.providerSubscription;
-  const allowedRouteNames = planName ? planAccessMap[planName] : planAccessMap["NoSubscription"];
+  console.log("planName : ",planName);
+  const allowedRouteNames = planName ? planAccessMap[planName] : planAccessMap[PlanName.NoSubscription];
+  console.log("AllowedRouteNames : ",allowedRouteNames);
   const filteredRoutes = providerRoutes.filter(route => allowedRouteNames.includes(route.name));
+  console.log("filteredRoutes : ",filteredRoutes);
 
 useEffect(() => {
-  console.log("useEffect");
   
   if (!user) return;
 

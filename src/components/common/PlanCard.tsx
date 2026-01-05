@@ -9,6 +9,7 @@ import { SelectField } from "../form/SelectField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formatNumberToPrice } from "@/utils/helper/formatter";
 import { Plan } from "@/utils/interface/entityInterface/planInterface";
+import { PlanName, SubscriptionValidity } from "@/utils/interface/enums";
 import { PlanDurationFormType, planDurationZodSchema } from "@/utils/zod/providerZod";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
 import { setSubscriptionPlanId, setPaymentSelectionPage, setSubscriptionIsTrailPlan } from "@/utils/redux/slices/providerSlice";
@@ -37,12 +38,12 @@ const PlanCard: React.FC<ProviderPlanCardProps> = ({
   } = useForm<PlanDurationFormType>({
     resolver: zodResolver(planDurationZodSchema),
     defaultValues: {
-      planDuration: "",
+      planDuration: SubscriptionValidity.SevenDays,
     },
   });
 
   const handleGoToPayment = handleSubmit((data) => {
-    if (plan.planName !== "Free" && !data.planDuration) {
+    if (plan.planName !== PlanName.Trial && !data.planDuration) {
       toast.warning("Please select a plan duration");
       return;
     }
@@ -65,8 +66,8 @@ const PlanCard: React.FC<ProviderPlanCardProps> = ({
             Most popular
           </Badge>
         )}
-        <CardTitle className="mb-7">{plan.planName}</CardTitle>
-        <span className="font-bold text-5xl">
+        <CardTitle className="mb-3 text-lg lg:text-xl rounded-4xl p-1 text-center">{plan.planName}</CardTitle>
+        <span className="font-bold text-5xl text-center">
           {plan.price === 0 ? "FREE" : formatNumberToPrice(plan.price)}
         </span>
       </CardHeader>

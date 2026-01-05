@@ -7,10 +7,10 @@ import { setMessages, setOnlineUsers, setSelectedUser } from "@/utils/redux/slic
 import { addAvailability, setPaymentSelectionPage, setSubscriptionIsTrailPlan, setSubscriptionPlanDuration, setSubscriptionPlanId } from "@/utils/redux/slices/providerSlice";
 
 export const useResetRedux = () => {
-    
-    const dispatch = useDispatch<AppDispatch>();
 
-    const resetCommon = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const resetCommon = () => {
     dispatch(setAuthUser(null));
     dispatch(setMessages(null));
     dispatch(setSelectedUser(null));
@@ -37,11 +37,11 @@ export const useResetRedux = () => {
 
     resetCommon();
 
-    if (role === "USER") {
+    if (role === Role.User) {
       resetUser();
-    } else if (role === "PROVIDER") {
+    } else if (role === Role.Provider) {
       resetProvider();
-    } else if (role === "ADMIN") {
+    } else if (role === Role.Admin) {
       resetAdmin();
     }
   };

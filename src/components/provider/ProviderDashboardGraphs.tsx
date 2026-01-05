@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { DateRange } from 'react-day-picker';
 import React, { useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { PlanName } from '@/utils/interface/enums';
 import { RootState } from '@/utils/redux/appStore';
 import { GraphView } from '@/utils/helper/GraphView';
 import RadialChart from '../common/chart/RadialChart';
@@ -28,8 +29,8 @@ const ProviderDashboardGraphs: React.FC = () => {
     const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
 
     const subscriptionPlan = useMemo(() => {
-        if (!user) return "NoSubscription";
-        return user.providerSubscription ?? "NoSubscription";
+        if (!user) return PlanName.NoSubscription;
+        return user.providerSubscription ?? PlanName.NoSubscription;
     }, [user]);
 
     const {
@@ -42,7 +43,7 @@ const ProviderDashboardGraphs: React.FC = () => {
         queryFn: () => providerFetchDashboardGraphData(subscriptionPlan, dateRange),
         staleTime: 60 * 60 * 1000,
         refetchOnWindowFocus: false,
-        enabled: subscriptionPlan !== "NoSubscription"
+        enabled: subscriptionPlan !== PlanName.NoSubscription
     });
 
     return (

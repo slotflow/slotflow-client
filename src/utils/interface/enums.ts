@@ -12,21 +12,21 @@ export enum ServiceCategory {
 };
 
 export enum AdminVerificationStatus {
-  REQUESTED = "Requested",
-  UNDER_REVIEW = "Under_review",
-  APPROVED = "Approved",
-  REJECTED = "Rejected",
-  RESUBMITTED = "Resubmitted",
-  NOT_REQUESTED = "Not_submitted",
+    REQUESTED = "Requested",
+    UNDER_REVIEW = "Under_review",
+    APPROVED = "Approved",
+    REJECTED = "Rejected",
+    RESUBMITTED = "Resubmitted",
+    NOT_REQUESTED = "Not_submitted",
 };
 
 export enum AppointmentStatus {
-  Booked = "Booked",
-  Completed = "Completed",
-  Cancelled = "Cancelled",
-  RejectedByProvider = "RejectedByProvider",
-  NotAttended = "NotAttended",
-  Confirmed = "Confirmed",
+    Booked = "Booked",
+    Completed = "Completed",
+    Cancelled = "Cancelled",
+    RejectedByProvider = "RejectedByProvider",
+    NotAttended = "NotAttended",
+    Confirmed = "Confirmed",
 };
 
 export enum Day {
@@ -91,13 +91,20 @@ export enum SubscriptionStatus {
 };
 
 export enum SubscriptionValidity {
-    OneMonth = "1 Month",
-    ThreeMonths = "3 Months",
-    SixMonths = "6 Months",
-    TwelveMonths = "12 Months",
+    SevenDays = 7,
+    OneMonth = 30,
+    ThreeMonths = 90,
+    SixMonths = 180,
+    TwelveMonths = 365,
 };
 
-
+export enum PlanName {
+  Trial = "TRIAL",
+  Starter = "STARTER",
+  Professional = "PROFESSIONAL",
+  Enterprise = "ENTERPRISE",
+  NoSubscription = "NO-SUBSCRIPTION"
+};
 
 
 

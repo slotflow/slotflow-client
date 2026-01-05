@@ -7,7 +7,7 @@ import { ApiBaseResponse } from "@/utils/interface/commonInterface";
 import { ResendOtpResponse, SigninResponse, SignupResponse } from "@/utils/interface/api/authApiInterface";
 import { ProviderSubmitDetailsResponse, ProviderUpdateProviderInfoResponse } from "@/utils/interface/api/providerApiInterface";
 import { providerCreateAddress, providerCreateServiceAvailabilities, providerCreateServiceDetails, providerSubmitDetailsForReview, providerUpdateInfo, providerUpdateProfileImage } from "@/utils/apis/provider.api";
-import { AdminVerificationStatus } from "@/utils/interface/enums";
+import { AdminVerificationStatus, PlanName } from "@/utils/interface/enums";
 
 const initialState: AuthState = {
     authUser: null,
@@ -32,7 +32,7 @@ const authSlice = createSlice({
                 state.authUser.username = action.payload;
             }
         },
-        setProviderSubscription: (state, action: PayloadAction<string>) => {
+        setProviderSubscription: (state, action: PayloadAction<PlanName>) => {
             if (state.authUser) {
                 state.authUser.providerSubscription = action.payload;
             }
@@ -74,7 +74,7 @@ const authSlice = createSlice({
         builder
             .addCase(signin.pending, () => { })
             .addCase(signin.fulfilled, (state, action: PayloadAction<SigninResponse>) => {
-                state.authUser = action.payload.data;
+                    state.authUser = action.payload.data;
             })
             .addCase(signin.rejected, () => { });
 

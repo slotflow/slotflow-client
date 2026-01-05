@@ -1,5 +1,5 @@
-import { Role } from "./enums";
 import { ChangeEvent } from "react";
+import { PlanName, Role } from "./enums";
 import { LucideIcon } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { ChartConfig } from "@/components/ui/chart";
@@ -177,10 +177,6 @@ export interface dataSelectListItemInterface {
   content: string;
 }
 
-
-export type plans = "Starter" | "Professional" | "Enterprise" | "NoSubscription";
-
-
 // **** AppointmentOverTimeInterface
 export interface AppointmentOverTimeInterface {
   completed: number,
@@ -275,7 +271,7 @@ export interface statsMapIntrface<T> {
   key: keyof T;
   icon: LucideIcon;
   price?: boolean;
-  plans?: string[];
+  plans?: PlanName[];
 }
 
 

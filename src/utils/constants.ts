@@ -77,7 +77,7 @@ import calendarImage from '../assets/heroImages/calendar2.png';;
 import { OptionType } from "@/components/form/SelectField";
 import bookingImage from '../assets/heroImages/heroSectionOneImg2.png';
 import { ContactItem } from "./interface/componentInterface/commonComponentInterface";
-import { AdminVerificationStatus, Role, ServiceCategory, ServiceMode, ServiceType } from "./interface/enums";
+import { AdminVerificationStatus, PlanName, Role, ServiceCategory, ServiceMode, ServiceType } from "./interface/enums";
 
 export const PLAN_TIERS = ["free", "starter", "professional", "enterprise"] as const;
 
@@ -135,28 +135,19 @@ export const planAccessMap: Record<string, string[]> = {
   NoSubscription: [
     "Dashboard",
     "Profile",
-    "Address",
-    "Service",
-    "Availability",
     "Subscriptions",
     "Settings",
   ],
-  Free: [
+  TRIAL: [
     "Dashboard",
     "Profile",
-    "Address",
-    "Service",
-    "Availability",
     "Appointments",
     "Subscriptions",
     "Settings",
   ],
-  Starter: [
+  STARTER: [
     "Dashboard",
     "Profile",
-    "Address",
-    "Service",
-    "Availability",
     "Appointments",
     "Subscriptions",
     "Payments",
@@ -164,12 +155,9 @@ export const planAccessMap: Record<string, string[]> = {
     "Notifications",
     "Settings",
   ],
-  Professional: [
+  PROFESSIONAL: [
     "Dashboard",
     "Profile",
-    "Address",
-    "Service",
-    "Availability",
     "Appointments",
     "Subscriptions",
     "Payments",
@@ -180,12 +168,9 @@ export const planAccessMap: Record<string, string[]> = {
     "Reviews",
     "Settings",
   ],
-  Enterprise: [
+  ENTERPRISE: [
     "Dashboard",
     "Profile",
-    "Address",
-    "Service",
-    "Availability",
     "Appointments",
     "Subscriptions",
     "Payments",
@@ -277,7 +262,7 @@ export const dateSelectList: dataSelectListItemInterface[] = [
 export const PlanList: PlanListType = [
   {
     _id: "0",
-    planName: "Free",
+    planName: PlanName.Trial,
     description: "Perfect for individuals or freelancers getting started with appointment scheduling.",
     features: [
       "Basic slot creation & booking",
@@ -290,7 +275,7 @@ export const PlanList: PlanListType = [
   },
   {
     _id: "1",
-    planName: "Starter",
+    planName: PlanName.Starter,
     description: "Ideal for solo professionals looking for a branded experience and better control.",
     features: [
       "Everything in Free Plan",
@@ -304,7 +289,7 @@ export const PlanList: PlanListType = [
   },
   {
     _id: "2",
-    planName: "Professional",
+    planName: PlanName.Professional,
     description: "Designed for growing teams or businesses that require advanced scheduling and integrations.",
     features: [
       "Everything in Starter Plan",
@@ -319,7 +304,7 @@ export const PlanList: PlanListType = [
   },
   {
     _id: "3",
-    planName: "Enterprise",
+    planName: PlanName.Enterprise,
     description: "Best suited for organizations that need scalable, secure, and fully customizable scheduling solutions.",
     features: [
       "Everything in Professional Plan",
@@ -617,89 +602,89 @@ export const statsMapForProvider: Array<statsMapIntrface<ProviderFetchDashboardS
     title: "Total Appointments",
     key: "totalAppointments",
     icon: CalendarCheck,
-    plans: ["Starter", "Professional", "Enterprise"],
+    plans: [PlanName.Starter, PlanName.Professional, PlanName.Enterprise],
   },
   {
     title: "Today’s Appointments",
     key: "todaysAppointments",
     icon: Clock,
-    plans: ["Starter", "Professional", "Enterprise"],
+    plans: [PlanName.Starter, PlanName.Professional, PlanName.Enterprise],
   },
   {
     title: "Subscription Payments",
     key: "totalSubscriptionPaidAmount",
     icon: Receipt,
     price: true,
-    plans: ["Starter", "Professional", "Enterprise"],
+    plans: [PlanName.Starter, PlanName.Professional, PlanName.Enterprise],
   },
   {
     title: "Total Earnings",
     key: "totalEarnings",
     icon: Banknote,
     price: true,
-    plans: ["Starter", "Professional", "Enterprise"],
+    plans: [PlanName.Starter, PlanName.Professional, PlanName.Enterprise],
   },
   {
     title: "Total Payouts Made",
     key: "totalPayoutsMade",
     icon: Wallet,
     price: true,
-    plans: ["Starter", "Professional", "Enterprise"],
+    plans: [PlanName.Starter, PlanName.Professional, PlanName.Enterprise],
   },
   {
     title: "Completed Appointments",
     key: "completedAppointments",
     icon: CheckCircle,
-    plans: ["Professional", "Enterprise"],
+    plans: [PlanName.Professional, PlanName.Enterprise],
   },
   {
     title: "Missed Appointments",
     key: "missedAppointments",
     icon: XCircle,
-    plans: ["Professional", "Enterprise"],
+    plans: [PlanName.Professional, PlanName.Enterprise],
   },
   {
     title: "Cancelled by User",
     key: "cancelledAppointmentsByUser",
     icon: Ban,
-    plans: ["Enterprise"],
+    plans: [PlanName.Enterprise],
   },
   {
     title: "Rejected by Provider",
     key: "rejectedAppointmentsByProvider",
     icon: ThumbsDown,
-    plans: ["Enterprise"],
+    plans: [PlanName.Enterprise],
   },
   {
     title: "Today’s Earnings",
     key: "todaysEarnings",
     icon: TrendingUp,
     price: true,
-    plans: ["Professional", "Enterprise"],
+    plans: [PlanName.Professional, PlanName.Enterprise],
   },
   {
     title: "Pending Payout",
     key: "pendingPayout",
     icon: Hourglass,
     price: true,
-    plans: ["Professional", "Enterprise"],
+    plans: [PlanName.Professional, PlanName.Enterprise],
   },
 ];
 
 
 // **** Provider Dashboard Graphs map according to plan
 export const planChartAccess: Record<string, string[]> = {
-  Starter: [
+  STARTER: [
     "AppointmentsOverTime",
     "TopBookingDays",
   ],
-  Professional: [
+  PROFESSIONAL: [
     "AppointmentsOverTime",
     "TopBookingDays",
     "AppointmentModeTrend",
     "NewVsReturningUsers",
   ],
-  Enterprise: [
+  ENTERPRISE: [
     "AppointmentsOverTime",
     "TopBookingDays",
     "AppointmentModeTrend",
@@ -933,7 +918,7 @@ export const subscriptionStatsMapForAdmin: StatsMapForAdminInterface[] = [
     icon: Ban,
   },
   {
-    title: "Free Plan Subscriptions",
+    title: "Free-Trial Plan Subscriptions",
     key: "subscriptionsByFreePlan",
     icon: LayoutGrid,
   },
@@ -1299,10 +1284,10 @@ export const serviceCategoryOptions: OptionType<ServiceCategory>[] = [
 
 // Planduration options
 export const planDurations: OptionType<number>[] = [
-  { label: "1 Month", value: 1 },
-  { label: "3 Months", value: 3 },
-  { label: "6 Months", value: 6 },
-  { label: "1 Year", value: 12 }
+  { label: "1 Month", value: 30 },
+  { label: "3 Months", value: 90 },
+  { label: "6 Months", value: 180 },
+  { label: "1 Year", value: 365 }
 ];
 
 // Planduration options

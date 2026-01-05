@@ -32,6 +32,7 @@ import { Booking } from "../interface/entityInterface/bookingInterface";
 import { Subscription } from "../interface/entityInterface/subscriptionInterface";
 import { ApiBaseResponse, FetchFunctionParams, ApiPaginatedResponse } from "../interface/commonInterface";
 import { FetchBookingDetailsResponse, FetchBookingsResponse, FetchOnlineBookingParams, FetchOnlineBookingsForProviderResponse, FetchPaymentsResponse, FetchProvidersProofsResponse, FetchProviderSubscriptionsResponse, FetchReviewsResponse, FetchSubscriptionDetailsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, UpdateAddressRequest, UpdateAddressResponse, UpdateFileDataRequest, UpdateFileDataResponse, ValidateRoomId } from "../interface/api/commonApiInterface";
+import { PlanName } from "../interface/enums";
 
 
 // **** Address apis
@@ -181,7 +182,6 @@ export const providerDeleteServiceProof = async(): Promise<ApiBaseResponse> => {
 export const providerSubmitDetailsForReview = createAsyncThunk<ProviderSubmitDetailsResponse>('/provider/profile/details',
     async () => {
         const response = await axiosInstance.patch('/provider/profile/approval');
-        console.log("response : ",response);
         return response.data;
     }
 )
@@ -245,7 +245,7 @@ export const providerFetchDashboardStatsData = async () : Promise<ProviderFetchD
     return response.data.data;
 }
 
-export const providerFetchDashboardGraphData = async (subscription?: string,dateRange?: DateRange) : Promise<ProviderDashboardGraphResponse> => {
+export const providerFetchDashboardGraphData = async (subscription?: PlanName, dateRange?: DateRange) : Promise<ProviderDashboardGraphResponse> => {
     const response = await axiosInstance.get(`/provider/dashboard/graph-data`, { 
         params: { 
             subscription, 
