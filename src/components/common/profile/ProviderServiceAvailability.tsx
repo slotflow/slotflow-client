@@ -27,7 +27,7 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
         queryFn: () => {
             if (!date) throw new Error("Missing date");
             if (role === Role.User || role === Role.Admin) {
-                if (!providerId) throw new Error("Missing provider _id for user/admin fetch");
+                if (!providerId) throw new Error("Missing provider Id");
                 return (fetchApiFuntion as UserOrAdminApiFunctionForPSAcomponent)({ date, providerId });
             } else if (role === Role.Provider) {
                 return (fetchApiFuntion as ProviderApiFunctionForPSAcomponent)(date);
@@ -38,7 +38,7 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
         refetchOnWindowFocus: false,
         enabled: !!date,
     });
-
+    
     useEffect(() => {
         if (!data || !date || date === null || !data.modes) {
             return;
@@ -114,7 +114,7 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
                                                 return role === Role.User ? (
                                                     <Button
                                                         key={slot._id}
-                                                        variant="default"
+                                                        variant="outline"
                                                         onClick={(e) => {
                                                             e.preventDefault();
                                                             e.stopPropagation();

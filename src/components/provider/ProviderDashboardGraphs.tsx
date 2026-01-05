@@ -65,7 +65,7 @@ const ProviderDashboardGraphs: React.FC = () => {
 
                             <Popover>
                                 <PopoverTrigger asChild>
-                                    <Button variant="default" className="w-full md:w-auto justify-start text-left font-normal cursor-pointer">
+                                    <Button variant="default" className="w-full md:w-auto justify-start text-left font-normal cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]">
                                         <CalendarIcon className="mr-2 h-4 w-4" />
                                         {dateRange?.from && dateRange?.to ? (
                                             <>

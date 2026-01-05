@@ -45,21 +45,27 @@ const UserDashboardPage = () => {
           Filters
         </Button>
       </div>
-      <div className="flex-1 flex justify-center items-center">
-        {isLoading ? (
+
+      {isLoading ? (
+        <div className="flex-1 flex justify-center items-center z-50">
           <Loader className="w-10 h-10 animate-spin" />
-        ) : isError && error ? (
+        </div>
+      ) : isError && error ? (
+        <div className="flex-1 flex justify-center items-center">
           <DataFetchingError message={(error as Error).message || "Something went wrong"} />
-        ) : data && data.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 my-4">
-            {data.map((provider, index) => (
-              <UserViewProviderCard key={index} {...provider} />
-            ))}
-          </div>
-        ) : (
+        </div>
+      ) : data && data.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 my-4">
+          {data.map((provider, index) => (
+            <UserViewProviderCard key={index} {...provider} />
+          ))}
+        </div>
+      ) : (
+        <div className="flex-1 flex justify-center items-center">
           <DataFetchingError message="No providers found in the database" />
-        )}
-      </div>
+        </div>
+      )}
+
     </div>
   );
 };

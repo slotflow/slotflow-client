@@ -10,6 +10,7 @@ import ProfileHorizontalTabs from "@/components/common/ProfileHorizontalTabs";
 import ProviderServiceDetails from "@/components/common/profile/ProviderServiceDetails";
 import ProviderServiceAvailability from "@/components/common/profile/ProviderServiceAvailability";
 import { userFetchAllReviews, userFetchProviderAddress, userFetchProviderDetails, userFetchProviderService, userFetchProviderServiceAvailability } from "@/utils/apis/user.api";
+import { Role } from "@/utils/interface/enums";
 
 const UserServiceProviderDetailPage = () => {
 
@@ -42,9 +43,9 @@ const UserServiceProviderDetailPage = () => {
                     ) || tab === 2 && (
                         <ProviderServiceDetails providerId={providerId} fetchApiFunction={() => userFetchProviderService(providerId)} queryKey="providerService" isUser shimmerRow={5} />
                     ) || tab === 3 && (
-                        <ProviderServiceAvailability providerId={providerId} fetchApiFuntion={userFetchProviderServiceAvailability} queryKey="providerServiceAvailability" role="User" />
+                        <ProviderServiceAvailability providerId={providerId} fetchApiFuntion={userFetchProviderServiceAvailability} queryKey="providerServiceAvailability" role={Role.User} />
                     ) || tab === 4 && (
-                        <ReviewsPage fetchFun={userFetchAllReviews} id={providerId} isUser role={"PROVIDER"} className="mt-2 md:mt-0" />
+                        <ReviewsPage fetchFun={userFetchAllReviews} id={providerId} isUser role={Role.Provider} className="mt-2 md:mt-0" />
                     )}
                 </div>
 
