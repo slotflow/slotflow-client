@@ -1,19 +1,20 @@
-import { X } from "lucide-react";
 import { toast } from "react-toastify";
-import React, { useState } from "react";
-import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
+import { Slider } from "@/components/ui/slider";
 import { useQuery } from "@tanstack/react-query";
+import React, { useEffect, useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import LocationPicker from "../common/LocationPicker";
 import { useQueryClient } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { ServiceCategory } from "@/utils/interface/enums";
-import { pushServiceCategory, setProviders } from "@/utils/redux/slices/userSlice";
+import FilterCompHeader from "../common/FilterCompHeader";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { ProviderCardsFilters } from "@/utils/interface/commonInterface";
 import { Location } from "@/utils/interface/entityInterface/addressInterface";
+import { pushServiceCategory, setProviders } from "@/utils/redux/slices/userSlice";
 import { userFetchAllAppServices, userSearchServiceProviders } from "@/utils/apis/user.api";
+import { BookCheck, ChartBarStacked, IndianRupee, Locate, SlidersHorizontal, X } from "lucide-react";
 
 interface FilterRightSideBarProps {
     onClose: () => void;
@@ -25,6 +26,11 @@ const FilterRightSideBar: React.FC<FilterRightSideBarProps> = ({ onClose }) => {
     const dispatch = useDispatch<AppDispatch>();
     const filterSideBarOpen = useSelector((state: RootState) => state.app.filterSideBarOpen);
     const { selectedCategories } = useSelector((state: RootState) => state.user);
+    const [showPriceFilter, setShowPriceFilter] = useState<boolean>(false);
+    const [showCategoriesFilter, setShowCategoriesFilter] = useState<boolean>(false);
+    const [showServicesFilter, setShowServicesFilter] = useState<boolean>(false);
+    const [showTrustedFilter, setShowTrustedFilter] = useState<boolean>(false);
+    const [showMapFilter, setShowMapFilter] = useState<boolean>(false);
 
     const [filters, setFilters] = useState<ProviderCardsFilters>({
         appServiceIds: [] as string[],
@@ -34,6 +40,18 @@ const FilterRightSideBar: React.FC<FilterRightSideBarProps> = ({ onClose }) => {
         categories: [] as ServiceCategory[],
         location: undefined,
     });
+
+    useEffect(() => {
+        if (selectedCategories.length === 0) return;
+
+        setFilters(prev => ({
+            ...prev,
+            categories: Array.from(new Set([
+                ...prev.categories,
+                ...selectedCategories,
+            ])),
+        }));
+    }, [selectedCategories]);
 
     const { data, isLoading } = useQuery({
         queryFn: () => userFetchAllAppServices(filters.categories),
@@ -109,113 +127,149 @@ const FilterRightSideBar: React.FC<FilterRightSideBarProps> = ({ onClose }) => {
     };
 
     return (
-        <aside
-            className={`
-    fixed right-0 top-0 z-40 h-screen
-    bg-[var(--menuBg)] border-l shadow-2xl
-    transition-all duration-300
-    ${filterSideBarOpen ? "w-[320px]" : "w-0"}
-    overflow-hidden
-  `}
-        >
+        <aside className={`fixed right-0 top-0 z-40 h-screen bg-[var(--menuBg)] border-l shadow-2xl transition-all duration-300 ${filterSideBarOpen ? "w-[320px]" : "w-0"} overflow-hidden`}>
             <div className="flex flex-col h-full">
+                <div className="flex items-center justify-between border-b p-4">
+                    <h4 className="text-lg font-semibold flex items-center gap-2"><SlidersHorizontal className="size-5" />Filters</h4>
+                    <Button variant="ghost" size="icon" onClick={onClose}>
+                        <X className="w-5 h-5" />
+                    </Button>
+                </div>
                 <div className="flex-1 overflow-y-auto p-4 pb-6 space-y-6">
-                    <div className="flex items-center justify-between">
-                        <h4 className="text-lg font-semibold">Filters</h4>
-                        <Button variant="ghost" size="icon" onClick={onClose}>
-                            <X className="w-5 h-5" />
-                        </Button>
-                    </div>
 
                     <section>
-                        <h5 className="font-medium mb-2">Slotflow</h5>
-                        <div className="flex items-center justify-between">
-                            <span>Slotflow Trusted</span>
-                            <Checkbox
-                                checked={filters.slotflowTrusted}
-                                onCheckedChange={(checked) =>
-                                    setFilters((prev) => ({
-                                        ...prev,
-                                        slotflowTrusted: Boolean(checked),
-                                    }))
-                                }
-                            />
-                        </div>
-                    </section>
+                        <FilterCompHeader
+                            isOpen={showTrustedFilter}
+                            onToggle={() => setShowTrustedFilter(prev => !prev)}
+                            title="Slotflow"
+                            Icon={BookCheck}
+                        />
 
-                    <section>
-                        <div className="space-y-3">
-                            <h5 className="font-medium mb-2">Price</h5>
-                            <div className="flex justify-between text-sm mb-1">
-                                <span>Min price</span>
-                                <span>₹ {filters.minPrice}</span>
-                            </div>
-                            <Slider
-                                value={[filters.minPrice!]}
-                                max={30000}
-                                step={100}
-                                onValueChange={([value]) =>
-                                    setFilters((prev) => ({ ...prev, minPrice: value }))
-                                }
-                            />
-                            <div className="flex justify-between text-sm mb-1">
-                                <span>Max price</span>
-                                <span>₹ {filters.maxPrice}</span>
-                            </div>
-                            <Slider
-                                value={[filters.maxPrice!]}
-                                max={30000}
-                                step={100}
-                                onValueChange={([value]) =>
-                                    setFilters((prev) => ({ ...prev, maxPrice: value }))
-                                }
-                            />
-                        </div>
-                    </section>
-
-                    <section>
-                        <h5 className="font-medium mb-2">Categories</h5>
-                        <div className="space-y-2">
-                            {Object.values(ServiceCategory).map((category) => (
-                                <div key={category} className="flex items-center justify-between">
-                                    <span className="text-sm">{category}</span>
+                        <div className={`grid transition-all duration-300 ease-in-out ${showTrustedFilter ? "grid-rows-[1fr] opacity-100 mt-2" : "grid-rows-[0fr] opacity-0"}`}>
+                            <div className="overflow-hidden">
+                                <div className="flex items-center justify-between text-sm py-2 px-1">
+                                    <span>Slotflow Trusted</span>
                                     <Checkbox
-                                        checked={filters.categories.includes(category)}
-                                        onCheckedChange={() => toggleCategory(category)}
+                                        checked={filters.slotflowTrusted}
+                                        onCheckedChange={(checked) =>
+                                            setFilters(prev => ({
+                                                ...prev,
+                                                slotflowTrusted: Boolean(checked),
+                                            }))
+                                        }
                                     />
                                 </div>
-                            ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <FilterCompHeader
+                            isOpen={showPriceFilter}
+                            onToggle={() => setShowPriceFilter(prev => !prev)}
+                            title="Price"
+                            Icon={IndianRupee}
+                        />
+                        <div className={`grid transition-all duration-300 ease-in-out ${showPriceFilter ? "grid-rows-[1fr] opacity-100 mt-2" : "grid-rows-[0fr] opacity-0"}`}>
+                            <div className="overflow-hidden px-1">
+                                <div className="space-y-3 pb-2">
+                                    <div className="flex justify-between text-sm mb-2">
+                                        <span>Min price</span>
+                                        <span>₹ {filters.minPrice}</span>
+                                    </div>
+                                    <Slider
+                                        value={[filters.minPrice!]}
+                                        max={30000}
+                                        step={100}
+                                        onValueChange={([value]) =>
+                                            setFilters((prev) => ({ ...prev, minPrice: value }))
+                                        }
+                                    />
+                                    <div className="flex justify-between text-sm mb-2">
+                                        <span>Max price</span>
+                                        <span>₹ {filters.maxPrice}</span>
+                                    </div>
+                                    <Slider
+                                        value={[filters.maxPrice!]}
+                                        max={30000}
+                                        step={100}
+                                        onValueChange={([value]) =>
+                                            setFilters((prev) => ({ ...prev, maxPrice: value }))
+                                        }
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <FilterCompHeader
+                            isOpen={showCategoriesFilter}
+                            onToggle={() => setShowCategoriesFilter(prev => !prev)}
+                            title="Categories"
+                            Icon={ChartBarStacked}
+                        />
+                        <div className={`grid transition-all duration-300 ease-in-out ${showCategoriesFilter ? "grid-rows-[1fr] opacity-100 mt-2" : "grid-rows-[0fr] opacity-0"}`}>
+                            <div className="overflow-hidden px-1">
+                                <div className="space-y-2 pb-2">
+                                    {Object.values(ServiceCategory).map((category) => (
+                                        <div key={category} className="flex items-center justify-between">
+                                            <span className="text-sm">{category}</span>
+                                            <Checkbox
+                                                checked={filters.categories.includes(category)}
+                                                onCheckedChange={() => toggleCategory(category)}
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
                         </div>
                     </section>
 
                     <section>
                         {(isLoading || data) && (
-                            <h5 className="font-medium mb-2">Services</h5>
+                            <FilterCompHeader
+                                isOpen={showServicesFilter}
+                                onToggle={() => setShowServicesFilter(prev => !prev)}
+                                title="Services"
+                                Icon={ChartBarStacked}
+                            />
                         )}
-                        {isLoading ? (
-                            <div className="space-y-2">
-                                {[...Array(3)].map((_, index) => (
-                                    <div key={index} className="w-full h-4 shimmer" />
-                                ))}
-                            </div>
-                        ) : (
-                            <div className="space-y-2">
-                                {data?.map(service => (
-                                    <div key={service._id} className="flex items-center justify-between">
-                                        <span className="text-sm">{service.serviceName}</span>
-                                        <Checkbox
-                                            checked={filters.appServiceIds.includes(service._id)}
-                                            onCheckedChange={() => toggleAppServiceIds(service._id)}
-                                        />
+                        <div className={`grid transition-all duration-300 ease-in-out ${showServicesFilter ? "grid-rows-[1fr] opacity-100 mt-2" : "grid-rows-[0fr] opacity-0"}`}>
+                            <div className="overflow-hidden px-1">
+                                {isLoading ? (
+                                    <div className="space-y-2">
+                                        {[...Array(3)].map((_, index) => (
+                                            <div key={index} className="w-full h-4 shimmer" />
+                                        ))}
                                     </div>
-                                ))}
+                                ) : (
+                                    <div className="space-y-2">
+                                        {data?.map(service => (
+                                            <div key={service._id} className="flex items-center justify-between">
+                                                <span className="text-sm">{service.serviceName}</span>
+                                                <Checkbox
+                                                    checked={filters.appServiceIds.includes(service._id)}
+                                                    onCheckedChange={() => toggleAppServiceIds(service._id)}
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
-                        )}
+                        </div>
                     </section>
 
                     <section>
-                        <h5 className="font-medium mb-2">Location</h5>
-                        <LocationPicker onLocationSelect={handleLocationSelect} />
+                        <FilterCompHeader
+                            isOpen={showMapFilter}
+                            onToggle={() => setShowMapFilter(prev => !prev)}
+                            title="Location"
+                            Icon={Locate}
+                        />
+                        <div className={`grid transition-all duration-300 ease-in-out ${showMapFilter ? "grid-rows-[1fr] opacity-100 mt-2" : "grid-rows-[0fr] opacity-0"}`}>
+                            <LocationPicker onLocationSelect={handleLocationSelect} />
+                        </div>
                     </section>
                 </div>
 
