@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
+import { setProviders } from '@/utils/redux/slices/userSlice';
 import { AppDispatch, RootState } from '@/utils/redux/appStore';
 import { userSearchServiceProviders } from '@/utils/apis/user.api';
 import { toggleFilterSideBar } from '@/utils/redux/slices/appSlice';
@@ -13,18 +14,25 @@ import UserViewProviderCard from '@/components/user/UserViewProviderCard';
 const UserDashboardPage = () => {
 
   const dispatch = useDispatch<AppDispatch>();
-  const selectedServices = useSelector((store: RootState) => store.user.selectedServices);
+  const { selectedCategories, providers } = useSelector((store: RootState) => store.user);
 
   const { data, isLoading, isError, error } = useQuery({
-    queryFn: () => userSearchServiceProviders(selectedServices ?? []),
-    queryKey: ['providers'],
+    queryFn: () => userSearchServiceProviders({
+      categories: selectedCategories,
+    }),
+    queryKey: ['providers', selectedCategories],
     staleTime: 5 * 60 * 1000,
     refetchOnWindowFocus: false,
   });
 
   useEffect(() => {
-
-  }, [selectedServices]);
+    console.log("data : ",data);
+    if(data) {
+      dispatch(setProviders(data));
+    };
+  }, [ selectedCategories, dispatch, data ]);
+  
+  console.log("providers : ",providers);
 
   return (
     <div className="p-2 min-h-full flex flex-col">
@@ -54,9 +62,9 @@ const UserDashboardPage = () => {
         <div className="flex-1 flex justify-center items-center">
           <DataFetchingError message={(error as Error).message || "Something went wrong"} />
         </div>
-      ) : data && data.length > 0 ? (
+      ) : providers && providers.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 my-4">
-          {data.map((provider, index) => (
+          {providers.map((provider, index) => (
             <UserViewProviderCard key={index} {...provider} />
           ))}
         </div>

@@ -3,23 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { CardTitle } from "@/components/ui/card";
 import avatar from '../../assets/defaultImages/avatar.png';
 import { formatNumberToPrice } from "@/utils/helper/formatter";
-
-export interface UserViewProviderCardComponentProps {
-    _id: string,
-    provider: {
-        _id: string,
-        username: string,
-        profileImage: string | null,
-        trustedBySlotflow: boolean,
-    },
-     serviceDetails: {
-        serviceId: string;
-        service: string;
-        serviceCategory: string;
-        serviceName: string;
-        servicePrice: number;
-    }
-}
+import { UserViewProviderCardComponentProps } from "@/utils/interface/componentInterface/commonComponentInterface";
 
 const UserViewProviderCard: React.FC<UserViewProviderCardComponentProps> = ({
     provider, serviceDetails

@@ -1,30 +1,30 @@
 import { X } from "lucide-react";
+import { toast } from "react-toastify";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { RootState } from "@/utils/redux/appStore";
 import LocationPicker from "../common/LocationPicker";
+import { useDispatch, useSelector } from "react-redux";
 import { ServiceCategory } from "@/utils/interface/enums";
+import { setProviders } from "@/utils/redux/slices/userSlice";
+import { AppDispatch, RootState } from "@/utils/redux/appStore";
+import { userSearchServiceProviders } from "@/utils/apis/user.api";
+import { ProviderCardsFilters } from "@/utils/interface/commonInterface";
 import { Location } from "@/utils/interface/entityInterface/addressInterface";
 
 interface FilterRightSideBarProps {
     onClose: () => void;
 }
-interface Filters {
-    maxPrice: number;
-    slotflowTrusted: boolean;
-    categories: ServiceCategory[];
-    location?: Location;
-}
 
 const FilterRightSideBar: React.FC<FilterRightSideBarProps> = ({ onClose }) => {
+
+    const dispatch = useDispatch<AppDispatch>();
     const filterSideBarOpen = useSelector(
         (state: RootState) => state.app.filterSideBarOpen
     );
 
-    const [filters, setFilters] = useState<Filters>({
+    const [filters, setFilters] = useState<ProviderCardsFilters>({
         maxPrice: 500,
         slotflowTrusted: false,
         categories: [] as ServiceCategory[],
@@ -43,13 +43,32 @@ const FilterRightSideBar: React.FC<FilterRightSideBarProps> = ({ onClose }) => {
     const handleLocationSelect = (location: Location) => {
         setFilters((prev) => ({
             ...prev,
-            location,
+            location: {
+                type: "Point",
+                coordinates: [location.lon, location.lat],
+            },
         }));
     };
 
-    const handleFilter = () => {
+    const handleFilter = async () => {
         // TODO handleFilter
+        console.log("filters : ", filters);
+        const res = await userSearchServiceProviders({
+            selectedServices: filters.appServiceIds,
+            categories: filters.categories,
+            location: filters.location,
+            maxPrice: filters.maxPrice,
+            slotflowTrusted: filters.slotflowTrusted
+        });
+        if (res) {
+            dispatch(setProviders(res));
+            toast.success(`${res.length > 0 ? "Filtered providers" : "No providers found"}`);
+        };
     };
+
+    const handleClearFilter = async () => {
+
+    }
 
     return (
         <aside
@@ -77,7 +96,7 @@ const FilterRightSideBar: React.FC<FilterRightSideBarProps> = ({ onClose }) => {
                             <span>₹ {filters.maxPrice}</span>
                         </div>
                         <Slider
-                            value={[filters.maxPrice]}
+                            value={[filters.maxPrice!]}
                             max={30000}
                             step={100}
                             onValueChange={([value]) =>
@@ -123,12 +142,16 @@ const FilterRightSideBar: React.FC<FilterRightSideBarProps> = ({ onClose }) => {
                     </section>
                 </div>
 
-                <div className="border-t bg-[var(--menuBg)] p-3 sticky bottom-0">
+                <div className="flex space-x-2 border-t bg-[var(--menuBg)] p-3 sticky bottom-0">
+                    <Button
+                        onClick={handleClearFilter}
+                        className="w-1/2 cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
+                    >Clear</Button>
                     <Button
                         onClick={handleFilter}
-                        className="w-full cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
+                        className="w-1/2 cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
                     >
-                        Apply Filters
+                        Apply
                     </Button>
                 </div>
             </div>

@@ -13,7 +13,7 @@ import { CreateAddressFormType } from "@/utils/zod/commonZodFields";
 import { UpdateFileDataRequest, UpdateFileDataResponse } from "../api/commonApiInterface";
 import { ApiBaseResponse, BaseChartData, ChatComponentProps, TimeRange } from "../commonInterface";
 import { AdminFetchProviderAvailabilityResponse, AdminFetchProviderServiceResponse } from "../api/adminProviderApiInterface";
-import { UserUpdateProfileImageResponse, UserFetchProviderAvailabilityResponse, UserFetchProviderServiceResponse, UserUpdateProfileImageRequest } from "../api/userApiInterface";
+import { UserUpdateProfileImageResponse, UserFetchProviderAvailabilityResponse, UserFetchProviderServiceResponse, UserUpdateProfileImageRequest, UserFetchServiceProvidersResponse } from "../api/userApiInterface";
 import { ProviderFetchServiceAvailabilityResponse, ProviderFetchServiceDetailsResponse, ProviderUpdateProfileImageRequest, ProviderUpdateProfileImageResponse } from "../api/providerApiInterface";
 
 // **** Common component interfaces **** \\
@@ -179,4 +179,7 @@ export interface FileUploaderProps {
     deleteFunction: () => Promise<ApiBaseResponse>;
     loading: boolean;
     data: string | null;
-}
+};
+
+// provider cards listing
+export type UserViewProviderCardComponentProps = UserFetchServiceProvidersResponse;

@@ -1,6 +1,7 @@
 import { Provider } from "./entityInterface/providerInterface";
-import { AdminVerificationStatus, PlanName, Role } from "./enums";
+import { AdminVerificationStatus, PlanName, Role, ServiceCategory } from "./enums";
 import { Availability } from "./entityInterface/serviceAvailabilityInterface";
+import { UserViewProviderCardComponentProps } from "./componentInterface/commonComponentInterface";
 
 // **** Auth slice state
 export interface AuthUser {
@@ -82,8 +83,9 @@ export interface ProviderState {
 
 // **** User slice interface
 export interface UserStateVariables {
-  selectedServices: string[] | null;
   isReviewCreateFormOpen: boolean;
   selectedBookingId: string | null;
   selectedBookingProviderId: string | null;
+  providers: Array<UserViewProviderCardComponentProps> | null;
+  selectedCategories: ServiceCategory[];
 }

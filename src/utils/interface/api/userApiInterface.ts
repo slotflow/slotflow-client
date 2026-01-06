@@ -1,4 +1,4 @@
-import { ApiBaseResponse } from "../commonInterface";
+import { ApiBaseResponse, ProviderCardsFilters } from "../commonInterface";
 import { User } from "../entityInterface/userInterface";
 import { Review } from "../entityInterface/reviewInterface";
 import { Address } from "../entityInterface/addressInterface";
@@ -45,6 +45,10 @@ export type UserFetchAllServicesResponse = Pick<Service, "_id" | "serviceName">;
 
 
 // **** Used as the response interface of the user fetching service providers for the dashboard fetching api
+export interface UserFetchServiceProvidersRequest extends Partial<ProviderCardsFilters>{
+    selectedServices?: string[];
+};
+
 export interface UserFetchServiceProvidersResponse {
     _id: string,
     provider: {
@@ -59,8 +63,8 @@ export interface UserFetchServiceProvidersResponse {
         serviceCategory: string;
         serviceName: string;
         servicePrice: number;
-    }
-}
+    };
+};
 
 
 // **** Used as the response type of the user fetching service providers details fetching api

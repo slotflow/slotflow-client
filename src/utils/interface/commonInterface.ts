@@ -1,9 +1,9 @@
 import { ChangeEvent } from "react";
-import { PlanName, Role } from "./enums";
 import { LucideIcon } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { ChartConfig } from "@/components/ui/chart";
 import { Plan } from "./entityInterface/planInterface";
+import { PlanName, Role, ServiceCategory } from "./enums";
 import { Booking } from "./entityInterface/bookingInterface";
 
 // **** Common Response interface
@@ -363,4 +363,15 @@ export enum RedirectTo {
   PROVIDER_APPROVAL_PENDING = 9
 }
 
-export type SelectOptions = Array<{ label: string, value: string }>
+export type SelectOptions = Array<{ label: string, value: string }>;
+
+export interface ProviderCardsFilters {
+  appServiceIds?: string[];
+  maxPrice?: number;
+  slotflowTrusted?: boolean;
+  categories: ServiceCategory[];
+  location?: {
+    type: string,
+    coordinates: [number, number],
+  };
+};
