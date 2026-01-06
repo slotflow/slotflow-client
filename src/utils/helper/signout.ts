@@ -12,12 +12,10 @@ import { clearProviderSlice } from "../redux/slices/providerSlice";
 export const handleSignoutHelper = async ({
   role,
   dispatch,
-  resetRedux,
   navigate,
 }: {
   role: Role;
   dispatch: AppDispatch;
-  resetRedux: (role: Role) => void;
   navigate: NavigateFunction;
 }) => {
   try {
@@ -30,7 +28,6 @@ export const handleSignoutHelper = async ({
       dispatch(clearUserSlice());
       queryClient.clear();
       queryClient.cancelQueries();
-      resetRedux(role);
       if (role === "USER") navigate("/user/login");
       else if (role === "PROVIDER") navigate("/provider/login");
       else if (role === "ADMIN") navigate("/admin/login");

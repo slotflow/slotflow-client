@@ -11,14 +11,12 @@ import { handleSignoutHelper } from '@/utils/helper/signout';
 import availability from '../../assets/svgs/availability.svg';
 import { AppDispatch, RootState } from '@/utils/redux/appStore';
 import { pageLabels, pageDescriptions } from '@/utils/constants';
-import { useResetRedux } from '@/utils/hooks/systemHooks/useResetRedux';
 import { SideBoxProps } from '@/utils/interface/entityInterface/providerInterface';
 
 const SideBox: React.FC<SideBoxProps> = ({ props }) => {
 
   const { pageNumber } = props;
   const navigate = useNavigate();
-  const resetRedux = useResetRedux();
   const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((store: RootState) => store.auth.authUser);
 
@@ -47,7 +45,6 @@ const SideBox: React.FC<SideBoxProps> = ({ props }) => {
                 handleSignoutHelper({
                   role: user?.role,
                   dispatch,
-                  resetRedux,
                   navigate,
                 })
               }

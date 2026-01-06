@@ -20,7 +20,6 @@ import { handleSignoutHelper } from '@/utils/helper/signout';
 import { AppDispatch, RootState } from '@/utils/redux/appStore';
 import { SideBarProps } from '@/utils/interface/commonInterface';
 import companyLogo from '../../assets/logos/logo-transparent.png';
-import { useResetRedux } from '@/utils/hooks/systemHooks/useResetRedux';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
 
 const SidebarNew: React.FC<SideBarProps> = ({
@@ -30,7 +29,6 @@ const SidebarNew: React.FC<SideBarProps> = ({
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const resetRedux = useResetRedux();
 
   const user: AuthUser | null = useSelector((store: RootState) => store.auth?.authUser);
   const themeMode: boolean = useSelector((store: RootState) => store.app.lightTheme);
@@ -135,7 +133,7 @@ const SidebarNew: React.FC<SideBarProps> = ({
                   <span>Settings</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={() => handleSignoutHelper({ role: user?.role, dispatch, resetRedux, navigate })}
+                  onClick={() => handleSignoutHelper({ role: user?.role, dispatch, navigate })}
                 >
                   <span>Sign out</span>
                 </DropdownMenuItem>

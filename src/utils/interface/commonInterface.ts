@@ -366,9 +366,10 @@ export enum RedirectTo {
 export type SelectOptions = Array<{ label: string, value: string }>;
 
 export interface ProviderCardsFilters {
-  appServiceIds?: string[];
-  maxPrice?: number;
-  slotflowTrusted?: boolean;
+  appServiceIds: string[];
+  minPrice: number;
+  maxPrice: number;
+  slotflowTrusted: boolean;
   categories: ServiceCategory[];
   location?: {
     type: string,

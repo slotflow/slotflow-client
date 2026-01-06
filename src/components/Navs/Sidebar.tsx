@@ -13,7 +13,6 @@ import { toggleTheme } from '@/utils/redux/slices/appSlice';
 import { handleSignoutHelper } from '@/utils/helper/signout';
 import { AppDispatch, RootState } from '@/utils/redux/appStore';
 import { SideBarProps } from '@/utils/interface/commonInterface';
-import { useResetRedux } from '@/utils/hooks/systemHooks/useResetRedux';
 
 const Sidebar: React.FC<SideBarProps> = ({
     routes,
@@ -22,7 +21,6 @@ const Sidebar: React.FC<SideBarProps> = ({
 
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
-    const resetRedux = useResetRedux();
 
     const sidebarOpen: boolean = useSelector((store: RootState) => store.app.sidebarOpen);
     const user: Partial<AuthUser> | null = useSelector((store: RootState) => store.auth?.authUser);
@@ -106,7 +104,7 @@ const Sidebar: React.FC<SideBarProps> = ({
                     <SingleTab
                         icon={LogOut}
                         text="Logout"
-                        onClick={() => handleSignoutHelper({ role: user?.role!, dispatch, resetRedux, navigate })}
+                        onClick={() => handleSignoutHelper({ role: user.role!, dispatch, navigate })}
                         sidebarOpen={sidebarOpen}
                     />
                 </ul>

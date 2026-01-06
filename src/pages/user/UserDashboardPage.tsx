@@ -26,13 +26,11 @@ const UserDashboardPage = () => {
   });
 
   useEffect(() => {
-    console.log("data : ",data);
     if(data) {
       dispatch(setProviders(data));
     };
   }, [ selectedCategories, dispatch, data ]);
-  
-  console.log("providers : ",providers);
+
 
   return (
     <div className="p-2 min-h-full flex flex-col">

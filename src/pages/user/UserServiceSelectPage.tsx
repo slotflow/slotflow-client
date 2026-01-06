@@ -8,7 +8,7 @@ import { pushServiceCategory } from "@/utils/redux/slices/userSlice";
 // import DataFetchingError from "@/components/common/DataFetchingError";
 // import ServiceSelectShimmer from "@/components/shimmers/ServiceSelectShimmer";
 // import { userFetchAllServicesForServiceSelectPage } from "@/utils/apis/user.api";
-// import { UserFetchAllServicesResponse } from "@/utils/interface/api/userApiInterface";
+// import { UserFetchAllAppServicesResponse } from "@/utils/interface/api/userApiInterface";
 
 const UserServiceSelectPage = () => {
 
@@ -38,12 +38,12 @@ const UserServiceSelectPage = () => {
             dispatch(pushServiceCategory(currentCategories.filter((excategory) => excategory !== category)));
         } else {
             dispatch(pushServiceCategory([...currentCategories, category]));
-        }
-    }
+        };
+    };
 
     const handleSubmitSelectedServices = async () => {
         navigate('/user/dashboard');
-    }
+    };
 
     return (
         <div className="p-2 min-h-full flex flex-col">

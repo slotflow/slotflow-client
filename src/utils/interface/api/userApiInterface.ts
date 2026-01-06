@@ -41,13 +41,11 @@ export type UserFetchAddressResponse = Pick<Address, "_id" | "addressLine" | "ph
 
 
 // **** Used as the response type of the user fetch all services for the service selecting page fetching api
-export type UserFetchAllServicesResponse = Pick<Service, "_id" | "serviceName">;
+export type UserFetchAllAppServicesResponse = Pick<Service, "_id" | "serviceName">;
 
 
 // **** Used as the response interface of the user fetching service providers for the dashboard fetching api
-export interface UserFetchServiceProvidersRequest extends Partial<ProviderCardsFilters>{
-    selectedServices?: string[];
-};
+export type UserFetchServiceProvidersRequest = Partial<ProviderCardsFilters>;
 
 export interface UserFetchServiceProvidersResponse {
     _id: string,

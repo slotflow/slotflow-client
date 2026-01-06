@@ -7,7 +7,7 @@ import {
     UserUpdateUserInfoResponse,
     UserBookAppointmentResponse,
     UserBookAnAppointmentRequest,
-    UserFetchAllServicesResponse,
+    UserFetchAllAppServicesResponse,
     UserUpdateProfileImageRequest,
     UserUpdateProfileImageResponse,
     UserFetchProviderAddressResponse,
@@ -27,6 +27,7 @@ import { Booking } from "../interface/entityInterface/bookingInterface";
 import { Provider } from "../interface/entityInterface/providerInterface";
 import { ApiBaseResponse, FetchFunctionParams, ApiPaginatedResponse } from "../interface/commonInterface";
 import { FetchBookingDetailsResponse, FetchBookingsResponse, FetchOnlineBookingParams, FetchOnlineBookingsForUserResponse, FetchPaymentsResponse, FetchReviewsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, UpdateAddressRequest, UpdateAddressResponse, ValidateRoomId } from "../interface/api/commonApiInterface";
+import { ServiceCategory } from "../interface/enums";
 
 // **** User profile apis
 export const userFetchProfileDetails = async (): Promise<UserFetchUserProfileDetailsResponse> => {
@@ -68,8 +69,12 @@ export const userUpdateAddress = async (data: UpdateAddressRequest): Promise<Upd
 
 
 // **** user app services apis
-export const userFetchAllServicesForServiceSelectPage = async (): Promise<Array<UserFetchAllServicesResponse>> => {
-    const response = await axiosInstance.get(`/user/appservices`);
+export const userFetchAllAppServices = async (categories: ServiceCategory[]): Promise<Array<UserFetchAllAppServicesResponse>> => {
+    const response = await axiosInstance.get(`/user/appservices`, {
+        params: {
+            categories
+        }
+    });
     return response.data.data;
 }
 
@@ -80,8 +85,9 @@ export const userSearchServiceProviders = async (data: UserFetchServiceProviders
     console.log("data : ",data);
     const response = await axiosInstance.get(`/user/providers`, {
         params: {
-            selectedServices: data.selectedServices,
+            appServiceIds: data.appServiceIds,
             maxPrice: data.maxPrice,
+            minPrice: data.minPrice,
             slotflowTrusted: data.slotflowTrusted,
             categories: data.categories,
             location: data.location,
