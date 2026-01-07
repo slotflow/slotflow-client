@@ -1,12 +1,19 @@
 import axios from 'axios';
 
+ const mainBackendUrl = import.meta.env.MODE === "development"
+        ? import.meta.env.VITE_BACKEND_DEV_URL
+        : import.meta.env.VITE_BACKEND_PRODUCTION_URL;
+
+const realtimeBackendUrl = import.meta.env.MODE === "development"
+        ? import.meta.env.VITE_REALTIME_BACKEND_DEV_URL
+        : import.meta.env.VITE_REALTIME_BACKEND_PRODUCTION_URL;
+
 export const axiosInstance = axios.create({
-    baseURL: 'http://localhost:3000/api/v1',
-    // baseURL: 'http://slotflow-main-backend:3000/api',
+    baseURL: `${mainBackendUrl}/v1`,
     withCredentials: true,
 });
 
 export const chatAxiosInstance = axios.create({
-    baseURL: 'http://localhost:3002/api',
+    baseURL: `${realtimeBackendUrl}/v1`,
     withCredentials: true,
 })

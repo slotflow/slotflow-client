@@ -14,13 +14,11 @@ const adminSlice = createSlice({
             state.isProviderRejectModalOpen = action.payload.modalState;
             state.rejectProviderId = action.payload.providerId;
         },
-        clearAdminSlice: () => initialState,
     },
 });
 
 
 export const {
-    clearAdminSlice,
     setProviderRejectModal
 } = adminSlice.actions;
 

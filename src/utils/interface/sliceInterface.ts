@@ -30,8 +30,11 @@ export interface AuthUser {
 
   providerSubscription?: PlanName;
   serviceDescription?: string;
+
   googleId?: string;
   googleConnected?: boolean;
+  
+  stripeConnected?: boolean;
 }
 
 export interface AuthState {

@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ApiBaseResponse } from "@/utils/interface/commonInterface";
 import { AuthState, AuthUser } from "@/utils/interface/sliceInterface";
 import { resendOtp, signin, signout, signup } from "@/utils/apis/auth.api";
+import { AdminVerificationStatus, PlanName } from "@/utils/interface/enums";
 import { userUpdateInfo, userUpdateProfileImage } from "@/utils/apis/user.api";
 import { UserUpdateUserInfoResponse } from "@/utils/interface/api/userApiInterface";
-import { ApiBaseResponse } from "@/utils/interface/commonInterface";
 import { ResendOtpResponse, SigninResponse, SignupResponse } from "@/utils/interface/api/authApiInterface";
 import { ProviderSubmitDetailsResponse, ProviderUpdateProviderInfoResponse } from "@/utils/interface/api/providerApiInterface";
 import { providerCreateAddress, providerCreateServiceAvailabilities, providerCreateServiceDetails, providerSubmitDetailsForReview, providerUpdateInfo, providerUpdateProfileImage } from "@/utils/apis/provider.api";
-import { AdminVerificationStatus, PlanName } from "@/utils/interface/enums";
 
 const initialState: AuthState = {
     authUser: null,
@@ -40,6 +40,11 @@ const authSlice = createSlice({
         setGoogleConnect: (state) => {
             if (state.authUser) {
                 state.authUser.googleConnected = true;
+            }
+        },
+        setStripeConnect: (state) => {
+            if (state.authUser) {
+                state.authUser.stripeConnected = true;
             }
         },
         setIsProofSubmitted: (state) => {
@@ -223,10 +228,11 @@ export const {
     setAuthUser,
     setProfileImage,
     setAuthUserName,
-    setProviderSubscription,
+    setStripeConnect,
     setGoogleConnect,
     setIsProofSubmitted,
-    setAdminVerificationState
+    setProviderSubscription,
+    setAdminVerificationState,
 } = authSlice.actions;
 
 export default authSlice.reducer;

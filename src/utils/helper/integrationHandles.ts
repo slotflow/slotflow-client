@@ -7,10 +7,10 @@ export const handleConnectGoogle = (e: React.MouseEvent<HTMLButtonElement>, disp
     e.preventDefault();
     try {
         dispatch(setGoogleConnectionLoading(true));
-        const apiUrl = import.meta.env.MODE === "development"
+        const mainBackendUrl = import.meta.env.MODE === "development"
         ? import.meta.env.VITE_BACKEND_DEV_URL
         : import.meta.env.VITE_BACKEND_PRODUCTION_URL;
-        window.location.href = `${apiUrl}/google/connect`;
+        window.location.href = `${mainBackendUrl}/v1/google/connect`;
     } catch {
         dispatch(setGoogleConnectionLoading(false));
         toast.error("Failed to connect google calendar");

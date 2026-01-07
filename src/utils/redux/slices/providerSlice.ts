@@ -65,7 +65,6 @@ const providerSlice = createSlice({
     setServiceProofLoading: (state, action: PayloadAction<boolean>) => {
       state.serviceProofLoading = action.payload;
     },
-    clearProviderSlice: () => initialState,
   },
 });
 
@@ -77,7 +76,6 @@ export const {
   setSubscriptionIsTrailPlan,
   setProviderIdentityProofs,
   setProviderServiceProofs,
-  clearProviderSlice,
   setIdentityProofLoading,
   setServiceProofLoading
 } = providerSlice.actions;

@@ -9,9 +9,10 @@ import IntegrationCard from '@/components/common/Integrations';
 import googleCalendar from '../../assets/iconImages/gCalendar.png';
 import { setGoogleConnect } from '@/utils/redux/slices/authSlice';
 import { handleConnectGoogle, handleStripeConnect } from '@/utils/helper/integrationHandles';
-import { setGoogleConnectionLoading, 
+import {
+    setGoogleConnectionLoading,
     // setStripeConnectionLoading
- } from '@/utils/redux/slices/integrationSlice';
+} from '@/utils/redux/slices/integrationSlice';
 
 const IntegrationsPage: React.FC = () => {
 
@@ -29,13 +30,13 @@ const IntegrationsPage: React.FC = () => {
             if (!response.success) {
                 toast.error("Connection failed, please try again");
             } else {
-                if (response.connectType === "GoogleCalendar") {
-                     dispatch(setGoogleConnect());
+                if (response.googleConnected) {
+                    dispatch(setGoogleConnect());
                     dispatch(setGoogleConnectionLoading(false));
                     toast.success("Successfully connected!");
                 }
-                if(response.connectType === "Stripe") {
-                   toast.success("Stripe connected successfully");
+                if (response.stripeConnected) {
+                    toast.success("Stripe connected successfully");
                 }
             }
         } catch (err) {
@@ -81,7 +82,7 @@ const IntegrationsPage: React.FC = () => {
                     connectingLoading={stripeConnectionLoading}
                     description='Connect your Stripe account to securely manage payments, payouts, and transaction tracking.'
                     heading='Stripe'
-                    isConnected={authUser.googleConnected ?? false}
+                    isConnected={authUser.stripeConnected ?? false}
                 />
 
             </div>

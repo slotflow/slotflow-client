@@ -10,7 +10,7 @@ interface videoSliceInitalState {
     videoCallRoomId: string | null;
 }
 
-const intitalState: videoSliceInitalState = {
+const initialState: videoSliceInitalState = {
     videoSocketId: null,
     isConnectedVideoSocket: false,
     isCameraOn: true,
@@ -22,7 +22,7 @@ const intitalState: videoSliceInitalState = {
 
 const videoSlice = createSlice({
     name: "videoSlice",
-    initialState: intitalState,
+    initialState,
     reducers: {
         setVideoSocketConnected: (state, action: PayloadAction<{ videoSocketId: string }>
         ) => {
@@ -32,15 +32,6 @@ const videoSlice = createSlice({
         setVideoSocketDisconnected: (state) => {
             state.videoSocketId = null;
             state.isConnectedVideoSocket = false;
-        },
-        clearVideoSlice: (state) => {
-            state.videoSocketId = null;
-            state.isConnectedVideoSocket = false;
-            state.isCameraOn = true;
-            state.isMicOn = true;
-            state.videoCallRoomId = null;
-            state.videoCallRemainingTime = 0;
-            state.isVideoCallTimerRunning = false;
         },
         setCamera: (state, action: PayloadAction<boolean>) => {
             state.isCameraOn = action.payload;
@@ -69,13 +60,12 @@ const videoSlice = createSlice({
 });
 
 export const {
+    setMic,
+    setCamera,
+    stopVideoCallTimer,
+    startVideoCallTimer,
+    updateVideoCallTimer,
     setVideoSocketConnected,
     setVideoSocketDisconnected,
-    setCamera,
-    setMic,
-    startVideoCallTimer,
-    stopVideoCallTimer,
-    updateVideoCallTimer,
-    clearVideoSlice
 } = videoSlice.actions;
 export default videoSlice.reducer;

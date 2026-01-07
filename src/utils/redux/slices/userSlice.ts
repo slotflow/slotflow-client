@@ -40,13 +40,11 @@ const userSlice = createSlice({
     setProviderCardsFilter: (state, action: PayloadAction<ProviderCardsFilters>) => {
       state.providerCardsfFlter = action.payload;
     },
-    clearUserSlice: () => initialState,
   },
 
 });
 
 export const {
-  clearUserSlice,
   toggleReviewCreateForm,
   setProviders,
   pushServiceCategory,

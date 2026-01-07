@@ -5,6 +5,7 @@ import booking from '../../../assets/svgs/booking.svg';
 import service from '../../../assets/svgs/service.svg';
 import { HandleRoleSelectionFunction } from "@/utils/interface/commonInterface";
 import { useModalAnimation } from "@/utils/hooks/systemHooks/useModalAnimation";
+import { roleRoutes } from "@/utils/constants";
 
 interface AuthSelectionModalProps {
   onClose: () => void;
@@ -36,7 +37,7 @@ const AuthSelectionModal: React.FC<AuthSelectionModalProps> = ({ onClose }) => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div
-            onClick={() => handleRoleSelection("/user/login")}
+            onClick={() => handleRoleSelection(roleRoutes.user)}
             className="cursor-pointer flex flex-col items-center justify-center rounded-2xl border p-6 h-64 hover:border-[var(--mainColor)] hover:shadow-xl transition-all duration-300"
           >
             <img
@@ -53,7 +54,7 @@ const AuthSelectionModal: React.FC<AuthSelectionModalProps> = ({ onClose }) => {
           </div>
 
           <div
-            onClick={() => handleRoleSelection("/provider/login")}
+            onClick={() => handleRoleSelection(roleRoutes.provider)}
             className="cursor-pointer flex flex-col items-center justify-center rounded-2xl border p-6 h-64 hover:border-[var(--mainColor)] hover:shadow-xl transition-all duration-300"
           >
             <img

@@ -68,6 +68,7 @@ import {
   dataSelectListItemInterface, 
   ProviderApprovalMessageInterface, 
   gsapBigSvgYDirectionAnimationInterface,
+  RedirectTo,
 } from "./interface/commonInterface";
 
 import chatImage from '../assets/heroImages/caht.jpg';
@@ -1321,3 +1322,35 @@ export const planNameOptions: OptionType<PlanName>[] = [
   { label: "Enterprise", value: PlanName.Enterprise },
   { label: "No Subscription", value: PlanName.NoSubscription },
 ];
+
+export const storeConstants: Record<string, string> = {
+  storeKey: "slotflow",
+  resetState: "RESET_STATE" 
+};
+
+export const roleRoutes: Record<string, string> = {
+  user: "/user/login",
+  provider: "/provider/login",
+  admin: "/admin/login"
+};
+
+export const redirectPaths: Record<RedirectTo, string> = {
+  [RedirectTo.LOGIN]: "/login",
+  [RedirectTo.REGISTER]: "/register",
+  [RedirectTo.VERIFY_EMAIL]: "/verify/email",
+  [RedirectTo.RESET_PASSWORD]: "/reset/password",
+  [RedirectTo.VERIFY_OTP]: "/verify/otp",
+
+  [RedirectTo.PROVIDER_ADDRESS]: "/onboarding/address",
+  [RedirectTo.PROVIDER_SERVICE_DETAILS]: "/onboarding/service",
+  [RedirectTo.PROVIDER_AVAILABILITY]: "/onboarding/availability",
+  [RedirectTo.PROVIDER_PROOFS]: "/onboarding/proofs",
+  [RedirectTo.PROVIDER_APPROVAL_PENDING]: "/onboarding/pending",
+};
+
+export const basePaths: Record<string, string> = {
+  user: "/user",
+  provider: "/provider",
+  admin: "/admin",
+  login: "/login"
+};
