@@ -10,6 +10,7 @@ import CommonPaymentSelection from "../CommonPaymentSelection";
 import { Slot } from "@/utils/interface/entityInterface/serviceAvailabilityInterface";
 import ProviderAvailabilityShimmer from "@/components/shimmers/ProviderAvailabilityShimmer";
 import { ProviderApiFunctionForPSAcomponent, ProviderServiceAvailabilityComponentProps, UserOrAdminApiFunctionForPSAcomponent } from "@/utils/interface/componentInterface/commonComponentInterface";
+import TimeSlotLegend from "../TimeSlotLegend";
 
 const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponentProps> = ({
     providerId,
@@ -38,7 +39,7 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
         refetchOnWindowFocus: false,
         enabled: !!date,
     });
-    
+
     useEffect(() => {
         if (!data || !date || date === null || !data.modes) {
             return;
@@ -67,13 +68,13 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
                     />
                 </div>
 
-                 {isLoading ? (
-        <ProviderAvailabilityShimmer slotCount={20} />
-      ) : isError && error ? (
-        <DataFetchingError message={error.message} />
-      ) : !data ? (
-        <DataFetchingError message="Data not found" />
-      ) : (
+                {isLoading ? (
+                    <ProviderAvailabilityShimmer slotCount={20} />
+                ) : isError && error ? (
+                    <DataFetchingError message={error.message} />
+                ) : !data ? (
+                    <DataFetchingError message="Data not found" />
+                ) : (
                     <div className="w-full flex flex-col">
                         {(
                             <>
@@ -97,18 +98,33 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
                                     </table>
                                 </div>
 
-                                {role === Role.User && data && data.slots.length > 0 && (
-                                    <p className="p-2">Please ensure that you book the slot at least 2 hours in advance.</p>
-                                )}
 
                                 <div className="mt-2 space-y-4 p-2">
-                                    <h3 className="font-bold text-lg">Time Slots for your selected date</h3>
+                                    <TimeSlotLegend
+                                        role={role}
+                                        showAdvanceNotice={Boolean(data && data.slots.length > 0)}
+                                        legendItems={[
+                                            {
+                                                label: "Available Slot",
+                                                className:
+                                                    "bg-[var(--mainColor)/20] border-[var(--mainColor)] hover:bg-[var(--mainColor)] hover:text-white",
+                                            },
+                                            {
+                                                label: "Unavailable Slot",
+                                                className: "border-gray-300 text-gray-500",
+                                            },
+                                            {
+                                                label: "Occupied Slot",
+                                                className: "border-yellow-300 text-yellow-700",
+                                            },
+                                        ]}
+                                    />
                                     <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                                         {data?.slots?.length ? (
                                             data?.slots.map((slot: Slot) => {
-                                                const commonClasses = `text-sm font-semibold text-center border rounded-md py-3 px-4 hover:bg-[var(--mainColor)] hover:text-white transition-colors duration-200 ${slot.available
-                                                    ? 'bg-[var(--mainColor)/20] border-[var(--mainColor)]'
-                                                    : 'border-gray-300'
+                                                const commonClasses = `text-sm font-semibold text-center border-2 rounded-md py-3 px-4 hover:bg-[var(--mainColor)] hover:text-white transition-colors duration-200 ${slot.available
+                                                    ? 'bg-[var(--mainColor)/20] border-[var(--mainColor)] hover:bg-[var(--mainColor)] hover:text-white'
+                                                    : slot.occupied ? 'border-yellow-300 text-yellow-700' : 'border-gray-300 text-gray-500'
                                                     }`;
 
                                                 return role === Role.User ? (

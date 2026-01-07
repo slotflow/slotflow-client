@@ -15,6 +15,7 @@ export interface Slot {
     time: string;
     _id: string;
     available: boolean;
+    occupied?: boolean;
 }
 
 //  Availability interface for the response
