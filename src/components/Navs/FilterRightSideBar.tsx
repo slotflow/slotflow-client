@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import LocationPicker from "../common/LocationPicker";
 import { useDispatch, useSelector } from "react-redux";
-// import { useQueryClient } from "@tanstack/react-query";
 import { ServiceCategory } from "@/utils/interface/enums";
 import FilterCompHeader from "../common/FilterCompHeader";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
@@ -22,15 +21,16 @@ interface FilterRightSideBarProps {
 
 const FilterRightSideBar: React.FC<FilterRightSideBarProps> = ({ onClose }) => {
 
-    // const queryClient = useQueryClient();
     const dispatch = useDispatch<AppDispatch>();
+
+    const { selectedCategories } = useSelector((state: RootState) => state.user);
     const filterSideBarOpen = useSelector((state: RootState) => state.app.filterSideBarOpen);
-    const { selectedCategories, providerCardsfFlter } = useSelector((state: RootState) => state.user);
-    const [showPriceFilter, setShowPriceFilter] = useState<boolean>(true);
-    const [showCategoriesFilter, setShowCategoriesFilter] = useState<boolean>(true);
-    const [showServicesFilter, setShowServicesFilter] = useState<boolean>(true);
-    const [showTrustedFilter, setShowTrustedFilter] = useState<boolean>(true);
+
     const [showMapFilter, setShowMapFilter] = useState<boolean>(true);
+    const [showPriceFilter, setShowPriceFilter] = useState<boolean>(true);
+    const [showTrustedFilter, setShowTrustedFilter] = useState<boolean>(true);
+    const [showServicesFilter, setShowServicesFilter] = useState<boolean>(true);
+    const [showCategoriesFilter, setShowCategoriesFilter] = useState<boolean>(true);
 
     const [filters, setFilters] = useState<ProviderCardsFilters>({
         appServiceIds: [] as string[],
@@ -71,12 +71,6 @@ const FilterRightSideBar: React.FC<FilterRightSideBarProps> = ({ onClose }) => {
                 ? prev.categories.filter((c) => c !== category)
                 : [...prev.categories, category],
         }));
-        // dispatch(setProviderCardsFilter({
-        //     ...providerCardsfFlter,
-        //     categories: providerCardsfFlter.categories.includes(category)
-        //         ? providerCardsfFlter.categories.filter((c) => c !== category)
-        //         : [...providerCardsfFlter.categories, category],
-        // }))
     };
 
     const toggleAppServiceIds = (appServiceId: string) => {
@@ -86,12 +80,6 @@ const FilterRightSideBar: React.FC<FilterRightSideBarProps> = ({ onClose }) => {
                 ? prev.appServiceIds.filter((id) => id !== appServiceId)
                 : [...prev.appServiceIds, appServiceId],
         }));
-        // dispatch(setProviderCardsFilter({
-        //     ...providerCardsfFlter,
-        //     appServiceIds: providerCardsfFlter.appServiceIds.includes(appServiceId)
-        //         ? providerCardsfFlter.appServiceIds.filter((id) => id !== appServiceId)
-        //         : [...providerCardsfFlter.appServiceIds, appServiceId],
-        // }))
     };
 
     const handleLocationSelect = (location: Location) => {
@@ -102,13 +90,6 @@ const FilterRightSideBar: React.FC<FilterRightSideBarProps> = ({ onClose }) => {
                 coordinates: [location.lon, location.lat],
             },
         }));
-        // dispatch(setProviderCardsFilter({
-        //     ...providerCardsfFlter,
-        //     location: {
-        //         type: "Point",
-        //         coordinates: [location.lon, location.lat],
-        //     },
-        // }))
     };
 
     const handleApplyFilter = async () => {
@@ -117,31 +98,9 @@ const FilterRightSideBar: React.FC<FilterRightSideBarProps> = ({ onClose }) => {
             return;
         };
         dispatch(setProviderCardsFilter(filters));
-
-    // const res = await userSearchServiceProviders({
-    //     ...filters,
-    //      skip: 0,
-    //     limit: 12,
-    // });
-    // if (res) {
-    //     dispatch(setProviders(res));
-    //     dispatch(pushServiceCategory(filters.categories));
-    //     toast.success(`${res.length > 0 ? "Filtered providers" : "No providers found"}`);
-    // };
     };
 
     const handleClearFilter = () => {
-        // setFilters({
-        //     categories: [],
-        //     appServiceIds: [],
-        //     location: undefined,
-        //     maxPrice: 0,
-        //     minPrice: 0,
-        //     slotflowTrusted: false,
-        // });
-        // dispatch(pushServiceCategory([]));
-        // toast.success("Filters cleared");
-        // queryClient.invalidateQueries({ queryKey: ["providers", selectedCategories] });
         dispatch(setProviderCardsFilter({
             categories: [],
             appServiceIds: [],
@@ -149,8 +108,8 @@ const FilterRightSideBar: React.FC<FilterRightSideBarProps> = ({ onClose }) => {
             maxPrice: 0,
             minPrice: 0,
             slotflowTrusted: false,
+            skip: 0,
             limit: 12,
-            skip: 12
         }));
     };
 
@@ -180,14 +139,7 @@ const FilterRightSideBar: React.FC<FilterRightSideBarProps> = ({ onClose }) => {
                                     <Checkbox
                                         checked={filters.slotflowTrusted}
                                         onCheckedChange={(checked) =>
-                                            // setFilters(prev => ({
-                                            //     ...prev,
-                                            //     slotflowTrusted: Boolean(checked),
-                                            // }))
-                                            dispatch(setProviderCardsFilter({
-                                                ...providerCardsfFlter,
-                                                slotflowTrusted: Boolean(checked),
-                                            }))
+                                            setFilters(prev => ({...prev,slotflowTrusted: Boolean(checked),}))
                                         }
                                     />
                                 </div>
@@ -215,10 +167,6 @@ const FilterRightSideBar: React.FC<FilterRightSideBarProps> = ({ onClose }) => {
                                         step={100}
                                         onValueChange={([value]) =>
                                             setFilters((prev) => ({ ...prev, minPrice: value }))
-                                            // dispatch(setProviderCardsFilter({
-                                            //     ...providerCardsfFlter,
-                                            //     minPrice: value,
-                                            // }))
                                         }
                                     />
                                     <div className="flex justify-between text-sm mb-2">
@@ -231,10 +179,6 @@ const FilterRightSideBar: React.FC<FilterRightSideBarProps> = ({ onClose }) => {
                                         step={100}
                                         onValueChange={([value]) =>
                                             setFilters((prev) => ({ ...prev, maxPrice: value }))
-                                            // dispatch(setProviderCardsFilter({
-                                            //     ...providerCardsfFlter,
-                                            //     maxPrice: value,
-                                            // }))
                                         }
                                     />
                                 </div>

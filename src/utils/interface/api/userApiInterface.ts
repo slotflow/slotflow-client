@@ -69,11 +69,11 @@ export interface UserFetchServiceProvidersResponse {
 
 
 // **** Used as the response type of the user fetching service providers details fetching api
-export type UserFetchProviderProfileDetailsResponse = Pick<Provider, "_id" | "username" | "email" | "phone" | "profileImage" | "trustedBySlotflow">;
+export type UserFetchProviderProfileDetailsResponse = Pick<Provider, "username" | "email" | "phone" | "profileImage" | "trustedBySlotflow">;
 
 
 // **** Used as the response type of the user fetching service providers address fetching api
-export type UserFetchProviderAddressResponse = Pick<Address, "userId" | "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "landMark" | "location">;
+export type UserFetchProviderAddressResponse = Pick<Address, "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "landMark" | "location">;
 
 
 // **** Used as the response interface of the user fetching service providers service details fetching api

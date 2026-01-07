@@ -17,17 +17,6 @@ const UserDashboardPage = () => {
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
   const { selectedCategories, providers, providerCardsfFlter } = useSelector((store: RootState) => store.user);
 
-  // const { data, isLoading, isError, error } = useQuery({
-  //   queryFn: () => userSearchServiceProviders({
-  //     categories: selectedCategories,
-  //     skip: 0,
-  //     limit: 12,
-  //   }),
-  //   queryKey: ['providers', selectedCategories],
-  //   staleTime: 5 * 60 * 1000,
-  //   refetchOnWindowFocus: false,
-  // });
-
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError, error } = useInfiniteQuery({
   queryKey: ['providers', providerCardsfFlter],
   queryFn: ({ pageParam = 0 }) => userSearchServiceProviders({
@@ -114,7 +103,10 @@ useEffect(() => {
       className="h-12 flex items-center justify-center"
     >
       {isFetchingNextPage && (
-        <Loader className="w-6 h-6 animate-spin" />
+        <div className="flex w-full justify-center gap-2">
+          <p>Fetching more providers...</p>
+          <Loader className="w-6 h-6 animate-spin" />
+        </div>
       )}
     </div>
     </>
