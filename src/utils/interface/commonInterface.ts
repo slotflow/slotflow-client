@@ -375,4 +375,6 @@ export interface ProviderCardsFilters {
     type: string,
     coordinates: [number, number],
   };
+  skip: number;
+  limit: number;
 };

@@ -7,11 +7,7 @@ import ProviderPlanCardShimmer from '../shimmers/ProviderPlanCardShimmer';
 
 const ShimmerCount = Array.from({ length: 3 });
 
-export interface ProviderPlanListProps {
-    showPlans: boolean;
-}
-
-const ProviderPlanList: React.FC<ProviderPlanListProps> = ({ showPlans }) => {
+const ProviderPlanList: React.FC = () => {
 
     const { data, isLoading, isError, error } = useQuery({
         queryFn: providerFetchPlans,
@@ -21,7 +17,7 @@ const ProviderPlanList: React.FC<ProviderPlanListProps> = ({ showPlans }) => {
     });
 
     return (
-        <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 py-6 ${!showPlans && "hidden"}`} >
+        <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 py-6`} >
             {isLoading ? (
                 ShimmerCount.map((_, index) => (
                     <ProviderPlanCardShimmer key={index} />

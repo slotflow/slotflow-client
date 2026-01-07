@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
 import { Loader } from 'lucide-react';
+import { useEffect, useRef  } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { useQuery } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { setProviders } from '@/utils/redux/slices/userSlice';
 import { AppDispatch, RootState } from '@/utils/redux/appStore';
 import { userSearchServiceProviders } from '@/utils/apis/user.api';
@@ -14,20 +14,62 @@ import UserViewProviderCard from '@/components/user/UserViewProviderCard';
 const UserDashboardPage = () => {
 
   const dispatch = useDispatch<AppDispatch>();
-  const { selectedCategories, providers } = useSelector((store: RootState) => store.user);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+  const { selectedCategories, providers, providerCardsfFlter } = useSelector((store: RootState) => store.user);
 
-  const { data, isLoading, isError, error } = useQuery({
-    queryFn: () => userSearchServiceProviders({
-      categories: selectedCategories,
-    }),
-    queryKey: ['providers', selectedCategories],
-    staleTime: 5 * 60 * 1000,
-    refetchOnWindowFocus: false,
-  });
+  // const { data, isLoading, isError, error } = useQuery({
+  //   queryFn: () => userSearchServiceProviders({
+  //     categories: selectedCategories,
+  //     skip: 0,
+  //     limit: 12,
+  //   }),
+  //   queryKey: ['providers', selectedCategories],
+  //   staleTime: 5 * 60 * 1000,
+  //   refetchOnWindowFocus: false,
+  // });
+
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError, error } = useInfiniteQuery({
+  queryKey: ['providers', providerCardsfFlter],
+  queryFn: ({ pageParam = 0 }) => userSearchServiceProviders({
+    ...providerCardsfFlter,
+    skip: pageParam,
+    limit: 12,
+  }),
+  initialPageParam: 0,
+  getNextPageParam: (lastPage, allPages) => {
+    return lastPage.length === 12 ? allPages.length * 12 : undefined;
+  },
+});
+
+useEffect(() => {
+  if (!loadMoreRef.current) return;
+  if (!hasNextPage) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const firstEntry = entries[0];
+      if (firstEntry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    },
+    {
+      root: null,
+      rootMargin: '200px',
+      threshold: 0,
+    }
+  );
+
+  observer.observe(loadMoreRef.current);
+
+  return () => {
+    observer.disconnect();
+  };
+}, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   useEffect(() => {
     if(data) {
-      dispatch(setProviders(data));
+      const flattenedProviders = data.pages.flat();
+      dispatch(setProviders(flattenedProviders));
     };
   }, [ selectedCategories, dispatch, data ]);
 
@@ -61,11 +103,21 @@ const UserDashboardPage = () => {
           <DataFetchingError message={(error as Error).message || "Something went wrong"} />
         </div>
       ) : providers && providers.length > 0 ? (
+        <>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 my-4">
           {providers.map((provider, index) => (
             <UserViewProviderCard key={index} {...provider} />
           ))}
         </div>
+          <div
+      ref={loadMoreRef}
+      className="h-12 flex items-center justify-center"
+    >
+      {isFetchingNextPage && (
+        <Loader className="w-6 h-6 animate-spin" />
+      )}
+    </div>
+    </>
       ) : (
         <div className="flex-1 flex justify-center items-center">
           <DataFetchingError message="No providers found in the database" />

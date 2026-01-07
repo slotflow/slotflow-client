@@ -103,7 +103,7 @@ export enum PlanName {
   Starter = "STARTER",
   Professional = "PROFESSIONAL",
   Enterprise = "ENTERPRISE",
-  NoSubscription = "NO-SUBSCRIPTION"
+  NoSubscription = "NOSUBSCRIPTION"
 };
 
 

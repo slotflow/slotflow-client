@@ -6,6 +6,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import paypalLogo from '../../assets/iconImages/Paypal.png';
 import stripeLogo from '../../assets/iconImages/Stripe.jpeg';
 import { userBookAnAppointment } from '@/utils/apis/user.api';
+import { SubscriptionValidity } from '@/utils/interface/enums';
 import razorpayLogo from '../../assets/iconImages/Razorpay.png';
 import { providerSubscribeToPlan } from '@/utils/apis/provider.api';
 import { Provider } from '@/utils/interface/entityInterface/providerInterface';
@@ -20,7 +21,7 @@ type UserBookinAppointmentDataProps = {
 
 interface ProviderSubscriptionDataProps {
     planId: string;
-    planDuration: string;
+    planDuration: SubscriptionValidity;
 }
 
 interface PaymentSelecionComponentPropst {

@@ -44,7 +44,7 @@ const providerSlice = createSlice({
     setSubscriptionPlanId: (state, action: PayloadAction<string | null>) => {
       state.planId = action.payload;
     },
-    setSubscriptionPlanDuration: (state, action: PayloadAction<string | null>) => {
+    setSubscriptionPlanDuration: (state, action: PayloadAction<number | null>) => {
       state.planDuration = action.payload;
     },
     setSubscriptionIsTrailPlan: (state, action: PayloadAction<boolean>) => {

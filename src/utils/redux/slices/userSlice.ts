@@ -1,6 +1,7 @@
 import { ServiceCategory } from "@/utils/interface/enums";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserStateVariables } from "@/utils/interface/sliceInterface";
+import { ProviderCardsFilters } from "@/utils/interface/commonInterface";
 import { UserViewProviderCardComponentProps } from "@/utils/interface/componentInterface/commonComponentInterface";
 
 const initialState: UserStateVariables = {
@@ -9,6 +10,16 @@ const initialState: UserStateVariables = {
   selectedBookingProviderId: null,
   providers: null,
   selectedCategories: [],
+  providerCardsfFlter: {
+    appServiceIds: [] as string[],
+    maxPrice: 0,
+    minPrice: 0,
+    slotflowTrusted: false,
+    categories: [] as ServiceCategory[],
+    location: undefined,
+    skip: 0,
+    limit: 12,
+  },
 };
 
 const userSlice = createSlice({
@@ -26,6 +37,9 @@ const userSlice = createSlice({
     setProviders: (state, action: PayloadAction<Array<UserViewProviderCardComponentProps>>) => {
       state.providers = action.payload;
     },
+    setProviderCardsFilter: (state, action: PayloadAction<ProviderCardsFilters>) => {
+      state.providerCardsfFlter = action.payload;
+    },
     clearUserSlice: () => initialState,
   },
 
@@ -35,7 +49,8 @@ export const {
   clearUserSlice,
   toggleReviewCreateForm,
   setProviders,
-  pushServiceCategory
+  pushServiceCategory,
+  setProviderCardsFilter
 } = userSlice.actions;
 
 export default userSlice.reducer;

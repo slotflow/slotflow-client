@@ -1,4 +1,4 @@
-import { AdminVerificationStatus } from "../enums";
+import { AdminVerificationStatus, Role } from "../enums";
 
 // Provider
 export interface Provider {
@@ -54,7 +54,7 @@ export interface SideBoxProps {
 // Payment confirmation page interface 
 export interface PaymentConfirmPageProps {
   status: boolean;
-  userType: string;
+  role: Role;
 }
 
 //  **** PROVIDER COMPONENT / PAGES INTERFACES END **** //

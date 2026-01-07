@@ -2,6 +2,7 @@ import { Provider } from "./entityInterface/providerInterface";
 import { AdminVerificationStatus, PlanName, Role, ServiceCategory } from "./enums";
 import { Availability } from "./entityInterface/serviceAvailabilityInterface";
 import { UserViewProviderCardComponentProps } from "./componentInterface/commonComponentInterface";
+import { ProviderCardsFilters } from "./commonInterface";
 
 // **** Auth slice state
 export interface AuthUser {
@@ -69,7 +70,7 @@ export interface SetProviderRejectModalType {
 export interface ProviderState {
   availabilities: Availability[] | null;
   planId: string | null;
-  planDuration: string | null;
+  planDuration: number | null;
   paymentSelectionOpen: boolean;
   isTrialPlan: boolean;
   paymentPageOpen: boolean;
@@ -88,4 +89,5 @@ export interface UserStateVariables {
   selectedBookingProviderId: string | null;
   providers: Array<UserViewProviderCardComponentProps> | null;
   selectedCategories: ServiceCategory[];
+  providerCardsfFlter: ProviderCardsFilters;
 }

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { FormButton } from "../FormSplits";
 import { SelectField } from "../SelectField";
 import { Button } from "@/components/ui/button";
-import { adVisibility } from "@/utils/constants";
+import { adVisibility, planNameOptions } from "@/utils/constants";
 import { PlanName } from "@/utils/interface/enums";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { slideOut } from "@/utils/helper/gsapAnimationSlide";
@@ -58,15 +58,13 @@ const CreatePlanForm: React.FC<CreatePlanFormProps> = ({
         >
            <h3 className="text-lg lg:text-2xl font-bold text-center my-4">Create New Plan</h3>
             <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-                <FormField<AdminCreatePlanFormType>
+                <SelectField<AdminCreatePlanFormType, PlanName>
                     id="planName"
                     label="Plan Name"
-                    placeholder="Enter Plan Name"
-                    type="text"
                     register={register}
                     error={errors.planName?.message}
-                    readOnly={false}
-                    required={true}
+                    options={planNameOptions}
+                    required
                 />
                 <FormField<AdminCreatePlanFormType>
                     id="description"
@@ -123,6 +121,7 @@ const CreatePlanForm: React.FC<CreatePlanFormProps> = ({
                     options={adVisibility}
                     required
                 />
+
                 <FormButton text="Save" loading={isSubmitting} disabled={isSubmitting || !isValid} />
                 <Button variant="destructive" className="cursor-pointer w-full" type="button" onClick={handleCloseForm}>
                     Cancel

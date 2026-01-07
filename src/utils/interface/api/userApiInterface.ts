@@ -45,7 +45,10 @@ export type UserFetchAllAppServicesResponse = Pick<Service, "_id" | "serviceName
 
 
 // **** Used as the response interface of the user fetching service providers for the dashboard fetching api
-export type UserFetchServiceProvidersRequest = Partial<ProviderCardsFilters>;
+export type UserFetchServiceProvidersRequest = Partial<ProviderCardsFilters> & {
+    skip: number;
+    limit: number;
+};
 
 export interface UserFetchServiceProvidersResponse {
     _id: string,

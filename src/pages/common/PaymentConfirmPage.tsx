@@ -2,6 +2,7 @@ import { gsap } from "gsap";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
+import { Role } from "@/utils/interface/enums";
 import { Button } from "@/components/ui/button";
 import { useSearchParams } from "react-router-dom";
 import { CheckCircle, XCircle } from "lucide-react";
@@ -10,7 +11,7 @@ import { providerSaveSubscription } from "@/utils/apis/provider.api";
 import { setProviderSubscription } from "@/utils/redux/slices/authSlice";
 import { PaymentConfirmPageProps } from "@/utils/interface/entityInterface/providerInterface";
 
-const PaymentConfirmPage: React.FC<PaymentConfirmPageProps> = ({ status, userType }) => {
+const PaymentConfirmPage: React.FC<PaymentConfirmPageProps> = ({ status, role }) => {
 
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
@@ -27,20 +28,20 @@ const PaymentConfirmPage: React.FC<PaymentConfirmPageProps> = ({ status, userTyp
   const save = async () => {
     if (!sessionId) return;
     try {
-      if (userType === "provider") {
+      if (role === Role.Provider) {
         const response = await providerSaveSubscription(sessionId);
         if (response.success) {
           toast.success(response.message);
-          dispatch(setProviderSubscription(response.planName))
+          dispatch(setProviderSubscription(response.data.planName))
         };
-      } else if (userType === "user") {
+      } else if (role === Role.User) {
         const response = await userSaveAppointmentBooking(sessionId);
         if (response.success) {
           toast.success(response.message);
         };
       };
     } catch {
-      toast.error("Subscription failed");
+      toast.error(`${role === Role.Provider ? "Subscription" : "Booking"} failed`);
     };
   };
 

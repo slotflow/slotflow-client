@@ -140,8 +140,8 @@ export const appRouter = createBrowserRouter([
                     { path: "reviews", element: <UserReviewPage /> },
                     { path: "notifications", element: <UserNotificationsPage /> },
                     { path: "settings", element: <SettingsPage /> },
-                    { path: "payment-success", element: <PaymentConfirmPage status={true} userType={"user"} /> },
-                    { path: "payment-failed", element: <PaymentConfirmPage status={false} userType={"user"} /> },
+                    { path: "payment-success", element: <PaymentConfirmPage status={true} role={Role.User} /> },
+                    { path: "payment-failed", element: <PaymentConfirmPage status={false} role={Role.User} /> },
                     { path: "*", element: <Error404Page /> },
                 ],
             },
@@ -278,8 +278,8 @@ export const appRouter = createBrowserRouter([
                             </PlanGuard>
                         )
                     },
-                    { path: "payment-success", element: <PaymentConfirmPage status={true} userType={"provider"} /> },
-                    { path: "payment-failed", element: <PaymentConfirmPage status={false} userType={"provider"} /> },
+                    { path: "payment-success", element: <PaymentConfirmPage status={true} role={Role.Provider} /> },
+                    { path: "payment-failed", element: <PaymentConfirmPage status={false} role={Role.Provider} /> },
                     { path: "stripe/success", element: <StripeConfirmPage status={true} /> },
                     { path: "stripe/refresh", element: <StripeConfirmPage status={false} /> },
                     { path: "*", element: <Error404Page /> },

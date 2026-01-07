@@ -132,7 +132,7 @@ export const providerRoutes: Route[] = [
 
 // Access Control For Provider
 export const planAccessMap: Record<string, string[]> = {
-  NoSubscription: [
+  NOSUBSCRIPTION: [
     "Dashboard",
     "Profile",
     "Subscriptions",
@@ -1313,3 +1313,11 @@ export const verificationStatusTextMap: Record<string, string> = {
   Resubmitted: "Re-submitted for review",
   Not_requested: "Not submitted",
 };
+
+export const planNameOptions: OptionType<PlanName>[] = [
+  { label: "Trial", value: PlanName.Trial },
+  { label: "Starter", value: PlanName.Starter },
+  { label: "Professional", value: PlanName.Professional },
+  { label: "Enterprise", value: PlanName.Enterprise },
+  { label: "No Subscription", value: PlanName.NoSubscription },
+];

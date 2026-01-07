@@ -82,16 +82,8 @@ export const userFetchAllAppServices = async (categories: ServiceCategory[]): Pr
 // **** user service providers apis
 // const response = await axiosInstance.get(`/user/providers/${selectedServices.join(",")}`);
 export const userSearchServiceProviders = async (data: UserFetchServiceProvidersRequest): Promise<Array<UserFetchServiceProvidersResponse>> => {
-    console.log("data : ",data);
     const response = await axiosInstance.get(`/user/providers`, {
-        params: {
-            appServiceIds: data.appServiceIds,
-            maxPrice: data.maxPrice,
-            minPrice: data.minPrice,
-            slotflowTrusted: data.slotflowTrusted,
-            categories: data.categories,
-            location: data.location,
-        },
+        params: {...data},
     });
     return response.data.data;
 };

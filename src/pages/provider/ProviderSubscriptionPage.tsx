@@ -27,9 +27,9 @@ const ProviderSubscriptionPage = () => {
             <div className="p-4">
                 <Button className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
                     onClick={() => setShowPlans(!showPlans)} >{showPlans ? "Hide Plans" : "Show Plans"}</Button>
-                <ProviderPlanList
-                    showPlans={showPlans}
-                />
+                    {showPlans && (
+                        <ProviderPlanList/>
+                    )}
             </div>
 
             {isTrialPlan && paymentSelectionOpen && (

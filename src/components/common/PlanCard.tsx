@@ -12,7 +12,7 @@ import { Plan } from "@/utils/interface/entityInterface/planInterface";
 import { PlanName, SubscriptionValidity } from "@/utils/interface/enums";
 import { PlanDurationFormType, planDurationZodSchema } from "@/utils/zod/providerZod";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
-import { setSubscriptionPlanId, setPaymentSelectionPage, setSubscriptionIsTrailPlan } from "@/utils/redux/slices/providerSlice";
+import { setSubscriptionPlanId, setPaymentSelectionPage, setSubscriptionIsTrailPlan, setSubscriptionPlanDuration } from "@/utils/redux/slices/providerSlice";
 
 type CardProps = Pick<Plan, "_id" | "planName" | "description" | "features" | "price">;
 
@@ -43,14 +43,18 @@ const PlanCard: React.FC<ProviderPlanCardProps> = ({
   });
 
   const handleGoToPayment = handleSubmit((data) => {
-    if (plan.planName !== PlanName.Trial && !data.planDuration) {
+    console.log("Clicking choose payment");
+    console.log("plan : ",plan);
+    console.log("data : ",data);
+    if (plan.planName !== PlanName.Trial && (!data.planDuration || data.planDuration === SubscriptionValidity.SevenDays)) {
       toast.warning("Please select a plan duration");
       return;
-    }
+    };
 
     dispatch(setSubscriptionIsTrailPlan(Boolean(isTrial)));
     dispatch(setSubscriptionPlanId(plan._id));
     dispatch(setPaymentSelectionPage(true));
+    dispatch(setSubscriptionPlanDuration(data.planDuration));
   });
 
   return (
