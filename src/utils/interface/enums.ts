@@ -27,6 +27,8 @@ export enum AppointmentStatus {
     RejectedByProvider = "RejectedByProvider",
     NotAttended = "NotAttended",
     Confirmed = "Confirmed",
+    PaymentPending = "PaymentPending",
+    Expired = "Expired",
 };
 
 export enum Day {
@@ -43,7 +45,8 @@ export enum PaymentFor {
     ProviderSubscription = "ProviderSubscription",
     AppointmentBooking = "AppointmentBooking",
     ProviderPayout = "ProviderPayout",
-    CancelBooking = "CancelBooking"
+    CancelBooking = "CancelBooking",
+    CancelSubscription = "CancelSubscription",
 };
 
 export enum PaymentGateway {
@@ -88,6 +91,7 @@ export enum SubscriptionStatus {
     Active = "Active",
     Expired = "Expired",
     Cancelled = "Cancelled",
+    PaymentPending = "PaymentPending",
 };
 
 export enum SubscriptionValidity {
@@ -99,14 +103,21 @@ export enum SubscriptionValidity {
 };
 
 export enum PlanName {
-  Trial = "TRIAL",
-  Starter = "STARTER",
-  Professional = "PROFESSIONAL",
-  Enterprise = "ENTERPRISE",
-  NoSubscription = "NOSUBSCRIPTION"
+    Trial = "TRIAL",
+    Starter = "STARTER",
+    Professional = "PROFESSIONAL",
+    Enterprise = "ENTERPRISE",
+    NoSubscription = "NOSUBSCRIPTION"
 };
 
-
+export enum AppConnect {
+    Google = "Google",
+    Stripe = "Stripe",
+    Notion = "Notion",
+    WhatsApp = "WhatsApp",
+    Razorpay = "Razorpay",
+    Paypal = "Paypal",
+}
 
 
 
