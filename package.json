@@ -52,6 +52,7 @@
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
     "dotted-map": "^2.2.3",
+    "firebase": "^12.7.0",
     "framer-motion": "^12.23.6",
     "gsap": "^3.12.7",
     "jspdf": "^3.0.3",

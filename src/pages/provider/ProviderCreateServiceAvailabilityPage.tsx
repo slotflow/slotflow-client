@@ -17,6 +17,7 @@ import { useAuthNavigation } from '@/utils/hooks/systemHooks/useAuthNavigation';
 import { useAddAvailability } from '@/utils/hooks/providerHooks/useServiceAvailability';
 import { daysOfWeekOptions, serviceDurationsOptions, updatableStatuses } from '@/utils/constants';
 import { ProviderServiceAvailabilityFormType, providerServiceAvailabilityZodSchema } from '@/utils/zod/providerZod';
+import { appConfig } from '@/utils/env';
 
 const ProviderCreateServiceAvailabilityPage: React.FC = () => {
 
@@ -101,7 +102,7 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
         }
       })
       .catch((error) => {
-        if (import.meta.env.DEV) console.log("Something went wrong while submitting availabilities : ", error);
+        if (appConfig.dev) console.log("Something went wrong while submitting availabilities : ", error);
       });
   };
 

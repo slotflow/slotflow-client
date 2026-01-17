@@ -12,6 +12,7 @@ import { slideOut } from "@/utils/helper/gsapAnimationSlide";
 import { handleFormError } from "@/utils/helper/formErrorCatcher";
 import { useAdminProviderActions } from "@/utils/hooks/adminHooks/useAdminProviderActions";
 import { AdminRejectProviderFormType, adminRejectProviderZodSchema } from "@/utils/zod/adminZod";
+import { appConfig } from "@/utils/env";
 
 interface RejectproviderFormProps {
   onClose: () => void;
@@ -60,7 +61,7 @@ const RejectproviderForm: React.FC<RejectproviderFormProps> = ({
       reset();
       handleCloseForm();
     } catch (error) {
-      if (import.meta.env.DEV) {
+      if (appConfig.dev) {
         console.log("Error while rejecting provider : ", error);
       }
     }

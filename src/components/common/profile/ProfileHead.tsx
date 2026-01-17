@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { Loader, Pen } from "lucide-react";
+import { isDevelopment } from "@/utils/env";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useDispatch, useSelector } from "react-redux";
@@ -43,9 +44,9 @@ const ProfileHead: React.FC<ProfileHeaderComponentProps> = ({
                     toast.success(res.message);
                 })
                 .catch((error) => {
-                    if (import.meta.env.DEV) console.error("Profile Image Upload error : ", error);
-                })
-        }
+                    if (isDevelopment) console.error("Profile Image Upload error : ", error);
+                });
+        };
     };
 
     console.log("selectedUserData : ",selectedUserData);

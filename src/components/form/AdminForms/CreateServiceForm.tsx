@@ -10,6 +10,7 @@ import { handleFormError } from "@/utils/helper/formErrorCatcher";
 import { useAdminServiceActions } from "@/utils/hooks/adminHooks/useAdminServiceActions";
 import { AdminCreateServiceFormType, adminCreateServiceZodSchema } from "@/utils/zod/adminZod";
 import { ServiceCategory } from "@/utils/interface/enums";
+import { appConfig } from "@/utils/env";
 
 interface CreateServiceFormProps {
   onClose: () => void;
@@ -49,7 +50,7 @@ const CreateServiceForm: React.FC<CreateServiceFormProps> = ({
       reset();
       handleCloseForm();
     } catch (error) {
-      if (import.meta.env.DEV) {
+      if (appConfig.dev) {
         console.log("Error while saving service:", error);
       }
     }

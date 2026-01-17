@@ -11,6 +11,7 @@ import { handleGoogleLogin } from "@/utils/helper/googleLogin";
 import { SignupFormType, signupZodSchema } from "@/utils/zod/authZod";
 import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
 import { RedirectTo, signUpFormProps } from "@/utils/interface/commonInterface";
+import { appConfig } from "@/utils/env";
 
 const SignUpForm: React.FC<signUpFormProps> = ({ role }) => {
 
@@ -41,7 +42,7 @@ const SignUpForm: React.FC<signUpFormProps> = ({ role }) => {
                 goToAuthPage(role, RedirectTo.VERIFY_OTP);
             }
         } catch (error) {
-            if(import.meta.env.DEV)console.log("An error occurred while sign up ",error);
+            if(appConfig.dev)console.log("An error occurred while sign up ",error);
         }
     };
 

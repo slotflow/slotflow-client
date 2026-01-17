@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import { AppDispatch } from "../redux/appStore";
+import { appConfig, serviceConfig } from "../env";
 import { connectStripeAccount } from "../apis/provider.api";
 import { setGoogleConnectionLoading, setStripeConnectionLoading } from "../redux/slices/integrationSlice";
 
@@ -7,15 +8,12 @@ export const handleConnectGoogle = (e: React.MouseEvent<HTMLButtonElement>, disp
     e.preventDefault();
     try {
         dispatch(setGoogleConnectionLoading(true));
-        const mainBackendUrl = import.meta.env.MODE === "development"
-        ? import.meta.env.VITE_BACKEND_DEV_URL
-        : import.meta.env.VITE_BACKEND_PRODUCTION_URL;
-        window.location.href = `${mainBackendUrl}/v1/google/connect`;
+        window.location.href = `${serviceConfig.apiGatewayUrl+appConfig.version}/google/connect`;
     } catch {
         dispatch(setGoogleConnectionLoading(false));
         toast.error("Failed to connect google calendar");
-    }
-}
+    };
+};
 
 
 export const handleStripeConnect = async (e: React.MouseEvent<HTMLButtonElement>, dispatch: AppDispatch) => {
@@ -32,5 +30,5 @@ export const handleStripeConnect = async (e: React.MouseEvent<HTMLButtonElement>
         toast.error("Failed to connect stripe");
     } finally {
         dispatch(setStripeConnectionLoading(false));
-    }
-}
+    };
+};

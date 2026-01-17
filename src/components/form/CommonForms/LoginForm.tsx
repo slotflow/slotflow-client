@@ -15,6 +15,7 @@ import { LoginFormType, LoginZodSchema } from '@/utils/zod/authZod';
 import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
 import { RedirectTo, LoginFormProps } from "@/utils/interface/commonInterface";
 import { Role } from "@/utils/interface/enums";
+import { appConfig } from "@/utils/env";
 
 const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
 
@@ -50,7 +51,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
                 handleNavigation(res.data.role);
             } else toast.error(res.message);
         } catch (error) {
-            if (import.meta.env.DEV) console.log("An error occurred during login ", error);
+            if (appConfig.dev) console.log("An error occurred during login ", error);
         }
     };
 

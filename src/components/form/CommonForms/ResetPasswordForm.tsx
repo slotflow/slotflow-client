@@ -10,6 +10,7 @@ import { setForgotPassword } from "@/utils/redux/slices/appSlice";
 import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
 import { ResetPasswordFormType, resetPasswordZodSchema } from "@/utils/zod/authZod";
 import { RedirectTo, ResetPasswordFormProps } from "@/utils/interface/commonInterface";
+import { appConfig } from "@/utils/env";
 
 const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ role }) => {
 
@@ -51,7 +52,7 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ role }) => {
                 dispatch(setForgotPassword(false));
             }
         } catch (error){
-            if(import.meta.env.DEV)console.log("An error occurred while updating password.",error);
+            if(appConfig.dev)console.log("An error occurred while updating password.",error);
         }
     };
 

@@ -13,6 +13,7 @@ import NotificationBox from '@/components/common/NotificationBox';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { ImageFileFormType, imageFileZodeSchema } from '@/utils/zod/providerZod';
 import { FileUploaderProps } from '@/utils/interface/componentInterface/commonComponentInterface';
+import { appConfig } from '@/utils/env';
 
 const FileUploader: React.FC<FileUploaderProps> = ({
     folderName,
@@ -64,7 +65,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
                 dispatch(setStateFunction(res.data));
             }
         } catch (error) {
-            if (import.meta.env.DEV) console.error("Upload error:", error);
+            if (appConfig.dev) console.error("Upload error:", error);
             toast.error("Upload failed! Please try again.");
         } finally {
             dispatch(setLoadingFunction(false));
@@ -81,7 +82,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
                 dispatch(setStateFunction(null));
             }
         } catch (error) {
-            if (import.meta.env.DEV) console.error("Deletion error:", error);
+            if (appConfig.dev) console.error("Deletion error:", error);
             toast.error("Deletion failed! Please try again.");
         } finally {
             dispatch(setLoadingFunction(false));

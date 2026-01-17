@@ -1,4 +1,5 @@
 import { toast } from "react-toastify";
+import { appConfig } from "@/utils/env";
 import { useQueryClient } from "@tanstack/react-query";
 import { adminAddNewPlan, adminChangePlanBlockStatus } from "../../apis/adminPlan.api";
 import { AdminAddNewPlanRequest, AdminChangePlanBlockStatusRequest } from "@/utils/interface/api/adminPlanApiInterface";
@@ -21,7 +22,7 @@ export const useAdminPlanActions = (): UseAdminPlanActionsReturnType => {
         }
       })
       .catch((error) => {
-        if (import.meta.env.DEV) console.log("An error occured while saving plan : ", error);
+        if (appConfig.dev) console.log("An error occured while saving plan : ", error);
       });
     };
 
@@ -34,7 +35,7 @@ export const useAdminPlanActions = (): UseAdminPlanActionsReturnType => {
         }
       })
       .catch((error) => {
-        if (import.meta.env.DEV) console.log("An error occured while change plan block status : ", error);
+        if (appConfig.dev) console.log("An error occured while change plan block status : ", error);
       });
   }
 

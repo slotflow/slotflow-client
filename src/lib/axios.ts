@@ -1,19 +1,14 @@
 import axios from 'axios';
+import { appConfig, serviceConfig } from '@/utils/env';
 
- const mainBackendUrl = import.meta.env.MODE === "development"
-        ? import.meta.env.VITE_BACKEND_DEV_URL
-        : import.meta.env.VITE_BACKEND_PRODUCTION_URL;
-
-const realtimeBackendUrl = import.meta.env.MODE === "development"
-        ? import.meta.env.VITE_REALTIME_BACKEND_DEV_URL
-        : import.meta.env.VITE_REALTIME_BACKEND_PRODUCTION_URL;
+console.log("baseUrl : ",`${serviceConfig.apiGatewayUrl+appConfig.version}`);
 
 export const axiosInstance = axios.create({
-    baseURL: `${mainBackendUrl}/v1`,
+    baseURL: `${serviceConfig.apiGatewayUrl+appConfig.version}`,
     withCredentials: true,
 });
 
 export const chatAxiosInstance = axios.create({
-    baseURL: `${realtimeBackendUrl}/v1`,
+    baseURL: `${serviceConfig.apiGatewayUrl}/v1`,
     withCredentials: true,
 })

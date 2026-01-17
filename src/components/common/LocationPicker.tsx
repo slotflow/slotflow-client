@@ -1,5 +1,6 @@
 import L from "leaflet";
 import { useEffect, useRef } from "react";
+import { locationIqConfig } from "@/utils/env";
 import { Location } from "@/utils/interface/entityInterface/addressInterface";
 
 interface LocationPickerProps {
@@ -11,17 +12,14 @@ export default function LocationPicker({ onLocationSelect }: LocationPickerProps
   const mapInstance = useRef<L.Map | null>(null);
   const markerRef = useRef<L.Marker | null>(null);
 
-  const LOCATIONIQ_KEY = import.meta.env.VITE_LOCATIONIQ_MAP_API_KEY;
-
   useEffect(() => {
     if (!mapRef.current || mapInstance.current) return;
 
     mapInstance.current = L.map(mapRef.current).setView([20.5937, 78.9629], 5);
 
-    L.tileLayer(
-      `https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?key=${LOCATIONIQ_KEY}`,
+    L.tileLayer(locationIqConfig.locationIqMapApiStart+locationIqConfig.locationIqMapApi,
       {
-        attribution: "&copy; OpenStreetMap contributors",
+        attribution: locationIqConfig.locationIqAttribution,
       }
     ).addTo(mapInstance.current);
 
@@ -34,7 +32,7 @@ export default function LocationPicker({ onLocationSelect }: LocationPickerProps
         markerRef.current.setLatLng([lat, lng]);
       }
 
-      const url = `https://us1.locationiq.com/v1/reverse?key=${LOCATIONIQ_KEY}&lat=${lat}&lon=${lng}&format=json`;
+      const url = locationIqConfig.locationIqUrlStart+locationIqConfig.locationIqMapApi+ locationIqConfig.locationIqUrlLat+lat+locationIqConfig.locationIqUrlLon+lng+locationIqConfig.locationIqUrlEnd;
 
       const res = await fetch(url);
       const data = await res.json();

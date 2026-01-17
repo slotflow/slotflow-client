@@ -1,6 +1,7 @@
 import { toast } from 'react-toastify';
 import { Loader, X } from 'lucide-react';
 import { useDispatch } from 'react-redux';
+import { stripeConfig } from '@/utils/env';
 import { useCallback, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import paypalLogo from '../../assets/iconImages/Paypal.png';
@@ -43,16 +44,17 @@ const CommonPaymentSelection: React.FC<PaymentSelecionComponentPropst> = ({
     const [paymentLoading, setPaymentLoading] = useState<boolean>(false);
 
     const makeStripePayment = useCallback(async () => {
-        if (!import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY) {
+        const stripePublishKey: string = stripeConfig.stripePublishableKey;
+        if (!stripePublishKey) {
             toast.error("Stripe key is missing!");
             return;
-        }
+        };
 
-        const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+        const stripe = await loadStripe(stripePublishKey);
         if (!stripe) {
             toast.error("Stripe failed to load!");
             return;
-        }
+        };
 
         try {
             if (isAppointmentBooking) {

@@ -16,6 +16,7 @@ import { RedirectTo } from "@/utils/interface/commonInterface";
 import { serviceCategoryOptions, serviceModeOptions, serviceTypeOptions, groupOptions } from "@/utils/constants";
 import { providerCreateServiceDetailsZodSchema, ProviderCreateServiceDetailsFormType } from "@/utils/zod/providerZod";
 import { providerFetchAllAppServices, providerCreateServiceDetails, providerFetchServiceDetails, providerUpdateServiceDetails } from "@/utils/apis/provider.api";
+import { appConfig } from "@/utils/env";
 
 const ProviderCreateServiceDetailsPage: React.FC = () => {
 
@@ -72,7 +73,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
         setServices(transformed);
       } catch (error) {
         console.log("error : ", error);
-        if (import.meta.env.DEV) console.log(error)
+        if (appConfig.dev) console.log(error)
       }
     };
     fetchServices();
@@ -118,7 +119,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
         }
       }
     } catch (error) {
-      if (import.meta.env.DEV) console.log("An unexpected error occured while saving data : ", error);
+      if (appConfig.dev) console.log("An unexpected error occured while saving data : ", error);
     }
   };
 

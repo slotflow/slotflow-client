@@ -14,6 +14,7 @@ import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { VerifyOtpFormType, verifyOtpZodSchema } from "@/utils/zod/authZod";
 import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
 import { RedirectTo, OtpVerificatioFormProps } from "@/utils/interface/commonInterface";
+import { appConfig } from "@/utils/env";
 
 const OtpVerificatioForm: React.FC<OtpVerificatioFormProps> = ({ role }) => {
 
@@ -63,7 +64,7 @@ const OtpVerificatioForm: React.FC<OtpVerificatioFormProps> = ({ role }) => {
                 else goToAuthPage(role, RedirectTo.LOGIN);
             }
         } catch (error) {
-            if (import.meta.env.DEV) console.log("An error occurred during OTP verification ", error);
+            if (appConfig.dev) console.log("An error occurred during OTP verification ", error);
         }
     };
 
@@ -74,7 +75,7 @@ const OtpVerificatioForm: React.FC<OtpVerificatioFormProps> = ({ role }) => {
             const res = await dispatch(resendOtp({ verificationToken, role })).unwrap();
             if (res.success) toast.success(res.message);
         } catch {
-            if (import.meta.env.DEV) console.log("An error occurred while resending OTP.");
+            if (appConfig.dev) console.log("An error occurred while resending OTP.");
         } 
     };
 

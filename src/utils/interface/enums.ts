@@ -117,9 +117,13 @@ export enum AppConnect {
     WhatsApp = "WhatsApp",
     Razorpay = "Razorpay",
     Paypal = "Paypal",
-}
+};
 
-
+export enum Platform {
+    Android = "Android",
+    Ios = "Ios",
+    Web = "Web",
+};
 
 
 

@@ -9,6 +9,7 @@ import { FormButton, FormHeading } from "../FormSplits";
 import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
 import { VerifyEmailFormType, verifyEmailZodSchema } from "@/utils/zod/authZod";
 import { RedirectTo, EmailVerificationFormProps } from "@/utils/interface/commonInterface";
+import { appConfig } from "@/utils/env";
 
 const EmailVerificationForm: React.FC<EmailVerificationFormProps> = ({ role }) => {
     const dispatch = useDispatch<AppDispatch>();
@@ -39,7 +40,7 @@ const EmailVerificationForm: React.FC<EmailVerificationFormProps> = ({ role }) =
                 goToAuthPage(role, RedirectTo.VERIFY_OTP);
             }
         } catch (error) {
-            if(import.meta.env.DEV)console.log("An error occurred during email verification ",error);
+            if(appConfig.dev)console.log("An error occurred during email verification ",error);
         }
     };
 
