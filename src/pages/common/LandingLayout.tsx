@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import Header from "@/components/Navs/Header";
 import { pathNames } from "@/utils/constants";
+import { Role } from "@/utils/interface/enums";
 import FooterBar from "@/components/Navs/FooterBar";
 import { RootState } from "../../utils/redux/appStore";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,7 +11,7 @@ import { setAuthUser } from "@/utils/redux/slices/authSlice";
 import { setAuthModal } from "@/utils/redux/slices/appSlice";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import AuthSelectionModal from "@/components/common/landing/AuthSelectionModal";
-import { Role } from "@/utils/interface/enums";
+import { NotificationPermissionGate } from "@/components/common/NotificationPermissionGate";
 
 const LandingLayout = () => {
 
@@ -49,7 +50,8 @@ const LandingLayout = () => {
         isProofsVerified: rawUser.isProofsVerified,
         isServiceDetailsVerified: rawUser.isServiceDetailsVerified,
         verificationRejectionReason: rawUser.verificationRejectionReason,
-        adminVerificationStatus: rawUser.adminVerificationStatus
+        adminVerificationStatus: rawUser.adminVerificationStatus,
+        allowPushNotification: rawUser.allowPushNotification,
       };
       dispatch(setAuthUser(authUser));
       window.history.replaceState({}, document.title, window.location.pathname);
@@ -64,6 +66,7 @@ const LandingLayout = () => {
 
   return (
     <>
+      <NotificationPermissionGate />
       <ToastContainer
         position="top-right"
         autoClose={3000}

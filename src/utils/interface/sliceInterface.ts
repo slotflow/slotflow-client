@@ -35,6 +35,8 @@ export interface AuthUser {
   googleConnected?: boolean;
   
   stripeConnected?: boolean;
+
+  allowPushNotification?: boolean | null;
 }
 
 export interface AuthState {

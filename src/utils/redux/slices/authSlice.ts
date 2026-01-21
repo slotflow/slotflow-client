@@ -25,37 +25,42 @@ const authSlice = createSlice({
         setProfileImage: (state, action: PayloadAction<string>) => {
             if (state.authUser) {
                 state.authUser.profileImage = action.payload;
-            }
+            };
         },
         setAuthUserName: (state, action: PayloadAction<string>) => {
             if (state.authUser) {
                 state.authUser.username = action.payload;
-            }
+            };
         },
         setProviderSubscription: (state, action: PayloadAction<PlanName>) => {
             if (state.authUser) {
                 state.authUser.providerSubscription = action.payload;
-            }
+            };
         },
         setGoogleConnect: (state) => {
             if (state.authUser) {
                 state.authUser.googleConnected = true;
-            }
+            };
         },
         setStripeConnect: (state) => {
             if (state.authUser) {
                 state.authUser.stripeConnected = true;
-            }
+            };
         },
         setIsProofSubmitted: (state) => {
             if(state.authUser) {
                 state.authUser.isProofSubmitted = true;
-            }
+            };
         },
         setAdminVerificationState: (state, action: PayloadAction<AdminVerificationStatus>) => {
             if(state.authUser) {
                 state.authUser.adminVerificationStatus = action.payload;
-            }
+            };
+        },
+        updateNotificationPreference: (state, action: PayloadAction<boolean>) => {
+            if(state.authUser) {
+                state.authUser.allowPushNotification = action.payload;
+            };
         },
     },
     extraReducers: (builder) => {
@@ -233,6 +238,7 @@ export const {
     setIsProofSubmitted,
     setProviderSubscription,
     setAdminVerificationState,
+    updateNotificationPreference
 } = authSlice.actions;
 
 export default authSlice.reducer;
