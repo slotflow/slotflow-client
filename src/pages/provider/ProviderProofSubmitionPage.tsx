@@ -37,7 +37,7 @@ export const ProviderProofSubmissionPage = () => {
   const handleNextutton = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     dispatch(setIsProofSubmitted());
-    goToAuthPage(Role.Provider, RedirectTo.PROVIDER_APPROVAL_PENDING);
+    goToAuthPage(Role.PROVIDER, RedirectTo.PROVIDER_APPROVAL_PENDING);
   }
 
   return (

@@ -31,13 +31,13 @@ const Address: React.FC = () => {
       setLoading(true);
       let res: UserCreateAddressResponse | UpdateAddressResponse;
 
-      if (authUser?.role === Role.User) {
+      if (authUser?.role === Role.USER) {
         if (isUpdating) {
           res = await userUpdateAddress(data);
         } else {
           res = await userCreateUserAddress(data);
         }
-      } else if (authUser?.role === Role.Provider) {
+      } else if (authUser?.role === Role.PROVIDER) {
         res = await providerUpdateAddress(data);
       } else {
         throw new Error("Unknown role");
@@ -63,10 +63,10 @@ const Address: React.FC = () => {
   useEffect(() => {
 
     async function fetchOldAddress() {
-      if (authUser?.role === Role.User) {
+      if (authUser?.role === Role.USER) {
         const result = await userFetchAddress();
         setOldAddress(result);
-      } else if (authUser?.role === Role.Provider) {
+      } else if (authUser?.role === Role.PROVIDER) {
         const result = await providerFetchAddress();
         setOldAddress(result);
       }

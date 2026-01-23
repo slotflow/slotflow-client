@@ -28,7 +28,7 @@ const CalendarPage: React.FC = () => {
 
     const canUseCalendar = useMemo(() => {
         if (!authUser) return false;
-        if (authUser.role === Role.Provider) {
+        if (authUser.role === Role.PROVIDER) {
             return ["Professional", "Enterprise"].includes(authUser.providerSubscription ?? "");
         }
         return true;
@@ -42,7 +42,7 @@ const CalendarPage: React.FC = () => {
         enabled: Boolean(
             authUser &&
             canUseCalendar &&
-            (authUser.role === Role.User || authUser.googleConnected)
+            (authUser.role === Role.USER || authUser.googleConnected)
         ),
     })
 

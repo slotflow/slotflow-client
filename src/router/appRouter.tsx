@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import PlanGuard from "./PlanGuard.tsx";
+import PlanGuard from "./planGuard.tsx";
 import { Role } from "@/utils/interface/enums.ts";
 import { ProtectedRoute } from "./protectedRoutes.tsx";
 import { createBrowserRouter, Outlet } from "react-router-dom";
@@ -75,22 +75,22 @@ export const appRouter = createBrowserRouter([
             { path: "/contact", element: <ContactPage /> },
             { path: "/privacy-policy", element: <PrivacyPolicyPage /> },
             { path: "/terms-and-conditions", element: <TermsAndConditionsPage /> },
-            { path: "/admin/login", element: <AuthPage role={Role.Admin} formType={0} /> },
-            { path: "/user/login", element: <AuthPage role={Role.User} formType={0} /> },
-            { path: "/user/register", element: <AuthPage role={Role.User} formType={1} /> },
-            { path: "/user/verify/email", element: <AuthPage role={Role.User} formType={2} /> },
-            { path: "/user/reset/password", element: <AuthPage role={Role.User} formType={3} /> },
-            { path: "/user/verify/otp", element: <AuthPage role={Role.User} formType={4} /> },
-            { path: "/provider/login", element: <AuthPage role={Role.Provider} formType={0} /> },
-            { path: "/provider/register", element: <AuthPage role={Role.Provider} formType={1} /> },
-            { path: "/provider/verify/email", element: <AuthPage role={Role.Provider} formType={2} /> },
-            { path: "/provider/reset/password", element: <AuthPage role={Role.Provider} formType={3} /> },
-            { path: "/provider/verify/otp", element: <AuthPage role={Role.Provider} formType={4} /> },
+            { path: "/admin/login", element: <AuthPage role={Role.ADMIN} formType={0} /> },
+            { path: "/user/login", element: <AuthPage role={Role.USER} formType={0} /> },
+            { path: "/user/register", element: <AuthPage role={Role.USER} formType={1} /> },
+            { path: "/user/verify/email", element: <AuthPage role={Role.USER} formType={2} /> },
+            { path: "/user/reset/password", element: <AuthPage role={Role.USER} formType={3} /> },
+            { path: "/user/verify/otp", element: <AuthPage role={Role.USER} formType={4} /> },
+            { path: "/provider/login", element: <AuthPage role={Role.PROVIDER} formType={0} /> },
+            { path: "/provider/register", element: <AuthPage role={Role.PROVIDER} formType={1} /> },
+            { path: "/provider/verify/email", element: <AuthPage role={Role.PROVIDER} formType={2} /> },
+            { path: "/provider/reset/password", element: <AuthPage role={Role.PROVIDER} formType={3} /> },
+            { path: "/provider/verify/otp", element: <AuthPage role={Role.PROVIDER} formType={4} /> },
             { path: "*", element: <Error404Page /> },
             {
                 path: "/admin",
                 element: (
-                    <ProtectedRoute allowedRoles={[Role.Admin]}>
+                    <ProtectedRoute allowedRoles={[Role.ADMIN]}>
                         <AdminMainPage />
                     </ProtectedRoute>
                 ),
@@ -113,7 +113,7 @@ export const appRouter = createBrowserRouter([
             {
                 path: "/user",
                 element: (
-                    <ProtectedRoute allowedRoles={[Role.User]}>
+                    <ProtectedRoute allowedRoles={[Role.USER]}>
                         <UserMainPage />
                     </ProtectedRoute>
                 ),
@@ -140,15 +140,15 @@ export const appRouter = createBrowserRouter([
                     { path: "reviews", element: <UserReviewPage /> },
                     { path: "notifications", element: <UserNotificationsPage /> },
                     { path: "settings", element: <SettingsPage /> },
-                    { path: "payment-success", element: <PaymentConfirmPage status={true} role={Role.User} /> },
-                    { path: "payment-failed", element: <PaymentConfirmPage status={false} role={Role.User} /> },
+                    { path: "payment-success", element: <PaymentConfirmPage status={true} role={Role.USER} /> },
+                    { path: "payment-failed", element: <PaymentConfirmPage status={false} role={Role.USER} /> },
                     { path: "*", element: <Error404Page /> },
                 ],
             },
             {
                 path: "/provider/onboarding",
                 element: (
-                    <ProtectedRoute allowedRoles={[Role.Provider]}>
+                    <ProtectedRoute allowedRoles={[Role.PROVIDER]}>
                         <Outlet />
                     </ProtectedRoute>
                 ),
@@ -163,7 +163,7 @@ export const appRouter = createBrowserRouter([
             {
                 path: "/provider",
                 element: (
-                    <ProtectedRoute allowedRoles={[Role.Provider]}>
+                    <ProtectedRoute allowedRoles={[Role.PROVIDER]}>
                         <ProviderMainPage />
                     </ProtectedRoute>
                 ),
@@ -278,8 +278,8 @@ export const appRouter = createBrowserRouter([
                             </PlanGuard>
                         )
                     },
-                    { path: "payment-success", element: <PaymentConfirmPage status={true} role={Role.Provider} /> },
-                    { path: "payment-failed", element: <PaymentConfirmPage status={false} role={Role.Provider} /> },
+                    { path: "payment-success", element: <PaymentConfirmPage status={true} role={Role.PROVIDER} /> },
+                    { path: "payment-failed", element: <PaymentConfirmPage status={false} role={Role.PROVIDER} /> },
                     { path: "stripe/success", element: <StripeConfirmPage status={true} /> },
                     { path: "stripe/refresh", element: <StripeConfirmPage status={false} /> },
                     { path: "*", element: <Error404Page /> },

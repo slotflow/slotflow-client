@@ -108,7 +108,7 @@ const ProviderApprovalPendingPage = () => {
                         <Button
                           variant="default"
                           className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
-                          onClick={() => goToAuthPage(Role.Provider, row.redirect)}
+                          onClick={() => goToAuthPage(Role.PROVIDER, row.redirect)}
                         ><Edit />
                         </Button>
                       </TableCell>
@@ -138,7 +138,7 @@ const ProviderApprovalPendingPage = () => {
                 <p className="text-sm">
                   <span className="font-semibold text-red-500">Rejection Reason</span>{" "}
                   <span className="ml-4">
-                  {authUser?.verificationRejectionReason}
+                    {authUser?.verificationRejectionReason}
                   </span>
                 </p>
               </div>)}

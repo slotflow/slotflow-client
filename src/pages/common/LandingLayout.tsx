@@ -11,7 +11,6 @@ import { setAuthUser } from "@/utils/redux/slices/authSlice";
 import { setAuthModal } from "@/utils/redux/slices/appSlice";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import AuthSelectionModal from "@/components/common/landing/AuthSelectionModal";
-import { NotificationPermissionGate } from "@/components/common/NotificationPermissionGate";
 
 const LandingLayout = () => {
 
@@ -55,8 +54,8 @@ const LandingLayout = () => {
       };
       dispatch(setAuthUser(authUser));
       window.history.replaceState({}, document.title, window.location.pathname);
-      if (authUser.role === Role.User) navigate('/user');
-      else if (authUser.role === Role.Provider) navigate('/provider');
+      if (authUser.role === Role.USER) navigate('/user');
+      else if (authUser.role === Role.PROVIDER) navigate('/provider');
     }
   }, []);
 
@@ -66,7 +65,6 @@ const LandingLayout = () => {
 
   return (
     <>
-      <NotificationPermissionGate />
       <ToastContainer
         position="top-right"
         autoClose={3000}

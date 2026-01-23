@@ -53,20 +53,20 @@ import {
   BarChart,
 } from "lucide-react";
 import { ProviderFetchDashboardStatsDataResponse } from "./interface/api/providerApiInterface";
-import { 
-  Route, 
-  PlanListType, 
-  DayMapInterface, 
+import {
+  Route,
+  PlanListType,
+  DayMapInterface,
   statsMapIntrface,
-  CommonTabInterface, 
-  FooterLinkInterface, 
-  PlanFeatureInterface, 
-  FeatureContentInterface, 
-  StatsMapForAdminInterface, 
-  FooterColumnDataInterface, 
-  HeaderCompoenentNavsProps, 
-  dataSelectListItemInterface, 
-  ProviderApprovalMessageInterface, 
+  CommonTabInterface,
+  FooterLinkInterface,
+  PlanFeatureInterface,
+  FeatureContentInterface,
+  StatsMapForAdminInterface,
+  FooterColumnDataInterface,
+  HeaderCompoenentNavsProps,
+  dataSelectListItemInterface,
+  ProviderApprovalMessageInterface,
   gsapBigSvgYDirectionAnimationInterface,
   RedirectTo,
 } from "./interface/commonInterface";
@@ -263,7 +263,7 @@ export const dateSelectList: dataSelectListItemInterface[] = [
 export const PlanList: PlanListType = [
   {
     _id: "0",
-    planName: PlanName.Trial,
+    planName: PlanName.TRIAL,
     description: "Perfect for individuals or freelancers getting started with appointment scheduling.",
     features: [
       "Basic slot creation & booking",
@@ -276,7 +276,7 @@ export const PlanList: PlanListType = [
   },
   {
     _id: "1",
-    planName: PlanName.Starter,
+    planName: PlanName.STARTER,
     description: "Ideal for solo professionals looking for a branded experience and better control.",
     features: [
       "Everything in Free Plan",
@@ -290,7 +290,7 @@ export const PlanList: PlanListType = [
   },
   {
     _id: "2",
-    planName: PlanName.Professional,
+    planName: PlanName.PROFESSIONAL,
     description: "Designed for growing teams or businesses that require advanced scheduling and integrations.",
     features: [
       "Everything in Starter Plan",
@@ -305,7 +305,7 @@ export const PlanList: PlanListType = [
   },
   {
     _id: "3",
-    planName: PlanName.Enterprise,
+    planName: PlanName.ENTERPRISE,
     description: "Best suited for organizations that need scalable, secure, and fully customizable scheduling solutions.",
     features: [
       "Everything in Professional Plan",
@@ -603,72 +603,72 @@ export const statsMapForProvider: Array<statsMapIntrface<ProviderFetchDashboardS
     title: "Total Appointments",
     key: "totalAppointments",
     icon: CalendarCheck,
-    plans: [PlanName.Starter, PlanName.Professional, PlanName.Enterprise],
+    plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
   },
   {
     title: "Today’s Appointments",
     key: "todaysAppointments",
     icon: Clock,
-    plans: [PlanName.Starter, PlanName.Professional, PlanName.Enterprise],
+    plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
   },
   {
     title: "Subscription Payments",
     key: "totalSubscriptionPaidAmount",
     icon: Receipt,
     price: true,
-    plans: [PlanName.Starter, PlanName.Professional, PlanName.Enterprise],
+    plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
   },
   {
     title: "Total Earnings",
     key: "totalEarnings",
     icon: Banknote,
     price: true,
-    plans: [PlanName.Starter, PlanName.Professional, PlanName.Enterprise],
+    plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
   },
   {
     title: "Total Payouts Made",
     key: "totalPayoutsMade",
     icon: Wallet,
     price: true,
-    plans: [PlanName.Starter, PlanName.Professional, PlanName.Enterprise],
+    plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
   },
   {
     title: "Completed Appointments",
     key: "completedAppointments",
     icon: CheckCircle,
-    plans: [PlanName.Professional, PlanName.Enterprise],
+    plans: [PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
   },
   {
     title: "Missed Appointments",
     key: "missedAppointments",
     icon: XCircle,
-    plans: [PlanName.Professional, PlanName.Enterprise],
+    plans: [PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
   },
   {
     title: "Cancelled by User",
     key: "cancelledAppointmentsByUser",
     icon: Ban,
-    plans: [PlanName.Enterprise],
+    plans: [PlanName.ENTERPRISE],
   },
   {
     title: "Rejected by Provider",
     key: "rejectedAppointmentsByProvider",
     icon: ThumbsDown,
-    plans: [PlanName.Enterprise],
+    plans: [PlanName.ENTERPRISE],
   },
   {
     title: "Today’s Earnings",
     key: "todaysEarnings",
     icon: TrendingUp,
     price: true,
-    plans: [PlanName.Professional, PlanName.Enterprise],
+    plans: [PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
   },
   {
     title: "Pending Payout",
     key: "pendingPayout",
     icon: Hourglass,
     price: true,
-    plans: [PlanName.Professional, PlanName.Enterprise],
+    plans: [PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
   },
 ];
 
@@ -1034,7 +1034,7 @@ export const progressBars: { [key: number]: boolean[] } = {
   4: [true, true, true, false],
 };
 
-const sidebarHeadings: string[] = ['Address', 'Service', 'Availability', "Upload Proofs" ,"Approval"];
+const sidebarHeadings: string[] = ['Address', 'Service', 'Availability', "Upload Proofs", "Approval"];
 export const pageLabels: { [key: number]: string[] } = {
   1: sidebarHeadings,
   2: sidebarHeadings,
@@ -1145,10 +1145,10 @@ export const adminOverviewTabs: CommonTabInterface[] = [
 
 // Profile tabs list
 export const profileTabs: CommonTabInterface[] = [
-  { value: "tab1", label: "Profile", icon: User, role: [Role.Provider, Role.User] },
-  { value: "tab2", label: "Address", icon: Home, role: [Role.Provider, Role.User] },
-  { value: "tab3", label: "Service", icon: Briefcase, role: [Role.Provider] },
-  { value: "tab4", label: "Availability", icon: Clock, role: [Role.Provider] },
+  { value: "tab1", label: "Profile", icon: User, role: [Role.PROVIDER, Role.USER] },
+  { value: "tab2", label: "Address", icon: Home, role: [Role.PROVIDER, Role.USER] },
+  { value: "tab3", label: "Service", icon: Briefcase, role: [Role.PROVIDER] },
+  { value: "tab4", label: "Availability", icon: Clock, role: [Role.PROVIDER] },
 ];
 
 // Provider dashboard tabs
@@ -1190,15 +1190,15 @@ export const adVisibilityOptions: OptionType<boolean>[] = [
 
 // 
 export const serviceTypeOptions: OptionType<ServiceType>[] = [
-  { label: "One Time", value: ServiceType.OneTime },
-  { label: "Recurring", value: ServiceType.Recurring },
+  { label: "One Time", value: ServiceType.ONE_TIME },
+  { label: "Recurring", value: ServiceType.RECURRING },
 ];
 
 //
 export const serviceModeOptions: OptionType<ServiceMode>[] = [
-  { label: "Online", value: ServiceMode.Online },
-  { label: "Offline", value: ServiceMode.Offline },
-  { label: "Both", value: ServiceMode.Both },
+  { label: "Online", value: ServiceMode.ONLINE },
+  { label: "Offline", value: ServiceMode.OFFLINE },
+  { label: "Both", value: ServiceMode.BOTH },
 ];
 
 //
@@ -1242,43 +1242,43 @@ export const serviceDurationsOptions: OptionType<number>[] = [
 export const serviceCategoryOptions: OptionType<ServiceCategory>[] = [
   {
     label: "Healthcare & Wellness",
-    value: ServiceCategory.HealthcareAndWellness,
+    value: ServiceCategory.HEALTHCARE_AND_WELLNESS,
   },
   {
     label: "Professional Services",
-    value: ServiceCategory.ProfessionalServices,
+    value: ServiceCategory.PROFESSIONAL_SERVICES,
   },
   {
     label: "Education & Training",
-    value: ServiceCategory.EducationAndTraining,
+    value: ServiceCategory.EDUCATION_AND_TRAINING,
   },
   {
     label: "Home & Maintenance",
-    value: ServiceCategory.HomeAndMaintenance,
+    value: ServiceCategory.HOME_AND_MAINTENANCE,
   },
   {
     label: "Beauty & Personal Care",
-    value: ServiceCategory.BeautyAndPersonalCare,
+    value: ServiceCategory.BEAUTY_AND_PERSONAL_CARE,
   },
   {
     label: "Fitness & Lifestyle",
-    value: ServiceCategory.FitnessAndLifestyle,
+    value: ServiceCategory.FITNESS_AND_LIFESTYLE,
   },
   {
     label: "Automotive Services",
-    value: ServiceCategory.AutomotiveServices,
+    value: ServiceCategory.AUTOMOTIVE_SERVICES,
   },
   {
     label: "Events & Creative Services",
-    value: ServiceCategory.EventsAndCreativeServices,
+    value: ServiceCategory.EVENTS_AND_CREATIVE_SERVICES,
   },
   {
     label: "Technology Services",
-    value: ServiceCategory.TechnologyServices,
+    value: ServiceCategory.TECHNOLOGY_SERVICES,
   },
   {
     label: "Real Estate & Property",
-    value: ServiceCategory.RealEstateAndProperty,
+    value: ServiceCategory.REAL_ESTATE_AND_PROPERTY,
   },
 ];
 
@@ -1316,16 +1316,16 @@ export const verificationStatusTextMap: Record<string, string> = {
 };
 
 export const planNameOptions: OptionType<PlanName>[] = [
-  { label: "Trial", value: PlanName.Trial },
-  { label: "Starter", value: PlanName.Starter },
-  { label: "Professional", value: PlanName.Professional },
-  { label: "Enterprise", value: PlanName.Enterprise },
-  { label: "No Subscription", value: PlanName.NoSubscription },
+  { label: "Trial", value: PlanName.TRIAL },
+  { label: "Starter", value: PlanName.STARTER },
+  { label: "Professional", value: PlanName.PROFESSIONAL },
+  { label: "Enterprise", value: PlanName.ENTERPRISE },
+  { label: "No Subscription", value: PlanName.NO_SUBSCRIPTION },
 ];
 
 export const storeConstants: Record<string, string> = {
   storeKey: "slotflow",
-  resetState: "RESET_STATE" 
+  resetState: "RESET_STATE"
 };
 
 export const roleRoutes: Record<string, string> = {

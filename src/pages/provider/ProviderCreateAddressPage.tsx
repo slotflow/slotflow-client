@@ -24,13 +24,13 @@ const ProviderAddAddressPage = () => {
                 const res = await providerUpdateAddress(data);
                 if (res.success) {
                     toast.success(res.message);
-                    goToAuthPage(Role.Provider, RedirectTo.PROVIDER_APPROVAL_PENDING);
+                    goToAuthPage(Role.PROVIDER, RedirectTo.PROVIDER_APPROVAL_PENDING);
                 }
             } else {
                 const res = await dispatch(providerCreateAddress(data)).unwrap();
                 if (res.success) {
                     toast.success(res.message);
-                    goToAuthPage(Role.Provider, RedirectTo.PROVIDER_SERVICE_DETAILS);
+                    goToAuthPage(Role.PROVIDER, RedirectTo.PROVIDER_SERVICE_DETAILS);
                 }
             }
         } catch (error) {

@@ -28,7 +28,7 @@ const InfoDisplayComponent: React.FC<InfoDisplayComponentRowProps> = ({
     if (value === null || value === undefined) {
         displayValue = "__ No Data Found __";
     } else if (isRadioGroup && Array.isArray(value)) {
-        displayValue = role === Role.Admin ? (
+        displayValue = role === Role.ADMIN ? (
             <div className="flex space-x-2">
                 {value.map((item) => (
                     <label key={item} htmlFor={item} className="text-sm font-medium leading-none">

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { Loader, Pen } from "lucide-react";
-import { isDevelopment } from "@/utils/env";
+import { appConfig } from "@/utils/env";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useDispatch, useSelector } from "react-redux";
@@ -38,19 +38,19 @@ const ProfileHead: React.FC<ProfileHeaderComponentProps> = ({
         if (updation && updateProfileImageApiFunction) {
             const { uploadUrl, key } = await getUploadUrl({ file: file, folder: "profiles" });
             await uploadToS3(file, uploadUrl);
-            await dispatch(updateProfileImageApiFunction({s3FileKey: key}))
+            await dispatch(updateProfileImageApiFunction({ s3FileKey: key }))
                 .unwrap()
                 .then((res: ProviderUpdateProfileImageResponse | UserUpdateProfileImageResponse) => {
                     toast.success(res.message);
                 })
                 .catch((error) => {
-                    if (isDevelopment) console.error("Profile Image Upload error : ", error);
+                    if (appConfig.isDevelopment) console.error("Profile Image Upload error : ", error);
                 });
         };
     };
 
-    console.log("selectedUserData : ",selectedUserData);
-    
+    console.log("selectedUserData : ", selectedUserData);
+
     const profileImage = isMyProfile
         ? authUser?.profileImage
         : selectedUserData?.selectedUserProfileImage || authUser?.profileImage;

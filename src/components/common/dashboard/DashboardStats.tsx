@@ -31,8 +31,8 @@ const DashboardStats = <T extends Record<string, number>>({
     const user = useSelector((store: RootState) => store.auth.authUser);
 
 const subscriptionPlan = useMemo(() => {
-  if (!user) return PlanName.NoSubscription;
-  return user.providerSubscription ?? PlanName.NoSubscription;
+  if (!user) return PlanName.NO_SUBSCRIPTION;
+  return user.providerSubscription ?? PlanName.NO_SUBSCRIPTION;
 }, [user]);
 
     const [chartData, setChartData] = useState<{ name: string; value: number }[]>();

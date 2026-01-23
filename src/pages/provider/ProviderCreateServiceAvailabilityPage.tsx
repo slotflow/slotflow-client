@@ -98,7 +98,7 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
       .then((res) => {
         if (res.success) {
           toast.success(res.message);
-          goToAuthPage(Role.Provider,redirectUrl);
+          goToAuthPage(Role.PROVIDER, redirectUrl);
         }
       })
       .catch((error) => {

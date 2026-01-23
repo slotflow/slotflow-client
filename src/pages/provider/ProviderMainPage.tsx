@@ -18,7 +18,7 @@ const ProviderMainPage: React.FC = () => {
 
   const planName = user?.providerSubscription;
   console.log("planName : ",planName);
-  const allowedRouteNames = planName ? planAccessMap[planName] : planAccessMap[PlanName.NoSubscription];
+  const allowedRouteNames = planName ? planAccessMap[planName] : planAccessMap[PlanName.NO_SUBSCRIPTION];
   console.log("AllowedRouteNames : ",allowedRouteNames);
   const filteredRoutes = providerRoutes.filter(route => allowedRouteNames.includes(route.name));
   console.log("filteredRoutes : ",filteredRoutes);

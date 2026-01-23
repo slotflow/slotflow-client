@@ -23,7 +23,6 @@ const UserBookingsPage = () => {
         <CommonTable<FetchBookingsResponse>
             fetchApiFunction={userFetchBookings}
             queryKey='bookings'
-            heading='Booking History'
             column={columns}
             columnsCount={6}
         />

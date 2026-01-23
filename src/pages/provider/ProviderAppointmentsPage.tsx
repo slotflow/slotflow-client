@@ -24,7 +24,6 @@ const ProviderAppointmentsPage = () => {
         providerFetchBookingAppoinments({ ...params, raw: true })
       }
       queryKey='appointments'
-      heading='Appointments'
       column={columns}
       columnsCount={6}
     />

@@ -23,9 +23,9 @@ export const handleSignoutHelper = async ({
       await persistAppStore.purge();
       queryClient.clear();
       queryClient.cancelQueries();
-      if (role === Role.User) navigate(roleRoutes.user);
-      else if (role === Role.Provider) navigate(roleRoutes.provider);
-      else if (role === Role.Admin) navigate(roleRoutes.admin);
+      if (role === Role.USER) navigate(roleRoutes.user);
+      else if (role === Role.PROVIDER) navigate(roleRoutes.provider);
+      else if (role === Role.ADMIN) navigate(roleRoutes.admin);
     }
   } catch {
     toast.error("Signout failed");

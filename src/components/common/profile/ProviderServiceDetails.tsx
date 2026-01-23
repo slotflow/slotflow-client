@@ -49,7 +49,7 @@ const ProviderServiceDetails: React.FC<ProviderServiceDetailsComponentProps> = (
                     {data?.requirements && (
                         <InfoDisplayComponent label="Requirements" value={data?.requirements} />
                     )}
-                    <InfoDisplayComponent label="Mode" value={data?.serviceMode === ServiceMode.Both ? "Online & Offline" : data?.serviceMode} />
+                    <InfoDisplayComponent label="Mode" value={data?.serviceMode === ServiceMode.BOTH ? "Online & Offline" : data?.serviceMode} />
                     {data?.serviceType && (
                         <InfoDisplayComponent label="Type" value={data?.serviceType} />
                     )}

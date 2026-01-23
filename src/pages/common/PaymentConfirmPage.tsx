@@ -28,20 +28,20 @@ const PaymentConfirmPage: React.FC<PaymentConfirmPageProps> = ({ status, role })
   const save = async () => {
     if (!sessionId) return;
     try {
-      if (role === Role.Provider) {
+      if (role === Role.PROVIDER) {
         const response = await providerSaveSubscription(sessionId);
         if (response.success) {
           toast.success(response.message);
           dispatch(setProviderSubscription(response.data.planName))
         };
-      } else if (role === Role.User) {
+      } else if (role === Role.USER) {
         const response = await userSaveAppointmentBooking(sessionId);
         if (response.success) {
           toast.success(response.message);
         };
       };
     } catch {
-      toast.error(`${role === Role.Provider ? "Subscription" : "Booking"} failed`);
+      toast.error(`${role === Role.PROVIDER ? "Subscription" : "Booking"} failed`);
     };
   };
 

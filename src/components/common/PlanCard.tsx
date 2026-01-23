@@ -38,7 +38,7 @@ const PlanCard: React.FC<ProviderPlanCardProps> = ({
   } = useForm<PlanDurationFormType>({
     resolver: zodResolver(planDurationZodSchema),
     defaultValues: {
-      planDuration: SubscriptionValidity.SevenDays,
+      planDuration: SubscriptionValidity.SEVEN_DAYS,
     },
   });
 
@@ -46,7 +46,7 @@ const PlanCard: React.FC<ProviderPlanCardProps> = ({
     console.log("Clicking choose payment");
     console.log("plan : ",plan);
     console.log("data : ",data);
-    if (plan.planName !== PlanName.Trial && (!data.planDuration || data.planDuration === SubscriptionValidity.SevenDays)) {
+    if (plan.planName !== PlanName.TRIAL && (!data.planDuration || data.planDuration === SubscriptionValidity.SEVEN_DAYS)) {
       toast.warning("Please select a plan duration");
       return;
     };

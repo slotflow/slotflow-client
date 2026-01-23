@@ -27,10 +27,10 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
     const { data, isLoading, isError, error } = useQuery({
         queryFn: () => {
             if (!date) throw new Error("Missing date");
-            if (role === Role.User || role === Role.Admin) {
+            if (role === Role.USER || role === Role.ADMIN) {
                 if (!providerId) throw new Error("Missing provider Id");
                 return (fetchApiFuntion as UserOrAdminApiFunctionForPSAcomponent)({ date, providerId });
-            } else if (role === Role.Provider) {
+            } else if (role === Role.PROVIDER) {
                 return (fetchApiFuntion as ProviderApiFunctionForPSAcomponent)(date);
             }
         },
@@ -127,7 +127,7 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
                                                     : slot.occupied ? 'border-yellow-300 text-yellow-700' : 'border-gray-300 text-gray-500'
                                                     }`;
 
-                                                return role === Role.User ? (
+                                                return role === Role.USER ? (
                                                     <Button
                                                         key={slot._id}
                                                         variant="outline"

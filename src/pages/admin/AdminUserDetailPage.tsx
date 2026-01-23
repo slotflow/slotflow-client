@@ -41,7 +41,7 @@ const AdminUserDetailPage: React.FC = () => {
                     ) || tab === 1 && (
                         <AddressListing fetchApiFunction={() => adminFetchUserAddress(userId)} queryKey='' userOrProviderId={userId} />
                     ) || tab === 2 && (
-                        <ReviewsPage isAdmin fetchFun={adminFetchAllReviews} id={userId} role={Role.User} className='mt-2 md:mt-0' />
+                        <ReviewsPage isAdmin fetchFun={adminFetchAllReviews} id={userId} role={Role.USER} className='mt-2 md:mt-0' />
                     )}
                 </div>
             </div>

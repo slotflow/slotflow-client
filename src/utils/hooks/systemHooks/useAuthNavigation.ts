@@ -10,9 +10,9 @@ export const useAuthNavigation = () => {
   const goToAuthPage = useCallback((role: Role, redirectPage: RedirectTo) => {
     let basePath: string = "";
 
-    if (role === Role.Admin) basePath = basePaths.admin;
-    else if (role === Role.User) basePath = basePaths.user;
-    else if (role === Role.Provider) basePath = basePaths.provider;
+    if (role === Role.ADMIN) basePath = basePaths.admin;
+    else if (role === Role.USER) basePath = basePaths.user;
+    else if (role === Role.PROVIDER) basePath = basePaths.provider;
 
     let path = redirectPaths[redirectPage] ?? basePaths.login;
 

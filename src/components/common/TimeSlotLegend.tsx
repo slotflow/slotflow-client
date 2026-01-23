@@ -36,7 +36,7 @@ const TimeSlotLegend: React.FC<TimeSlotLegendProps> = ({
         ))}
       </div>
        <h3 className="font-bold text-lg">{heading}</h3>
-      {role === Role.User && showAdvanceNotice && (
+      {role === Role.USER && showAdvanceNotice && (
           <p className="text-sm text-muted-foreground">
           Please ensure that you book the slot at least 2 hours in advance.
         </p>

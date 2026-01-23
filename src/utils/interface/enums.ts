@@ -1,129 +1,150 @@
-export enum ServiceCategory {
-    HealthcareAndWellness = "Healthcare & Wellness",
-    ProfessionalServices = "Professional Services",
-    EducationAndTraining = "Education & Training",
-    HomeAndMaintenance = "Home & Maintenance",
-    BeautyAndPersonalCare = "Beauty & Personal Care",
-    FitnessAndLifestyle = "Fitness & Lifestyle",
-    AutomotiveServices = "Automotive Services",
-    EventsAndCreativeServices = "Events & Creative Services",
-    TechnologyServices = "Technology Services",
-    RealEstateAndProperty = "Real Estate & Property",
+export enum PermissionStatus {
+    GRANTED = "Granted",
+    DENIED = "Denied",
+    DEFAULT = "Default",
+};
+
+
+export enum Platform {
+  ANDROID = "ANDROID",
+  IOS = "IOS",
+  WEB = "WEB",
 };
 
 export enum AdminVerificationStatus {
-    REQUESTED = "Requested",
-    UNDER_REVIEW = "Under_review",
-    APPROVED = "Approved",
-    REJECTED = "Rejected",
-    RESUBMITTED = "Resubmitted",
-    NOT_REQUESTED = "Not_submitted",
+  REQUESTED = "REQUESTED",
+  UNDER_REVIEW = "UNDER_REVIEW",
+  APPROVED = "APPROVED",
+  REJECTED = "REJECTED",
+  RESUBMITTED = "RESUBMITTED",
+  NOT_REQUESTED = "NOT_REQUESTED",
 };
 
 export enum AppointmentStatus {
-    Booked = "Booked",
-    Completed = "Completed",
-    Cancelled = "Cancelled",
-    RejectedByProvider = "RejectedByProvider",
-    NotAttended = "NotAttended",
-    Confirmed = "Confirmed",
-    PaymentPending = "PaymentPending",
-    Expired = "Expired",
+  BOOKED = "BOOKED",
+  COMPLETED = "COMPLETED",
+  CANCELLED = "CANCELLED",
+  REJECTED_BY_PROVIDER = "REJECTED_BY_PROVIDER",
+  NOT_ATTENDED = "NOT_ATTENDED",
+  CONFIRMED = "CONFIRMED",
+  PAYMENT_PENDING = "PAYMENT_PENDING",
+  EXPIRED = "EXPIRED",
+};
+
+
+export enum Role {
+    ADMIN = "ADMIN",
+    USER = "USER",
+    PROVIDER = "PROVIDER",
+};
+
+export enum Boolean {
+    TRUE = "true",
+    FALSE = "false"
+};
+
+export enum FileType {
+    PNG="image/png",
+    JPEG="image/jpeg",
+    JPG="image/jpg"
 };
 
 export enum Day {
-    Sunday = "Sunday",
-    Monday = "Monday",
-    Tuesday = "Tuesday",
-    Wednesday = "Wednesday",
-    Thursday = "Thursday",
-    Friday = "Friday",
-    Saturday = "Saturday",
-};
-
-export enum PaymentFor {
-    ProviderSubscription = "ProviderSubscription",
-    AppointmentBooking = "AppointmentBooking",
-    ProviderPayout = "ProviderPayout",
-    CancelBooking = "CancelBooking",
-    CancelSubscription = "CancelSubscription",
-};
-
-export enum PaymentGateway {
-    Stripe = "Stripe",
-    Razorpay = "Razorpay",
-    Paypal = "Paypal"
-};
-
-export enum PaymentMethod {
-    Card = "Card",
-    Upi = "Upi",
-    Wallet = "Wallet",
-    NetBanking = "NetBanking",
-};
-
-export enum PaymentStatus {
-    Pending = "Pending",
-    Paid = "Paid",
-    Failed = "Failed",
-    Cancelled = "Cancelled",
-    Refunded = "Refunded",
-};
-
-export enum Role {
-    Admin = "ADMIN",
-    User = "USER",
-    Provider = "PROVIDER",
-};
-
-export enum ServiceMode {
-    Online = "Online",
-    Offline = "Offline",
-    Both = "Both",
-};
-
-export enum ServiceType {
-    OneTime = "One-time",
-    Recurring = "Recurring",
-};
-
-export enum SubscriptionStatus {
-    Active = "Active",
-    Expired = "Expired",
-    Cancelled = "Cancelled",
-    PaymentPending = "PaymentPending",
-};
-
-export enum SubscriptionValidity {
-    SevenDays = 7,
-    OneMonth = 30,
-    ThreeMonths = 90,
-    SixMonths = 180,
-    TwelveMonths = 365,
-};
-
-export enum PlanName {
-    Trial = "TRIAL",
-    Starter = "STARTER",
-    Professional = "PROFESSIONAL",
-    Enterprise = "ENTERPRISE",
-    NoSubscription = "NOSUBSCRIPTION"
+    SUNDAY = "Sunday",
+    MONDAY = "Monday",
+    TUESDAY = "Tuesday",
+    WEDNESDAY = "Wednesday",
+    THURSDAY = "Thursday",
+    FRIDAY = "Friday",
+    SATURDAY = "Saturday",
 };
 
 export enum AppConnect {
-    Google = "Google",
-    Stripe = "Stripe",
-    Notion = "Notion",
-    WhatsApp = "WhatsApp",
-    Razorpay = "Razorpay",
-    Paypal = "Paypal",
+    GOOGLE = "GOOGLE",
+    STRIPE = "STRIPE",
+    NOTION = "NOTION",
+    WHATSAPP = "WHATSAPP",
+    RAZORPAY = "RAZORPAY",
+    PAYPAL = "PAYPAL",
 };
 
-export enum Platform {
-    Android = "Android",
-    Ios = "Ios",
-    Web = "Web",
+export enum OtpPurpose {
+  REGISTRATION = "REGISTRATION",
+  PASSWORD_RESET = "PASSWORD_RESET",
 };
 
+export enum PaymentFor {
+    PROVIDER_SUBSCRIPTION = "PROVIDER_SUBSCRIPTION",
+    APPOINTMENT_BOOKING = "APPOINTMENT_BOOKING",
+    PROVIDER_PAYOUT = "PROVIDER_PAYOUT",
+    CANCEL_BOOKING = "CANCEL_BOOKING",
+    CANCEL_SUBSCRIPTION = "CANCEL_SUBSCRIPTION",
+};
 
+export enum PaymentGateway {
+    STRIPE = "STRIPE",
+    RAZORPAY = "RAZORPAY",
+    PAYPAL = "PAYPAL"
+};
 
+export enum PaymentMethod {
+    CARD = "CARD",
+    UPI = "UPI",
+    WALLET = "WALLET",
+    NET_BANKING = "NET_BANKING",
+};
+
+export enum PaymentStatus {
+    PENDING = "PENDING",
+    PAID = "PAID",
+    FAILED = "FAILED",
+    CANCELLED = "CANCELLED",
+    REFUNDED = "REFUNDED",
+};
+
+export enum PlanName {
+  TRIAL = "TRIAL",
+  STARTER = "STARTER",
+  PROFESSIONAL = "PROFESSIONAL",
+  ENTERPRISE = "ENTERPRISE",
+  NO_SUBSCRIPTION = "NO_SUBSCRIPTION"
+};
+
+export enum ServiceCategory {
+    HEALTHCARE_AND_WELLNESS = "Healthcare & Wellness",
+    PROFESSIONAL_SERVICES = "Professional Services",
+    EDUCATION_AND_TRAINING = "Education & Training",
+    HOME_AND_MAINTENANCE = "Home & Maintenance",
+    BEAUTY_AND_PERSONAL_CARE = "Beauty & Personal Care",
+    FITNESS_AND_LIFESTYLE = "Fitness & Lifestyle",
+    AUTOMOTIVE_SERVICES = "Automotive Services",
+    EVENTS_AND_CREATIVE_SERVICES = "Events & Creative Services",
+    TECHNOLOGY_SERVICES = "Technology Services",
+    REAL_ESTATE_AND_PROPERTY = "Real Estate & Property",
+};
+
+export enum ServiceMode {
+    ONLINE = "ONLINE",
+    OFFLINE = "OFFLINE",
+    BOTH = "BOTH",
+};
+
+export enum ServiceType {
+    ONE_TIME = "ONE_TIME",
+    RECURRING = "RECURRING",
+};
+
+export enum SubscriptionStatus {
+    ACTIVE = "ACTIVE",
+    EXPIRED = "EXPIRED",
+    CANCELLED = "CANCELLED",
+    PAYMENT_PENDING = "PAYMENT_PENDING",
+};
+
+export enum SubscriptionValidity {
+    SEVEN_DAYS = 7,
+    ONE_MONTH = 30,
+    THREE_MONTHS = 90,
+    SIX_MONTHS = 180,
+    TWELVE_MONTHS = 365,
+};

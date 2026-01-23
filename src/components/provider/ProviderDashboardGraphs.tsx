@@ -29,8 +29,8 @@ const ProviderDashboardGraphs: React.FC = () => {
     const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
 
     const subscriptionPlan = useMemo(() => {
-        if (!user) return PlanName.NoSubscription;
-        return user.providerSubscription ?? PlanName.NoSubscription;
+        if (!user) return PlanName.NO_SUBSCRIPTION;
+        return user.providerSubscription ?? PlanName.NO_SUBSCRIPTION;
     }, [user]);
 
     const {
@@ -43,7 +43,7 @@ const ProviderDashboardGraphs: React.FC = () => {
         queryFn: () => providerFetchDashboardGraphData(subscriptionPlan, dateRange),
         staleTime: 60 * 60 * 1000,
         refetchOnWindowFocus: false,
-        enabled: subscriptionPlan !== PlanName.NoSubscription
+        enabled: subscriptionPlan !== PlanName.NO_SUBSCRIPTION
     });
 
     return (

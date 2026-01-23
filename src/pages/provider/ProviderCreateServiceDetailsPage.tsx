@@ -23,7 +23,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { goToAuthPage } = useAuthNavigation();
   const { dataUpdating } = useSelector((store: RootState) => store.auth);
-  const [ services, setServices] = useState<OptionType<string>[]>([]);
+  const [services, setServices] = useState<OptionType<string>[]>([]);
   const { authUser } = useSelector((state: RootState) => state.auth);
 
   const {
@@ -80,7 +80,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
   }, [serviceCategory]);
 
   useEffect(() => {
-    if(!authUser?.isServiceDetailsAdded) return;
+    if (!authUser?.isServiceDetailsAdded) return;
 
     async function fetchOldServiceDetails() {
       const result = await providerFetchServiceDetails();
@@ -89,33 +89,33 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
         isGroupService: result.isGroupService,
         maxParticipants: result.maxParticipants,
         requirements: result.requirements,
-        serviceDescription: result.serviceDescription, 
+        serviceDescription: result.serviceDescription,
         serviceExperience: result.serviceExperience,
         serviceMode: result.serviceMode,
         serviceName: result.serviceName,
         servicePrice: result.servicePrice,
-        serviceType: result.serviceType, 
+        serviceType: result.serviceType,
         videoUrl: result.videoUrl,
         tags: result.tags,
       })
     }
 
     fetchOldServiceDetails();
-  },[authUser?.isServiceDetailsAdded, reset]);
+  }, [authUser?.isServiceDetailsAdded, reset]);
 
   const onSubmit = async (data: ProviderCreateServiceDetailsFormType) => {
     try {
-      if(authUser?.isServiceDetailsAdded) {
-       const res = await providerUpdateServiceDetails(data);
+      if (authUser?.isServiceDetailsAdded) {
+        const res = await providerUpdateServiceDetails(data);
         if (res.success) {
           toast.success(res.message);
-          goToAuthPage(Role.Provider, RedirectTo.PROVIDER_APPROVAL_PENDING);
+          goToAuthPage(Role.PROVIDER, RedirectTo.PROVIDER_APPROVAL_PENDING);
         }
       } else {
         const res = await dispatch(providerCreateServiceDetails(data)).unwrap();
         if (res.success) {
           toast.success(res.message);
-          goToAuthPage(Role.Provider, RedirectTo.PROVIDER_AVAILABILITY);
+          goToAuthPage(Role.PROVIDER, RedirectTo.PROVIDER_AVAILABILITY);
         }
       }
     } catch (error) {
@@ -141,7 +141,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 error={errors.serviceCategory}
               />
 
-              <SelectField<ProviderCreateServiceDetailsFormType,string>
+              <SelectField<ProviderCreateServiceDetailsFormType, string>
                 id="service"
                 label="Service"
                 options={services}
@@ -194,7 +194,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 error={errors.requirements?.message}
               />
 
-              <SelectField<ProviderCreateServiceDetailsFormType,ServiceType>
+              <SelectField<ProviderCreateServiceDetailsFormType, ServiceType>
                 id="serviceType"
                 label="Service Type"
                 options={serviceTypeOptions}
@@ -202,7 +202,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 error={errors.serviceType}
               />
 
-              <SelectField<ProviderCreateServiceDetailsFormType,ServiceMode>
+              <SelectField<ProviderCreateServiceDetailsFormType, ServiceMode>
                 id="serviceMode"
                 label="Service Mode"
                 options={serviceModeOptions}
@@ -230,7 +230,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 error={errors.maxParticipants?.message}
               />
 
-              <SelectField<ProviderCreateServiceDetailsFormType,boolean>
+              <SelectField<ProviderCreateServiceDetailsFormType, boolean>
                 id="isGroupService"
                 label="Is this a group service?"
                 options={groupOptions}

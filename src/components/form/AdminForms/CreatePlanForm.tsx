@@ -36,7 +36,7 @@ const CreatePlanForm: React.FC<CreatePlanFormProps> = ({
         resolver: zodResolver(adminCreatePlanZodSchema),
         mode: "onChange",
         defaultValues: {
-            planName: PlanName.Starter,
+            planName: PlanName.STARTER,
             description: "",
             price: 0,
             features: ["", "", "", "", ""],

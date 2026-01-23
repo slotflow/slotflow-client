@@ -3,9 +3,10 @@ import { Button } from "../../ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
 import { MoreHorizontal, NotebookPen, ReceiptText, VideoIcon } from "lucide-react";
-import { AppointmentStatus, Booking } from "@/utils/interface/entityInterface/bookingInterface";
+import { Booking } from "@/utils/interface/entityInterface/bookingInterface";
 import { FetchBookingsResponse, ValidateRoomId } from "@/utils/interface/api/commonApiInterface";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
+import { AppointmentStatus } from "@/utils/interface/enums";
 
 export const UserBookingsTableColumns = (
   handleUserCancelBooking: (bookingId: Booking["_id"]) => void,
@@ -32,17 +33,17 @@ export const UserBookingsTableColumns = (
       cell: ({ row }) => {
         const status = row.original.appointmentStatus;
         switch (status) {
-          case "Booked":
+          case AppointmentStatus.BOOKED:
             return <span className="text-yellow-500 font-semibold">Pending Confirmation</span>;
-          case "Cancelled":
+          case AppointmentStatus.CANCELLED:
             return <span className="text-red-500 font-semibold">Cancelled</span>;
-          case "Confirmed":
+          case AppointmentStatus.CONFIRMED:
             return <span className="text-green-500 font-semibold">Confirmed</span>;
-          case "RejectedByProvider":
+          case AppointmentStatus.REJECTED_BY_PROVIDER:
             return <span className="text-red-500 font-semibold">Rejected By Provider</span>;
-          case "NotAttended":
+          case AppointmentStatus.NOT_ATTENDED:
             return <span className="text-orange-500 font-semibold">Not Attended</span>;
-          case "Completed":
+          case AppointmentStatus.COMPLETED:
             return <span className="text-indigo-500 font-semibold">Completed 🎉</span>;
           default:
             return <span>{status}</span>;
@@ -79,13 +80,13 @@ export const UserBookingsTableColumns = (
             <DropdownMenuContent align="end">
               <DropdownMenuSeparator />
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              {booking.appointmentStatus === "Booked" && (
+              {booking.appointmentStatus === AppointmentStatus.BOOKED && (
                 <DropdownMenuItem
                   onClick={() => handleUserCancelBooking(booking._id)}>
                   Cancel
                 </DropdownMenuItem>
               )}
-              {booking.appointmentStatus === AppointmentStatus.Confirmed && (
+              {booking.appointmentStatus === AppointmentStatus.CONFIRMED && (
                 <DropdownMenuItem
                   onClick={() => handleUserJoinCall({ appointmentId: booking._id, roomId: booking.videoCallRoomId })}
                   className="flex items-center gap-2"
@@ -93,9 +94,9 @@ export const UserBookingsTableColumns = (
                   <VideoIcon /> Join
                 </DropdownMenuItem>
               )}
-              {booking.appointmentStatus === AppointmentStatus.Completed && (
+              {booking.appointmentStatus === AppointmentStatus.COMPLETED && (
                 <DropdownMenuItem
-                  onClick={(e: React.MouseEvent<HTMLDivElement>) => handleReviewAddFormToggle(e, booking._id, booking.serviceProviderId )}
+                  onClick={(e: React.MouseEvent<HTMLDivElement>) => handleReviewAddFormToggle(e, booking._id, booking.serviceProviderId)}
                   className="flex items-center gap-2"
                 >
                   <NotebookPen /> Add Review

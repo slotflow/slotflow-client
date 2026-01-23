@@ -2,11 +2,12 @@ import { format } from "date-fns";
 import { Button } from "../../ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
+import { Booking } from "@/utils/interface/entityInterface/bookingInterface";
 import { Check, MoreHorizontal, ReceiptText, VideoIcon, X } from "lucide-react";
-import { AppointmentStatus, Booking } from "@/utils/interface/entityInterface/bookingInterface";
 import { FetchBookingsResponse, ValidateRoomId } from "@/utils/interface/api/commonApiInterface";
 import { ProviderChangeAppointmentStatusRequest } from "@/utils/interface/api/providerApiInterface";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
+import { AppointmentStatus } from "@/utils/interface/enums";
 
 export const ProviderAppointmentsBookingTableColumns = (
   handleChangeAppointmentStatus: (data: ProviderChangeAppointmentStatusRequest) => void,
@@ -34,17 +35,17 @@ export const ProviderAppointmentsBookingTableColumns = (
       cell: ({ row }) => {
         const status = row.original.appointmentStatus;
         switch (status) {
-          case "Booked":
+          case AppointmentStatus.BOOKED:
             return <span className="text-yellow-500 font-semibold">Pending Confirmation</span>;
-          case "Cancelled":
+          case AppointmentStatus.CANCELLED:
             return <span className="text-red-500 font-semibold">Cancelled</span>;
-          case "Confirmed":
+          case AppointmentStatus.CONFIRMED:
             return <span className="text-green-500 font-semibold">Confirmed</span>;
-          case "RejectedByProvider":
+          case AppointmentStatus.REJECTED_BY_PROVIDER:
             return <span className="text-red-500 font-semibold">Rejected By Provider</span>;
-          case "NotAttended":
+          case AppointmentStatus.NOT_ATTENDED:
             return <span className="text-orange-500 font-semibold">Not Attended</span>;
-          case "Completed":
+          case AppointmentStatus.COMPLETED:
             return <span className="text-indigo-500 font-semibold">Completed 🎉</span>;
           default:
             return <span>{status}</span>;
@@ -83,17 +84,17 @@ export const ProviderAppointmentsBookingTableColumns = (
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              {appointment.appointmentStatus === AppointmentStatus.Booked && (
+              {appointment.appointmentStatus === AppointmentStatus.BOOKED && (
                 <>
                   <DropdownMenuItem
-                    onClick={() => handleChangeAppointmentStatus({ appointmentId: appointment._id, appointmentStatus: AppointmentStatus.Confirmed })}
+                    onClick={() => handleChangeAppointmentStatus({ appointmentId: appointment._id, appointmentStatus: AppointmentStatus.CONFIRMED })}
                     className="flex items-center gap-2"
                   >
                     {<Check className="w-4 h-4" />}
                     <span>Confirm</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    onClick={() => handleChangeAppointmentStatus({ appointmentId: appointment._id, appointmentStatus: AppointmentStatus.Rejected })}
+                    onClick={() => handleChangeAppointmentStatus({ appointmentId: appointment._id, appointmentStatus: AppointmentStatus.REJECTED_BY_PROVIDER })}
                     className="flex items-center gap-2"
                   >
                     {<X className="w-4 h-4" />}
@@ -101,7 +102,7 @@ export const ProviderAppointmentsBookingTableColumns = (
                   </DropdownMenuItem>
                 </>
               )}
-              {appointment.appointmentStatus === AppointmentStatus.Confirmed && (
+              {appointment.appointmentStatus === AppointmentStatus.CONFIRMED && (
                 <DropdownMenuItem
                   onClick={() => handleProviderJoinCall({ appointmentId: appointment._id, roomId: appointment.videoCallRoomId })}
                   className="flex items-center gap-2"

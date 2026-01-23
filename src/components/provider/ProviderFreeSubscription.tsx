@@ -19,7 +19,7 @@ const ProviderFreeSubscription = () => {
     const handlePaymentSelectionClose = () => {
         dispatch(setPaymentSelectionPage(false));
         dispatch(setSubscriptionIsTrailPlan(false));
-        dispatch(setProviderSubscription(PlanName.Trial));
+        dispatch(setProviderSubscription(PlanName.TRIAL));
     };
 
     const makeTrialubscription = async () => {
