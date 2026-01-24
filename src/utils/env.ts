@@ -14,6 +14,10 @@ export const firebaseConfig = {
     measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
+export const firebaseCloudMessageConfig = {
+    vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY,
+};
+
 export const stripeConfig = {
     stripePublishableKey: import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY,
     stripeSecretKey: import.meta.env.VITE_STRIPE_SECRET_KEY

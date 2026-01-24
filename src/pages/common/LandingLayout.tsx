@@ -11,6 +11,7 @@ import { setAuthUser } from "@/utils/redux/slices/authSlice";
 import { setAuthModal } from "@/utils/redux/slices/appSlice";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import AuthSelectionModal from "@/components/common/landing/AuthSelectionModal";
+import { useNotificationPermissionGate } from "@/hooks/systemHooks/useNotificationPermissionGate";
 
 const LandingLayout = () => {
 
@@ -58,6 +59,8 @@ const LandingLayout = () => {
       else if (authUser.role === Role.PROVIDER) navigate('/provider');
     }
   }, []);
+
+  useNotificationPermissionGate();
 
   const handleCloseModal = () => {
     dispatch(setAuthModal(false));

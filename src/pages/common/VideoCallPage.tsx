@@ -4,11 +4,11 @@ import { RootState } from "@/utils/redux/appStore";
 import CommonTable from "@/components/common/CommonTable";
 import { userFetchBookings } from "@/utils/apis/user.api";
 import { providerFetchBookingAppoinments } from "@/utils/apis/provider.api";
-import { useProviderAppointmentActions } from "@/utils/hooks/providerHooks/useProviderAppointmentActions";
+import { useProviderAppointmentActions } from "@/hooks/providerHooks/useProviderAppointmentActions";
 import { UserOnlineBookingTableColumn } from "@/components/table/tableColumns/UserOnlineBookingsTableColumn";
 import { ProviderOnlineBookingTableColumn } from "@/components/table/tableColumns/ProviderOnlineBookingsTableColumn";
 import { FetchOnlineBookingsForProviderResponse, FetchOnlineBookingsForUserResponse } from "@/utils/interface/api/commonApiInterface";
-import { useUserBookingActions } from "@/utils/hooks/userHooks/useUserBookingActions";
+import { useUserBookingActions } from "@/hooks/userHooks/useUserBookingActions";
 
 const VideoCallPage: React.FC = () => {
 

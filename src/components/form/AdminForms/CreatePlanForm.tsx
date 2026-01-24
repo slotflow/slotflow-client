@@ -7,7 +7,7 @@ import { adVisibility, planNameOptions } from "@/utils/constants";
 import { PlanName } from "@/utils/interface/enums";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { slideOut } from "@/utils/helper/gsapAnimationSlide";
-import { useAdminPlanActions } from "@/utils/hooks/adminHooks/useAdminPlanActions";
+import { useAdminPlanActions } from "@/hooks/adminHooks/useAdminPlanActions";
 import { AdminCreatePlanFormType, adminCreatePlanZodSchema } from "@/utils/zod/adminZod";
 
 interface CreatePlanFormProps {

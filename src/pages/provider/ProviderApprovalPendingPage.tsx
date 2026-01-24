@@ -9,7 +9,7 @@ import { RedirectTo } from "@/utils/interface/commonInterface";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { AdminVerificationStatus, Role } from "@/utils/interface/enums";
 import { providerSubmitDetailsForReview } from "@/utils/apis/provider.api";
-import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
+import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
 import { blockBackStatuses, verificationStatusTextMap } from "@/utils/constants";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 

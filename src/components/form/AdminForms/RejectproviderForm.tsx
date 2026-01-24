@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { verificationOptions } from "@/utils/constants";
 import { slideOut } from "@/utils/helper/gsapAnimationSlide";
 import { handleFormError } from "@/utils/helper/formErrorCatcher";
-import { useAdminProviderActions } from "@/utils/hooks/adminHooks/useAdminProviderActions";
+import { useAdminProviderActions } from "@/hooks/adminHooks/useAdminProviderActions";
 import { AdminRejectProviderFormType, adminRejectProviderZodSchema } from "@/utils/zod/adminZod";
 import { appConfig } from "@/utils/env";
 

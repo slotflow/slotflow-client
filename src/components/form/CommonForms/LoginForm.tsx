@@ -12,7 +12,7 @@ import { FormButton, FormHeading } from "../FormSplits";
 import { handleGoogleLogin } from "@/utils/helper/googleLogin";
 import { setForgotPassword } from "@/utils/redux/slices/appSlice";
 import { LoginFormType, LoginZodSchema } from '@/utils/zod/authZod';
-import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
+import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
 import { RedirectTo, LoginFormProps } from "@/utils/interface/commonInterface";
 import { Role } from "@/utils/interface/enums";
 import { appConfig } from "@/utils/env";

@@ -186,6 +186,11 @@ export const providerSubmitDetailsForReview = createAsyncThunk<ProviderSubmitDet
     }
 )
 
+export const providerSetPushNotification = async(data: boolean): Promise<ApiBaseResponse> => {
+    const response = await axiosInstance.patch('/provider/profile/push-notification', { allowPushNotification: data });
+    return response.data;
+}
+
 
 // **** Provider plans apis
 export const providerFetchPlans = async (): Promise<ProviderFetchPlansResponse[]> => {

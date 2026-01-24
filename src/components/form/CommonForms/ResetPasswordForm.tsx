@@ -7,7 +7,7 @@ import { updatePassword } from "@/utils/apis/auth.api";
 import { FormButton, FormHeading } from "../FormSplits";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { setForgotPassword } from "@/utils/redux/slices/appSlice";
-import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
+import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
 import { ResetPasswordFormType, resetPasswordZodSchema } from "@/utils/zod/authZod";
 import { RedirectTo, ResetPasswordFormProps } from "@/utils/interface/commonInterface";
 import { appConfig } from "@/utils/env";

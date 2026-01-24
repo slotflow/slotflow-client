@@ -49,6 +49,11 @@ export const userUpdateInfo = createAsyncThunk<UserUpdateUserInfoResponse, UserU
     }
 )
 
+export const userSetPushNotification = async(data: boolean): Promise<ApiBaseResponse> => {
+    const response = await axiosInstance.patch('/user/profile/push-notification', { allowPushNotification: data });
+    return response.data;
+}
+
 
 // **** user address apis
 export const userCreateUserAddress = async (data: CreateUserAddressRequest): Promise<UserCreateAddressResponse> => {

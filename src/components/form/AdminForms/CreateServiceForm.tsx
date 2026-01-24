@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { serviceCategoryOptions } from "@/utils/constants";
 import { slideOut } from "@/utils/helper/gsapAnimationSlide";
 import { handleFormError } from "@/utils/helper/formErrorCatcher";
-import { useAdminServiceActions } from "@/utils/hooks/adminHooks/useAdminServiceActions";
+import { useAdminServiceActions } from "@/hooks/adminHooks/useAdminServiceActions";
 import { AdminCreateServiceFormType, adminCreateServiceZodSchema } from "@/utils/zod/adminZod";
 import { ServiceCategory } from "@/utils/interface/enums";
 import { appConfig } from "@/utils/env";

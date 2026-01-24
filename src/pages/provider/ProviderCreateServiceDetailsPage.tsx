@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { OptionType, SelectField } from "@/components/form/SelectField";
 import { Role, ServiceCategory, ServiceMode, ServiceType } from "@/utils/interface/enums";
-import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
+import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
 import { RedirectTo } from "@/utils/interface/commonInterface";
 import { serviceCategoryOptions, serviceModeOptions, serviceTypeOptions, groupOptions } from "@/utils/constants";
 import { providerCreateServiceDetailsZodSchema, ProviderCreateServiceDetailsFormType } from "@/utils/zod/providerZod";

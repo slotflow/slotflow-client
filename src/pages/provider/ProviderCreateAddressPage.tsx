@@ -7,7 +7,7 @@ import { RedirectTo } from "@/utils/interface/commonInterface";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import AddressForm from "@/components/form/CommonForms/AddressForm";
 import { CreateAddressFormType } from "@/utils/zod/commonZodFields";
-import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
+import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
 import { providerCreateAddress, providerFetchAddress, providerUpdateAddress } from "@/utils/apis/provider.api";
 import { appConfig } from "@/utils/env";
 

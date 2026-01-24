@@ -1,5 +1,5 @@
 import CommonTable from '@/components/common/CommonTable';
-import { useCommonHook } from '@/utils/hooks/commonHooks/useCommonActions';
+import { useCommonHook } from '@/hooks/commonHooks/useCommonActions';
 import { adminFetchAllSubscriptions } from '@/utils/apis/adminSubscription.api';
 import { FetchProviderSubscriptionsResponse } from '@/utils/interface/api/commonApiInterface';
 import { ProvidersSubscriptionsTableColumns } from '@/components/table/tableColumns/ProviderSubscriptionsTableColumn';

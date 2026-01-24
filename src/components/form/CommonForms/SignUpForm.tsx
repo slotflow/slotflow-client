@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormButton, FormHeading } from "../FormSplits";
 import { handleGoogleLogin } from "@/utils/helper/googleLogin";
 import { SignupFormType, signupZodSchema } from "@/utils/zod/authZod";
-import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
+import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
 import { RedirectTo, signUpFormProps } from "@/utils/interface/commonInterface";
 import { appConfig } from "@/utils/env";
 

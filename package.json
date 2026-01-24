@@ -1,7 +1,10 @@
 {
-  "name": "sfclient",
-  "private": true,
+  "name": "slotflow-client",
+  "description": "slotflow client",
+  "author": "midhunkalarikkal",
+  "license": "MIT",
   "version": "0.0.0",
+  "packageManager": "pnpm@10.28.1",
   "type": "module",
   "scripts": {
     "dev": "vite",

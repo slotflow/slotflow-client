@@ -4,7 +4,7 @@ import CommonTable from '@/components/common/CommonTable';
 import { slideIn } from '@/utils/helper/gsapAnimationSlide';
 import { adminFetchAllPlans } from '@/utils/apis/adminPlan.api';
 import CreatePlanForm from '@/components/form/AdminForms/CreatePlanForm';
-import { useAdminPlanActions } from '@/utils/hooks/adminHooks/useAdminPlanActions';
+import { useAdminPlanActions } from '@/hooks/adminHooks/useAdminPlanActions';
 import { AdminFetchAllPlansResponse } from '@/utils/interface/api/adminPlanApiInterface';
 import { AdminPlansTableColumns } from '@/components/table/tableColumns/AdminPlansTableColumn';
 

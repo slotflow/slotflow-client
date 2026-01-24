@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import booking from '../../../assets/svgs/booking.svg';
 import service from '../../../assets/svgs/service.svg';
 import { HandleRoleSelectionFunction } from "@/utils/interface/commonInterface";
-import { useModalAnimation } from "@/utils/hooks/systemHooks/useModalAnimation";
+import { useModalAnimation } from "@/hooks/systemHooks/useModalAnimation";
 import { roleRoutes } from "@/utils/constants";
 
 interface AuthSelectionModalProps {

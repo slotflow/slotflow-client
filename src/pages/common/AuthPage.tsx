@@ -7,7 +7,7 @@ import React, { useEffect, useRef, useState } from "react";
 import LoginForm from "@/components/form/CommonForms/LoginForm";
 import SignUpForm from "@/components/form/CommonForms/SignUpForm";
 import WorldMapWrapper from "@/components/common/WorldMapWrapper";
-import { useAuthCheckInLogin } from "@/utils/hooks/commonHooks/useAuthCheckInLogin";
+import { useAuthCheckInLogin } from "@/hooks/commonHooks/useAuthCheckInLogin";
 import ResetPasswordForm from "@/components/form/CommonForms/ResetPasswordForm";
 import OtpVerificatioForm from "@/components/form/CommonForms/OtpVerificatioForm";
 import AnimatedBeamIntegrations from "@/components/common/AnimatedCircleWithBeam";

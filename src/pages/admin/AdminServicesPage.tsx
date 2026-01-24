@@ -4,7 +4,7 @@ import CommonTable from "@/components/common/CommonTable";
 import { slideIn } from "@/utils/helper/gsapAnimationSlide";
 import { adminFetchAllServices } from "@/utils/apis/adminService.api";
 import CreateServiceForm from "@/components/form/AdminForms/CreateServiceForm";
-import { useAdminServiceActions } from "@/utils/hooks/adminHooks/useAdminServiceActions";
+import { useAdminServiceActions } from "@/hooks/adminHooks/useAdminServiceActions";
 import { AdminFetchAllServicesResponse } from "@/utils/interface/api/adminServiceApiInterface";
 import { AdminAppServicesTableColumns } from "@/components/table/tableColumns/AdminAppServicesTableColumn";
 

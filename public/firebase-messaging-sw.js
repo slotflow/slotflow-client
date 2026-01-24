@@ -5,19 +5,16 @@ const firebaseConfig = {
   apiKey: "AIzaSyDdeMzf8l5Wt2RO4Aszkw0jpo-HJNm6a4M",
   authDomain: "slotflow-a3e40.firebaseapp.com",
   projectId: "slotflow-a3e40",
+  storageBucket: "slotflow-a3e40.firebasestorage.app",
   messagingSenderId: "837453096498",
   appId: "1:837453096498:web:a5999b30a3f2a4b211fe2b",
+  measurementId: "G-F2PZV2N6GF",
 };
 
-const app = firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
-  const { title, body } = payload.notification ?? {};
-
-  self.registration.showNotification(title ?? "Notification", {
-    body: body ?? "",
-    data: payload.data,
-  });
+  console.log("received background message : ",payload);
 });

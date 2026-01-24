@@ -6,10 +6,10 @@ import { resendOtp } from "@/utils/apis/auth.api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AppDispatch } from "@/utils/redux/appStore";
 import { FormButton, FormHeading } from "../FormSplits";
-import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
 import { VerifyEmailFormType, verifyEmailZodSchema } from "@/utils/zod/authZod";
 import { RedirectTo, EmailVerificationFormProps } from "@/utils/interface/commonInterface";
 import { appConfig } from "@/utils/env";
+import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
 
 const EmailVerificationForm: React.FC<EmailVerificationFormProps> = ({ role }) => {
     const dispatch = useDispatch<AppDispatch>();

@@ -12,7 +12,7 @@ import { updateTimer } from "@/utils/redux/slices/appSlice";
 import { resendOtp, verifyOtp } from "@/utils/apis/auth.api";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { VerifyOtpFormType, verifyOtpZodSchema } from "@/utils/zod/authZod";
-import { useAuthNavigation } from "@/utils/hooks/systemHooks/useAuthNavigation";
+import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
 import { RedirectTo, OtpVerificatioFormProps } from "@/utils/interface/commonInterface";
 import { appConfig } from "@/utils/env";
 

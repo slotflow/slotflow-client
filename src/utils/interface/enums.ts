@@ -1,9 +1,8 @@
 export enum PermissionStatus {
-    GRANTED = "Granted",
-    DENIED = "Denied",
-    DEFAULT = "Default",
+    GRANTED = "granted",
+    DENIED = "denied",
+    DEFAULT = "default",
 };
-
 
 export enum Platform {
   ANDROID = "ANDROID",

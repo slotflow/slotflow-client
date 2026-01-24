@@ -8,7 +8,7 @@ import { userCreateReview } from "@/utils/apis/user.api";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { toggleReviewCreateForm } from "@/utils/redux/slices/userSlice";
 import { Review } from "@/utils/interface/entityInterface/reviewInterface";
-import { useModalAnimation } from "@/utils/hooks/systemHooks/useModalAnimation";
+import { useModalAnimation } from "@/hooks/systemHooks/useModalAnimation";
 
 type ReviewFormValues = Pick<Review, "reviewText" | "rating">;
 
