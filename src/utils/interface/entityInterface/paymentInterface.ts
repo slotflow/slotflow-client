@@ -1,3 +1,5 @@
+import { PaymentFor, PaymentGateway } from "../enums";
+
 export interface Payment {
     _id: string;
     transactionId: string, // Stripe payment_intent || razorpay's payment_id || paypals capture_id
@@ -18,17 +20,4 @@ export interface Payment {
     refundAt?: Date,
     refundReason?: string,
     chargeId?: string,
-}
-
-export enum PaymentFor {
-    ProviderSubscription = "ProviderSubscription",
-    AppointmentBooking = "AppointmentBooking",
-    ProviderPayout = "ProviderPayout",
-    CancelBooking = "CancelBooking"
-}
-
-export enum PaymentGateway {
-    Stripe = "Stripe",
-    Razorpay = "Razorpay",
-    Paypal = "Paypal",
 }

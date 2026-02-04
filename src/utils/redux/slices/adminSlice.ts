@@ -1,16 +1,25 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { AdminState, SetProviderRejectModalType } from "@/utils/interface/sliceInterface";
+
+const initialState: AdminState = {
+    rejectProviderId: null,
+    isProviderRejectModalOpen: false,
+};
 
 const adminSlice = createSlice({
     name: "admin",
-    initialState: null,
+    initialState,
     reducers: {
-        clearAdminSlice: () => {
-
-        }
+        setProviderRejectModal: (state, action: PayloadAction<SetProviderRejectModalType>) => {
+            state.isProviderRejectModalOpen = action.payload.modalState;
+            state.rejectProviderId = action.payload.providerId;
+        },
     },
 });
 
 
-export const { clearAdminSlice } = adminSlice.actions;
+export const {
+    setProviderRejectModal
+} = adminSlice.actions;
 
 export default adminSlice.reducer;

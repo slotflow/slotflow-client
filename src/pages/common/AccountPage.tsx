@@ -9,25 +9,25 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { profileTabs } from '@/utils/constants';
 import { RootState } from '@/utils/redux/appStore';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import Address from '@/components/common/profile/Address';
 import Profile from '@/components/common/profile/Profile';
+import { userUpdateProfileImage } from '@/utils/apis/user.api';
 import ProfileHead from '@/components/common/profile/ProfileHead';
-import { userUpdateUserProfileImage } from '@/utils/apis/user.api';
 import ProviderService from '@/components/provider/ProviderService';
 import DataFetchingError from '@/components/common/DataFetchingError';
+import { providerUpdateProfileImage } from '@/utils/apis/provider.api';
 import ProviderAvailability from '@/components/provider/ProviderAvailability';
-import { providerUpdateProviderProfileImage } from '@/utils/apis/provider.api';
 
 const AccountPage: React.FC = () => {
+
     const { authUser } = useSelector((state: RootState) => state.auth);
     const [selectedTab, setSelectedTab] = useState("tab1");
 
     const isProvider = authUser?.role === "PROVIDER";
 
     const updateProfileImageApiFunction = isProvider
-        ? providerUpdateProviderProfileImage
-        : userUpdateUserProfileImage;
+        ? providerUpdateProfileImage
+        : userUpdateProfileImage;
 
     if (!authUser) return <DataFetchingError message="User not found" />;
 
@@ -41,6 +41,7 @@ const AccountPage: React.FC = () => {
             />
 
             <div className="mt-6 flex flex-col md:flex-row gap-6">
+                
                 <div className="w-full md:hidden">
                     <Select value={selectedTab} onValueChange={setSelectedTab}>
                         <SelectTrigger className="w-full">
@@ -57,7 +58,6 @@ const AccountPage: React.FC = () => {
                                         </div>
                                     </SelectItem>
                                 ))}
-
                         </SelectContent>
                     </Select>
                 </div>
@@ -78,7 +78,6 @@ const AccountPage: React.FC = () => {
                         ))}
                 </div>
 
-                <ScrollArea className="flex-1 h-[70vh] rounded-md border p-4">
                     {selectedTab === "tab1" && <Profile />}
                     {selectedTab === "tab2" && <Address />}
                     {isProvider && (
@@ -87,7 +86,6 @@ const AccountPage: React.FC = () => {
                             {selectedTab === "tab4" && <ProviderAvailability />}
                         </>
                     )}
-                </ScrollArea>
             </div>
         </div>
     );

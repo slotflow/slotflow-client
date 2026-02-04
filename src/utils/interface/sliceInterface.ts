@@ -1,80 +1,98 @@
-import { Role } from "./commonInterface";
-import { Plan } from "./entityInterface/planInterface";
-import { ProviderService } from "./entityInterface/providerServiceInterface";
+import { Provider } from "./entityInterface/providerInterface";
+import { AdminVerificationStatus, PlanName, Role, ServiceCategory } from "./enums";
 import { Availability } from "./entityInterface/serviceAvailabilityInterface";
+import { UserViewProviderCardComponentProps } from "./componentInterface/commonComponentInterface";
+import { ProviderCardsFilters } from "./commonInterface";
 
-// **** Auth slice state **** \\
-export interface UserData {
-    uid?: string;
-    username?: string;
-    profileImage?: string;
-    phone?: string;
-    email?: string;
-    verificationToken?: string;
-    role: Role;
-    isBlocked: boolean;
-    isLoggedIn: boolean;
-    isAddressAdded?: boolean;
-    isServiceDetailsAdded?: boolean;
-    isServiceAvailabilityAdded?: boolean;
-    isAdminApproved?: boolean;
-    providerSubscription?: Plan["planName"];
-    serviceDescription?: ProviderService["serviceDescription"];
-    googleId?: string;
-    googleConnected: boolean;
-    updatedAt: string
+// **** Auth slice state
+export interface AuthUser {
+  uid?: string;
+  username?: string;
+  profileImage?: string;
+  phone?: string;
+  email?: string;
+  verificationToken?: string;
+  role: Role;
+  isBlocked?: boolean;
+  isLoggedIn?: boolean;
+  isAddressAdded?: boolean;
+  isServiceDetailsAdded?: boolean;
+  isServiceAvailabilityAdded?: boolean;
+  isProofSubmitted?: boolean;
+  isAdminVerified?: boolean;
+  verificationRejectionReason?: string;
+
+  adminVerificationStatus?: AdminVerificationStatus,
+  isAddressVerified?: boolean,
+  isServiceDetailsVerified?: boolean,
+  isAvailabilityVerified?: boolean,
+  isProofsVerified?: boolean,
+
+  providerSubscription?: PlanName;
+  serviceDescription?: string;
+
+  googleId?: string;
+  googleConnected?: boolean;
+  
+  stripeConnected?: boolean;
+
+  allowPushNotification?: boolean | null;
 }
 
 export interface AuthState {
-    authUser: UserData | null;
-    profileImageUpdating: boolean;
-    dataUpdating: boolean; // used for the data update loading state in provider add address, provider add service availability, provider add service details, profile info updating
+  authUser: AuthUser | null;
+  profileImageUpdating: boolean;
+  dataUpdating: boolean; // used for the data update loading state in provider add address, provider add service availability, provider add service details, profile info updating
+}
+
+
+// **** App state slice
+export interface appState {
+  lightTheme: boolean;
+  sidebarOpen: boolean;
+  filterSideBarOpen: boolean;
+  authModal: boolean;
+  forgotPassword: boolean;
+  otpRemainingTime: number;
+  otpTimerIsRunning: boolean;
+}
+
+
+// **** Admin slice
+export interface AdminState {
+  rejectProviderId: string | null;
+  isProviderRejectModalOpen: boolean;
+}
+
+export interface SetProviderRejectModalType {
+  modalState: boolean,
+  providerId: Provider["_id"] | null,
 }
 
 
 
-// **** Sign Form Interface **** \\
-export interface SignUpFormStateVariables {
-    signInForm: boolean;
-    signUpForm: boolean;
-    verifyOtpForm: boolean;
-    verifyEmailForm: boolean;
-    resetPasswordForm: boolean;
-    forgotPassword: boolean;
-    otpRemainingTime: number;
-    otpTimerIsRunning: boolean;
-    loading: boolean;
-}
-
-
-
-// **** App state slice **** \\
-export interface appStateVariables {
-    lightTheme: boolean;
-    signinForm: boolean;
-    sidebarOpen: boolean;
-    filterSideBarOpen: boolean;
-    authModal: boolean;
-}
-
-
-
-// **** Provider slice interfaces **** \\
+// **** Provider slice interfaces
 export interface ProviderState {
   availabilities: Availability[] | null;
   planId: string | null;
-  planDuration: string | null;
+  planDuration: number | null;
   paymentSelectionOpen: boolean;
   isTrialPlan: boolean;
   paymentPageOpen: boolean;
+  identityProof: string | null;
+  serviceProof: string | null;
+  identityProofLoading: boolean;
+  serviceProofLoading: boolean;
 }
 
 
 
-// **** User slice interface **** \\
+// **** User slice interface
 export interface UserStateVariables {
-  selectedServices: string[] | null;
-  isReviewAddFormOpen: boolean;
+  isReviewCreateFormOpen: boolean;
   selectedBookingId: string | null;
   selectedBookingProviderId: string | null;
+  providers: Array<UserViewProviderCardComponentProps> | null;
+  selectedCategories: ServiceCategory[];
+  providerCardsfFlter: ProviderCardsFilters;
 }

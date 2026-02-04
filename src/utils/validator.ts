@@ -1,13 +1,10 @@
 import dayjs from 'dayjs';
-import validator from 'validator';
 import customParseFormat from "dayjs/plugin/isSameOrBefore";
 import { validateEmail, validateOtp, validatePassword, validateUsername } from '@codebymk/validator';
 
 dayjs.extend(customParseFormat);
 
 export class Validator {
-
-
 
     // app service name
     static validateAppServiceName(serviceName: string): void {
@@ -56,7 +53,7 @@ export class Validator {
         for (const feature of features) {
             if (typeof feature !== "string" || feature.trim().length === 0)
                 throw new Error("Each feature must be a non-empty string.");
-            if(!/^[\w\d\s!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]{5,100}$/.test(feature.trim()))
+            if (!/^[\w\d\s!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]{5,100}$/.test(feature.trim()))
                 throw new Error("Invalid feature.");
         }
     }
@@ -70,7 +67,7 @@ export class Validator {
     }
 
 
-    
+
 
 
     // **** Address Validation
@@ -110,7 +107,7 @@ export class Validator {
     }
 
     // Pincode
-    static validatePincode(pincode: string): void { 
+    static validatePincode(pincode: string): void {
         if (!pincode || pincode.trim().length < 3) throw new Error("Pincode is required and should have at least 3 characters.");
         if (pincode.trim().length > 12) throw new Error("Pincode should have less than 12 characters.");
         if (!/^[A-Za-z0-9\s-]{3,12}$/.test(pincode)) throw new Error("Invalid postal code");
@@ -128,11 +125,6 @@ export class Validator {
         if (!country || country.trim().length < 2) throw new Error("Country is required and should have at least 2 characters.");
         if (country.trim().length > 50) throw new Error("Country should have less than 50 characters.");
         if (!/^[a-zA-Z ]{2,50}$/.test(country)) throw new Error("Country should only contain alphabets and spaces");
-    }
-
-    // Google Map Link
-    static validateGoogleMapLink(googleMapLink: string): void {
-        if (!validator.isURL(googleMapLink)) throw new Error("Invalid Google Map link.");
     }
 
 
@@ -164,25 +156,10 @@ export class Validator {
         if (servicePrice < 1 || servicePrice > 1000000) throw new Error("Invalid service price. Service price must be between 1 and 1000000.");
     }
 
-    // Provider adhaar number
-    static validateProviderAdhaar(providerAdhaar: string): void {
-        if (!providerAdhaar) {
-            throw new Error("Adhaar number is required.");
-        }
-
-        if (typeof providerAdhaar !== "string") {
-            throw new Error("Invalid adhaar number. Must be a string.");
-        }
-
-        if (!/^\d{6}$/.test(providerAdhaar)) {
-            throw new Error("Invalid adhaar number. Please enter exactly 6 digits.");
-        }
-    }
-
     // Provider experience
-    static validateProviderExperience(providerExperience: string): void {
-        if (!providerExperience || providerExperience.trim().length === 0) throw new Error("Provider experience is required.");
-        if (!/^[\w\d !"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]{1,500}$/.test(providerExperience.trim())) throw new Error("Invalid experience. Provider experience should contain alphanumeric characters, spaces, and special characters, and be between 1 and 500 characters.");
+    static validateserviceExperience(serviceExperience: string): void {
+        if (!serviceExperience || serviceExperience.trim().length === 0) throw new Error("Provider experience is required.");
+        if (!/^[\w\d !"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]{1,500}$/.test(serviceExperience.trim())) throw new Error("Invalid experience. Provider experience should contain alphanumeric characters, spaces, and special characters, and be between 1 and 500 characters.");
     }
 
 

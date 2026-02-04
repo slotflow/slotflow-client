@@ -15,14 +15,15 @@ const GoogleButton: React.FC<GoogleButtonProps> = ({
     return (
         <Button
             onClick={onClick}
-            variant="outline"
+            variant="default"
             type="button"
             className={`${className} my-2
                 relative flex items-center justify-center
-                px-2 py-2 md:px-3 md:py-2.5
                 bg-white dark:bg-[var(--inputBg)]
                 rounded-md border-none
                 shadow-sm 
+                text-black dark:text-white hover:text-white
+                transition-colors
                 cursor-pointer`}
         >
             <span
@@ -38,4 +39,4 @@ const GoogleButton: React.FC<GoogleButtonProps> = ({
     )
 }
 
-export default GoogleButton
+export default GoogleButton;

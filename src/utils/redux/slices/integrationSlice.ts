@@ -19,12 +19,12 @@ const integrationSlice = createSlice({
         },
         setStripeConnectionLoading: (state, action: PayloadAction<boolean>) => {
             state.stripeConnectionLoading = action.payload;
-        }
+        },
     },
 });
 
 export const {
     setGoogleConnectionLoading,
-    setStripeConnectionLoading
+    setStripeConnectionLoading,
 } = integrationSlice.actions;
 export default integrationSlice.reducer;

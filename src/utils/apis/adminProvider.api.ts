@@ -1,5 +1,6 @@
 import { axiosInstance } from "@/lib/axios";
 import {
+    AdminRejectProviderRequest,
     AdminFetchAllProvidersResponse,
     AdminFetchProviderServiceResponse,
     AdminChangeProviderTrustTagRequest,
@@ -11,16 +12,22 @@ import {
 import { buildQueryParams, parseNewCommonResponse } from "../helper";
 import { Provider } from "../interface/entityInterface/providerInterface";
 import { FetchFunctionParams, ApiPaginatedResponse, ApiBaseResponse } from "../interface/commonInterface";
-import { AdminFetchddressResponse, FetchPaymentsResponse, FetchProviderSubscriptionsResponse } from "../interface/api/commonApiInterface";
+import { AdminFetchddressResponse, FetchPaymentsResponse, FetchProvidersProofsResponse, FetchProviderSubscriptionsResponse } from "../interface/api/commonApiInterface";
 
 export const adminFetchAllProviders = async (params?: FetchFunctionParams): Promise<ApiPaginatedResponse<AdminFetchAllProvidersResponse>> => {
     const query = buildQueryParams(params);
     const response = await axiosInstance.get(`/admin/providers${query ? `?${query}` : ''}`);
-    return parseNewCommonResponse<AdminFetchAllProvidersResponse>(response.data);
+    return parseNewCommonResponse<AdminFetchAllProvidersResponse>(response.data.data);
 };
 
-export const adminApproveProvider = async (providerId : Provider["_id"]): Promise<ApiBaseResponse> => {
+export const adminApproveProvider = async (providerId: Provider["_id"]): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.patch(`/admin/providers/${providerId}/approve`);
+    return response.data;
+}
+
+export const adminRejectProvider = async (data: AdminRejectProviderRequest): Promise<ApiBaseResponse> => {
+    const { providerId, ...payload } = data;
+    const response = await axiosInstance.patch(`/admin/providers/${providerId}/reject`, {...payload});
     return response.data;
 }
 
@@ -49,26 +56,30 @@ export const adminFetchProviderService = async (providerId: Provider["_id"]): Pr
     return response.data.data;
 }
 
-export const adminFetchProviderServiceAvailability = async ({date, providerId}: AdminFetchProviderAvailabilityRequest): Promise<AdminFetchProviderAvailabilityResponse> => {
+export const adminFetchProviderServiceAvailability = async ({ date, providerId }: AdminFetchProviderAvailabilityRequest): Promise<AdminFetchProviderAvailabilityResponse> => {
     const response = await axiosInstance.get(`/admin/providers/${providerId}/availability`, {
-        params : {
-            date : date.toISOString()
+        params: {
+            date: date.toISOString()
         }
     });
-    return response.data.data;
+    return response.data;
 }
 
-export const adminFetchProviderSubscriptions = async (params: FetchFunctionParams<Provider["_id"]>) : Promise<ApiPaginatedResponse<FetchProviderSubscriptionsResponse>> => {
+export const adminFetchProviderSubscriptions = async (params: FetchFunctionParams<Provider["_id"]>): Promise<ApiPaginatedResponse<FetchProviderSubscriptionsResponse>> => {
     const { id, pagination } = params;
     const query = buildQueryParams({ pagination });
     const response = await axiosInstance.get(`/admin/providers/${id}/subscriptions${query ? `?${query}` : ''}`);
-    return parseNewCommonResponse<FetchProviderSubscriptionsResponse>(response.data);
+    return parseNewCommonResponse<FetchProviderSubscriptionsResponse>(response.data.data);
 }
 
 export const adminFetchProviderPayments = async (params: FetchFunctionParams<Provider["_id"]>): Promise<ApiPaginatedResponse<FetchPaymentsResponse>> => {
     const { id, pagination } = params;
     const query = buildQueryParams({ pagination });
     const response = await axiosInstance.get(`/admin/providers/${id}/payments${query ? `?${query}` : ''}`);
-    return parseNewCommonResponse<FetchPaymentsResponse>(response.data);
+    return parseNewCommonResponse<FetchPaymentsResponse>(response.data.data);
 }
 
+export const adminFetchProviderProofs = async (providerId: Provider["_id"]): Promise<FetchProvidersProofsResponse> => {
+    const response = await axiosInstance.get(`/admin/providers/${providerId}/proofs`);
+    return response.data.data;
+}

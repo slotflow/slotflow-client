@@ -1,24 +1,12 @@
 import { axiosInstance } from "../../lib/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { setAuthUser } from "../redux/slices/authSlice";
-import { startTimer } from "../redux/slices/signFormSlice";
 import { ApiBaseResponse } from "../interface/commonInterface";
 import { ResendOtpRequest, ResendOtpResponse, SigninRequest, SigninResponse, SignupRequest, SignupResponse, UpdatePasswordRequest, VerifyOtpRequest } from "../interface/api/authApiInterface";
 
 export const signup = createAsyncThunk<SignupResponse, SignupRequest>('auth/signup',
-    async (userData: SignupRequest, thunkAPI) => {
-        // try {
+    async (userData: SignupRequest) => {
             const response = await axiosInstance.post("/auth/signup", userData);
-            if (response.data.success) {
-                thunkAPI.dispatch(setAuthUser(response.data.authUser));
-                thunkAPI.dispatch(startTimer(300));
-            }
             return response.data;
-    //     } catch (error) {
-    //         return thunkAPI.rejectWithValue(
-    //     error.response?.data || { success: false, message: "Something went wrong" }
-    //   );
-    //     }
     }
 );
 
@@ -31,6 +19,7 @@ export const verifyOtp = createAsyncThunk<ApiBaseResponse,VerifyOtpRequest>("aut
 
 export const signin = createAsyncThunk<SigninResponse, SigninRequest>("auth/signin",
     async (userData: SigninRequest) => {
+        console.log("auth singin api calling");
         const response = await axiosInstance.post('/auth/signin', userData);
         return response.data;
     }
@@ -44,12 +33,8 @@ export const signout = createAsyncThunk<ApiBaseResponse>("auth/signOut",
 )
 
 export const resendOtp = createAsyncThunk<ResendOtpResponse,ResendOtpRequest>("auth/resendOtp",
-    async (authData: ResendOtpRequest, thunkAPI) => {
+    async (authData: ResendOtpRequest) => {
         const response = await axiosInstance.post("/auth/resendOtp", authData);
-        if (response.data.success) {
-            thunkAPI.dispatch(setAuthUser(response.data.authUser));
-            thunkAPI.dispatch(startTimer(300));
-        }
         return response.data;
     }
 )
@@ -60,12 +45,6 @@ export const updatePassword = createAsyncThunk<ApiBaseResponse,UpdatePasswordReq
         return response.data;
     }
 )
-
-export const checkUserStatus = createAsyncThunk("auth/checkUserStatus",
-    async () => {
-        await axiosInstance.post("/auth/status");
-    }
-);
 
 // export const handleGoogleLogin = async () : Promise<any> => {
 //     const response = axiosInstance.get()

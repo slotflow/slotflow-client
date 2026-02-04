@@ -11,7 +11,6 @@ const UserPaymentsPage = () => {
     <CommonTable<FetchPaymentsResponse>
       fetchApiFunction={userFetchPayments}
       queryKey='payments'
-      heading='Payment History'
       column={column}
       columnsCount={6}
     />

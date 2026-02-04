@@ -1,12 +1,13 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
+import { RootState } from '@/utils/redux/appStore';
+import { PlanName } from '@/utils/interface/enums';
+import { useEffect, useMemo, useState } from 'react';
 import DataFetchingError from '../DataFetchingError';
 import StatsCard from '@/components/common/dashboard/StatsCard';
 import { statsMapIntrface } from '@/utils/interface/commonInterface';
 import HorizontalChartForAdminReact from '../chart/HorizontalChartForAdmin';
 import DashboardStatsShimmer from '@/components/shimmers/DashboardStatsShimmer';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/utils/redux/appStore';
 
 interface DashboardStatsProps<T extends Record<string, number>> {
     queryFunction(): Promise<T>;
@@ -30,8 +31,8 @@ const DashboardStats = <T extends Record<string, number>>({
     const user = useSelector((store: RootState) => store.auth.authUser);
 
 const subscriptionPlan = useMemo(() => {
-  if (!user) return "NoSubscription";
-  return user.providerSubscription ?? "NoSubscription";
+  if (!user) return PlanName.NO_SUBSCRIPTION;
+  return user.providerSubscription ?? PlanName.NO_SUBSCRIPTION;
 }, [user]);
 
     const [chartData, setChartData] = useState<{ name: string; value: number }[]>();

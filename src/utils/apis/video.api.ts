@@ -1,9 +1,8 @@
 import { RootState } from "../redux/appStore";
+import { appConfig, serviceConfig } from "../env";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createVideoSocket, destroyVideoSocket } from "@/lib/socketService";
 import { setVideoSocketConnected, setVideoSocketDisconnected } from "../redux/slices/videoSlice";
-
-const BASE_URL =  import.meta.env.MODE === "development" ? import.meta.env.VITE_REALTIME_BACKEND_DEV_URL : import.meta.env.VITE_REALTIME_BACKEND_DEV_URL;
 
 export const connectVideoSocket = createAsyncThunk<void, void, { state: RootState }>("video/connectSocket",
     async (_, { getState, dispatch }) => {
@@ -12,7 +11,7 @@ export const connectVideoSocket = createAsyncThunk<void, void, { state: RootStat
     const authUser = getState().auth.authUser;
     if (!authUser) return;
 
-    const videoSocket = createVideoSocket(authUser.uid as string, BASE_URL);
+    const videoSocket = createVideoSocket(authUser.uid as string, serviceConfig.realtimeService+appConfig.version);
     console.log("videoSocket : ",videoSocket);
     
     videoSocket.on("connect", () => {

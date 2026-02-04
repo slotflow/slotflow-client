@@ -1,23 +1,25 @@
 import { useEffect } from "react";
 import Header from "@/components/Navs/Header";
 import { pathNames } from "@/utils/constants";
+import { Role } from "@/utils/interface/enums";
 import FooterBar from "@/components/Navs/FooterBar";
 import { RootState } from "../../utils/redux/appStore";
 import { useDispatch, useSelector } from "react-redux";
 import { Bounce, ToastContainer } from "react-toastify";
-import { UserData } from "@/utils/interface/sliceInterface";
+import { AuthUser } from "@/utils/interface/sliceInterface";
 import { setAuthUser } from "@/utils/redux/slices/authSlice";
-import { setAuthModal } from "@/utils/redux/slices/stateSlice";
+import { setAuthModal } from "@/utils/redux/slices/appSlice";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import AuthSelectionModal from "@/components/common/landing/AuthSelectionModal";
+import { useNotificationPermissionGate } from "@/hooks/systemHooks/useNotificationPermissionGate";
 
 const LandingLayout = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const state = useSelector((state: RootState) => state.state);
-  const themeMode = useSelector((store: RootState) => store.state?.lightTheme);
+  const state = useSelector((state: RootState) => state.app);
+  const themeMode = useSelector((store: RootState) => store.app?.lightTheme);
   const shouldHideFooter = pathNames.some((path) => location.pathname.startsWith(path));
 
   useEffect(() => {
@@ -27,32 +29,42 @@ const LandingLayout = () => {
     if (authUserStr) {
       const rawUser = JSON.parse(decodeURIComponent(authUserStr));
       if (!rawUser || !rawUser.googleId) return;
-      const authUser: UserData = {
+      const authUser: AuthUser = {
         uid: rawUser._id,
         username: rawUser.username,
         email: rawUser.email,
         profileImage: rawUser.profileImage,
         isBlocked: rawUser.isBlocked,
-        role: rawUser.role as "USER" | "PROVIDER",
+        role: rawUser.role,
         isLoggedIn: true,
-        isAddressAdded: rawUser.addressId ? true : false,
-        isServiceDetailsAdded: rawUser.serviceId ? true : false,
-        isServiceAvailabilityAdded: rawUser.serviceAvailabilityId ? true : false,
-        isAdminApproved: rawUser.isAdminVerified,
+        isAddressAdded: rawUser.isAddressAdded,
+        isServiceDetailsAdded: rawUser.isServiceDetailsAdded,
+        isServiceAvailabilityAdded: rawUser.isServiceAvailabilityAdded,
+        isProofSubmitted: rawUser.isProofSubmitted,
+        isAdminVerified: rawUser.isAdminVerified,
         googleId: rawUser.googleId,
         googleConnected: rawUser.googleConnected,
-        updatedAt: rawUser.updatedAt,
+        providerSubscription: rawUser.providerSubscription,
+        isAddressVerified: rawUser.isAddressVerified,
+        isAvailabilityVerified: rawUser.isAvailabilityVerified,
+        isProofsVerified: rawUser.isProofsVerified,
+        isServiceDetailsVerified: rawUser.isServiceDetailsVerified,
+        verificationRejectionReason: rawUser.verificationRejectionReason,
+        adminVerificationStatus: rawUser.adminVerificationStatus,
+        allowPushNotification: rawUser.allowPushNotification,
       };
       dispatch(setAuthUser(authUser));
       window.history.replaceState({}, document.title, window.location.pathname);
-      if (authUser.role === "USER") navigate('/user');
-      else if (authUser.role === "PROVIDER") navigate('/provider/dashboard');
+      if (authUser.role === Role.USER) navigate('/user');
+      else if (authUser.role === Role.PROVIDER) navigate('/provider');
     }
   }, []);
 
+  useNotificationPermissionGate();
+
   const handleCloseModal = () => {
-          dispatch(setAuthModal(false));
-      };
+    dispatch(setAuthModal(false));
+  };
 
   return (
     <>

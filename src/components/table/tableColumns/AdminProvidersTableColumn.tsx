@@ -3,11 +3,13 @@ import { MoreHorizontal } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
 import { Provider } from "@/utils/interface/entityInterface/providerInterface";
-import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminFetchAllProvidersResponse } from "@/utils/interface/api/adminProviderApiInterface";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
+import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminFetchAllProvidersResponse } from "@/utils/interface/api/adminProviderApiInterface";
+import { AdminVerificationStatus } from "@/utils/interface/enums";
 
 export const AdminProvidersTableColumns = (
     handleAdminApproveProvider: (providerId: Provider["_id"]) => void,
+    handleOpenProviderRejectModal: (providerId: Provider["_id"]) => void,
     hanldeAdminChangeProviderBlockStatus: (data: AdminChangeProviderBlockStatusRequest) => void,
     handleGetProviderDetailPage: (providerId: Provider["_id"]) => void,
     hanldeAdminChangeProviderSlotflowTrustTag: (data: AdminChangeProviderTrustTagRequest) => void,
@@ -41,6 +43,29 @@ export const AdminProvidersTableColumns = (
                     return <span className="text-green-500 font-semibold">Verified</span>
                 } else {
                     return <span className="text-red-500 font-semibold">Pending</span>
+                }
+            },
+        },
+        {
+            accessorKey: "adminVerificationStatus",
+            header: "Verication Status",
+            cell: ({ row }) => {
+                const status = row.original.adminVerificationStatus;
+                switch (status) {
+                    case AdminVerificationStatus.REQUESTED:
+                        return <span className="font-semibold">Requested By Provider</span>;
+                    case AdminVerificationStatus.UNDER_REVIEW:
+                        return <span className="text-yellow-500 font-semibold">Under Review</span>;
+                    case AdminVerificationStatus.APPROVED:
+                        return <span className="text-green-500 font-semibold">Approved</span>;
+                    case AdminVerificationStatus.REJECTED:
+                        return <span className="text-red-500 font-semibold">Rejected</span>;
+                    case AdminVerificationStatus.RESUBMITTED:
+                        return <span className="font-semibold">ReSubmitted By Provider</span>;
+                    case AdminVerificationStatus.NOT_REQUESTED:
+                        return <span className="text-gray-500 font-semibold">Not Requested</span>;
+                    default:
+                        return <span>{status}</span>;
                 }
             },
         },
@@ -88,9 +113,16 @@ export const AdminProvidersTableColumns = (
                             <DropdownMenuItem onClick={() => handleGetProviderDetailPage(provider._id)}>
                                 Details
                             </DropdownMenuItem>
-                            {!provider.isAdminVerified && (
+                            {(!provider.isAdminVerified && 
+                            (provider.adminVerificationStatus === AdminVerificationStatus.REQUESTED || provider.adminVerificationStatus === AdminVerificationStatus.RESUBMITTED || provider.adminVerificationStatus === AdminVerificationStatus.UNDER_REVIEW)) && (
                                 <DropdownMenuItem onClick={() => handleAdminApproveProvider(provider._id)}>
                                     Approve
+                                </DropdownMenuItem>
+                            )}
+                            {(!provider.isAdminVerified &&
+                                (provider.adminVerificationStatus === AdminVerificationStatus.REQUESTED || provider.adminVerificationStatus === AdminVerificationStatus.RESUBMITTED || provider.adminVerificationStatus === AdminVerificationStatus.UNDER_REVIEW)) && (
+                                <DropdownMenuItem onClick={() => handleOpenProviderRejectModal(provider._id)}>
+                                    Reject
                                 </DropdownMenuItem>
                             )}
                             <DropdownMenuItem onClick={() => hanldeAdminChangeProviderBlockStatus({ isBlocked: provider.isBlocked, providerId: provider._id })}>

@@ -25,40 +25,43 @@ const IntegrationCard: React.FC<IntegrationCardProps> = ({
     const dispatch = useDispatch<AppDispatch>();
 
     return (
-
-        <Card className="w-full mt-4 border shadow-sm">
+        <Card className="w-full mt-4 border shadow-sm flex flex-col">
             <CardHeader className="flex justify-between items-center space-x-4">
-                <div className='flex items-center space-x-2'>
-                    <img src={image} alt="Google" className="size-12" />
-                    <CardTitle className="text-lg font-semibold">{heading}</CardTitle>
+                <div className="flex items-center space-x-2">
+                    <img src={image} alt="Integration" className="size-12 rounded-sm shadow-md" />
+                    <CardTitle className="text-lg font-semibold">
+                        {heading}
+                    </CardTitle>
                 </div>
-
             </CardHeader>
 
-            <CardContent className="text-sm">
+            <CardContent className="text-sm flex-1">
                 {description}
             </CardContent>
 
             <CardFooter className="flex justify-end">
                 {isConnected ? (
-                    <span className='p-1 border border-green-400 flex items-center justify-center rounded-md'>
-                        <span className='text-xs font-semibold'>Connected</span>
+                    <span className="p-1 border border-green-400 flex items-center justify-center rounded-md">
+                        <span className="text-xs font-semibold">Connected</span>
                         <Check className="text-green-500 w-5 h-5 ml-2" />
                     </span>
                 ) : connectingLoading ? (
-                    <span className='p-1 flex items-center justify-center rounded-md w-full'>
-                        <span className='text-sm font-semibold'>Connecting</span>
+                    <span className="p-1 flex items-center justify-center rounded-md w-full">
+                        <span className="text-sm font-semibold">Connecting</span>
                         <Loader2 className="animate-spin mr-2 w-4 h-4 ml-2" />
                     </span>
                 ) : (
                     <Button
-                        variant="outline"
+                        variant="default"
                         onClick={(e) => connectOnClick(e, dispatch)}
-                        className="px-3 py-1 text-sm rounded-md transition w-full cursor-pointer"
-                    >Connect</Button>
+                        className="px-3 py-1 text-sm rounded-md w-full cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
+                    >
+                        Connect
+                    </Button>
                 )}
             </CardFooter>
         </Card>
+
     )
 }
 

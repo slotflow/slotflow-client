@@ -1,11 +1,12 @@
 import axios from 'axios';
+import { appConfig, serviceConfig } from '@/utils/env';
 
 export const axiosInstance = axios.create({
-    baseURL: 'http://localhost:3000/api',
+    baseURL: `${serviceConfig.apiGatewayUrl+appConfig.version}`,
     withCredentials: true,
 });
 
 export const chatAxiosInstance = axios.create({
-    baseURL: 'http://localhost:4000/api',
+    baseURL: `${serviceConfig.apiGatewayUrl}/v1`,
     withCredentials: true,
 })

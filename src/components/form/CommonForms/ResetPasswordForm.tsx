@@ -1,124 +1,111 @@
+import FormField from "../FormField";
 import { toast } from "react-toastify";
-import InputField from "../InputFieldWithLable";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePassword } from "@/utils/apis/auth.api";
 import { FormButton, FormHeading } from "../FormSplits";
-import { UserData } from "@/utils/interface/sliceInterface";
-import React, { FormEvent, useCallback, useState } from "react";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { ApiBaseResponse, HandleChangeFunction, PasswordResetFormDataProps } from "@/utils/interface/commonInterface";
-import { setForgotPassword, setResetPasswordForm, setsignInForm, setSignUpForm, setVerifyEmailForm, setVerifyOtpForm } from "@/utils/redux/slices/signFormSlice";
+import { setForgotPassword } from "@/utils/redux/slices/appSlice";
+import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
+import { ResetPasswordFormType, resetPasswordZodSchema } from "@/utils/zod/authZod";
+import { RedirectTo, ResetPasswordFormProps } from "@/utils/interface/commonInterface";
+import { appConfig } from "@/utils/env";
 
-const ResetPasswordForm: React.FC = () => {
+const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ role }) => {
 
     const dispatch = useDispatch<AppDispatch>();
-
-    const loading: boolean = useSelector((store: RootState) => store.signform.loading);
-    const authUser: UserData | null = useSelector((store: RootState) => store.auth.authUser);
-
-    const role: string | null = authUser?.role || null;
+    const { goToAuthPage } = useAuthNavigation();
+    const authUser = useSelector((store: RootState) => store.auth.authUser);
     const verificationToken: string | undefined = authUser?.verificationToken;
 
-    const [hasErrors, setHasErrors] = useState<boolean>(false);
-    const [formData, setFormData] = useState<PasswordResetFormDataProps>({
-        password: "",
-        confirmPassword: "",
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors, isSubmitting, isValid },
+    } = useForm<ResetPasswordFormType>({
+        resolver: zodResolver(resetPasswordZodSchema),
+        mode: "onChange",
+        defaultValues: {
+            password: "",
+            confirmPassword: "",
+        },
     });
 
-    const handleChange = useCallback<HandleChangeFunction>((e) => {
-        setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
-        setHasErrors(false);
-    }, []);
-
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        if (hasErrors) {
-            toast.error("Please fix the form errors.");
+    const onSubmit = async (data: ResetPasswordFormType) => {
+        if (!role || !verificationToken) {
+            toast.error("Something went wrong. Please try again.");
             return;
         }
-        if (role && verificationToken) {
-            dispatch(updatePassword({
+
+        try {
+            const res = await dispatch(updatePassword({
                 role,
                 verificationToken,
-                password: formData.password,
-            }))
-                .unwrap()
-                .then((res: ApiBaseResponse) => {
-                    if (res.success) {
-                        toast.success(res.message);
-                        dispatch(setForgotPassword(false));
-                        dispatch(setResetPasswordForm(false));
-                        dispatch(setsignInForm(true));
-                        dispatch(setVerifyEmailForm(false));
-                        dispatch(setVerifyOtpForm(false));
-                        dispatch(setSignUpForm(false));
-                    } else {
-                        toast.error(res.message);
-                    }
-                })
-                .catch((error) => {
-                    toast.error(error || "An error occurred.");
-                });
+                password: data.password,
+            })).unwrap();
+
+            if (res.success) {
+                toast.success(res.message);
+                goToAuthPage(role, RedirectTo.LOGIN);
+                dispatch(setForgotPassword(false));
+            }
+        } catch (error){
+            if(appConfig.dev)console.log("An error occurred while updating password.",error);
         }
     };
 
-    const handleCancel = (): void => {
-        dispatch(setResetPasswordForm(false));
-        dispatch(setsignInForm(true));
-        dispatch(setVerifyEmailForm(false));
-        dispatch(setVerifyOtpForm(false));
-        dispatch(setSignUpForm(false));
-    }
-
-    const handleErrorChange = (hasError: boolean) => {
-        setHasErrors(hasError);
-    };
+    const passwordValue = watch("password");
 
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="p-8">
-                    <FormHeading title={"Reset Password"} description="Enter new credentials carefully" />
+                    <FormHeading title="Reset Password" description="Enter new credentials carefully" />
 
                     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                        <form onSubmit={handleSubmit} className="space-y-3">
-
-
-                            <InputField
+                        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+                            <FormField<ResetPasswordFormType>
                                 label="Password"
                                 id="password"
-                                placeholder="Enter your password"
+                                placeholder="Enter new password"
                                 type="password"
-                                value={formData.password}
-                                onChange={handleChange}
                                 required={true}
-                                isPassword={true}
-                                onHasError={handleErrorChange}
+                                showTogglePassword
+                                register={register}
+                                error={errors.password?.message}
                             />
-                            <InputField
+                            <FormField<ResetPasswordFormType>
                                 label="Confirm Password"
                                 id="confirmPassword"
-                                placeholder="Confirm your password"
+                                placeholder="Confirm new password"
                                 type="password"
-                                value={formData.confirmPassword}
-                                onChange={handleChange}
                                 required={true}
-                                isPassword={true}
-                                onHasError={handleErrorChange}
+                                showTogglePassword
+                                register={register}
+                                error={
+                                    errors.confirmPassword?.message ??
+                                    (watch("confirmPassword") !== passwordValue ? "Passwords do not match" : undefined)
+                                }
                             />
 
-                            <FormButton text={"Update"} loading={loading} />
+                            <FormButton text="Update" loading={isSubmitting} disabled={isSubmitting || !isValid} />
                         </form>
 
                         <p className="mt-6 flex justify-between text-xs md:text-sm/6 text-[var(--textTwo)] px-2">
-                            <span className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer" onClick={handleCancel}>Cencel</span>
+                            <span
+                                className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
+                                onClick={() => goToAuthPage(role, RedirectTo.LOGIN)}
+                            >
+                                Cancel
+                            </span>
                         </p>
-
                     </div>
                 </div>
             </div>
-        </div >
-    )
-}
+        </div>
+    );
+};
 
 export default ResetPasswordForm;

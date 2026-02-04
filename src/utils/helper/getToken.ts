@@ -1,0 +1,13 @@
+import { messaging } from "@/lib/firebase";
+import { getToken } from "firebase/messaging";
+import { appConfig, firebaseCloudMessageConfig } from "../env";
+
+export const getFcmToken = async (): Promise<string | undefined> => {
+  try {
+    const token = await getToken(messaging, { vapidKey: firebaseCloudMessageConfig.vapidKey });
+    return token;
+  } catch (error) {
+    if (appConfig.isDevelopment) console.log("Failed to generated fcm token : ", error);
+    return;
+  }
+};

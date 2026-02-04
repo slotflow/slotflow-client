@@ -18,7 +18,11 @@ export const AdminAppServicesTableColumns = (
         },
         {
             accessorKey: "serviceName",
-            header: ({ column }) => (<DataTableColumnHeader column={column} title="ServiceName" />)
+            header: ({ column }) => (<DataTableColumnHeader column={column} title="Name" />)
+        },
+        {
+            accessorKey: "serviceCategory",
+            header: ({ column }) => (<DataTableColumnHeader column={column} title="Category" />)
         },
         {
             accessorKey: "isBlocked",

@@ -1,13 +1,11 @@
 import { useCallback } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { AppDispatch } from "@/utils/redux/appStore";
 import booking from '../../../assets/svgs/booking.svg';
 import service from '../../../assets/svgs/service.svg';
 import { HandleRoleSelectionFunction } from "@/utils/interface/commonInterface";
-import { useModalAnimation } from "@/utils/hooks/systemHooks/useModalAnimation";
-import { setsignInForm, setSignUpForm } from "@/utils/redux/slices/signFormSlice";
+import { useModalAnimation } from "@/hooks/systemHooks/useModalAnimation";
+import { roleRoutes } from "@/utils/constants";
 
 interface AuthSelectionModalProps {
   onClose: () => void;
@@ -16,19 +14,15 @@ interface AuthSelectionModalProps {
 const AuthSelectionModal: React.FC<AuthSelectionModalProps> = ({ onClose }) => {
 
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
   const { modalRef, closeModal } = useModalAnimation(onClose);
 
   const handleRoleSelection = useCallback<HandleRoleSelectionFunction>(
     (url: string) => {
-      dispatch(setSignUpForm(false));
-      dispatch(setsignInForm(true));
       navigate(url);
       closeModal();
     },
-    [dispatch, navigate, closeModal]
+    [navigate, closeModal]
   );
-
 
   return (
     <div
@@ -43,7 +37,7 @@ const AuthSelectionModal: React.FC<AuthSelectionModalProps> = ({ onClose }) => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div
-            onClick={() => handleRoleSelection("/user/login")}
+            onClick={() => handleRoleSelection(roleRoutes.user)}
             className="cursor-pointer flex flex-col items-center justify-center rounded-2xl border p-6 h-64 hover:border-[var(--mainColor)] hover:shadow-xl transition-all duration-300"
           >
             <img
@@ -60,7 +54,7 @@ const AuthSelectionModal: React.FC<AuthSelectionModalProps> = ({ onClose }) => {
           </div>
 
           <div
-            onClick={() => handleRoleSelection("/provider/login")}
+            onClick={() => handleRoleSelection(roleRoutes.provider)}
             className="cursor-pointer flex flex-col items-center justify-center rounded-2xl border p-6 h-64 hover:border-[var(--mainColor)] hover:shadow-xl transition-all duration-300"
           >
             <img
@@ -78,7 +72,7 @@ const AuthSelectionModal: React.FC<AuthSelectionModalProps> = ({ onClose }) => {
         </div>
 
         <Button
-          variant="outline"
+          variant="destructive"
           onClick={closeModal}
           className="mt-6 text-sm cursor-pointer"
         >

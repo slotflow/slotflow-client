@@ -1,11 +1,11 @@
 import dayjs from 'dayjs';
 import { Button } from '../ui/button';
-import { useDispatch } from 'react-redux';
 import React, { useEffect, useState } from 'react';
-import { AppDispatch } from '@/utils/redux/appStore';
+import { useDispatch, useSelector } from 'react-redux';
 import avatar from '../../assets/defaultImages/avatar.png';
 import { Circle, CircleOff, PanelLeft } from 'lucide-react';
-import { toggleSidebar } from '@/utils/redux/slices/stateSlice';
+import { toggleSidebar } from '@/utils/redux/slices/appSlice';
+import { AppDispatch, RootState } from '@/utils/redux/appStore';
 
 interface InfoHeaderProps {
     profileImage?: string;
@@ -19,6 +19,7 @@ const InfoHeader: React.FC<InfoHeaderProps> = ({
 
     const dispatch = useDispatch<AppDispatch>();
     const formatted = dayjs().format('DD MM dddd hh:mm A');
+    const { profileImageUpdating } = useSelector((state: RootState) => state.auth);
 
     const [isOnline, setIsOnline] = useState(true)
     useEffect(() => {
@@ -46,10 +47,14 @@ const InfoHeader: React.FC<InfoHeaderProps> = ({
             </Button>
 
             <div className='flex ml-3'>
-                <img
+                {profileImageUpdating ? (
+                    <div className="rounded-full size-6 shimmer"></div>
+                ) : (
+                    <img
                     src={profileImage || avatar}
                     className='size-6 rounded-full'
-                />
+                    />
+                )}
                 <h4 className='italic ml-2'>Hi, {username}</h4>
             </div>
 

@@ -53,14 +53,39 @@ import {
   BarChart,
 } from "lucide-react";
 import { ProviderFetchDashboardStatsDataResponse } from "./interface/api/providerApiInterface";
-import { CommonTabInterface, dataSelectListItemInterface, DayMapInterface, FeatureContentInterface, FooterColumnDataInterface, FooterLinkInterface, gsapBigSvgYDirectionAnimationInterface, HeaderCompoenentNavsProps, PlanFeatureInterface, PlanListType, ProviderApprovalMessageInterface, Route, StatsMapForAdminInterface, statsMapIntrface } from "./interface/commonInterface";
+import {
+  Route,
+  PlanListType,
+  DayMapInterface,
+  statsMapIntrface,
+  CommonTabInterface,
+  FooterLinkInterface,
+  PlanFeatureInterface,
+  FeatureContentInterface,
+  StatsMapForAdminInterface,
+  FooterColumnDataInterface,
+  HeaderCompoenentNavsProps,
+  dataSelectListItemInterface,
+  ProviderApprovalMessageInterface,
+  gsapBigSvgYDirectionAnimationInterface,
+  RedirectTo,
+} from "./interface/commonInterface";
 
 import chatImage from '../assets/heroImages/caht.jpg';
 import gCalendar from '../assets/iconImages/gCalendar.png';
 import videoCallImage from '../assets/heroImages/videoCall.jpg';
 import calendarImage from '../assets/heroImages/calendar2.png';;
+import { OptionType } from "@/components/form/SelectField";
 import bookingImage from '../assets/heroImages/heroSectionOneImg2.png';
 import { ContactItem } from "./interface/componentInterface/commonComponentInterface";
+import { AdminVerificationStatus, PlanName, Role, ServiceCategory, ServiceMode, ServiceType } from "./interface/enums";
+
+export const PLAN_TIERS = ["free", "starter", "professional", "enterprise"] as const;
+
+export const blockBackStatuses = [AdminVerificationStatus.REQUESTED, AdminVerificationStatus.UNDER_REVIEW, AdminVerificationStatus.RESUBMITTED] as const;
+
+export const updatableStatuses = [AdminVerificationStatus.NOT_REQUESTED, AdminVerificationStatus.REJECTED] as const;
+
 
 // **** Routes for admin **** \\
 export const adminRoutes: Route[] = [
@@ -72,12 +97,12 @@ export const adminRoutes: Route[] = [
   { path: "plans", name: "Plans", icon: LayoutGrid },
   { path: "subscriptions", name: "Subscriptions", icon: CreditCard },
   { path: "payments", name: "Payments", icon: Handshake },
-  { path: "api-strength", name: "Api Strength", icon: ScanHeart },
+  { path: "health", name: "Health", icon: ScanHeart },
 ]
 
 // **** Routes for user **** \\
 export const userRoutes: Route[] = [
-  { path: "dashboard", name: "Dashboard", icon: Gauge },
+  { path: "dashboard", name: "Services", icon: Gauge },
   { path: "profile", name: "Profile", icon: User },
   { path: "bookings", name: "Bookings", icon: CalendarCheck },
   { path: "payments", name: "Payments", icon: CreditCard },
@@ -108,31 +133,22 @@ export const providerRoutes: Route[] = [
 
 // Access Control For Provider
 export const planAccessMap: Record<string, string[]> = {
-  NoSubscription: [
+  NOSUBSCRIPTION: [
     "Dashboard",
     "Profile",
-    "Address",
-    "Service",
-    "Availability",
     "Subscriptions",
     "Settings",
   ],
-  Free: [
+  TRIAL: [
     "Dashboard",
     "Profile",
-    "Address",
-    "Service",
-    "Availability",
     "Appointments",
     "Subscriptions",
     "Settings",
   ],
-  Starter: [
+  STARTER: [
     "Dashboard",
     "Profile",
-    "Address",
-    "Service",
-    "Availability",
     "Appointments",
     "Subscriptions",
     "Payments",
@@ -140,12 +156,9 @@ export const planAccessMap: Record<string, string[]> = {
     "Notifications",
     "Settings",
   ],
-  Professional: [
+  PROFESSIONAL: [
     "Dashboard",
     "Profile",
-    "Address",
-    "Service",
-    "Availability",
     "Appointments",
     "Subscriptions",
     "Payments",
@@ -156,12 +169,9 @@ export const planAccessMap: Record<string, string[]> = {
     "Reviews",
     "Settings",
   ],
-  Enterprise: [
+  ENTERPRISE: [
     "Dashboard",
     "Profile",
-    "Address",
-    "Service",
-    "Availability",
     "Appointments",
     "Subscriptions",
     "Payments",
@@ -195,14 +205,6 @@ export const navigation: HeaderCompoenentNavsProps[] = [
   { name: 'Contact', href: '/contact', current: false },
 ]
 
-// **** Provider plan subscription duration array **** \\
-export const planDurations: { durationName: string; durationMonth: number }[] = [
-  { durationName: "1 Month", durationMonth: 1 },
-  { durationName: "3 Months", durationMonth: 3 },
-  { durationName: "6 Months", durationMonth: 6 },
-  { durationName: "12 Months", durationMonth: 12 }
-];
-
 // **** Tabs for provider profile showing in admin side and provider side **** \\
 export const providerTabs: { tabName: string, admin: boolean, user: boolean }[] = [
   { tabName: "Details", admin: true, user: true },
@@ -211,7 +213,8 @@ export const providerTabs: { tabName: string, admin: boolean, user: boolean }[] 
   { tabName: "Availability", admin: true, user: true },
   { tabName: "Reviews", admin: true, user: true },
   { tabName: "Subscriptions", admin: true, user: false },
-  { tabName: "Payments", admin: true, user: false }
+  { tabName: "Payments", admin: true, user: false },
+  { tabName: "Proofs", admin: true, user: false }
 ];
 
 export const userTabs: { tabName: string, admin: boolean, user: boolean }[] = [
@@ -260,7 +263,7 @@ export const dateSelectList: dataSelectListItemInterface[] = [
 export const PlanList: PlanListType = [
   {
     _id: "0",
-    planName: "Free",
+    planName: PlanName.TRIAL,
     description: "Perfect for individuals or freelancers getting started with appointment scheduling.",
     features: [
       "Basic slot creation & booking",
@@ -273,7 +276,7 @@ export const PlanList: PlanListType = [
   },
   {
     _id: "1",
-    planName: "Starter",
+    planName: PlanName.STARTER,
     description: "Ideal for solo professionals looking for a branded experience and better control.",
     features: [
       "Everything in Free Plan",
@@ -287,7 +290,7 @@ export const PlanList: PlanListType = [
   },
   {
     _id: "2",
-    planName: "Professional",
+    planName: PlanName.PROFESSIONAL,
     description: "Designed for growing teams or businesses that require advanced scheduling and integrations.",
     features: [
       "Everything in Starter Plan",
@@ -302,7 +305,7 @@ export const PlanList: PlanListType = [
   },
   {
     _id: "3",
-    planName: "Enterprise",
+    planName: PlanName.ENTERPRISE,
     description: "Best suited for organizations that need scalable, secure, and fully customizable scheduling solutions.",
     features: [
       "Everything in Professional Plan",
@@ -600,89 +603,89 @@ export const statsMapForProvider: Array<statsMapIntrface<ProviderFetchDashboardS
     title: "Total Appointments",
     key: "totalAppointments",
     icon: CalendarCheck,
-    plans: ["Starter", "Professional", "Enterprise"],
+    plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
   },
   {
     title: "Today’s Appointments",
     key: "todaysAppointments",
     icon: Clock,
-    plans: ["Starter", "Professional", "Enterprise"],
+    plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
   },
   {
     title: "Subscription Payments",
     key: "totalSubscriptionPaidAmount",
     icon: Receipt,
     price: true,
-    plans: ["Starter", "Professional", "Enterprise"],
+    plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
   },
   {
     title: "Total Earnings",
     key: "totalEarnings",
     icon: Banknote,
     price: true,
-    plans: ["Starter", "Professional", "Enterprise"],
+    plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
   },
   {
     title: "Total Payouts Made",
     key: "totalPayoutsMade",
     icon: Wallet,
     price: true,
-    plans: ["Starter", "Professional", "Enterprise"],
+    plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
   },
   {
     title: "Completed Appointments",
     key: "completedAppointments",
     icon: CheckCircle,
-    plans: ["Professional", "Enterprise"],
+    plans: [PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
   },
   {
     title: "Missed Appointments",
     key: "missedAppointments",
     icon: XCircle,
-    plans: ["Professional", "Enterprise"],
+    plans: [PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
   },
   {
     title: "Cancelled by User",
     key: "cancelledAppointmentsByUser",
     icon: Ban,
-    plans: ["Enterprise"],
+    plans: [PlanName.ENTERPRISE],
   },
   {
     title: "Rejected by Provider",
     key: "rejectedAppointmentsByProvider",
     icon: ThumbsDown,
-    plans: ["Enterprise"],
+    plans: [PlanName.ENTERPRISE],
   },
   {
     title: "Today’s Earnings",
     key: "todaysEarnings",
     icon: TrendingUp,
     price: true,
-    plans: ["Professional", "Enterprise"],
+    plans: [PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
   },
   {
     title: "Pending Payout",
     key: "pendingPayout",
     icon: Hourglass,
     price: true,
-    plans: ["Professional", "Enterprise"],
+    plans: [PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
   },
 ];
 
 
 // **** Provider Dashboard Graphs map according to plan
 export const planChartAccess: Record<string, string[]> = {
-  Starter: [
+  STARTER: [
     "AppointmentsOverTime",
     "TopBookingDays",
   ],
-  Professional: [
+  PROFESSIONAL: [
     "AppointmentsOverTime",
     "TopBookingDays",
     "AppointmentModeTrend",
     "NewVsReturningUsers",
   ],
-  Enterprise: [
+  ENTERPRISE: [
     "AppointmentsOverTime",
     "TopBookingDays",
     "AppointmentModeTrend",
@@ -916,7 +919,7 @@ export const subscriptionStatsMapForAdmin: StatsMapForAdminInterface[] = [
     icon: Ban,
   },
   {
-    title: "Free Plan Subscriptions",
+    title: "Free-Trial Plan Subscriptions",
     key: "subscriptionsByFreePlan",
     icon: LayoutGrid,
   },
@@ -1023,7 +1026,7 @@ export const AppointmentsStatsMapForAdmin: StatsMapForAdminInterface[] = [
 ];
 
 
-// Address adding, service details adding and service availability adding page side box data
+// Address creating, service details creating and service availability creating page side box data
 export const progressBars: { [key: number]: boolean[] } = {
   1: [true, false, false, false],
   2: [true, true, false, false],
@@ -1031,12 +1034,13 @@ export const progressBars: { [key: number]: boolean[] } = {
   4: [true, true, true, false],
 };
 
-const sidebarHeadings: string[] = ['Address Details', 'Service Details', 'Availability', "Approval in progress"];
+const sidebarHeadings: string[] = ['Address', 'Service', 'Availability', "Upload Proofs", "Approval"];
 export const pageLabels: { [key: number]: string[] } = {
   1: sidebarHeadings,
   2: sidebarHeadings,
   3: sidebarHeadings,
   4: sidebarHeadings,
+  5: sidebarHeadings
 };
 
 
@@ -1044,13 +1048,15 @@ export const pageDescriptions: { [key: number]: string } = {
   1: 'Add your service address accurately to ensure seamless customer bookings.',
   2: 'Provide detailed information about your services for clarity and transparency.',
   3: 'Set your service availability to manage customer appointments efficiently.',
-  4: 'Our team is reviewing your service registration request. You will be notified via email once your request is approved. Thank you for your patience..',
+  4: 'Upload your proof of identity. Make sure to upload the current documents within the specified size and format limits.',
+  5: 'Our team is reviewing your service registration request. You will be notified via email once your request is approved. Thank you for your patience.',
 };
 
-export const addAddressGoogleMapLinkInfoHeading: string = "Google Maps Selection Unavailable";
-export const addAddressGoogleMapLinkInfo: string = `Currently, we don’t support selecting your location directly from Google Maps.  
-Please open Google Maps, click on "Share" → "Embed a map", copy the iframe **src** URL,  
-and paste it in the field below. If your location is marked on Google Maps, it will be more helpful for offline services. Give it a try on Google Maps!`;
+export const addAddressGoogleMapLinkInfoHeading: string = "Select Your Exact Location";
+export const addAddressGoogleMapLinkInfo: string = `Use the map to select your exact location.  
+Click on the map to drop a marker at your address.  
+This helps us provide accurate location based services and ensures more precise search results.  
+Your selected location will also be used to automatically fill address details wherever possible.`;
 
 
 // Hero section
@@ -1139,17 +1145,17 @@ export const adminOverviewTabs: CommonTabInterface[] = [
 
 // Profile tabs list
 export const profileTabs: CommonTabInterface[] = [
-  { value: "tab1", label: "Profile", icon: User, role: ["PROVIDER" , "USER"] },
-  { value: "tab2", label: "Address", icon: Home, role: ["PROVIDER" , "USER"] },
-  { value: "tab3", label: "Service", icon: Briefcase, role: ["PROVIDER"] },
-  { value: "tab4", label: "Availability", icon: Clock, role: ["PROVIDER"] },
-]
+  { value: "tab1", label: "Profile", icon: User, role: [Role.PROVIDER, Role.USER] },
+  { value: "tab2", label: "Address", icon: Home, role: [Role.PROVIDER, Role.USER] },
+  { value: "tab3", label: "Service", icon: Briefcase, role: [Role.PROVIDER] },
+  { value: "tab4", label: "Availability", icon: Clock, role: [Role.PROVIDER] },
+];
 
 // Provider dashboard tabs
 export const providerDashboardTabs: CommonTabInterface[] = [
   { value: "stats", label: "Stats", icon: Activity },
   { value: "graphs", label: "Graphs", icon: BarChart },
-]
+];
 
 
 // Settings Page Tabs
@@ -1175,3 +1181,176 @@ export const settingsTabs: CommonTabInterface[] = [
     icon: Palette,
   },
 ]
+
+// Advertisement visibility select field options
+export const adVisibilityOptions: OptionType<boolean>[] = [
+  { label: "Ad Visible", value: true },
+  { label: "No Ad Visibility", value: false },
+];
+
+// 
+export const serviceTypeOptions: OptionType<ServiceType>[] = [
+  { label: "One Time", value: ServiceType.ONE_TIME },
+  { label: "Recurring", value: ServiceType.RECURRING },
+];
+
+//
+export const serviceModeOptions: OptionType<ServiceMode>[] = [
+  { label: "Online", value: ServiceMode.ONLINE },
+  { label: "Offline", value: ServiceMode.OFFLINE },
+  { label: "Both", value: ServiceMode.BOTH },
+];
+
+//
+export const groupOptions: OptionType<boolean>[] = [
+  { label: "Group", value: true },
+  { label: "Individual", value: false },
+];
+
+
+// Days of Week Options
+export const daysOfWeekOptions: OptionType<string>[] = [
+  { label: "Sunday", value: "Sunday" },
+  { label: "Monday", value: "Monday" },
+  { label: "Tuesday", value: "Tuesday" },
+  { label: "Wednesday", value: "Wednesday" },
+  { label: "Thursday", value: "Thursday" },
+  { label: "Friday", value: "Friday" },
+  { label: "Saturday", value: "Saturday" }
+];
+
+// Service Duration Options
+export const serviceDurationsOptions: OptionType<number>[] = [
+  { label: "10 minutes", value: 10 },
+  { label: "15 minutes", value: 15 },
+  { label: "30 minutes", value: 30 },
+  { label: "45 minutes", value: 45 },
+  { label: "1 hour", value: 60 },
+  { label: "1 hour 15 minutes", value: 75 },
+  { label: "1 hour 30 minutes", value: 90 },
+  { label: "1 hour 45 minutes", value: 105 },
+  { label: "2 hours", value: 120 },
+  { label: "3 hours", value: 180 },
+  { label: "4hour", value: 240 },
+  { label: "5 hours", value: 300 },
+  { label: "6 hours", value: 360 },
+  { label: "7 hours", value: 420 },
+  { label: "8 hours", value: 480 }
+];
+
+// Service Categories Options
+export const serviceCategoryOptions: OptionType<ServiceCategory>[] = [
+  {
+    label: "Healthcare & Wellness",
+    value: ServiceCategory.HEALTHCARE_AND_WELLNESS,
+  },
+  {
+    label: "Professional Services",
+    value: ServiceCategory.PROFESSIONAL_SERVICES,
+  },
+  {
+    label: "Education & Training",
+    value: ServiceCategory.EDUCATION_AND_TRAINING,
+  },
+  {
+    label: "Home & Maintenance",
+    value: ServiceCategory.HOME_AND_MAINTENANCE,
+  },
+  {
+    label: "Beauty & Personal Care",
+    value: ServiceCategory.BEAUTY_AND_PERSONAL_CARE,
+  },
+  {
+    label: "Fitness & Lifestyle",
+    value: ServiceCategory.FITNESS_AND_LIFESTYLE,
+  },
+  {
+    label: "Automotive Services",
+    value: ServiceCategory.AUTOMOTIVE_SERVICES,
+  },
+  {
+    label: "Events & Creative Services",
+    value: ServiceCategory.EVENTS_AND_CREATIVE_SERVICES,
+  },
+  {
+    label: "Technology Services",
+    value: ServiceCategory.TECHNOLOGY_SERVICES,
+  },
+  {
+    label: "Real Estate & Property",
+    value: ServiceCategory.REAL_ESTATE_AND_PROPERTY,
+  },
+];
+
+
+// Planduration options
+export const planDurations: OptionType<number>[] = [
+  { label: "1 Month", value: 30 },
+  { label: "3 Months", value: 90 },
+  { label: "6 Months", value: 180 },
+  { label: "1 Year", value: 365 }
+];
+
+// Planduration options
+export const adVisibility: OptionType<boolean>[] = [
+  { label: "Ad Visisble", value: true },
+  { label: "Ad Not Visible", value: false },
+];
+
+
+// admin provider verification boolean options
+export const verificationOptions: OptionType<boolean>[] = [
+  { label: "Verified", value: true },
+  { label: "Rejected", value: false }
+];
+
+
+// Status text mapper
+export const verificationStatusTextMap: Record<string, string> = {
+  Requested: "Submitted for review",
+  Under_review: "Currently under review",
+  Approved: "Approved",
+  Rejected: "Rejected",
+  Resubmitted: "Re-submitted for review",
+  Not_requested: "Not submitted",
+};
+
+export const planNameOptions: OptionType<PlanName>[] = [
+  { label: "Trial", value: PlanName.TRIAL },
+  { label: "Starter", value: PlanName.STARTER },
+  { label: "Professional", value: PlanName.PROFESSIONAL },
+  { label: "Enterprise", value: PlanName.ENTERPRISE },
+  { label: "No Subscription", value: PlanName.NO_SUBSCRIPTION },
+];
+
+export const storeConstants: Record<string, string> = {
+  storeKey: "slotflow",
+  resetState: "RESET_STATE"
+};
+
+export const roleRoutes: Record<string, string> = {
+  user: "/user/login",
+  provider: "/provider/login",
+  admin: "/admin/login"
+};
+
+export const redirectPaths: Record<RedirectTo, string> = {
+  [RedirectTo.LOGIN]: "/login",
+  [RedirectTo.REGISTER]: "/register",
+  [RedirectTo.VERIFY_EMAIL]: "/verify/email",
+  [RedirectTo.RESET_PASSWORD]: "/reset/password",
+  [RedirectTo.VERIFY_OTP]: "/verify/otp",
+
+  [RedirectTo.PROVIDER_ADDRESS]: "/onboarding/address",
+  [RedirectTo.PROVIDER_SERVICE_DETAILS]: "/onboarding/service",
+  [RedirectTo.PROVIDER_AVAILABILITY]: "/onboarding/availability",
+  [RedirectTo.PROVIDER_PROOFS]: "/onboarding/proofs",
+  [RedirectTo.PROVIDER_APPROVAL_PENDING]: "/onboarding/pending",
+};
+
+export const basePaths: Record<string, string> = {
+  user: "/user",
+  provider: "/provider",
+  admin: "/admin",
+  login: "/login"
+};

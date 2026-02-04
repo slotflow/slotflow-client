@@ -1,11 +1,10 @@
 import { RootState } from "../redux/appStore";
 import { chatAxiosInstance } from "@/lib/axios";
+import { appConfig, serviceConfig } from "../env";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { connectSocket, disconnectSocket } from "@/lib/socketService";
 import { Message } from "../interface/entityInterface/message.interface";
 import { addNewMessage, setMessages, setSocketConnected, setSocketDisconnected } from "../redux/slices/chatSlice";
-
-const BASE_URL =  import.meta.env.MODE === "development" ? import.meta.env.VITE_REALTIME_BACKEND_DEV_URL : import.meta.env.VITE_REALTIME_BACKEND_DEV_URL;
 
 export const getMessages = createAsyncThunk<Array<Message>, { selectedUserId: string }>('message/getMessages',
     async ({ selectedUserId }, thunkAPI) => {
@@ -38,7 +37,7 @@ export const connectChatSocket = createAsyncThunk<void, void, { state: RootState
     const authUser = getState().auth.authUser;
     if (!authUser) return;
 
-    const socket = connectSocket(authUser.uid as string, BASE_URL+"/chat");
+    const socket = connectSocket(authUser.uid as string, serviceConfig.realtimeService+appConfig.version+"/chat");
     
     socket.on("connect", () => {
       dispatch(setSocketConnected({ socketId: socket.id as string }));

@@ -15,12 +15,11 @@ import { ChevronUp, Lock, User2 } from "lucide-react";
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import avatar from '../../assets/defaultImages/avatar.png';
-import { UserData } from '@/utils/interface/sliceInterface';
+import { AuthUser } from '@/utils/interface/sliceInterface';
 import { handleSignoutHelper } from '@/utils/helper/signout';
 import { AppDispatch, RootState } from '@/utils/redux/appStore';
 import { SideBarProps } from '@/utils/interface/commonInterface';
 import companyLogo from '../../assets/logos/logo-transparent.png';
-import { useResetRedux } from '@/utils/hooks/systemHooks/useResetRedux';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
 
 const SidebarNew: React.FC<SideBarProps> = ({
@@ -30,10 +29,9 @@ const SidebarNew: React.FC<SideBarProps> = ({
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const resetRedux = useResetRedux();
 
-  const user: UserData | null = useSelector((store: RootState) => store.auth?.authUser);
-  const themeMode: boolean = useSelector((store: RootState) => store.state.lightTheme);
+  const user: AuthUser | null = useSelector((store: RootState) => store.auth?.authUser);
+  const themeMode: boolean = useSelector((store: RootState) => store.app.lightTheme);
   const basePath = user?.role === "ADMIN" ? "/admin" : user?.role === "PROVIDER" ? "/provider" : "/user";
 
   useEffect(() => {
@@ -44,7 +42,7 @@ const SidebarNew: React.FC<SideBarProps> = ({
     }
   }, [themeMode]);
 
-  if (!user) return;
+  if (!user || !user.role) return;
 
   return (
     <Sidebar collapsible="icon" className="">
@@ -135,7 +133,7 @@ const SidebarNew: React.FC<SideBarProps> = ({
                   <span>Settings</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={() => handleSignoutHelper({ role: user.role, dispatch, resetRedux, navigate })}
+                  onClick={() => handleSignoutHelper({ role: user?.role, dispatch, navigate })}
                 >
                   <span>Sign out</span>
                 </DropdownMenuItem>

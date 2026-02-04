@@ -1,8 +1,8 @@
-//  Admin Plans
+import { PlanName } from "../enums";
 
 export interface Plan {
     _id: string;
-    planName: string;
+    planName: PlanName;
     description: string;
     price: number;
     features: string[];

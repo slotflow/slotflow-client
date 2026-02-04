@@ -9,6 +9,10 @@ const initialState: ProviderState = {
   paymentSelectionOpen: false,
   isTrialPlan: false,
   paymentPageOpen: false,
+  identityProof: null,
+  serviceProof: null,
+  identityProofLoading: false,
+  serviceProofLoading: false,
 };
 
 const providerSlice = createSlice({
@@ -40,7 +44,7 @@ const providerSlice = createSlice({
     setSubscriptionPlanId: (state, action: PayloadAction<string | null>) => {
       state.planId = action.payload;
     },
-    setSubscriptionPlanDuration: (state, action: PayloadAction<string | null>) => {
+    setSubscriptionPlanDuration: (state, action: PayloadAction<number | null>) => {
       state.planDuration = action.payload;
     },
     setSubscriptionIsTrailPlan: (state, action: PayloadAction<boolean>) => {
@@ -49,14 +53,18 @@ const providerSlice = createSlice({
     setPaymentSelectionPage: (state, action: PayloadAction<boolean>) => {
       state.paymentSelectionOpen = action.payload;
     },
-    clearProviderSlice: (state) => {
-      state.availabilities = [];
-      state.planId = null;
-      state.planDuration = null;
-      state.paymentSelectionOpen = false;
-      state.isTrialPlan = false;
-      state.paymentPageOpen = false;
-    }
+    setProviderIdentityProofs: (state, action: PayloadAction<string | null>) => {
+      state.identityProof = action.payload
+    },
+    setProviderServiceProofs: (state, action: PayloadAction<string | null>) => {
+      state.serviceProof = action.payload
+    },
+    setIdentityProofLoading: (state, action: PayloadAction<boolean>) => {
+      state.identityProofLoading = action.payload;
+    },
+    setServiceProofLoading: (state, action: PayloadAction<boolean>) => {
+      state.serviceProofLoading = action.payload;
+    },
   },
 });
 
@@ -66,7 +74,10 @@ export const {
   setSubscriptionPlanDuration,
   setPaymentSelectionPage,
   setSubscriptionIsTrailPlan,
-  clearProviderSlice,
+  setProviderIdentityProofs,
+  setProviderServiceProofs,
+  setIdentityProofLoading,
+  setServiceProofLoading
 } = providerSlice.actions;
 
 export default providerSlice.reducer;

@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import FullCalendar from '@fullcalendar/react';
 import { useNavigate } from "react-router-dom";
+import { Role } from "@/utils/interface/enums";
 import { useQuery } from '@tanstack/react-query';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { CreditCard, Unplug } from "lucide-react";
@@ -27,7 +28,7 @@ const CalendarPage: React.FC = () => {
 
     const canUseCalendar = useMemo(() => {
         if (!authUser) return false;
-        if (authUser.role === "PROVIDER") {
+        if (authUser.role === Role.PROVIDER) {
             return ["Professional", "Enterprise"].includes(authUser.providerSubscription ?? "");
         }
         return true;
@@ -41,7 +42,7 @@ const CalendarPage: React.FC = () => {
         enabled: Boolean(
             authUser &&
             canUseCalendar &&
-            (authUser.role === "USER" || authUser.googleConnected)
+            (authUser.role === Role.USER || authUser.googleConnected)
         ),
     })
 
@@ -64,7 +65,7 @@ const CalendarPage: React.FC = () => {
                 />
             </div>
         )
-    }
+    };
 
     if (!authUser?.googleConnected) {
         return (

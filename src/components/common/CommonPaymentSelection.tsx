@@ -1,11 +1,13 @@
 import { toast } from 'react-toastify';
 import { Loader, X } from 'lucide-react';
 import { useDispatch } from 'react-redux';
+import { stripeConfig } from '@/utils/env';
 import { useCallback, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import paypalLogo from '../../assets/iconImages/Paypal.png';
 import stripeLogo from '../../assets/iconImages/Stripe.jpeg';
 import { userBookAnAppointment } from '@/utils/apis/user.api';
+import { SubscriptionValidity } from '@/utils/interface/enums';
 import razorpayLogo from '../../assets/iconImages/Razorpay.png';
 import { providerSubscribeToPlan } from '@/utils/apis/provider.api';
 import { Provider } from '@/utils/interface/entityInterface/providerInterface';
@@ -20,7 +22,7 @@ type UserBookinAppointmentDataProps = {
 
 interface ProviderSubscriptionDataProps {
     planId: string;
-    planDuration: string;
+    planDuration: SubscriptionValidity;
 }
 
 interface PaymentSelecionComponentPropst {
@@ -42,16 +44,17 @@ const CommonPaymentSelection: React.FC<PaymentSelecionComponentPropst> = ({
     const [paymentLoading, setPaymentLoading] = useState<boolean>(false);
 
     const makeStripePayment = useCallback(async () => {
-        if (!import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY) {
+        const stripePublishKey: string = stripeConfig.stripePublishableKey;
+        if (!stripePublishKey) {
             toast.error("Stripe key is missing!");
             return;
-        }
+        };
 
-        const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+        const stripe = await loadStripe(stripePublishKey);
         if (!stripe) {
             toast.error("Stripe failed to load!");
             return;
-        }
+        };
 
         try {
             if (isAppointmentBooking) {

@@ -2,19 +2,24 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { X, Loader, Coins } from "lucide-react";
 import { RootState } from "@/utils/redux/appStore";
+import { PlanName } from "@/utils/interface/enums";
+import { useQueryClient } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
+import { setProviderSubscription } from "@/utils/redux/slices/authSlice";
 import { providerSubscribeToTrialPlan } from "@/utils/apis/provider.api";
 import { setPaymentSelectionPage, setSubscriptionIsTrailPlan } from "@/utils/redux/slices/providerSlice";
 
 const ProviderFreeSubscription = () => {
 
     const dispatch = useDispatch();
-    const { paymentSelectionOpen } = useSelector((store: RootState) => store.provider);
+    const queryClient = useQueryClient();
     const [paymentLoading, setPaymentLoading] = useState(false);
+    const { paymentSelectionOpen } = useSelector((store: RootState) => store.provider);
 
     const handlePaymentSelectionClose = () => {
         dispatch(setPaymentSelectionPage(false));
         dispatch(setSubscriptionIsTrailPlan(false));
+        dispatch(setProviderSubscription(PlanName.TRIAL));
     };
 
     const makeTrialubscription = async () => {
@@ -23,6 +28,7 @@ const ProviderFreeSubscription = () => {
             const res = await providerSubscribeToTrialPlan();
             toast.success(res.message);
             handlePaymentSelectionClose();
+            queryClient.invalidateQueries({ queryKey: ["subscriptions"] });
         } catch {
             setPaymentLoading(false);
         } finally {

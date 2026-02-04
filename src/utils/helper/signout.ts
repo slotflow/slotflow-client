@@ -1,41 +1,31 @@
 import { toast } from "react-toastify";
+import { Role } from "../interface/enums";
+import { roleRoutes } from "../constants";
 import { signout } from "../apis/auth.api";
 import { queryClient } from "@/lib/queryClient";
 import { NavigateFunction } from "react-router-dom";
-import { Role } from "../interface/commonInterface";
-import { AppDispatch } from "@/utils/redux/appStore";
-import { clearUserSlice } from "../redux/slices/userSlice";
-import { clearChatSlice } from "../redux/slices/chatSlice";
-import { clearAdminSlice } from "../redux/slices/adminSlice";
-import { clearProviderSlice } from "../redux/slices/providerSlice";
-import { clearSignFormSlice } from "../redux/slices/signFormSlice";
+import { AppDispatch, persistAppStore } from "@/utils/redux/appStore";
 
 export const handleSignoutHelper = async ({
   role,
   dispatch,
-  resetRedux,
   navigate,
 }: {
   role: Role;
   dispatch: AppDispatch;
-  resetRedux: (role: Role) => void;
   navigate: NavigateFunction;
 }) => {
   try {
     const res = await dispatch(signout()).unwrap();
     if (res.success) {
       toast.success(res.message);
-      dispatch(clearChatSlice());
-      dispatch(clearProviderSlice());
-      dispatch(clearSignFormSlice());
-      dispatch(clearAdminSlice());
-      dispatch(clearUserSlice());
+      dispatch({ type: 'RESET_STATE' });
+      await persistAppStore.purge();
       queryClient.clear();
       queryClient.cancelQueries();
-      resetRedux(role);
-      if (role === "USER") navigate("/user/login");
-      else if (role === "PROVIDER") navigate("/provider/login");
-      else if (role === "ADMIN") navigate("/admin/login");
+      if (role === Role.USER) navigate(roleRoutes.user);
+      else if (role === Role.PROVIDER) navigate(roleRoutes.provider);
+      else if (role === Role.ADMIN) navigate(roleRoutes.admin);
     }
   } catch {
     toast.error("Signout failed");

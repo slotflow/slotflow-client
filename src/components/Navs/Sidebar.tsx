@@ -3,17 +3,16 @@ import {
     Sun,
     Moon,
 } from 'lucide-react';
+import React from 'react';
 import { SingleTab } from './SingleTab';
-import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logos/logo-transparent.png';
-import { UserData } from '@/utils/interface/sliceInterface';
+import { AuthUser } from '@/utils/interface/sliceInterface';
+import { toggleTheme } from '@/utils/redux/slices/appSlice';
 import { handleSignoutHelper } from '@/utils/helper/signout';
-import { toggleTheme } from '@/utils/redux/slices/stateSlice';
 import { AppDispatch, RootState } from '@/utils/redux/appStore';
 import { SideBarProps } from '@/utils/interface/commonInterface';
-import { useResetRedux } from '@/utils/hooks/systemHooks/useResetRedux';
 
 const Sidebar: React.FC<SideBarProps> = ({
     routes,
@@ -22,25 +21,16 @@ const Sidebar: React.FC<SideBarProps> = ({
 
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
-    const resetRedux = useResetRedux();
 
-    const sidebarOpen: boolean = useSelector((store: RootState) => store.state.sidebarOpen);
-    const user: UserData | null = useSelector((store: RootState) => store.auth?.authUser);
-    const themeMode: boolean = useSelector((store: RootState) => store.state.lightTheme);
+    const sidebarOpen: boolean = useSelector((store: RootState) => store.app.sidebarOpen);
+    const user: Partial<AuthUser> | null = useSelector((store: RootState) => store.auth?.authUser);
+    const themeMode: boolean = useSelector((store: RootState) => store.app.lightTheme);
 
     const changeTheme = (): void => {
         dispatch(toggleTheme());
     }
 
     const basePath = user?.role === "ADMIN" ? "/admin" : user?.role === "PROVIDER" ? "/provider" : "/user";
-
-    useEffect(() => {
-        if (themeMode) {
-            document.documentElement.classList.remove('dark');
-        } else {
-            document.documentElement.classList.add('dark');
-        }
-    }, [themeMode]);
 
     return (
         <div className={` ${sidebarOpen ? 'w-[18%]' : 'w-[5%]'} overflow-y-scroll no-scrollbar border-r transition-all duration-600 flex flex-col bg-[var(--menuBg)]`} >
@@ -96,9 +86,9 @@ const Sidebar: React.FC<SideBarProps> = ({
                                 locked={isLocked}
                             />
                         );
-                        
+
                     })}
-                    
+
 
                 </ul>
             </div>
@@ -114,7 +104,7 @@ const Sidebar: React.FC<SideBarProps> = ({
                     <SingleTab
                         icon={LogOut}
                         text="Logout"
-                        onClick={() => handleSignoutHelper({ role: user?.role, dispatch, resetRedux, navigate })}
+                        onClick={() => handleSignoutHelper({ role: user.role!, dispatch, navigate })}
                         sidebarOpen={sidebarOpen}
                     />
                 </ul>

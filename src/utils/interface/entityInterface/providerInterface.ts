@@ -1,23 +1,35 @@
+import { AdminVerificationStatus, Role } from "../enums";
 
 // Provider
 export interface Provider {
-    _id: string;
-    username: string;
-    email: string;
-    password: string;
-    isBlocked: boolean;
-    isEmailVerified: boolean;
-    isAdminVerified: boolean;
-    phone: string;
-    profileImage: string;
-    addressId: string;
-    serviceId: string;
-    serviceAvailabilityId: string;
-    subscription: [string];
-    verificationToken: string;
-    trustedBySlotflow: boolean;
-    createdAt: string;
-    updatedAt: string;
+  _id: string;
+  username: string;
+  email: string;
+  password: string;
+  isBlocked: boolean;
+  isEmailVerified: boolean;
+
+  isAdminVerified: boolean;
+  verificationRejectionReason: string;
+
+  adminVerificationStatus: AdminVerificationStatus,
+  isAddressVerified: boolean,
+  isServiceDetailsVerified: boolean,
+  isAvailabilityVerified: boolean,
+  isProofsVerified: boolean,
+
+  phone: string;
+  profileImage: string;
+  addressId: string;
+  serviceId: string;
+  serviceAvailabilityId: string;
+  subscription: [string];
+  verificationToken: string;
+  trustedBySlotflow: boolean;
+  identityProof: string | FileList;
+  serviceProof: string | FileList;
+  createdAt: string;
+  updatedAt: string;
 }
 
 
@@ -26,12 +38,12 @@ export interface Provider {
 
 //  **** PROVIDER COMPONENT / PAGES INTERFACES START **** //
 
-// This is the interface of a right side showing compoenent in the provider address adding, service adding and availability adding page
+// This is the interface of a right side showing compoenent in the provider address creating, service creating and availability creating page
 export interface SideBoxProps {
-    props: {
-      pageNumber: number;
-    };
-  }
+  props: {
+    pageNumber: number;
+  };
+}
 
 
 
@@ -42,7 +54,7 @@ export interface SideBoxProps {
 // Payment confirmation page interface 
 export interface PaymentConfirmPageProps {
   status: boolean;
-  userType: string;
+  role: Role;
 }
 
 //  **** PROVIDER COMPONENT / PAGES INTERFACES END **** //

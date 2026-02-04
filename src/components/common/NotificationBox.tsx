@@ -20,7 +20,7 @@ const NotificationBox: React.FC<NotificationBoxProps> = ({
         <h4 className="font-semibold text-sm ml-2">{heading}</h4>
       </div>
       <div className="flex flex-col">
-        <p className="text-sm">
+        <p className="text-sm text-justify">
           {message}
         </p>
       </div>

@@ -4,9 +4,7 @@ import AdminRevenueReport from '@/components/admin/AdminRevenueReport';
 const AdminReportPage: React.FC = () => {
 
   return (
-    <div>
-      <AdminRevenueReport />
-    </div>
+    <AdminRevenueReport />
   )
 }
 

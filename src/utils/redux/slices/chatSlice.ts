@@ -27,7 +27,7 @@ interface chatSliceInitalState {
     isMessagesLoading: boolean;
 }
 
-const intitalState: chatSliceInitalState = {
+const initialState: chatSliceInitalState = {
     onlineUsers: null,
     lastMessages: {},
     selectedUser: null,
@@ -40,7 +40,7 @@ const intitalState: chatSliceInitalState = {
 
 const chatSlice = createSlice({
     name: "chatSlice",
-    initialState: intitalState,
+    initialState,
     reducers: {
         setOnlineUsers: (state, action: PayloadAction<Array<string> | null>) => {
             state.onlineUsers = action.payload;
@@ -68,15 +68,6 @@ const chatSlice = createSlice({
             state.socketId = null;
             state.isConnected = false;
         },
-        clearChatSlice: (state) => {
-            state.onlineUsers = null;
-            state.lastMessages = {};
-            state.selectedUser = null;
-            state.socketId = null;
-            state.isConnected = false;
-            state.messages = null;
-            state.isMessagesLoading = false;
-        },
     },
     extraReducers: (builder) => {
         builder.addCase(sendMessage.fulfilled,(state, action) => {
@@ -86,12 +77,11 @@ const chatSlice = createSlice({
 });
 
 export const {
+    setMessages,
+    addNewMessage,
     setOnlineUsers,
     setLastMessage,
     setSelectedUser,
-    setMessages,
-    addNewMessage,
-    clearChatSlice,
     setSocketConnected,
     setSocketDisconnected
 } = chatSlice.actions;

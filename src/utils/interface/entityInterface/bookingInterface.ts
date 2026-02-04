@@ -1,11 +1,4 @@
-export enum AppointmentStatus {
-    Booked = "Booked",
-    Completed = "Completed",
-    Cancelled = "Cancelled",
-    Rejected = "RejectedByProvider",
-    NotAttended = "NotAttended",
-    Confirmed = "Confirmed"
-}
+import { AppointmentStatus } from "../enums";
 
 export interface ParticipantPresence {
     joined: boolean;

@@ -7,10 +7,9 @@ import { OnChangeFn, PaginationState } from "@tanstack/react-table";
 import { CommonTableComponentProps } from "@/utils/interface/commonInterface";
 
 const CommonTable = <T,>({
+  parentDivCalssName,
   fetchApiFunction,
   queryKey,
-  heading,
-  headingClassName,
   column,
   columnsCount,
   id,
@@ -40,10 +39,7 @@ const CommonTable = <T,>({
   });
 
   return (
-    <div className="p-4">
-      {heading && (
-        <h2 className={`text-2xl font-bold ${headingClassName}`}>{heading}</h2>
-      )}
+    <div className={`${parentDivCalssName || "p-4"}`}>
       {isLoading ? (
         <div className="mt-2">
           <TableShimmer columnsCount={columnsCount} />

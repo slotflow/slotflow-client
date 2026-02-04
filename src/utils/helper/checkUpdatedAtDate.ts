@@ -3,10 +3,10 @@ import { toast } from "react-toastify";
 
 interface handleUpdatedAtCheckProps {
     e: React.MouseEvent<HTMLElement>;
-    updatedAt: string;
     errorMessage: string;
     openUserInfoForm?: boolean;
     setOpenUserInfoForm?: (value : boolean) => void;
+    updatedAt?: string;
 }
 
 export const handleUpdatedAtCheck = ({
@@ -19,7 +19,7 @@ export const handleUpdatedAtCheck = ({
     e.preventDefault();
     const thirtyDaysAgo = dayjs().subtract(30,"day");
     if(!openUserInfoForm) {
-      if(dayjs(updatedAt).isBefore(thirtyDaysAgo)) {
+      if(updatedAt && dayjs(updatedAt).isBefore(thirtyDaysAgo)) {
         setOpenUserInfoForm?.(true);
         return;
       } else {

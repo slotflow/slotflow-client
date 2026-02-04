@@ -1,56 +1,51 @@
-import React from 'react';
+import { useState } from "react";
 import { toast } from "react-toastify";
-import { FormEvent, useState } from "react";
+import React, { useEffect } from 'react';
+import { Role } from "@/utils/interface/enums";
 import { Button } from '@/components/ui/button';
-import { RootState } from "@/utils/redux/appStore";
 import { useDispatch, useSelector } from "react-redux";
 import { useQueryClient } from "@tanstack/react-query";
-import { AppDispatch } from "recharts/types/state/store";
 import { Edit, MapPinHouse, Plus, X } from 'lucide-react';
 import { setAuthUser } from "@/utils/redux/slices/authSlice";
+import { AppDispatch, RootState } from "@/utils/redux/appStore";
+import AddressForm from "@/components/form/CommonForms/AddressForm";
+import { CreateAddressFormType } from '@/utils/zod/commonZodFields';
 import AddressListing from "@/components/common/profile/AddressListing";
-import AddAddress, { AddressFormProps } from "@/components/common/AddAddress";
 import { UpdateAddressResponse } from '@/utils/interface/api/commonApiInterface';
-import { UserAddUserAddressResponse } from '@/utils/interface/api/userApiInterface';
-import { userAddUserAddress, userFetchUserAddress, userUpdateUserAddress } from "@/utils/apis/user.api";
-import { providerFetchProviderAddress, providerUpdateProviderAddress } from "@/utils/apis/provider.api";
+import { UserCreateAddressResponse } from '@/utils/interface/api/userApiInterface';
+import { providerFetchAddress, providerUpdateAddress } from "@/utils/apis/provider.api";
+import { userCreateUserAddress, userFetchAddress, userUpdateAddress } from "@/utils/apis/user.api";
 
 const Address: React.FC = () => {
 
   const queryClient = useQueryClient();
   const dispatch = useDispatch<AppDispatch>();
-  const { authUser } = useSelector((state: RootState) => state.auth);
-  const [hasErrors, setHasErrors] = useState<boolean>(false);
-  const [addAddress, setAddAddress] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
+  const [showAddressForm, setShowAddressForm] = useState(false);
+  const authUser = useSelector((state: RootState) => state.auth.authUser);
+  const [oldAddress, setOldAddress] = useState<CreateAddressFormType>();
 
-  const handleAAddAddress = async (e: FormEvent<HTMLFormElement>, formData: AddressFormProps) => {
-
-    e.preventDefault();
-    if (hasErrors) {
-      toast.error("Please fix the form errors.");
-      return;
-    }
+  const handleAddress = async (data: CreateAddressFormType) => {
     try {
       setLoading(true);
-      let res: UserAddUserAddressResponse | UpdateAddressResponse;
+      let res: UserCreateAddressResponse | UpdateAddressResponse;
 
-      if (authUser?.role === "USER") {
+      if (authUser?.role === Role.USER) {
         if (isUpdating) {
-          res = await userUpdateUserAddress(formData);
+          res = await userUpdateAddress(data);
         } else {
-          res = await userAddUserAddress(formData);
+          res = await userCreateUserAddress(data);
         }
-      } else if (authUser?.role === "PROVIDER") {
-        res = await providerUpdateProviderAddress(formData);
+      } else if (authUser?.role === Role.PROVIDER) {
+        res = await providerUpdateAddress(data);
       } else {
         throw new Error("Unknown role");
       }
       if (res.success) {
         toast.success(res.message);
-        queryClient.setQueryData(["userAddress"], res.data);
-        setAddAddress(false);
+        queryClient.invalidateQueries({ queryKey: ["userAddress"] });
+        setShowAddressForm(false);
         if (authUser) {
           dispatch(setAuthUser({
             ...authUser,
@@ -65,21 +60,37 @@ const Address: React.FC = () => {
     }
   }
 
-  return (
-    <div className="min-h-full flex flex-col">
+  useEffect(() => {
 
-      <div className='border rounded-md my-2 p-2'>
+    async function fetchOldAddress() {
+      if (authUser?.role === Role.USER) {
+        const result = await userFetchAddress();
+        setOldAddress(result);
+      } else if (authUser?.role === Role.PROVIDER) {
+        const result = await providerFetchAddress();
+        setOldAddress(result);
+      }
+    }
+
+    fetchOldAddress();
+
+  },[authUser?.role, isUpdating]);
+
+  return (
+    <div className="min-h-full flex flex-col w-full">
+
+      <div className='border rounded-md p-2 mb-2'>
         <div className='flex justify-between items-center'>
           <div className='flex space-x-2'>
             <MapPinHouse />
             <h2 className="text-xl font-semibold"> Address</h2>
           </div>
           <Button
-            variant="outline"
+            variant="default"
             disabled={loading}
-            onClick={() => setAddAddress(!addAddress)}
-            className="cursor-pointer"
-          >{addAddress
+            onClick={() => setShowAddressForm(!showAddressForm)}
+            className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
+          >{showAddressForm
             ? <span className='flex items-center'><X className='mr-2' />Close</span>
             : authUser?.isAddressAdded
               ? <span className='flex items-center'><Edit className='mr-2' />  Edit Address</span>
@@ -91,22 +102,18 @@ const Address: React.FC = () => {
         )}
       </div>
 
-      {addAddress ? (
-        <AddAddress
-          onSubmit={handleAAddAddress}
-          formClassNames={"my-4 border rounded-lg py-6"}
+      {showAddressForm ? (
+        <AddressForm
+          onSubmit={handleAddress}
+          formClassNames={"border rounded-lg py-6"}
           headingSize={"xs:text-md md:text-xl"}
           heading={"Address Form"}
           buttonText={"Submit"}
-          setHasErrors={setHasErrors}
+          setData={oldAddress}
         />
       ) : (
         <AddressListing
-          fetchApiFunction={
-            authUser?.role === "USER" ?
-              userFetchUserAddress
-              : providerFetchProviderAddress
-          }
+          fetchApiFunction={authUser?.role === "USER" ? userFetchAddress : providerFetchAddress}
           queryKey="userAddress"
           setLoading={setLoading}
           setIsUpdating={setIsUpdating}

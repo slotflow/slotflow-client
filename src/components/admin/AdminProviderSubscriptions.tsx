@@ -1,6 +1,6 @@
 import { memo } from "react";
 import CommonTable from "../common/CommonTable";
-import { useCommonHook } from "@/utils/hooks/commonHooks/useCommonActions";
+import { useCommonHook } from "@/hooks/commonHooks/useCommonActions";
 import { adminFetchProviderSubscriptions } from "@/utils/apis/adminProvider.api";
 import { FetchProviderSubscriptionsResponse } from "@/utils/interface/api/commonApiInterface";
 import { ProvidersSubscriptionsTableColumns } from "../table/tableColumns/ProviderSubscriptionsTableColumn";
@@ -23,6 +23,7 @@ const AdminProviderSubscriptions: React.FC<AdminFetchProviderSubscriptionsCompon
             column={column}
             columnsCount={7}
             id={providerId}
+            parentDivCalssName="p-0"
         />
     )
 })

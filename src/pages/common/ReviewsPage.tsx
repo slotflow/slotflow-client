@@ -9,8 +9,8 @@ import { toast } from "react-toastify";
 import {
   ApiPaginatedResponse,
   FetchFunctionParams,
-  Role,
 } from "@/utils/interface/commonInterface";
+import { Role } from "@/utils/interface/enums";
 import { Button } from "@/components/ui/button";
 import { userDeleteReview } from "@/utils/apis/user.api";
 import { ShieldCheck, ShieldX, Trash } from "lucide-react";
@@ -21,6 +21,7 @@ import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { Review } from "@/utils/interface/entityInterface/reviewInterface";
 import { adminChangeReviewBlockStatus } from "@/utils/apis/adminReview.api";
 import { FetchReviewsResponse } from "@/utils/interface/api/commonApiInterface";
+import { AdminChangeReviewBlockStatusRequest } from "@/utils/interface/api/adminReviewApiInterface";
 
 interface ReviewsPageProps {
   id?: string;
@@ -56,7 +57,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
     isLoading,
     isError,
   } = useInfiniteQuery<ApiPaginatedResponse<FetchReviewsResponse>>({
-    queryKey: ["reviews"],
+    queryKey: ["reviews",id],
     queryFn: ({ pageParam = 1 }) =>
       fetchFun({
         id,
@@ -158,19 +159,19 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
 
   const handleChangeReviewBlockStatus = async (
     e: React.MouseEvent<HTMLButtonElement>,
-    reviewId: Review["_id"]
+    data: AdminChangeReviewBlockStatusRequest
   ) => {
 
     console.log("Chaging review block status");
 
     e.preventDefault();
 
-    if (!reviewId) {
+    if (!data.reviewId) {
       toast.error("Please try again later");
       return;
     }
 
-    await adminChangeReviewBlockStatus(reviewId)
+    await adminChangeReviewBlockStatus(data)
       .then((res) => {
         if (res.success) {
           toast.success(res.message);
@@ -185,9 +186,13 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
 
   const reviews = data?.pages.flatMap((page) => (page.data ? page.data : [])) || [];
 
+  console.log("reviews : ",reviews);
+
   if (reviews.length === 0) {
     return (
-      <DataFetchingError message="No data found in database" className="p-4" />
+      <div className="h-full flex-1 flex justify-center items-center">
+        <DataFetchingError message="No Reviews found in database" className="p-4" />
+      </div>
     )
   }
 
@@ -218,14 +223,14 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
               {!isProvider && (
                 <div className="flex items-center gap-3 border-t pt-3 mt-3">
                   <img
-                    src={review.providerId.profileImage || noProfile}
+                    src={review?.providerId?.profileImage ?? noProfile}
                     alt="provider"
                     className="size-10 rounded-full object-cover"
                   />
                   <div className="text-sm">
                     <p className="font-medium">Service Provider</p>
                     <p className="text-muted-foreground">
-                      {review.providerId.username}
+                      {review?.providerId?.username ?? "No username"}
                     </p>
                   </div>
                 </div>
@@ -234,14 +239,14 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
               {!isUser && (
                 <div className="flex items-center gap-3 border-t pt-3 mt-3">
                   <img
-                    src={review.userId.profileImage || noProfile}
+                    src={review?.userId?.profileImage ?? noProfile}
                     alt="user"
                     className="size-10 rounded-full object-cover"
                   />
                   <div className="text-sm">
                     <p className="font-medium">Reviewer</p>
                     <p className="text-muted-foreground">
-                      {review.userId.username}
+                      {review?.userId?.username}
                     </p>
                   </div>
                 </div>
@@ -300,7 +305,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
                 )}
                 {isProvider && (
                   <Button
-                    variant="outline"
+                    variant="default"
                     size="sm"
                     className="cursor-pointer"
                     onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleReportReview(e, review._id)}
@@ -327,7 +332,10 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
                     variant="secondary"
                     size="sm"
                     className="cursor-pointer"
-                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleChangeReviewBlockStatus(e, review._id)}
+                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleChangeReviewBlockStatus(e, {
+                      reviewId: review._id,
+                      isblocked: review.isBlocked
+                    })}
                   >
                     {review.isBlocked ? (
                       <span className="flex items-center space-x-2">
@@ -357,8 +365,8 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
           <Button
             onClick={() => fetchNextPage()}
             disabled={isFetchingNextPage}
-            className="cursor-pointer"
-            variant="outline"
+            className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
+            variant="default"
           >
             {isFetchingNextPage ? "Loading..." : "Load More"}
           </Button>

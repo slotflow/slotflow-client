@@ -2,98 +2,107 @@ import { ApiBaseResponse } from "../commonInterface";
 import { Plan } from "../entityInterface/planInterface";
 import { User } from "../entityInterface/userInterface";
 import { Address } from "../entityInterface/addressInterface";
+import { Booking } from "../entityInterface/bookingInterface";
 import { Provider } from "../entityInterface/providerInterface";
 import { Service } from "../entityInterface/appServiceInterface";
 import { ProviderService } from "../entityInterface/providerServiceInterface";
 import { Availability, AvailabilityForResponse } from "../entityInterface/serviceAvailabilityInterface";
-import { Booking } from "../entityInterface/bookingInterface";
+import { SubscriptionValidity } from "../enums";
 
-// **** 1.  Used as the request interface for adding address api
-export type ProviderAddProviderAddressRequest = Pick<Address, "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "googleMapLink">;
+// **** Used as the request interface for creating address api
+export type ProviderCreateAddressRequest = Pick<Address, "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location">;
 
-// **** 2.  Used as the response type of provider fetch address api
-export type ProviderFetchAddressResponse = Pick<Address, "_id" | "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "googleMapLink" | "updatedAt">;
+// **** Used as the response type of provider fetch address api
+export type ProviderFetchAddressResponse = Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "updatedAt" | "landMark" | "location" | "countryCode">;
 
 
-// **** 3.  Used as the response type of fetch all services api
+// **** Used as the response type of fetch all services api
+export type ProviderFetchAllAppServiceRequest = Pick<Service, "serviceCategory">;
 export type ProviderFetchAllServicesResponse = Array<Pick<Service, "_id" | "serviceName">>;
 
 
-// **** 4.  Inline interface used for providerAddProviderServiceDetails api
+// **** Used as the request interface for providerCreateServiceDetails api
+export type ProviderCreateServiceDetailsRequest = Pick<ProviderService, "isGroupService" | "maxParticipants" | "requirements" | "service" | "serviceDescription" | "serviceExperience" | "serviceMode" | "serviceName" | "servicePrice" | "serviceType" | "tags" | "videoUrl">;
+
+// **** Used as the request interface for providerUpdateServiceDetails api
+export type ProviderUpdateServiceDetailsRequest = Pick<ProviderService, "_id" | "isGroupService" | "maxParticipants" | "requirements" | "service" | "serviceDescription" | "serviceExperience" | "serviceMode" | "serviceName" | "servicePrice" | "serviceType" | "tags" | "videoUrl">;
 
 
-// **** 5.  Used as the response type for provider fetch self service details
-type FetchServiceDetailsResponse = Pick<ProviderService, "serviceName" | "serviceDescription" | "servicePrice" | "providerAdhaar" | "providerExperience" | "providerCertificateUrl">;
+// **** Used as the response type for provider fetch self service details
+type FetchServiceDetailsResponse = Pick<ProviderService, "_id" | "serviceName" | "serviceDescription" | "servicePrice" | "serviceExperience" | "isGroupService" | "maxParticipants" | "requirements" | "serviceMode" | "serviceType" | "tags" | "videoUrl">;
 export interface ProviderFetchServiceDetailsResponse extends FetchServiceDetailsResponse {
-  serviceCategory: Pick<Service, "serviceName">
+  service: Pick<Service, "serviceName">
 }
 
 
-// **** 6.  Used as the request interface for provider service availability adding api
-export interface AddProviderServiceAvailabilitiesRequest {
+// **** Used as the request interface for provider service availability creating api
+export interface CreateProviderServiceAvailabilitiesRequest {
   data: Availability[];
 }
 
 
-// **** 7.  Used as the response type for provider fetch self profile details api
-export type ProviderFetchProfileDetailsResponse = Pick<Provider, "username" | "email" | "isAdminVerified" | "isBlocked" | "isEmailVerified" | "phone" | "createdAt" | "trustedBySlotflow" | "updatedAt">;
+// **** Used as the response type for provider fetch self profile details api
+export type ProviderFetchProfileDetailsResponse = Pick<Provider, "username" | "email" | "isAdminVerified" | "isBlocked" | "isEmailVerified" | "phone" | "createdAt" | "trustedBySlotflow" | "updatedAt" | "adminVerificationStatus" | "isAddressVerified" | "isAvailabilityVerified" | "isProofsVerified" | "isServiceDetailsVerified">;
 
 
-// **** 8.  Used as the response type for provider fetch self service availability
+// **** Used as the response type for provider fetch self service availability
 export type ProviderFetchServiceAvailabilityResponse = AvailabilityForResponse;
 
 
-// **** 9.  Used as the response type for Provider profile image updating api
+// **** Used as the response type for Provider profile image updating api
+export interface ProviderUpdateProfileImageRequest {
+  s3FileKey: string
+}
 export interface ProviderUpdateProfileImageResponse extends ApiBaseResponse {
   data: Provider["profileImage"]
 }
 
 
-// **** 10.  Used as the response type for Provider fetch plans api
+// **** Used as the response type for Provider fetch plans api
 export type ProviderFetchPlansResponse = Pick<Plan, "_id" | "planName" | "price" | "features" | "description">;
 
 
-// **** 11.1  Used as the request type for Provider subscribe to a plan api
+// **** Used as the request type for Provider subscribe to a plan api
 export type ProviderSubscribeToPlanRequest = {
   planId: Plan["_id"];
-  planDuration: string
+  planDuration: SubscriptionValidity
 }
-// **** 11.2  Used as the response interface for Provider subscribe to a plan api
+// **** Used as the response interface for Provider subscribe to a plan api
 export interface ProviderSubscribeToPlanResponse extends ApiBaseResponse {
   data: string
 }
 
-
-// **** 12.  Inline interfaces used for the providerSaveSubscription api
-export interface ProviderSaveSubscriptionResponse extends ApiBaseResponse {
-  planName: Plan["planName"]
-};
-
-// **** 13.  Interfaces for providerFetchProviderSubscriptions api is in common interface api file
+// **** Interfaces for providerFetchSubscriptions api is in common interface api file
 
 
-// **** 14.  Inline interfaces used for the providerSubscribeToTrialPlan api
+// **** Inline interfaces used for the providerSubscribeToTrialPlan api
 
 
-// **** 15.  Interfaces for providerFetchProviderPayments api is in common interface api file
+// **** Interfaces for providerFetchPayments api is in common interface api file
 
 
-// **** 16.  Interfaces for providerFetchProviderBookingAppointments api is in common interface api file
+// **** Interfaces for providerFetchProviderBookingAppointments api is in common interface api file
 
 
-// **** 17.1 Used as the request type for Provider update providerInfo [username and phone]
+// **** Used as the request type for Provider update providerInfo [username and phone]
 export type ProviderUpdateProviderInfoRequest = Pick<Provider, "username" | "phone">
-// **** 17.2 Used as the response interface for Provider update providerInfo [username and phone]
+// **** Used as the response interface for Provider update providerInfo [username and phone]
 export interface ProviderUpdateProviderInfoResponse extends ApiBaseResponse {
   data: ProviderUpdateProviderInfoRequest
 }
 
 
-// **** 18. Used as the return type for the provider fetch users for the chat side bar
+// **** Used as the request interface of provider submit detials for review
+export interface ProviderSubmitDetailsResponse extends ApiBaseResponse {
+  data: Pick<Provider, "adminVerificationStatus">;
+}
+
+
+// **** Used as the return type for the provider fetch users for the chat side bar
 export type ProviderFetchUsersForChatSidebarResponse = Array<Pick<User, "_id" | "username" | "profileImage">>
 
 
-// **** 19. Used as the return interface for the provider fetch dashboard data
+// **** Used as the return interface for the provider fetch dashboard data
 export interface ProviderFetchDashboardStatsDataResponse extends Record<string, number> {
   totalAppointments: number;
   completedAppointments: number;
@@ -109,7 +118,7 @@ export interface ProviderFetchDashboardStatsDataResponse extends Record<string, 
 }
 
 
-// **** 20. Used as the return interface for the provider fetch dashboard graph data
+// **** Used as the return interface for the provider fetch dashboard graph data
 export interface ProviderDashboardGraphResponse {
   appointmentsOvertimeChartData: Array<{
     date: string;
@@ -149,11 +158,11 @@ export interface ProviderDashboardGraphResponse {
 }
 
 
-// **** 20. Used as the request interface for the provider change booking appointment status
+// **** Used as the request interface for the provider change booking appointment status
 export interface ProviderChangeAppointmentStatusRequest {
   appointmentId: Booking["_id"];
   appointmentStatus: Booking["appointmentStatus"];
 }
 
 
-// **** 21. Address updating interfaces are in common interface file
+// **** Address updating interfaces are in common interface file

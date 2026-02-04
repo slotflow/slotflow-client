@@ -12,7 +12,7 @@ import { AdminFetchddressResponse, FetchPaymentsResponse } from "../interface/ap
 export const adminFetchAllUsers = async (params?: FetchFunctionParams): Promise<ApiPaginatedResponse<AdminfetchAllUsersResponse>> => {
     const query = buildQueryParams(params);
     const response = await axiosInstance.get(`/admin/users${query ? `?${query}` : ''}`);
-    return parseNewCommonResponse<AdminfetchAllUsersResponse>(response.data);
+    return parseNewCommonResponse<AdminfetchAllUsersResponse>(response.data.data);
 }
 
 export const adminChangeUserBlockStatus = async (data: AdminChangeUserStatusRequest): Promise<ApiBaseResponse> => {
@@ -34,6 +34,6 @@ export const adminFetchUserPayments = async (params: FetchFunctionParams<User["_
     const { id, pagination } = params;
     const query = buildQueryParams({ pagination });
     const response = await axiosInstance.get(`/admin/users/${id}/payments${query ? `?${query}` : ''}`);
-    return parseNewCommonResponse<FetchPaymentsResponse>(response.data);
+    return parseNewCommonResponse<FetchPaymentsResponse>(response.data.data);
 }
 

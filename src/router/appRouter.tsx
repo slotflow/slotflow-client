@@ -1,10 +1,18 @@
 import { lazy } from "react";
 import PlanGuard from "./planGuard.tsx";
-import { createBrowserRouter } from "react-router-dom";
+import { Role } from "@/utils/interface/enums.ts";
 import { ProtectedRoute } from "./protectedRoutes.tsx";
-import IntegrationsPage from "@/pages/common/IntegrationsPage.tsx";
+import { createBrowserRouter, Outlet } from "react-router-dom";
+
 import SettingsPage from "@/pages/common/SettingsPage.tsx";
+import IntegrationsPage from "@/pages/common/IntegrationsPage.tsx";
 import StripeConfirmPage from "@/pages/common/StripeConfirmPage.tsx";
+import ProviderAddAddressPage from "@/pages/provider/ProviderCreateAddressPage.tsx";
+import ProviderCreateServiceDetailsPage from "@/pages/provider/ProviderCreateServiceDetailsPage.tsx";
+import ProviderCreateServiceAvailabilityPage from "@/pages/provider/ProviderCreateServiceAvailabilityPage.tsx";
+import ProviderApprovalPendingPage from "@/pages/provider/ProviderApprovalPendingPage.tsx";
+import ProviderProofSubmitionPage from "@/pages/provider/ProviderProofSubmitionPage.tsx";
+import ProviderMainPage from "@/pages/provider/ProviderMainPage.tsx";
 
 const AuthPage = lazy(() => import("@/pages/common/AuthPage.tsx"));
 const AboutPage = lazy(() => import("@/pages/common/AboutPage.tsx"));
@@ -32,7 +40,7 @@ const UserServiceSelectPage = lazy(() => import("@/pages/user/UserServiceSelectP
 const UserBookingDetailsPage = lazy(() => import("@/pages/user/UserBookingDetailsPage.tsx"))
 const UserServiceProviderDetailPage = lazy(() => import("@/pages/user/UserServiceProviderDetailPage.tsx"));
 
-const ProviderMainPage = lazy(() => import("@/pages/provider/ProviderMainPage.tsx"));
+// const ProviderMainPage = lazy(() => import("@/pages/provider/ProviderMainPage.tsx"));
 const ProviderChatPage = lazy(() => import("@/pages/provider/ProviderChatPage.tsx"));
 const ProviderReviewPage = lazy(() => import("@/pages/provider/ProviderReviewPage"));
 const ProviderPaymentsPage = lazy(() => import("@/pages/provider/ProviderPaymentsPage.tsx"));
@@ -67,14 +75,22 @@ export const appRouter = createBrowserRouter([
             { path: "/contact", element: <ContactPage /> },
             { path: "/privacy-policy", element: <PrivacyPolicyPage /> },
             { path: "/terms-and-conditions", element: <TermsAndConditionsPage /> },
-            { path: "/admin/login", element: <AuthPage role={"ADMIN"} /> },
-            { path: "/user/login", element: <AuthPage role={"USER"} /> },
-            { path: "/provider/login", element: <AuthPage role={"PROVIDER"} /> },
+            { path: "/admin/login", element: <AuthPage role={Role.ADMIN} formType={0} /> },
+            { path: "/user/login", element: <AuthPage role={Role.USER} formType={0} /> },
+            { path: "/user/register", element: <AuthPage role={Role.USER} formType={1} /> },
+            { path: "/user/verify/email", element: <AuthPage role={Role.USER} formType={2} /> },
+            { path: "/user/reset/password", element: <AuthPage role={Role.USER} formType={3} /> },
+            { path: "/user/verify/otp", element: <AuthPage role={Role.USER} formType={4} /> },
+            { path: "/provider/login", element: <AuthPage role={Role.PROVIDER} formType={0} /> },
+            { path: "/provider/register", element: <AuthPage role={Role.PROVIDER} formType={1} /> },
+            { path: "/provider/verify/email", element: <AuthPage role={Role.PROVIDER} formType={2} /> },
+            { path: "/provider/reset/password", element: <AuthPage role={Role.PROVIDER} formType={3} /> },
+            { path: "/provider/verify/otp", element: <AuthPage role={Role.PROVIDER} formType={4} /> },
             { path: "*", element: <Error404Page /> },
             {
                 path: "/admin",
                 element: (
-                    <ProtectedRoute allowedRoles={["ADMIN"]}>
+                    <ProtectedRoute allowedRoles={[Role.ADMIN]}>
                         <AdminMainPage />
                     </ProtectedRoute>
                 ),
@@ -90,14 +106,14 @@ export const appRouter = createBrowserRouter([
                     { path: "subscriptions", element: <AdminSubscriptionsPage /> },
                     { path: "payments", element: <AdminPaymentsPage /> },
                     { path: "subscription/:subscriptionId", element: <AdminSubcriptionDetailedViewPage /> },
-                    { path: "api-strength", element: <AdminApiStrengthPage /> },
+                    { path: "health", element: <AdminApiStrengthPage /> },
                     { path: "*", element: <Error404Page /> },
                 ],
             },
             {
                 path: "/user",
                 element: (
-                    <ProtectedRoute allowedRoles={["USER"]}>
+                    <ProtectedRoute allowedRoles={[Role.USER]}>
                         <UserMainPage />
                     </ProtectedRoute>
                 ),
@@ -124,15 +140,30 @@ export const appRouter = createBrowserRouter([
                     { path: "reviews", element: <UserReviewPage /> },
                     { path: "notifications", element: <UserNotificationsPage /> },
                     { path: "settings", element: <SettingsPage /> },
-                    { path: "payment-success", element: <PaymentConfirmPage status={true} userType={"user"} /> },
-                    { path: "payment-failed", element: <PaymentConfirmPage status={false} userType={"user"} /> },
+                    { path: "payment-success", element: <PaymentConfirmPage status={true} role={Role.USER} /> },
+                    { path: "payment-failed", element: <PaymentConfirmPage status={false} role={Role.USER} /> },
                     { path: "*", element: <Error404Page /> },
                 ],
             },
             {
+                path: "/provider/onboarding",
+                element: (
+                    <ProtectedRoute allowedRoles={[Role.PROVIDER]}>
+                        <Outlet />
+                    </ProtectedRoute>
+                ),
+                children: [
+                    { path: "address", element: <ProviderAddAddressPage /> },
+                    { path: "service", element: <ProviderCreateServiceDetailsPage /> },
+                    { path: "availability", element: <ProviderCreateServiceAvailabilityPage /> },
+                    { path: "proofs", element: <ProviderProofSubmitionPage /> },
+                    { path: "pending", element: <ProviderApprovalPendingPage /> },
+                ]
+            },
+            {
                 path: "/provider",
                 element: (
-                    <ProtectedRoute allowedRoles={["PROVIDER"]}>
+                    <ProtectedRoute allowedRoles={[Role.PROVIDER]}>
                         <ProviderMainPage />
                     </ProtectedRoute>
                 ),
@@ -247,8 +278,8 @@ export const appRouter = createBrowserRouter([
                             </PlanGuard>
                         )
                     },
-                    { path: "payment-success", element: <PaymentConfirmPage status={true} userType={"provider"} /> },
-                    { path: "payment-failed", element: <PaymentConfirmPage status={false} userType={"provider"} /> },
+                    { path: "payment-success", element: <PaymentConfirmPage status={true} role={Role.PROVIDER} /> },
+                    { path: "payment-failed", element: <PaymentConfirmPage status={false} role={Role.PROVIDER} /> },
                     { path: "stripe/success", element: <StripeConfirmPage status={true} /> },
                     { path: "stripe/refresh", element: <StripeConfirmPage status={false} /> },
                     { path: "*", element: <Error404Page /> },

@@ -10,7 +10,7 @@ import { FetchFunctionParams, ApiPaginatedResponse, ApiBaseResponse } from "../i
 export const adminFetchAllPlans = async (params?: FetchFunctionParams): Promise<ApiPaginatedResponse<AdminFetchAllPlansResponse>> => {
     const query = buildQueryParams(params);
     const response = await axiosInstance.get(`/admin/plans${query ? `?${query}` : ''}`);
-    return parseNewCommonResponse<AdminFetchAllPlansResponse>(response.data);
+    return parseNewCommonResponse<AdminFetchAllPlansResponse>(response.data.data);
 };
 
 export const adminAddNewPlan = async (formData: AdminAddNewPlanRequest): Promise<ApiBaseResponse> => {

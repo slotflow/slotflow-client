@@ -1,16 +1,16 @@
 import { gsap } from "gsap";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { Role } from "@/utils/interface/enums";
+import { Button } from "@/components/ui/button";
 import { useSearchParams } from "react-router-dom";
 import { CheckCircle, XCircle } from "lucide-react";
-import CommonButton from "@/components/common/CommonButton";
-import { providerSaveSubscription } from "@/utils/apis/provider.api";
 import { userSaveAppointmentBooking } from "@/utils/apis/user.api";
+// import { setProviderSubscription } from "@/utils/redux/slices/authSlice";
 import { PaymentConfirmPageProps } from "@/utils/interface/entityInterface/providerInterface";
-import { useDispatch } from "react-redux";
-import { updateProviderSubscription } from "@/utils/redux/slices/authSlice";
 
-const PaymentConfirmPage: React.FC<PaymentConfirmPageProps> = ({ status, userType }) => {
+const PaymentConfirmPage: React.FC<PaymentConfirmPageProps> = ({ status, role }) => {
 
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
@@ -27,26 +27,23 @@ const PaymentConfirmPage: React.FC<PaymentConfirmPageProps> = ({ status, userTyp
   const save = async () => {
     if (!sessionId) return;
     try {
-      if (userType === "provider") {
-        const response = await providerSaveSubscription(sessionId);
-        if (response.success) {
-          toast.success(response.message);
-          dispatch(updateProviderSubscription(response.planName))
-        }
-      } else if (userType === "user") {
+      if (role === Role.PROVIDER) {
+        // Call api for getting the subscribed planName for adding it int e redux for the features unlocking
+        // dispatch(setProviderSubscription())
+      } else if (role === Role.USER) {
         const response = await userSaveAppointmentBooking(sessionId);
         if (response.success) {
           toast.success(response.message);
-        }
-      }
+        };
+      };
     } catch {
-      toast.error("Subscription failed");
-    }
-  }
+      toast.error(`${role === Role.PROVIDER ? "Subscription" : "Booking"} failed`);
+    };
+  };
 
   useEffect(() => {
     save();
-  }, [])
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center h-full p-4">
@@ -61,11 +58,11 @@ const PaymentConfirmPage: React.FC<PaymentConfirmPageProps> = ({ status, userTyp
         <h1 className="text-2xl font-bold mt-4">{status ? "Payment Successful!" : "Payment Failed!"}</h1>
         <p className="mt-2">{status ? "Your payment was processed successfully." : "There was an issue with your payment. Please try again."}</p>
         <div className="my-4">
-          <CommonButton text={"Go to home"} onClick={() => window.location.href = "/provider/subscription"} />
+          <Button onClick={() => window.location.href = "/provider/subscription"} className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]" >Go To Home </Button>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default PaymentConfirmPage;

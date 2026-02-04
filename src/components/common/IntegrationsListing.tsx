@@ -16,11 +16,11 @@ const IntegrationsListing: React.FC = () => {
                 <CardContent className="space-y-4">
                     <div className="flex items-center justify-between">
                         <Label>Google Calendar Connection</Label>
-                        <Button variant="outline">Connect</Button>
+                        <Button variant="default" className='cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]'>Connect</Button>
                     </div>
                     <div className="flex items-center justify-between">
                         <Label>Stripe Connection</Label>
-                        <Button variant="outline">Connect</Button>
+                        <Button variant="default" className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]">Connect</Button>
                     </div>
                 </CardContent>
             </Card>

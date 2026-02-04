@@ -1,98 +1,81 @@
-import { toast } from 'react-toastify';
-import InputField from '../InputFieldWithLable'
-import { resendOtp } from '@/utils/apis/auth.api';
-import { useDispatch, useSelector } from 'react-redux';
-import { FormButton, FormHeading } from '../FormSplits';
-import { FormEvent, useCallback, useState } from 'react';
-import { AppDispatch, RootState } from '@/utils/redux/appStore';
-import { setResetPasswordForm, setsignInForm, setSignUpForm, setVerifyEmailForm, setVerifyOtpForm } from '@/utils/redux/slices/signFormSlice';
-import { ApiBaseResponse, EmailVerificationFormData, EmailVerificationFormProps, HandleChangeFunction } from '@/utils/interface/commonInterface';
+import FormField from "../FormField";
+import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { resendOtp } from "@/utils/apis/auth.api";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AppDispatch } from "@/utils/redux/appStore";
+import { FormButton, FormHeading } from "../FormSplits";
+import { VerifyEmailFormType, verifyEmailZodSchema } from "@/utils/zod/authZod";
+import { RedirectTo, EmailVerificationFormProps } from "@/utils/interface/commonInterface";
+import { appConfig } from "@/utils/env";
+import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
 
 const EmailVerificationForm: React.FC<EmailVerificationFormProps> = ({ role }) => {
-
     const dispatch = useDispatch<AppDispatch>();
-    const loading: boolean = useSelector((store: RootState) => store.signform.loading);
-    const [hasErrors, setHasErrors] = useState<boolean>(false);
+    const { goToAuthPage } = useAuthNavigation();
 
-    const [formData, setFormData] = useState<EmailVerificationFormData>({
-        email: ""
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting, isValid },
+    } = useForm<VerifyEmailFormType>({
+        resolver: zodResolver(verifyEmailZodSchema),
+        mode: "onChange",
+        defaultValues: {
+            email: ""
+        },
     });
 
-    const handleChange = useCallback<HandleChangeFunction>((e) => {
-        setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
-        setHasErrors(false);
-    }, []);
-
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        if (hasErrors) {
-            toast.error("Please fix the form errors.");
+    const onSubmit = async (data: VerifyEmailFormType) => {
+        if (!role) {
+            toast.info("Select your account type.");
             return;
         }
-        if (role) {
-            dispatch(resendOtp({ role, email: formData.email }))
-                .unwrap()
-                .then((res: ApiBaseResponse) => {
-                    if (res.success) {
-                        toast.success(res.message);
-                        dispatch(setVerifyOtpForm(true));
-                        dispatch(setVerifyEmailForm(false));
-                        dispatch(setSignUpForm(false));
-                        dispatch(setsignInForm(false));
-                        dispatch(setResetPasswordForm(false));
-                    } else {
-                        toast.error(res.message);
-                    }
-                })
-                .catch((error) => {
-                    toast.error(error || "An error occurred.");
-                });
-        } else {
-            toast.info("Select your account type.");
+
+        try {
+            const res = await dispatch(resendOtp({ role, email: data.email })).unwrap();
+            if (res.success) {
+                toast.success(res.message);
+                goToAuthPage(role, RedirectTo.VERIFY_OTP);
+            }
+        } catch (error) {
+            if(appConfig.dev)console.log("An error occurred during email verification ",error);
         }
-    };
-
-    const handleCancel = (): void => {
-        dispatch(setVerifyEmailForm(false));
-        dispatch(setsignInForm(true));
-        dispatch(setVerifyOtpForm(false));
-        dispatch(setSignUpForm(false));
-        dispatch(setResetPasswordForm(false));
-    }
-
-    const handleErrorChange = (hasError: boolean) => {
-        setHasErrors(hasError);
     };
 
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                <div className="p-8">            
-                    <FormHeading title={"Verify Email"} description='An Otp will send to this email id' />
+                <div className="p-8">
+                    <FormHeading title="Verify Email" description="An OTP will be sent to this email ID" />
                     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                        <form onSubmit={handleSubmit} className="space-y-3">
-                            <InputField
-                                label="Email address"
+                        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+                            <FormField<VerifyEmailFormType>
+                                label="Email Address"
                                 id="email"
-                                placeholder="midhun@gmail.com"
+                                placeholder="Enter your registered email"
                                 type="email"
-                                value={formData.email}
-                                onChange={handleChange}
+                                register={register}
+                                error={errors.email?.message}
                                 required={true}
-                                onHasError={handleErrorChange}
                             />
-
-                            <FormButton text={"Submit"} loading={loading} />
+                            <FormButton text="Submit" loading={isSubmitting} disabled={isSubmitting || !isValid} />
                         </form>
 
                         <p className="mt-6 flex justify-between text-xs md:text-sm/6 text-[var(--textTwo)] px-2">
-                            <span className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer" onClick={handleCancel}>Cencel</span>
+                            <span
+                                className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
+                                onClick={() => goToAuthPage(role, RedirectTo.LOGIN)}
+                            >
+                                Cancel
+                            </span>
                         </p>
                     </div>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default EmailVerificationForm
+export default EmailVerificationForm;
