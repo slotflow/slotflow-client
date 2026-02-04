@@ -9,7 +9,7 @@ import stripeLogo from '../../assets/iconImages/Stripe.jpeg';
 import { userBookAnAppointment } from '@/utils/apis/user.api';
 import { SubscriptionValidity } from '@/utils/interface/enums';
 import razorpayLogo from '../../assets/iconImages/Razorpay.png';
-import { providerSubscribeToPlan } from '@/utils/apis/provider.api';
+import { providerCheckoutForSubscribePlan } from '@/utils/apis/provider.api';
 import { Provider } from '@/utils/interface/entityInterface/providerInterface';
 import { setPaymentSelectionPage, setSubscriptionIsTrailPlan, setSubscriptionPlanDuration, setSubscriptionPlanId } from '@/utils/redux/slices/providerSlice';
 
@@ -82,7 +82,7 @@ const CommonPaymentSelection: React.FC<PaymentSelecionComponentPropst> = ({
                 sessionId = response.data;
             } else if (isProviderSubscription) {
                 const infoData = data as ProviderSubscriptionDataProps;
-                const response = await providerSubscribeToPlan(infoData);
+                const response = await providerCheckoutForSubscribePlan(infoData);
                 sessionId = response.data;
             }
 

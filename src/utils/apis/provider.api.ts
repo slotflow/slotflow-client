@@ -4,7 +4,7 @@ import {
     ProviderFetchAddressResponse,
     ProviderCreateAddressRequest,
     ProviderSubmitDetailsResponse,
-    ProviderSubscribeToPlanRequest,
+    ProviderCheckoutForSubscribePlanRequest,
     ProviderDashboardGraphResponse,
     ProviderSubscribeToPlanResponse,
     ProviderFetchAllServicesResponse,
@@ -22,6 +22,7 @@ import {
     ProviderFetchUsersForChatSidebarResponse,
     ProviderFetchServiceAvailabilityResponse,
     CreateProviderServiceAvailabilitiesRequest,
+    ProviderSubscribedPlanRespone,
 } from "../interface/api/providerApiInterface";
 import { DateRange } from "react-day-picker";
 import { createAsyncThunk } from "@reduxjs/toolkit";
@@ -71,22 +72,22 @@ export const providerFetchBookingAppoinments = async <T extends FetchBookingsRes
     return parseNewCommonResponse<T>(response.data.data);
 }
 
-export const adminFetchBookingDetails = async(bookingId: Booking["_id"]): Promise<FetchBookingDetailsResponse> => {
+export const adminFetchBookingDetails = async (bookingId: Booking["_id"]): Promise<FetchBookingDetailsResponse> => {
     const response = await axiosInstance.get(`/provider/bookings/${bookingId}`);
     return response.data.data;
 }
 
-export const providerChangeAppointmentStatus = async (data: ProviderChangeAppointmentStatusRequest) : Promise<ApiBaseResponse> => {
-    const response = await axiosInstance.patch(`/provider/bookings/${data.appointmentId}`,data);
+export const providerChangeAppointmentStatus = async (data: ProviderChangeAppointmentStatusRequest): Promise<ApiBaseResponse> => {
+    const response = await axiosInstance.patch(`/provider/bookings/${data.appointmentId}`, data);
     return response.data;
 }
 
 export const providerValidateRoomId = async (data: ValidateRoomId): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.get(`/provider/bookings/${data.appointmentId}/can-join?roomId=${data.roomId}`);
     return response.data;
-} 
+}
 
-export const providerFetchBookingDetails = async (appointmentId: Booking['_id']) : Promise<ApiBaseResponse> => {
+export const providerFetchBookingDetails = async (appointmentId: Booking['_id']): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.get(`/provider/bookings${appointmentId}`);
     return response.data;
 }
@@ -94,7 +95,7 @@ export const providerFetchBookingDetails = async (appointmentId: Booking['_id'])
 export const providerJoinOrLeftRoomCallBack = async (data: JoinRoomCallbackRequest): Promise<JoinRoomCallbackResponse> => {
     const response = await axiosInstance.patch(`/provider/bookings/${data.videoCallRoomId}/join-left`, data);
     return response.data;
-}     
+}
 
 
 // **** Provider services apis
@@ -153,27 +154,27 @@ export const providerUpdateInfo = createAsyncThunk<ProviderUpdateProviderInfoRes
     }
 )
 
-export const providerUpdateIdentityProof = async(data: UpdateFileDataRequest): Promise<UpdateFileDataResponse> => {
+export const providerUpdateIdentityProof = async (data: UpdateFileDataRequest): Promise<UpdateFileDataResponse> => {
     const response = await axiosInstance.patch('/provider/profile/identity', data);
     return response.data;
 }
 
-export const providerUpdateProofServiceProof = async(data: UpdateFileDataRequest): Promise<UpdateFileDataResponse> => {
+export const providerUpdateProofServiceProof = async (data: UpdateFileDataRequest): Promise<UpdateFileDataResponse> => {
     const response = await axiosInstance.patch('/provider/profile/service', data);
     return response.data;
 }
 
-export const providerFetchProofs = async(): Promise<FetchProvidersProofsResponse> => {
+export const providerFetchProofs = async (): Promise<FetchProvidersProofsResponse> => {
     const response = await axiosInstance.get(`/provider/profile/proofs`);
     return response.data.data;
 }
 
-export const providerDeleteIdentityProof = async(): Promise<ApiBaseResponse> => {
+export const providerDeleteIdentityProof = async (): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.delete('/provider/profile/identity');
     return response.data;
 }
 
-export const providerDeleteServiceProof = async(): Promise<ApiBaseResponse> => {
+export const providerDeleteServiceProof = async (): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.delete('/provider/profile/service');
     return response.data;
 }
@@ -185,7 +186,7 @@ export const providerSubmitDetailsForReview = createAsyncThunk<ProviderSubmitDet
     }
 )
 
-export const providerSetPushNotification = async(data: boolean): Promise<ApiBaseResponse> => {
+export const providerSetPushNotification = async (data: boolean): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.patch('/provider/profile/push-notification', { allowPushNotification: data });
     return response.data;
 }
@@ -199,9 +200,9 @@ export const providerFetchPlans = async (): Promise<ProviderFetchPlansResponse[]
 
 
 // **** Provider subscription apis
-// This api will create the stripe session and return the session id 
-export const providerSubscribeToPlan = async (data: ProviderSubscribeToPlanRequest): Promise<ProviderSubscribeToPlanResponse> => {
-    const response = await axiosInstance.post('/provider/subscriptions/checkout/session', data)
+
+export const providerSubscribedPlan = async (): Promise<ProviderSubscribedPlanRespone> => {
+    const response = await axiosInstance.get('/provider/subscriptions/subscribed');
     return response.data;
 }
 
@@ -222,33 +223,26 @@ export const providerFetchSubscriptionDetails = async (subscriptionId: Subscript
 }
 
 
-// **** Provider payment apis
-export const providerFetchPayments = async (params?: FetchFunctionParams): Promise<ApiPaginatedResponse<FetchPaymentsResponse>> => {
-    const query = buildQueryParams(params);
-    const response = await axiosInstance.get(`/provider/payments${query ? `?${query}` : ''}`);
-    return parseNewCommonResponse<FetchPaymentsResponse>(response.data.data);
-}
-
-
 // **** Provider chat apis
-export const providerFetchUsersForChatSideBar = async () : Promise<ProviderFetchUsersForChatSidebarResponse> => {
+export const providerFetchUsersForChatSideBar = async (): Promise<ProviderFetchUsersForChatSidebarResponse> => {
     const response = await axiosInstance.get('/provider/chat/users');
     return response.data.data
 }
 
 
 // **** Provider dashboard apis
-export const providerFetchDashboardStatsData = async () : Promise<ProviderFetchDashboardStatsDataResponse> => {
+export const providerFetchDashboardStatsData = async (): Promise<ProviderFetchDashboardStatsDataResponse> => {
     const response = await axiosInstance.get('/provider/dashboard/stats');
     return response.data.data;
 }
 
-export const providerFetchDashboardGraphData = async (subscription?: PlanName, dateRange?: DateRange) : Promise<ProviderDashboardGraphResponse> => {
-    const response = await axiosInstance.get(`/provider/dashboard/graph-data`, { 
-        params: { 
-            subscription, 
+export const providerFetchDashboardGraphData = async (subscription?: PlanName, dateRange?: DateRange): Promise<ProviderDashboardGraphResponse> => {
+    const response = await axiosInstance.get(`/provider/dashboard/graph-data`, {
+        params: {
+            subscription,
             ...(dateRange ? { start: dateRange.from, end: dateRange.to } : {}),
-         } });
+        }
+    });
     return response.data.data;
 }
 
@@ -268,6 +262,20 @@ export const providerReportReview = async (reviewId: Review["_id"]): Promise<Api
 
 // **** provider integration api
 export const connectStripeAccount = async (): Promise<{ url: string }> => {
-  const response = await axiosInstance.post("/provider/stripe/connect");
-  return response.data.data;
+    const response = await axiosInstance.post("/provider/stripe/connect");
+    return response.data.data;
 };
+
+
+// **** Provider payment service api
+
+export const providerCheckoutForSubscribePlan = async (data: ProviderCheckoutForSubscribePlanRequest): Promise<ProviderSubscribeToPlanResponse> => {
+    const response = await axiosInstance.post('/payments/subscriptions/checkout/session', data)
+    return response.data;
+}
+
+export const providerFetchPayments = async (params?: FetchFunctionParams): Promise<ApiPaginatedResponse<FetchPaymentsResponse>> => {
+    const query = buildQueryParams(params);
+    const response = await axiosInstance.get(`/payments/provider${query ? `?${query}` : ''}`);
+    return parseNewCommonResponse<FetchPaymentsResponse>(response.data.data);
+}

@@ -7,7 +7,7 @@ import { Provider } from "../entityInterface/providerInterface";
 import { Service } from "../entityInterface/appServiceInterface";
 import { ProviderService } from "../entityInterface/providerServiceInterface";
 import { Availability, AvailabilityForResponse } from "../entityInterface/serviceAvailabilityInterface";
-import { SubscriptionValidity } from "../enums";
+import { PlanName, SubscriptionValidity } from "../enums";
 
 // **** Used as the request interface for creating address api
 export type ProviderCreateAddressRequest = Pick<Address, "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location">;
@@ -63,13 +63,17 @@ export type ProviderFetchPlansResponse = Pick<Plan, "_id" | "planName" | "price"
 
 
 // **** Used as the request type for Provider subscribe to a plan api
-export type ProviderSubscribeToPlanRequest = {
+export type ProviderCheckoutForSubscribePlanRequest = {
   planId: Plan["_id"];
   planDuration: SubscriptionValidity
 }
 // **** Used as the response interface for Provider subscribe to a plan api
 export interface ProviderSubscribeToPlanResponse extends ApiBaseResponse {
   data: string
+}
+
+export interface ProviderSubscribedPlanRespone extends ApiBaseResponse {
+  data: PlanName;
 }
 
 // **** Interfaces for providerFetchSubscriptions api is in common interface api file

@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { useSearchParams } from "react-router-dom";
 import { CheckCircle, XCircle } from "lucide-react";
 import { userSaveAppointmentBooking } from "@/utils/apis/user.api";
-// import { setProviderSubscription } from "@/utils/redux/slices/authSlice";
+import { providerSubscribedPlan } from "@/utils/apis/provider.api";
+import { setProviderSubscription } from "@/utils/redux/slices/authSlice";
 import { PaymentConfirmPageProps } from "@/utils/interface/entityInterface/providerInterface";
 
 const PaymentConfirmPage: React.FC<PaymentConfirmPageProps> = ({ status, role }) => {
@@ -28,8 +29,10 @@ const PaymentConfirmPage: React.FC<PaymentConfirmPageProps> = ({ status, role })
     if (!sessionId) return;
     try {
       if (role === Role.PROVIDER) {
-        // Call api for getting the subscribed planName for adding it int e redux for the features unlocking
-        // dispatch(setProviderSubscription())
+        const response = await providerSubscribedPlan();
+        if (response.success) {
+          dispatch(setProviderSubscription(response.data));
+        };
       } else if (role === Role.USER) {
         const response = await userSaveAppointmentBooking(sessionId);
         if (response.success) {
