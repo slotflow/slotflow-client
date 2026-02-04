@@ -13,8 +13,16 @@ const ProviderSubscriptionPage = () => {
     const { planId, planDuration, isTrialPlan, paymentSelectionOpen } = useSelector((store: RootState) => store.provider);
 
     return (
-        <div className="">
+        <div>
             <ProviderSubscriptionHistory />
+            <div className="p-4">
+                <Button className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
+                    onClick={() => setShowPlans(!showPlans)} >{showPlans ? "Hide Plans" : "Show Plans"}</Button>
+                {showPlans && (
+                    <ProviderPlanList />
+                )}
+            </div>
+
             {paymentSelectionOpen && planId && planDuration && (
                 <CommonPaymentSelection
                     data={{
@@ -24,13 +32,6 @@ const ProviderSubscriptionPage = () => {
                     isProviderSubscription
                 />
             )}
-            <div className="p-4">
-                <Button className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
-                    onClick={() => setShowPlans(!showPlans)} >{showPlans ? "Hide Plans" : "Show Plans"}</Button>
-                    {showPlans && (
-                        <ProviderPlanList/>
-                    )}
-            </div>
 
             {isTrialPlan && paymentSelectionOpen && (
                 <ProviderFreeSubscription />

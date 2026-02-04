@@ -8,7 +8,6 @@ import {
     ProviderDashboardGraphResponse,
     ProviderSubscribeToPlanResponse,
     ProviderFetchAllServicesResponse,
-    ProviderSaveSubscriptionResponse,
     ProviderUpdateProviderInfoRequest,
     ProviderFetchAllAppServiceRequest,
     ProviderUpdateProfileImageRequest,
@@ -202,14 +201,7 @@ export const providerFetchPlans = async (): Promise<ProviderFetchPlansResponse[]
 // **** Provider subscription apis
 // This api will create the stripe session and return the session id 
 export const providerSubscribeToPlan = async (data: ProviderSubscribeToPlanRequest): Promise<ProviderSubscribeToPlanResponse> => {
-    const response = await axiosInstance.post('/provider/subscriptions/checkout-session', data)
-    return response.data;
-}
-
-// This api will send the session id to backend and validate the sessionid and retrieve the subscription details
-export const providerSaveSubscription = async (sessionId: string): Promise<ProviderSaveSubscriptionResponse> => {
-    const response = await axiosInstance.post('/provider/subscriptions', { sessionId });
-    console.log("response : ",response);
+    const response = await axiosInstance.post('/provider/subscriptions/checkout/session', data)
     return response.data;
 }
 

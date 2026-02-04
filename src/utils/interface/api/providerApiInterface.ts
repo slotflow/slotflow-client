@@ -72,14 +72,6 @@ export interface ProviderSubscribeToPlanResponse extends ApiBaseResponse {
   data: string
 }
 
-
-// **** Inline interfaces used for the providerSaveSubscription api
-export interface ProviderSaveSubscriptionResponse extends ApiBaseResponse {
-  data : {
-    planName: Plan["planName"];
-  }
-};
-
 // **** Interfaces for providerFetchSubscriptions api is in common interface api file
 
 
