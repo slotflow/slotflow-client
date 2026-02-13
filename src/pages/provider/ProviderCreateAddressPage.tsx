@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
-import { Role } from "@/utils/interface/enums";
+import { AdminVerificationStatus, Role } from "@/utils/interface/enums";
 import { useDispatch, useSelector } from "react-redux";
 import RightSideBox from "@/components/provider/SideBox";
 import { RedirectTo } from "@/utils/interface/commonInterface";
@@ -39,7 +39,13 @@ const ProviderAddAddressPage = () => {
     }
 
     useEffect(() => {
-        if (!authUser?.isAddressAdded) return;
+        if (!authUser) return;
+
+        const shouldFetchAddress =
+            authUser.isAddressAdded &&
+            authUser.adminVerificationStatus !== AdminVerificationStatus.NOT_REQUESTED;
+
+        if (!shouldFetchAddress) return;
 
         async function fetchOldAddress() {
             const result = await providerFetchAddress();

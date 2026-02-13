@@ -51,7 +51,7 @@ const FooterBar = ({
           </FooterContent>
           <FooterBottom>
             <div>{"© "}{new Date().getFullYear()}{copyright}</div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 hidden md:block">
               {policies.map((policy, index) => (
                 <a key={index} href={policy.href}>
                   {policy.text}

@@ -32,9 +32,7 @@ const FormField = <T extends FieldValues>({
 
   const handlePasswordStrength = (val: string) => {
     if (type === "password" && val) {
-      console.log("val : ", val);
       const result = CustomValidator.validator("password", val);
-      console.log("result : ", result);
       setPasswordStrength(result?.point ?? null);
     } else {
       setPasswordStrength(null);

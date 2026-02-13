@@ -132,21 +132,21 @@ export const providerRoutes: Route[] = [
 ]
 
 // Access Control For Provider
-export const planAccessMap: Record<string, string[]> = {
-  NOSUBSCRIPTION: [
+export const planAccessMap: Record<PlanName, string[]> = {
+  [PlanName.NO_SUBSCRIPTION]: [
     "Dashboard",
     "Profile",
     "Subscriptions",
     "Settings",
   ],
-  TRIAL: [
+  [PlanName.TRIAL]: [
     "Dashboard",
     "Profile",
     "Appointments",
     "Subscriptions",
     "Settings",
   ],
-  STARTER: [
+  [PlanName.STARTER]: [
     "Dashboard",
     "Profile",
     "Appointments",
@@ -156,7 +156,7 @@ export const planAccessMap: Record<string, string[]> = {
     "Notifications",
     "Settings",
   ],
-  PROFESSIONAL: [
+  [PlanName.PROFESSIONAL]: [
     "Dashboard",
     "Profile",
     "Appointments",
@@ -169,7 +169,7 @@ export const planAccessMap: Record<string, string[]> = {
     "Reviews",
     "Settings",
   ],
-  ENTERPRISE: [
+  [PlanName.ENTERPRISE]: [
     "Dashboard",
     "Profile",
     "Appointments",
@@ -530,6 +530,8 @@ export const footerColumnData: FooterColumnDataInterface[] = [
       { text: "About", href: "" },
       { text: "Careers", href: "" },
       { text: "Blog", href: "" },
+      { text: "Privacy Policy", href: "/privacy-policy" },
+      { text: "Terms of Service", href: "/terms-and-conditions" },
     ],
   },
   {
@@ -539,6 +541,7 @@ export const footerColumnData: FooterColumnDataInterface[] = [
       { text: "Facebook", href: "https://github.com/slotflow" },
       { text: "Instagram", href: "https://github.com/slotflow" },
       { text: "LinkedIn", href: "https://www.linkedin.com/in/midhunkpaniker" },
+      { text: "Github", href: "https://github.com/slotflow" },
       { text: "Github", href: "https://github.com/slotflow" },
     ],
   },

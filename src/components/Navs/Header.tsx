@@ -28,7 +28,7 @@ const Header: React.FC = () => {
       <div className={`max-w-7xl mx-auto flex h-16 items-center justify-between`}>
 
         <div className='w-3/12 flex items-center' onClick={() => navigate('/')} >
-          <div className='flex items-center justify-center'>
+          <div className='flex items-center justify-center hidden md:block'>
             <img src={logo} className='size-8' />
           </div>
           <h4 className="ml-2 text-[var(--mainColor)] text-3xl font-bold italic px-2 rounded-lg cursor-pointer">Slotflow</h4>
@@ -36,7 +36,7 @@ const Header: React.FC = () => {
 
         <div className='w-6/12'>
           <div className="flex flex-1 items-center justify-center">
-            <div className="hidden sm:ml-6 sm:block">
+            <div className="hidden sm:ml-6 md:block">
               <div className="flex space-x-4">
                 {navigation.map((item) => (
                   <a
@@ -65,7 +65,7 @@ const Header: React.FC = () => {
           <Button
             variant={"ghost"}
             onClick={handleAuthClick}
-            className="ml-2 cursor-pointer px-4 py-2 rounded-lg text-sm font-semibold border border-[var(--mainColor)] text-[var(--mainColor)] hover:bg-[var(--mainColor)] hover:text-white transition"
+            className="hidden md:blockml-2 cursor-pointer px-4 py-2 rounded-lg text-sm font-semibold border border-[var(--mainColor)] text-[var(--mainColor)] hover:bg-[var(--mainColor)] hover:text-white transition"
           >
             Sign Up
           </Button>

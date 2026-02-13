@@ -32,7 +32,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
     setValue,
     watch,
     reset,
-    formState: { errors }
+    formState: { errors, isValid, isSubmitting }
   } = useForm<ProviderCreateServiceDetailsFormType>({
     resolver: zodResolver(providerCreateServiceDetailsZodSchema),
     mode: "onChange",
@@ -124,11 +124,17 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
   };
 
   return (
-    <div className="md:h-screen md:flex justify-center w-full bg-[var(--background)]">
+    <div className="md:min-h-screen md:flex justify-center w-full bg-[var(--background)] ">
       <SideBox props={{ pageNumber: 2 }} />
 
-      <div className="w-full md:w-8/12 md:px-10 overflow-y-scroll no-scrollbar">
-        <form onSubmit={handleSubmit(onSubmit)} className="md:mt-10 px-4 md:px-12 py-6 md:py-0">
+      <div className="w-full md:w-8/12 md:px-10">
+        <form
+          onSubmit={handleSubmit(onSubmit, (errors) => {
+            console.log("Validation Errors:", errors);
+            toast.error("Please fill in all required fields correctly.");
+          })}
+          className="md:mt-10 px-4 md:px-12 py-6 md:py-0"
+        >
           <h4 className="xs:text-md md:text-xl lg:text-2xl font-semibold text-start px-6">Service Details</h4>
           <div className="md:flex w-full space-y-6">
             <div className="space-y-4 w-full space-x-2 px-6 pt-6">
@@ -139,6 +145,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 options={serviceCategoryOptions}
                 register={register}
                 error={errors.serviceCategory}
+                required
               />
 
               <SelectField<ProviderCreateServiceDetailsFormType, string>
@@ -147,6 +154,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 options={services}
                 register={register}
                 error={errors.service}
+                required
               />
 
               <FormField<ProviderCreateServiceDetailsFormType>
@@ -156,6 +164,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 type="text"
                 register={register}
                 error={errors.serviceName?.message}
+                required
               />
 
               <FormField<ProviderCreateServiceDetailsFormType>
@@ -165,6 +174,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 type="text"
                 register={register}
                 error={errors.serviceDescription?.message}
+                required
               />
 
               <FormField<ProviderCreateServiceDetailsFormType>
@@ -174,6 +184,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 type="number"
                 register={register}
                 error={errors.servicePrice?.message}
+                required
               />
 
               <FormField<ProviderCreateServiceDetailsFormType>
@@ -183,6 +194,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 type="text"
                 register={register}
                 error={errors.serviceExperience?.message}
+                required
               />
 
               <FormField<ProviderCreateServiceDetailsFormType>
@@ -200,6 +212,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 options={serviceTypeOptions}
                 register={register}
                 error={errors.serviceType}
+                required
               />
 
               <SelectField<ProviderCreateServiceDetailsFormType, ServiceMode>
@@ -208,6 +221,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 options={serviceModeOptions}
                 register={register}
                 error={errors.serviceMode}
+                required
               />
             </div>
             <div className="space-y-4 w-full space-x-2 px-6 md:pt-6 md:px-6">
@@ -248,6 +262,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
             <Button
               type="submit"
               variant="default"
+              disabled={!isValid || isSubmitting || dataUpdating}
               className="cursor-pointer w-10/12 md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
             >
               {dataUpdating ? "Loading" : "Next"}
