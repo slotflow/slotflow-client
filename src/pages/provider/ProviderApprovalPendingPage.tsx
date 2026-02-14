@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { Edit, Info } from "lucide-react";
+import { Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SideBox from "@/components/provider/SideBox";
 import { useDispatch, useSelector } from "react-redux";
@@ -145,7 +145,7 @@ const ProviderApprovalPendingPage = () => {
 
             {isBackBlocked && (
               <p className="text-sm text-center flex items-center spac">
-                <Info className="mr-4" /> Your details are under review. Navigation is temporarily disabled.
+                Your details are under review. Navigation is temporarily disabled. This process may take up to 12 hours, and we will inform you through your registered email.
               </p>
             )}
           </CardContent>

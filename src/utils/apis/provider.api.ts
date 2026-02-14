@@ -56,9 +56,10 @@ export const providerUpdateAddress = async (data: UpdateAddressRequest): Promise
 
 // **** App service apis
 export const providerFetchAllAppServices = async (data: ProviderFetchAllAppServiceRequest): Promise<ProviderFetchAllServicesResponse> => {
+    console.log("data : ",data);
     const response = await axiosInstance.get('/provider/appservices', {
         params: {
-            serviceCategory: data.serviceCategory
+            serviceCategory: [data.serviceCategory]
         }
     });
     return response.data.data;
@@ -122,6 +123,7 @@ export const providerFetchServiceDetails = async (): Promise<ProviderFetchServic
 // **** Provider service availability apis
 export const providerCreateServiceAvailabilities = createAsyncThunk<ApiBaseResponse, CreateProviderServiceAvailabilitiesRequest>("/provider/addServiceAvailability",
     async ({ data }: CreateProviderServiceAvailabilitiesRequest) => {
+        console.log("data : ",data);
         const response = await axiosInstance.post(`/provider/availabilities`, data);
         return response.data;
     }

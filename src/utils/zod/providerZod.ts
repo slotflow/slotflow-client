@@ -74,10 +74,10 @@ export const providerCreateServiceDetailsZodSchema = z.object({
     .max(500, "Requirements cannot exceed 500 characters")
     .optional(),
 
-  videoUrl: z
-    .string()
-    .url("Invalid video URL")
-    .optional(),
+  videoUrl: z.union([
+    z.string().url("Invalid video URL"),
+    z.literal(""),
+  ]).optional(),
 });
 
 export type ProviderCreateServiceDetailsFormType = z.infer<  typeof providerCreateServiceDetailsZodSchema>;

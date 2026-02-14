@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import { appConfig } from "@/utils/env";
 import { useQueryClient } from "@tanstack/react-query";
-import { adminAddNewPlan, adminChangePlanBlockStatus } from "../../apis/adminPlan.api";
+import { adminAddNewPlan, adminChangePlanBlockStatus } from "@/utils/apis/adminPlan.api";
 import { AdminAddNewPlanRequest, AdminChangePlanBlockStatusRequest } from "@/utils/interface/api/adminPlanApiInterface";
 
 interface UseAdminPlanActionsReturnType {

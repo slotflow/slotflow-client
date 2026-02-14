@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify';
-import { Role } from '@/utils/interface/enums';
+import { Role, ServiceMode } from '@/utils/interface/enums';
 import { Button } from '@/components/ui/button';
 import SideBox from '@/components/provider/SideBox';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -139,16 +139,16 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
               <h6 className='text-sm font-semibold'>Select service modes {<span className="text-red-500"> *</span>}</h6>
               <div className="w-1/2 flex space-x-4 mt-2">
                 <div
-                  className={`w-1/2 text-xs text-center border rounded-md py-2 px-4 hover:bg-[var(--mainColor)/10] transition-colors duration-200 cursor-pointer ${isModeSelected('Online') ? 'bg-[var(--mainColor)/20] border-[var(--mainColor)]' : 'border-gray-300'
+                  className={`w-1/2 text-xs text-center border rounded-md py-2 px-4 hover:bg-[var(--mainColor)/10] transition-colors duration-200 cursor-pointer ${isModeSelected(ServiceMode.ONLINE) ? 'bg-[var(--mainColor)/20] border-[var(--mainColor)]' : 'border-gray-300'
                     }`}
-                  onClick={() => toggleMode('Online')}
+                  onClick={() => toggleMode(ServiceMode.ONLINE)}
                 >
                   Online
                 </div>
                 <div
-                  className={`w-1/2 text-xs text-center border rounded-md py-2 px-4 hover:bg-[var(--mainColor)/10] transition-colors duration-200 cursor-pointer ${isModeSelected('Offline') ? 'bg-[var(--mainColor)/20] border-[var(--mainColor)]' : 'border-gray-300'
+                  className={`w-1/2 text-xs text-center border rounded-md py-2 px-4 hover:bg-[var(--mainColor)/10] transition-colors duration-200 cursor-pointer ${isModeSelected(ServiceMode.OFFLINE) ? 'bg-[var(--mainColor)/20] border-[var(--mainColor)]' : 'border-gray-300'
                     }`}
-                  onClick={() => toggleMode('Offline')}
+                  onClick={() => toggleMode(ServiceMode.OFFLINE)}
                 >
                   Offline
                 </div>

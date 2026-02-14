@@ -1309,13 +1309,13 @@ export const verificationOptions: OptionType<boolean>[] = [
 
 
 // Status text mapper
-export const verificationStatusTextMap: Record<string, string> = {
-  Requested: "Submitted for review",
-  Under_review: "Currently under review",
-  Approved: "Approved",
-  Rejected: "Rejected",
-  Resubmitted: "Re-submitted for review",
-  Not_requested: "Not submitted",
+export const verificationStatusTextMap: Record<AdminVerificationStatus, string> = {
+  [AdminVerificationStatus.REQUESTED]: "Submitted for review",
+  [AdminVerificationStatus.UNDER_REVIEW]: "Currently under review",
+  [AdminVerificationStatus.APPROVED]: "Approved",
+  [AdminVerificationStatus.REJECTED]: "Rejected",
+  [AdminVerificationStatus.RESUBMITTED]: "Re-submitted for review",
+  [AdminVerificationStatus.NOT_REQUESTED]: "Not submitted",
 };
 
 export const planNameOptions: OptionType<PlanName>[] = [

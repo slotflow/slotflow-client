@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { OptionType, SelectField } from "@/components/form/SelectField";
-import { Role, ServiceCategory, ServiceMode, ServiceType } from "@/utils/interface/enums";
+import { AdminVerificationStatus, Role, ServiceCategory, ServiceMode, ServiceType } from "@/utils/interface/enums";
 import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
 import { RedirectTo } from "@/utils/interface/commonInterface";
 import { serviceCategoryOptions, serviceModeOptions, serviceTypeOptions, groupOptions } from "@/utils/constants";
@@ -80,7 +80,13 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
   }, [serviceCategory]);
 
   useEffect(() => {
-    if (!authUser?.isServiceDetailsAdded) return;
+    if (!authUser) return;
+
+    const shouldFetchDetails =
+      authUser.isServiceDetailsAdded &&
+      authUser.adminVerificationStatus !== AdminVerificationStatus.NOT_REQUESTED;
+
+    if (!shouldFetchDetails) return;
 
     async function fetchOldServiceDetails() {
       const result = await providerFetchServiceDetails();
@@ -227,21 +233,13 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
             <div className="space-y-4 w-full space-x-2 px-6 md:pt-6 md:px-6">
 
               <FormField<ProviderCreateServiceDetailsFormType>
-                label="Intro Video URL"
-                id="videoUrl"
-                placeholder="https://"
-                type="text"
-                register={register}
-                error={errors.videoUrl?.message}
-              />
-
-              <FormField<ProviderCreateServiceDetailsFormType>
                 label="Max Participants"
                 id="maxParticipants"
                 type="number"
                 placeholder="1"
                 register={register}
                 error={errors.maxParticipants?.message}
+                required
               />
 
               <SelectField<ProviderCreateServiceDetailsFormType, boolean>
@@ -250,6 +248,16 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
                 options={groupOptions}
                 register={register}
                 error={errors.isGroupService}
+                required
+              />
+
+              <FormField<ProviderCreateServiceDetailsFormType>
+                label="Intro Video URL"
+                id="videoUrl"
+                placeholder="https://"
+                type="text"
+                register={register}
+                error={errors.videoUrl?.message}
               />
 
               <TagInput

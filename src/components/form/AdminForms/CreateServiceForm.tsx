@@ -66,15 +66,6 @@ const CreateServiceForm: React.FC<CreateServiceFormProps> = ({
         onSubmit={handleSubmit(onSubmit, handleFormError(setFocus))}
         className="space-y-6"
       >
-        <FormField<AdminCreateServiceFormType>
-          id="serviceName"
-          label="Service Name"
-          placeholder="Enter Service Name"
-          type="text"
-          register={register}
-          error={errors.serviceName?.message}
-          required
-        />
 
         <SelectField<AdminCreateServiceFormType, ServiceCategory>
           id="serviceCategory"
@@ -84,6 +75,16 @@ const CreateServiceForm: React.FC<CreateServiceFormProps> = ({
           error={errors.serviceCategory}
         />
 
+        <FormField<AdminCreateServiceFormType>
+          id="serviceName"
+          label="Service Name"
+          placeholder="Enter Service Name"
+          type="text"
+          register={register}
+          error={errors.serviceName?.message}
+          required
+        />
+        
         <div className="space-y-2">
           <FormButton
             text="Save"

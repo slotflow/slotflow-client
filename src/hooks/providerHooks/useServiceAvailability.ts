@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { addMinutes, format, isBefore, isEqual } from "date-fns";
 import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import { addAvailability } from "@/utils/redux/slices/providerSlice";
+import { ServiceMode } from "@/utils/interface/enums";
 
 export const useAddAvailability = (getValues: UseFormGetValues<{
     day: string;
@@ -120,8 +121,7 @@ export const useAddAvailability = (getValues: UseFormGetValues<{
         return current.includes(mode);
     };
 
-    const toggleMode = (mode: string) => {
-        console.log("mode : ",mode);
+    const toggleMode = (mode: ServiceMode) => {
         const current = getValues('modes') || [];
         if (current.includes(mode)) {
             setValue('modes', current.filter(m => m !== mode), { shouldDirty: true });
