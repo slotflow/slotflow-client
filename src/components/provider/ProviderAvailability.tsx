@@ -9,7 +9,7 @@ import { Role } from "@/utils/interface/enums";
 const ProviderAvailability = () => {
 
     return (
-        <div className="min-h-full flex flex-col">
+        <div className="min-h-full flex flex-col w-full space-y-2">
 
             <div className='border rounded-md p-2'>
                 <div className='flex justify-between items-center'>

@@ -378,3 +378,11 @@ export interface ProviderCardsFilters {
   skip: number;
   limit: number;
 };
+
+export interface JwtClaims {
+  userOrProviderId?: string;
+  email?: string;
+  role?: string;
+  iat?: number;
+  exp?: number;
+}

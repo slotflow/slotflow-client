@@ -85,8 +85,6 @@ const ChatSidebar: React.FC<ChatSideBarProps> = ({
         return () => { socket?.off("newMessage", setNewMessage) };
     }, [socket]);
 
-    // console.log("data : ", data);
-
     if (isLoading) return <ChatSidebarShimmer />;
     if (!data || (isError && error)) return <DataFetchingError message={(error as Error).message} className="min-h-full" />
 

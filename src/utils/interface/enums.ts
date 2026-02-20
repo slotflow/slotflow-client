@@ -86,13 +86,6 @@ export enum PaymentGateway {
     PAYPAL = "PAYPAL"
 };
 
-export enum PaymentMethod {
-    CARD = "CARD",
-    UPI = "UPI",
-    WALLET = "WALLET",
-    NET_BANKING = "NET_BANKING",
-};
-
 export enum PaymentStatus {
     PENDING = "PENDING",
     PAID = "PAID",
@@ -134,10 +127,12 @@ export enum ServiceType {
 };
 
 export enum SubscriptionStatus {
-    ACTIVE = "ACTIVE",
+   ACTIVE = "ACTIVE",
     EXPIRED = "EXPIRED",
     CANCELLED = "CANCELLED",
-    PAYMENT_PENDING = "PAYMENT_PENDING",
+    PENDING = "PENDING",
+    PAST_DUE = "PAST_DUE",
+    FAILED = "FAILED",
 };
 
 export enum SubscriptionValidity {

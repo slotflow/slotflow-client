@@ -136,7 +136,6 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
       <div className="w-full md:w-8/12 md:px-10">
         <form
           onSubmit={handleSubmit(onSubmit, (errors) => {
-            console.log("Validation Errors:", errors);
             toast.error("Please fill in all required fields correctly.");
           })}
           className="md:mt-10 px-4 md:px-12 py-6 md:py-0"

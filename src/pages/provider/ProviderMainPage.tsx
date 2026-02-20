@@ -4,62 +4,67 @@ import { RootState } from "@/utils/redux/appStore";
 import React, { Suspense, useEffect } from "react";
 import { PlanName } from "@/utils/interface/enums";
 import InfoHeader from "@/components/Navs/InfoHeader";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import LoadingFallback from "../common/LoadingFallback";
 import avatar from '../../assets/defaultImages/avatar.png';
 import { planAccessMap, providerRoutes } from "@/utils/constants";
 
 const ProviderMainPage: React.FC = () => {
 
-  console.log("provider main page");
-  const {authUser: user} = useSelector((store: RootState) => store.auth);
+  const { authUser: user } = useSelector((store: RootState) => store.auth);
   const { sidebarOpen } = useSelector((store: RootState) => store.app);
   const navigate = useNavigate();
+  const pathname = useLocation().pathname;
 
   const planName = user?.providerSubscription;
-  console.log("planName : ",planName);
   const allowedRouteNames = planName ? planAccessMap[planName] : planAccessMap[PlanName.NO_SUBSCRIPTION];
-  console.log("AllowedRouteNames : ",allowedRouteNames);
   const filteredRoutes = providerRoutes.filter(route => allowedRouteNames.includes(route.name));
-  console.log("filteredRoutes : ",filteredRoutes);
 
-useEffect(() => {
-  
-  if (!user) return;
+  useEffect(() => {
 
-  if (!user.isAddressAdded && !user.isAddressVerified) {
-    navigate("/provider/onboarding/address");
-    return;
-  }
+    if (!user) return;
 
-  if (!user.isServiceDetailsAdded && !user.isServiceDetailsVerified) {
-    navigate("/provider/onboarding/service");
-    return;
-  }
+    if (!user.isAddressAdded && !user.isAddressVerified) {
+      navigate("/provider/onboarding/address");
+      return;
+    }
 
-  if (
-    !user.isServiceAvailabilityAdded &&
-    !user.isAvailabilityVerified
-  ) {
-    navigate("/provider/onboarding/availability");
-    return;
-  }
+    if (!user.isServiceDetailsAdded && !user.isServiceDetailsVerified) {
+      navigate("/provider/onboarding/service");
+      return;
+    }
 
-  if (!user.isProofSubmitted && !user.isProofsVerified) {
-    navigate("/provider/onboarding/proofs");
-    return;
-  }
+    if (
+      !user.isServiceAvailabilityAdded &&
+      !user.isAvailabilityVerified
+    ) {
+      navigate("/provider/onboarding/availability");
+      return;
+    }
 
-  if (!user.isAdminVerified) {
-    navigate("/provider/onboarding/pending");
-    return;
-  }
+    if (!user.isProofSubmitted && !user.isProofsVerified) {
+      navigate("/provider/onboarding/proofs");
+      return;
+    }
 
-  if(user.isAdminVerified) {
-    navigate("/provider/dashboard");
-    return;
-  }
-}, [user, navigate]);
+    if (!user.isAdminVerified) {
+      navigate("/provider/onboarding/pending");
+      return;
+    }
+
+    // const isOnboardingPath = pathname.startsWith("/provider/onboarding");
+    // const isProviderpaymentRoute = pathname === "/provider/payment-success" || pathname === "/provider/payment-failed";
+
+    // if (user.isAdminVerified && (isOnboardingPath || isProviderpaymentRoute)) {
+    //   navigate("/provider/dashboard");
+    //   return;
+    // }
+
+    if (user.isAdminVerified) {
+      navigate("/provider/dashboard");
+      return;
+    }
+  }, [user, navigate]);
 
   return (
     <div className="flex h-screen bg-[var(--background)] transition-all duration-300">

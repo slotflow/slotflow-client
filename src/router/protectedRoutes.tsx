@@ -11,9 +11,6 @@ interface ProtectedRouteProps {
 export const ProtectedRoute = ({ allowedRoles, children }: ProtectedRouteProps) => {
   const user = useSelector((store: RootState) => store.auth.authUser);
   
-  console.log("user : ",user);
-  console.log("allowedRoles : ",allowedRoles);
-  
   if (!user || !user.role) {
     return <Navigate to="/" replace />;
   }

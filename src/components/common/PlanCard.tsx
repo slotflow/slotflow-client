@@ -43,9 +43,6 @@ const PlanCard: React.FC<ProviderPlanCardProps> = ({
   });
 
   const handleGoToPayment = handleSubmit((data) => {
-    console.log("Clicking choose payment");
-    console.log("plan : ",plan);
-    console.log("data : ",data);
     if (plan.planName !== PlanName.TRIAL && (!data.planDuration || data.planDuration === SubscriptionValidity.SEVEN_DAYS)) {
       toast.warning("Please select a plan duration");
       return;

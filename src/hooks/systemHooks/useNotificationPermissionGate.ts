@@ -17,10 +17,6 @@ export const useNotificationPermissionGate = () => {
   const shouldAskPermission = useMemo(() => {
     if (typeof window === "undefined") return false;
     if (!("Notification" in window)) return false;
-    console.log("authUser : ",authUser);
-    console.log("Notification.permission : ",Notification.permission);
-    console.log("authUser.isLoggedIn : ",authUser?.isLoggedIn);
-    console.log("authUser.allowPushNotification : ",authUser?.allowPushNotification);
 
     return (
       Notification.permission === PermissionStatus.DEFAULT &&
@@ -35,7 +31,6 @@ export const useNotificationPermissionGate = () => {
     if (!authUser?.isLoggedIn) return;
 
     if (Notification.permission === PermissionStatus.DENIED) {
-      console.log("Notification.permission : ",Notification.permission)
       const updateServer = async () => {
         try {
           if (authUser.role === Role.USER) {
@@ -54,7 +49,6 @@ export const useNotificationPermissionGate = () => {
   }, [authUser, dispatch]);
 
   const askPermission = useCallback(async () => {
-    console.log("shouldAskPermission : ",shouldAskPermission);
     if (!shouldAskPermission) return;
 
     const permission = await requestNotificationPermission();
@@ -62,9 +56,6 @@ export const useNotificationPermissionGate = () => {
     if (permission === PermissionStatus.GRANTED) {
       const deviceId = getDeviceId();
       const fcmToken = await getFcmToken();
-      console.log("permission : ",permission);
-      console.log("deviceId : ",deviceId);
-      console.log("fcmToken : ",fcmToken);
 
       if (!deviceId || !fcmToken) return;
 

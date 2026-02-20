@@ -49,8 +49,6 @@ const AdminRevenueReport: React.FC = () => {
 
     const column = AdminRevenueTableColumn();
 
-    console.log("data : ",data);
-
     return (
         <div className="p-2">
             <h2 className={`text-2xl font-bold mb-4`}>Revenue Report</h2>

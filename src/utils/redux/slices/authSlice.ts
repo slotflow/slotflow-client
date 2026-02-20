@@ -5,7 +5,7 @@ import { resendOtp, signin, signout, signup } from "@/utils/apis/auth.api";
 import { AdminVerificationStatus, PlanName } from "@/utils/interface/enums";
 import { userUpdateInfo, userUpdateProfileImage } from "@/utils/apis/user.api";
 import { UserUpdateUserInfoResponse } from "@/utils/interface/api/userApiInterface";
-import { ResendOtpResponse, SigninResponse, SignupResponse } from "@/utils/interface/api/authApiInterface";
+import { ProviderSubscriptionUpdatedPayload, ResendOtpResponse, SigninResponse, SignupResponse } from "@/utils/interface/api/authApiInterface";
 import { ProviderSubmitDetailsResponse, ProviderUpdateProviderInfoResponse } from "@/utils/interface/api/providerApiInterface";
 import { providerCreateAddress, providerCreateServiceAvailabilities, providerCreateServiceDetails, providerSubmitDetailsForReview, providerUpdateInfo, providerUpdateProfileImage } from "@/utils/apis/provider.api";
 
@@ -13,6 +13,8 @@ const initialState: AuthState = {
     authUser: null,
     profileImageUpdating: false,
     dataUpdating: false,
+    eventSocketId: null,
+    eventSocketIsConnected: false,
 };
 
 const authSlice = createSlice({
@@ -62,6 +64,19 @@ const authSlice = createSlice({
                 state.authUser.allowPushNotification = action.payload;
             };
         },
+        setEventSocketConnected: (state, action: PayloadAction<{ socketId: string }>) => {
+            state.eventSocketId = action.payload.socketId;
+            state.eventSocketIsConnected = true;
+        },
+        setEventSocketDisconnected: (state) => {
+            state.eventSocketId = null;
+            state.eventSocketIsConnected = false;
+        },
+        setSubscription: (state, action: PayloadAction<ProviderSubscriptionUpdatedPayload>) => {
+            if(state.authUser) {
+                state.authUser.providerSubscription = action.payload.subscriptionPlan;
+            }
+        }
     },
     extraReducers: (builder) => {
         // Sign Up Api
@@ -233,12 +248,15 @@ export const {
     setAuthUser,
     setProfileImage,
     setAuthUserName,
+    setSubscription,
     setStripeConnect,
     setGoogleConnect,
     setIsProofSubmitted,
     setProviderSubscription,
+    setEventSocketConnected,
     setAdminVerificationState,
-    updateNotificationPreference
+    setEventSocketDisconnected,
+    updateNotificationPreference,
 } = authSlice.actions;
 
 export default authSlice.reducer;

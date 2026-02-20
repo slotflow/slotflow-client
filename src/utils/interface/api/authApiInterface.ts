@@ -1,4 +1,4 @@
-import { PlanName, Role } from "../enums";
+import { AdminVerificationStatus, PlanName, Role } from "../enums";
 import { ApiBaseResponse } from "../commonInterface";
 
 interface UserBaseInterface {
@@ -32,8 +32,8 @@ export type SigninRequest = Pick<UserBaseInterface, "email" | "password" | "role
 export interface SigninResponse extends ApiBaseResponse {
     data: {
         username: string;
-        profileImage: string;
         phone: string;
+        profileImage: string;
         role: Role;
         isBlocked: boolean;
         isLoggedIn: boolean;
@@ -43,7 +43,17 @@ export interface SigninResponse extends ApiBaseResponse {
         isAdminVerified?: boolean,
         providerSubscription?: PlanName;
         googleConnected: boolean;
+        uid?: string;
+        isProofSubmitted?: boolean;
+        verificationRejectionReason?: string | null,
+        adminVerificationStatus?: AdminVerificationStatus,
+        isAddressVerified?: boolean,
+        isServiceDetailsVerified?: boolean,
+        isAvailabilityVerified?: boolean,
+        isProofsVerified?: boolean,
+        allowPushNotification?: boolean;
     };
+
 }
 
 
@@ -63,3 +73,11 @@ export interface ResendOtpResponse extends ApiBaseResponse {
 
 // ****  Used as the Request type of update password api
 export type UpdatePasswordRequest = Pick<UserBaseInterface, "password" | "role" | "verificationToken">;
+
+//
+export interface ProviderSubscriptionUpdatedPayload {
+    providerId: string;
+    subscriptionPlan: PlanName;
+    startDate: Date;
+    endDate: Date;
+}

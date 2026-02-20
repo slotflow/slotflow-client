@@ -58,7 +58,7 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
 
     return (
         <>
-            <div className="flex w-full mt-2 space-x-1 md:mt-0">
+            <div className="flex w-full space-x-1">
                 <div className="">
                     <Calendar
                         mode="single"

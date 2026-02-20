@@ -75,7 +75,9 @@ const OtpVerificatioForm: React.FC<OtpVerificatioFormProps> = ({ role }) => {
             const res = await dispatch(resendOtp({ verificationToken, role })).unwrap();
             if (res.success) toast.success(res.message);
         } catch {
-            if (appConfig.dev) console.log("An error occurred while resending OTP.");
+            if (appConfig.dev) {
+                console.log("An error occurred while resending OTP.");
+            }
         } 
     };
 

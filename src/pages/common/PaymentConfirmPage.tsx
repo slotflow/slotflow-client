@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { Role } from "@/utils/interface/enums";
 import { Button } from "@/components/ui/button";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { CheckCircle, XCircle } from "lucide-react";
 import { userSaveAppointmentBooking } from "@/utils/apis/user.api";
 import { providerSubscribedPlan } from "@/utils/apis/provider.api";
@@ -13,6 +13,7 @@ import { PaymentConfirmPageProps } from "@/utils/interface/entityInterface/provi
 
 const PaymentConfirmPage: React.FC<PaymentConfirmPageProps> = ({ status, role }) => {
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get("session_id");
@@ -61,7 +62,7 @@ const PaymentConfirmPage: React.FC<PaymentConfirmPageProps> = ({ status, role })
         <h1 className="text-2xl font-bold mt-4">{status ? "Payment Successful!" : "Payment Failed!"}</h1>
         <p className="mt-2">{status ? "Your payment was processed successfully." : "There was an issue with your payment. Please try again."}</p>
         <div className="my-4">
-          <Button onClick={() => window.location.href = "/provider/subscription"} className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]" >Go To Home </Button>
+          <Button onClick={() => navigate(role === Role.PROVIDER ? "/provider/subscription" : "/user/dashboard")} className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]" >Go To Home </Button>
         </div>
       </div>
     </div>

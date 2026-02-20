@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { SubscriptionStatus } from "@/utils/interface/enums";
 import { Button } from "../../ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
@@ -40,10 +41,21 @@ export const ProvidersSubscriptionsTableColumns = (
             header: ({ column }) => (<DataTableColumnHeader column={column} title="Status" />),
             cell: ({ row }) => {
                 const subscriptionStatus = row.original.subscriptionStatus;
-                if (subscriptionStatus == "Expired") {
-                    return <span className="text-red-500 font-semibold">Expired</span>
-                } else {
-                    return <span className="text-green-500 font-semibold">Active</span>
+                switch (subscriptionStatus) {
+                    case SubscriptionStatus.ACTIVE:
+                        return <span className="text-green-500 font-semibold">Active</span>;
+                    case SubscriptionStatus.EXPIRED:
+                        return <span className="text-red-500 font-semibold">Expired</span>;
+                    case SubscriptionStatus.CANCELLED:
+                        return <span className="text-gray-500 font-semibold">Cancelled</span>;
+                    case SubscriptionStatus.PENDING:
+                        return <span className="text-yellow-500 font-semibold">Pending</span>;
+                    case SubscriptionStatus.PAST_DUE:
+                        return <span className="text-orange-500 font-semibold">Past Due</span>;
+                    case SubscriptionStatus.FAILED:
+                        return <span className="text-red-600 font-semibold">Failed</span>;
+                    default:
+                        return <span className="font-semibold">{subscriptionStatus}</span>;
                 }
             }
         },

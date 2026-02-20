@@ -162,8 +162,6 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
     data: AdminChangeReviewBlockStatusRequest
   ) => {
 
-    console.log("Chaging review block status");
-
     e.preventDefault();
 
     if (!data.reviewId) {
@@ -179,14 +177,11 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
         }
       })
       .catch((error) => {
-        console.log("Error : ",error);
         toast.error("Review block status updating failed");
       })
   }
 
   const reviews = data?.pages.flatMap((page) => (page.data ? page.data : [])) || [];
-
-  console.log("reviews : ",reviews);
 
   if (reviews.length === 0) {
     return (

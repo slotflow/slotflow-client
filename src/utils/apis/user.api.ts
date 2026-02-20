@@ -68,7 +68,6 @@ export const userFetchAddress = async (): Promise<UserFetchAddressResponse> => {
 
 export const userUpdateAddress = async (data: UpdateAddressRequest): Promise<UpdateAddressResponse> => {
     const response = await axiosInstance.patch(`/user/addresses/${data._id}`, data);
-    console.log("response : ", response);
     return response.data;
 }
 

@@ -40,7 +40,9 @@ const EmailVerificationForm: React.FC<EmailVerificationFormProps> = ({ role }) =
                 goToAuthPage(role, RedirectTo.VERIFY_OTP);
             }
         } catch (error) {
-            if(appConfig.dev)console.log("An error occurred during email verification ",error);
+            if(appConfig.dev) {
+                console.log("An error occurred during email verification ",error);
+            }
         }
     };
 

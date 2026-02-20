@@ -6,7 +6,7 @@ import ProviderServiceDetails from '@/components/common/profile/ProviderServiceD
 const ProviderService = () => {
 
   return (
-    <div className="min-h-full flex flex-col w-full">
+    <div className="min-h-full flex flex-col w-full space-y-2">
 
       <div className='border rounded-md p-2'>
         <div className='flex justify-between items-center'>

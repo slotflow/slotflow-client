@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { planAccessMap } from "@/utils/constants";
 import { RootState } from "@/utils/redux/appStore";
+import { PlanName } from "@/utils/interface/enums";
 
 interface PlanGuardProps {
   routeName: string;
@@ -9,13 +10,9 @@ interface PlanGuardProps {
 }
 
 const PlanGuard = ({ routeName, children }: PlanGuardProps) => {
-  console.log("plan guard");
   const user = useSelector((store: RootState) => store.auth.authUser);
-  console.log("user : ",user);
-  const planName = user?.providerSubscription || "NoSubscription";
-  console.log("planName : ",planName);
+  const planName = user?.providerSubscription || PlanName.NO_SUBSCRIPTION;
   const allowedRoutes = planAccessMap[planName] || [];
-  console.log("allowedRoutes : ",allowedRoutes);
 
   if (!allowedRoutes.includes(routeName)) {
     return <Navigate to="/provider" replace />;

@@ -53,8 +53,6 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
         refetchOnWindowFocus: false,
     });
 
-    console.log("data : ",data);
-
     useEffect(() => {
         if (data) {
             if (setProfileImage && "profileImage" in data && data.profileImage) {

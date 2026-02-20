@@ -61,7 +61,6 @@ export const useAdminProviderActions = (): UseAdminProviderActionReturnType => {
   const hanldeAdminChangeProviderBlockStatus = ({ providerId, isBlocked }: AdminChangeProviderBlockStatusRequest) => {
     adminChangeProviderBlockStatus({ providerId, isBlocked })
       .then((res) => {
-        console.log("response : ", res);
         if (res.success) {
           toast.success(res.message);
           queryClient.invalidateQueries({ queryKey: ["providers"] });

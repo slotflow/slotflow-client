@@ -28,8 +28,8 @@ const ChatContainer: React.FC = () => {
     useEffect(() => {
         if (!selectedUser || !authUser) return;
         
-        dispatch(getMessages({ selectedUserId: selectedUser._id }));
         dispatch(connectChatSocket());
+        dispatch(getMessages({ selectedUserId: selectedUser._id }));
 
         return () => {
             dispatch(disconnectChatSocket());

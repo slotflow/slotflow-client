@@ -25,7 +25,6 @@ export const stripeConfig = {
 
 export const serviceConfig = {
     apiGatewayUrl: appConfig.isDevelopment ? import.meta.env.VITE_API_GATEWAY_URL_DEV : import.meta.env.VITE_API_GATEWAY_URL,
-    realtimeService: appConfig.isDevelopment ? import.meta.env.VITE_REALTIME_SERVICE_URL_DEV : import.meta.env.VITE_REALTIME_SERVICE_URL,
 };
 
 export const locationIqConfig = {
@@ -37,3 +36,8 @@ export const locationIqConfig = {
     locationIqUrlLon: import.meta.env.VITE_LOCATIONIQ_URL_LON,
     locationIqUrlEnd: import.meta.env.VITE_LOCATIONIQ_URL_END
 };
+
+export const jwtConfig = {
+    jwtSecret: import.meta.env.VITE_JWT_SECRET,
+    jwtExpiresIn: import.meta.env.VITE_JWT_EXPIRES_IN
+}

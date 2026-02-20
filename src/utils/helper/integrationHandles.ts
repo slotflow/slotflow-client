@@ -17,13 +17,10 @@ export const handleConnectGoogle = (e: React.MouseEvent<HTMLButtonElement>, disp
 
 
 export const handleStripeConnect = async (e: React.MouseEvent<HTMLButtonElement>, dispatch: AppDispatch) => {
-    console.log("handleStripeConnect Calling");
     e.preventDefault();
     try {
         dispatch(setStripeConnectionLoading(true));
-        console.log("Handle connect Stripe");
         const res = await connectStripeAccount();
-        console.log("res : ",res);
         window.location.href = res.url;
     } catch {
         dispatch(setStripeConnectionLoading(false));
