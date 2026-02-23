@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { destroyEventSocket, getEventSocket } from "@/lib/socketService";
 import { RootState } from "../redux/appStore";
 import { setEventSocketConnected, setEventSocketDisconnected, setSubscription } from "../redux/slices/authSlice";
+import { ProviderSubscriptionActivated } from "../interface/api/providerApiInterface";
 
 export const connectEventSocket = createAsyncThunk<
     void,
@@ -52,7 +53,7 @@ export const connectEventSocket = createAsyncThunk<
     // BUSINESS EVENT HANDLERS
     // ===============================
 
-    socket.on("subscription:activated", (payload) => {
+    socket.on("subscription:activated", (payload: ProviderSubscriptionActivated) => {
         console.log("📦 Subscription activated:", payload);
 
         const isOwner = payload.providerId === authUser.uid;

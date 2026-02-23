@@ -167,13 +167,13 @@ export interface ProviderChangeAppointmentStatusRequest {
 
 // **** Address updating interfaces are in common interface file
 
-
-export interface ProviderGetMySubscriptionResponse extends ApiBaseResponse {
-  data : {
-    providerId: string;
+export interface ProviderSubscriptionActivated {
+  providerId: string;
     subscribedPlan: PlanName;
     startDate: Date;
     endDate: Date;
     subscriptionStatus: SubscriptionStatus;
-  }
+}
+export interface ProviderGetMySubscriptionResponse extends ApiBaseResponse {
+  data : ProviderSubscriptionActivated
 }

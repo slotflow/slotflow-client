@@ -6,7 +6,7 @@ import { resendOtp, signin, signout, signup } from "@/utils/apis/auth.api";
 import { userUpdateInfo, userUpdateProfileImage } from "@/utils/apis/user.api";
 import { UserUpdateUserInfoResponse } from "@/utils/interface/api/userApiInterface";
 import { ResendOtpResponse, SigninResponse, SignupResponse } from "@/utils/interface/api/authApiInterface";
-import { ProviderGetMySubscriptionResponse, ProviderSubmitDetailsResponse, ProviderUpdateProviderInfoResponse } from "@/utils/interface/api/providerApiInterface";
+import { ProviderSubmitDetailsResponse, ProviderSubscriptionActivated, ProviderUpdateProviderInfoResponse } from "@/utils/interface/api/providerApiInterface";
 import { providerCreateAddress, providerCreateServiceAvailabilities, providerCreateServiceDetails, providerSubmitDetailsForReview, providerUpdateInfo, providerUpdateProfileImage } from "@/utils/apis/provider.api";
 
 const initialState: AuthState = {
@@ -68,12 +68,12 @@ const authSlice = createSlice({
             state.eventSocketId = null;
             state.eventSocketIsConnected = false;
         },
-        setSubscription: (state, action: PayloadAction<ProviderGetMySubscriptionResponse>) => {
+        setSubscription: (state, action: PayloadAction<ProviderSubscriptionActivated>) => {
             if(state.authUser) {
-                state.authUser.providerSubscription = action.payload.data.subscribedPlan;
-                state.authUser.subscriptionStartDate = action.payload.data.startDate,
-                state.authUser.subscriptionEndDate = action.payload.data.endDate,
-                state.authUser.subscriptionStatus = action.payload.data.subscriptionStatus
+                state.authUser.providerSubscription = action.payload.subscribedPlan;
+                state.authUser.subscriptionStartDate = action.payload.startDate,
+                state.authUser.subscriptionEndDate = action.payload.endDate,
+                state.authUser.subscriptionStatus = action.payload.subscriptionStatus
             }
         },
         setSubscriptionUpdating: (state, action: PayloadAction<boolean>) => {
