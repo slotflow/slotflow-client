@@ -33,14 +33,6 @@ const SubscriptionDetailViewPage: React.FC<SubscriptionDetailViewPageProps> = ({
         { label: "Subscribed Plan Name", value: data?.subscriptionPlanId?.planName },
         { label: "Subscription Max Bookings", value: data?.subscriptionPlanId?.maxBookingPerMonth },
         { label: "Subscription Ad Visibility", value: data?.subscriptionPlanId?.adVisibility, isBoolean: true },
-        { label: "Payment Gateway", value: data?.paymentId?.paymentGateway },
-        { label: "Payment Transaction Id", value: data?.paymentId?.transactionId },
-        { label: "Payment For", value: data?.paymentId?.paymentFor },
-        { label: "Payment Status", value: data?.paymentId?.paymentStatus },
-        { label: "Payment Method", value: data?.paymentId?.paymentMethod },
-        { label: "Payment Base Amount", value: data?.paymentId?.initialAmount, isPrice: true },
-        { label: "Payment Discount Amount", value: data?.paymentId?.discountAmount, isPrice: true },
-        { label: "Payment Total Amount", value: data?.paymentId?.totalAmount, isPrice: true },
     ];
 
   return (
