@@ -32,9 +32,9 @@ const rootReducer = combineReducers(rootReducers);
 const baseReducer = (state: any, action: any) => {
     if (action.type === storeConstants.resetState) {
         const lightTheme = state?.app?.lightTheme;
-        
+                
         const initialState = rootReducer(undefined, action);
-        
+                
         return {
             ...initialState,
             app: {

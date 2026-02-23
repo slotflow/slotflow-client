@@ -4,29 +4,21 @@ import { Role } from "@/utils/interface/enums.ts";
 import { ProtectedRoute } from "./protectedRoutes.tsx";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 
-import SettingsPage from "@/pages/common/SettingsPage.tsx";
-import IntegrationsPage from "@/pages/common/IntegrationsPage.tsx";
-import StripeConfirmPage from "@/pages/common/StripeConfirmPage.tsx";
-import ProviderAddAddressPage from "@/pages/provider/ProviderCreateAddressPage.tsx";
-import ProviderCreateServiceDetailsPage from "@/pages/provider/ProviderCreateServiceDetailsPage.tsx";
-import ProviderCreateServiceAvailabilityPage from "@/pages/provider/ProviderCreateServiceAvailabilityPage.tsx";
-import ProviderApprovalPendingPage from "@/pages/provider/ProviderApprovalPendingPage.tsx";
-import ProviderProofSubmitionPage from "@/pages/provider/ProviderProofSubmitionPage.tsx";
-import ProviderMainPage from "@/pages/provider/ProviderMainPage.tsx";
-
 const AuthPage = lazy(() => import("@/pages/common/AuthPage.tsx"));
 const AboutPage = lazy(() => import("@/pages/common/AboutPage.tsx"));
 const ContactPage = lazy(() => import("@/pages/common/ContactPage.tsx"));
-const LandingPage = lazy(() => import("../pages/common/LandingPage.tsx"));
-const Error404Page = lazy(() => import("@/pages/common/Error404Page.tsx"));
 const AccountPage = lazy(() => import("@/pages/common/AccountPage.tsx"));
+const LandingPage = lazy(() => import("../pages/common/LandingPage.tsx"));
+const SettingsPage = lazy(() => import("@/pages/common/SettingsPage.tsx"));
+const Error404Page = lazy(() => import("@/pages/common/Error404Page.tsx"));
 const CalendarPage = lazy(() => import("@/pages/common/CalendarPage.tsx"));
 const VideoCallLoby = lazy(() => import("@/pages/common/VideoCallLoby.tsx"));
 const VideoCallRoom = lazy(() => import("@/pages/common/VideoCallRoom.tsx"));
 const VideoCallPage = lazy(() => import("@/pages/common/VideoCallPage.tsx"));
 const LandingLayout = lazy(() => import("../pages/common/LandingLayout.tsx"));
+const IntegrationsPage = lazy(() => import("@/pages/common/IntegrationsPage.tsx"));
+const StripeConfirmPage = lazy(() => import("@/pages/common/StripeConfirmPage.tsx"));
 const PrivacyPolicyPage = lazy(() => import("@/pages/common/PrivacyPolicyPage.tsx"));
-const PaymentConfirmPage = lazy(() => import("@/pages/common/PaymentConfirmPage.tsx"));
 const TermsAndConditionsPage = lazy(() => import("@/pages/common/TermsAndConditionsPage.tsx"));
 
 const UserMainPage = lazy(() => import("@/pages/user/UserMainPage.tsx"));
@@ -37,19 +29,26 @@ const UserBookingsPage = lazy(() => import("@/pages/user/UserBookingsPage.tsx"))
 const UserDashboardPage = lazy(() => import("@/pages/user/UserDashboardPage.tsx"));
 const UserNotificationsPage = lazy(() => import("@/pages/user/UserNotificationsPage.tsx"));
 const UserServiceSelectPage = lazy(() => import("@/pages/user/UserServiceSelectPage.tsx"));
-const UserBookingDetailsPage = lazy(() => import("@/pages/user/UserBookingDetailsPage.tsx"))
+const UserBookingConfirmPage = lazy(() => import("@/pages/user/UserBookingConfirmPage.tsx"));
+const UserBookingDetailsPage = lazy(() => import("@/pages/user/UserBookingDetailsPage.tsx"));
 const UserServiceProviderDetailPage = lazy(() => import("@/pages/user/UserServiceProviderDetailPage.tsx"));
 
-// const ProviderMainPage = lazy(() => import("@/pages/provider/ProviderMainPage.tsx"));
 const ProviderChatPage = lazy(() => import("@/pages/provider/ProviderChatPage.tsx"));
 const ProviderReviewPage = lazy(() => import("@/pages/provider/ProviderReviewPage"));
+const ProviderMainPage = lazy(() => import("@/pages/provider/ProviderMainPage.tsx"));
 const ProviderPaymentsPage = lazy(() => import("@/pages/provider/ProviderPaymentsPage.tsx"));
 const ProviderDashboardPage = lazy(() => import("@/pages/provider/ProviderDashboardPage.tsx"));
+const ProviderAddAddressPage = lazy(() => import("@/pages/provider/ProviderCreateAddressPage.tsx"));
 const ProviderAppointmentsPage = lazy(() => import("@/pages/provider/ProviderAppointmentsPage.tsx"));
 const ProviderSubscriptionPage = lazy(() => import("@/pages/provider/ProviderSubscriptionPage.tsx"));
 const ProviderNotificationsPage = lazy(() => import("@/pages/provider/ProviderNotificationsPage.tsx"));
 const ProviderBookingDetailsPage = lazy(() => import("@/pages/provider/ProviderBookingDetailsPage.tsx"))
+const ProviderProofSubmitionPage = lazy(() => import("@/pages/provider/ProviderProofSubmitionPage.tsx"));
+const ProviderApprovalPendingPage = lazy(() => import("@/pages/provider/ProviderApprovalPendingPage.tsx"));
+const ProviderSubscriptionConfirmPage = lazy(() => import("@/pages/provider/ProviderSubscriptionConfirmPage.tsx"));
+const ProviderCreateServiceDetailsPage = lazy(() => import("@/pages/provider/ProviderCreateServiceDetailsPage.tsx"));
 const ProviderSubscriptionDetailViewPage = lazy(() => import("@/pages/provider/ProviderSubscriptionDetailViewPage.tsx"));
+const ProviderCreateServiceAvailabilityPage = lazy(() => import("@/pages/provider/ProviderCreateServiceAvailabilityPage.tsx"));
 
 const AdminReportPage = lazy(() => import("@/pages/admin/AdminReportPage"));
 const AdminMainPage = lazy(() => import("../pages/admin/AdminMainPage.tsx"));
@@ -140,8 +139,8 @@ export const appRouter = createBrowserRouter([
                     { path: "reviews", element: <UserReviewPage /> },
                     { path: "notifications", element: <UserNotificationsPage /> },
                     { path: "settings", element: <SettingsPage /> },
-                    { path: "payment-success", element: <PaymentConfirmPage status={true} role={Role.USER} /> },
-                    { path: "payment-failed", element: <PaymentConfirmPage status={false} role={Role.USER} /> },
+                    { path: "payment-success", element: <UserBookingConfirmPage status={true} /> },
+                    { path: "payment-failed", element: <UserBookingConfirmPage status={false} /> },
                     { path: "*", element: <Error404Page /> },
                 ],
             },
@@ -278,8 +277,8 @@ export const appRouter = createBrowserRouter([
                             </PlanGuard>
                         )
                     },
-                    { path: "payment-success", element: <PaymentConfirmPage status={true} role={Role.PROVIDER} /> },
-                    { path: "payment-failed", element: <PaymentConfirmPage status={false} role={Role.PROVIDER} /> },
+                    { path: "payment-success", element: <ProviderSubscriptionConfirmPage status={true} /> },
+                    { path: "payment-failed", element: <ProviderSubscriptionConfirmPage status={false} /> },
                     { path: "stripe/success", element: <StripeConfirmPage status={true} /> },
                     { path: "stripe/refresh", element: <StripeConfirmPage status={false} /> },
                     { path: "*", element: <Error404Page /> },

@@ -9,6 +9,7 @@ import stripeLogo from '../../assets/iconImages/Stripe.jpeg';
 import { userBookAnAppointment } from '@/utils/apis/user.api';
 import { SubscriptionValidity } from '@/utils/interface/enums';
 import razorpayLogo from '../../assets/iconImages/Razorpay.png';
+import { setSubscriptionUpdating } from '@/utils/redux/slices/authSlice';
 import { providerCheckoutForSubscribePlan } from '@/utils/apis/provider.api';
 import { Provider } from '@/utils/interface/entityInterface/providerInterface';
 import { setPaymentSelectionPage, setSubscriptionIsTrailPlan, setSubscriptionPlanDuration, setSubscriptionPlanId } from '@/utils/redux/slices/providerSlice';
@@ -92,6 +93,7 @@ const CommonPaymentSelection: React.FC<PaymentSelecionComponentPropst> = ({
             }
 
             dispatch(setPaymentSelectionPage(false));
+            dispatch(setSubscriptionUpdating(true));
             const result = await stripe.redirectToCheckout({ sessionId });
             if (result?.error) {
                 toast.error(result.error.message);

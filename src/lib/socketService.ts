@@ -6,7 +6,7 @@ export let eventSocket: Socket | null = null;
 
 export const createChatSocket = (userId: string, baseUrl: string) => {
   if (!socket) {
-    socket = io(baseUrl, { query: { userId }, path: '/chat', autoConnect: true });
+    socket = io(`${baseUrl}/chat`, { query: { userId }, path: '/socket.io', autoConnect: true, withCredentials: true });
   }
   return socket;
 };
@@ -20,7 +20,7 @@ export const distroyChatSocket = () => {
 
 export const createVideoSocket = (userId: string, baseUrl: string) => {
   if (!videoSocket) {
-    videoSocket = io(baseUrl, { query: { userId }, path: "/video", autoConnect: true });
+    videoSocket = io(`${baseUrl}/video`, { query: { userId }, path: "/socket.io", autoConnect: true, withCredentials: true });
   }
   return videoSocket;
 };
@@ -32,19 +32,41 @@ export const destroyVideoSocket = () => {
   }
 };
 
-export const createEventSocket = (baseUrl: string) => {
-  console.log("createEventSocket");
+// export const createEventSocket = (baseUrl: string) => {
+//   console.log("createEventSocket");
+//   if (!eventSocket) {
+//     console.log("creating event Socket");
+//     console.log("baseUrl : ", baseUrl);
+//     eventSocket = io(`${baseUrl}/events`, { path: "/socket.io", autoConnect: true, withCredentials: true });
+//   }
+//   return eventSocket;
+// };
+
+
+/**
+ * Creates (or returns existing) event namespace socket.
+ * This function guarantees a SINGLE instance.
+ */
+export const getEventSocket = (): Socket => {
   if (!eventSocket) {
-    console.log("creating event Socket");
-    console.log("baseUrl : ",baseUrl);
-    eventSocket = io(baseUrl, { path: "/api/v1/events", autoConnect: true, withCredentials: true });
+    eventSocket = io(`http://localhost:3000/events`, {
+      path: "/socket.io",        // must match backend
+      withCredentials: true,     // required for cookie-based JWT
+      autoConnect: true,         // connect immediately
+      transports: ["websocket"], // optional: force websocket
+    });
   }
+
   return eventSocket;
 };
 
-export const destroyEventSocket = () => {
+/**
+ * Disconnects and clears the socket instance.
+ * Used on logout or app cleanup.
+ */
+export const destroyEventSocket = (): void => {
   if (eventSocket) {
-    console.log("destroying event socket");
+    eventSocket.removeAllListeners(); // prevent memory leaks
     eventSocket.disconnect();
     eventSocket = null;
   }

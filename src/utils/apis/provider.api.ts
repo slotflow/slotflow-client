@@ -22,7 +22,7 @@ import {
     ProviderFetchUsersForChatSidebarResponse,
     ProviderFetchServiceAvailabilityResponse,
     CreateProviderServiceAvailabilitiesRequest,
-    ProviderSubscribedPlanRespone,
+    ProviderGetMySubscriptionResponse,
 } from "../interface/api/providerApiInterface";
 import { DateRange } from "react-day-picker";
 import { createAsyncThunk } from "@reduxjs/toolkit";
@@ -199,12 +199,6 @@ export const providerFetchPlans = async (): Promise<ProviderFetchPlansResponse[]
 
 
 // **** Provider subscription apis
-
-export const providerSubscribedPlan = async (): Promise<ProviderSubscribedPlanRespone> => {
-    const response = await axiosInstance.get('/provider/subscriptions/subscribed');
-    return response.data;
-}
-
 export const providerFetchSubscriptions = async (params?: FetchFunctionParams): Promise<ApiPaginatedResponse<FetchProviderSubscriptionsResponse>> => {
     const query = buildQueryParams(params);
     const response = await axiosInstance.get(`/provider/subscriptions${query ? `?${query}` : ''}`);
@@ -219,6 +213,11 @@ export const providerSubscribeToTrialPlan = async (): Promise<ApiBaseResponse> =
 export const providerFetchSubscriptionDetails = async (subscriptionId: Subscription["_id"]): Promise<FetchSubscriptionDetailsResponse> => {
     const response = await axiosInstance.get(`/provider/subscriptions/${subscriptionId}`);
     return response.data.data;
+}
+
+export const providerFetchMySubscription = async (): Promise<ProviderGetMySubscriptionResponse> => {
+    const response = await axiosInstance.get('/provider/subscriptions/me');
+    return response.data;
 }
 
 

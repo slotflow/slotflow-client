@@ -73,11 +73,3 @@ export interface ResendOtpResponse extends ApiBaseResponse {
 
 // ****  Used as the Request type of update password api
 export type UpdatePasswordRequest = Pick<UserBaseInterface, "password" | "role" | "verificationToken">;
-
-//
-export interface ProviderSubscriptionUpdatedPayload {
-    providerId: string;
-    subscriptionPlan: PlanName;
-    startDate: Date;
-    endDate: Date;
-}

@@ -1,5 +1,5 @@
 import { Provider } from "./entityInterface/providerInterface";
-import { AdminVerificationStatus, PlanName, Role, ServiceCategory } from "./enums";
+import { AdminVerificationStatus, PlanName, Role, ServiceCategory, SubscriptionStatus } from "./enums";
 import { Availability } from "./entityInterface/serviceAvailabilityInterface";
 import { UserViewProviderCardComponentProps } from "./componentInterface/commonComponentInterface";
 import { ProviderCardsFilters } from "./commonInterface";
@@ -30,6 +30,10 @@ export interface AuthUser {
   isProofsVerified?: boolean,
 
   providerSubscription?: PlanName;
+  subscriptionStartDate?: Date;
+  subscriptionEndDate?: Date;
+  subscriptionStatus?: SubscriptionStatus;
+
   serviceDescription?: string;
 
   googleId?: string;
@@ -39,6 +43,7 @@ export interface AuthUser {
   stripeConnected?: boolean;
 
   allowPushNotification?: boolean | null;
+  token?: string;
 }
 
 export interface AuthState {
@@ -47,6 +52,7 @@ export interface AuthState {
   dataUpdating: boolean; // used for the data update loading state in provider add address, provider add service availability, provider add service details, profile info updating
   eventSocketId: string | null,
   eventSocketIsConnected: boolean,
+  subscriptionUpdating: boolean;
 }
 
 

@@ -3,7 +3,7 @@ import Header from "@/components/Navs/Header";
 import { pathNames } from "@/utils/constants";
 import { Role } from "@/utils/interface/enums";
 import FooterBar from "@/components/Navs/FooterBar";
-import { RootState } from "../../utils/redux/appStore";
+import { AppDispatch, RootState } from "../../utils/redux/appStore";
 import { useDispatch, useSelector } from "react-redux";
 import { Bounce, ToastContainer } from "react-toastify";
 import { AuthUser } from "@/utils/interface/sliceInterface";
@@ -12,13 +12,15 @@ import { setAuthModal } from "@/utils/redux/slices/appSlice";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import AuthSelectionModal from "@/components/common/landing/AuthSelectionModal";
 import { useNotificationPermissionGate } from "@/hooks/systemHooks/useNotificationPermissionGate";
+import { connectEventSocket } from "@/utils/socket/eventSocketThunk";
 
 const LandingLayout = () => {
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const location = useLocation();
   const state = useSelector((state: RootState) => state.app);
+  const authUser = useSelector((state: RootState) => state.auth.authUser);
   const themeMode = useSelector((store: RootState) => store.app?.lightTheme);
   const shouldHideFooter = pathNames.some((path) => location.pathname.startsWith(path));
 
@@ -61,6 +63,17 @@ const LandingLayout = () => {
   }, []);
 
   useNotificationPermissionGate();
+
+  useEffect(() => {
+    // Connect when user logs in, but only if not already connected
+    if (authUser) {
+      console.log("Connecting event Socket");
+      dispatch(connectEventSocket());
+    }
+
+    // We remove the auto-disconnect on cleanup to prevent navigation-based disconnects.
+    // Disconnection is now handled explicitly in the signout process.
+  }, [authUser, dispatch]);
 
   const handleCloseModal = () => {
     dispatch(setAuthModal(false));

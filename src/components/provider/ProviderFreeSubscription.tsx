@@ -5,7 +5,7 @@ import { RootState } from "@/utils/redux/appStore";
 import { PlanName } from "@/utils/interface/enums";
 import { useQueryClient } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
-import { setProviderSubscription } from "@/utils/redux/slices/authSlice";
+import { setSubscription } from "@/utils/redux/slices/authSlice";
 import { providerSubscribeToTrialPlan } from "@/utils/apis/provider.api";
 import { setPaymentSelectionPage, setSubscriptionIsTrailPlan } from "@/utils/redux/slices/providerSlice";
 
@@ -19,7 +19,16 @@ const ProviderFreeSubscription = () => {
     const handlePaymentSelectionClose = () => {
         dispatch(setPaymentSelectionPage(false));
         dispatch(setSubscriptionIsTrailPlan(false));
-        dispatch(setProviderSubscription(PlanName.TRIAL));
+        dispatch(setSubscription({
+            data: {
+                subscriptionPlan: PlanName.TRIAL,
+                providerId: "",
+                startDate: new Date(),
+                endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+            },
+            message: "Trial Plan Subscribed Successfully",
+            success: true
+        }));
     };
 
     const makeTrialubscription = async () => {

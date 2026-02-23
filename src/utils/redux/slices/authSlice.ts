@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { AdminVerificationStatus } from "@/utils/interface/enums";
 import { ApiBaseResponse } from "@/utils/interface/commonInterface";
 import { AuthState, AuthUser } from "@/utils/interface/sliceInterface";
 import { resendOtp, signin, signout, signup } from "@/utils/apis/auth.api";
-import { AdminVerificationStatus, PlanName } from "@/utils/interface/enums";
 import { userUpdateInfo, userUpdateProfileImage } from "@/utils/apis/user.api";
 import { UserUpdateUserInfoResponse } from "@/utils/interface/api/userApiInterface";
-import { ProviderSubscriptionUpdatedPayload, ResendOtpResponse, SigninResponse, SignupResponse } from "@/utils/interface/api/authApiInterface";
-import { ProviderSubmitDetailsResponse, ProviderUpdateProviderInfoResponse } from "@/utils/interface/api/providerApiInterface";
+import { ResendOtpResponse, SigninResponse, SignupResponse } from "@/utils/interface/api/authApiInterface";
+import { ProviderGetMySubscriptionResponse, ProviderSubmitDetailsResponse, ProviderUpdateProviderInfoResponse } from "@/utils/interface/api/providerApiInterface";
 import { providerCreateAddress, providerCreateServiceAvailabilities, providerCreateServiceDetails, providerSubmitDetailsForReview, providerUpdateInfo, providerUpdateProfileImage } from "@/utils/apis/provider.api";
 
 const initialState: AuthState = {
@@ -15,6 +15,7 @@ const initialState: AuthState = {
     dataUpdating: false,
     eventSocketId: null,
     eventSocketIsConnected: false,
+    subscriptionUpdating: false,
 };
 
 const authSlice = createSlice({
@@ -32,11 +33,6 @@ const authSlice = createSlice({
         setAuthUserName: (state, action: PayloadAction<string>) => {
             if (state.authUser) {
                 state.authUser.username = action.payload;
-            };
-        },
-        setProviderSubscription: (state, action: PayloadAction<PlanName>) => {
-            if (state.authUser) {
-                state.authUser.providerSubscription = action.payload;
             };
         },
         setGoogleConnect: (state) => {
@@ -72,10 +68,16 @@ const authSlice = createSlice({
             state.eventSocketId = null;
             state.eventSocketIsConnected = false;
         },
-        setSubscription: (state, action: PayloadAction<ProviderSubscriptionUpdatedPayload>) => {
+        setSubscription: (state, action: PayloadAction<ProviderGetMySubscriptionResponse>) => {
             if(state.authUser) {
-                state.authUser.providerSubscription = action.payload.subscriptionPlan;
+                state.authUser.providerSubscription = action.payload.data.subscribedPlan;
+                state.authUser.subscriptionStartDate = action.payload.data.startDate,
+                state.authUser.subscriptionEndDate = action.payload.data.endDate,
+                state.authUser.subscriptionStatus = action.payload.data.subscriptionStatus
             }
+        },
+        setSubscriptionUpdating: (state, action: PayloadAction<boolean>) => {
+            state.subscriptionUpdating = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -252,7 +254,7 @@ export const {
     setStripeConnect,
     setGoogleConnect,
     setIsProofSubmitted,
-    setProviderSubscription,
+    setSubscriptionUpdating,
     setEventSocketConnected,
     setAdminVerificationState,
     setEventSocketDisconnected,

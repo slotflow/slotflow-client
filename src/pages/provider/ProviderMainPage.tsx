@@ -52,15 +52,7 @@ const ProviderMainPage: React.FC = () => {
       return;
     }
 
-    // const isOnboardingPath = pathname.startsWith("/provider/onboarding");
-    // const isProviderpaymentRoute = pathname === "/provider/payment-success" || pathname === "/provider/payment-failed";
-
-    // if (user.isAdminVerified && (isOnboardingPath || isProviderpaymentRoute)) {
-    //   navigate("/provider/dashboard");
-    //   return;
-    // }
-
-    if (user.isAdminVerified) {
+    if (user.isAdminVerified && (pathname === "/provider" || pathname === "/provider/")) {
       navigate("/provider/dashboard");
       return;
     }

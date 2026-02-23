@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import GoogleButton from "../GoogleButton";
 import { useDispatch, } from "react-redux";
-import { connectEventSocket, signin } from "@/utils/apis/auth.api";
+import { signin } from "@/utils/apis/auth.api";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { AppDispatch } from "@/utils/redux/appStore";
@@ -48,7 +48,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
             const res = await dispatch(signin({ ...data, role })).unwrap();
             if (res.success) {
                 toast.success(res.message);
-                dispatch(connectEventSocket());
                 handleNavigation(res.data.role);
             } else toast.error(res.message);
         } catch (error) {
