@@ -153,6 +153,7 @@ export interface CommonTableComponentProps<T> {
 export interface FetchFunctionParams<T = string> {
   id?: T;
   role?: Role;
+  online?: boolean;
   pagination?: {
     page: number;
     limit: number;

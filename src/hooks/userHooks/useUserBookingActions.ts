@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "@/utils/redux/appStore";
 import { useQueryClient } from "@tanstack/react-query";
-import { connectVideoSocket } from "@/utils/apis/video.api";
+import { connectVideoSocket } from "@/utils/socket/video.api";
 import { toggleReviewCreateForm } from "@/utils/redux/slices/userSlice";
 import { ValidateRoomId } from "@/utils/interface/api/commonApiInterface";
 import { Booking } from "@/utils/interface/entityInterface/bookingInterface";
@@ -23,7 +23,7 @@ export const useUserBookingActions = (): UseUserBookingActionsCustomHookReturnTy
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const dispatch = useDispatch<AppDispatch>();
-    
+
     const handleUserCancelBooking = (bookingId: Booking["_id"]) => {
         userCancelBooking(bookingId)
             .then((res) => {

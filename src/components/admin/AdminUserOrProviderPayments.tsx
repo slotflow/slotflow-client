@@ -1,3 +1,4 @@
+import { useCommonHook } from "@/hooks/commonHooks/useCommonActions";
 import CommonTable from "../common/CommonTable";
 import { PaymentsTableColumn } from "../table/tableColumns/PaymentsTableColumn";
 import { FetchPaymentsResponse } from "@/utils/interface/api/commonApiInterface";
@@ -5,15 +6,17 @@ import { AdminFetchProviderPaymentsComponentProps } from "@/utils/interface/comp
 
 const AdminUserOrProviderPayments: React.FC<AdminFetchProviderPaymentsComponentProps> = ({
     id,
+    role,
     fethFunction
 }) => {
 
-    const column = PaymentsTableColumn();
+    const { handleGetPaymentDetailsPage } = useCommonHook();
+    const column = PaymentsTableColumn(handleGetPaymentDetailsPage);
 
     return (
         <CommonTable<FetchPaymentsResponse>
-            fetchApiFunction={() => fethFunction({ id, pagination: { page: 1, limit: 10 } })}
-            queryKey="providerPayments"
+            fetchApiFunction={() => fethFunction({ id, role })}
+            queryKey={`payments-${id}`}
             column={column}
             columnsCount={7}
             id={id}

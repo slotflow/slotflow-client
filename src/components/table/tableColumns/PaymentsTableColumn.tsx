@@ -1,13 +1,17 @@
 import { format } from "date-fns";
+import { MoreHorizontal } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
+import { PaymentFor } from "@/utils/interface/enums";
 import { formatNumberToPrice } from "@/utils/helper/formatter";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
 import { FetchPaymentsResponse } from "@/utils/interface/api/commonApiInterface";
-import { PaymentFor, PaymentGateway } from "@/utils/interface/enums";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Payment } from "@/utils/interface/entityInterface/paymentInterface";
 
 // for admin side, provider side and user side view of payments table
 export const PaymentsTableColumn = (
-
+  handleGetPaymentDetailsPage: (paymentId: Payment["_id"]) => void
 ): ColumnDef<FetchPaymentsResponse>[] => [
     {
       accessorKey: "createdAt",
@@ -56,25 +60,6 @@ export const PaymentsTableColumn = (
       }
     },
     {
-      accessorKey: "paymentGateway",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Gateway" />
-      ),
-      cell: ({ row }) => {
-        const paymentGateway = row.original.paymentGateway;
-        switch (paymentGateway) {
-          case PaymentGateway.STRIPE:
-            return <span className="text-indigo-500 font-semibold">Stripe</span>;
-          case PaymentGateway.RAZORPAY:
-            return <span className="text-blue-800 font-semibold">Razorpay</span>;
-          case PaymentGateway.PAYPAL:
-            return <span className="text-blue-400 font-semibold">Paypal</span>;
-          default:
-            return <span>{paymentGateway}</span>;
-        }
-      }
-    },
-    {
       accessorKey: "paymentMethod",
       header: ({ column }) => (<DataTableColumnHeader column={column} title="Method" />)
     },
@@ -82,4 +67,29 @@ export const PaymentsTableColumn = (
       accessorKey: "paymentStatus",
       header: ({ column }) => (<DataTableColumnHeader column={column} title="Status" />)
     },
+    {
+      accessorKey: "actions",
+      header: "Actions",
+      id: "actions",
+      cell: ({ row }) => {
+        const payment = row.original;
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0 cursor-pointer">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => handleGetPaymentDetailsPage(payment._id)}>
+                Details
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )
+      },
+    }
   ]

@@ -1,4 +1,5 @@
 import { Role } from "../enums";
+import { ApiBaseResponse } from "../commonInterface";
 import { User } from "../entityInterface/userInterface";
 import { Plan } from "../entityInterface/planInterface";
 import { Review } from "../entityInterface/reviewInterface";
@@ -7,7 +8,6 @@ import { Booking } from "../entityInterface/bookingInterface";
 import { Address } from "../entityInterface/addressInterface";
 import { Provider } from "../entityInterface/providerInterface";
 import { Subscription } from "../entityInterface/subscriptionInterface";
-import { ApiBaseResponse, FetchFunctionParams } from "../commonInterface";
 import { Availability } from "../entityInterface/serviceAvailabilityInterface";
 
 // **** Used as the response type of fetch provider subscriptions for admin side and provider side
@@ -15,9 +15,8 @@ export type FetchProviderSubscriptionsResponse = Pick<Subscription, "_id" | "sta
 
 
 // **** Used as the return type of fetch payments for admin side, provider side
-export type FetchPaymentsResponse = Pick<Payment, "_id" | "createdAt" | "totalAmount" | "paymentFor" | "paymentMethod" | "paymentGateway" | "paymentStatus" | "discountAmount">
-
-
+export type FetchPaymentsResponse = Pick<Payment, "_id" |"createdAt" | "totalAmount" | "paymentFor" | "paymentMethod" | "paymentStatus" | "discountAmount">
+export type FetchPaymentDetailsResponse = Omit<Payment, "_id" | "chargeId" | "receiptEmail" | "receiptNumber" | "updatedAt" | "userId" | "providerId"> | null;
 // **** Used as the response type fetch all bookings for provider side and user side
 // used as the ProviderAppointmentsBookingTableColumns type
 // used as the userAllBookingsTableColumns type
@@ -28,7 +27,7 @@ export type FetchPaymentsResponse = Pick<Payment, "_id" | "createdAt" | "totalAm
 export type FetchBookingsResponse = Pick<Booking, "_id" | "appointmentDate" | "appointmentMode" | "appointmentStatus" | "appointmentTime" | "videoCallRoomId" | "createdAt" | "serviceProviderId">;
 
 // **** Used as the request and response type and interface fetch all online bookings for provider side and user side
-export type FetchOnlineBookingParams = FetchFunctionParams & { online?: boolean, raw?: boolean };
+
 export type FetchOnlineBookingsForProviderResponse = Pick<Booking, "_id" | "appointmentDate" | "appointmentStatus" | "appointmentTime" | "videoCallRoomId" | "createdAt"> & Pick<User, "username">;
 export type FetchOnlineBookingsForUserResponse = Pick<Booking, "_id" | "appointmentDate" | "appointmentStatus" | "appointmentTime" | "videoCallRoomId" | "createdAt"> & Pick<Provider, "username">;
 

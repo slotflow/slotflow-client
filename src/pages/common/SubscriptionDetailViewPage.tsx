@@ -33,6 +33,7 @@ const SubscriptionDetailViewPage: React.FC<SubscriptionDetailViewPageProps> = ({
         { label: "Subscribed Plan Name", value: data?.subscriptionPlanId?.planName },
         { label: "Subscription Max Bookings", value: data?.subscriptionPlanId?.maxBookingPerMonth },
         { label: "Subscription Ad Visibility", value: data?.subscriptionPlanId?.adVisibility, isBoolean: true },
+        { label: "Subscription price", value: data?.subscriptionPlanId?.price, isPrice: true },
     ];
 
   return (

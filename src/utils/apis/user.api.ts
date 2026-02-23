@@ -26,7 +26,7 @@ import { Review } from "../interface/entityInterface/reviewInterface";
 import { Booking } from "../interface/entityInterface/bookingInterface";
 import { Provider } from "../interface/entityInterface/providerInterface";
 import { ApiBaseResponse, FetchFunctionParams, ApiPaginatedResponse } from "../interface/commonInterface";
-import { FetchBookingDetailsResponse, FetchBookingsResponse, FetchOnlineBookingParams, FetchOnlineBookingsForUserResponse, FetchPaymentsResponse, FetchReviewsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, UpdateAddressRequest, UpdateAddressResponse, ValidateRoomId } from "../interface/api/commonApiInterface";
+import { FetchBookingDetailsResponse, FetchBookingsResponse, FetchOnlineBookingsForUserResponse, FetchPaymentsResponse, FetchReviewsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, UpdateAddressRequest, UpdateAddressResponse, ValidateRoomId } from "../interface/api/commonApiInterface";
 import { ServiceCategory } from "../interface/enums";
 
 // **** User profile apis
@@ -128,8 +128,8 @@ export const userSaveAppointmentBooking = async (sessionId: string): Promise<Api
     return response.data;
 }
 
-export const userFetchBookings = async <T extends FetchBookingsResponse | FetchOnlineBookingsForUserResponse>(query?: FetchOnlineBookingParams): Promise<ApiPaginatedResponse<T>> => {
-    const refactoredQuery = buildQueryParams<FetchOnlineBookingParams>(query);
+export const userFetchBookings = async <T extends FetchBookingsResponse | FetchOnlineBookingsForUserResponse>(query?: FetchFunctionParams): Promise<ApiPaginatedResponse<T>> => {
+    const refactoredQuery = buildQueryParams<FetchFunctionParams>(query);
     const response = await axiosInstance.get(`/user/bookings${refactoredQuery ? `?${refactoredQuery}` : ''}`);
     return parseNewCommonResponse<T>(response.data.data);
 }
@@ -155,9 +155,9 @@ export const userJoinOrLeftRoomCallBack = async (data: JoinRoomCallbackRequest):
 }
 
 // user payment apis
-export const userFetchPayments = async (query?: FetchFunctionParams): Promise<ApiPaginatedResponse<FetchPaymentsResponse>> => {
+export const userFetchPayments = async (query?: FetchFunctionParams<string>): Promise<ApiPaginatedResponse<FetchPaymentsResponse>> => {
     const refactoredQuery = buildQueryParams(query);
-    const response = await axiosInstance.get(`/user/payments${refactoredQuery ? `?${refactoredQuery}` : ''}`);
+    const response = await axiosInstance.get(`/payments${refactoredQuery ? `?${refactoredQuery}` : ''}`);
     return parseNewCommonResponse<FetchPaymentsResponse>(response.data.data);
 }
 

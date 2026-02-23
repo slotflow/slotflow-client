@@ -21,7 +21,7 @@ const ProviderAppointmentsPage = () => {
   return (
     <CommonTable<FetchBookingsResponse>
       fetchApiFunction={(params) =>
-        providerFetchBookingAppoinments({ ...params, raw: true })
+        providerFetchBookingAppoinments({ ...params, online: false })
       }
       queryKey='appointments'
       column={columns}

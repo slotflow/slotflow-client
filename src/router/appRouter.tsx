@@ -3,6 +3,7 @@ import PlanGuard from "./planGuard.tsx";
 import { Role } from "@/utils/interface/enums.ts";
 import { ProtectedRoute } from "./protectedRoutes.tsx";
 import { createBrowserRouter, Outlet } from "react-router-dom";
+import PaymentDetailViewPage from "@/pages/common/PaymentDetailViewPage.tsx";
 
 const AuthPage = lazy(() => import("@/pages/common/AuthPage.tsx"));
 const AboutPage = lazy(() => import("@/pages/common/AboutPage.tsx"));
@@ -103,8 +104,9 @@ export const appRouter = createBrowserRouter([
                     { path: "services", element: <AdminServicesPage /> },
                     { path: "plans", element: <AdminPlansPage /> },
                     { path: "subscriptions", element: <AdminSubscriptionsPage /> },
-                    { path: "payments", element: <AdminPaymentsPage /> },
                     { path: "subscription/:subscriptionId", element: <AdminSubcriptionDetailedViewPage /> },
+                    { path: "payments", element: <AdminPaymentsPage /> },
+                    { path: "payments/:paymentId", element: <PaymentDetailViewPage /> },
                     { path: "health", element: <AdminApiStrengthPage /> },
                     { path: "*", element: <Error404Page /> },
                 ],
@@ -124,6 +126,7 @@ export const appRouter = createBrowserRouter([
                     { path: "bookings", element: <UserBookingsPage /> },
                     { path: "bookings/:bookingId", element: <UserBookingDetailsPage /> },
                     { path: "payments", element: <UserPaymentsPage /> },
+                    { path: "payments/:paymentId", element: <PaymentDetailViewPage /> },
                     { path: "integrations", element: <IntegrationsPage /> },
                     { path: "chat", element: <UserChatPage /> },
                     { path: "video-call", element: <VideoCallPage /> },
@@ -213,6 +216,9 @@ export const appRouter = createBrowserRouter([
                             </PlanGuard>
                         )
                     },
+                    { 
+                        path: "payments/:paymentId", 
+                        element: <PaymentDetailViewPage /> },
                     {
                         path: "integrations",
                         element: (

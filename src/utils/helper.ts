@@ -1,5 +1,5 @@
-import { FetchOnlineBookingParams } from "./interface/api/commonApiInterface";
 import { FetchFunctionParams, ApiPaginatedResponse } from "./interface/commonInterface";
+import { Role } from "./interface/enums";
 
 // **** Time formating function for otp page **** \\
 export const formatTime = (seconds: number): string => {
@@ -77,7 +77,7 @@ export const copyToClipboard = (text: string) => {
 export const formatBoolean = (val: boolean) => (val ? "Yes" : "No");
 
 // **** Function for query builder **** \\
-export const buildQueryParams = <T extends FetchFunctionParams | FetchOnlineBookingParams>(params?: T): string => {
+export const buildQueryParams = <T extends FetchFunctionParams>(params?: T): string => {
   const query = new URLSearchParams();
 
   if (!params) return "";
@@ -93,6 +93,18 @@ export const buildQueryParams = <T extends FetchFunctionParams | FetchOnlineBook
   
   if("role" in params && params.role) {
     query.append("role", params.role.toString());
+  }
+
+  if(params.role === Role.USER && params.id) {
+    query.append("userId", params.id);
+  }
+
+  if(params.role === Role.PROVIDER && params.id) {
+    query.append("providerId", params.id);
+  }
+
+  if ("id" in params && params.id) {
+    query.append("id", String(params.id));
   }
 
   return query.toString();

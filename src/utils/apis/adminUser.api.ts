@@ -7,7 +7,7 @@ import {
 import { buildQueryParams, parseNewCommonResponse } from "../helper";
 import { FetchFunctionParams, ApiPaginatedResponse, ApiBaseResponse } from "../interface/commonInterface";
 import { User } from "../interface/entityInterface/userInterface";
-import { AdminFetchddressResponse, FetchPaymentsResponse } from "../interface/api/commonApiInterface";
+import { AdminFetchddressResponse } from "../interface/api/commonApiInterface";
 
 export const adminFetchAllUsers = async (params?: FetchFunctionParams): Promise<ApiPaginatedResponse<AdminfetchAllUsersResponse>> => {
     const query = buildQueryParams(params);
@@ -29,11 +29,3 @@ export const adminFetchUserAddress = async (userId: User["_id"]): Promise<AdminF
     const response = await axiosInstance.get(`/admin/users/${userId}/address`);
     return response.data.data;
 }
-
-export const adminFetchUserPayments = async (params: FetchFunctionParams<User["_id"]>): Promise<ApiPaginatedResponse<FetchPaymentsResponse>> => {
-    const { id, pagination } = params;
-    const query = buildQueryParams({ pagination });
-    const response = await axiosInstance.get(`/admin/users/${id}/payments${query ? `?${query}` : ''}`);
-    return parseNewCommonResponse<FetchPaymentsResponse>(response.data.data);
-}
-

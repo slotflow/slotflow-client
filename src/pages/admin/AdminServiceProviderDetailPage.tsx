@@ -14,7 +14,8 @@ import AdminProviderSubscriptions from "@/components/admin/AdminProviderSubscrip
 import ProviderServiceDetails from "@/components/common/profile/ProviderServiceDetails";
 import AdminUserOrProviderPayments from "@/components/admin/AdminUserOrProviderPayments";
 import ProviderServiceAvailability from "@/components/common/profile/ProviderServiceAvailability";
-import { adminFetchProviderServiceAvailability, adminFetchProviderAddress, adminFetchProviderProfileDetails, adminFetchProviderService, adminFetchProviderPayments, adminFetchProviderProofs } from "@/utils/apis/adminProvider.api";
+import { adminFetchProviderServiceAvailability, adminFetchProviderAddress, adminFetchProviderProfileDetails, adminFetchProviderService, adminFetchProviderProofs } from "@/utils/apis/adminProvider.api";
+import { adminFetchAllPayments } from "@/utils/apis/adminPayment.api";
 
 const AdminServiceProviderDetailPage = () => {
 
@@ -54,7 +55,7 @@ const AdminServiceProviderDetailPage = () => {
                     ) || tab === 5 && (
                         <AdminProviderSubscriptions providerId={providerId} />
                     ) || tab === 6 && (
-                        <AdminUserOrProviderPayments id={providerId} fethFunction={adminFetchProviderPayments} />
+                        <AdminUserOrProviderPayments id={providerId} role={Role.PROVIDER} fethFunction={adminFetchAllPayments} />
                     ) || tab === 7 && (
                         <ProviderProofs fetchApiFunction={() => adminFetchProviderProofs(providerId)} providerId={providerId} />
                     )}

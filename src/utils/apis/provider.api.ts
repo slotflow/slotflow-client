@@ -31,7 +31,7 @@ import { Review } from "../interface/entityInterface/reviewInterface";
 import { Booking } from "../interface/entityInterface/bookingInterface";
 import { Subscription } from "../interface/entityInterface/subscriptionInterface";
 import { ApiBaseResponse, FetchFunctionParams, ApiPaginatedResponse } from "../interface/commonInterface";
-import { FetchBookingDetailsResponse, FetchBookingsResponse, FetchOnlineBookingParams, FetchOnlineBookingsForProviderResponse, FetchPaymentsResponse, FetchProvidersProofsResponse, FetchProviderSubscriptionsResponse, FetchReviewsResponse, FetchSubscriptionDetailsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, UpdateAddressRequest, UpdateAddressResponse, UpdateFileDataRequest, UpdateFileDataResponse, ValidateRoomId } from "../interface/api/commonApiInterface";
+import { FetchBookingDetailsResponse, FetchBookingsResponse, FetchOnlineBookingsForProviderResponse, FetchPaymentsResponse, FetchProvidersProofsResponse, FetchProviderSubscriptionsResponse, FetchReviewsResponse, FetchSubscriptionDetailsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, UpdateAddressRequest, UpdateAddressResponse, UpdateFileDataRequest, UpdateFileDataResponse, ValidateRoomId } from "../interface/api/commonApiInterface";
 import { PlanName } from "../interface/enums";
 
 
@@ -66,8 +66,8 @@ export const providerFetchAllAppServices = async (data: ProviderFetchAllAppServi
 
 
 // **** Booking apis
-export const providerFetchBookingAppoinments = async <T extends FetchBookingsResponse | FetchOnlineBookingsForProviderResponse>(params?: FetchOnlineBookingParams): Promise<ApiPaginatedResponse<T>> => {
-    const query = buildQueryParams<FetchOnlineBookingParams>(params);
+export const providerFetchBookingAppoinments = async <T extends FetchBookingsResponse | FetchOnlineBookingsForProviderResponse>(params?: FetchFunctionParams): Promise<ApiPaginatedResponse<T>> => {
+    const query = buildQueryParams<FetchFunctionParams>(params);
     const response = await axiosInstance.get(`/provider/bookings/${query ? `?${query}` : ''}`);
     return parseNewCommonResponse<T>(response.data.data);
 }
@@ -266,14 +266,13 @@ export const connectStripeAccount = async (): Promise<{ url: string }> => {
 
 
 // **** Provider payment service api
-
 export const providerCheckoutForSubscribePlan = async (data: ProviderCheckoutForSubscribePlanRequest): Promise<ProviderSubscribeToPlanResponse> => {
     const response = await axiosInstance.post('/provider/subscriptions/checkout/session', data);
     return response.data;
 }
 
-export const providerFetchPayments = async (params?: FetchFunctionParams): Promise<ApiPaginatedResponse<FetchPaymentsResponse>> => {
+export const providerFetchPayments = async (params?: FetchFunctionParams<string>): Promise<ApiPaginatedResponse<FetchPaymentsResponse>> => {
     const query = buildQueryParams(params);
-    const response = await axiosInstance.get(`/payments/provider${query ? `?${query}` : ''}`);
+    const response = await axiosInstance.get(`/payments${query ? `?${query}` : ''}`);
     return parseNewCommonResponse<FetchPaymentsResponse>(response.data.data);
 }

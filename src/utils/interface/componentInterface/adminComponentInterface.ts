@@ -1,10 +1,12 @@
 import { Provider } from "../entityInterface/providerInterface";
 import { FetchPaymentsResponse } from "../api/commonApiInterface";
 import { ApiPaginatedResponse, FetchFunctionParams } from "../commonInterface";
+import { Role } from "../enums";
 
 // Admin fetch provider payments compoenent props interface
 export interface AdminFetchProviderPaymentsComponentProps {
     id: string;
+    role: Role;
     fethFunction: (params: FetchFunctionParams) => Promise<ApiPaginatedResponse<FetchPaymentsResponse>>;
 }
 
