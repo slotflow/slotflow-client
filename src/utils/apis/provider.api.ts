@@ -25,14 +25,13 @@ import {
     ProviderGetMySubscriptionResponse,
 } from "../interface/api/providerApiInterface";
 import { DateRange } from "react-day-picker";
+import { PlanName } from "../interface/enums";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { buildQueryParams, parseNewCommonResponse } from "../helper";
 import { Review } from "../interface/entityInterface/reviewInterface";
 import { Booking } from "../interface/entityInterface/bookingInterface";
-import { Subscription } from "../interface/entityInterface/subscriptionInterface";
 import { ApiBaseResponse, FetchFunctionParams, ApiPaginatedResponse } from "../interface/commonInterface";
-import { FetchBookingDetailsResponse, FetchBookingsResponse, FetchOnlineBookingsForProviderResponse, FetchPaymentsResponse, FetchProvidersProofsResponse, FetchProviderSubscriptionsResponse, FetchReviewsResponse, FetchSubscriptionDetailsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, UpdateAddressRequest, UpdateAddressResponse, UpdateFileDataRequest, UpdateFileDataResponse, ValidateRoomId } from "../interface/api/commonApiInterface";
-import { PlanName } from "../interface/enums";
+import { FetchBookingDetailsResponse, FetchBookingsResponse, FetchOnlineBookingsForProviderResponse, FetchPaymentsResponse, FetchProvidersProofsResponse, FetchProviderSubscriptionsResponse, FetchReviewsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, UpdateAddressRequest, UpdateAddressResponse, UpdateFileDataRequest, UpdateFileDataResponse, ValidateRoomId } from "../interface/api/commonApiInterface";
 
 
 // **** Address apis
@@ -208,11 +207,6 @@ export const providerFetchSubscriptions = async (params?: FetchFunctionParams): 
 export const providerSubscribeToTrialPlan = async (): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.post('/provider/subscriptions/trial');
     return response.data;
-}
-
-export const providerFetchSubscriptionDetails = async (subscriptionId: Subscription["_id"]): Promise<FetchSubscriptionDetailsResponse> => {
-    const response = await axiosInstance.get(`/provider/subscriptions/${subscriptionId}`);
-    return response.data.data;
 }
 
 export const providerFetchMySubscription = async (): Promise<ProviderGetMySubscriptionResponse> => {

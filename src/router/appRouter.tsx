@@ -4,6 +4,7 @@ import { Role } from "@/utils/interface/enums.ts";
 import { ProtectedRoute } from "./protectedRoutes.tsx";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import PaymentDetailViewPage from "@/pages/common/PaymentDetailViewPage.tsx";
+import SubscriptionDetailViewPage from "@/pages/common/SubscriptionDetailViewPage.tsx";
 
 const AuthPage = lazy(() => import("@/pages/common/AuthPage.tsx"));
 const AboutPage = lazy(() => import("@/pages/common/AboutPage.tsx"));
@@ -48,7 +49,6 @@ const ProviderProofSubmitionPage = lazy(() => import("@/pages/provider/ProviderP
 const ProviderApprovalPendingPage = lazy(() => import("@/pages/provider/ProviderApprovalPendingPage.tsx"));
 const ProviderSubscriptionConfirmPage = lazy(() => import("@/pages/provider/ProviderSubscriptionConfirmPage.tsx"));
 const ProviderCreateServiceDetailsPage = lazy(() => import("@/pages/provider/ProviderCreateServiceDetailsPage.tsx"));
-const ProviderSubscriptionDetailViewPage = lazy(() => import("@/pages/provider/ProviderSubscriptionDetailViewPage.tsx"));
 const ProviderCreateServiceAvailabilityPage = lazy(() => import("@/pages/provider/ProviderCreateServiceAvailabilityPage.tsx"));
 
 const AdminReportPage = lazy(() => import("@/pages/admin/AdminReportPage"));
@@ -63,7 +63,6 @@ const AdminApiStrengthPage = lazy(() => import("@/pages/admin/AdminApiStrengthPa
 const AdminSubscriptionsPage = lazy(() => import("@/pages/admin/AdminSubscriptionsPage.tsx"));
 const AdminServiceProvidersPage = lazy(() => import("../pages/admin/AdminServiceProvidersPage.tsx"));
 const AdminServiceProviderDetailPage = lazy(() => import("@/pages/admin/AdminServiceProviderDetailPage.tsx"));
-const AdminSubcriptionDetailedViewPage = lazy(() => import("@/pages/admin/AdminSubcriptionDetailedViewPage.tsx"));
 
 export const appRouter = createBrowserRouter([
     {
@@ -104,7 +103,7 @@ export const appRouter = createBrowserRouter([
                     { path: "services", element: <AdminServicesPage /> },
                     { path: "plans", element: <AdminPlansPage /> },
                     { path: "subscriptions", element: <AdminSubscriptionsPage /> },
-                    { path: "subscription/:subscriptionId", element: <AdminSubcriptionDetailedViewPage /> },
+                    { path: "subscriptions/:subscriptionId", element: <SubscriptionDetailViewPage /> },
                     { path: "payments", element: <AdminPaymentsPage /> },
                     { path: "payments/:paymentId", element: <PaymentDetailViewPage /> },
                     { path: "health", element: <AdminApiStrengthPage /> },
@@ -205,8 +204,8 @@ export const appRouter = createBrowserRouter([
                         )
                     },
                     {
-                        path: "subscription/:subscriptionId",
-                        element: <ProviderSubscriptionDetailViewPage />
+                        path: "subscriptions/:subscriptionId",
+                        element: <SubscriptionDetailViewPage />
                     },
                     {
                         path: "payments",

@@ -17,9 +17,9 @@ export const useCommonHook = (): UseCommonHookInterface => {
 
     const handleAdminGetProviderDetailPage = (subscriptionId: Subscription["_id"]) => {
         if (authUser?.role === Role.ADMIN) {
-            navigate(`/admin/subscription/${subscriptionId}`)
+            navigate(`/admin/subscriptions/${subscriptionId}`)
         } else if (authUser?.role === Role.PROVIDER) {
-            navigate(`/provider/subscription/${subscriptionId}`)
+            navigate(`/provider/subscriptions/${subscriptionId}`)
         }
     }
 
