@@ -2,24 +2,18 @@ import React from 'react';
 import { formatDate } from '@/utils/helper';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { fetchBookingDetails } from '@/utils/apis/booking.api';
 import DataFetchingError from '@/components/common/DataFetchingError';
 import InfoDisplayComponent from '@/components/common/InfoDisplayComponent';
 import { Booking } from '@/utils/interface/entityInterface/bookingInterface';
 import ProfileDetailsShimmer from '@/components/shimmers/ProfileDetailsShimmer';
-import { FetchBookingDetailsResponse } from '@/utils/interface/api/commonApiInterface';
 
-interface BookingDetailPageProps {
-  queryFunction: (bookingId: Booking["_id"]) => Promise<FetchBookingDetailsResponse>;
-}
-
-const BookingDetailPage: React.FC<BookingDetailPageProps> = ({
-  queryFunction
-}) => {
+const BookingDetailPage: React.FC = () => {
 
   const { bookingId } = useParams<{ bookingId: Booking["_id"] }>();
 
   const { data, isLoading, isError, error } = useQuery({
-    queryFn: () => queryFunction(bookingId!),
+    queryFn: () => fetchBookingDetails(bookingId!),
     queryKey: ["booking", bookingId],
     staleTime: 60 * 60 * 1000,
     refetchOnWindowFocus: false,

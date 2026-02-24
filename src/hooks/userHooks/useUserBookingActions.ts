@@ -1,26 +1,20 @@
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "@/utils/redux/appStore";
 import { useQueryClient } from "@tanstack/react-query";
-import { connectVideoSocket } from "@/utils/socket/video.api";
 import { toggleReviewCreateForm } from "@/utils/redux/slices/userSlice";
-import { ValidateRoomId } from "@/utils/interface/api/commonApiInterface";
+import { userCreateReview, userCancelBooking } from "@/utils/apis/user.api";
 import { Booking } from "@/utils/interface/entityInterface/bookingInterface";
 import { UserCreateReviewRequest } from "@/utils/interface/api/userApiInterface";
-import { userCreateReview, userCancelBooking, userValidateRoomId } from "@/utils/apis/user.api";
 
 interface UseUserBookingActionsCustomHookReturnType {
     handleUserCancelBooking: (bookingId: Booking["_id"]) => void;
-    handleUserJoinCall: (data: ValidateRoomId) => void;
-    handleNavigateToBookingDetailPage: (bookingId: Booking["_id"]) => void;
     handleAddReview: (data: UserCreateReviewRequest) => void;
     handleReviewAddFormToggle: (e: React.MouseEvent<HTMLDivElement>, bookingId: string, providerId: string) => void;
 }
 
 export const useUserBookingActions = (): UseUserBookingActionsCustomHookReturnType => {
 
-    const navigate = useNavigate();
     const queryClient = useQueryClient();
     const dispatch = useDispatch<AppDispatch>();
 
@@ -35,23 +29,6 @@ export const useUserBookingActions = (): UseUserBookingActionsCustomHookReturnTy
             .catch(() => {
                 toast.error("Please try again");
             });
-    }
-
-    const handleUserJoinCall = async ({ appointmentId, roomId }: ValidateRoomId) => {
-        await userValidateRoomId({ appointmentId, roomId })
-            .then((res) => {
-                if (res.success) {
-                    navigate(`/user/video-call-lobby/${roomId}`);
-                    dispatch(connectVideoSocket());
-                }
-            })
-            .catch(() => {
-                toast.error("Invalid Request, please try again after sometimes.");
-            })
-    };
-
-    const handleNavigateToBookingDetailPage = (bookingId: Booking["_id"]) => {
-        navigate(`/user/bookings/${bookingId}`)
     }
 
     const handleAddReview = async ({ bookingId, rating, reviewText, providerId }: UserCreateReviewRequest) => {
@@ -76,5 +53,5 @@ export const useUserBookingActions = (): UseUserBookingActionsCustomHookReturnTy
         }));
     }
 
-    return { handleUserCancelBooking, handleUserJoinCall, handleNavigateToBookingDetailPage, handleAddReview, handleReviewAddFormToggle }
+    return { handleUserCancelBooking, handleAddReview, handleReviewAddFormToggle }
 }

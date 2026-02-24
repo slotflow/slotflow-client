@@ -1,5 +1,5 @@
-import { useCommonHook } from "@/hooks/commonHooks/useCommonActions";
 import CommonTable from "../common/CommonTable";
+import { useCommonHook } from "@/hooks/commonHooks/useCommonActions";
 import { PaymentsTableColumn } from "../table/tableColumns/PaymentsTableColumn";
 import { FetchPaymentsResponse } from "@/utils/interface/api/commonApiInterface";
 import { AdminFetchProviderPaymentsComponentProps } from "@/utils/interface/componentInterface/adminComponentInterface";

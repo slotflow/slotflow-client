@@ -1,8 +1,8 @@
 import CommonTable from '@/components/common/CommonTable';
-import { providerFetchPayments } from '@/utils/apis/provider.api';
 import { useCommonHook } from '@/hooks/commonHooks/useCommonActions';
 import { FetchPaymentsResponse } from '@/utils/interface/api/commonApiInterface';
 import { PaymentsTableColumn } from '@/components/table/tableColumns/PaymentsTableColumn';
+import { fetchPayments } from '@/utils/apis/payment.api';
 
 const ProviderPaymentsPage = () => {
 
@@ -11,7 +11,7 @@ const ProviderPaymentsPage = () => {
 
   return (
     <CommonTable<FetchPaymentsResponse>
-      fetchApiFunction={providerFetchPayments}
+      fetchApiFunction={fetchPayments}
       queryKey='payments'
       column={column}
       columnsCount={7}

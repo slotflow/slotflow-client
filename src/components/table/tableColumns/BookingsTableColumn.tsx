@@ -1,17 +1,22 @@
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
+import { AppointmentStatus, Role } from "@/utils/interface/enums";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
-import { MoreHorizontal, ReceiptText, VideoIcon } from "lucide-react";
+import { Check, MoreHorizontal, NotebookPen, ReceiptText, VideoIcon, X } from "lucide-react";
 import { Booking } from "@/utils/interface/entityInterface/bookingInterface";
-import { FetchOnlineBookingsForProviderResponse, ValidateRoomId } from "@/utils/interface/api/commonApiInterface";
+import { FetchBookingsResponse, ValidateRoomId } from "@/utils/interface/api/commonApiInterface";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { AppointmentStatus } from "@/utils/interface/enums";
+import { ProviderChangeAppointmentStatusRequest } from "@/utils/interface/api/providerApiInterface";
 
-export const ProviderOnlineBookingTableColumn = (
-    handleProviderJoinCall: (data: ValidateRoomId) => void,
-    handleNavigateToAppointmentDetailPage: (appointmentId: Booking["_id"]) => void,
-): ColumnDef<FetchOnlineBookingsForProviderResponse>[] => [
+export const BookingsTableColumn = (
+    handleJoinCall: (data: ValidateRoomId) => void,
+    handleNavigateToBookingsDetailPage: (appointmentId: Booking["_id"]) => void,
+    role: Role,
+    handleReviewAddFormToggle?: (e: React.MouseEvent<HTMLDivElement>, bookingId: string, providerId: string) => void,
+    handleUserCancelBooking?: (bookingId: Booking["_id"]) => void,
+    handleChangeAppointmentStatus?: (data: ProviderChangeAppointmentStatusRequest) => void,
+): ColumnDef<FetchBookingsResponse>[] => [
         {
             accessorKey: "appointmentDate",
             header: ({ column }) => (<DataTableColumnHeader column={column} title="Date" />),
@@ -51,10 +56,6 @@ export const ProviderOnlineBookingTableColumn = (
             header: ({ column }) => (<DataTableColumnHeader column={column} title="Slot" />)
         },
         {
-            accessorKey: "userId.username",
-            header: ({ column }) => (<DataTableColumnHeader column={column} title="Customer" />)
-        },
-        {
             accessorKey: "createdAt",
             header: ({ column }) => (<DataTableColumnHeader column={column} title="Paid on" />),
             cell: ({ row }) => {
@@ -70,7 +71,7 @@ export const ProviderOnlineBookingTableColumn = (
             cell: (
                 { row }
             ) => {
-                const appointment = row.original;
+                const booking = row.original;
                 return (
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -82,17 +83,49 @@ export const ProviderOnlineBookingTableColumn = (
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            {appointment.appointmentStatus === AppointmentStatus.CONFIRMED && (
+                            {booking.appointmentStatus === AppointmentStatus.CONFIRMED && (
                                 <DropdownMenuItem
-                                    onClick={() => handleProviderJoinCall({ appointmentId: appointment._id, roomId: appointment.videoCallRoomId })}
+                                    onClick={() => handleJoinCall({ appointmentId: booking._id, roomId: booking.videoCallRoomId })}
                                     className="flex items-center gap-2"
                                 >
                                     <VideoIcon /> Join
                                 </DropdownMenuItem>
                             )}
+                            {role === Role.PROVIDER && handleChangeAppointmentStatus && booking.appointmentStatus === AppointmentStatus.BOOKED && (
+                                <>
+                                    <DropdownMenuItem
+                                        onClick={() => handleChangeAppointmentStatus({ appointmentId: booking._id, appointmentStatus: AppointmentStatus.CONFIRMED })}
+                                        className="flex items-center gap-2"
+                                    >
+                                        {<Check className="w-4 h-4" />}
+                                        <span>Confirm</span>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem
+                                        onClick={() => handleChangeAppointmentStatus({ appointmentId: booking._id, appointmentStatus: AppointmentStatus.REJECTED_BY_PROVIDER })}
+                                        className="flex items-center gap-2"
+                                    >
+                                        {<X className="w-4 h-4" />}
+                                        <span>Reject</span>
+                                    </DropdownMenuItem>
+                                </>
+                            )}
+                            {role === Role.USER && handleUserCancelBooking &&booking.appointmentStatus === AppointmentStatus.BOOKED && (
+                                <DropdownMenuItem
+                                    onClick={() => handleUserCancelBooking(booking._id)}>
+                                    Cancel
+                                </DropdownMenuItem>
+                            )}
+                            {role === Role.USER && handleReviewAddFormToggle && booking.appointmentStatus === AppointmentStatus.COMPLETED && (
+                                <DropdownMenuItem
+                                    onClick={(e: React.MouseEvent<HTMLDivElement>) => handleReviewAddFormToggle(e, booking._id, booking.serviceProviderId)}
+                                    className="flex items-center gap-2"
+                                >
+                                    <NotebookPen /> Add Review
+                                </DropdownMenuItem>
+                            )}
                             <DropdownMenuItem
                                 className="flex items-center gap-2"
-                                onClick={() => handleNavigateToAppointmentDetailPage(appointment._id)}
+                                onClick={() => handleNavigateToBookingsDetailPage(booking._id)}
                             >
                                 <ReceiptText /> Details
                             </DropdownMenuItem>

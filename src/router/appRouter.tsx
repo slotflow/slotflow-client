@@ -3,6 +3,7 @@ import PlanGuard from "./planGuard.tsx";
 import { Role } from "@/utils/interface/enums.ts";
 import { ProtectedRoute } from "./protectedRoutes.tsx";
 import { createBrowserRouter, Outlet } from "react-router-dom";
+import BookingDetailPage from "@/pages/common/BookingDetailPage.tsx";
 import PaymentDetailViewPage from "@/pages/common/PaymentDetailViewPage.tsx";
 import SubscriptionDetailViewPage from "@/pages/common/SubscriptionDetailViewPage.tsx";
 
@@ -16,7 +17,7 @@ const Error404Page = lazy(() => import("@/pages/common/Error404Page.tsx"));
 const CalendarPage = lazy(() => import("@/pages/common/CalendarPage.tsx"));
 const VideoCallLoby = lazy(() => import("@/pages/common/VideoCallLoby.tsx"));
 const VideoCallRoom = lazy(() => import("@/pages/common/VideoCallRoom.tsx"));
-const VideoCallPage = lazy(() => import("@/pages/common/VideoCallPage.tsx"));
+const ListBookingsPage = lazy(() => import("@/pages/common/ListBookingsPage.tsx"));
 const LandingLayout = lazy(() => import("../pages/common/LandingLayout.tsx"));
 const IntegrationsPage = lazy(() => import("@/pages/common/IntegrationsPage.tsx"));
 const StripeConfirmPage = lazy(() => import("@/pages/common/StripeConfirmPage.tsx"));
@@ -27,12 +28,10 @@ const UserMainPage = lazy(() => import("@/pages/user/UserMainPage.tsx"));
 const UserChatPage = lazy(() => import("@/pages/user/UserChatPage.tsx"));
 const UserReviewPage = lazy(() => import("@/pages/user/UserReviewPage"));
 const UserPaymentsPage = lazy(() => import("@/pages/user/UserPaymentsPage.tsx"));
-const UserBookingsPage = lazy(() => import("@/pages/user/UserBookingsPage.tsx"));
 const UserDashboardPage = lazy(() => import("@/pages/user/UserDashboardPage.tsx"));
 const UserNotificationsPage = lazy(() => import("@/pages/user/UserNotificationsPage.tsx"));
 const UserServiceSelectPage = lazy(() => import("@/pages/user/UserServiceSelectPage.tsx"));
 const UserBookingConfirmPage = lazy(() => import("@/pages/user/UserBookingConfirmPage.tsx"));
-const UserBookingDetailsPage = lazy(() => import("@/pages/user/UserBookingDetailsPage.tsx"));
 const UserServiceProviderDetailPage = lazy(() => import("@/pages/user/UserServiceProviderDetailPage.tsx"));
 
 const ProviderChatPage = lazy(() => import("@/pages/provider/ProviderChatPage.tsx"));
@@ -41,10 +40,8 @@ const ProviderMainPage = lazy(() => import("@/pages/provider/ProviderMainPage.ts
 const ProviderPaymentsPage = lazy(() => import("@/pages/provider/ProviderPaymentsPage.tsx"));
 const ProviderDashboardPage = lazy(() => import("@/pages/provider/ProviderDashboardPage.tsx"));
 const ProviderAddAddressPage = lazy(() => import("@/pages/provider/ProviderCreateAddressPage.tsx"));
-const ProviderAppointmentsPage = lazy(() => import("@/pages/provider/ProviderAppointmentsPage.tsx"));
 const ProviderSubscriptionPage = lazy(() => import("@/pages/provider/ProviderSubscriptionPage.tsx"));
 const ProviderNotificationsPage = lazy(() => import("@/pages/provider/ProviderNotificationsPage.tsx"));
-const ProviderBookingDetailsPage = lazy(() => import("@/pages/provider/ProviderBookingDetailsPage.tsx"))
 const ProviderProofSubmitionPage = lazy(() => import("@/pages/provider/ProviderProofSubmitionPage.tsx"));
 const ProviderApprovalPendingPage = lazy(() => import("@/pages/provider/ProviderApprovalPendingPage.tsx"));
 const ProviderSubscriptionConfirmPage = lazy(() => import("@/pages/provider/ProviderSubscriptionConfirmPage.tsx"));
@@ -122,13 +119,13 @@ export const appRouter = createBrowserRouter([
                     { path: "dashboard", element: <UserDashboardPage /> },
                     { path: "providerProfile/:providerId", element: <UserServiceProviderDetailPage /> },
                     { path: "profile", element: <AccountPage /> },
-                    { path: "bookings", element: <UserBookingsPage /> },
-                    { path: "bookings/:bookingId", element: <UserBookingDetailsPage /> },
+                    { path: "bookings", element: <ListBookingsPage /> },
+                    { path: "bookings/:bookingId", element: <BookingDetailPage /> },
                     { path: "payments", element: <UserPaymentsPage /> },
                     { path: "payments/:paymentId", element: <PaymentDetailViewPage /> },
                     { path: "integrations", element: <IntegrationsPage /> },
                     { path: "chat", element: <UserChatPage /> },
-                    { path: "video-call", element: <VideoCallPage /> },
+                    { path: "video-call", element: <ListBookingsPage /> },
                     {
                         path: "video-call-lobby/:roomId",
                         element: <VideoCallLoby />
@@ -183,7 +180,7 @@ export const appRouter = createBrowserRouter([
                         path: "appointments",
                         element: (
                             <PlanGuard routeName="Appointments">
-                                <ProviderAppointmentsPage />
+                                <ListBookingsPage />
                             </PlanGuard>
                         )
                     },
@@ -191,7 +188,7 @@ export const appRouter = createBrowserRouter([
                         path: "appointments/:bookingId",
                         element: (
                             <PlanGuard routeName="Appointments">
-                                <ProviderBookingDetailsPage />
+                                <BookingDetailPage />
                             </PlanGuard>
                         )
                     },
@@ -238,7 +235,7 @@ export const appRouter = createBrowserRouter([
                         path: "video-call",
                         element: (
                             <PlanGuard routeName="Video call">
-                                <VideoCallPage />
+                                <ListBookingsPage />
                             </PlanGuard>
                         ),
                     },

@@ -53,7 +53,6 @@ export type AdminFetchProviderAvailabilityRequest = {
 export type AdminFetchProviderAvailabilityResponse = AvailabilityForResponse;
 
 
-// **** Interface for adminFetchProviderSubscriptions api is in common interface file
 
 
 // **** Interface for adminFetchProviderPayments api is in common interface file

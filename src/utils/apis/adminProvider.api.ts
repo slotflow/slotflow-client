@@ -12,7 +12,7 @@ import {
 import { buildQueryParams, parseNewCommonResponse } from "../helper";
 import { Provider } from "../interface/entityInterface/providerInterface";
 import { FetchFunctionParams, ApiPaginatedResponse, ApiBaseResponse } from "../interface/commonInterface";
-import { AdminFetchddressResponse, FetchProvidersProofsResponse, FetchProviderSubscriptionsResponse } from "../interface/api/commonApiInterface";
+import { AdminFetchddressResponse, FetchProvidersProofsResponse } from "../interface/api/commonApiInterface";
 
 export const adminFetchAllProviders = async (params?: FetchFunctionParams): Promise<ApiPaginatedResponse<AdminFetchAllProvidersResponse>> => {
     const query = buildQueryParams(params);
@@ -63,13 +63,6 @@ export const adminFetchProviderServiceAvailability = async ({ date, providerId }
         }
     });
     return response.data;
-}
-
-export const adminFetchProviderSubscriptions = async (params: FetchFunctionParams<Provider["_id"]>): Promise<ApiPaginatedResponse<FetchProviderSubscriptionsResponse>> => {
-    const { id, pagination } = params;
-    const query = buildQueryParams({ pagination });
-    const response = await axiosInstance.get(`/admin/providers/${id}/subscriptions${query ? `?${query}` : ''}`);
-    return parseNewCommonResponse<FetchProviderSubscriptionsResponse>(response.data.data);
 }
 
 export const adminFetchProviderProofs = async (providerId: Provider["_id"]): Promise<FetchProvidersProofsResponse> => {

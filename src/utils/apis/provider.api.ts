@@ -27,11 +27,11 @@ import {
 import { DateRange } from "react-day-picker";
 import { PlanName } from "../interface/enums";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { buildQueryParams, parseNewCommonResponse } from "../helper";
+import { buildQueryParams } from "../helper";
 import { Review } from "../interface/entityInterface/reviewInterface";
 import { Booking } from "../interface/entityInterface/bookingInterface";
 import { ApiBaseResponse, FetchFunctionParams, ApiPaginatedResponse } from "../interface/commonInterface";
-import { FetchBookingDetailsResponse, FetchBookingsResponse, FetchOnlineBookingsForProviderResponse, FetchPaymentsResponse, FetchProvidersProofsResponse, FetchProviderSubscriptionsResponse, FetchReviewsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, UpdateAddressRequest, UpdateAddressResponse, UpdateFileDataRequest, UpdateFileDataResponse, ValidateRoomId } from "../interface/api/commonApiInterface";
+import { FetchProvidersProofsResponse, FetchReviewsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, UpdateAddressRequest, UpdateAddressResponse, UpdateFileDataRequest, UpdateFileDataResponse } from "../interface/api/commonApiInterface";
 
 
 // **** Address apis
@@ -65,24 +65,9 @@ export const providerFetchAllAppServices = async (data: ProviderFetchAllAppServi
 
 
 // **** Booking apis
-export const providerFetchBookingAppoinments = async <T extends FetchBookingsResponse | FetchOnlineBookingsForProviderResponse>(params?: FetchFunctionParams): Promise<ApiPaginatedResponse<T>> => {
-    const query = buildQueryParams<FetchFunctionParams>(params);
-    const response = await axiosInstance.get(`/provider/bookings/${query ? `?${query}` : ''}`);
-    return parseNewCommonResponse<T>(response.data.data);
-}
-
-export const adminFetchBookingDetails = async (bookingId: Booking["_id"]): Promise<FetchBookingDetailsResponse> => {
-    const response = await axiosInstance.get(`/provider/bookings/${bookingId}`);
-    return response.data.data;
-}
 
 export const providerChangeAppointmentStatus = async (data: ProviderChangeAppointmentStatusRequest): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.patch(`/provider/bookings/${data.appointmentId}`, data);
-    return response.data;
-}
-
-export const providerValidateRoomId = async (data: ValidateRoomId): Promise<ApiBaseResponse> => {
-    const response = await axiosInstance.get(`/provider/bookings/${data.appointmentId}/can-join?roomId=${data.roomId}`);
     return response.data;
 }
 
@@ -198,11 +183,6 @@ export const providerFetchPlans = async (): Promise<ProviderFetchPlansResponse[]
 
 
 // **** Provider subscription apis
-export const providerFetchSubscriptions = async (params?: FetchFunctionParams): Promise<ApiPaginatedResponse<FetchProviderSubscriptionsResponse>> => {
-    const query = buildQueryParams(params);
-    const response = await axiosInstance.get(`/provider/subscriptions${query ? `?${query}` : ''}`);
-    return parseNewCommonResponse<FetchProviderSubscriptionsResponse>(response.data.data);
-}
 
 export const providerSubscribeToTrialPlan = async (): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.post('/provider/subscriptions/trial');
@@ -263,10 +243,4 @@ export const connectStripeAccount = async (): Promise<{ url: string }> => {
 export const providerCheckoutForSubscribePlan = async (data: ProviderCheckoutForSubscribePlanRequest): Promise<ProviderSubscribeToPlanResponse> => {
     const response = await axiosInstance.post('/provider/subscriptions/checkout/session', data);
     return response.data;
-}
-
-export const providerFetchPayments = async (params?: FetchFunctionParams<string>): Promise<ApiPaginatedResponse<FetchPaymentsResponse>> => {
-    const query = buildQueryParams(params);
-    const response = await axiosInstance.get(`/payments${query ? `?${query}` : ''}`);
-    return parseNewCommonResponse<FetchPaymentsResponse>(response.data.data);
 }

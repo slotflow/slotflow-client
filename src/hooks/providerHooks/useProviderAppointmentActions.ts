@@ -1,19 +1,15 @@
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { AppDispatch } from "@/utils/redux/appStore";
 import { useQueryClient } from "@tanstack/react-query";
-import { connectVideoSocket } from "@/utils/socket/video.api";
-import { ValidateRoomId } from "@/utils/interface/api/commonApiInterface";
-import { Booking } from "@/utils/interface/entityInterface/bookingInterface";
-import { providerChangeAppointmentStatus, providerValidateRoomId } from "@/utils/apis/provider.api";
+import { providerChangeAppointmentStatus } from "@/utils/apis/provider.api";
 import { ProviderChangeAppointmentStatusRequest } from "@/utils/interface/api/providerApiInterface";
 
-export const useProviderAppointmentActions = () => {
+interface UseProviderAppointmentActions {
+    handleChangeAppointmentStatus: (data: ProviderChangeAppointmentStatusRequest) => void;
+}
 
-    const navigate = useNavigate();
+export const useProviderAppointmentActions = (): UseProviderAppointmentActions => {
+
     const queryClient = useQueryClient();
-    const dispatch = useDispatch<AppDispatch>();
 
     const handleChangeAppointmentStatus = ({ appointmentId, appointmentStatus }: ProviderChangeAppointmentStatusRequest) => {
         providerChangeAppointmentStatus({ appointmentId, appointmentStatus })
@@ -28,22 +24,5 @@ export const useProviderAppointmentActions = () => {
             });
     }
 
-    const handleProviderJoinCall = async ({ appointmentId, roomId }: ValidateRoomId) => {
-        await providerValidateRoomId({ appointmentId, roomId })
-            .then((res) => {
-                if (res.success) {
-                    navigate(`/provider/video-call-lobby/${roomId}`);
-                    dispatch(connectVideoSocket());
-                }
-            })
-            .catch(() => {
-                toast.error("Invalid Request, please try again after sometimes.");
-            })
-    };
-
-    const handleNavigateToAppointmentDetailPage = (appointmentId: Booking["_id"]) => {
-        navigate(`/provider/appointments/${appointmentId}`);
-    }
-
-    return { handleChangeAppointmentStatus, handleProviderJoinCall, handleNavigateToAppointmentDetailPage }
+    return { handleChangeAppointmentStatus }
 }
