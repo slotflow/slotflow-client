@@ -1,5 +1,4 @@
-import { FetchFunctionParams, ApiPaginatedResponse } from "./interface/commonInterface";
-import { Role } from "./interface/enums";
+import { ApiPaginatedResponse } from "./interface/commonInterface";
 
 // **** Time formating function for otp page **** \\
 export const formatTime = (seconds: number): string => {
@@ -77,37 +76,87 @@ export const copyToClipboard = (text: string) => {
 export const formatBoolean = (val: boolean) => (val ? "Yes" : "No");
 
 // **** Function for query builder **** \\
-export const buildQueryParams = <T extends FetchFunctionParams>(params?: T): string => {
+// export const buildQueryParams = <T extends FetchFunctionBaseQueryParams>(params?: T): string => {
+//   const query = new URLSearchParams();
+
+//   if (!params) return "";
+
+//   // if ("pagination" in params && params.pagination) {
+//   //   query.append("page", params.pagination.page.toString());
+//   //   query.append("limit", params.pagination.limit.toString());
+//   // }
+
+//     if ("page" in params) {
+//     query.append("page", params.page.toString());
+//   }
+
+//     if ("limit" in params) {
+//     query.append("limit", params.limit.toString());
+//   }
+
+//   if ("online" in params && params.online !== undefined) {
+//     query.append("online", params.online.toString());
+//   }
+
+//   if("role" in params && params.role) {
+//     query.append("role", params.role.toString());
+//   }
+
+//   if(params.role === Role.USER && params.id) {
+//     query.append("userId", params.id);
+//   }
+
+//   if(params.role === Role.PROVIDER && params.id) {
+//     query.append("providerId", params.id);
+//   }
+
+//   if ("id" in params && params.id) {
+//     query.append("id", String(params.id));
+//   }
+
+//   return query.toString();
+// };
+
+export const buildQueryParams = <
+T extends object
+>(
+  params?: T
+): string => {
+  if (!params) return "";
   const query = new URLSearchParams();
 
-  if (!params) return "";
+  (Object.entries(params) as [keyof T, T[keyof T]][])
+    .forEach(([key, value]) => {
+      if (
+        value !== undefined &&
+        value !== null &&
+        value !== ""
+      ) {
+        query.append(String(key), String(value));
+      }
+    });
 
-  if ("pagination" in params && params.pagination) {
-    query.append("page", params.pagination.page.toString());
-    query.append("limit", params.pagination.limit.toString());
-  }
-
-  if ("online" in params && params.online !== undefined) {
-    query.append("online", params.online.toString());
-  }
-  
-  if("role" in params && params.role) {
-    query.append("role", params.role.toString());
-  }
-
-  if(params.role === Role.USER && params.id) {
-    query.append("userId", params.id);
-  }
-
-  if(params.role === Role.PROVIDER && params.id) {
-    query.append("providerId", params.id);
-  }
-
-  if ("id" in params && params.id) {
-    query.append("id", String(params.id));
-  }
+  console.log("query : ", query.toString());
 
   return query.toString();
+};
+
+export const buildPathParams = <T extends object = {}>(
+  params?: T
+): string => {
+  if (!params) return "";
+
+  const segments = Object.values(params)
+    .filter((value) => value !== undefined && value !== null)
+    .map((value) => {
+      if (typeof value !== "string" && typeof value !== "number") {
+        throw new Error("Path params must be string or number");
+      }
+      return encodeURIComponent(String(value));
+    });
+
+    console.log("path : ",segments.length ? `/${segments.join("/")}` : "");
+  return segments.length ? `/${segments.join("/")}` : "";
 };
 
 // **** Function for returing data from pagination included apis **** \\

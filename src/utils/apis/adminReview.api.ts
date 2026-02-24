@@ -1,10 +1,10 @@
 import { axiosInstance } from "@/lib/axios";
 import { buildQueryParams } from "../helper";
 import { FetchReviewsResponse } from "../interface/api/commonApiInterface";
-import { ApiBaseResponse, ApiPaginatedResponse, FetchFunctionParams } from "../interface/commonInterface";
+import { ApiBaseResponse, ApiPaginatedResponse, FetchFunctionBaseQueryParams } from "../interface/commonInterface";
 import { AdminChangeReviewBlockStatusRequest } from "../interface/api/adminReviewApiInterface";
 
-export const adminFetchAllReviews = async (payload: FetchFunctionParams): Promise<ApiPaginatedResponse<FetchReviewsResponse>> => {
+export const adminFetchAllReviews = async (payload: FetchFunctionBaseQueryParams): Promise<ApiPaginatedResponse<FetchReviewsResponse>> => {
     const { id } = payload;
     const refactoredQuery = buildQueryParams(payload);
     const response = await axiosInstance.get(`/admin/reviews/${id}${refactoredQuery ? `?${refactoredQuery}` : ''}`);

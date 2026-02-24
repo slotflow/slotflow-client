@@ -17,12 +17,12 @@ const ListBookingsPage: React.FC = () => {
     handleChangeAppointmentStatus
   } = useProviderAppointmentActions();
 
-  const { 
-    handleJoinCall, 
+  const {
+    handleJoinCall,
     handleNavigateToBookingsDetailPage
-   } = useCommonHook();
+  } = useCommonHook();
 
-   const { handleUserCancelBooking, handleReviewAddFormToggle } = useUserBookingActions();
+  const { handleUserCancelBooking, handleReviewAddFormToggle } = useUserBookingActions();
 
   const columns = BookingsTableColumn(
     handleJoinCall,
@@ -34,14 +34,15 @@ const ListBookingsPage: React.FC = () => {
   );
 
   return (
-      <CommonTable<FetchBookingsResponse>
-        fetchApiFunction={(params) =>
-          fetchBookings({ ...params, online: true })
-        }
-        columnsCount={6}
-        column={columns}
-        queryKey="onlineBookings"
-      />
+    <CommonTable<FetchBookingsResponse>
+      fetchApiFunction={(params) =>
+        fetchBookings({ ...params, online: true })
+      }
+      columnsCount={6}
+      column={columns}
+      queryParams={{ online: true }}
+      queryKey="onlineBookings"
+    />
   );
 };
 

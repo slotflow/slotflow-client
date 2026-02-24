@@ -8,7 +8,7 @@ import {
 import { toast } from "react-toastify";
 import {
   ApiPaginatedResponse,
-  FetchFunctionParams,
+  FetchFunctionBaseQueryParams,
 } from "@/utils/interface/commonInterface";
 import { Role } from "@/utils/interface/enums";
 import { Button } from "@/components/ui/button";
@@ -22,6 +22,7 @@ import { Review } from "@/utils/interface/entityInterface/reviewInterface";
 import { adminChangeReviewBlockStatus } from "@/utils/apis/adminReview.api";
 import { FetchReviewsResponse } from "@/utils/interface/api/commonApiInterface";
 import { AdminChangeReviewBlockStatusRequest } from "@/utils/interface/api/adminReviewApiInterface";
+import { appConfig } from "@/utils/env";
 
 interface ReviewsPageProps {
   id?: string;
@@ -30,7 +31,7 @@ interface ReviewsPageProps {
   isAdmin?: boolean;
   role: Role;
   fetchFun: (
-    query: FetchFunctionParams
+    query: FetchFunctionBaseQueryParams
   ) => Promise<ApiPaginatedResponse<FetchReviewsResponse>>;
   className: string;
 }
@@ -57,7 +58,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
     isLoading,
     isError,
   } = useInfiniteQuery<ApiPaginatedResponse<FetchReviewsResponse>>({
-    queryKey: ["reviews",id],
+    queryKey: ["reviews", id],
     queryFn: ({ pageParam = 1 }) =>
       fetchFun({
         id,
@@ -177,6 +178,9 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
         }
       })
       .catch((error) => {
+        if (appConfig.isDevelopment) {
+          console.log("Review block status updating failed", error);
+        }
         toast.error("Review block status updating failed");
       })
   }

@@ -1,5 +1,5 @@
 import { Role } from "../enums";
-import { ApiBaseResponse } from "../commonInterface";
+import { ApiBaseResponse, ApiPaginatedResponse, FetchFunctionBaseQueryParams } from "../commonInterface";
 import { User } from "../entityInterface/userInterface";
 import { Plan } from "../entityInterface/planInterface";
 import { Review } from "../entityInterface/reviewInterface";
@@ -10,10 +10,24 @@ import { Provider } from "../entityInterface/providerInterface";
 import { Subscription } from "../entityInterface/subscriptionInterface";
 import { Availability } from "../entityInterface/serviceAvailabilityInterface";
 
+export type ApiFetchFunction<
+  T,
+  Q extends object = {}
+> = (
+  queryParams?: FetchFunctionBaseQueryParams & Q
+) => Promise<ApiPaginatedResponse<T>>;
+
 // **** Used as the response type of fetch provider subscriptions for admin side and provider side
+export interface FetchSubscriptionsQueryParams {
+  providerId?: string;
+}
 export type FetchProviderSubscriptionsResponse = Pick<Subscription, "_id" | "startDate" | "endDate" | "subscriptionStatus"> & Pick<Plan, "planName">;
 
 // **** Used as the return type of fetch payments for admin side, provider side
+export interface FetchPaymentsQueryParams {
+  providerId?: string;
+  userId?: string;
+}
 export type FetchPaymentsResponse = Pick<Payment, "_id" |"createdAt" | "totalAmount" | "paymentFor" | "paymentMethod" | "paymentStatus" | "discountAmount">;
 export type FetchPaymentDetailsResponse = Omit<Payment, "_id" | "chargeId" | "receiptEmail" | "receiptNumber" | "updatedAt" | "userId" | "providerId"> | null;
 
@@ -21,6 +35,9 @@ export type FetchPaymentDetailsResponse = Omit<Payment, "_id" | "chargeId" | "re
 // export type FetchOnlineBookingsForProviderResponse = Pick<Booking, "_id" | "appointmentDate" | "appointmentStatus" | "appointmentTime" | "videoCallRoomId" | "createdAt"> & Pick<User, "username">;
 // export type FetchOnlineBookingsForUserResponse = Pick<Booking, "_id" | "appointmentDate" | "appointmentStatus" | "appointmentTime" | "videoCallRoomId" | "createdAt"> & Pick<Provider, "username">;
 
+export interface FetchBookingsQueryParams {
+  online?: boolean;
+} 
 export type FetchBookingsResponse = Pick<Booking, "_id" | "appointmentDate" | "appointmentStatus" | "appointmentTime" | "videoCallRoomId" | "createdAt" | "serviceProviderId">;
 
 

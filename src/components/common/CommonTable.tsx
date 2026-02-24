@@ -4,36 +4,46 @@ import { useQuery } from "@tanstack/react-query";
 import DataFetchingError from "./DataFetchingError";
 import TableShimmer from "../shimmers/TableShimmer";
 import { OnChangeFn, PaginationState } from "@tanstack/react-table";
-import { CommonTableComponentProps } from "@/utils/interface/commonInterface";
+import { CommonTableComponentProps, FetchFunctionBaseQueryParams } from "@/utils/interface/commonInterface";
 
-const CommonTable = <T,>({
+const CommonTable = <
+  T,
+  Q extends object = {}
+>({
   parentDivCalssName,
   fetchApiFunction,
   queryKey,
   column,
   columnsCount,
-  id,
   pageSize = 10,
-}: CommonTableComponentProps<T>) => {
+  queryParams,
+}: CommonTableComponentProps<T, Q>) => {
 
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
-    pageSize: pageSize,
-  })
+    pageSize,
+  });
 
-  const handlePaginationChange: OnChangeFn<PaginationState> = (updaterOrValue) => {
+  const handlePaginationChange: OnChangeFn<PaginationState> = (
+    updaterOrValue
+  ) => {
     setPagination(updaterOrValue);
   };
 
+  const finalQueryParams = {
+    ...queryParams,
+    page: pagination.pageIndex + 1,
+    limit: pagination.pageSize,
+  } as FetchFunctionBaseQueryParams & Q;
+
   const { data, isLoading, isError, error } = useQuery({
-    queryFn: () => fetchApiFunction({ 
-      id, 
-      pagination: { 
-        page: pagination.pageIndex + 1,
-        limit: pagination.pageSize 
-      } 
-    }),
-    queryKey: [queryKey, pagination.pageIndex, pagination.pageSize, id],
+    queryFn: () => fetchApiFunction(finalQueryParams),
+    queryKey: [
+      queryKey,
+      pagination.pageIndex,
+      pagination.pageSize,
+      queryParams,
+    ],
     staleTime: 60 * 60 * 1000,
     refetchOnWindowFocus: false,
   });
@@ -45,17 +55,23 @@ const CommonTable = <T,>({
           <TableShimmer columnsCount={columnsCount} />
         </div>
       ) : data?.data ? (
-        <DataTable 
-          columns={column} 
+        <DataTable
+          columns={column}
           data={data.data}
           pageCount={data.totalPages}
           pagination={pagination}
           onPaginationChange={handlePaginationChange}
         />
       ) : isError && error ? (
-        <DataFetchingError message={(error as Error).message} className="min-h-full" />
+        <DataFetchingError
+          message={(error as Error).message}
+          className="min-h-full"
+        />
       ) : (
-        <DataFetchingError message={"No "+queryKey+" found in database"} className="min-h-full" />
+        <DataFetchingError
+          message={`No ${queryKey} found in database`}
+          className="min-h-full"
+        />
       )}
     </div>
   );

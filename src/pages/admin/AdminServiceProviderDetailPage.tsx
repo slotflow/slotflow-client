@@ -55,7 +55,7 @@ const AdminServiceProviderDetailPage = () => {
                     ) || tab === 5 && (
                         <AdminProviderSubscriptions providerId={providerId} />
                     ) || tab === 6 && (
-                        <AdminUserOrProviderPayments id={providerId} role={Role.PROVIDER} fethFunction={fetchPayments} />
+                        <AdminUserOrProviderPayments providerId={providerId} fetchFunction={fetchPayments} />
                     ) || tab === 7 && (
                         <ProviderProofs fetchApiFunction={() => adminFetchProviderProofs(providerId)} providerId={providerId} />
                     )}

@@ -30,7 +30,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { buildQueryParams } from "../helper";
 import { Review } from "../interface/entityInterface/reviewInterface";
 import { Booking } from "../interface/entityInterface/bookingInterface";
-import { ApiBaseResponse, FetchFunctionParams, ApiPaginatedResponse } from "../interface/commonInterface";
+import { ApiBaseResponse, FetchFunctionBaseQueryParams, ApiPaginatedResponse } from "../interface/commonInterface";
 import { FetchProvidersProofsResponse, FetchReviewsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, UpdateAddressRequest, UpdateAddressResponse, UpdateFileDataRequest, UpdateFileDataResponse } from "../interface/api/commonApiInterface";
 
 
@@ -220,7 +220,7 @@ export const providerFetchDashboardGraphData = async (subscription?: PlanName, d
 
 
 // **** provider review api
-export const providerFetchAllReviews = async (query: FetchFunctionParams): Promise<ApiPaginatedResponse<FetchReviewsResponse>> => {
+export const providerFetchAllReviews = async (query: FetchFunctionBaseQueryParams): Promise<ApiPaginatedResponse<FetchReviewsResponse>> => {
     const refactoredQuery = buildQueryParams(query);
     const response = await axiosInstance.get(`/provider/reviews${refactoredQuery ? `?${refactoredQuery}` : ''}`);
     return response.data.data;

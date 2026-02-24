@@ -1,10 +1,10 @@
-import { FetchFunctionParams } from "../commonInterface";
+import { FetchFunctionBaseQueryParams } from "../commonInterface";
 import { Payment } from "../entityInterface/paymentInterface";
 
 // Admin fetch revenue report request
-export interface AdmminFetchRevenueReportRequest extends FetchFunctionParams {
-    startDate?: Date;
-    endDate?: Date;
+export interface AdmminFetchRevenueReportRequest extends FetchFunctionBaseQueryParams {
+  startDate?: Date;
+  endDate?: Date;
 }
 // Admin fetch revenue report response
 export type AdminFetchRevenueReportRow = Pick<
@@ -18,7 +18,7 @@ export type AdminFetchRevenueReportRow = Pick<
 >;
 
 export interface AdminFetchRevenueReportResponse {
-  data : {
+  data: {
     rows: AdminFetchRevenueReportRow[];
     grandTotal: number;
     grandDiscount: number;

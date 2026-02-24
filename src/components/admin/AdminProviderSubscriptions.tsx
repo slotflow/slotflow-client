@@ -1,12 +1,14 @@
 import { memo } from "react";
 import CommonTable from "../common/CommonTable";
+import { fetchSubscriptions } from "@/utils/apis/subscription.api";
 import { useCommonHook } from "@/hooks/commonHooks/useCommonActions";
-import { FetchProviderSubscriptionsResponse } from "@/utils/interface/api/commonApiInterface";
+import { FetchProviderSubscriptionsResponse, FetchSubscriptionsQueryParams } from "@/utils/interface/api/commonApiInterface";
 import { ProvidersSubscriptionsTableColumns } from "../table/tableColumns/ProviderSubscriptionsTableColumn";
 import { AdminFetchProviderSubscriptionsComponentProps } from "@/utils/interface/componentInterface/adminComponentInterface";
-import { fetchSubscriptions } from "@/utils/apis/subscription.api";
 
-const AdminProviderSubscriptions: React.FC<AdminFetchProviderSubscriptionsComponentProps> = memo(({ providerId }) => {
+const AdminProviderSubscriptions: React.FC<AdminFetchProviderSubscriptionsComponentProps> = memo(({
+    providerId
+}) => {
 
     const {
         handleAdminGetProviderDetailPage
@@ -17,12 +19,12 @@ const AdminProviderSubscriptions: React.FC<AdminFetchProviderSubscriptionsCompon
     );
 
     return (
-        <CommonTable<FetchProviderSubscriptionsResponse>
-            fetchApiFunction={() => fetchSubscriptions({ id: providerId, pagination: { page: 1, limit: 10 } })}
+        <CommonTable<FetchProviderSubscriptionsResponse, FetchSubscriptionsQueryParams>
+            fetchApiFunction={fetchSubscriptions}
             queryKey="providerSubscription"
             column={column}
             columnsCount={7}
-            id={providerId}
+            queryParams={{ providerId }}
             parentDivCalssName="p-0"
         />
     )

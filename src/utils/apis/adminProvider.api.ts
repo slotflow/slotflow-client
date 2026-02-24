@@ -11,11 +11,15 @@ import {
 } from "../interface/api/adminProviderApiInterface";
 import { buildQueryParams, parseNewCommonResponse } from "../helper";
 import { Provider } from "../interface/entityInterface/providerInterface";
-import { FetchFunctionParams, ApiPaginatedResponse, ApiBaseResponse } from "../interface/commonInterface";
+import { ApiFetchFunction } from "../interface/api/commonApiInterface";
+import { FetchFunctionBaseQueryParams, ApiBaseResponse } from "../interface/commonInterface";
 import { AdminFetchddressResponse, FetchProvidersProofsResponse } from "../interface/api/commonApiInterface";
 
-export const adminFetchAllProviders = async (params?: FetchFunctionParams): Promise<ApiPaginatedResponse<AdminFetchAllProvidersResponse>> => {
-    const query = buildQueryParams(params);
+export const adminFetchAllProviders: ApiFetchFunction<
+    AdminFetchAllProvidersResponse,
+    FetchFunctionBaseQueryParams
+> = async (queryParams) => {
+    const query = buildQueryParams(queryParams);
     const response = await axiosInstance.get(`/admin/providers${query ? `?${query}` : ''}`);
     return parseNewCommonResponse<AdminFetchAllProvidersResponse>(response.data.data);
 };
@@ -27,7 +31,7 @@ export const adminApproveProvider = async (providerId: Provider["_id"]): Promise
 
 export const adminRejectProvider = async (data: AdminRejectProviderRequest): Promise<ApiBaseResponse> => {
     const { providerId, ...payload } = data;
-    const response = await axiosInstance.patch(`/admin/providers/${providerId}/reject`, {...payload});
+    const response = await axiosInstance.patch(`/admin/providers/${providerId}/reject`, { ...payload });
     return response.data;
 }
 

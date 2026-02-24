@@ -25,7 +25,7 @@ import { buildQueryParams } from "../helper";
 import { Review } from "../interface/entityInterface/reviewInterface";
 import { Booking } from "../interface/entityInterface/bookingInterface";
 import { Provider } from "../interface/entityInterface/providerInterface";
-import { ApiBaseResponse, FetchFunctionParams, ApiPaginatedResponse } from "../interface/commonInterface";
+import { ApiBaseResponse, FetchFunctionBaseQueryParams, ApiPaginatedResponse } from "../interface/commonInterface";
 import { FetchReviewsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, UpdateAddressRequest, UpdateAddressResponse } from "../interface/api/commonApiInterface";
 import { ServiceCategory } from "../interface/enums";
 
@@ -49,7 +49,7 @@ export const userUpdateInfo = createAsyncThunk<UserUpdateUserInfoResponse, UserU
     }
 )
 
-export const userSetPushNotification = async(data: boolean): Promise<ApiBaseResponse> => {
+export const userSetPushNotification = async (data: boolean): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.patch('/user/profile/push-notification', { allowPushNotification: data });
     return response.data;
 }
@@ -87,7 +87,7 @@ export const userFetchAllAppServices = async (categories: ServiceCategory[]): Pr
 // const response = await axiosInstance.get(`/user/providers/${selectedServices.join(",")}`);
 export const userSearchServiceProviders = async (data: UserFetchServiceProvidersRequest): Promise<Array<UserFetchServiceProvidersResponse>> => {
     const response = await axiosInstance.get(`/user/providers`, {
-        params: {...data},
+        params: { ...data },
     });
     return response.data.data;
 };
@@ -152,7 +152,7 @@ export const userCreateReview = async (data: UserCreateReviewRequest): Promise<A
     return response.data;
 }
 
-export const userFetchAllReviews = async (payload: FetchFunctionParams): Promise<ApiPaginatedResponse<FetchReviewsResponse>> => {
+export const userFetchAllReviews = async (payload: FetchFunctionBaseQueryParams): Promise<ApiPaginatedResponse<FetchReviewsResponse>> => {
     const { id } = payload;
     const refactoredQuery = buildQueryParams(payload);
     const response = await axiosInstance.get(`/user/reviews/${id}${refactoredQuery ? `?${refactoredQuery}` : ''}`);

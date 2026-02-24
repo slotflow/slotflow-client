@@ -138,26 +138,31 @@ export type HandleRoleSelectionFunction = (url: string) => void;
 
 
 // **** Common Table compoenent
-export interface CommonTableComponentProps<T> {
+export interface CommonTableComponentProps<
+  T,
+  Q extends object = {}
+> {
   parentDivCalssName?: string;
-  fetchApiFunction: (params?: FetchFunctionParams) => Promise<ApiPaginatedResponse<T>>;
+
+  fetchApiFunction: (
+    queryParams?: FetchFunctionBaseQueryParams & Q
+  ) => Promise<ApiPaginatedResponse<T>>;
+
   queryKey: string;
   column: ColumnDef<T>[];
   columnsCount: number;
-  id?: string;
   pageSize?: number;
+
+  queryParams?: Q;
 }
 
 
 // **** Api common request parameter interface
-export interface FetchFunctionParams<T = string> {
-  id?: T;
-  role?: Role;
-  online?: boolean;
-  pagination?: {
-    page: number;
-    limit: number;
-  };
+export interface FetchFunctionBaseQueryParams {
+  page?: number;
+  limit?: number;
+  sortBy?: string;
+  sortOrder?: "asc" | "desc";
 }
 
 

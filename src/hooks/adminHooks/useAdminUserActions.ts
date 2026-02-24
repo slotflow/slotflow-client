@@ -1,8 +1,8 @@
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-import { adminChangeUserBlockStatus } from "../../apis/adminUser.api";
 import { User } from "@/utils/interface/entityInterface/userInterface";
+import { adminChangeUserBlockStatus } from "@/utils/apis/adminUser.api";
 import { AdminChangeUserStatusRequest } from "@/utils/interface/api/adminUserApiInterface";
 
 interface useAdminUserActionsCustomHookReturnType {

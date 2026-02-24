@@ -1,14 +1,17 @@
 import { axiosInstance } from "@/lib/axios";
+import { ApiBaseResponse } from "../interface/commonInterface";
 import { buildQueryParams, parseNewCommonResponse } from "../helper";
 import { Booking } from "../interface/entityInterface/bookingInterface";
-import { ApiBaseResponse, ApiPaginatedResponse, FetchFunctionParams } from "../interface/commonInterface";
-import { FetchBookingDetailsResponse, FetchBookingsResponse, ValidateRoomId } from "../interface/api/commonApiInterface";
+import { ApiFetchFunction, FetchBookingDetailsResponse, FetchBookingsQueryParams, FetchBookingsResponse, ValidateRoomId } from "../interface/api/commonApiInterface";
 
 // fetch bookings
-export const fetchBookings = async <T extends FetchBookingsResponse>(params?: FetchFunctionParams): Promise<ApiPaginatedResponse<T>> => {
-    const query = buildQueryParams<FetchFunctionParams>(params);
+export const fetchBookings: ApiFetchFunction<
+    FetchBookingsResponse,
+    FetchBookingsQueryParams
+> = async (queryParams) => {
+    const query = buildQueryParams(queryParams);
     const response = await axiosInstance.get(`/bookings/${query ? `?${query}` : ''}`);
-    return parseNewCommonResponse<T>(response.data.data);
+    return parseNewCommonResponse(response.data.data);
 }
 
 // fetch a single booking details

@@ -4,13 +4,16 @@ import {
     AdminChangeUserStatusRequest,
     AdminFetchUserProfileDetailsResponse,
 } from "../interface/api/adminUserApiInterface";
-import { buildQueryParams, parseNewCommonResponse } from "../helper";
-import { FetchFunctionParams, ApiPaginatedResponse, ApiBaseResponse } from "../interface/commonInterface";
 import { User } from "../interface/entityInterface/userInterface";
-import { AdminFetchddressResponse } from "../interface/api/commonApiInterface";
+import { buildQueryParams, parseNewCommonResponse } from "../helper";
+import { FetchFunctionBaseQueryParams, ApiBaseResponse } from "../interface/commonInterface";
+import { AdminFetchddressResponse, ApiFetchFunction } from "../interface/api/commonApiInterface";
 
-export const adminFetchAllUsers = async (params?: FetchFunctionParams): Promise<ApiPaginatedResponse<AdminfetchAllUsersResponse>> => {
-    const query = buildQueryParams(params);
+export const adminFetchAllUsers: ApiFetchFunction<
+    AdminfetchAllUsersResponse,
+    FetchFunctionBaseQueryParams
+> = async (queryParams) => {
+    const query = buildQueryParams(queryParams);
     const response = await axiosInstance.get(`/admin/users${query ? `?${query}` : ''}`);
     return parseNewCommonResponse<AdminfetchAllUsersResponse>(response.data.data);
 }
