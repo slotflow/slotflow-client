@@ -11,7 +11,7 @@ export const connectVideoSocket = createAsyncThunk<void, void, { state: RootStat
     const authUser = getState().auth.authUser;
     if (!authUser) return;
 
-    const videoSocket = createVideoSocket(authUser.uid as string, serviceConfig.realtimeService+appConfig.version);
+    const videoSocket = createVideoSocket(authUser.uid as string, serviceConfig.apiGatewayUrl+appConfig.version);
     console.log("videoSocket : ",videoSocket);
     
     videoSocket.on("connect", () => {

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Role } from "@/utils/interface/enums";
 import { useDispatch, useSelector } from "react-redux";
 import { validateRoomId } from "@/utils/apis/booking.api";
-import { connectVideoSocket } from "@/utils/socket/video.api";
+import { connectVideoSocket } from "@/utils/socket/videoSocketThunk";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { ValidateRoomId } from "@/utils/interface/api/commonApiInterface";
 import { Booking } from "@/utils/interface/entityInterface/bookingInterface";
