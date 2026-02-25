@@ -1,8 +1,8 @@
 import CommonTable from "../common/CommonTable";
 import { useCommonHook } from "@/hooks/commonHooks/useCommonActions";
 import { PaymentsTableColumn } from "../table/tableColumns/PaymentsTableColumn";
-import { FetchPaymentsQueryParams, FetchPaymentsResponse } from "@/utils/interface/api/commonApiInterface";
 import { AdminFetchProviderPaymentsComponentProps } from "@/utils/interface/componentInterface/adminComponentInterface";
+import { FetchPaymentsQueryParams, FetchPaymentsResponse } from "@/utils/interface/api/paymentApiInterface";
 
 const AdminUserOrProviderPayments: React.FC<AdminFetchProviderPaymentsComponentProps> = ({
     providerId,

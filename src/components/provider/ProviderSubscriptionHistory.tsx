@@ -1,8 +1,8 @@
 import CommonTable from '../common/CommonTable';
 import { fetchSubscriptions } from '@/utils/apis/subscription.api';
 import { useCommonHook } from '@/hooks/commonHooks/useCommonActions';
-import { FetchProviderSubscriptionsResponse, FetchSubscriptionsQueryParams } from '@/utils/interface/api/commonApiInterface';
 import { ProvidersSubscriptionsTableColumns } from '../table/tableColumns/ProviderSubscriptionsTableColumn';
+import { FetchProviderSubscriptionsResponse, FetchSubscriptionsQueryParams } from '@/utils/interface/api/subscriptionApiInterface';
 
 const ProviderSubscriptionHistory = () => {
 

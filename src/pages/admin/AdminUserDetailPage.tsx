@@ -3,13 +3,13 @@ import { useParams } from 'react-router-dom';
 import { userTabs } from '@/utils/constants';
 import ReviewsPage from '../common/ReviewsPage';
 import ProfileHead from '@/components/common/profile/ProfileHead';
-import { adminFetchAllReviews } from '@/utils/apis/adminReview.api';
 import DataFetchingError from '@/components/common/DataFetchingError';
 import ProfileListing from '@/components/common/profile/ProfileListing';
 import AddressListing from '@/components/common/profile/AddressListing';
 import ProfileHorizontalTabs from '@/components/common/ProfileHorizontalTabs';
 import { adminFetchUserAddress, adminFetchUserProfileDetails } from '@/utils/apis/adminUser.api';
 import { Role } from '@/utils/interface/enums';
+import { fetchReviews } from '@/utils/apis/review.api';
 
 const AdminUserDetailPage: React.FC = () => {
 
@@ -41,7 +41,7 @@ const AdminUserDetailPage: React.FC = () => {
                     ) || tab === 1 && (
                         <AddressListing fetchApiFunction={() => adminFetchUserAddress(userId)} queryKey='' userOrProviderId={userId} />
                     ) || tab === 2 && (
-                        <ReviewsPage isAdmin fetchFun={adminFetchAllReviews} id={userId} role={Role.USER} className='mt-2 md:mt-0' />
+                        <ReviewsPage fetchFunction={() => fetchReviews({ userId })} role={Role.ADMIN} className='mt-2 md:mt-0' />
                     )}
                 </div>
             </div>

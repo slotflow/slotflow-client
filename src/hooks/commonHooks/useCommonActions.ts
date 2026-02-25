@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { validateRoomId } from "@/utils/apis/booking.api";
 import { connectVideoSocket } from "@/utils/socket/videoSocketThunk";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { ValidateRoomId } from "@/utils/interface/api/commonApiInterface";
 import { Booking } from "@/utils/interface/entityInterface/bookingInterface";
 import { Payment } from "@/utils/interface/entityInterface/paymentInterface";
 import { Subscription } from "@/utils/interface/entityInterface/subscriptionInterface";
+import { ValidateRoomId } from "@/utils/interface/api/bookingApiInterface";
 
 interface UseCommonHookInterface {
     handleAdminGetProviderDetailPage: (subscriptionId: Subscription["_id"]) => void;

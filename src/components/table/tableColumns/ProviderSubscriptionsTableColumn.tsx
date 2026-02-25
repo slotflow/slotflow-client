@@ -5,8 +5,8 @@ import { MoreHorizontal } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
 import { Subscription } from "@/utils/interface/entityInterface/subscriptionInterface";
-import { FetchProviderSubscriptionsResponse } from "@/utils/interface/api/commonApiInterface";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
+import { FetchProviderSubscriptionsResponse } from "@/utils/interface/api/subscriptionApiInterface";
 
 // For admin side view and provider side view of provider subscriptions
 export const ProvidersSubscriptionsTableColumns = (

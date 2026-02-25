@@ -4,7 +4,6 @@ import { Role } from "@/utils/interface/enums";
 import ReviewsPage from "../common/ReviewsPage";
 import { providerTabs } from "@/utils/constants";
 import ProfileHead from "@/components/common/profile/ProfileHead";
-import { adminFetchAllReviews } from "@/utils/apis/adminReview.api";
 import DataFetchingError from "@/components/common/DataFetchingError";
 import AddressListing from "@/components/common/profile/AddressListing";
 import ProfileListing from "@/components/common/profile/ProfileListing";
@@ -16,6 +15,7 @@ import AdminUserOrProviderPayments from "@/components/admin/AdminUserOrProviderP
 import ProviderServiceAvailability from "@/components/common/profile/ProviderServiceAvailability";
 import { adminFetchProviderServiceAvailability, adminFetchProviderAddress, adminFetchProviderProfileDetails, adminFetchProviderService, adminFetchProviderProofs } from "@/utils/apis/adminProvider.api";
 import { fetchPayments } from "@/utils/apis/payment.api";
+import { fetchReviews } from "@/utils/apis/review.api";
 
 const AdminServiceProviderDetailPage = () => {
 
@@ -51,7 +51,7 @@ const AdminServiceProviderDetailPage = () => {
                     ) || tab === 3 && (
                         <ProviderServiceAvailability providerId={providerId} fetchApiFuntion={adminFetchProviderServiceAvailability} queryKey="providerServiceAvailability" role={Role.ADMIN} />
                     ) || tab === 4 && (
-                        <ReviewsPage isAdmin fetchFun={adminFetchAllReviews} id={providerId} role={Role.PROVIDER} className="mt-2 md:mt-0" />
+                        <ReviewsPage fetchFunction={() => fetchReviews({ providerId })} role={Role.ADMIN} className="mt-2 md:mt-0" />
                     ) || tab === 5 && (
                         <AdminProviderSubscriptions providerId={providerId} />
                     ) || tab === 6 && (

@@ -5,9 +5,9 @@ import { AppointmentStatus, Role } from "@/utils/interface/enums";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
 import { Check, MoreHorizontal, NotebookPen, ReceiptText, VideoIcon, X } from "lucide-react";
 import { Booking } from "@/utils/interface/entityInterface/bookingInterface";
-import { FetchBookingsResponse, ValidateRoomId } from "@/utils/interface/api/commonApiInterface";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { ProviderChangeAppointmentStatusRequest } from "@/utils/interface/api/providerApiInterface";
+import { FetchBookingsResponse, ValidateRoomId } from "@/utils/interface/api/bookingApiInterface";
 
 export const BookingsTableColumn = (
     handleJoinCall: (data: ValidateRoomId) => void,

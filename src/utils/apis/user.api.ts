@@ -1,5 +1,4 @@
 import {
-    UserCreateReviewRequest,
     CreateUserAddressRequest,
     UserFetchAddressResponse,
     UserUpdateUserInfoRequest,
@@ -21,13 +20,11 @@ import {
 } from "../interface/api/userApiInterface";
 import { axiosInstance } from "@/lib/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { buildQueryParams } from "../helper";
-import { Review } from "../interface/entityInterface/reviewInterface";
+import { ServiceCategory } from "../interface/enums";
+import { ApiBaseResponse } from "../interface/commonInterface";
 import { Booking } from "../interface/entityInterface/bookingInterface";
 import { Provider } from "../interface/entityInterface/providerInterface";
-import { ApiBaseResponse, FetchFunctionBaseQueryParams, ApiPaginatedResponse } from "../interface/commonInterface";
-import { FetchReviewsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, UpdateAddressRequest, UpdateAddressResponse } from "../interface/api/commonApiInterface";
-import { ServiceCategory } from "../interface/enums";
+import { JoinRoomCallbackRequest, JoinRoomCallbackResponse, UpdateAddressRequest, UpdateAddressResponse } from "../interface/api/commonApiInterface";
 
 // **** User profile apis
 export const userFetchProfileDetails = async (): Promise<UserFetchUserProfileDetailsResponse> => {
@@ -143,23 +140,4 @@ export const userJoinOrLeftRoomCallBack = async (data: JoinRoomCallbackRequest):
 export const UserFetchProvidersForChatSideBar = async (): Promise<UserFetchProvidersForChatSidebarResponse> => {
     const response = await axiosInstance.get('/user/chat/providers');
     return response.data.data;
-}
-
-
-// user review api
-export const userCreateReview = async (data: UserCreateReviewRequest): Promise<ApiBaseResponse> => {
-    const response = await axiosInstance.post('/user/reviews/', data);
-    return response.data;
-}
-
-export const userFetchAllReviews = async (payload: FetchFunctionBaseQueryParams): Promise<ApiPaginatedResponse<FetchReviewsResponse>> => {
-    const { id } = payload;
-    const refactoredQuery = buildQueryParams(payload);
-    const response = await axiosInstance.get(`/user/reviews/${id}${refactoredQuery ? `?${refactoredQuery}` : ''}`);
-    return response.data.data;
-}
-
-export const userDeleteReview = async (reviewId: Review["_id"]): Promise<ApiBaseResponse> => {
-    const response = await axiosInstance.delete(`/user/reviews/${reviewId}`);
-    return response.data;
 }

@@ -1,8 +1,8 @@
 import { axiosInstance } from "@/lib/axios";
-import { ApiBaseResponse } from "../interface/commonInterface";
 import { buildQueryParams, parseNewCommonResponse } from "../helper";
 import { Booking } from "../interface/entityInterface/bookingInterface";
-import { ApiFetchFunction, FetchBookingDetailsResponse, FetchBookingsQueryParams, FetchBookingsResponse, ValidateRoomId } from "../interface/api/commonApiInterface";
+import { ApiBaseResponse, ApiFetchFunction } from "../interface/commonInterface";
+import { FetchBookingDetailsResponse, FetchBookingsQueryParams, FetchBookingsResponse, ValidateRoomId } from "../interface/api/bookingApiInterface";
 
 // fetch bookings
 export const fetchBookings: ApiFetchFunction<

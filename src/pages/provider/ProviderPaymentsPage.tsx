@@ -1,8 +1,8 @@
 import CommonTable from '@/components/common/CommonTable';
 import { useCommonHook } from '@/hooks/commonHooks/useCommonActions';
-import { FetchPaymentsResponse } from '@/utils/interface/api/commonApiInterface';
 import { PaymentsTableColumn } from '@/components/table/tableColumns/PaymentsTableColumn';
 import { fetchPayments } from '@/utils/apis/payment.api';
+import { FetchPaymentsResponse } from '@/utils/interface/api/paymentApiInterface';
 
 const ProviderPaymentsPage = () => {
 

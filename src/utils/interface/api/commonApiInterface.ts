@@ -1,13 +1,8 @@
 import { Role } from "../enums";
 import { ApiBaseResponse, ApiPaginatedResponse, FetchFunctionBaseQueryParams } from "../commonInterface";
-import { User } from "../entityInterface/userInterface";
-import { Plan } from "../entityInterface/planInterface";
-import { Review } from "../entityInterface/reviewInterface";
-import { Payment } from "../entityInterface/paymentInterface";
 import { Booking } from "../entityInterface/bookingInterface";
 import { Address } from "../entityInterface/addressInterface";
 import { Provider } from "../entityInterface/providerInterface";
-import { Subscription } from "../entityInterface/subscriptionInterface";
 import { Availability } from "../entityInterface/serviceAvailabilityInterface";
 
 export type ApiFetchFunction<
@@ -17,29 +12,6 @@ export type ApiFetchFunction<
   queryParams?: FetchFunctionBaseQueryParams & Q
 ) => Promise<ApiPaginatedResponse<T>>;
 
-// **** Used as the response type of fetch provider subscriptions for admin side and provider side
-export interface FetchSubscriptionsQueryParams {
-  providerId?: string;
-}
-export type FetchProviderSubscriptionsResponse = Pick<Subscription, "_id" | "startDate" | "endDate" | "subscriptionStatus"> & Pick<Plan, "planName">;
-
-// **** Used as the return type of fetch payments for admin side, provider side
-export interface FetchPaymentsQueryParams {
-  providerId?: string;
-  userId?: string;
-}
-export type FetchPaymentsResponse = Pick<Payment, "_id" |"createdAt" | "totalAmount" | "paymentFor" | "paymentMethod" | "paymentStatus" | "discountAmount">;
-export type FetchPaymentDetailsResponse = Omit<Payment, "_id" | "chargeId" | "receiptEmail" | "receiptNumber" | "updatedAt" | "userId" | "providerId"> | null;
-
-
-// export type FetchOnlineBookingsForProviderResponse = Pick<Booking, "_id" | "appointmentDate" | "appointmentStatus" | "appointmentTime" | "videoCallRoomId" | "createdAt"> & Pick<User, "username">;
-// export type FetchOnlineBookingsForUserResponse = Pick<Booking, "_id" | "appointmentDate" | "appointmentStatus" | "appointmentTime" | "videoCallRoomId" | "createdAt"> & Pick<Provider, "username">;
-
-export interface FetchBookingsQueryParams {
-  online?: boolean;
-} 
-export type FetchBookingsResponse = Pick<Booking, "_id" | "appointmentDate" | "appointmentStatus" | "appointmentTime" | "videoCallRoomId" | "createdAt" | "serviceProviderId">;
-
 
 // **** AddressUpdating request type and response interface used by user and provider
 export type UpdateAddressRequest = Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location">;
@@ -48,20 +20,7 @@ export interface UpdateAddressResponse extends ApiBaseResponse {
 }
 
 
-// **** Validate booking video call room id request interface used by the provider and the user
-export interface ValidateRoomId {
-  appointmentId: Booking["_id"];
-  roomId: Booking["videoCallRoomId"];
-}
 
-
-
-// **** Used as the response interface for the adminFetchSubscriptionDetails api  
-type SubscriptionProps = Pick<Subscription, "startDate" | "endDate" | "subscriptionStatus" | "createdAt">;
-type PlanProps = Pick<Plan, "planName" | "price" | "adVisibility" | "maxBookingPerMonth">;
-export interface FetchSubscriptionDetailsResponse extends SubscriptionProps {
-  subscriptionPlanId: PlanProps,
-}
 
 
 
@@ -79,22 +38,11 @@ export interface JoinRoomCallbackResponse extends ApiBaseResponse {
 };
 
 
-// **** Used as the return type of the user fetching user reviews
-export interface FetchReviewsResponse extends Pick<Review, "_id" | "createdAt" | "reviewText" | "rating" | "reported" | "isBlocked"> {
-  userId: Pick<User, "username" | "profileImage">;
-  providerId: Pick<Provider, "username" | "profileImage">;
-};
-
 
 // **** Used as the response type of the admin fetch provider or user address api
 export type AdminFetchddressResponse = Pick<Address, "userId" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "landMark" | "location">;
 
 
-// **** Used as the response type of the booking details fetching
-export interface FetchBookingDetailsResponse extends Pick<Booking, "appointmentDate" | "appointmentMode" | "appointmentStatus" | "appointmentTime" | "createdAt" | "onlineTrack" | "statusTrack" | "videoCallRoomId"> {
-  userId: Pick<User, "username" | "email">;
-  serviceProviderId: Pick<Provider, "username" | "email">;
-} 
 
 
 // **** Used as the request interface of update file

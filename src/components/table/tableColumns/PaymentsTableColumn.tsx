@@ -5,9 +5,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { PaymentFor } from "@/utils/interface/enums";
 import { formatNumberToPrice } from "@/utils/helper/formatter";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
-import { FetchPaymentsResponse } from "@/utils/interface/api/commonApiInterface";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Payment } from "@/utils/interface/entityInterface/paymentInterface";
+import { FetchPaymentsResponse } from "@/utils/interface/api/paymentApiInterface";
 
 // for admin side, provider side and user side view of payments table
 export const PaymentsTableColumn = (

@@ -156,6 +156,13 @@ export interface CommonTableComponentProps<
   queryParams?: Q;
 }
 
+export type ApiFetchFunction<
+  T,
+  Q extends object = {}
+> = (
+  queryParams?: FetchFunctionBaseQueryParams & Q
+) => Promise<ApiPaginatedResponse<T>>;
+
 
 // **** Api common request parameter interface
 export interface FetchFunctionBaseQueryParams {

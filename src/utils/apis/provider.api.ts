@@ -4,12 +4,12 @@ import {
     ProviderFetchAddressResponse,
     ProviderCreateAddressRequest,
     ProviderSubmitDetailsResponse,
-    ProviderCheckoutForSubscribePlanRequest,
     ProviderDashboardGraphResponse,
     ProviderSubscribeToPlanResponse,
     ProviderFetchAllServicesResponse,
     ProviderUpdateProviderInfoRequest,
     ProviderFetchAllAppServiceRequest,
+    ProviderGetMySubscriptionResponse,
     ProviderUpdateProfileImageRequest,
     ProviderUpdateProviderInfoResponse,
     ProviderUpdateProfileImageResponse,
@@ -18,20 +18,18 @@ import {
     ProviderCreateServiceDetailsRequest,
     ProviderUpdateServiceDetailsRequest,
     ProviderChangeAppointmentStatusRequest,
+    ProviderCheckoutForSubscribePlanRequest,
     ProviderFetchDashboardStatsDataResponse,
     ProviderFetchUsersForChatSidebarResponse,
     ProviderFetchServiceAvailabilityResponse,
     CreateProviderServiceAvailabilitiesRequest,
-    ProviderGetMySubscriptionResponse,
 } from "../interface/api/providerApiInterface";
 import { DateRange } from "react-day-picker";
 import { PlanName } from "../interface/enums";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { buildQueryParams } from "../helper";
-import { Review } from "../interface/entityInterface/reviewInterface";
+import { ApiBaseResponse } from "../interface/commonInterface";
 import { Booking } from "../interface/entityInterface/bookingInterface";
-import { ApiBaseResponse, FetchFunctionBaseQueryParams, ApiPaginatedResponse } from "../interface/commonInterface";
-import { FetchProvidersProofsResponse, FetchReviewsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, UpdateAddressRequest, UpdateAddressResponse, UpdateFileDataRequest, UpdateFileDataResponse } from "../interface/api/commonApiInterface";
+import { FetchProvidersProofsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, UpdateAddressRequest, UpdateAddressResponse, UpdateFileDataRequest, UpdateFileDataResponse } from "../interface/api/commonApiInterface";
 
 
 // **** Address apis
@@ -216,19 +214,6 @@ export const providerFetchDashboardGraphData = async (subscription?: PlanName, d
         }
     });
     return response.data.data;
-}
-
-
-// **** provider review api
-export const providerFetchAllReviews = async (query: FetchFunctionBaseQueryParams): Promise<ApiPaginatedResponse<FetchReviewsResponse>> => {
-    const refactoredQuery = buildQueryParams(query);
-    const response = await axiosInstance.get(`/provider/reviews${refactoredQuery ? `?${refactoredQuery}` : ''}`);
-    return response.data.data;
-}
-
-export const providerReportReview = async (reviewId: Review["_id"]): Promise<ApiBaseResponse> => {
-    const response = await axiosInstance.patch(`/provider/reviews/${reviewId}`);
-    return response.data;
 }
 
 

@@ -9,8 +9,9 @@ import ProfileListing from "@/components/common/profile/ProfileListing";
 import ProfileHorizontalTabs from "@/components/common/ProfileHorizontalTabs";
 import ProviderServiceDetails from "@/components/common/profile/ProviderServiceDetails";
 import ProviderServiceAvailability from "@/components/common/profile/ProviderServiceAvailability";
-import { userFetchAllReviews, userFetchProviderAddress, userFetchProviderDetails, userFetchProviderService, userFetchProviderServiceAvailability } from "@/utils/apis/user.api";
+import { userFetchProviderAddress, userFetchProviderDetails, userFetchProviderService, userFetchProviderServiceAvailability } from "@/utils/apis/user.api";
 import { Role } from "@/utils/interface/enums";
+import { fetchReviews } from "@/utils/apis/review.api";
 
 const UserServiceProviderDetailPage = () => {
 
@@ -45,7 +46,7 @@ const UserServiceProviderDetailPage = () => {
                     ) || tab === 3 && (
                         <ProviderServiceAvailability providerId={providerId} fetchApiFuntion={userFetchProviderServiceAvailability} queryKey="providerServiceAvailability" role={Role.USER} />
                     ) || tab === 4 && (
-                        <ReviewsPage fetchFun={userFetchAllReviews} id={providerId} isUser role={Role.PROVIDER} className="mt-2 md:mt-0" />
+                        <ReviewsPage fetchFunction={() => fetchReviews({ providerId })} role={Role.USER} className="mt-2 md:mt-0" />
                     )}
                 </div>
 

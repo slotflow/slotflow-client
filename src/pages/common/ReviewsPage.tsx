@@ -12,37 +12,28 @@ import {
 } from "@/utils/interface/commonInterface";
 import { Role } from "@/utils/interface/enums";
 import { Button } from "@/components/ui/button";
-import { userDeleteReview } from "@/utils/apis/user.api";
 import { ShieldCheck, ShieldX, Trash } from "lucide-react";
 import noProfile from "../../assets/defaultImages/avatar.png";
-import { providerReportReview } from "@/utils/apis/provider.api";
 import DataFetchingError from "@/components/common/DataFetchingError";
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { Review } from "@/utils/interface/entityInterface/reviewInterface";
-import { adminChangeReviewBlockStatus } from "@/utils/apis/adminReview.api";
-import { FetchReviewsResponse } from "@/utils/interface/api/commonApiInterface";
-import { AdminChangeReviewBlockStatusRequest } from "@/utils/interface/api/adminReviewApiInterface";
 import { appConfig } from "@/utils/env";
+import { deleteReview, reportReview, toggleReviewBlockStatus } from "@/utils/apis/review.api";
+import { FetchReviewsQueryParams, FetchReviewsResponse, ToggleReviewBlockStatusRequest } from "@/utils/interface/api/reviewApiInterface";
 
 interface ReviewsPageProps {
-  id?: string;
-  isUser?: boolean;
-  isProvider?: boolean;
-  isAdmin?: boolean;
+  // id?: string;
   role: Role;
-  fetchFun: (
-    query: FetchFunctionBaseQueryParams
+  fetchFunction: (
+    query: FetchFunctionBaseQueryParams & FetchReviewsQueryParams
   ) => Promise<ApiPaginatedResponse<FetchReviewsResponse>>;
   className: string;
 }
 
 const ReviewsPage: React.FC<ReviewsPageProps> = ({
-  id,
-  isUser = false,
-  isProvider = false,
-  isAdmin = false,
+  // id,
   role,
-  fetchFun,
+  fetchFunction,
   className
 }) => {
 
@@ -58,13 +49,15 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
     isLoading,
     isError,
   } = useInfiniteQuery<ApiPaginatedResponse<FetchReviewsResponse>>({
-    queryKey: ["reviews", id],
-    queryFn: ({ pageParam = 1 }) =>
-      fetchFun({
-        id,
-        role,
-        pagination: { page: pageParam as number, limit },
-      }),
+    queryKey: ["reviews"],
+    // queryFn: ({ pageParam = 1 }) =>
+    //   fetchFunction({
+    //     id,
+    //     role,
+    //     pagination: { page: pageParam as number, limit },
+    //   }),
+    queryFn: ({ pageParam = 1, ...queryParams }) =>
+      fetchFunction({ ...queryParams, page: pageParam as number, limit }),
     getNextPageParam: (lastPage) => {
       if (!lastPage.currentPage || !lastPage.totalPages) return undefined;
       return lastPage.currentPage < lastPage.totalPages
@@ -111,7 +104,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
                 className="cursor-pointer"
                 onClick={async () => {
                   try {
-                    const res = await userDeleteReview(reviewId);
+                    const res = await deleteReview(reviewId);
                     if (res.success) {
                       toast.success(res.message);
                       queryClient.invalidateQueries({ queryKey: ["reviews"] });
@@ -146,7 +139,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
       return;
     }
 
-    await providerReportReview(reviewId)
+    await reportReview(reviewId)
       .then((res) => {
         if (res.success) {
           toast.success(res.message);
@@ -160,7 +153,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
 
   const handleChangeReviewBlockStatus = async (
     e: React.MouseEvent<HTMLButtonElement>,
-    data: AdminChangeReviewBlockStatusRequest
+    data: ToggleReviewBlockStatusRequest
   ) => {
 
     e.preventDefault();
@@ -170,7 +163,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
       return;
     }
 
-    await adminChangeReviewBlockStatus(data)
+    await toggleReviewBlockStatus(data)
       .then((res) => {
         if (res.success) {
           toast.success(res.message);
@@ -219,7 +212,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
 
               <div className="flex-grow" />
 
-              {!isProvider && (
+              {role !== Role.PROVIDER && (
                 <div className="flex items-center gap-3 border-t pt-3 mt-3">
                   <img
                     src={review?.providerId?.profileImage ?? noProfile}
@@ -235,7 +228,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
                 </div>
               )}
 
-              {!isUser && (
+              {role !== Role.USER && (
                 <div className="flex items-center gap-3 border-t pt-3 mt-3">
                   <img
                     src={review?.userId?.profileImage ?? noProfile}
@@ -251,7 +244,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
                 </div>
               )}
 
-              {!isUser && (
+              {role !== Role.USER && (
                 <div className="grid grid-cols-2 gap-4 mt-4 border-t pt-4">
                   <div className="flex items-center">
                     {review.reported ? (
@@ -292,7 +285,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
               )}
 
               <div className="flex gap-2 mt-4">
-                {isUser && (
+                {role === Role.USER && (
                   <Button
                     variant="destructive"
                     size="sm"
@@ -302,7 +295,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
                     <Trash className="text-red-500" /> Delete
                   </Button>
                 )}
-                {isProvider && (
+                {role === Role.PROVIDER && (
                   <Button
                     variant="default"
                     size="sm"
@@ -326,7 +319,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
                     )}
                   </Button>
                 )}
-                {isAdmin && (
+                {role === Role.ADMIN && (
                   <Button
                     variant="secondary"
                     size="sm"

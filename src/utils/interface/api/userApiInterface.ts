@@ -1,6 +1,5 @@
 import { ApiBaseResponse, ProviderCardsFilters } from "../commonInterface";
 import { User } from "../entityInterface/userInterface";
-import { Review } from "../entityInterface/reviewInterface";
 import { Address } from "../entityInterface/addressInterface";
 import { Provider } from "../entityInterface/providerInterface";
 import { Service } from "../entityInterface/appServiceInterface";
@@ -58,7 +57,7 @@ export interface UserFetchServiceProvidersResponse {
         profileImage: string | null,
         trustedBySlotflow: boolean,
     },
-     serviceDetails: {
+    serviceDetails: {
         serviceId: string;
         service: string;
         serviceCategory: string;
@@ -117,7 +116,3 @@ export type UserFetchProvidersForChatSidebarResponse = Array<Pick<Provider, "_id
 
 
 // **** Address updating interfaces are in common interface file
-
-
-// **** Used as the request type of the user creating review
-export type UserCreateReviewRequest = Pick<Review, "reviewText" | "rating" | "bookingId" | "providerId">;

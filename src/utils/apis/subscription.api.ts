@@ -1,7 +1,8 @@
 import { axiosInstance } from "@/lib/axios";
 import { buildQueryParams, parseNewCommonResponse } from "../helper";
+import { ApiFetchFunction } from "../interface/api/commonApiInterface";
 import { Subscription } from "../interface/entityInterface/subscriptionInterface";
-import { ApiFetchFunction, FetchProviderSubscriptionsResponse, FetchSubscriptionDetailsResponse, FetchSubscriptionsQueryParams } from "../interface/api/commonApiInterface";
+import { FetchProviderSubscriptionsResponse, FetchSubscriptionDetailsResponse, FetchSubscriptionsQueryParams } from "../interface/api/subscriptionApiInterface";
 
 // fetch subscriptions
 export const fetchSubscriptions: ApiFetchFunction<

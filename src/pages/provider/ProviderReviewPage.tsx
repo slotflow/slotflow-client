@@ -1,13 +1,11 @@
 import React from 'react';
-import ReviewsPage from '../common/ReviewsPage';
-import { providerFetchAllReviews } from '@/utils/apis/provider.api';
 import { Role } from '@/utils/interface/enums';
+import ReviewsPage from '../common/ReviewsPage';
+import { fetchReviews } from '@/utils/apis/review.api';
 
 const ProviderReviewPage: React.FC = () => {
   return (
-    <div>
-        <ReviewsPage isProvider fetchFun={providerFetchAllReviews} role={Role.PROVIDER} className='p-4' />
-    </div>
+    <ReviewsPage fetchFunction={fetchReviews} role={Role.PROVIDER} className='p-4' />
   )
 }
 
