@@ -4,11 +4,11 @@ import { useForm } from "react-hook-form";
 import FormField from "../form/FormField";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
-import { userCreateReview } from "@/utils/apis/user.api";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { toggleReviewCreateForm } from "@/utils/redux/slices/userSlice";
 import { Review } from "@/utils/interface/entityInterface/reviewInterface";
 import { useModalAnimation } from "@/hooks/systemHooks/useModalAnimation";
+import { createReview } from "@/utils/apis/review.api";
 
 type ReviewFormValues = Pick<Review, "reviewText" | "rating">;
 
@@ -45,7 +45,7 @@ const ReviewForm: React.FC = () => {
         }
 
         try {
-            const res = await userCreateReview({
+            const res = await createReview({
                 bookingId: selectedBookingId,
                 reviewText,
                 rating,

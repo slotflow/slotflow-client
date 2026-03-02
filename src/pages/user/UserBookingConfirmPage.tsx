@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import { Button } from "@/components/ui/button";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { CheckCircle2, LayoutDashboard, XCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 
 import { userSaveAppointmentBooking } from "@/utils/apis/user.api";
 

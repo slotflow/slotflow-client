@@ -1,16 +1,19 @@
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { Role } from "@/utils/interface/enums";
+import TimeSlotLegend from "../TimeSlotLegend";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { Calendar } from "@/components/ui/calendar";
 import DataFetchingError from "../DataFetchingError";
+import { getEventSocket } from "@/lib/socketService";
+import { fetchEngagedSlots } from "@/utils/apis/serviceAvailability.api";
 import InfoDisplayComponent from "../InfoDisplayComponent";
 import CommonPaymentSelection from "../CommonPaymentSelection";
 import { Slot } from "@/utils/interface/entityInterface/serviceAvailabilityInterface";
 import ProviderAvailabilityShimmer from "@/components/shimmers/ProviderAvailabilityShimmer";
 import { ProviderApiFunctionForPSAcomponent, ProviderServiceAvailabilityComponentProps, UserOrAdminApiFunctionForPSAcomponent } from "@/utils/interface/componentInterface/commonComponentInterface";
-import TimeSlotLegend from "../TimeSlotLegend";
+import { EventSocketEnum, SlotEngageRequest } from "@/utils/interface/socket.interface";
 
 const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponentProps> = ({
     providerId,
@@ -23,6 +26,8 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
     const [openPayment, setOpenPayment] = useState<boolean>(false);
     const [selectedSlotId, setSelectedSlotId] = useState<string | null>(null);
     const [selectedMode, setSelectedMode] = useState<string | null>(null);
+    const [engagedSlotIds, setEngagedSlotIds] = useState<Set<string>>(new Set());
+    const eventSocket = getEventSocket();
 
     const { data, isLoading, isError, error } = useQuery({
         queryFn: () => {
@@ -41,11 +46,53 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
     });
 
     useEffect(() => {
+        const loadEngagedSlots = async () => {
+            if (providerId && date) {
+                const slots = await fetchEngagedSlots(providerId, date);
+                setEngagedSlotIds(new Set(slots));
+            }
+        };
+        loadEngagedSlots();
+    }, [providerId, date]);
+
+    useEffect(() => {
         if (!data || !date || date === null || !data.modes) {
             return;
         }
         setSelectedMode(data?.modes[0]);
     }, [data, date])
+
+    useEffect(() => {
+        eventSocket.emit(EventSocketEnum.providerJoin, { providerId });
+
+        eventSocket.on(EventSocketEnum.slotLocked, (eventData: SlotEngageRequest) => {
+            if (eventData.providerId !== providerId) return;
+            const eventDate = new Date(eventData.date).toDateString();
+            const currentDate = date?.toDateString();
+            if (eventDate !== currentDate) return;
+
+            setEngagedSlotIds(prev => new Set(prev).add(eventData.slotId));
+        });
+
+        eventSocket.on(EventSocketEnum.slotUnlocked, (eventData: SlotEngageRequest) => {
+            if (eventData.providerId !== providerId) return;
+            const eventDate = new Date(eventData.date).toDateString();
+            const currentDate = date?.toDateString();
+            if (eventDate !== currentDate) return;
+
+            setEngagedSlotIds(prev => {
+                const next = new Set(prev);
+                next.delete(eventData.slotId);
+                return next;
+            });
+        });
+
+        return () => {
+            eventSocket.emit(EventSocketEnum.providerLeave, { providerId });
+            eventSocket.off(EventSocketEnum.slotLocked);
+            eventSocket.off(EventSocketEnum.slotUnlocked);
+        }
+    }, [eventSocket, providerId, date])
 
     const handleBookAnAppoint = (slotId: string, availability: boolean) => {
         if (!availability) {
@@ -122,9 +169,10 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
                                     <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                                         {data?.slots?.length ? (
                                             data?.slots.map((slot: Slot) => {
-                                                const commonClasses = `text-sm font-semibold text-center border-2 rounded-md py-3 px-4 hover:bg-[var(--mainColor)] hover:text-white transition-colors duration-200 ${slot.available
-                                                    ? 'bg-[var(--mainColor)/20] border-[var(--mainColor)] hover:bg-[var(--mainColor)] hover:text-white'
-                                                    : slot.occupied ? 'border-yellow-300 text-yellow-700' : 'border-gray-300 text-gray-500'
+                                                const isOccupied = slot.occupied || engagedSlotIds.has(slot._id);
+                                                const commonClasses = `text-sm font-semibold text-center border-2 rounded-md py-3 px-4 hover:bg-[var(--mainColor)] hover:text-white transition-colors duration-200 
+                                                ${slot.available && !isOccupied ? 'bg-[var(--mainColor)/20] border-[var(--mainColor)] hover:bg-[var(--mainColor)] hover:text-white'
+                                                        : isOccupied ? 'border-yellow-300 text-yellow-700' : 'border-gray-300 text-gray-500'
                                                     }`;
 
                                                 return role === Role.USER ? (
@@ -134,9 +182,9 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
                                                         onClick={(e) => {
                                                             e.preventDefault();
                                                             e.stopPropagation();
-                                                            handleBookAnAppoint(slot._id, slot.available);
+                                                            handleBookAnAppoint(slot._id, slot.available && !isOccupied);
                                                         }}
-                                                        className={`${commonClasses} ${slot.available ? 'cursor-pointer' : ''}`}
+                                                        className={`${commonClasses} ${slot.available && !isOccupied ? 'cursor-pointer' : ''}`}
                                                     >
                                                         {slot.time}
                                                     </Button>

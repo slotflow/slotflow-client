@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { stripeConfig } from '@/utils/env';
 import { useCallback, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
+import { getEventSocket } from '@/lib/socketService';
 import paypalLogo from '../../assets/iconImages/Paypal.png';
 import stripeLogo from '../../assets/iconImages/Stripe.jpeg';
 import { userBookAnAppointment } from '@/utils/apis/user.api';
@@ -13,6 +14,7 @@ import { setSubscriptionUpdating } from '@/utils/redux/slices/authSlice';
 import { providerCheckoutForSubscribePlan } from '@/utils/apis/provider.api';
 import { Provider } from '@/utils/interface/entityInterface/providerInterface';
 import { setPaymentSelectionPage, setSubscriptionIsTrailPlan, setSubscriptionPlanDuration, setSubscriptionPlanId } from '@/utils/redux/slices/providerSlice';
+import { EventSocketEnum, SlotEngageRequest } from '@/utils/interface/socket.interface';
 
 type UserBookinAppointmentDataProps = {
     providerId: Provider["_id"]
@@ -42,6 +44,7 @@ const CommonPaymentSelection: React.FC<PaymentSelecionComponentPropst> = ({
 
 
     const dispatch = useDispatch();
+    const eventSocket = getEventSocket();
     const [paymentLoading, setPaymentLoading] = useState<boolean>(false);
 
     const makeStripePayment = useCallback(async () => {
@@ -75,12 +78,26 @@ const CommonPaymentSelection: React.FC<PaymentSelecionComponentPropst> = ({
             }
 
             setPaymentLoading(true);
-            let sessionId = "";
+            let sessionId: string = "";
 
             if (isAppointmentBooking) {
                 const infoData = data as UserBookinAppointmentDataProps;
-                const response = await userBookAnAppointment(infoData);
-                sessionId = response.data;
+                eventSocket.emit(EventSocketEnum.slotEngageRequest, {
+                    providerId: infoData.providerId,
+                    date: infoData.date,
+                    slotId: infoData.slotId,
+                } as SlotEngageRequest);
+
+                eventSocket.once(EventSocketEnum.slotEngageApproved, async () => {
+                    const response = await userBookAnAppointment(infoData);
+                    const sessionId = response.data;
+                    await stripe.redirectToCheckout({ sessionId });
+                });
+
+                eventSocket.once(EventSocketEnum.slotEngageRejected, () => {
+                    toast.error("Slot already engaged by another user");
+                });
+
             } else if (isProviderSubscription) {
                 const infoData = data as ProviderSubscriptionDataProps;
                 const response = await providerCheckoutForSubscribePlan(infoData);
@@ -89,6 +106,12 @@ const CommonPaymentSelection: React.FC<PaymentSelecionComponentPropst> = ({
 
             if (!sessionId?.trim()) {
                 toast.error("Failed to create checkout session.");
+                const infoData = data as UserBookinAppointmentDataProps;
+                eventSocket.emit(EventSocketEnum.slotUnlockRequest, {
+                    providerId: infoData.providerId,
+                    date: infoData.date,
+                    slotId: infoData.slotId,
+                } as SlotEngageRequest);
                 return;
             }
 
@@ -97,9 +120,23 @@ const CommonPaymentSelection: React.FC<PaymentSelecionComponentPropst> = ({
             const result = await stripe.redirectToCheckout({ sessionId });
             if (result?.error) {
                 toast.error(result.error.message);
+                const infoData = data as UserBookinAppointmentDataProps;
+                eventSocket.emit(EventSocketEnum.slotUnlockRequest, {
+                    providerId: infoData.providerId,
+                    date: infoData.date,
+                    slotId: infoData.slotId,
+                } as SlotEngageRequest);
             }
         } catch {
             toast.error("Something went wrong during payment.");
+            if(isAppointmentBooking) {
+                const infoData = data as UserBookinAppointmentDataProps;
+                eventSocket.emit(EventSocketEnum.slotUnlockRequest, {
+                    providerId: infoData.providerId,
+                    date: infoData.date,
+                    slotId: infoData.slotId,
+                } as SlotEngageRequest);
+            }
         } finally {
             setPaymentLoading(false);
             dispatch(setSubscriptionPlanId(null));

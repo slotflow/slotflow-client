@@ -1,8 +1,7 @@
 import { RootState } from "../redux/appStore";
-import { appConfig, serviceConfig } from "../env";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { getChatSocket, distroyChatSocket } from "@/lib/socketService";
 import { Message } from "../interface/entityInterface/message.interface";
-import { createChatSocket, distroyChatSocket } from "@/lib/socketService";
 import { addNewMessage, setChatSocketDisconnected, setSocketConnected } from "../redux/slices/chatSlice";
 
 export const connectChatSocket = createAsyncThunk<void, void, { state: RootState }>("chat/connectSocket",
@@ -11,7 +10,7 @@ export const connectChatSocket = createAsyncThunk<void, void, { state: RootState
     const authUser = getState().auth.authUser;
     if (!authUser) return;
 
-    const socket = createChatSocket(authUser.uid as string, serviceConfig.apiGatewayUrl + appConfig.version + "/chat");
+    const socket = getChatSocket();
 
     socket.on("connect", () => {
       dispatch(setSocketConnected({ socketId: socket.id as string }));

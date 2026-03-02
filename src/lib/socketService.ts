@@ -4,9 +4,14 @@ export let socket: Socket | null = null;
 export let videoSocket: Socket | null = null;
 export let eventSocket: Socket | null = null;
 
-export const createChatSocket = (userId: string, baseUrl: string) => {
+export const getChatSocket = () => {
   if (!socket) {
-    socket = io(`${baseUrl}/chat`, { query: { userId }, path: '/socket.io', autoConnect: true, withCredentials: true });
+    socket = io(`http://localhost:3000/chat`, {
+      path: "/socket.io",
+      withCredentials: true,
+      autoConnect: true,
+      transports: ["websocket"],
+    });
   }
   return socket;
 };
@@ -18,9 +23,14 @@ export const distroyChatSocket = () => {
   }
 };
 
-export const createVideoSocket = (userId: string, baseUrl: string) => {
+export const getVideoSocket = () => {
   if (!videoSocket) {
-    videoSocket = io(`${baseUrl}/video`, { query: { userId }, path: "/socket.io", autoConnect: true, withCredentials: true });
+    videoSocket = io(`http://localhost:3000/video`, {
+      path: "/socket.io",
+      withCredentials: true,
+      autoConnect: true,
+      transports: ["websocket"],
+    });
   }
   return videoSocket;
 };
@@ -32,41 +42,24 @@ export const destroyVideoSocket = () => {
   }
 };
 
-// export const createEventSocket = (baseUrl: string) => {
-//   console.log("createEventSocket");
-//   if (!eventSocket) {
-//     console.log("creating event Socket");
-//     console.log("baseUrl : ", baseUrl);
-//     eventSocket = io(`${baseUrl}/events`, { path: "/socket.io", autoConnect: true, withCredentials: true });
-//   }
-//   return eventSocket;
-// };
 
 
-/**
- * Creates (or returns existing) event namespace socket.
- * This function guarantees a SINGLE instance.
- */
 export const getEventSocket = (): Socket => {
   if (!eventSocket) {
     eventSocket = io(`http://localhost:3000/events`, {
-      path: "/socket.io",        // must match backend
-      withCredentials: true,     // required for cookie-based JWT
-      autoConnect: true,         // connect immediately
-      transports: ["websocket"], // optional: force websocket
+      path: "/socket.io",
+      withCredentials: true,
+      autoConnect: true,
+      transports: ["websocket"],
     });
   }
 
   return eventSocket;
 };
 
-/**
- * Disconnects and clears the socket instance.
- * Used on logout or app cleanup.
- */
 export const destroyEventSocket = (): void => {
   if (eventSocket) {
-    eventSocket.removeAllListeners(); // prevent memory leaks
+    eventSocket.removeAllListeners();
     eventSocket.disconnect();
     eventSocket = null;
   }
