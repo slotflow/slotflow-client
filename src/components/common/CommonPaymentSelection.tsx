@@ -7,7 +7,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { getEventSocket } from '@/lib/socketService';
 import paypalLogo from '../../assets/iconImages/Paypal.png';
 import stripeLogo from '../../assets/iconImages/Stripe.jpeg';
-import { userBookAnAppointment } from '@/utils/apis/user.api';
+import { bookAnAppointment } from '@/utils/apis/booking.api';
 import { SubscriptionValidity } from '@/utils/interface/enums';
 import razorpayLogo from '../../assets/iconImages/Razorpay.png';
 import { setSubscriptionUpdating } from '@/utils/redux/slices/authSlice';
@@ -89,7 +89,7 @@ const CommonPaymentSelection: React.FC<PaymentSelecionComponentPropst> = ({
                 } as SlotEngageRequest);
 
                 eventSocket.once(EventSocketEnum.slotEngageApproved, async () => {
-                    const response = await userBookAnAppointment(infoData);
+                    const response = await bookAnAppointment(infoData);
                     const sessionId = response.data;
                     await stripe.redirectToCheckout({ sessionId });
                 });

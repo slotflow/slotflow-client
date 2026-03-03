@@ -1,12 +1,11 @@
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { checkBookingConfirmed } from "@/utils/apis/booking.api";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { CheckCircle2, LayoutDashboard, XCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-import { userSaveAppointmentBooking } from "@/utils/apis/user.api";
 
 interface UserBookingConfirmPageProps {
   status: boolean;
@@ -15,16 +14,16 @@ interface UserBookingConfirmPageProps {
 const UserBookingConfirmPage: React.FC<UserBookingConfirmPageProps> = ({
   status,
 }) => {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const sessionId = searchParams.get("session_id");
 
-  const saveBooking = async () => {
-    if (!sessionId) return;
+  const navigate = useNavigate();
+  
+  const checkRecentBooking = async () => {
     try {
-      const response = await userSaveAppointmentBooking(sessionId);
-      if (response.success) {
-        toast.success(response.message);
+      const response = await checkBookingConfirmed();
+      if (response.data) {
+        toast.success("Your Booking has been confirmed");
+      } else {
+        toast.error("Booking failed");
       }
     } catch {
       toast.error("Booking failed");
@@ -33,7 +32,7 @@ const UserBookingConfirmPage: React.FC<UserBookingConfirmPageProps> = ({
 
   useEffect(() => {
     if (!status) return;
-    saveBooking();
+    checkRecentBooking();
   }, [status]);
 
   const containerVariants: Variants = {

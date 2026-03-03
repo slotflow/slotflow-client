@@ -86,17 +86,7 @@ export interface UserFetchProviderServiceResponse extends FetchServiceDetailsPro
 export type UserFetchProviderAvailabilityResponse = AvailabilityForResponse;
 
 
-// **** Used as the request type of the user book an appointment api
-export type UserBookAnAppointmentRequest = {
-    providerId: Provider["_id"];
-    slotId: string;
-    date: Date;
-    selectedServiceMode: string;
-}
-// **** Used as the response interface of the user book an appointment api
-export interface UserBookAppointmentResponse extends ApiBaseResponse {
-    data: string
-}
+
 
 
 // **** Inline interface used for userSaveAppointmentBooking api

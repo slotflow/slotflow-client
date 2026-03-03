@@ -4,8 +4,6 @@ import {
     UserUpdateUserInfoRequest,
     UserCreateAddressResponse,
     UserUpdateUserInfoResponse,
-    UserBookAppointmentResponse,
-    UserBookAnAppointmentRequest,
     UserFetchAllAppServicesResponse,
     UserUpdateProfileImageRequest,
     UserUpdateProfileImageResponse,
@@ -71,7 +69,7 @@ export const userUpdateAddress = async (data: UpdateAddressRequest): Promise<Upd
 
 // **** user app services apis
 export const userFetchAllAppServices = async (categories: ServiceCategory[]): Promise<Array<UserFetchAllAppServicesResponse>> => {
-    console.log("categories : ",categories);
+    console.log("categories : ", categories);
     const response = await axiosInstance.get(`/user/appservices`, {
         params: {
             categories
@@ -115,15 +113,6 @@ export const userFetchProviderServiceAvailability = async (data: { providerId: P
 
 
 // user booking apis
-export const userBookAnAppointment = async (data: UserBookAnAppointmentRequest): Promise<UserBookAppointmentResponse> => {
-    const response = await axiosInstance.post('/user/bookings/checkout/session', data);
-    return response.data;
-}
-
-export const userSaveAppointmentBooking = async (sessionId: string): Promise<ApiBaseResponse> => {
-    const response = await axiosInstance.post('/user/bookings', { sessionId });
-    return response.data;
-}
 
 export const userCancelBooking = async (bookingId: Booking["_id"]): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.patch(`/user/bookings/${bookingId}`);
