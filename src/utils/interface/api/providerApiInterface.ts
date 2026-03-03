@@ -159,10 +159,6 @@ export interface ProviderDashboardGraphResponse {
 
 
 // **** Used as the request interface for the provider change booking appointment status
-export interface ProviderChangeAppointmentStatusRequest {
-  appointmentId: Booking["_id"];
-  appointmentStatus: Booking["appointmentStatus"];
-}
 
 
 // **** Address updating interfaces are in common interface file

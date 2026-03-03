@@ -6,10 +6,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Mic, MicOff, Video, VideoOff } from 'lucide-react';
 import { durationMap } from "@/utils/interface/commonInterface";
 import { AppDispatch, RootState } from '@/utils/redux/appStore';
-import { userJoinOrLeftRoomCallBack } from "@/utils/apis/user.api";
-import { providerJoinOrLeftRoomCallBack } from "@/utils/apis/provider.api";
-import { JoinRoomCallbackRequest } from "@/utils/interface/api/commonApiInterface";
 import { setCamera, setMic, startVideoCallTimer, updateVideoCallTimer } from '@/utils/redux/slices/videoSlice';
+import { joinOrLeft } from "@/utils/apis/booking.api";
+import { JoinRoomCallbackRequest } from "@/utils/interface/api/bookingApiInterface";
 
 const LobbyPage = () => {
 
@@ -75,17 +74,12 @@ const LobbyPage = () => {
 
     const data: JoinRoomCallbackRequest = {
       joined: true,
-      role: user.role,
       joinedTime: currentTime,
       videoCallRoomId: roomId
     }
 
     try {
-      const joinCallback = data.role === "USER"
-        ? userJoinOrLeftRoomCallBack
-        : providerJoinOrLeftRoomCallBack;
-
-      const res = await joinCallback(data);
+      const res = await joinOrLeft(data);
 
       if (res.success) {
         if(!res.data.duration) {

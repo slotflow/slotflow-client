@@ -3,10 +3,10 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/utils/redux/appStore";
 import { useQueryClient } from "@tanstack/react-query";
 import { toggleReviewCreateForm } from "@/utils/redux/slices/userSlice";
-import { userCancelBooking } from "@/utils/apis/user.api";
 import { Booking } from "@/utils/interface/entityInterface/bookingInterface";
 import { createReview } from "@/utils/apis/review.api";
 import { CreateReviewRequest } from "@/utils/interface/api/reviewApiInterface";
+import { cancelBooking } from "@/utils/apis/booking.api";
 
 interface UseUserBookingActionsCustomHookReturnType {
     handleUserCancelBooking: (bookingId: Booking["_id"]) => void;
@@ -20,7 +20,7 @@ export const useUserBookingActions = (): UseUserBookingActionsCustomHookReturnTy
     const dispatch = useDispatch<AppDispatch>();
 
     const handleUserCancelBooking = (bookingId: Booking["_id"]) => {
-        userCancelBooking(bookingId)
+        cancelBooking(bookingId)
             .then((res) => {
                 if (res.success) {
                     queryClient.invalidateQueries({ queryKey: ["bookings"] });

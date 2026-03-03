@@ -2,7 +2,13 @@ import { axiosInstance } from "@/lib/axios";
 import { buildQueryParams, parseNewCommonResponse } from "../helper";
 import { Booking } from "../interface/entityInterface/bookingInterface";
 import { ApiBaseResponse, ApiFetchFunction } from "../interface/commonInterface";
-import { BookAnAppointmentRequest, BookAppointmentResponse, CheckBookingConfirmedResponse, FetchBookingDetailsResponse, FetchBookingsQueryParams, FetchBookingsResponse, ValidateRoomId } from "../interface/api/bookingApiInterface";
+import { BookAnAppointmentRequest, BookAppointmentResponse, changeAppointmentStatusRequest, CheckBookingConfirmedResponse, FetchBookingDetailsResponse, FetchBookingsQueryParams, FetchBookingsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, ValidateRoomId } from "../interface/api/bookingApiInterface";
+
+// create checkout session for booking an appointment
+export const bookAnAppointment = async (data: BookAnAppointmentRequest): Promise<BookAppointmentResponse> => {
+    const response = await axiosInstance.post('/bookings', data);
+    return response.data;
+}
 
 // fetch bookings
 export const fetchBookings: ApiFetchFunction<
@@ -22,7 +28,7 @@ export const fetchBookingDetails = async (bookingId: Booking["_id"]): Promise<Fe
 
 // validate joinRoom
 export const validateRoomId = async (data: ValidateRoomId): Promise<ApiBaseResponse> => {
-    const response = await axiosInstance.get(`/bookings/${data.appointmentId}/can-join?roomId=${data.roomId}`);
+    const response = await axiosInstance.get(`/bookings/${data.appointmentId}/access?roomId=${data.roomId}`);
     return response.data;
 }
 
@@ -32,8 +38,24 @@ export const checkBookingConfirmed = async (): Promise<CheckBookingConfirmedResp
     return response.data;
 }
 
-// create checkout session for booking an appointment
-export const bookAnAppointment = async (data: BookAnAppointmentRequest): Promise<BookAppointmentResponse> => {
-    const response = await axiosInstance.post('/bookings/checkout/session', data);
+// cancel booking
+export const cancelBooking = async (bookingId: Booking["_id"]): Promise<ApiBaseResponse> => {
+    const response = await axiosInstance.patch(`/bookings/${bookingId}`);
+    return response.data;
+}
+
+// join or left online room
+export const joinOrLeft = async (data: JoinRoomCallbackRequest): Promise<JoinRoomCallbackResponse> => {
+    const response = await axiosInstance.patch(`/bookings/${data.videoCallRoomId}/join-left`, {
+        joined: data.joined,
+        joinedTime: data.joinedTime,
+        leftCallTime: data.leftCallTime,
+    });
+    return response.data;
+}
+
+// change appointment status
+export const changeAppointmentStatus = async (data: changeAppointmentStatusRequest): Promise<ApiBaseResponse> => {
+    const response = await axiosInstance.patch(`/bookings/${data.appointmentId}/change-status`, data);
     return response.data;
 }

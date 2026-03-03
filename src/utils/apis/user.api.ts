@@ -22,7 +22,7 @@ import { ServiceCategory } from "../interface/enums";
 import { ApiBaseResponse } from "../interface/commonInterface";
 import { Booking } from "../interface/entityInterface/bookingInterface";
 import { Provider } from "../interface/entityInterface/providerInterface";
-import { JoinRoomCallbackRequest, JoinRoomCallbackResponse, UpdateAddressRequest, UpdateAddressResponse } from "../interface/api/commonApiInterface";
+import { UpdateAddressRequest, UpdateAddressResponse } from "../interface/api/commonApiInterface";
 
 // **** User profile apis
 export const userFetchProfileDetails = async (): Promise<UserFetchUserProfileDetailsResponse> => {
@@ -110,20 +110,6 @@ export const userFetchProviderServiceAvailability = async (data: { providerId: P
     });
     return response.data.data;
 }
-
-
-// user booking apis
-
-export const userCancelBooking = async (bookingId: Booking["_id"]): Promise<ApiBaseResponse> => {
-    const response = await axiosInstance.patch(`/user/bookings/${bookingId}`);
-    return response.data;
-}
-
-export const userJoinOrLeftRoomCallBack = async (data: JoinRoomCallbackRequest): Promise<JoinRoomCallbackResponse> => {
-    const response = await axiosInstance.patch(`/user/bookings/${data.videoCallRoomId}/join-left`, data);
-    return response.data;
-}
-
 
 // user chat apis
 export const UserFetchProvidersForChatSideBar = async (): Promise<UserFetchProvidersForChatSidebarResponse> => {

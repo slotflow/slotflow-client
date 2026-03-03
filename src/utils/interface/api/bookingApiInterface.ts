@@ -2,6 +2,7 @@ import { ApiBaseResponse } from "../commonInterface";
 import { User } from "../entityInterface/userInterface";
 import { Booking } from "../entityInterface/bookingInterface";
 import { Provider } from "../entityInterface/providerInterface";
+import { Availability } from "../entityInterface/serviceAvailabilityInterface";
 
 // Used as the request type of the fetch bookings api
 export interface FetchBookingsQueryParams {
@@ -43,4 +44,23 @@ export type BookAnAppointmentRequest = {
 // Used as the response interface of the book an appointment api
 export interface BookAppointmentResponse extends ApiBaseResponse {
     data: string
+}
+
+// Used as the request type of the join room callback api
+export interface JoinRoomCallbackRequest {
+    videoCallRoomId: Booking["videoCallRoomId"],
+    joined: boolean;
+    joinedTime?: Date;
+    leftCallTime?: Date;
+}
+
+// Used as the response interface of the join room callback api
+export interface JoinRoomCallbackResponse extends ApiBaseResponse {
+  data: Pick<Availability, "duration">
+};
+
+// Used as the request type of the provider change booking appointment status api
+export interface changeAppointmentStatusRequest {
+  appointmentId: Booking["_id"];
+  appointmentStatus: Booking["appointmentStatus"];
 }

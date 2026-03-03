@@ -1,9 +1,8 @@
-import { Role } from "../enums";
-import { ApiBaseResponse, ApiPaginatedResponse, FetchFunctionBaseQueryParams } from "../commonInterface";
 import { Booking } from "../entityInterface/bookingInterface";
 import { Address } from "../entityInterface/addressInterface";
 import { Provider } from "../entityInterface/providerInterface";
 import { Availability } from "../entityInterface/serviceAvailabilityInterface";
+import { ApiBaseResponse, ApiPaginatedResponse, FetchFunctionBaseQueryParams } from "../commonInterface";
 
 export type ApiFetchFunction<
   T,
@@ -25,18 +24,6 @@ export interface UpdateAddressResponse extends ApiBaseResponse {
 
 
 // **** Used as the request interface for the join room callback api
-export interface JoinRoomCallbackRequest {
-    videoCallRoomId: Booking["videoCallRoomId"],
-    role: Role,
-    joined: boolean;
-    joinedTime?: Date;
-    leftCallTime?: Date;
-}
-
-export interface JoinRoomCallbackResponse extends ApiBaseResponse {
-  data: Pick<Availability, "duration">
-};
-
 
 
 // **** Used as the response type of the admin fetch provider or user address api

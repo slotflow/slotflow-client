@@ -7,11 +7,10 @@ import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { userJoinOrLeftRoomCallBack } from "@/utils/apis/user.api";
-import { providerJoinOrLeftRoomCallBack } from "@/utils/apis/provider.api";
 import { Mic, MicOff, Video, VideoOff, PhoneOff, Loader } from "lucide-react";
-import { JoinRoomCallbackRequest } from "@/utils/interface/api/commonApiInterface";
 import { setCamera, setMic, stopVideoCallTimer, updateVideoCallTimer } from "@/utils/redux/slices/videoSlice";
+import { joinOrLeft } from "@/utils/apis/booking.api";
+import { JoinRoomCallbackRequest } from "@/utils/interface/api/bookingApiInterface";
 
 const RoomPage = () => {
 
@@ -144,17 +143,13 @@ const RoomPage = () => {
 
     const data: JoinRoomCallbackRequest = {
       joined: true,
-      role: user.role,
       leftCallTime: currentTime,
       videoCallRoomId: roomId,
     }
 
     try {
-      const joinCallback = data.role === "USER"
-        ? userJoinOrLeftRoomCallBack
-        : providerJoinOrLeftRoomCallBack;
 
-      const res = await joinCallback(data);
+      const res = await joinOrLeft(data);
 
       if (res.success) {
         toast.success("You leaved meet successfully");

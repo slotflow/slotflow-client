@@ -17,7 +17,6 @@ import {
     ProviderFetchServiceDetailsResponse,
     ProviderCreateServiceDetailsRequest,
     ProviderUpdateServiceDetailsRequest,
-    ProviderChangeAppointmentStatusRequest,
     ProviderCheckoutForSubscribePlanRequest,
     ProviderFetchDashboardStatsDataResponse,
     ProviderFetchUsersForChatSidebarResponse,
@@ -28,8 +27,7 @@ import { DateRange } from "react-day-picker";
 import { PlanName } from "../interface/enums";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ApiBaseResponse } from "../interface/commonInterface";
-import { Booking } from "../interface/entityInterface/bookingInterface";
-import { FetchProvidersProofsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, UpdateAddressRequest, UpdateAddressResponse, UpdateFileDataRequest, UpdateFileDataResponse } from "../interface/api/commonApiInterface";
+import { FetchProvidersProofsResponse, UpdateAddressRequest, UpdateAddressResponse, UpdateFileDataRequest, UpdateFileDataResponse } from "../interface/api/commonApiInterface";
 
 
 // **** Address apis
@@ -62,22 +60,6 @@ export const providerFetchAllAppServices = async (data: ProviderFetchAllAppServi
 }
 
 
-// **** Booking apis
-
-export const providerChangeAppointmentStatus = async (data: ProviderChangeAppointmentStatusRequest): Promise<ApiBaseResponse> => {
-    const response = await axiosInstance.patch(`/provider/bookings/${data.appointmentId}`, data);
-    return response.data;
-}
-
-export const providerFetchBookingDetails = async (appointmentId: Booking['_id']): Promise<ApiBaseResponse> => {
-    const response = await axiosInstance.get(`/provider/bookings${appointmentId}`);
-    return response.data;
-}
-
-export const providerJoinOrLeftRoomCallBack = async (data: JoinRoomCallbackRequest): Promise<JoinRoomCallbackResponse> => {
-    const response = await axiosInstance.patch(`/provider/bookings/${data.videoCallRoomId}/join-left`, data);
-    return response.data;
-}
 
 
 // **** Provider services apis

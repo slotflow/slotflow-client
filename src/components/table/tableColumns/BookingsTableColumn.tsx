@@ -3,11 +3,10 @@ import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { AppointmentStatus, Role } from "@/utils/interface/enums";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
-import { Check, MoreHorizontal, NotebookPen, ReceiptText, VideoIcon, X } from "lucide-react";
 import { Booking } from "@/utils/interface/entityInterface/bookingInterface";
+import { Check, MoreHorizontal, NotebookPen, ReceiptText, VideoIcon, X } from "lucide-react";
+import { changeAppointmentStatusRequest, FetchBookingsResponse, ValidateRoomId } from "@/utils/interface/api/bookingApiInterface";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { ProviderChangeAppointmentStatusRequest } from "@/utils/interface/api/providerApiInterface";
-import { FetchBookingsResponse, ValidateRoomId } from "@/utils/interface/api/bookingApiInterface";
 
 export const BookingsTableColumn = (
     handleJoinCall: (data: ValidateRoomId) => void,
@@ -15,7 +14,7 @@ export const BookingsTableColumn = (
     role: Role,
     handleReviewAddFormToggle?: (e: React.MouseEvent<HTMLDivElement>, bookingId: string, providerId: string) => void,
     handleUserCancelBooking?: (bookingId: Booking["_id"]) => void,
-    handleChangeAppointmentStatus?: (data: ProviderChangeAppointmentStatusRequest) => void,
+    handleChangeAppointmentStatus?: (data: changeAppointmentStatusRequest) => void,
 ): ColumnDef<FetchBookingsResponse>[] => [
         {
             accessorKey: "appointmentDate",
