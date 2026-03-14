@@ -20,7 +20,6 @@ import { axiosInstance } from "@/lib/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ServiceCategory } from "../interface/enums";
 import { ApiBaseResponse } from "../interface/commonInterface";
-import { Booking } from "../interface/entityInterface/bookingInterface";
 import { Provider } from "../interface/entityInterface/providerInterface";
 import { UpdateAddressRequest, UpdateAddressResponse } from "../interface/api/commonApiInterface";
 

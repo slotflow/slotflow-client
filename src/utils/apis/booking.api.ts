@@ -34,7 +34,7 @@ export const validateRoomId = async (data: ValidateRoomId): Promise<ApiBaseRespo
 
 // check booking confirmed
 export const checkBookingConfirmed = async (): Promise<CheckBookingConfirmedResponse> => {
-    const response = await axiosInstance.get('/bookings/check');
+    const response = await axiosInstance.get('/bookings/recent');
     return response.data;
 }
 

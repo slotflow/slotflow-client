@@ -20,6 +20,7 @@ const UserBookingConfirmPage: React.FC<UserBookingConfirmPageProps> = ({
   const checkRecentBooking = async () => {
     try {
       const response = await checkBookingConfirmed();
+      console.log("response : ",response);
       if (response.data) {
         toast.success("Your Booking has been confirmed");
       } else {
@@ -32,7 +33,11 @@ const UserBookingConfirmPage: React.FC<UserBookingConfirmPageProps> = ({
 
   useEffect(() => {
     if (!status) return;
-    checkRecentBooking();
+    const timeout = setTimeout(() => {
+      checkRecentBooking();
+    },5000);
+
+    return(() => clearTimeout(timeout));
   }, [status]);
 
   const containerVariants: Variants = {
@@ -71,11 +76,11 @@ const UserBookingConfirmPage: React.FC<UserBookingConfirmPageProps> = ({
                   <CheckCircle2 className="h-16 w-16 text-green-500" />
                   <h3 className="text-xl font-bold">Booking Confirmed!</h3>
                   <Button
-                    onClick={() => navigate("/user/dashboard")}
+                    onClick={() => navigate("/user/bookings")}
                     className="bg-[var(--mainColor)] text-white"
                   >
                     <LayoutDashboard className="mr-2 h-5 w-5" />
-                    Go to Dashboard
+                     See Bookings
                   </Button>
                 </motion.div>
               ) : (

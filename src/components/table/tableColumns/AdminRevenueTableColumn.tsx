@@ -1,9 +1,8 @@
-import { format } from "date-fns";
 import { ColumnDef } from "@tanstack/react-table";
-import { formatNumberToPrice } from "@/utils/helper/formatter";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
-import { AdminFetchRevenueReportRow } from "@/utils/interface/api/adminReportApiInterface";
 import { PaymentFor, PaymentGateway } from "@/utils/interface/enums";
+import { formateDate, formatNumberToPrice } from "@/utils/helper/formatter";
+import { AdminFetchRevenueReportRow } from "@/utils/interface/api/adminReportApiInterface";
 
 export const AdminRevenueTableColumn = (
 
@@ -12,8 +11,8 @@ export const AdminRevenueTableColumn = (
       accessorKey: "createdAt",
       header: ({ column }) => (<DataTableColumnHeader column={column} title="Paid on" />),
       cell: ({ row }) => {
-        const createdAt = row.getValue("createdAt");
-        const formattedDate = createdAt ? format(new Date(createdAt as Date), "dd MMM yyyy") : "N/A";
+        const createdAt = row.getValue("createdAt") as Date;
+        const formattedDate = formateDate(createdAt)
         return <span>{formattedDate}</span>;
       }
     },

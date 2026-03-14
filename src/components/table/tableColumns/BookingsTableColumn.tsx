@@ -1,12 +1,13 @@
-import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import { AppointmentStatus, Role } from "@/utils/interface/enums";
+import { formateDate } from "@/utils/helper/formatter";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
+import { AppointmentStatus, Role } from "@/utils/interface/enums";
 import { Booking } from "@/utils/interface/entityInterface/bookingInterface";
 import { Check, MoreHorizontal, NotebookPen, ReceiptText, VideoIcon, X } from "lucide-react";
 import { changeAppointmentStatusRequest, FetchBookingsResponse, ValidateRoomId } from "@/utils/interface/api/bookingApiInterface";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { checkJoin } from "@/utils/helper";
 
 export const BookingsTableColumn = (
     handleJoinCall: (data: ValidateRoomId) => void,
@@ -20,8 +21,8 @@ export const BookingsTableColumn = (
             accessorKey: "appointmentDate",
             header: ({ column }) => (<DataTableColumnHeader column={column} title="Date" />),
             cell: ({ row }) => {
-                const createdAt = row.getValue("appointmentDate");
-                const formattedDate = createdAt ? format(new Date(createdAt as Date), "dd MMM yyyy") : "N/A";
+                const createdAt = row.getValue("appointmentDate") as Date;
+                const formattedDate = formateDate(createdAt)
                 return <span>{formattedDate}</span>;
             }
         },
@@ -58,8 +59,8 @@ export const BookingsTableColumn = (
             accessorKey: "createdAt",
             header: ({ column }) => (<DataTableColumnHeader column={column} title="Paid on" />),
             cell: ({ row }) => {
-                const createdAt = row.getValue("createdAt");
-                const formattedDate = createdAt ? format(new Date(createdAt as Date), "dd MMM yyyy") : "N/A";
+                const createdAt = row.getValue("createdAt") as Date;
+                const formattedDate = formateDate(createdAt)
                 return <span>{formattedDate}</span>;
             }
         },
@@ -71,6 +72,8 @@ export const BookingsTableColumn = (
                 { row }
             ) => {
                 const booking = row.original;
+                console.log("booking.appointmentDate :",booking.appointmentDate)
+                const canJoin = checkJoin(booking.appointmentDate);
                 return (
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
@@ -82,7 +85,7 @@ export const BookingsTableColumn = (
                         <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            {booking.appointmentStatus === AppointmentStatus.CONFIRMED && (
+                            {(booking.appointmentStatus === AppointmentStatus.CONFIRMED && canJoin) && (
                                 <DropdownMenuItem
                                     onClick={() => handleJoinCall({ appointmentId: booking._id, roomId: booking.videoCallRoomId })}
                                     className="flex items-center gap-2"

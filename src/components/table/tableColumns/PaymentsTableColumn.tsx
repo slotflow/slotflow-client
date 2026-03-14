@@ -1,13 +1,12 @@
-import { format } from "date-fns";
 import { MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { PaymentFor } from "@/utils/interface/enums";
-import { formatNumberToPrice } from "@/utils/helper/formatter";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { formateDate, formatNumberToPrice } from "@/utils/helper/formatter";
 import { Payment } from "@/utils/interface/entityInterface/paymentInterface";
 import { FetchPaymentsResponse } from "@/utils/interface/api/paymentApiInterface";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 // for admin side, provider side and user side view of payments table
 export const PaymentsTableColumn = (
@@ -17,8 +16,8 @@ export const PaymentsTableColumn = (
       accessorKey: "createdAt",
       header: ({ column }) => (<DataTableColumnHeader column={column} title="Paid on" />),
       cell: ({ row }) => {
-        const createdAt = row.getValue("createdAt");
-        const formattedDate = createdAt ? format(new Date(createdAt as Date), "dd MMM yyyy") : "N/A";
+        const createdAt = row.getValue("createdAt") as Date;
+        const formattedDate = formateDate(createdAt);
         return <span>{formattedDate}</span>;
       }
     },

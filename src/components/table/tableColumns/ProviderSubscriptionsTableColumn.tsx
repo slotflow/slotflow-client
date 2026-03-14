@@ -1,12 +1,12 @@
-import { format } from "date-fns";
-import { SubscriptionStatus } from "@/utils/interface/enums";
 import { Button } from "../../ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
+import { formateDate } from "@/utils/helper/formatter";
+import { SubscriptionStatus } from "@/utils/interface/enums";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
 import { Subscription } from "@/utils/interface/entityInterface/subscriptionInterface";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 import { FetchProviderSubscriptionsResponse } from "@/utils/interface/api/subscriptionApiInterface";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 
 // For admin side view and provider side view of provider subscriptions
 export const ProvidersSubscriptionsTableColumns = (
@@ -20,8 +20,8 @@ export const ProvidersSubscriptionsTableColumns = (
             accessorKey: "startDate",
             header: ({ column }) => (<DataTableColumnHeader column={column} title="Start Date" />),
             cell: ({ row }) => {
-                const startDate = row.getValue("startDate");
-                const formattedDate = startDate ? format(new Date(startDate as Date), "dd MMM yyyy") : "N/A";
+                const startDate = row.getValue("startDate") as Date;
+                const formattedDate = formateDate(startDate);
                 return <span>{formattedDate}</span>;
             }
 
@@ -30,8 +30,8 @@ export const ProvidersSubscriptionsTableColumns = (
             accessorKey: "endDate",
             header: ({ column }) => (<DataTableColumnHeader column={column} title="Expires on" />),
             cell: ({ row }) => {
-                const endDate = row.getValue("endDate");
-                const formattedDate = endDate ? format(new Date(endDate as Date), "dd MMM yyyy") : "N/A";
+                const endDate = row.getValue("endDate") as Date;
+                const formattedDate = formateDate(endDate);
                 return <span>{formattedDate}</span>;
             }
 

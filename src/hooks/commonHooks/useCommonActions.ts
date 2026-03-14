@@ -59,7 +59,7 @@ export const useCommonHook = (): UseCommonHookInterface => {
         if(authUser?.role === Role.PROVIDER){
             navigate(`/provider/appointments/${appointmentId}`);
         } else if(authUser?.role === Role.USER) {
-            navigate(`/user/appointments/${appointmentId}`);
+            navigate(`/user/bookings/${appointmentId}`);
         }
     }
 

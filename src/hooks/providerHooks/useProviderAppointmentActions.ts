@@ -16,7 +16,7 @@ export const useProviderAppointmentActions = (): UseProviderAppointmentActions =
             .then((res) => {
                 if (res.success) {
                     toast.success(res.message);
-                    queryClient.invalidateQueries({ queryKey: ["appointments"] });
+                    queryClient.invalidateQueries({ queryKey: ["bookings"] });
                 }
             })
             .catch(() => {

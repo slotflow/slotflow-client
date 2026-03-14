@@ -1,5 +1,4 @@
 import React from "react"
-import { formatDate } from "@/utils/helper";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPaymentDetails } from "@/utils/apis/payment.api";
@@ -32,11 +31,11 @@ const PaymentDetailViewPage: React.FC = () => {
         { label: "Refund Amount", value: data?.refundAmount, isPrice: true },
         { label: "Refund Status", value: data?.refundStatus },
         { label: "Refund Reason", value: data?.refundReason },
-        { label: "Refunded At", value: data?.refundAt, formatDate },
+        { label: "Refunded At", value: data?.refundAt, isDate: true },
         { label: "Receipt URL", value: data?.receiptUrl },
         { label: "Customer Email", value: data?.customerEmail },
         { label: "Description", value: data?.description },
-        { label: "Created At", value: data?.createdAt, formatDate },
+        { label: "Created At", value: data?.createdAt, isDate: true },
     ];
 
     return (

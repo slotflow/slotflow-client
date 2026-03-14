@@ -41,7 +41,7 @@ const ListBookingsPage: React.FC = () => {
       columnsCount={6}
       column={columns}
       queryParams={{ online: true }}
-      queryKey="onlineBookings"
+      queryKey="bookings"
     />
   );
 };

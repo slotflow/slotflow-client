@@ -1,9 +1,8 @@
 import React from 'react';
-import { formatDate } from '@/utils/helper';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { fetchSubscriptionDetails } from '@/utils/apis/subscription.api';
 import DataFetchingError from '@/components/common/DataFetchingError';
+import { fetchSubscriptionDetails } from '@/utils/apis/subscription.api';
 import InfoDisplayComponent from '@/components/common/InfoDisplayComponent';
 import ProfileDetailsShimmer from '@/components/shimmers/ProfileDetailsShimmer';
 
@@ -21,9 +20,9 @@ const SubscriptionDetailViewPage: React.FC = () => {
 
     const dataMap = [
         { label: "Subscription Status", value: data?.subscriptionStatus },
-        { label: "Subscribed on", value: data?.createdAt, formatDate },
-        { label: "Subscription started on", value: data?.startDate, formatDate },
-        { label: "Subscription expires on", value: data?.endDate, formatDate },
+        { label: "Subscribed on", value: data?.createdAt, isDate: true },
+        { label: "Subscription started on", value: data?.startDate, isDate: true },
+        { label: "Subscription expires on", value: data?.endDate, isDate: true },
         { label: "Subscribed Plan Name", value: data?.subscriptionPlanId?.planName },
         { label: "Subscription Max Bookings", value: data?.subscriptionPlanId?.maxBookingPerMonth },
         { label: "Subscription Ad Visibility", value: data?.subscriptionPlanId?.adVisibility, isBoolean: true },

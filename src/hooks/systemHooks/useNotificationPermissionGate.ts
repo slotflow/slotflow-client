@@ -55,7 +55,9 @@ export const useNotificationPermissionGate = () => {
 
     if (permission === PermissionStatus.GRANTED) {
       const deviceId = getDeviceId();
+      console.log("deviceId : ",deviceId);
       const fcmToken = await getFcmToken();
+      console.log("fcmToken : ",fcmToken);
 
       if (!deviceId || !fcmToken) return;
 

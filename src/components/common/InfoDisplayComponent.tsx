@@ -1,5 +1,6 @@
 import { Copy } from "lucide-react";
 import { Role } from "@/utils/interface/enums";
+import { formateDate } from "@/utils/helper/formatter";
 import { formatBoolean, formatDuration } from "@/utils/helper";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { InfoDisplayComponentRowProps } from "@/utils/interface/commonInterface";
@@ -17,6 +18,7 @@ const InfoDisplayComponent: React.FC<InfoDisplayComponentRowProps> = ({
     isIframe,
     isRadioGroup,
     isTime,
+    isDate,
     selectedRadioValue,
     onRadioChange,
     role,
@@ -66,6 +68,8 @@ const InfoDisplayComponent: React.FC<InfoDisplayComponentRowProps> = ({
         );
     } else if (formatDate && typeof value === "string") {
         displayValue = formatDate(value);
+    } else if (isDate) {
+        displayValue = formateDate(value as Date);
     } else if (isIframe) {
         return (
             <tr className={`${!isLast ? "border-b " : ""}`}>

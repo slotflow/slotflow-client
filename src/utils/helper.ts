@@ -1,6 +1,6 @@
 import { ApiPaginatedResponse } from "./interface/commonInterface";
 
-// **** Time formating function for otp page **** \\
+// Time formating function for otp page
 export const formatTime = (seconds: number): string => {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;
@@ -9,7 +9,7 @@ export const formatTime = (seconds: number): string => {
   return `${formattedMinutes}:${formattedSeconds}`;
 };
 
-// **** Greeting generation function for header **** \\
+// Greeting generation function for header
 export const greetings = (): string => {
   const date = new Date();
   const hour = date.getHours();
@@ -22,7 +22,7 @@ export const greetings = (): string => {
   }
 }
 
-// **** Provider slot availability generator **** \\
+// Provider slot availability generator
 const format12HourTime = (time24: string): string => {
   const [hours, minutes] = time24.split(':').map(Number);
   const period = hours >= 12 ? 'PM' : 'AM';
@@ -54,25 +54,12 @@ export const generateTimeSlots = (startTime: string, endTime: string, intervalMi
   return slots
 };
 
-// **** Formate date for infoDisplayCompoenent **** \\
-export const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleString("en-US", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: true,
-  });
-};
-
-// **** Copy to clipboard function for infoDisplayCompoenent **** \\
+// Copy to clipboard function for infoDisplayCompoenent
 export const copyToClipboard = (text: string) => {
   navigator.clipboard.writeText(text);
 };
 
-// **** Formating function for boolean value formatBoolean **** \\
+// Formating function for boolean value formatBoolean
 export const formatBoolean = (val: boolean) => (val ? "Yes" : "No");
 
 export const buildQueryParams = <
@@ -97,7 +84,7 @@ T extends object
   return query.toString();
 };
 
-// **** Function for returing data from pagination included apis **** \\
+// Function for returing data from pagination included apis
 export const parseNewCommonResponse = <T>(res: ApiPaginatedResponse<T>): ApiPaginatedResponse<T> => {
   return {
     data: res.data,
@@ -107,7 +94,7 @@ export const parseNewCommonResponse = <T>(res: ApiPaginatedResponse<T>): ApiPagi
   };
 };
 
-// **** format duration
+// format duration
 export const formatDuration = (minutes?: number) => {
   if (!minutes) return "";
 
@@ -123,3 +110,13 @@ export const formatDuration = (minutes?: number) => {
 
   return `${Math.floor(hours)} hours ${minutes % 60} minutes`;
 };
+
+// check if the user can join the call
+export const checkJoin = (date: Date | string) => {
+  const appointmentDate = new Date(date);
+  const now = new Date();
+  const diff = appointmentDate.getTime() - now.getTime();
+  const minutes = Math.floor(diff / 60000);
+  return minutes <= 15;
+}
+

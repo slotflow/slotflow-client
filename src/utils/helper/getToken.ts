@@ -4,6 +4,7 @@ import { appConfig, firebaseCloudMessageConfig } from "../env";
 
 export const getFcmToken = async (): Promise<string | undefined> => {
   try {
+    console.log("vapidKey : ",firebaseCloudMessageConfig.vapidKey)
     const token = await getToken(messaging, { vapidKey: firebaseCloudMessageConfig.vapidKey });
     return token;
   } catch (error) {

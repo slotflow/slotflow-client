@@ -15,7 +15,7 @@ export interface Booking {
     _id: string;
     serviceProviderId: string;
     userId: string;
-    appointmentDate: string;
+    appointmentDate: Date;
     appointmentTime: string;
     appointmentMode: string;
     appointmentStatus: AppointmentStatus;
@@ -27,6 +27,6 @@ export interface Booking {
         provider: ParticipantPresence;
     },
     statusTrack: statusTrack[],
-    createdAt: string;
-    updatedAt: string;
+    createdAt: Date;
+    updatedAt: Date;
 }

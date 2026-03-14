@@ -4,5 +4,6 @@ import { RegisterDeviceRequest } from "../interface/api/notificationApiInterface
 
 export const registerDevice = async (data: RegisterDeviceRequest): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.post('/user-device',data);
+    console.log("registerDevice response : ",response);
     return response.data;
 };

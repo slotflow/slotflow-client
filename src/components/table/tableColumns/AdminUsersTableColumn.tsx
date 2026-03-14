@@ -2,9 +2,9 @@ import { Button } from "../../ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
+import { User } from "@/utils/interface/entityInterface/userInterface";
 import { AdminChangeUserStatusRequest, AdminfetchAllUsersResponse } from "@/utils/interface/api/adminUserApiInterface";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
-import { User } from "@/utils/interface/entityInterface/userInterface";
 
 export const AdminUsersTableColumns = (
     handleAdminChangeUserBlockStatus: (data: AdminChangeUserStatusRequest) => void,

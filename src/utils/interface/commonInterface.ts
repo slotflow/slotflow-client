@@ -79,6 +79,7 @@ export interface InfoDisplayComponentRowProps {
   isRadioGroup?: boolean;
   isIframe?: boolean;
   isTime?: boolean;
+  isDate?: boolean;
   selectedRadioValue?: string | null;
   onRadioChange?: (value: string) => void;
   role?: Role;

@@ -1,7 +1,7 @@
 import React from 'react';
-import { formatDate } from '@/utils/helper';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { formatDateWithTime } from '@/utils/helper/formatter';
 import { fetchBookingDetails } from '@/utils/apis/booking.api';
 import DataFetchingError from '@/components/common/DataFetchingError';
 import InfoDisplayComponent from '@/components/common/InfoDisplayComponent';
@@ -11,6 +11,7 @@ import ProfileDetailsShimmer from '@/components/shimmers/ProfileDetailsShimmer';
 const BookingDetailPage: React.FC = () => {
 
   const { bookingId } = useParams<{ bookingId: Booking["_id"] }>();
+  console.log("bookingId : ",bookingId)
 
   const { data, isLoading, isError, error } = useQuery({
     queryFn: () => fetchBookingDetails(bookingId!),
@@ -21,8 +22,8 @@ const BookingDetailPage: React.FC = () => {
   });
 
   const dataMap = [
-    { label: "Booked On", value: data?.appointmentDate },
-    { label: "Booking At", value: data?.createdAt, formatDate },
+    { label: "Booked On", value: data?.appointmentDate, isDate: true },
+    { label: "Booking At", value: data?.createdAt, isDate: true },
     { label: "Service Mode", value: data?.appointmentMode },
     { label: "Booking Status", value: data?.appointmentStatus },
     { label: "Slot Time", value: data?.appointmentTime },
@@ -70,7 +71,7 @@ const BookingDetailPage: React.FC = () => {
                 <td className="p-4 w-8/12">
                   {data?.onlineTrack?.user
                     ? data.onlineTrack.user.joinedTime
-                      ? formatDate(data.onlineTrack.user.joinedTime)
+                      ? formatDateWithTime(data.onlineTrack.user.joinedTime)
                       : "No data found"
                     : "No data found"}
                 </td>
@@ -81,7 +82,7 @@ const BookingDetailPage: React.FC = () => {
                 <td className="p-4 w-8/12">
                   {data?.onlineTrack?.user
                     ? data.onlineTrack.user.leftCallTime
-                      ? formatDate(data.onlineTrack.user.leftCallTime)
+                      ? formatDateWithTime(data.onlineTrack.user.leftCallTime)
                       : "No data found"
                     : "No data found"}
                 </td>
@@ -102,7 +103,7 @@ const BookingDetailPage: React.FC = () => {
                 <td className="p-4 w-8/12">
                   {data?.onlineTrack?.provider
                     ? data.onlineTrack.provider.joinedTime
-                      ? formatDate(data.onlineTrack.provider.joinedTime)
+                      ? formatDateWithTime(data.onlineTrack.provider.joinedTime)
                       : "No data found"
                     : "No data found"}
                 </td>
@@ -113,7 +114,7 @@ const BookingDetailPage: React.FC = () => {
                 <td className="p-4 w-8/12">
                   {data?.onlineTrack?.provider
                     ? data.onlineTrack.provider.leftCallTime
-                      ? formatDate(data.onlineTrack.provider.leftCallTime)
+                      ? formatDateWithTime(data.onlineTrack.provider.leftCallTime)
                       : "No data found"
                     : "No data found"}
                 </td>
@@ -135,7 +136,7 @@ const BookingDetailPage: React.FC = () => {
                         {track.appointmentStatus}
                       </td>
                       <td className="p-4 w-8/12">
-                        {track.time ? formatDate(track.time) : "No time recorded"}
+                        {track.time ? formatDateWithTime(track.time) : "No time recorded"}
                       </td>
                     </tr>
                   );
