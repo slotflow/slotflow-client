@@ -107,6 +107,7 @@ const ProviderSubscriptionConfirmPage: React.FC<ProviderSubscriptionConfirmPageP
                     Subscription Activated!
                   </h3>
                   <Button
+                    title="Go to Dashboard"
                     onClick={() => navigate("/provider/dashboard")}
                     className="bg-[var(--mainColor)] text-white"
                   >
@@ -124,6 +125,7 @@ const ProviderSubscriptionConfirmPage: React.FC<ProviderSubscriptionConfirmPageP
                   <XCircle className="h-16 w-16 text-red-500" />
                   <h3 className="text-xl font-bold">Payment Failed</h3>
                   <Button
+                    title="Go to Dashboard"
                     onClick={() => navigate("/provider/dashboard")}
                     className="bg-[var(--mainColor)] text-white"
                   >

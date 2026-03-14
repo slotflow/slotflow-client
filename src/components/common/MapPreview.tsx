@@ -47,6 +47,7 @@ const MapPreview: React.FC<MapPreviewProps> = ({ lat, lon }) => {
 
                 <div className="flex justify-start mt-4">
                     <Button
+                        title="Open in Google Maps"
                         variant="default"
                         asChild
                         className="flex items-center gap-2 cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"

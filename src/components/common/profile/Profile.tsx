@@ -40,6 +40,7 @@ const Profile: React.FC = () => {
           <h2 className="text-xl font-semibold"> Profile Details</h2>
         </div>
         <Button
+        title="Edit Info"
           variant="default"
           className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
           onClick={(e) => {

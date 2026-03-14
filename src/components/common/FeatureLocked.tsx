@@ -23,6 +23,7 @@ const FeatureLocked: React.FC<FeatureLockedProps> = ({
       <h1 className="font-semibold">{message}</h1>
       {onButtonClick && (
         <Button
+          title={buttonText}
           className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
           variant={buttonVariant}
           onClick={onButtonClick}

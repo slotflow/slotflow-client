@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Calendar, CheckCircle2, XCircle } from "lucide-react";
 import { checkBookingConfirmed } from "@/utils/apis/booking.api";
 import { motion, AnimatePresence, Variants } from "framer-motion";
-import { CheckCircle2, LayoutDashboard, XCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface UserBookingConfirmPageProps {
@@ -16,11 +16,11 @@ const UserBookingConfirmPage: React.FC<UserBookingConfirmPageProps> = ({
 }) => {
 
   const navigate = useNavigate();
-  
+
   const checkRecentBooking = async () => {
     try {
       const response = await checkBookingConfirmed();
-      console.log("response : ",response);
+      console.log("response : ", response);
       if (response.data) {
         toast.success("Your Booking has been confirmed");
       } else {
@@ -35,9 +35,9 @@ const UserBookingConfirmPage: React.FC<UserBookingConfirmPageProps> = ({
     if (!status) return;
     const timeout = setTimeout(() => {
       checkRecentBooking();
-    },5000);
+    }, 5000);
 
-    return(() => clearTimeout(timeout));
+    return (() => clearTimeout(timeout));
   }, [status]);
 
   const containerVariants: Variants = {
@@ -76,11 +76,12 @@ const UserBookingConfirmPage: React.FC<UserBookingConfirmPageProps> = ({
                   <CheckCircle2 className="h-16 w-16 text-green-500" />
                   <h3 className="text-xl font-bold">Booking Confirmed!</h3>
                   <Button
+                    title="My Bookings"
                     onClick={() => navigate("/user/bookings")}
-                    className="bg-[var(--mainColor)] text-white"
+                    className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
                   >
-                    <LayoutDashboard className="mr-2 h-5 w-5" />
-                     See Bookings
+                    <Calendar className="mr-2 h-5 w-5" />
+                    My Bookings
                   </Button>
                 </motion.div>
               ) : (
@@ -93,8 +94,9 @@ const UserBookingConfirmPage: React.FC<UserBookingConfirmPageProps> = ({
                   <XCircle className="h-16 w-16 text-red-500" />
                   <h3 className="text-xl font-bold">Payment Failed</h3>
                   <Button
+                    title="Go to Dashboard"
                     onClick={() => navigate("/user/dashboard")}
-                    className="bg-[var(--mainColor)] text-white"
+                    className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
                   >
                     Go to Dashboard
                   </Button>

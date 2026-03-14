@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { RootState } from "@/utils/redux/appStore";
 import DataFetchingError from "../DataFetchingError";
 import InfoDisplayComponent from "../InfoDisplayComponent";
-import { copyToClipboard, formatDate } from "@/utils/helper";
+import { copyToClipboard } from "@/utils/helper";
 import ProfileDetailsShimmer from "@/components/shimmers/ProfileDetailsShimmer";
 import { ProviderFetchProfileDetailsResponse } from "@/utils/interface/api/providerApiInterface";
 import { AdminFetchUserProfileDetailsResponse } from "@/utils/interface/api/adminUserApiInterface";
@@ -99,7 +99,7 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
                                 <InfoDisplayComponent label="Service Details Verified" value={providerProfileData.isServiceDetailsVerified} isBoolean={true} />
                                 <InfoDisplayComponent label="Availability Verified" value={providerProfileData.isAvailabilityVerified} isBoolean={true} />
                                 <InfoDisplayComponent label="Proofs Verified" value={providerProfileData.isProofsVerified} isBoolean={true} />
-                                <InfoDisplayComponent label="Joined On" value={providerProfileData.createdAt} formatDate={formatDate} isLast />
+                                <InfoDisplayComponent label="Joined On" value={providerProfileData.createdAt} isDate isLast />
                             </>
                         );
                     })()}
@@ -127,7 +127,7 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
                                 <InfoDisplayComponent label="Email" value={authUser?.email || providerProfileData.email} />
                                 <InfoDisplayComponent label="Phone Number" value={authUser?.phone || providerProfileData.phone || 'Not yet added'} />
                                 <InfoDisplayComponent label="Slotflow Trusted" value={providerProfileData.trustedBySlotflow} isBoolean={true} />
-                                <InfoDisplayComponent label="Joined On" value={providerProfileData.createdAt} formatDate={formatDate} />
+                                <InfoDisplayComponent label="Joined On" value={providerProfileData.createdAt} isDate />
                                 <InfoDisplayComponent label="Address" value={authUser?.isAddressAdded} isBoolean={true} />
                                 <InfoDisplayComponent label="Service Details" value={authUser?.isServiceDetailsAdded} isBoolean={true} />
                                 <InfoDisplayComponent label="Availability Details" value={authUser?.isServiceAvailabilityAdded} isBoolean={true} />
@@ -165,7 +165,7 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
                                 <InfoDisplayComponent label="Username" value={authUser?.username || userProfileData?.username} />
                                 <InfoDisplayComponent label="Email" value={authUser?.email || userProfileData?.email} />
                                 <InfoDisplayComponent label="Phone Number" value={authUser?.phone || userProfileData?.phone} />
-                                <InfoDisplayComponent label="Joined On" value={userProfileData?.createdAt} formatDate={formatDate} />
+                                <InfoDisplayComponent label="Joined On" value={userProfileData?.createdAt} isDate />
                                 <InfoDisplayComponent label="Email Verified" value={userProfileData?.isEmailVerified} isBoolean={true} />
                                 <InfoDisplayComponent label="Account Blocked" value={userProfileData?.isBlocked} isBoolean={true} />
                             </>

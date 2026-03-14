@@ -27,6 +27,7 @@ const AccountSecurity: React.FC = () => {
             <Label htmlFor="password">New Password</Label>
             <Input id="password" type="password" placeholder="Enter new password" />
             <Button
+              title="Update Password"
               className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
             >Update Password
             </Button>

@@ -106,6 +106,7 @@ const ProviderApprovalPendingPage = () => {
                     {adminStatus === AdminVerificationStatus.REJECTED && (
                       <TableCell>
                         <Button
+                          title="Update"
                           variant="default"
                           className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
                           onClick={() => goToAuthPage(Role.PROVIDER, row.redirect)}
@@ -124,6 +125,7 @@ const ProviderApprovalPendingPage = () => {
                   Please submit your details. We will review them and inform you via email within one business day.
                 </p>
                 <Button
+                  title={adminStatus === AdminVerificationStatus.NOT_REQUESTED ? "Submit for Review" : "Resubmit for Review"}
                   variant="default"
                   className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
                   onClick={handleSubmit}

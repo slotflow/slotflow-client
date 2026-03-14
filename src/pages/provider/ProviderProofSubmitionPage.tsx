@@ -75,6 +75,7 @@ export const ProviderProofSubmissionPage = () => {
               <div className="flex justify-end">
                 {(identityProof && serviceProof) && (
                   <Button
+                    title="Next"
                     variant="default"
                     onClick={handleNextutton}
                     className="cursor-pointer w-full md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"

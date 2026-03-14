@@ -72,6 +72,7 @@ const AuthSelectionModal: React.FC<AuthSelectionModalProps> = ({ onClose }) => {
         </div>
 
         <Button
+          title="Close"
           variant="destructive"
           onClick={closeModal}
           className="mt-6 text-sm cursor-pointer"

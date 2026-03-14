@@ -267,6 +267,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
           </div>
           <div className="flex justify-center md:justify-end mt-6">
             <Button
+              title="Next"
               type="submit"
               variant="default"
               disabled={!isValid || isSubmitting || dataUpdating}

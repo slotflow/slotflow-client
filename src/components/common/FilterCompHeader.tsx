@@ -19,6 +19,7 @@ const FilterCompHeader: React.FC<FilterCompHeaderProps> = ({
     <div className="flex justify-between items-center">
       <h5 className="font-medium flex items-center gap-2"><Icon className="size-4" /> {title}</h5>
       <Button
+        title="Toggle Filter"
         type="button"
         variant="outline"
         size="icon"

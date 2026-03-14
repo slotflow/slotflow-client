@@ -57,9 +57,8 @@ const PlanCard: React.FC<ProviderPlanCardProps> = ({
   return (
     <Card
       key={plan._id}
-      className={`p-4 rounded-2xl shadow-sm flex flex-col hover:border-[var(--mainColor)] ${
-        popular ? "border-primary" : ""
-      }`}
+      className={`p-4 rounded-2xl shadow-sm flex flex-col hover:border-[var(--mainColor)] ${popular ? "border-primary" : ""
+        }`}
     >
       <CardHeader>
         {popular && (
@@ -100,13 +99,18 @@ const PlanCard: React.FC<ProviderPlanCardProps> = ({
 
       {!dummy ? (
         <div className="mt-auto">
-          <Button className="w-full cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]" onClick={handleGoToPayment}>
+          <Button
+            title="Choose Plan"
+            className="w-full cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
+            onClick={handleGoToPayment}
+          >
             Choose Plan
           </Button>
         </div>
       ) : (
         <CardFooter>
           <Button
+            title="Sign up"
             className="w-full cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
             variant="default"
           >

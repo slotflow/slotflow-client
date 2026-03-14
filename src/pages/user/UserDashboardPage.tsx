@@ -69,6 +69,7 @@ useEffect(() => {
         <div className="relative w-full max-w-md flex space-x-2">
           <Input type="text" placeholder="Search..." className="h-auto" />
           <Button
+          title="Search"
             variant="default"
             className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
             onClick={() => dispatch(toggleFilterSideBar())} >
@@ -76,6 +77,7 @@ useEffect(() => {
           </Button>
         </div>
         <Button
+        title="Filters"
           variant="default"
           className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
           onClick={() => dispatch(toggleFilterSideBar())} >

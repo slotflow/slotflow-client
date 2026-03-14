@@ -27,6 +27,7 @@ const TimeSlotLegend: React.FC<TimeSlotLegendProps> = ({
         {legendItems.map((item) => (
           <div key={item.label} className="flex flex-col space-y-1">
             <Button
+              title={item.label}
               variant="outline"
               className={`text-sm font-semibold border-2 rounded-md py-3 px-4 cursor-default ${item.className}`}
             >

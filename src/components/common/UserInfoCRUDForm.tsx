@@ -128,7 +128,13 @@ const UserInfoCRUDForm: React.FC<UserInfoCRUDProps> = ({
                             loading={isSubmitting}
                             disabled={isSubmitting || !isValid}
                         />
-                        <Button variant="destructive" className="cursor-pointer w-full" type="button" onClick={handleCloseForm}>
+                        <Button
+                        title="Cancel"
+                        variant="destructive" 
+                        className="cursor-pointer w-full" 
+                        type="button" 
+                        onClick={handleCloseForm}
+                        >
                             Cancel
                         </Button>
                     </div>

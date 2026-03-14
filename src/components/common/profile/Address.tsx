@@ -86,6 +86,11 @@ const Address: React.FC = () => {
             <h2 className="text-xl font-semibold"> Address</h2>
           </div>
           <Button
+            title={showAddressForm
+              ? "Close"
+              : authUser?.isAddressAdded
+                ? "Edit Address"
+                : "Add Address"}
             variant="default"
             disabled={loading}
             onClick={() => setShowAddressForm(!showAddressForm)}

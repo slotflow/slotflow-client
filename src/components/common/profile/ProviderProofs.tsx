@@ -50,6 +50,7 @@ const ProviderProofs: React.FC<ProviderProofsProps> = ({
                 <CardHeader className="flex flex-row justify-between items-center">
                     <CardTitle className="text-base font-semibold">Identity Proof</CardTitle>
                     <Button
+                        title={expandIdentity ? "Minimize" : "Maximize"}
                         variant="default"
                         size="sm"
                         onClick={() => setExpandIdentity(!expandIdentity)}
@@ -84,6 +85,7 @@ const ProviderProofs: React.FC<ProviderProofsProps> = ({
                 <CardHeader className="flex flex-row justify-between items-center">
                     <CardTitle className="text-base font-semibold">Service Proof</CardTitle>
                     <Button
+                        title={ expandService ? "Minimize" : "Maximize"}
                         variant="default"
                         size="sm"
                         onClick={() => setExpandService(!expandService)}

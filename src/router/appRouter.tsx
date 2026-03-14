@@ -29,7 +29,6 @@ const UserChatPage = lazy(() => import("@/pages/user/UserChatPage.tsx"));
 const UserReviewPage = lazy(() => import("@/pages/user/UserReviewPage"));
 const UserPaymentsPage = lazy(() => import("@/pages/user/UserPaymentsPage.tsx"));
 const UserDashboardPage = lazy(() => import("@/pages/user/UserDashboardPage.tsx"));
-const UserNotificationsPage = lazy(() => import("@/pages/user/UserNotificationsPage.tsx"));
 const UserServiceSelectPage = lazy(() => import("@/pages/user/UserServiceSelectPage.tsx"));
 const UserBookingConfirmPage = lazy(() => import("@/pages/user/UserBookingConfirmPage.tsx"));
 const UserServiceProviderDetailPage = lazy(() => import("@/pages/user/UserServiceProviderDetailPage.tsx"));
@@ -41,7 +40,6 @@ const ProviderPaymentsPage = lazy(() => import("@/pages/provider/ProviderPayment
 const ProviderDashboardPage = lazy(() => import("@/pages/provider/ProviderDashboardPage.tsx"));
 const ProviderAddAddressPage = lazy(() => import("@/pages/provider/ProviderCreateAddressPage.tsx"));
 const ProviderSubscriptionPage = lazy(() => import("@/pages/provider/ProviderSubscriptionPage.tsx"));
-const ProviderNotificationsPage = lazy(() => import("@/pages/provider/ProviderNotificationsPage.tsx"));
 const ProviderProofSubmitionPage = lazy(() => import("@/pages/provider/ProviderProofSubmitionPage.tsx"));
 const ProviderApprovalPendingPage = lazy(() => import("@/pages/provider/ProviderApprovalPendingPage.tsx"));
 const ProviderSubscriptionConfirmPage = lazy(() => import("@/pages/provider/ProviderSubscriptionConfirmPage.tsx"));
@@ -136,7 +134,6 @@ export const appRouter = createBrowserRouter([
                     },
                     { path: "calendar", element: <CalendarPage /> },
                     { path: "reviews", element: <UserReviewPage /> },
-                    { path: "notifications", element: <UserNotificationsPage /> },
                     { path: "settings", element: <SettingsPage /> },
                     { path: "payment-success", element: <UserBookingConfirmPage status={true} /> },
                     { path: "payment-failed", element: <UserBookingConfirmPage status={false} /> },
@@ -260,14 +257,6 @@ export const appRouter = createBrowserRouter([
                         element: (
                             <PlanGuard routeName="Calendar">
                                 < CalendarPage />
-                            </PlanGuard>
-                        )
-                    },
-                    {
-                        path: "notifications",
-                        element: (
-                            <PlanGuard routeName="Notifications">
-                                <ProviderNotificationsPage />
                             </PlanGuard>
                         )
                     },

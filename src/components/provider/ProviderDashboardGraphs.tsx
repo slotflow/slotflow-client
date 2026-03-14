@@ -7,7 +7,7 @@ import React, { useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { PlanName } from '@/utils/interface/enums';
 import { RootState } from '@/utils/redux/appStore';
-import { GraphView } from '@/utils/helper/GraphView';
+import { graphView } from '@/utils/helper/graphView';
 import RadialChart from '../common/chart/RadialChart';
 import { CalendarIcon, GitGraph } from 'lucide-react';
 import DataFetchingError from '../common/DataFetchingError';
@@ -97,7 +97,7 @@ const ProviderDashboardGraphs: React.FC = () => {
                             dataKeyTwo="missed"
                             dataKeyThree="cancelled"
                             chartConfig={appointmentsOverTimeChartConfig}
-                            isLocked={!GraphView(subscriptionPlan, "AppointmentsOverTime")}
+                            isLocked={!graphView(subscriptionPlan, "AppointmentsOverTime")}
                         />
                         <RadialChart
                             title="Top Booking Days"
@@ -106,7 +106,7 @@ const ProviderDashboardGraphs: React.FC = () => {
                             dataKeyOne="count"
                             dataKeyTwo="day"
                             chartConfig={topBookingDaysChartConfig}
-                            isLocked={!GraphView(subscriptionPlan, "TopBookingDays")}
+                            isLocked={!graphView(subscriptionPlan, "TopBookingDays")}
                         />
                         <LineChartHorizontal
                             title="Appointment Mode Trend"
@@ -115,7 +115,7 @@ const ProviderDashboardGraphs: React.FC = () => {
                             dataKeyOne="online"
                             dataKeyTwo="offline"
                             chartConfig={appointmentModeChartConfig}
-                            isLocked={!GraphView(subscriptionPlan, "AppointmentModeTrend")}
+                            isLocked={!graphView(subscriptionPlan, "AppointmentModeTrend")}
                         />
                         <ChartLineMultiple
                             title="New vs Returning Users"
@@ -124,7 +124,7 @@ const ProviderDashboardGraphs: React.FC = () => {
                             chartConfig={newVsReturningUsersChartConfig}
                             dataKeyOne="newUsers"
                             dataKeyTwo="returningUsers"
-                            isLocked={!GraphView(subscriptionPlan, "NewVsReturningUsers")}
+                            isLocked={!graphView(subscriptionPlan, "NewVsReturningUsers")}
                         />
                         <BarChartVertical
                             title="Appointment Distribution"
@@ -133,7 +133,7 @@ const ProviderDashboardGraphs: React.FC = () => {
                             dataKeyOne="online"
                             dataKeyTwo="offline"
                             chartConfig={appointmentModeChartConfig}
-                            isLocked={!GraphView(subscriptionPlan, "AppointmentDistribution")}
+                            isLocked={!graphView(subscriptionPlan, "AppointmentDistribution")}
                         />
                         <BarChartHorizontal
                             title="Peak Booking Hours"
@@ -143,7 +143,7 @@ const ProviderDashboardGraphs: React.FC = () => {
                             dataKeyTwo="bookings"
                             dataKeyThree="bookings"
                             chartConfig={peakBookingHoursChartConfig}
-                            isLocked={!GraphView(subscriptionPlan, "PeakBookingHours")}
+                            isLocked={!graphView(subscriptionPlan, "PeakBookingHours")}
                         />
                         <PieChartCompletionBreakdown
                             title="Appointment Completion Breakdown"
@@ -152,7 +152,7 @@ const ProviderDashboardGraphs: React.FC = () => {
                             dataKey="value"
                             chartConfig={completionBreakdownChartConfig}
                             nameKey={"status"}
-                            isLocked={!GraphView(subscriptionPlan, "AppointmentCompletionBreakdown")}
+                            isLocked={!graphView(subscriptionPlan, "AppointmentCompletionBreakdown")}
                         />
                     </div>
                 </React.Fragment>

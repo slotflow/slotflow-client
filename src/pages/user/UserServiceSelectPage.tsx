@@ -72,8 +72,11 @@ const UserServiceSelectPage = () => {
             </div>
             <div className="flex justify-end mt-6">
                 <Button
+                    title="Next"
                     className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
-                    onClick={handleSubmitSelectedServices} >Next</Button>
+                    onClick={handleSubmitSelectedServices} >
+                    Next
+                </Button>
             </div>
 
         </div>

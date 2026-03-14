@@ -190,6 +190,7 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
 
             <div className="flex justify-center md:justify-end mt-4 md:mt-6">
               <Button
+                title="Generate Slots"
                 type="button"
                 variant="default"
                 disabled={isSubmitting}
@@ -249,6 +250,7 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
             {selectedTimeSlots && selectedTimeSlots.length > 0 && (
               <div className="flex space-x-2 justify-center md:justify-end mt-4 md:mt-6">
                 <Button
+                  title="Confirm"
                   type="button"
                   variant="default"
                   disabled={isSubmitting}
@@ -262,6 +264,7 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
             {availabilities && (
               <div className="flex space-x-2 justify-center md:justify-end mt-4 md:mt-6 ">
                 <Button
+                  title="Submit"
                   type="submit"
                   variant="default"
                   disabled={isSubmitting || !isValid}

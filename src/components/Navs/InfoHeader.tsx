@@ -1,9 +1,9 @@
 import dayjs from 'dayjs';
 import { Button } from '../ui/button';
+import { Bell, PanelLeft } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import avatar from '../../assets/defaultImages/avatar.png';
-import { Circle, CircleOff, PanelLeft } from 'lucide-react';
 import { toggleSidebar } from '@/utils/redux/slices/appSlice';
 import { AppDispatch, RootState } from '@/utils/redux/appStore';
 
@@ -18,58 +18,81 @@ const InfoHeader: React.FC<InfoHeaderProps> = ({
 }) => {
 
     const dispatch = useDispatch<AppDispatch>();
-    const formatted = dayjs().format('DD MM dddd hh:mm A');
     const { profileImageUpdating } = useSelector((state: RootState) => state.auth);
 
-    const [isOnline, setIsOnline] = useState(true)
+    const [isOnline, setIsOnline] = useState(true);
     useEffect(() => {
-        window.addEventListener("offline", () => {
-            setIsOnline(false);
-        })
+        const handleOffline = () => setIsOnline(false);
+        const handleOnline = () => setIsOnline(true);
 
-        window.addEventListener("online", () => {
-            setIsOnline(true);
-        })
+        window.addEventListener("offline", handleOffline);
+        window.addEventListener("online", handleOnline);
+
+        return () => {
+            window.removeEventListener("offline", handleOffline);
+            window.removeEventListener("online", handleOnline);
+        }
     }, []);
 
     const handleSidebar = (): void => {
         dispatch(toggleSidebar());
     }
+
     return (
-        <nav className={` bg-[var(--menuBg)] m-4 p-2 rounded-md mt-2 flex items-center`}>
+        <nav className="m-4 mt-2 px-4 md:px-6 py-3 flex items-center justify-between rounded-2xl bg-[var(--menuBg)]/80 backdrop-blur-xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] border border-gray-200/20 dark:border-white/5 transition-all duration-300">
+            <div className="flex items-center gap-2 md:gap-4">
+                <Button
+                    title="Toggle Sidebar"
+                    variant="ghost"
+                    size="icon"
+                    className="rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer"
+                    onClick={handleSidebar}
+                >
+                    <PanelLeft className="w-5 h-5 opacity-80" />
+                </Button>
 
-            <Button
-                variant="ghost"
-                className="cursor-pointer"
-                onClick={handleSidebar}
-            >
-                <PanelLeft />
-            </Button>
+                <div className="w-px h-6 bg-gray-400/20 hidden sm:block"></div>
 
-            <div className='flex ml-3'>
-                {profileImageUpdating ? (
-                    <div className="rounded-full size-6 shimmer"></div>
-                ) : (
-                    <img
-                    src={profileImage || avatar}
-                    className='size-6 rounded-full'
-                    />
-                )}
-                <h4 className='italic ml-2'>Hi, {username}</h4>
-            </div>
-
-            <div className='flex space-x-2 items-center ml-auto'>
-                <h4 className='text-sm'>{formatted}</h4>
-                <div className='flex' title={isOnline ? "Online" : "Offline"} >
-                    {isOnline ? (
-                        <Circle className="size-4 text-green-500 fill-green-500" />
-                    ) : (
-                        <CircleOff className="size-4 text-red-500 fill-red-500" />
-                    )}
+                <div className="flex items-center gap-3">
+                    <div className="relative flex items-center justify-center">
+                        {profileImageUpdating ? (
+                            <div className="rounded-full size-9 shimmer ring-2 ring-primary/20"></div>
+                        ) : (
+                            <img
+                                src={profileImage || avatar}
+                                alt="Profile"
+                                className="size-9 rounded-full object-cover ring-2 ring-primary/20 shadow-sm"
+                            />
+                        )}
+                        <div className={`absolute bottom-0 right-0 size-2.5 rounded-full border-2 border-[var(--menuBg)] ${isOnline ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]' : 'bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.8)]'}`} title={isOnline ? "Online" : "Offline"}></div>
+                    </div>
+                    <div className="flex flex-col">
+                        <span className="text-[10px] text-gray-500 font-semibold uppercase tracking-widest hidden sm:block">Welcome Back</span>
+                        <h4 className="text-sm font-medium tracking-wide">Hi, {username}</h4>
+                    </div>
                 </div>
             </div>
+
+            <div className="flex items-center gap-3 md:gap-5">
+                <div className="hidden lg:flex flex-col items-end">
+                    <span className="text-[10px] text-gray-500 font-semibold uppercase tracking-widest">{dayjs().format('dddd')}</span>
+                    <h4 className="text-sm font-medium opacity-90 tracking-wide">{dayjs().format('DD MMM YYYY, hh:mm A')}</h4>
+                </div>
+
+                <div className="w-px h-6 bg-gray-400/20 hidden lg:block"></div>
+
+                <Button
+                    title="notifications"
+                    variant="ghost"
+                    size="icon"
+                    className="relative rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer"
+                >
+                    <Bell className="w-5 h-5 opacity-80" />
+                    <span className="absolute top-2.5 right-2.5 size-2 bg-blue-500 rounded-full animate-pulse shadow-[0_0_6px_rgba(59,130,246,0.8)] border border-[var(--menuBg)]"></span>
+                </Button>
+            </div>
         </nav>
-    )
+    );
 }
 
 export default InfoHeader

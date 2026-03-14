@@ -41,7 +41,6 @@ import {
   Video,
   Calendar1,
   Star,
-  Bell,
   Settings,
   Combine,
   User,
@@ -111,7 +110,6 @@ export const userRoutes: Route[] = [
   { path: "calendar", name: "Calendar", icon: Calendar1 },
   { path: "video-call", name: "Video call", icon: Video },
   { path: "reviews", name: "Reviews", icon: Star },
-  { path: "notifications", name: "Notifications", icon: Bell },
   { path: "settings", name: "Settings", icon: Settings },
 ]
 
@@ -127,7 +125,6 @@ export const providerRoutes: Route[] = [
   { path: "chat", name: "Chat", icon: MessageSquare },
   { path: "video-call", name: "Video call", icon: Video },
   { path: "reviews", name: "Reviews", icon: Star },
-  { path: "notifications", name: "Notifications", icon: Bell },
   { path: "settings", name: "Settings", icon: Settings },
 ]
 

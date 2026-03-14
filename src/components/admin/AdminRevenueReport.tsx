@@ -31,10 +31,8 @@ const AdminRevenueReport: React.FC = () => {
         queryFn: () => adminFetchRevenueReport({
             startDate: dateRange?.from,
             endDate: dateRange?.to,
-            pagination: {
-                page: pagination.pageIndex + 1,
-                limit: pagination.pageSize
-            }
+            page: pagination.pageIndex + 1,
+            limit: pagination.pageSize
         }),
         queryKey: [
             "revenue",
@@ -56,7 +54,10 @@ const AdminRevenueReport: React.FC = () => {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
                 <Popover>
                     <PopoverTrigger asChild>
-                        <Button variant="default" className="w-full md:w-auto justify-start text-left font-normal cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]">
+                        <Button
+                            title="Select Date Range"
+                            variant="default"
+                            className="w-full md:w-auto justify-start text-left font-normal cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]">
                             <CalendarIcon className="mr-2 h-4 w-4" />
                             {dateRange?.from && dateRange?.to ? (
                                 <>
@@ -78,20 +79,22 @@ const AdminRevenueReport: React.FC = () => {
                 </Popover>
 
                 <div className="flex gap-2">
-                    <Button className='cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]' onClick={() => refetch()}>
+                    <Button title="Reset" className='cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]' onClick={() => refetch()}>
                         <RotateCcw />
                         Reset
                     </Button>
                     <Button
+                        title="Generate PDF"
                         variant="default"
                         className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
                         onClick={(e) => handleExportPDF(e, data?.data?.rows || [], "Revenue")}
-                        >
+                    >
                         <NotebookText />
                         Generate PDF
                     </Button>
 
                     <Button
+                        title="Generate Excel"
                         variant="default"
                         className="cursor-pointerhover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
                         onClick={(e) => handleExportExcel(e, data?.data?.rows || [], "Revenue")}
