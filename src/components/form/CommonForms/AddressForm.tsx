@@ -225,6 +225,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
 
             <div className="flex justify-center md:justify-end mt-4 md:mt-6">
                 <Button
+                    title={buttonText}
                     type="submit"
                     variant="default"
                     className="cursor-pointer w-10/12 md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"

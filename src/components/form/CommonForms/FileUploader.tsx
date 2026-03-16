@@ -143,6 +143,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
                             )
                             }
                             <Button
+                                title="Delete File"
                                 type="button"
                                 variant="destructive"
                                 className='cursor-pointer'
@@ -164,6 +165,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
                 {(!fileUploaded && proofFile) && (
                     <CardFooter className='flex justify-end'>
                         <Button
+                            title="Upload"
                             variant="default"
                             disabled={isSubmitting || !isValid}
                             className="cursor-pointer w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"

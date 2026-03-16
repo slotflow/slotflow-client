@@ -87,6 +87,7 @@ const ContactPage = () => {
                 </Field>
 
                 <Button
+                  title="Send Message"
                   variant="default"
                   type="submit"
                   className="w-full cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"

@@ -40,6 +40,7 @@ const SideBox: React.FC<SideBoxProps> = ({ props }) => {
           <h3 className="text-3xl font-bold italic text-[var(--mainColor)]">Slotflow</h3>
           {user && (
             <Button
+              title="Logout"
               variant="default"
               onClick={() =>
                 handleSignoutHelper({

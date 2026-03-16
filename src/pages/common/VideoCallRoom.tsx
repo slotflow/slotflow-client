@@ -246,13 +246,13 @@ const RoomPage = () => {
       </div>
 
       <div className="flex gap-4 mt-6 bg-[var(--menuItemHoverBg)] p-4 rounded-xl shadow">
-        <Button onClick={toggleCamera} variant={isCameraOn ? "default" : "destructive"} className="cursor-pointer" >
+        <Button title={isCameraOn ? "Video On" : "Video Off"} onClick={toggleCamera} variant={isCameraOn ? "default" : "destructive"} className="cursor-pointer" >
           {isCameraOn ? <Video /> : <VideoOff />}
         </Button>
-        <Button onClick={toggleMic} variant={isMicOn ? "default" : "destructive"} className="cursor-pointer" >
+        <Button title={isMicOn ? "Mic On" : "Mic Off"} onClick={toggleMic} variant={isMicOn ? "default" : "destructive"} className="cursor-pointer" >
           {isMicOn ? <Mic /> : <MicOff />}
         </Button>
-        <Button onClick={handleEndCall} variant="destructive" className="cursor-pointer" >
+        <Button title="End Call" onClick={handleEndCall} variant="destructive" className="cursor-pointer" >
           <PhoneOff />
         </Button>
       </div>

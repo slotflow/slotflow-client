@@ -118,7 +118,7 @@ const FilterRightSideBar: React.FC<FilterRightSideBarProps> = ({ onClose }) => {
             <div className="flex flex-col h-full">
                 <div className="flex items-center justify-between border-b p-4">
                     <h4 className="text-lg font-semibold flex items-center gap-2"><SlidersHorizontal className="size-5" />Filters</h4>
-                    <Button variant="ghost" size="icon" className="cursor-pointer" onClick={onClose}>
+                    <Button title="Cancel" variant="ghost" size="icon" className="cursor-pointer" onClick={onClose}>
                         <X className="w-5 h-5" />
                     </Button>
                 </div>
@@ -259,10 +259,12 @@ const FilterRightSideBar: React.FC<FilterRightSideBarProps> = ({ onClose }) => {
 
                 <div className="flex space-x-2 border-t bg-[var(--menuBg)] p-3 sticky bottom-0">
                     <Button
+                        title="Clear"
                         onClick={handleClearFilter}
                         className="w-1/2 cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
                     >Clear</Button>
                     <Button
+                        title="Apply"
                         onClick={handleApplyFilter}
                         className="w-1/2 cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
                     >

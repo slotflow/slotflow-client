@@ -85,6 +85,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
                                 />
 
                                 <Button
+                                    title="Forgot Password"
                                     variant="link"
                                     className="px-0 block text-xs md:text-sm font-medium text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
                                     onClick={() => {

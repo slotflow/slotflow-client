@@ -105,7 +105,7 @@ export function DataTable<TData, TValue>({
         <DropdownMenu>
           <div className="ml-auto">
             <DropdownMenuTrigger asChild>
-              <Button variant="default" className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]">Columns</Button>
+              <Button title="Columns" variant="default" className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]">Columns</Button>
             </DropdownMenuTrigger>
           </div>
           <DropdownMenuContent align="end">
@@ -191,6 +191,7 @@ export function DataTable<TData, TValue>({
         </div>
         <div className="flex items-center space-x-2">
           <Button
+            title="Previous"
             variant="default"
             className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
             size="sm"
@@ -200,6 +201,7 @@ export function DataTable<TData, TValue>({
             Previous
           </Button>
           <Button
+            title="Next"
             variant="default"
             className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
             size="sm"

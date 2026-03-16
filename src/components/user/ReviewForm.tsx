@@ -102,6 +102,7 @@ const ReviewForm: React.FC = () => {
 
                     <div className="flex gap-3 justify-end">
                         <Button
+                            title="Cancel"
                             type="button"
                             variant="destructive"
                             className="cursor-pointer"
@@ -109,7 +110,7 @@ const ReviewForm: React.FC = () => {
                         >
                             Cancel
                         </Button>
-                        <Button type="submit" className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]">
+                        <Button title="Submit" type="submit" className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]">
                             Submit
                         </Button>
                     </div>

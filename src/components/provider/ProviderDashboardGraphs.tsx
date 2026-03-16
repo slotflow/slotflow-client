@@ -7,7 +7,6 @@ import React, { useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { PlanName } from '@/utils/interface/enums';
 import { RootState } from '@/utils/redux/appStore';
-import { graphView } from '@/utils/helper/graphView';
 import RadialChart from '../common/chart/RadialChart';
 import { CalendarIcon, GitGraph } from 'lucide-react';
 import DataFetchingError from '../common/DataFetchingError';
@@ -22,6 +21,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import PieChartCompletionBreakdown from '../common/chart/PieChartCompletionBreakdown';
 import { ProviderDashboardGraphResponse } from '@/utils/interface/api/providerApiInterface';
 import { appointmentModeChartConfig, appointmentsOverTimeChartConfig, completionBreakdownChartConfig, newVsReturningUsersChartConfig, peakBookingHoursChartConfig, topBookingDaysChartConfig } from '@/utils/constants';
+import { graphView } from '@/utils/helper/GraphView';
 
 const ProviderDashboardGraphs: React.FC = () => {
 
@@ -65,7 +65,7 @@ const ProviderDashboardGraphs: React.FC = () => {
 
                             <Popover>
                                 <PopoverTrigger asChild>
-                                    <Button variant="default" className="w-full md:w-auto justify-start text-left font-normal cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]">
+                                    <Button title="Select Date" variant="default" className="w-full md:w-auto justify-start text-left font-normal cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]">
                                         <CalendarIcon className="mr-2 h-4 w-4" />
                                         {dateRange?.from && dateRange?.to ? (
                                             <>

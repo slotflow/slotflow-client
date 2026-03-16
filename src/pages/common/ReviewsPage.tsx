@@ -99,6 +99,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
             <p>Are you sure you want to delete this review?</p>
             <div className="flex gap-2">
               <Button
+                title="Delete"
                 size="sm"
                 variant="destructive"
                 className="cursor-pointer"
@@ -117,7 +118,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
               >
                 Yes, Delete
               </Button>
-              <Button size="sm" variant="ghost" className="cursor-pointer" onClick={closeToast}>
+              <Button title="Cancel" size="sm" variant="ghost" className="cursor-pointer" onClick={closeToast}>
                 Cancel
               </Button>
             </div>
@@ -287,6 +288,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
               <div className="flex gap-2 mt-4">
                 {role === Role.USER && (
                   <Button
+                    title="Delete"
                     variant="destructive"
                     size="sm"
                     className="cursor-pointer bg-[var(--background)] border"
@@ -297,6 +299,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
                 )}
                 {role === Role.PROVIDER && (
                   <Button
+                    title={review.reported ? "Unreport" : "Report"}
                     variant="default"
                     size="sm"
                     className="cursor-pointer"
@@ -321,6 +324,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
                 )}
                 {role === Role.ADMIN && (
                   <Button
+                    title={review.isBlocked ? "Unblock" : "Block"}
                     variant="secondary"
                     size="sm"
                     className="cursor-pointer"
@@ -355,6 +359,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
       {hasNextPage && (
         <div className="flex justify-center mt-8">
           <Button
+            title="Load More"
             onClick={() => fetchNextPage()}
             disabled={isFetchingNextPage}
             className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"

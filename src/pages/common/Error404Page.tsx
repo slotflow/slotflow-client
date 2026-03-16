@@ -21,6 +21,7 @@ const Error404Page: React.FC = () => {
         className='h-40 md:h-80'
       />
       <Button 
+        title="Return To Home"
       onClick={() => {
         navigate('/')
       }} className="mt-6 cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]" > \

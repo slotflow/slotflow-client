@@ -14,6 +14,7 @@ const GoogleButton: React.FC<GoogleButtonProps> = ({
 }) => {
     return (
         <Button
+            title={text}
             onClick={onClick}
             variant="default"
             type="button"

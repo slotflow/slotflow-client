@@ -50,6 +50,7 @@ export const TimePicker: React.FC<TimePickerProps> = ({ value, onChange }) => {
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
         <Button
+          title="Date"
           variant="outline"
           className={cn(
             "w-full justify-start text-left font-normal",
@@ -68,6 +69,7 @@ export const TimePicker: React.FC<TimePickerProps> = ({ value, onChange }) => {
             <div className="flex sm:flex-col p-2">
               {hours.map((hour) => (
                 <Button
+                  title="Date"
                   key={hour}
                   size="icon"
                   variant={
@@ -88,6 +90,7 @@ export const TimePicker: React.FC<TimePickerProps> = ({ value, onChange }) => {
             <div className="flex sm:flex-col p-2">
               {minutes.map((minute) => (
                 <Button
+                  title="Date"
                   key={minute}
                   size="icon"
                   variant={
@@ -108,6 +111,7 @@ export const TimePicker: React.FC<TimePickerProps> = ({ value, onChange }) => {
             <div className="flex sm:flex-col p-2">
               {["AM", "PM"].map((ampm) => (
                 <Button
+                  title="Date"
                   key={ampm}
                   size="icon"
                   variant={

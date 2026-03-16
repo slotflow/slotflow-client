@@ -92,6 +92,7 @@ const CountrySelect = ({
     <Popover open={isOpen} onOpenChange={setIsOpen} modal>
       <PopoverTrigger asChild>
         <Button
+          title="Country select"
           type="button"
           variant="outline"
           className="flex gap-1 rounded-e-none rounded-s-lg border-r-0 focus:z-10"

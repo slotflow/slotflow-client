@@ -158,6 +158,7 @@ const LobbyPage = () => {
 
         <div className="flex gap-4 mt-6 bg-[var(--menuItemHoverBg)] p-4 rounded-xl shadow">
           <Button
+            title={isCameraOn ? "Video On" : "Video Off"}
             onClick={toggleCamera}
             variant={isCameraOn ? "default" : "destructive"}
             className="cursor-pointer"
@@ -165,6 +166,7 @@ const LobbyPage = () => {
             {isCameraOn ? <Video /> : <VideoOff />}
           </Button>
           <Button
+            title={isMicOn ? "Mic On" : "Mic Off"}
             onClick={toggleMic}
             variant={isMicOn ? "default" : "destructive"}
             className="cursor-pointer"
@@ -180,6 +182,7 @@ const LobbyPage = () => {
           Check your camera and microphone before joining the meeting.
         </p>
         <Button
+          title="Join Now"
           onClick={handleJoin}
           className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
         >

@@ -177,6 +177,7 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
 
                                                 return role === Role.USER ? (
                                                     <Button
+                                                        title={slot.time}
                                                         key={slot._id}
                                                         variant="outline"
                                                         onClick={(e) => {

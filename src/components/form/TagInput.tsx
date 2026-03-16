@@ -33,6 +33,7 @@ const TagInput: React.FC<TagInputProps> = ({ value, onChange }) => {
           className="border rounded-md px-3 py-2 w-full text-sm"
         />
         <Button
+          title="Add"
           type="button"
           variant="default"
           onClick={addTag}
@@ -50,6 +51,7 @@ const TagInput: React.FC<TagInputProps> = ({ value, onChange }) => {
           >
             {tag}
             <Button
+              title="Remove"
               type="button"
               variant="ghost"
               onClick={() => removeTag(tag)}

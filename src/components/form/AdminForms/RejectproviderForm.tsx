@@ -126,7 +126,13 @@ const RejectproviderForm: React.FC<RejectproviderFormProps> = ({
             loading={isSubmitting}
             disabled={isSubmitting || !isValid}
           />
-          <Button variant="destructive" className="cursor-pointer w-full" type="button" onClick={handleCloseForm}>
+          <Button 
+          title="Cancel"
+          variant="destructive" 
+          className="cursor-pointer w-full" 
+          type="button" 
+          onClick={handleCloseForm}
+          >
             Cancel
           </Button>
         </div>

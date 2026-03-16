@@ -18,6 +18,7 @@ const ProviderAvailability = () => {
                         <h2 className="text-xl font-semibold">Service Availability</h2>
                     </div>
                     <Button
+                        title="Edit Details"
                         variant="default"
                         // disabled={loading}
                         // onClick={}

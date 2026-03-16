@@ -169,6 +169,7 @@ const OtpVerificatioForm: React.FC<OtpVerificatioFormProps> = ({ role }) => {
                             )}
                         </p>
                         <Button
+                            title="otp not recieved"
                             variant="link"
                             className="block text-xs md:text-sm font-medium text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer px-2"
                             onClick={() => {

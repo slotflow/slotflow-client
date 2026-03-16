@@ -18,6 +18,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
 
       {actionLabel && onActionClick && (
         <Button
+          title={actionLabel}
           variant="default"
           className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
           onClick={onActionClick}

@@ -22,6 +22,7 @@ export const FormHeading: React.FC<AuthFormsHeadingProps> = React.memo(({ title,
 export const FormButton: React.FC<AuthFormsButtonProps> = React.memo(({ text, loading = false, disabled }) => {
     return (
         <Button
+            title={text}
             variant="default"
             type="submit"
             disabled={disabled}

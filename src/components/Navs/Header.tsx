@@ -55,6 +55,7 @@ const Header: React.FC = () => {
 
         <div className='w-3/12 flex justify-end items-center'>
           <Button
+            title="Login"
             variant={"ghost"}
             onClick={handleAuthClick}
             className="cursor-pointer px-4 py-2 rounded-lg text-sm font-semibold bg-[var(--mainColor)] text-white hover:opacity-90 transition border border-[var(--mainColor)] hover:text-[var(--mainColor)] "
@@ -63,6 +64,7 @@ const Header: React.FC = () => {
           </Button>
 
           <Button
+            title="Sign Up"
             variant={"ghost"}
             onClick={handleAuthClick}
             className="hidden md:blockml-2 cursor-pointer px-4 py-2 rounded-lg text-sm font-semibold border border-[var(--mainColor)] text-[var(--mainColor)] hover:bg-[var(--mainColor)] hover:text-white transition"
