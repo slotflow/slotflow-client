@@ -10,10 +10,10 @@ import React, { useState } from "react";
 import { settingsTabs } from "@/utils/constants";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import AccountSecurity from "@/components/common/AccountSecurity";
-import IntegrationsListing from "@/components/common/IntegrationsListing";
-import PersonalizationList from "@/components/common/PersonalizationList";
-import NotificationSettings from "@/components/common/NotificationSettings";
+import AccountSecurity from "@/components/common/settings/AccountSecurity";
+import IntegrationsListing from "@/components/common/settings/IntegrationsListing";
+import PersonalizationList from "@/components/common/settings/PersonalizationList";
+import NotificationSettings from "@/components/common/settings/NotificationSettings";
 
 const SettingsPage: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<string>("notifications");
@@ -56,10 +56,9 @@ const SettingsPage: React.FC = () => {
                   key={value}
                   onClick={() => setSelectedTab(value)}
                   className={`flex items-center gap-2 w-full justify-start px-3 py-2 rounded-md text-sm font-medium transition-colors
-                    ${
-                      selectedTab === value
-                        ? "bg-accent text-accent-foreground"
-                        : "hover:bg-muted"
+                    ${selectedTab === value
+                      ? "bg-accent text-accent-foreground"
+                      : "hover:bg-muted"
                     }`}
                 >
                   {Icon && <Icon className="w-4 h-4" />}
