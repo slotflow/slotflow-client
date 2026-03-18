@@ -3,18 +3,17 @@ import { userRoutes } from "@/utils/constants";
 import Sidebar from "@/components/Navs/Sidebar";
 import InfoHeader from "@/components/Navs/InfoHeader";
 import ReviewForm from "@/components/user/ReviewForm";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Outlet, useLocation } from "react-router-dom";
 import LoadingFallback from "../common/LoadingFallback";
 import avatar from '../../assets/defaultImages/avatar.png';
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
+import { RootState } from "@/utils/redux/appStore";
 import FilterRightSideBar from "@/components/Navs/FilterRightSideBar";
-import { toggleFilterSideBar } from "@/utils/redux/slices/appSlice";
+import NotificationsContainer from "@/components/notification/NotificationsContainer";
 
 const UserMainPage = () => {
 
   const location = useLocation();
-  const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((store: RootState) => store.auth.authUser);
   const { sidebarOpen } = useSelector((store: RootState) => store.app);
   const { isReviewCreateFormOpen } = useSelector((store: RootState) => store.user);
@@ -31,11 +30,13 @@ const UserMainPage = () => {
           {isReviewCreateFormOpen && (
             <ReviewForm />
           )}
+
+          <NotificationsContainer />
         </div>
       </div>
 
       {location?.pathname === '/user/dashboard' && (
-        <FilterRightSideBar onClose={() => dispatch(toggleFilterSideBar())} />
+        <FilterRightSideBar  />
       )}
 
     </div>

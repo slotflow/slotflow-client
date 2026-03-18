@@ -1,13 +1,13 @@
 import React from "react";
 import { LucideIcon } from "lucide-react";
 
-interface NotificationBoxProps {
+interface AlertProps {
   icon?: LucideIcon;
   heading: string;
   message: string;
 }
 
-const NotificationBox: React.FC<NotificationBoxProps> = ({
+const AlertBox: React.FC<AlertProps> = ({
   icon: Icon,
   heading,
   message,
@@ -28,4 +28,4 @@ const NotificationBox: React.FC<NotificationBoxProps> = ({
   );
 };
 
-export default NotificationBox;
+export default AlertBox;

@@ -5,11 +5,11 @@ import { Check, Info } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import AlertBox from '@/components/common/AlertBox';
 import { AppDispatch } from '@/utils/redux/appStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { getUploadUrl, uploadToS3 } from '@/utils/apis/s3.api';
-import NotificationBox from '@/components/common/NotificationBox';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { ImageFileFormType, imageFileZodeSchema } from '@/utils/zod/providerZod';
 import { FileUploaderProps } from '@/utils/interface/componentInterface/commonComponentInterface';
@@ -155,7 +155,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
                     )}
 
                     {message && (
-                        <NotificationBox
+                        <AlertBox
                             icon={Info}
                             heading={"Important"}
                             message={message}

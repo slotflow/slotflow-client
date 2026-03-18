@@ -10,21 +10,20 @@ import { ServiceCategory } from "@/utils/interface/enums";
 import FilterCompHeader from "../common/FilterCompHeader";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { userFetchAllAppServices } from "@/utils/apis/user.api";
+import { toggleFilterSideBar } from "@/utils/redux/slices/appSlice";
 import { setProviderCardsFilter } from "@/utils/redux/slices/userSlice";
 import { ProviderCardsFilters } from "@/utils/interface/commonInterface";
 import { Location } from "@/utils/interface/entityInterface/addressInterface";
-import { BookCheck, ChartBarStacked, IndianRupee, Locate, SlidersHorizontal, X } from "lucide-react";
+import { BookCheck, ChartBarStacked, IndianRupee, Locate, SlidersHorizontal } from "lucide-react";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 
-interface FilterRightSideBarProps {
-    onClose: () => void;
-};
 
-const FilterRightSideBar: React.FC<FilterRightSideBarProps> = ({ onClose }) => {
+const FilterRightSideBar: React.FC = () => {
 
     const dispatch = useDispatch<AppDispatch>();
 
     const { selectedCategories } = useSelector((state: RootState) => state.user);
-    const filterSideBarOpen = useSelector((state: RootState) => state.app.filterSideBarOpen);
+    const { filterSideBarOpen } = useSelector((state: RootState) => state.app);
 
     const [showMapFilter, setShowMapFilter] = useState<boolean>(true);
     const [showPriceFilter, setShowPriceFilter] = useState<boolean>(true);
@@ -114,15 +113,16 @@ const FilterRightSideBar: React.FC<FilterRightSideBarProps> = ({ onClose }) => {
     };
 
     return (
-        <aside className={`fixed right-0 top-0 z-40 h-screen bg-[var(--menuBg)] border-l shadow-2xl transition-all duration-300 ${filterSideBarOpen ? "w-[320px]" : "w-0"} overflow-hidden`}>
-            <div className="flex flex-col h-full">
-                <div className="flex items-center justify-between border-b p-4">
-                    <h4 className="text-lg font-semibold flex items-center gap-2"><SlidersHorizontal className="size-5" />Filters</h4>
-                    <Button title="Cancel" variant="ghost" size="icon" className="cursor-pointer" onClick={onClose}>
-                        <X className="w-5 h-5" />
-                    </Button>
-                </div>
-                <div className="flex-1 overflow-y-auto p-4 pb-6 space-y-6">
+        <Sheet open={filterSideBarOpen} onOpenChange={() => dispatch(toggleFilterSideBar())}>
+            <SheetContent className="w-[320px] sm:w-[400px] bg-[var(--menuBg)] border-l flex flex-col p-6 shadow-2xl">
+                <SheetHeader className="mb-4">
+                    <SheetTitle className="flex items-center gap-2 text-xl font-bold">
+                        <SlidersHorizontal className="w-5 h-5 text-[var(--mainColor)]" />
+                        Filters
+                    </SheetTitle>
+                </SheetHeader>
+
+                <div className="flex-1 overflow-y-auto p-4 pb-6 space-y-6 no-scrollbar">
 
                     <section>
                         <FilterCompHeader
@@ -139,7 +139,7 @@ const FilterRightSideBar: React.FC<FilterRightSideBarProps> = ({ onClose }) => {
                                     <Checkbox
                                         checked={filters.slotflowTrusted}
                                         onCheckedChange={(checked) =>
-                                            setFilters(prev => ({...prev,slotflowTrusted: Boolean(checked),}))
+                                            setFilters(prev => ({ ...prev, slotflowTrusted: Boolean(checked), }))
                                         }
                                     />
                                 </div>
@@ -271,8 +271,8 @@ const FilterRightSideBar: React.FC<FilterRightSideBarProps> = ({ onClose }) => {
                         Apply
                     </Button>
                 </div>
-            </div>
-        </aside>
+            </SheetContent>
+        </Sheet>
     );
 };
 

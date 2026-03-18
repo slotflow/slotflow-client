@@ -7,7 +7,7 @@ const initialState: appState = {
     sidebarOpen: true, // TODO make it starting with is
     filterSideBarOpen: true, // TODO make it starting with is
     authModal: false,  // TODO make it starting with is and end with open
-
+    isNotificationsOpen: false,
     forgotPassword: false,
     otpRemainingTime: 0,
     otpTimerIsRunning: false,
@@ -25,6 +25,9 @@ const stateSlice = createSlice({
         },
         toggleFilterSideBar: (state) => {
             state.filterSideBarOpen = !state.filterSideBarOpen;
+        },
+        toggleNotificationContainer: (state) => {
+            state.isNotificationsOpen = !state.isNotificationsOpen;
         },
         setAuthModal: (state, action: PayloadAction<boolean>) => {
             state.authModal = action.payload;
@@ -82,7 +85,8 @@ export const {
     toggleFilterSideBar,
     setAuthModal,
     updateTimer,
-    setForgotPassword
+    setForgotPassword,
+    toggleNotificationContainer
 } = stateSlice.actions;
 
 export default stateSlice.reducer;

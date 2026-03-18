@@ -65,6 +65,7 @@ export interface appState {
   forgotPassword: boolean;
   otpRemainingTime: number;
   otpTimerIsRunning: boolean;
+  isNotificationsOpen: boolean;
 }
 
 

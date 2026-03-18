@@ -6,9 +6,9 @@ import { PhoneInput } from '../phone-input';
 import { countries } from 'country-data-list';
 import { ChevronRight, Info } from 'lucide-react';
 import { RootState } from '@/utils/redux/appStore';
+import AlertBox from '@/components/common/AlertBox';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from "react-hook-form";
-import NotificationBox from '../../common/NotificationBox';
 import { CountryDropdown } from '../../ui/country-dropdown';
 import LocationPicker from '@/components/common/LocationPicker';
 import { Location } from '@/utils/interface/entityInterface/addressInterface';
@@ -78,7 +78,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
 
     useEffect(() => {
         reset(setData)
-    },[setData, reset])
+    }, [setData, reset])
 
     const submitHandler = (data: CreateAddressFormType) => {
         onSubmit(data);
@@ -214,7 +214,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
                         Select Location{<span className="mx-1 text-red-500">*</span>}
                     </label>
                     <LocationPicker onLocationSelect={handleLocationSelect} />
-                    <NotificationBox
+                    <AlertBox
                         icon={Info}
                         heading={addAddressGoogleMapLinkInfoHeading}
                         message={addAddressGoogleMapLinkInfo}

@@ -4,8 +4,8 @@ import { Bell, PanelLeft } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import avatar from '../../assets/defaultImages/avatar.png';
-import { toggleSidebar } from '@/utils/redux/slices/appSlice';
 import { AppDispatch, RootState } from '@/utils/redux/appStore';
+import { toggleNotificationContainer, toggleSidebar } from '@/utils/redux/slices/appSlice';
 
 interface InfoHeaderProps {
     profileImage?: string;
@@ -86,6 +86,7 @@ const InfoHeader: React.FC<InfoHeaderProps> = ({
                     variant="ghost"
                     size="icon"
                     className="relative rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer"
+                    onClick={() => dispatch(toggleNotificationContainer())}
                 >
                     <Bell className="w-5 h-5 opacity-80" />
                     <span className="absolute top-2.5 right-2.5 size-2 bg-blue-500 rounded-full animate-pulse shadow-[0_0_6px_rgba(59,130,246,0.8)] border border-[var(--menuBg)]"></span>
