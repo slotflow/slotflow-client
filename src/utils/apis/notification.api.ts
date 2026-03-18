@@ -1,9 +1,18 @@
 import { axiosInstance } from "@/lib/axios";
-import { ApiBaseResponse } from "../interface/commonInterface";
-import { RegisterDeviceRequest } from "../interface/api/notificationApiInterface";
+import { buildQueryParams, parseNewCommonResponse } from "../helper";
+import { ApiBaseResponse, ApiFetchFunction } from "../interface/commonInterface";
+import { FetchNotificationsQueryParams, FetchNotificationsResponse, RegisterDeviceRequest } from "../interface/api/notificationApiInterface";
 
 export const registerDevice = async (data: RegisterDeviceRequest): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.post('/user-device',data);
-    console.log("registerDevice response : ",response);
     return response.data;
+};
+
+export const fetchNotifications: ApiFetchFunction<
+FetchNotificationsResponse,
+FetchNotificationsQueryParams
+> = async (queryParams) => {
+  const query = buildQueryParams(queryParams);
+  const response = await axiosInstance.get(`/notifications${query ? `?${query}` : ""}`);
+  return parseNewCommonResponse<FetchNotificationsResponse>(response.data.data);
 };

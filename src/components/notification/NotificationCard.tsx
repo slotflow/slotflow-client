@@ -1,14 +1,31 @@
+import dayjs from "dayjs"
+import relativeTime from "dayjs/plugin/relativeTime"
+import { formateDate } from "@/utils/helper/formatter";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
-const NotificationCard = () => {
+dayjs.extend(relativeTime)
+
+interface NotificationCardProps {
+    title: string;
+    body: string;
+    isRead: boolean;
+    createdAt: Date;
+}
+
+const NotificationCard = ({ title, body, isRead, createdAt }: NotificationCardProps) => {
 
     return (
-        <Alert>
-            <AlertTitle>Payment successful</AlertTitle>
-            <AlertDescription>
-                Your payment of $29.99 has been processed. A receipt has been sent to
-                your email address.
+        <Alert className={`transition-colors shadow-sm ${isRead ? 'bg-black/5 dark:bg-white/5 opacity-70 border-transparent' : 'bg-blue-50/50 dark:bg-blue-900/10 border-blue-200/50 dark:border-blue-800/50'}`}>
+            <AlertTitle className={`flex justify-between items-start leading-tight ${!isRead ? 'font-bold text-gray-900 dark:text-gray-100' : 'text-gray-700 dark:text-gray-300'}`}>
+                <span className="break-words mr-2">{title}</span>
+                {!isRead && <span className="h-2 w-2 rounded-full bg-blue-500 shrink-0 mt-1 shadow-[0_0_4px_rgba(59,130,246,0.6)]" />}
+            </AlertTitle>
+            <AlertDescription className={`mt-1.5 text-sm ${!isRead ? 'text-gray-700 dark:text-gray-300' : 'text-gray-500 dark:text-gray-400'}`}>
+                {body}
             </AlertDescription>
+            <div className="text-[10px] text-gray-400 mt-2.5 text-right font-medium tracking-wide uppercase">
+                {formateDate(createdAt)}
+            </div>
         </Alert>
     );
 };
