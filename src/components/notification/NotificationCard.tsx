@@ -22,10 +22,12 @@ const NotificationCard = ({ title, body, isRead, createdAt }: NotificationCardPr
             </AlertTitle>
             <AlertDescription className={`mt-1.5 text-sm ${!isRead ? 'text-gray-700 dark:text-gray-300' : 'text-gray-500 dark:text-gray-400'}`}>
                 {body}
+                <div className="flex justify-end w-full mt-2.5">
+                    <span className="text-[10px] text-gray-400 font-medium uppercase whitespace-nowrap">
+                        {formateDate(createdAt)}
+                    </span>
+                </div>
             </AlertDescription>
-            <div className="text-[10px] text-gray-400 mt-2.5 text-right font-medium tracking-wide uppercase">
-                {formateDate(createdAt)}
-            </div>
         </Alert>
     );
 };
