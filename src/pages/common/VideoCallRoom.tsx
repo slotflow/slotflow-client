@@ -11,8 +11,21 @@ import { useNavigate, useParams } from "react-router-dom";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { disconnectVideoSocket } from "@/utils/socket/videoSocketThunk";
 import { Mic, MicOff, Video, VideoOff, PhoneOff, Loader } from "lucide-react";
-import { setCamera, setMic, stopVideoCallTimer, updateVideoCallTimer } from "@/utils/redux/slices/videoSlice";
 import { JoinRoomCallbackRequest } from "@/utils/interface/api/bookingApiInterface";
+import { setCamera, setMic, stopVideoCallTimer, updateVideoCallTimer } from "@/utils/redux/slices/videoSlice";
+
+enum VideoCallSocketEnum {
+  roomJoin = "room:join",
+  userJoined = "user:joined",
+  userCall = "user:call",
+  incomingCall = "incoming:call",
+  callAccepted = "call:accepted",
+  peerNegotiation = "peer:nego:needed",
+  peerNegotiationDone = "peer:nego:done",
+  peerNegotiationFinal = "peer:nego:final",
+  roomLeave = "room:leave",
+  userLeft = "user:left",
+}
 
 const RoomPage = () => {
 
@@ -25,8 +38,10 @@ const RoomPage = () => {
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
 
   const [myStream, setMyStream] = useState<MediaStream | null>(null);
-  const [remoteSocketId, setRemoteSocketId] = useState<string | null>(null);
-  const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
+
+  const [ remoteUserName, setRemoteUsername ] = useState<string | null>(null);
+  const [ remoteSocketId, setRemoteSocketId ] = useState<string | null>(null);
+  const [ remoteStream, setRemoteStream ] = useState<MediaStream | null>(null);
 
   const user = useSelector((state: RootState) => state.auth.authUser);
   const { isCameraOn, isMicOn } = useSelector((state: RootState) => state.video);
@@ -57,28 +72,21 @@ const RoomPage = () => {
         stream.getTracks().forEach((track) => peer.peer.addTrack(track, stream));
       }
     };
-    
+
     initStream();
-    
+
     return () => {
       isMounted = false;
       if (currentStream) {
         currentStream.getTracks().forEach((t) => t.stop());
       }
     };
+
   }, [dispatch]);
 
   useEffect(() => {
-    if (myVideoRef.current && myStream) myVideoRef.current.srcObject = myStream;
-  }, [myStream]);
-
-  useEffect(() => {
-    if (remoteVideoRef.current && remoteStream) remoteVideoRef.current.srcObject = remoteStream;
-  }, [remoteStream]);
-
-  useEffect(() => {
     const handleTrack = (ev: RTCTrackEvent) => {
-      setRemoteStream(ev.streams[0]);
+       setRemoteStream(ev.streams[0]);
     };
     peer.peer.addEventListener("track", handleTrack);
 
@@ -87,7 +95,7 @@ const RoomPage = () => {
       if (peer.peer.signalingState !== "stable") return;
       const offer = await peer.getOffer();
       if (offer) {
-          videoSocket?.emit("peer:nego:needed", { offer, to: remoteSocketId });
+        videoSocket?.emit(VideoCallSocketEnum.peerNegotiation, { offer, to: remoteSocketId });
       }
     };
     peer.peer.addEventListener("negotiationneeded", handleNegoNeeded);
@@ -99,40 +107,53 @@ const RoomPage = () => {
   }, [remoteSocketId]);
 
   useEffect(() => {
-    videoSocket?.emit("room:join", { roomId, user: { id: user?.uid } });
+    if (myVideoRef.current && myStream) myVideoRef.current.srcObject = myStream;
+  }, [myStream]);
 
-    videoSocket?.on("user:joined", async ({ id }) => {
+  useEffect(() => {
+    if (remoteVideoRef.current && remoteStream) remoteVideoRef.current.srcObject = remoteStream;
+  }, [remoteStream]);
+
+  useEffect(() => {
+    videoSocket?.emit(VideoCallSocketEnum.roomJoin, { roomId, user: { id: user?.uid, name: user?.username } });
+
+    videoSocket?.on(VideoCallSocketEnum.userJoined, async ({ id, user: joinedUser }) => {
       setRemoteSocketId(id);
+      setRemoteUsername(joinedUser?.name);
       const offer = await peer.getOffer();
-      videoSocket?.emit("user:call", { to: id, offer });
+      if (joinedUser?.id !== user?.uid) {
+        toast.success(`${joinedUser?.name} joined the call`);
+      }
+      videoSocket?.emit(VideoCallSocketEnum.userCall, { to: id, offer, user: { name: user?.username } });
     });
 
-    videoSocket?.on("incoming:call", async ({ from, offer }) => {
+    videoSocket?.on(VideoCallSocketEnum.incomingCall, async ({ from, offer, user: caller }) => {
       setRemoteSocketId(from);
+      setRemoteUsername(caller?.name);
       const ans = await peer.getAnswer(offer);
-      videoSocket?.emit("call:accepted", { to: from, ans });
+      videoSocket?.emit(VideoCallSocketEnum.callAccepted, { to: from, ans });
     });
 
-    videoSocket?.on("call:accepted", async ({ ans }) => {
+    videoSocket?.on(VideoCallSocketEnum.callAccepted, async ({ ans }) => {
       await peer.setLocalDescription(ans);
     });
 
-    videoSocket?.on("peer:nego:needed", async ({ from, offer }) => {
+    videoSocket?.on(VideoCallSocketEnum.peerNegotiation, async ({ from, offer }) => {
       const ans = await peer.getAnswer(offer);
-      videoSocket?.emit("peer:nego:done", { to: from, ans });
+      videoSocket?.emit(VideoCallSocketEnum.peerNegotiationDone, { to: from, ans });
     });
 
-    videoSocket?.on("peer:nego:final", async ({ ans }) => {
+    videoSocket?.on(VideoCallSocketEnum.peerNegotiationFinal, async ({ ans }) => {
       await peer.setLocalDescription(ans);
     });
 
-    videoSocket?.on("user:left", () => {
+    videoSocket?.on(VideoCallSocketEnum.userLeft, () => {
       setRemoteStream(null);
     });
 
     return () => {
       peer.close();
-      videoSocket?.emit("room:leave", { roomId });
+      videoSocket?.emit(VideoCallSocketEnum.roomLeave, { roomId });
       dispatch(disconnectVideoSocket());
     };
   }, [roomId, user?.email]);
@@ -222,7 +243,7 @@ const RoomPage = () => {
         peer.peer.close();
         videoSocket?.emit("room:leave", { roomId });
         dispatch(disconnectVideoSocket());
-        
+
         if (myStream) {
           const audioTrack = myStream.getAudioTracks()[0];
           if (audioTrack) {
@@ -237,7 +258,7 @@ const RoomPage = () => {
           }
         }
 
-        if(videoCallRemainingTime > 0) {
+        if (videoCallRemainingTime > 0) {
           dispatch(stopVideoCallTimer({
             remainingTime: videoCallRemainingTime,
             roomId
@@ -248,13 +269,13 @@ const RoomPage = () => {
             roomId: null
           }));
         }
-        
+
         navigate(`/${user?.role === Role.PROVIDER ? "provider/appointments" : "user/bookings"}`, { replace: true });
       } else {
         toast.error(res.message || "Unable to join, please try again");
       }
     } catch (error) {
-      console.log("error : ",error)
+      console.log("error : ", error)
       toast.error("Please try again");
     }
   };
@@ -262,7 +283,6 @@ const RoomPage = () => {
   return (
     <div className="flex flex-col items-center justify-center h-full relative">
 
-      {/* Timer in top-right */}
       <div className="absolute top-2 right-4">
         {isVideoCallTimerRunning ? (
           <span className="text-xs md:text-sm text-black font-semibold bg-amber-300 px-3 py-1 rounded-md shadow">
@@ -303,6 +323,9 @@ const RoomPage = () => {
               playsInline
               className="w-full h-full object-cover rounded-2xl scale-x-[-1]"
             />
+            <div className="absolute bottom-3 left-3 text-white bg-black/50 px-3 py-1 rounded-lg text-sm">
+              {remoteUserName}
+            </div>
           </div>
         ) : (
           <div className="flex justify-center items-center border rounded-2xl w-full h-[300px] md:h-[400px]">

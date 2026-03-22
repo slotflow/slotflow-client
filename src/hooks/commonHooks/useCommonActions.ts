@@ -1,14 +1,13 @@
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Role } from "@/utils/interface/enums";
-import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/utils/redux/appStore";
 import { validateRoomId } from "@/utils/apis/booking.api";
-import { connectVideoSocket } from "@/utils/socket/videoSocketThunk";
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
+import { ValidateRoomId } from "@/utils/interface/api/bookingApiInterface";
 import { Booking } from "@/utils/interface/entityInterface/bookingInterface";
 import { Payment } from "@/utils/interface/entityInterface/paymentInterface";
 import { Subscription } from "@/utils/interface/entityInterface/subscriptionInterface";
-import { ValidateRoomId } from "@/utils/interface/api/bookingApiInterface";
 
 interface UseCommonHookInterface {
     handleAdminGetProviderDetailPage: (subscriptionId: Subscription["_id"]) => void;
@@ -19,7 +18,6 @@ interface UseCommonHookInterface {
 
 export const useCommonHook = (): UseCommonHookInterface => {
 
-    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const { authUser } = useSelector((state: RootState) => state.auth);
 
@@ -53,7 +51,6 @@ export const useCommonHook = (): UseCommonHookInterface => {
                     } else if(authUser?.role === Role.USER){
                         navigate(`/user/video-call-lobby/${roomId}`);
                     }
-                    dispatch(connectVideoSocket());
                 }
             })
             .catch(() => {

@@ -1,4 +1,5 @@
 import { toast } from "react-toastify";
+import { Role } from "@/utils/interface/enums";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
 import { joinOrLeft } from "@/utils/apis/booking.api";
@@ -6,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from "react-router-dom";
 import { Mic, MicOff, Video, VideoOff } from 'lucide-react';
 import { AppDispatch, RootState } from '@/utils/redux/appStore';
+import { connectVideoSocket } from "@/utils/socket/videoSocketThunk";
 import { JoinRoomCallbackRequest } from "@/utils/interface/api/bookingApiInterface";
 import { setCamera, setMic, startVideoCallTimer, updateVideoCallTimer } from '@/utils/redux/slices/videoSlice';
 
@@ -16,13 +18,13 @@ const LobbyPage = () => {
 
   const dispatch = useDispatch<AppDispatch>();
   const videoRef = useRef<HTMLVideoElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
 
   const [stream, setStream] = useState<MediaStream | null>(null);
 
   const user = useSelector((state: RootState) => state.auth.authUser);
   const { isCameraOn, isMicOn } = useSelector((state: RootState) => state.video);
   const { isVideoCallTimerRunning, videoCallRoomId, videoCallRemainingTime } = useSelector((state: RootState) => state.video);
-
 
   const getPreview = async () => {
     try {
@@ -38,6 +40,7 @@ const LobbyPage = () => {
       dispatch(setCamera(videoTrack?.enabled ?? false));
       dispatch(setMic(audioTrack?.enabled ?? false));
 
+      streamRef.current = localStream;
       setStream(localStream);
       if (videoRef.current) videoRef.current.srcObject = localStream;
     } catch (err) {
@@ -48,11 +51,13 @@ const LobbyPage = () => {
   };
 
   useEffect(() => {
-
     getPreview();
 
     return () => {
-      stream?.getTracks().forEach((t) => t.stop());
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((t) => t.stop());
+        streamRef.current = null;
+      }
     };
   }, []);
 
@@ -88,6 +93,7 @@ const LobbyPage = () => {
           toast.error("Something went wrong");
         } else {
           const totalDurationInSec = res.data.duration * 60;
+          dispatch(connectVideoSocket());
 
           if (!videoCallRoomId || videoCallRemainingTime === 0) {
             dispatch(startVideoCallTimer({
@@ -108,7 +114,7 @@ const LobbyPage = () => {
             }
           }
           toast.success("Welcome to meet");
-          navigate(`/${user?.role === "PROVIDER" ? "provider" : "user"}/video-call-room/${roomId}`);
+          navigate(`/${user?.role === Role.PROVIDER ? "provider" : "user"}/video-call-room/${roomId}`);
         }
       } else {
         toast.error(res.message || "Unable to join, please try again");
