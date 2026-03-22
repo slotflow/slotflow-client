@@ -1,7 +1,6 @@
 import { toast } from "react-toastify";
 import peer from "@/utils/service/peer";
 import { formatTime } from "@/utils/helper";
-import { Role } from "@/utils/interface/enums";
 import { Button } from "@/components/ui/button";
 import { videoSocket } from "@/lib/socketService";
 import { useEffect, useState, useRef } from "react";
@@ -9,23 +8,11 @@ import { joinOrLeft } from "@/utils/apis/booking.api";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
+import { Role, VideoCallSocketEnum } from "@/utils/interface/enums";
 import { disconnectVideoSocket } from "@/utils/socket/videoSocketThunk";
 import { Mic, MicOff, Video, VideoOff, PhoneOff, Loader } from "lucide-react";
 import { JoinRoomCallbackRequest } from "@/utils/interface/api/bookingApiInterface";
 import { setCamera, setMic, stopVideoCallTimer, updateVideoCallTimer } from "@/utils/redux/slices/videoSlice";
-
-enum VideoCallSocketEnum {
-  roomJoin = "room:join",
-  userJoined = "user:joined",
-  userCall = "user:call",
-  incomingCall = "incoming:call",
-  callAccepted = "call:accepted",
-  peerNegotiation = "peer:nego:needed",
-  peerNegotiationDone = "peer:nego:done",
-  peerNegotiationFinal = "peer:nego:final",
-  roomLeave = "room:leave",
-  userLeft = "user:left",
-}
 
 const RoomPage = () => {
 
@@ -33,10 +20,11 @@ const RoomPage = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch<AppDispatch>();
-
+  
   const myVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
-
+  
+  const myStreamRef = useRef<MediaStream | null>(null);
   const [myStream, setMyStream] = useState<MediaStream | null>(null);
 
   const [ remoteUserName, setRemoteUsername ] = useState<string | null>(null);
@@ -48,7 +36,6 @@ const RoomPage = () => {
   const { isVideoCallTimerRunning, videoCallRemainingTime } = useSelector((state: RootState) => state.video);
 
   useEffect(() => {
-    let currentStream: MediaStream | null = null;
     let isMounted = true;
 
     const initStream = async () => {
@@ -60,13 +47,13 @@ const RoomPage = () => {
         return;
       }
 
-      currentStream = stream;
       const videoTrack = stream.getVideoTracks()[0];
       const audioTrack = stream.getAudioTracks()[0];
 
       dispatch(setCamera(videoTrack?.enabled ?? false));
       dispatch(setMic(audioTrack?.enabled ?? false));
 
+      myStreamRef.current = stream;
       setMyStream(stream);
       if (peer.peer && peer.peer.signalingState !== "closed") {
         stream.getTracks().forEach((track) => peer.peer.addTrack(track, stream));
@@ -77,8 +64,8 @@ const RoomPage = () => {
 
     return () => {
       isMounted = false;
-      if (currentStream) {
-        currentStream.getTracks().forEach((t) => t.stop());
+      if (myStreamRef.current) {
+        myStreamRef.current.getTracks().forEach((t) => t.stop());
       }
     };
 
