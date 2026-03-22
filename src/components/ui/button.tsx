@@ -35,7 +35,7 @@ const buttonVariants = cva(
 )
 
 function Button({
-  className,
+  className = "transition-colors",
   variant,
   size,
   asChild = false,

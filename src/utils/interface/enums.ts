@@ -168,7 +168,7 @@ export enum NotificationType {
     SYSTEM = "SYSTEM",
 };
 
-export enum VideoCallSocketEnum {
+export enum VideoCallSocket {
   roomJoin = "room:join",
   userJoined = "user:joined",
   userCall = "user:call",
@@ -179,4 +179,15 @@ export enum VideoCallSocketEnum {
   peerNegotiationFinal = "peer:nego:final",
   roomLeave = "room:leave",
   userLeft = "user:left",
+}
+
+export enum PeerValues {
+    TRACK = "track",
+    STABLE = "stable",
+    NEGOTIATION_NEEDED = "negotiationneeded"
+}
+
+export enum MediaTrackKind {
+  VIDEO = "video",
+  AUDIO = "audio",
 }

@@ -8,12 +8,12 @@ import { joinOrLeft } from "@/utils/apis/booking.api";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { Role, VideoCallSocketEnum } from "@/utils/interface/enums";
+import { toggleMediaTrack } from "@/utils/helper/toggleMediaTrack";
 import { disconnectVideoSocket } from "@/utils/socket/videoSocketThunk";
+import { MediaTrackKind, PeerValues, Role, VideoCallSocket } from "@/utils/interface/enums";
 import { Mic, MicOff, Video, VideoOff, PhoneOff, Loader } from "lucide-react";
 import { JoinRoomCallbackRequest } from "@/utils/interface/api/bookingApiInterface";
 import { setCamera, setMic, stopVideoCallTimer, updateVideoCallTimer } from "@/utils/redux/slices/videoSlice";
-import { toggleMediaTrack } from "@/utils/helper/toggleMediaTrack";
 
 const RoomPage = () => {
 
@@ -76,21 +76,21 @@ const RoomPage = () => {
     const handleTrack = (ev: RTCTrackEvent) => {
       setRemoteStream(ev.streams[0]);
     };
-    peer.peer.addEventListener("track", handleTrack);
+    peer.peer.addEventListener(PeerValues.TRACK, handleTrack);
 
     const handleNegoNeeded = async () => {
       if (!remoteSocketId) return;
-      if (peer.peer.signalingState !== "stable") return;
+      if (peer.peer.signalingState !== PeerValues.STABLE) return;
       const offer = await peer.getOffer();
       if (offer) {
-        videoSocket?.emit(VideoCallSocketEnum.peerNegotiation, { offer, to: remoteSocketId });
+        videoSocket?.emit(VideoCallSocket.peerNegotiation, { offer, to: remoteSocketId });
       }
     };
-    peer.peer.addEventListener("negotiationneeded", handleNegoNeeded);
+    peer.peer.addEventListener(PeerValues.NEGOTIATION_NEEDED, handleNegoNeeded);
 
     return () => {
-      peer.peer.removeEventListener("track", handleTrack);
-      peer.peer.removeEventListener("negotiationneeded", handleNegoNeeded);
+      peer.peer.removeEventListener(PeerValues.TRACK, handleTrack);
+      peer.peer.removeEventListener(PeerValues.NEGOTIATION_NEEDED, handleNegoNeeded);
     };
   }, [remoteSocketId]);
 
@@ -103,52 +103,52 @@ const RoomPage = () => {
   }, [remoteStream]);
 
   useEffect(() => {
-    videoSocket?.emit(VideoCallSocketEnum.roomJoin, { roomId, user: { id: user?.uid, name: user?.username } });
+    videoSocket?.emit(VideoCallSocket.roomJoin, { roomId, user: { id: user?.uid, name: user?.username } });
 
-    videoSocket?.on(VideoCallSocketEnum.userJoined, async ({ id, user: joinedUser }) => {
+    videoSocket?.on(VideoCallSocket.userJoined, async ({ id, user: joinedUser }) => {
       setRemoteSocketId(id);
       setRemoteUsername(joinedUser?.name);
       const offer = await peer.getOffer();
       if (joinedUser?.id !== user?.uid) {
         toast.success(`${joinedUser?.name} joined the call`);
       }
-      videoSocket?.emit(VideoCallSocketEnum.userCall, { to: id, offer, user: { name: user?.username } });
+      videoSocket?.emit(VideoCallSocket.userCall, { to: id, offer, user: { name: user?.username } });
     });
 
-    videoSocket?.on(VideoCallSocketEnum.incomingCall, async ({ from, offer, user: caller }) => {
+    videoSocket?.on(VideoCallSocket.incomingCall, async ({ from, offer, user: caller }) => {
       setRemoteSocketId(from);
       setRemoteUsername(caller?.name);
       const ans = await peer.getAnswer(offer);
-      videoSocket?.emit(VideoCallSocketEnum.callAccepted, { to: from, ans });
+      videoSocket?.emit(VideoCallSocket.callAccepted, { to: from, ans });
     });
 
-    videoSocket?.on(VideoCallSocketEnum.callAccepted, async ({ ans }) => {
+    videoSocket?.on(VideoCallSocket.callAccepted, async ({ ans }) => {
       await peer.setLocalDescription(ans);
     });
 
-    videoSocket?.on(VideoCallSocketEnum.peerNegotiation, async ({ from, offer }) => {
+    videoSocket?.on(VideoCallSocket.peerNegotiation, async ({ from, offer }) => {
       const ans = await peer.getAnswer(offer);
-      videoSocket?.emit(VideoCallSocketEnum.peerNegotiationDone, { to: from, ans });
+      videoSocket?.emit(VideoCallSocket.peerNegotiationDone, { to: from, ans });
     });
 
-    videoSocket?.on(VideoCallSocketEnum.peerNegotiationFinal, async ({ ans }) => {
+    videoSocket?.on(VideoCallSocket.peerNegotiationFinal, async ({ ans }) => {
       await peer.setLocalDescription(ans);
     });
 
-    videoSocket?.on(VideoCallSocketEnum.userLeft, () => {
+    videoSocket?.on(VideoCallSocket.userLeft, () => {
       setRemoteStream(null);
     });
 
     return () => {
       peer.close();
-      videoSocket?.emit(VideoCallSocketEnum.roomLeave, { roomId });
+      videoSocket?.emit(VideoCallSocket.roomLeave, { roomId });
       dispatch(disconnectVideoSocket());
     };
   }, [roomId, user?.email]);
 
   const toggleCamera = () =>
     toggleMediaTrack({
-      kind: "video",
+      kind: MediaTrackKind.VIDEO,
       stream: myStream,
       setStream: setMyStream,
       isOn: isCameraOn,
@@ -159,7 +159,7 @@ const RoomPage = () => {
 
   const toggleMic = () =>
     toggleMediaTrack({
-      kind: "audio",
+      kind: MediaTrackKind.AUDIO,
       stream: myStream,
       setStream: setMyStream,
       isOn: isMicOn,
@@ -178,7 +178,7 @@ const RoomPage = () => {
 
   const handleEndCall = async () => {
     if (!user || !roomId) {
-      toast.error("Something went wrong, please truy again");
+      toast.error("Something went wrong, please try again");
       return;
     }
 

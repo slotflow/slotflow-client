@@ -15,7 +15,7 @@ const LandingPage = lazy(() => import("../pages/common/LandingPage.tsx"));
 const SettingsPage = lazy(() => import("@/pages/common/SettingsPage.tsx"));
 const Error404Page = lazy(() => import("@/pages/common/Error404Page.tsx"));
 const CalendarPage = lazy(() => import("@/pages/common/CalendarPage.tsx"));
-const VideoCallLoby = lazy(() => import("@/pages/common/VideoCallLoby.tsx"));
+const VideoCallLoby = lazy(() => import("@/pages/common/VideoCallLobby.tsx"));
 const VideoCallRoom = lazy(() => import("@/pages/common/VideoCallRoom.tsx"));
 const ListBookingsPage = lazy(() => import("@/pages/common/ListBookingsPage.tsx"));
 const LandingLayout = lazy(() => import("../pages/common/LandingLayout.tsx"));
