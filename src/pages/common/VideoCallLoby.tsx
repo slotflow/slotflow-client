@@ -10,6 +10,7 @@ import { AppDispatch, RootState } from '@/utils/redux/appStore';
 import { connectVideoSocket } from "@/utils/socket/videoSocketThunk";
 import { JoinRoomCallbackRequest } from "@/utils/interface/api/bookingApiInterface";
 import { setCamera, setMic, startVideoCallTimer, updateVideoCallTimer } from '@/utils/redux/slices/videoSlice';
+import { toggleMediaTrack } from "@/utils/helper/toggleMediaTrack";
 
 const LobbyPage = () => {
 
@@ -124,44 +125,24 @@ const LobbyPage = () => {
     }
   }
 
-  const toggleCamera = async () => {
-    if (isCameraOn) {
-      if (stream) stream.getVideoTracks().forEach(t => t.stop());
-      dispatch(setCamera(false));
-    } else {
-      try {
-        const newStream = await navigator.mediaDevices.getUserMedia({ video: true });
-        const newTrack = newStream.getVideoTracks()[0];
-        if (stream) {
-          stream.getVideoTracks().forEach(t => stream.removeTrack(t));
-          stream.addTrack(newTrack);
-        }
-        if (videoRef.current) videoRef.current.srcObject = stream;
-        dispatch(setCamera(true));
-      } catch (err) {
-        console.error("Cannot turn on camera:", err);
-      }
-    }
-  };
+  const toggleCamera = () =>
+    toggleMediaTrack({
+      kind: "video",
+      stream,
+      setStream,
+      isOn: isCameraOn,
+      setIsOn: (v) => dispatch(setCamera(v)),
+      videoRef,
+    });
 
-  const toggleMic = async () => {
-    if (isMicOn) {
-      if (stream) stream.getAudioTracks().forEach(t => t.stop());
-      dispatch(setMic(false));
-    } else {
-      try {
-        const newStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        const newTrack = newStream.getAudioTracks()[0];
-        if (stream) {
-          stream.getAudioTracks().forEach(t => stream.removeTrack(t));
-          stream.addTrack(newTrack);
-        }
-        dispatch(setMic(true));
-      } catch (err) {
-        console.error("Cannot turn on mic:", err);
-      }
-    }
-  };
+  const toggleMic = () =>
+    toggleMediaTrack({
+      kind: "audio",
+      stream,
+      setStream,
+      isOn: isMicOn,
+      setIsOn: (v) => dispatch(setMic(v)),
+    });
 
   return (
     <div className="grid grid-cols-12 h-screen">

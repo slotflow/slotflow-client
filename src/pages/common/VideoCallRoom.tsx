@@ -13,6 +13,7 @@ import { disconnectVideoSocket } from "@/utils/socket/videoSocketThunk";
 import { Mic, MicOff, Video, VideoOff, PhoneOff, Loader } from "lucide-react";
 import { JoinRoomCallbackRequest } from "@/utils/interface/api/bookingApiInterface";
 import { setCamera, setMic, stopVideoCallTimer, updateVideoCallTimer } from "@/utils/redux/slices/videoSlice";
+import { toggleMediaTrack } from "@/utils/helper/toggleMediaTrack";
 
 const RoomPage = () => {
 
@@ -20,16 +21,16 @@ const RoomPage = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch<AppDispatch>();
-  
+
   const myVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
-  
+
   const myStreamRef = useRef<MediaStream | null>(null);
   const [myStream, setMyStream] = useState<MediaStream | null>(null);
 
-  const [ remoteUserName, setRemoteUsername ] = useState<string | null>(null);
-  const [ remoteSocketId, setRemoteSocketId ] = useState<string | null>(null);
-  const [ remoteStream, setRemoteStream ] = useState<MediaStream | null>(null);
+  const [remoteUserName, setRemoteUsername] = useState<string | null>(null);
+  const [remoteSocketId, setRemoteSocketId] = useState<string | null>(null);
+  const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
 
   const user = useSelector((state: RootState) => state.auth.authUser);
   const { isCameraOn, isMicOn } = useSelector((state: RootState) => state.video);
@@ -73,7 +74,7 @@ const RoomPage = () => {
 
   useEffect(() => {
     const handleTrack = (ev: RTCTrackEvent) => {
-       setRemoteStream(ev.streams[0]);
+      setRemoteStream(ev.streams[0]);
     };
     peer.peer.addEventListener("track", handleTrack);
 
@@ -145,57 +146,26 @@ const RoomPage = () => {
     };
   }, [roomId, user?.email]);
 
+  const toggleCamera = () =>
+    toggleMediaTrack({
+      kind: "video",
+      stream: myStream,
+      setStream: setMyStream,
+      isOn: isCameraOn,
+      setIsOn: (v) => dispatch(setCamera(v)),
+      videoRef: myVideoRef,
+      peerConnection: peer.peer,
+    });
 
-  const toggleCamera = async () => {
-    if (isCameraOn) {
-      if (myStream) myStream.getVideoTracks().forEach(t => t.stop());
-      dispatch(setCamera(false));
-    } else {
-      try {
-        const newStream = await navigator.mediaDevices.getUserMedia({ video: true });
-        const newTrack = newStream.getVideoTracks()[0];
-        if (myStream) {
-          myStream.getVideoTracks().forEach(t => myStream.removeTrack(t));
-          myStream.addTrack(newTrack);
-        }
-
-        const sender = peer.peer.getSenders().find(s => s.track && s.track.kind === 'video');
-        if (sender) {
-          sender.replaceTrack(newTrack);
-        }
-
-        if (myVideoRef.current) myVideoRef.current.srcObject = myStream;
-        dispatch(setCamera(true));
-      } catch (err) {
-        console.error("Cannot turn on camera:", err);
-      }
-    }
-  };
-
-  const toggleMic = async () => {
-    if (isMicOn) {
-      if (myStream) myStream.getAudioTracks().forEach(t => t.stop());
-      dispatch(setMic(false));
-    } else {
-      try {
-        const newStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        const newTrack = newStream.getAudioTracks()[0];
-        if (myStream) {
-          myStream.getAudioTracks().forEach(t => myStream.removeTrack(t));
-          myStream.addTrack(newTrack);
-        }
-
-        const sender = peer.peer.getSenders().find(s => s.track && s.track.kind === 'audio');
-        if (sender) {
-          sender.replaceTrack(newTrack);
-        }
-
-        dispatch(setMic(true));
-      } catch (err) {
-        console.error("Cannot turn on mic:", err);
-      }
-    }
-  };
+  const toggleMic = () =>
+    toggleMediaTrack({
+      kind: "audio",
+      stream: myStream,
+      setStream: setMyStream,
+      isOn: isMicOn,
+      setIsOn: (v) => dispatch(setMic(v)),
+      peerConnection: peer.peer,
+    });
 
   useEffect(() => {
     if (isVideoCallTimerRunning) {

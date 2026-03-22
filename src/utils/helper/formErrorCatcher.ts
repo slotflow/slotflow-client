@@ -5,12 +5,12 @@ export const handleFormError =
   <T extends Record<string, string | number | boolean | "" | undefined | null>>(
     setFocus: UseFormSetFocus<T>,
   ) =>
-  (errors: FieldErrors<T>) => {
-    const firstErrorField = Object.keys(errors)[0] as Path<T> | undefined;
+    (errors: FieldErrors<T>) => {
+      const firstErrorField = Object.keys(errors)[0] as Path<T> | undefined;
 
-    if (firstErrorField) {
-      setFocus(firstErrorField);
-    }
+      if (firstErrorField) {
+        setFocus(firstErrorField);
+      }
 
-    toast.error("Please fix the highlighted fields.");
-  };
+      toast.error("Please fix the highlighted fields.");
+    };
