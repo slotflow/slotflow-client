@@ -9,6 +9,8 @@ import { changeAppointmentStatusRequest, FetchBookingsResponse, ValidateRoomId }
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { checkJoin } from "@/utils/helper";
 
+// intentional commenting for checking
+
 export const BookingsTableColumn = (
     handleJoinCall: (data: ValidateRoomId) => void,
     handleNavigateToBookingsDetailPage: (appointmentId: Booking["_id"]) => void,
@@ -73,7 +75,8 @@ export const BookingsTableColumn = (
             ) => {
                 const booking = row.original;
                 console.log("booking.appointmentDate :",booking.appointmentDate)
-                const canJoin = checkJoin(booking.appointmentDate);
+                // const canJoin = checkJoin(booking.appointmentDate);
+                const canJoin = true;
                 return (
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>

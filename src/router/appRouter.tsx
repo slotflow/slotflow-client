@@ -238,19 +238,11 @@ export const appRouter = createBrowserRouter([
                     },
                     {
                         path: "video-call-lobby/:roomId",
-                        element: (
-                            <PlanGuard routeName="Video call">
-                                <VideoCallLoby />
-                            </PlanGuard>
-                        ),
+                        element: <VideoCallLoby />
                     },
                     {
                         path: "video-call-room/:roomId",
-                        element: (
-                            <PlanGuard routeName="Video call">
-                                <VideoCallRoom />
-                            </PlanGuard>
-                        )
+                        element: <VideoCallRoom />
                     },
                     {
                         path: "calendar",

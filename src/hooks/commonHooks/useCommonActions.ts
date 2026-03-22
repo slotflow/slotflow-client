@@ -46,7 +46,13 @@ export const useCommonHook = (): UseCommonHookInterface => {
         await validateRoomId({ appointmentId, roomId })
             .then((res) => {
                 if (res.success) {
-                    navigate(`/provider/video-call-lobby/${roomId}`);
+                    if(authUser?.role === Role.PROVIDER){
+                        console.log("navigating")
+                        console.log("authUser : ",authUser);
+                        navigate(`/provider/video-call-lobby/${roomId}`);
+                    } else if(authUser?.role === Role.USER){
+                        navigate(`/user/video-call-lobby/${roomId}`);
+                    }
                     dispatch(connectVideoSocket());
                 }
             })

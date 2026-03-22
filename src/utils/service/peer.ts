@@ -1,7 +1,14 @@
 class PeerService {
-  peer: RTCPeerConnection;
+  peer!: RTCPeerConnection;
 
   constructor() {
+    this.initPeer();
+  }
+
+  initPeer() {
+    if (this.peer && this.peer.signalingState !== "closed") {
+      this.peer.close();
+    }
     this.peer = new RTCPeerConnection({
       iceServers: [
         {
@@ -15,7 +22,9 @@ class PeerService {
   }
 
   close(): void {
-    this.peer.close();
+    if (this.peer && this.peer.signalingState !== "closed") {
+      this.peer.close();
+    }
   }
 
   async getAnswer(offer: RTCSessionDescriptionInit): Promise<RTCSessionDescriptionInit | undefined> {

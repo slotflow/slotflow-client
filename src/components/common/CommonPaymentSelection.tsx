@@ -65,7 +65,6 @@ const CommonPaymentSelection: React.FC<PaymentSelecionComponentPropst> = ({
     try {
         setPaymentLoading(true);
 
-        // ---------------- BOOKING PAYMENT ----------------
         if (isAppointmentBooking) {
 
             const infoData = data as UserBookinAppointmentDataProps;
@@ -121,10 +120,8 @@ const CommonPaymentSelection: React.FC<PaymentSelecionComponentPropst> = ({
                 toast.error("Slot already engaged by another user");
             });
 
-            return; // VERY IMPORTANT
+            return;
         }
-
-        // ---------------- SUBSCRIPTION PAYMENT ----------------
 
         if (isProviderSubscription) {
 

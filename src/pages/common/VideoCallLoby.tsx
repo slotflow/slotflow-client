@@ -1,14 +1,13 @@
 import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
+import { joinOrLeft } from "@/utils/apis/booking.api";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from "react-router-dom";
 import { Mic, MicOff, Video, VideoOff } from 'lucide-react';
-import { durationMap } from "@/utils/interface/commonInterface";
 import { AppDispatch, RootState } from '@/utils/redux/appStore';
-import { setCamera, setMic, startVideoCallTimer, updateVideoCallTimer } from '@/utils/redux/slices/videoSlice';
-import { joinOrLeft } from "@/utils/apis/booking.api";
 import { JoinRoomCallbackRequest } from "@/utils/interface/api/bookingApiInterface";
+import { setCamera, setMic, startVideoCallTimer, updateVideoCallTimer } from '@/utils/redux/slices/videoSlice';
 
 const LobbyPage = () => {
 
@@ -24,28 +23,31 @@ const LobbyPage = () => {
   const { isCameraOn, isMicOn } = useSelector((state: RootState) => state.video);
   const { isVideoCallTimerRunning, videoCallRoomId, videoCallRemainingTime } = useSelector((state: RootState) => state.video);
 
+
+  const getPreview = async () => {
+    try {
+      console.log("getPreview")
+      const localStream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true,
+      });
+
+      const videoTrack = localStream.getVideoTracks()[0];
+      const audioTrack = localStream.getAudioTracks()[0];
+
+      dispatch(setCamera(videoTrack?.enabled ?? false));
+      dispatch(setMic(audioTrack?.enabled ?? false));
+
+      setStream(localStream);
+      if (videoRef.current) videoRef.current.srcObject = localStream;
+    } catch (err) {
+      console.error("Cannot access camera:", err);
+      dispatch(setCamera(false));
+      dispatch(setMic(false));
+    }
+  };
+
   useEffect(() => {
-    const getPreview = async () => {
-      try {
-        const localStream = await navigator.mediaDevices.getUserMedia({
-          video: true,
-          audio: true,
-        });
-
-        const videoTrack = localStream.getVideoTracks()[0];
-        const audioTrack = localStream.getAudioTracks()[0];
-
-        dispatch(setCamera(videoTrack?.enabled ?? false));
-        dispatch(setMic(audioTrack?.enabled ?? false));
-
-        setStream(localStream);
-        if (videoRef.current) videoRef.current.srcObject = localStream;
-      } catch (err) {
-        console.error("Cannot access camera:", err);
-        dispatch(setCamera(false));
-        dispatch(setMic(false));
-      }
-    };
 
     getPreview();
 
@@ -55,14 +57,14 @@ const LobbyPage = () => {
   }, []);
 
   useEffect(() => {
-          if (isVideoCallTimerRunning) {
-              const interval = setInterval(() => {
-                  dispatch(updateVideoCallTimer());
-              }, 1000);
-              return () => clearInterval(interval);
-          }
-      }, [isVideoCallTimerRunning, dispatch]);
-  
+    if (isVideoCallTimerRunning) {
+      const interval = setInterval(() => {
+        dispatch(updateVideoCallTimer());
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [isVideoCallTimerRunning, dispatch]);
+
 
   const handleJoin = async () => {
     if (!user || !roomId) {
@@ -82,28 +84,28 @@ const LobbyPage = () => {
       const res = await joinOrLeft(data);
 
       if (res.success) {
-        if(!res.data.duration) {
+        if (!res.data.duration) {
           toast.error("Something went wrong");
-        } else{
-          const totalDurationInSec = durationMap[res.data.duration];
-      
-          if(!videoCallRoomId || videoCallRemainingTime === 0) {
+        } else {
+          const totalDurationInSec = res.data.duration * 60;
+
+          if (!videoCallRoomId || videoCallRemainingTime === 0) {
             dispatch(startVideoCallTimer({
-              remainingTime: totalDurationInSec, 
+              remainingTime: totalDurationInSec,
               roomId
             }));
           } else {
-            if(roomId === videoCallRoomId) {
+            if (roomId === videoCallRoomId) {
               dispatch(startVideoCallTimer({
-                remainingTime: videoCallRemainingTime, 
+                remainingTime: videoCallRemainingTime,
                 roomId
               }));
             } else {
-                dispatch(startVideoCallTimer({
-                  remainingTime: totalDurationInSec, 
-                  roomId
-                }));
-              }
+              dispatch(startVideoCallTimer({
+                remainingTime: totalDurationInSec,
+                roomId
+              }));
+            }
           }
           toast.success("Welcome to meet");
           navigate(`/${user?.role === "PROVIDER" ? "provider" : "user"}/video-call-room/${roomId}`);
@@ -116,21 +118,42 @@ const LobbyPage = () => {
     }
   }
 
-  const toggleCamera = () => {
-    if (!stream) return;
-    const videoTrack = stream.getVideoTracks()[0];
-    if (videoTrack) {
-      videoTrack.enabled = !videoTrack.enabled;
-      dispatch(setCamera(videoTrack.enabled));
+  const toggleCamera = async () => {
+    if (isCameraOn) {
+      if (stream) stream.getVideoTracks().forEach(t => t.stop());
+      dispatch(setCamera(false));
+    } else {
+      try {
+        const newStream = await navigator.mediaDevices.getUserMedia({ video: true });
+        const newTrack = newStream.getVideoTracks()[0];
+        if (stream) {
+          stream.getVideoTracks().forEach(t => stream.removeTrack(t));
+          stream.addTrack(newTrack);
+        }
+        if (videoRef.current) videoRef.current.srcObject = stream;
+        dispatch(setCamera(true));
+      } catch (err) {
+        console.error("Cannot turn on camera:", err);
+      }
     }
   };
 
-  const toggleMic = () => {
-    if (!stream) return;
-    const audioTrack = stream.getAudioTracks()[0];
-    if (audioTrack) {
-      audioTrack.enabled = !audioTrack.enabled;
-      dispatch(setMic(audioTrack.enabled));
+  const toggleMic = async () => {
+    if (isMicOn) {
+      if (stream) stream.getAudioTracks().forEach(t => t.stop());
+      dispatch(setMic(false));
+    } else {
+      try {
+        const newStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const newTrack = newStream.getAudioTracks()[0];
+        if (stream) {
+          stream.getAudioTracks().forEach(t => stream.removeTrack(t));
+          stream.addTrack(newTrack);
+        }
+        dispatch(setMic(true));
+      } catch (err) {
+        console.error("Cannot turn on mic:", err);
+      }
     }
   };
 

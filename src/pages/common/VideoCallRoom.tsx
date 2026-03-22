@@ -1,15 +1,17 @@
 import { toast } from "react-toastify";
 import peer from "@/utils/service/peer";
 import { formatTime } from "@/utils/helper";
+import { Role } from "@/utils/interface/enums";
 import { Button } from "@/components/ui/button";
 import { videoSocket } from "@/lib/socketService";
 import { useEffect, useState, useRef } from "react";
+import { joinOrLeft } from "@/utils/apis/booking.api";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
+import { disconnectVideoSocket } from "@/utils/socket/videoSocketThunk";
 import { Mic, MicOff, Video, VideoOff, PhoneOff, Loader } from "lucide-react";
 import { setCamera, setMic, stopVideoCallTimer, updateVideoCallTimer } from "@/utils/redux/slices/videoSlice";
-import { joinOrLeft } from "@/utils/apis/booking.api";
 import { JoinRoomCallbackRequest } from "@/utils/interface/api/bookingApiInterface";
 
 const RoomPage = () => {
@@ -31,9 +33,19 @@ const RoomPage = () => {
   const { isVideoCallTimerRunning, videoCallRemainingTime } = useSelector((state: RootState) => state.video);
 
   useEffect(() => {
+    let currentStream: MediaStream | null = null;
+    let isMounted = true;
+
     const initStream = async () => {
+      peer.initPeer();
       const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
 
+      if (!isMounted) {
+        stream.getTracks().forEach((t) => t.stop());
+        return;
+      }
+
+      currentStream = stream;
       const videoTrack = stream.getVideoTracks()[0];
       const audioTrack = stream.getAudioTracks()[0];
 
@@ -41,9 +53,19 @@ const RoomPage = () => {
       dispatch(setMic(audioTrack?.enabled ?? false));
 
       setMyStream(stream);
-      stream.getTracks().forEach((track) => peer.peer.addTrack(track, stream));
+      if (peer.peer && peer.peer.signalingState !== "closed") {
+        stream.getTracks().forEach((track) => peer.peer.addTrack(track, stream));
+      }
     };
+    
     initStream();
+    
+    return () => {
+      isMounted = false;
+      if (currentStream) {
+        currentStream.getTracks().forEach((t) => t.stop());
+      }
+    };
   }, [dispatch]);
 
   useEffect(() => {
@@ -55,20 +77,29 @@ const RoomPage = () => {
   }, [remoteStream]);
 
   useEffect(() => {
-    peer.peer.addEventListener("track", (ev) => {
+    const handleTrack = (ev: RTCTrackEvent) => {
       setRemoteStream(ev.streams[0]);
-    });
+    };
+    peer.peer.addEventListener("track", handleTrack);
 
-    peer.peer.addEventListener("negotiationneeded", async () => {
+    const handleNegoNeeded = async () => {
       if (!remoteSocketId) return;
       if (peer.peer.signalingState !== "stable") return;
       const offer = await peer.getOffer();
-      videoSocket?.emit("peer:nego:needed", { offer, to: remoteSocketId });
-    });
+      if (offer) {
+          videoSocket?.emit("peer:nego:needed", { offer, to: remoteSocketId });
+      }
+    };
+    peer.peer.addEventListener("negotiationneeded", handleNegoNeeded);
+
+    return () => {
+      peer.peer.removeEventListener("track", handleTrack);
+      peer.peer.removeEventListener("negotiationneeded", handleNegoNeeded);
+    };
   }, [remoteSocketId]);
 
   useEffect(() => {
-    videoSocket?.emit("room:join", { roomId, user: { email: "user@example.com" } });
+    videoSocket?.emit("room:join", { roomId, user: { id: user?.uid } });
 
     videoSocket?.on("user:joined", async ({ id }) => {
       setRemoteSocketId(id);
@@ -76,7 +107,7 @@ const RoomPage = () => {
       videoSocket?.emit("user:call", { to: id, offer });
     });
 
-    videoSocket?.on("incomming:call", async ({ from, offer }) => {
+    videoSocket?.on("incoming:call", async ({ from, offer }) => {
       setRemoteSocketId(from);
       const ans = await peer.getAnswer(offer);
       videoSocket?.emit("call:accepted", { to: from, ans });
@@ -100,27 +131,61 @@ const RoomPage = () => {
     });
 
     return () => {
+      peer.close();
       videoSocket?.emit("room:leave", { roomId });
-      videoSocket?.off();
+      dispatch(disconnectVideoSocket());
     };
-  }, [roomId]);
+  }, [roomId, user?.email]);
 
 
-  const toggleCamera = () => {
-    if (!myStream) return;
-    const videoTrack = myStream.getVideoTracks()[0];
-    if (videoTrack) {
-      videoTrack.enabled = !videoTrack.enabled;
-      dispatch(setCamera(videoTrack.enabled));
+  const toggleCamera = async () => {
+    if (isCameraOn) {
+      if (myStream) myStream.getVideoTracks().forEach(t => t.stop());
+      dispatch(setCamera(false));
+    } else {
+      try {
+        const newStream = await navigator.mediaDevices.getUserMedia({ video: true });
+        const newTrack = newStream.getVideoTracks()[0];
+        if (myStream) {
+          myStream.getVideoTracks().forEach(t => myStream.removeTrack(t));
+          myStream.addTrack(newTrack);
+        }
+
+        const sender = peer.peer.getSenders().find(s => s.track && s.track.kind === 'video');
+        if (sender) {
+          sender.replaceTrack(newTrack);
+        }
+
+        if (myVideoRef.current) myVideoRef.current.srcObject = myStream;
+        dispatch(setCamera(true));
+      } catch (err) {
+        console.error("Cannot turn on camera:", err);
+      }
     }
   };
 
-  const toggleMic = () => {
-    if (!myStream) return;
-    const audioTrack = myStream.getAudioTracks()[0];
-    if (audioTrack) {
-      audioTrack.enabled = !audioTrack.enabled;
-      dispatch(setMic(audioTrack.enabled));
+  const toggleMic = async () => {
+    if (isMicOn) {
+      if (myStream) myStream.getAudioTracks().forEach(t => t.stop());
+      dispatch(setMic(false));
+    } else {
+      try {
+        const newStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const newTrack = newStream.getAudioTracks()[0];
+        if (myStream) {
+          myStream.getAudioTracks().forEach(t => myStream.removeTrack(t));
+          myStream.addTrack(newTrack);
+        }
+
+        const sender = peer.peer.getSenders().find(s => s.track && s.track.kind === 'audio');
+        if (sender) {
+          sender.replaceTrack(newTrack);
+        }
+
+        dispatch(setMic(true));
+      } catch (err) {
+        console.error("Cannot turn on mic:", err);
+      }
     }
   };
 
@@ -156,18 +221,18 @@ const RoomPage = () => {
         myStream?.getTracks().forEach((t) => t.stop());
         peer.peer.close();
         videoSocket?.emit("room:leave", { roomId });
+        dispatch(disconnectVideoSocket());
+        
         if (myStream) {
           const audioTrack = myStream.getAudioTracks()[0];
           if (audioTrack) {
-            audioTrack.enabled = !audioTrack.enabled;
+            audioTrack.enabled = false;
             dispatch(setMic(false));
           }
-        }
 
-        if (myStream) {
           const videoTrack = myStream.getVideoTracks()[0];
           if (videoTrack) {
-            videoTrack.enabled = !videoTrack.enabled;
+            videoTrack.enabled = false;
             dispatch(setCamera(false));
           }
         }
@@ -184,11 +249,12 @@ const RoomPage = () => {
           }));
         }
         
-        navigate(`/${user?.role === "PROVIDER" ? "provider" : "user"}/video-call`, { replace: true });
+        navigate(`/${user?.role === Role.PROVIDER ? "provider/appointments" : "user/bookings"}`, { replace: true });
       } else {
         toast.error(res.message || "Unable to join, please try again");
       }
-    } catch {
+    } catch (error) {
+      console.log("error : ",error)
       toast.error("Please try again");
     }
   };

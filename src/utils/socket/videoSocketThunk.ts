@@ -1,5 +1,4 @@
 import { RootState } from "../redux/appStore";
-import { appConfig, serviceConfig } from "../env";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getVideoSocket, destroyVideoSocket } from "@/lib/socketService";
 import { setVideoSocketConnected, setVideoSocketDisconnected } from "../redux/slices/videoSlice";
@@ -11,12 +10,13 @@ export const connectVideoSocket = createAsyncThunk<void, void, { state: RootStat
     const authUser = getState().auth.authUser;
     if (!authUser) return;
 
-    const videoSocket = getVideoSocket(authUser.uid as string, serviceConfig.apiGatewayUrl + appConfig.version);
-    console.log("videoSocket : ", videoSocket);
+    const videoSocket = getVideoSocket();
 
     videoSocket.on("connect", () => {
       dispatch(setVideoSocketConnected({ videoSocketId: videoSocket.id as string }));
     });
+
+    console.log("videoSocket : ", videoSocket);
 
     // Add events like user joined, provider joined 
     // videoSocket.on("newMessage", (newMessage: Message) => {
@@ -29,7 +29,6 @@ export const connectVideoSocket = createAsyncThunk<void, void, { state: RootStat
 export const disconnectVideoSocket = createAsyncThunk<void>("video/disconnectSocket",
   async (_, { dispatch }) => {
     console.log("disconnectVideoSocket function calling");
-
     destroyVideoSocket();
     dispatch(setVideoSocketDisconnected());
   }
