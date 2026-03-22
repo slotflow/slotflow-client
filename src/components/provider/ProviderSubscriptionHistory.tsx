@@ -1,6 +1,6 @@
 import CommonTable from '../common/CommonTable';
 import { fetchSubscriptions } from '@/utils/apis/subscription.api';
-import { useCommonHook } from '@/hooks/commonHooks/useCommonActions';
+import { useRoleBasedNavigation } from '@/hooks/commonHooks/useRoleBasedNavigation';
 import { ProvidersSubscriptionsTableColumns } from '../table/tableColumns/ProviderSubscriptionsTableColumn';
 import { FetchProviderSubscriptionsResponse, FetchSubscriptionsQueryParams } from '@/utils/interface/api/subscriptionApiInterface';
 
@@ -8,7 +8,7 @@ const ProviderSubscriptionHistory = () => {
 
     const {
         handleAdminGetProviderDetailPage
-    } = useCommonHook();
+    } = useRoleBasedNavigation();
 
     const column = ProvidersSubscriptionsTableColumns(
         handleAdminGetProviderDetailPage

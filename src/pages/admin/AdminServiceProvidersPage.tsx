@@ -6,7 +6,7 @@ import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { adminFetchAllProviders } from "@/utils/apis/adminProvider.api";
 import { setProviderRejectModal } from "@/utils/redux/slices/adminSlice";
 import RejectproviderForm from "@/components/form/AdminForms/RejectproviderForm";
-import { useAdminProviderActions } from "@/hooks/adminHooks/useAdminProviderActions";
+import { useAdminProvider } from "@/hooks/adminHooks/useAdminProvider";
 import { AdminFetchAllProvidersResponse } from "@/utils/interface/api/adminProviderApiInterface";
 import { AdminProvidersTableColumns } from "@/components/table/tableColumns/AdminProvidersTableColumn";
 
@@ -21,7 +21,7 @@ const AdminServiceProvidersPage = () => {
     hanldeAdminChangeProviderBlockStatus,
     handleGetProviderDetailPage,
     hanldeAdminChangeProviderSlotflowTrustTag
-  } = useAdminProviderActions();
+  } = useAdminProvider();
 
   const columns = AdminProvidersTableColumns(
     handleAdminApproveProvider,

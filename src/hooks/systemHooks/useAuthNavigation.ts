@@ -4,7 +4,12 @@ import { Role } from "@/utils/interface/enums";
 import { basePaths, redirectPaths } from "@/utils/constants";
 import { RedirectTo } from "@/utils/interface/commonInterface";
 
-export const useAuthNavigation = () => {
+interface useAuthNavigationReturnInterface {
+  goToAuthPage: (role: Role, redirectPage: RedirectTo) => void;
+}
+
+export const useAuthNavigation = (): useAuthNavigationReturnInterface => {
+
   const navigate = useNavigate();
 
   const goToAuthPage = useCallback((role: Role, redirectPage: RedirectTo) => {
@@ -20,4 +25,5 @@ export const useAuthNavigation = () => {
   }, [navigate]);
 
   return { goToAuthPage };
+
 };

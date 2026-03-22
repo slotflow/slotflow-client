@@ -3,12 +3,12 @@ import { useQueryClient } from "@tanstack/react-query";
 import { adminAddNewService, adminChangeServiceBlockStatus } from "@/utils/apis/adminService.api";
 import { AdminAddNewAppServiceRequest, AdminChangeServiceBlockStatusRequest } from "@/utils/interface/api/adminServiceApiInterface";
 
-interface UseAdminServiceActionReturnType {
+interface UseAdminServiceReturnInterface {
   handleAdminServiceCreating: (data: AdminAddNewAppServiceRequest) => void;
   handleAdminChangeServiceStatus: (data: AdminChangeServiceBlockStatusRequest) => void;
 }
 
-export const useAdminServiceActions = (): UseAdminServiceActionReturnType => {
+export const useAdminService = (): UseAdminServiceReturnInterface => {
 
   const queryClient = useQueryClient();
 

@@ -4,12 +4,12 @@ import CommonTable from "@/components/common/CommonTable";
 import { slideIn } from "@/utils/helper/gsapAnimationSlide";
 import { adminFetchAllServices } from "@/utils/apis/adminService.api";
 import CreateServiceForm from "@/components/form/AdminForms/CreateServiceForm";
-import { useAdminServiceActions } from "@/hooks/adminHooks/useAdminServiceActions";
+import { useAdminService } from "@/hooks/adminHooks/useAdminService";
 import { AdminFetchAllServicesResponse } from "@/utils/interface/api/adminServiceApiInterface";
 import { AdminAppServicesTableColumns } from "@/components/table/tableColumns/AdminAppServicesTableColumn";
 
 const AdminServicesPage = () => {
-  const { handleAdminChangeServiceStatus } = useAdminServiceActions();
+  const { handleAdminChangeServiceStatus } = useAdminService();
   const column = AdminAppServicesTableColumns(handleAdminChangeServiceStatus);
 
   const [showForm, setShowForm] = useState(false);

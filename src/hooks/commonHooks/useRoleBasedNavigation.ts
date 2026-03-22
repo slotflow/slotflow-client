@@ -9,14 +9,14 @@ import { Booking } from "@/utils/interface/entityInterface/bookingInterface";
 import { Payment } from "@/utils/interface/entityInterface/paymentInterface";
 import { Subscription } from "@/utils/interface/entityInterface/subscriptionInterface";
 
-interface UseCommonHookInterface {
+interface useRoleBasedNavigationReturnInterface {
     handleAdminGetProviderDetailPage: (subscriptionId: Subscription["_id"]) => void;
     handleGetPaymentDetailsPage: (paymentId: Payment["_id"]) => void;
     handleJoinCall: (data: ValidateRoomId) => void;
     handleNavigateToBookingsDetailPage: (appointmentId: Booking["_id"]) => void;
 }
 
-export const useCommonHook = (): UseCommonHookInterface => {
+export const useRoleBasedNavigation = (): useRoleBasedNavigationReturnInterface => {
 
     const navigate = useNavigate();
     const { authUser } = useSelector((state: RootState) => state.auth);
@@ -40,13 +40,10 @@ export const useCommonHook = (): UseCommonHookInterface => {
     }
 
      const handleJoinCall = async ({ appointmentId, roomId }: ValidateRoomId) => {
-        // make it common for user and provider
         await validateRoomId({ appointmentId, roomId })
             .then((res) => {
                 if (res.success) {
                     if(authUser?.role === Role.PROVIDER){
-                        console.log("navigating")
-                        console.log("authUser : ",authUser);
                         navigate(`/provider/video-call-lobby/${roomId}`);
                     } else if(authUser?.role === Role.USER){
                         navigate(`/user/video-call-lobby/${roomId}`);

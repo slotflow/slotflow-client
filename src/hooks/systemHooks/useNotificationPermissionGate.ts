@@ -10,7 +10,11 @@ import { PermissionStatus, Platform, Role } from "@/utils/interface/enums";
 import { updateNotificationPreference } from "@/utils/redux/slices/authSlice";
 import { requestNotificationPermission } from "@/utils/helper/requestNotificationPermission";
 
-export const useNotificationPermissionGate = () => {
+interface useNotificationPermissionGateInterface {
+  askPermission: () => Promise<void>
+}
+
+export const useNotificationPermissionGate = (): useNotificationPermissionGateInterface => {
   const dispatch = useDispatch();
   const authUser = useSelector((state: RootState) => state.auth.authUser);
 

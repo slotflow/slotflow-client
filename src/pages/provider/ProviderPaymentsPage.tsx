@@ -1,13 +1,13 @@
 import CommonTable from '@/components/common/CommonTable';
-import { useCommonHook } from '@/hooks/commonHooks/useCommonActions';
+import { useRoleBasedNavigation } from '@/hooks/commonHooks/useRoleBasedNavigation';
 import { PaymentsTableColumn } from '@/components/table/tableColumns/PaymentsTableColumn';
 import { fetchPayments } from '@/utils/apis/payment.api';
 import { FetchPaymentsResponse } from '@/utils/interface/api/paymentApiInterface';
 
 const ProviderPaymentsPage = () => {
 
-   const { handleGetPaymentDetailsPage } = useCommonHook();
-   const column = PaymentsTableColumn(handleGetPaymentDetailsPage);
+  const { handleGetPaymentDetailsPage } = useRoleBasedNavigation();
+  const column = PaymentsTableColumn(handleGetPaymentDetailsPage);
 
   return (
     <CommonTable<FetchPaymentsResponse>

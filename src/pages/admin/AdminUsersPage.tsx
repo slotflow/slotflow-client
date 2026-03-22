@@ -1,6 +1,6 @@
 import CommonTable from "@/components/common/CommonTable";
 import { adminFetchAllUsers } from "@/utils/apis/adminUser.api";
-import { useAdminUserActions } from "@/hooks/adminHooks/useAdminUserActions";
+import { useAdminUser } from "@/hooks/adminHooks/useAdminUser";
 import { AdminfetchAllUsersResponse } from "@/utils/interface/api/adminUserApiInterface";
 import { AdminUsersTableColumns } from "@/components/table/tableColumns/AdminUsersTableColumn";
 
@@ -9,8 +9,8 @@ const AdminUsersPage = () => {
   const {
     handleAdminChangeUserBlockStatus,
     handleGetUserDetailPage
-  } = useAdminUserActions();
-  
+  } = useAdminUser();
+
   const column = AdminUsersTableColumns(
     handleAdminChangeUserBlockStatus,
     handleGetUserDetailPage

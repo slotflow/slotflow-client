@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { verificationOptions } from "@/utils/constants";
 import { slideOut } from "@/utils/helper/gsapAnimationSlide";
 import { handleFormError } from "@/utils/helper/formErrorCatcher";
-import { useAdminProviderActions } from "@/hooks/adminHooks/useAdminProviderActions";
+import { useAdminProvider } from "@/hooks/adminHooks/useAdminProvider";
 import { AdminRejectProviderFormType, adminRejectProviderZodSchema } from "@/utils/zod/adminZod";
 import { appConfig } from "@/utils/env";
 
@@ -24,7 +24,7 @@ const RejectproviderForm: React.FC<RejectproviderFormProps> = ({
   formRef,
 }) => {
 
-  const { handleAdminRejectProvider } = useAdminProviderActions();
+  const { handleAdminRejectProvider } = useAdminProvider();
   const { rejectProviderId } = useSelector((state: RootState) => state.admin);
 
   const handleCloseForm = () => {
@@ -53,10 +53,10 @@ const RejectproviderForm: React.FC<RejectproviderFormProps> = ({
 
   const onSubmit = async (data: AdminRejectProviderFormType) => {
     try {
-        if(!rejectProviderId) {
-            toast.error("Provider is not selected");
-            return;
-        }
+      if (!rejectProviderId) {
+        toast.error("Provider is not selected");
+        return;
+      }
       await handleAdminRejectProvider({ providerId: rejectProviderId, ...data });
       reset();
       handleCloseForm();
@@ -78,7 +78,7 @@ const RejectproviderForm: React.FC<RejectproviderFormProps> = ({
         className="space-y-6"
       >
 
-        <SelectField<AdminRejectProviderFormType,boolean>
+        <SelectField<AdminRejectProviderFormType, boolean>
           id="isAddressVerified"
           label="Address Verification"
           options={verificationOptions}
@@ -126,12 +126,12 @@ const RejectproviderForm: React.FC<RejectproviderFormProps> = ({
             loading={isSubmitting}
             disabled={isSubmitting || !isValid}
           />
-          <Button 
-          title="Cancel"
-          variant="destructive" 
-          className="cursor-pointer w-full" 
-          type="button" 
-          onClick={handleCloseForm}
+          <Button
+            title="Cancel"
+            variant="destructive"
+            className="cursor-pointer w-full"
+            type="button"
+            onClick={handleCloseForm}
           >
             Cancel
           </Button>

@@ -10,7 +10,7 @@ import { Provider } from "@/utils/interface/entityInterface/providerInterface";
 import { adminApproveProvider, adminChangeProviderBlockStatus, adminChangeProviderTrustTag, adminRejectProvider } from "@/utils/apis/adminProvider.api";
 import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminRejectProviderRequest } from "@/utils/interface/api/adminProviderApiInterface";
 
-interface UseAdminProviderActionReturnType {
+interface UseAdminProviderReturnInterface {
   handleAdminApproveProvider: (providerId: Provider["_id"]) => void;
   handleOpenProviderRejectModal: (providerId: Provider["_id"]) => void;
   handleAdminRejectProvider: (data: AdminRejectProviderRequest) => void;
@@ -19,7 +19,7 @@ interface UseAdminProviderActionReturnType {
   hanldeAdminChangeProviderSlotflowTrustTag: (data: AdminChangeProviderTrustTagRequest) => void;
 }
 
-export const useAdminProviderActions = (): UseAdminProviderActionReturnType => {
+export const useAdminProvider = (): UseAdminProviderReturnInterface => {
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();

@@ -1,5 +1,5 @@
 import CommonTable from "../common/CommonTable";
-import { useCommonHook } from "@/hooks/commonHooks/useCommonActions";
+import { useRoleBasedNavigation } from "@/hooks/commonHooks/useRoleBasedNavigation";
 import { PaymentsTableColumn } from "../table/tableColumns/PaymentsTableColumn";
 import { AdminFetchProviderPaymentsComponentProps } from "@/utils/interface/componentInterface/adminComponentInterface";
 import { FetchPaymentsQueryParams, FetchPaymentsResponse } from "@/utils/interface/api/paymentApiInterface";
@@ -9,16 +9,16 @@ const AdminUserOrProviderPayments: React.FC<AdminFetchProviderPaymentsComponentP
     fetchFunction
 }) => {
 
-    const { handleGetPaymentDetailsPage } = useCommonHook();
+    const { handleGetPaymentDetailsPage } = useRoleBasedNavigation();
     const column = PaymentsTableColumn(handleGetPaymentDetailsPage);
 
     return (
         <CommonTable<FetchPaymentsResponse, FetchPaymentsQueryParams>
-            fetchApiFunction={(queryParams) => fetchFunction({providerId, ...queryParams})}
+            fetchApiFunction={(queryParams) => fetchFunction({ providerId, ...queryParams })}
             queryKey={`payments-${providerId}`}
             column={column}
             columnsCount={7}
-            queryParams={{providerId}}
+            queryParams={{ providerId }}
             parentDivCalssName="p-0"
         />
     )

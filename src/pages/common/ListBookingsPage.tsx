@@ -3,10 +3,10 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/utils/redux/appStore";
 import { fetchBookings } from "@/utils/apis/booking.api";
 import CommonTable from "@/components/common/CommonTable";
-import { useCommonHook } from "@/hooks/commonHooks/useCommonActions";
-import { useUserBookingActions } from "@/hooks/userHooks/useUserBookingActions";
+import { useRoleBasedNavigation } from "@/hooks/commonHooks/useRoleBasedNavigation";
+import { useUserBookingActions } from "@/hooks/userHooks/useUserBooking";
 import { BookingsTableColumn } from "@/components/table/tableColumns/BookingsTableColumn";
-import { useProviderAppointmentActions } from "@/hooks/providerHooks/useProviderAppointmentActions";
+import { useProviderAppointment } from "@/hooks/providerHooks/useProviderAppointment";
 import { FetchBookingsResponse } from "@/utils/interface/api/bookingApiInterface";
 
 const ListBookingsPage: React.FC = () => {
@@ -15,12 +15,12 @@ const ListBookingsPage: React.FC = () => {
 
   const {
     handleChangeAppointmentStatus
-  } = useProviderAppointmentActions();
+  } = useProviderAppointment();
 
   const {
     handleJoinCall,
     handleNavigateToBookingsDetailPage
-  } = useCommonHook();
+  } = useRoleBasedNavigation();
 
   const { handleUserCancelBooking, handleReviewAddFormToggle } = useUserBookingActions();
 

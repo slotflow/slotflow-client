@@ -4,19 +4,19 @@ import { useQueryClient } from "@tanstack/react-query";
 import { adminAddNewPlan, adminChangePlanBlockStatus } from "@/utils/apis/adminPlan.api";
 import { AdminAddNewPlanRequest, AdminChangePlanBlockStatusRequest } from "@/utils/interface/api/adminPlanApiInterface";
 
-interface UseAdminPlanActionsReturnType {
-    handleAdminPlanCreating: (formData: AdminAddNewPlanRequest) => void;
-    handleAdminChangePlanStatus: (data: AdminChangePlanBlockStatusRequest) => void;
+interface useAdminPlanReturnInterface {
+  handleAdminPlanCreating: (formData: AdminAddNewPlanRequest) => void;
+  handleAdminChangePlanStatus: (data: AdminChangePlanBlockStatusRequest) => void;
 }
 
-export const useAdminPlanActions = (): UseAdminPlanActionsReturnType => {
+export const useAdminPlan = (): useAdminPlanReturnInterface => {
 
   const queryClient = useQueryClient();
 
   const handleAdminPlanCreating = async (formData: AdminAddNewPlanRequest) => {
-      await adminAddNewPlan(formData)
+    await adminAddNewPlan(formData)
       .then((res) => {
-        if(res.success) {
+        if (res.success) {
           toast.success(res.message);
           queryClient.invalidateQueries({ queryKey: ["plans"] });
         }
@@ -24,12 +24,12 @@ export const useAdminPlanActions = (): UseAdminPlanActionsReturnType => {
       .catch((error) => {
         if (appConfig.dev) console.log("An error occured while saving plan : ", error);
       });
-    };
+  };
 
-  const handleAdminChangePlanStatus = ({planId, isBlocked} : AdminChangePlanBlockStatusRequest) => {
-    adminChangePlanBlockStatus({planId, isBlocked })
+  const handleAdminChangePlanStatus = ({ planId, isBlocked }: AdminChangePlanBlockStatusRequest) => {
+    adminChangePlanBlockStatus({ planId, isBlocked })
       .then((res) => {
-        if(res.success) {
+        if (res.success) {
           toast.success(res.message);
           queryClient.invalidateQueries({ queryKey: ["plans"] });
         }

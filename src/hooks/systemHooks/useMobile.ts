@@ -1,8 +1,12 @@
 import * as React from "react"
 
-const MOBILE_BREAKPOINT = 768
+interface useIsMobileReturnInterface {
+  isMobile: boolean;
+}
 
-export function useIsMobile() {
+export const useIsMobile = (): useIsMobileReturnInterface => {
+
+  const MOBILE_BREAKPOINT = 768
   const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
 
   React.useEffect(() => {
@@ -15,5 +19,5 @@ export function useIsMobile() {
     return () => mql.removeEventListener("change", onChange)
   }, [])
 
-  return !!isMobile
+  return { isMobile: !!isMobile }
 }

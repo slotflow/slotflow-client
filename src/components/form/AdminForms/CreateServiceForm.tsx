@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { serviceCategoryOptions } from "@/utils/constants";
 import { slideOut } from "@/utils/helper/gsapAnimationSlide";
 import { handleFormError } from "@/utils/helper/formErrorCatcher";
-import { useAdminServiceActions } from "@/hooks/adminHooks/useAdminServiceActions";
+import { useAdminService } from "@/hooks/adminHooks/useAdminService";
 import { AdminCreateServiceFormType, adminCreateServiceZodSchema } from "@/utils/zod/adminZod";
 import { ServiceCategory } from "@/utils/interface/enums";
 import { appConfig } from "@/utils/env";
@@ -21,7 +21,7 @@ const CreateServiceForm: React.FC<CreateServiceFormProps> = ({
   onClose,
   formRef,
 }) => {
-  const { handleAdminServiceCreating } = useAdminServiceActions();
+  const { handleAdminServiceCreating } = useAdminService();
 
   const handleCloseForm = () => {
     slideOut(formRef.current, {
@@ -84,19 +84,19 @@ const CreateServiceForm: React.FC<CreateServiceFormProps> = ({
           error={errors.serviceName?.message}
           required
         />
-        
+
         <div className="space-y-2">
           <FormButton
             text="Save"
             loading={isSubmitting}
             disabled={isSubmitting || !isValid}
           />
-          <Button 
-          title="Cancel"
-          variant="destructive" 
-          className="cursor-pointer w-full" 
-          type="button" 
-          onClick={handleCloseForm}
+          <Button
+            title="Cancel"
+            variant="destructive"
+            className="cursor-pointer w-full"
+            type="button"
+            onClick={handleCloseForm}
           >
             Cancel
           </Button>

@@ -1,7 +1,18 @@
 import gsap from "gsap";
 import { useEffect, useRef } from "react";
 
-export const useModalAnimation = (onClose: (e: React.MouseEvent<HTMLButtonElement>) => void) => {
+interface useModalAnimationReturnInterface {
+  modalRef: React.RefObject<HTMLDivElement | null>
+  closeModal: () => void
+}
+
+interface useModalAnimationInterface {
+  onClose: (e: React.MouseEvent<HTMLButtonElement>) => void
+}
+
+export const useModalAnimation = ({
+  onClose
+}: useModalAnimationInterface): useModalAnimationReturnInterface => {
   
   const modalRef = useRef<HTMLDivElement>(null);
 

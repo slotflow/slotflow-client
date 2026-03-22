@@ -1,12 +1,13 @@
 import { useCallback } from "react";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
+import { ServiceMode } from "@/utils/interface/enums";
 import { addMinutes, format, isBefore, isEqual } from "date-fns";
 import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import { addAvailability } from "@/utils/redux/slices/providerSlice";
-import { ServiceMode } from "@/utils/interface/enums";
 
-export const useAddAvailability = (getValues: UseFormGetValues<{
+interface UseAddAvailabilityInterface {
+    getValues: UseFormGetValues<{
     day: string;
     duration: number;
     startTime: Date;
@@ -14,7 +15,8 @@ export const useAddAvailability = (getValues: UseFormGetValues<{
     modes: string[];
     selectedTimeSlots: string[];
     timeSlots: string[];
-}>, setValue: UseFormSetValue<{
+}>,
+    setValue: UseFormSetValue<{
     selectedTimeSlots: string[];
     day: string;
     duration: number;
@@ -22,7 +24,22 @@ export const useAddAvailability = (getValues: UseFormGetValues<{
     endTime: Date;
     modes: string[];
     timeSlots: string[];
-}>) => {
+}>,
+}
+
+interface UseAddAvailabilityReturnInterface {
+    handleAddAvailability: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    generateTimeSlots: (start: Date, end: Date, intervalMinutes: number) => void;
+    toggleSlot: (slot: string) => void;
+    isModeSelected: (mode: string) => boolean;
+    toggleMode: (mode: ServiceMode) => void;
+}
+
+export const useAddAvailability = ({
+    getValues,
+    setValue,
+}: UseAddAvailabilityInterface): UseAddAvailabilityReturnInterface => {
+
     const dispatch = useDispatch();
 
     const handleAddAvailability = useCallback(
@@ -129,8 +146,6 @@ export const useAddAvailability = (getValues: UseFormGetValues<{
             setValue('modes', [...current, mode], { shouldDirty: true });
         }
     };
-
-     
 
     return {
         handleAddAvailability,

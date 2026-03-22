@@ -3,11 +3,11 @@ import { useQueryClient } from "@tanstack/react-query";
 import { changeAppointmentStatus } from "@/utils/apis/booking.api";
 import { changeAppointmentStatusRequest } from "@/utils/interface/api/bookingApiInterface";
 
-interface UseProviderAppointmentActions {
+interface UseProviderAppointmentReturnInterface {
     handleChangeAppointmentStatus: (data: changeAppointmentStatusRequest) => void;
 }
 
-export const useProviderAppointmentActions = (): UseProviderAppointmentActions => {
+export const useProviderAppointment = (): UseProviderAppointmentReturnInterface => {
 
     const queryClient = useQueryClient();
 

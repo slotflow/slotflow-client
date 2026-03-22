@@ -7,7 +7,7 @@ import { adVisibility, planNameOptions } from "@/utils/constants";
 import { PlanName } from "@/utils/interface/enums";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { slideOut } from "@/utils/helper/gsapAnimationSlide";
-import { useAdminPlanActions } from "@/hooks/adminHooks/useAdminPlanActions";
+import { useAdminPlan } from "@/hooks/adminHooks/useAdminPlan";
 import { AdminCreatePlanFormType, adminCreatePlanZodSchema } from "@/utils/zod/adminZod";
 
 interface CreatePlanFormProps {
@@ -19,7 +19,7 @@ const CreatePlanForm: React.FC<CreatePlanFormProps> = ({
     onClose,
     formRef
 }) => {
-    const { handleAdminPlanCreating } = useAdminPlanActions();
+    const { handleAdminPlanCreating } = useAdminPlan();
 
     const handleCloseForm = () => {
         slideOut(formRef.current, {
@@ -56,7 +56,7 @@ const CreatePlanForm: React.FC<CreatePlanFormProps> = ({
             ref={formRef}
             className="w-auto md:w-4xl rounded-lg bg-[var(--background)] p-6 shadow-xl border-1"
         >
-           <h3 className="text-lg lg:text-2xl font-bold text-center my-4">Create New Plan</h3>
+            <h3 className="text-lg lg:text-2xl font-bold text-center my-4">Create New Plan</h3>
             <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                 <SelectField<AdminCreatePlanFormType, PlanName>
                     id="planName"
@@ -123,12 +123,12 @@ const CreatePlanForm: React.FC<CreatePlanFormProps> = ({
                 />
 
                 <FormButton text="Save" loading={isSubmitting} disabled={isSubmitting || !isValid} />
-                <Button 
-                title="Cancel"
-                variant="destructive" 
-                className="cursor-pointer w-full" 
-                type="button" 
-                onClick={handleCloseForm}
+                <Button
+                    title="Cancel"
+                    variant="destructive"
+                    className="cursor-pointer w-full"
+                    type="button"
+                    onClick={handleCloseForm}
                 >
                     Cancel
                 </Button>

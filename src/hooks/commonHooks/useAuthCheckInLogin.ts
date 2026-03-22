@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "@/utils/redux/appStore";
 
-export const useAuthCheckInLogin = () => {
+export const useAuthCheckInLogin = (): void => {
     
   const navigate = useNavigate();
   const authUser = useSelector((state: RootState) => state.auth.authUser);
@@ -19,4 +19,5 @@ export const useAuthCheckInLogin = () => {
       }
     }
   }, [authUser, navigate]);
+
 };

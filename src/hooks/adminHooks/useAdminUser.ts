@@ -5,12 +5,12 @@ import { User } from "@/utils/interface/entityInterface/userInterface";
 import { adminChangeUserBlockStatus } from "@/utils/apis/adminUser.api";
 import { AdminChangeUserStatusRequest } from "@/utils/interface/api/adminUserApiInterface";
 
-interface useAdminUserActionsCustomHookReturnType {
+interface useAdminUserCustomHookReturnInterface {
   handleAdminChangeUserBlockStatus: (data: AdminChangeUserStatusRequest) => void;
   handleGetUserDetailPage: (e: React.MouseEvent<HTMLDivElement>, userId: User["_id"]) => void;
 }
 
-export const useAdminUserActions = (): useAdminUserActionsCustomHookReturnType => {
+export const useAdminUser = (): useAdminUserCustomHookReturnInterface => {
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
