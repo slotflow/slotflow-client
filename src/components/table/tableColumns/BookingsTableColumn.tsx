@@ -1,3 +1,4 @@
+import { checkJoin } from "@/utils/helper";
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { formateDate } from "@/utils/helper/formatter";
@@ -7,9 +8,6 @@ import { Booking } from "@/utils/interface/entityInterface/bookingInterface";
 import { Check, MoreHorizontal, NotebookPen, ReceiptText, VideoIcon, X } from "lucide-react";
 import { changeAppointmentStatusRequest, FetchBookingsResponse, ValidateRoomId } from "@/utils/interface/api/bookingApiInterface";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { checkJoin } from "@/utils/helper";
-
-// intentional commenting for checking
 
 export const BookingsTableColumn = (
     handleJoinCall: (data: ValidateRoomId) => void,
@@ -74,9 +72,7 @@ export const BookingsTableColumn = (
                 { row }
             ) => {
                 const booking = row.original;
-                console.log("booking.appointmentDate :",booking.appointmentDate)
-                // const canJoin = checkJoin(booking.appointmentDate);
-                const canJoin = true;
+                const canJoin = checkJoin(booking.appointmentDate);
                 return (
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
