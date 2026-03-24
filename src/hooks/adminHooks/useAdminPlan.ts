@@ -1,20 +1,20 @@
 import { toast } from "react-toastify";
 import { appConfig } from "@/utils/env";
 import { useQueryClient } from "@tanstack/react-query";
-import { adminAddNewPlan, adminChangePlanBlockStatus } from "@/utils/apis/adminPlan.api";
-import { AdminAddNewPlanRequest, AdminChangePlanBlockStatusRequest } from "@/utils/interface/api/adminPlanApiInterface";
+import { createPlan, changePlanBlockStatus } from "@/utils/apis/plan.api";
+import { CreatePlanRequest, ChangePlanBlockStatusRequest } from "@/utils/interface/api/planApiInterface";
 
 interface useAdminPlanReturnInterface {
-  handleAdminPlanCreating: (formData: AdminAddNewPlanRequest) => void;
-  handleAdminChangePlanStatus: (data: AdminChangePlanBlockStatusRequest) => void;
+  handleAdminPlanCreating: (formData: CreatePlanRequest) => void;
+  handleAdminChangePlanStatus: (data: ChangePlanBlockStatusRequest) => void;
 }
 
 export const useAdminPlan = (): useAdminPlanReturnInterface => {
 
   const queryClient = useQueryClient();
 
-  const handleAdminPlanCreating = async (formData: AdminAddNewPlanRequest) => {
-    await adminAddNewPlan(formData)
+  const handleAdminPlanCreating = async (formData: CreatePlanRequest) => {
+    await createPlan(formData)
       .then((res) => {
         if (res.success) {
           toast.success(res.message);
@@ -26,8 +26,8 @@ export const useAdminPlan = (): useAdminPlanReturnInterface => {
       });
   };
 
-  const handleAdminChangePlanStatus = ({ planId, isBlocked }: AdminChangePlanBlockStatusRequest) => {
-    adminChangePlanBlockStatus({ planId, isBlocked })
+  const handleAdminChangePlanStatus = ({ planId, isBlocked }: ChangePlanBlockStatusRequest) => {
+    changePlanBlockStatus({ planId, isBlocked })
       .then((res) => {
         if (res.success) {
           toast.success(res.message);

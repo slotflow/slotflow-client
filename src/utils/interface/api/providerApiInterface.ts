@@ -52,11 +52,6 @@ export interface ProviderUpdateProfileImageResponse extends ApiBaseResponse {
   data: Provider["profileImage"]
 }
 
-
-// **** Used as the response type for Provider fetch plans api
-export type ProviderFetchPlansResponse = Pick<Plan, "_id" | "planName" | "price" | "features" | "description">;
-
-
 // **** Used as the request type for Provider subscribe to a plan api
 export type ProviderCheckoutForSubscribePlanRequest = {
   planId: Plan["_id"];

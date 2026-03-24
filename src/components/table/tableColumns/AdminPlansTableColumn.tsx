@@ -3,11 +3,11 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Check, MoreHorizontal, X } from "lucide-react";
 import { formatNumberToPrice } from "@/utils/helper/formatter";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
-import { AdminChangePlanBlockStatusRequest, AdminFetchAllPlansResponse } from "@/utils/interface/api/adminPlanApiInterface";
+import { ChangePlanBlockStatusRequest, AdminFetchAllPlansResponse } from "@/utils/interface/api/planApiInterface";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 
 export const AdminPlansTableColumns = (
-  handleAdminChangePlanStatus: (data: AdminChangePlanBlockStatusRequest) => void,
+  handleAdminChangePlanStatus: (data: ChangePlanBlockStatusRequest) => void,
 ): ColumnDef<AdminFetchAllPlansResponse>[] => [
     {
       accessorKey: "_id",

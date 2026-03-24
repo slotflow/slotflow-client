@@ -1,7 +1,5 @@
 import { axiosInstance } from "@/lib/axios";
 import {
-    ProviderFetchPlansResponse,
-    // ProviderCreateAddressRequest,
     ProviderSubmitDetailsResponse,
     ProviderDashboardGraphResponse,
     ProviderSubscribeToPlanResponse,
@@ -143,13 +141,6 @@ export const providerSubmitDetailsForReview = createAsyncThunk<ProviderSubmitDet
 export const providerSetPushNotification = async (data: boolean): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.patch('/provider/profile/push-notification', { allowPushNotification: data });
     return response.data;
-}
-
-
-// **** Provider plans apis
-export const providerFetchPlans = async (): Promise<ProviderFetchPlansResponse[]> => {
-    const response = await axiosInstance.get('/provider/plans');
-    return response.data.data;
 }
 
 
