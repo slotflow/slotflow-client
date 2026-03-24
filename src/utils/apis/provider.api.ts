@@ -1,8 +1,7 @@
 import { axiosInstance } from "@/lib/axios";
 import {
     ProviderFetchPlansResponse,
-    ProviderFetchAddressResponse,
-    ProviderCreateAddressRequest,
+    // ProviderCreateAddressRequest,
     ProviderSubmitDetailsResponse,
     ProviderDashboardGraphResponse,
     ProviderSubscribeToPlanResponse,
@@ -13,7 +12,7 @@ import {
     ProviderUpdateProfileImageRequest,
     ProviderUpdateProviderInfoResponse,
     ProviderUpdateProfileImageResponse,
-    ProviderFetchProfileDetailsResponse,
+    ProviderFetchMyProfileDetailsResponse,
     ProviderFetchServiceDetailsResponse,
     ProviderCreateServiceDetailsRequest,
     ProviderUpdateServiceDetailsRequest,
@@ -22,31 +21,14 @@ import {
     ProviderFetchUsersForChatSidebarResponse,
     ProviderFetchServiceAvailabilityResponse,
     CreateProviderServiceAvailabilitiesRequest,
+    AdminFetchProviderProfileDetailsResponse,
+    UserFetchProviderProfileDetailsResponse,
 } from "../interface/api/providerApiInterface";
 import { DateRange } from "react-day-picker";
 import { PlanName } from "../interface/enums";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ApiBaseResponse } from "../interface/commonInterface";
-import { FetchProvidersProofsResponse, UpdateAddressRequest, UpdateAddressResponse, UpdateFileDataRequest, UpdateFileDataResponse } from "../interface/api/commonApiInterface";
-
-
-// **** Address apis
-export const providerCreateAddress = createAsyncThunk<ApiBaseResponse, ProviderCreateAddressRequest>("/provider/addAddress",
-    async (data: ProviderCreateAddressRequest) => {
-        const response = await axiosInstance.post(`/provider/addresses`, data);
-        return response.data;
-    }
-)
-
-export const providerFetchAddress = async (): Promise<ProviderFetchAddressResponse> => {
-    const response = await axiosInstance.get('/provider/address');
-    return response.data.data;
-}
-
-export const providerUpdateAddress = async (data: UpdateAddressRequest): Promise<UpdateAddressResponse> => {
-    const response = await axiosInstance.patch(`/provider/addresses/${data._id}`, data);
-    return response.data;
-}
+import { FetchProvidersProofsResponse, UpdateFileDataRequest, UpdateFileDataResponse } from "../interface/api/commonApiInterface";
 
 
 // **** App service apis
@@ -97,11 +79,20 @@ export const providerFetchServiceAvailability = async (date: Date): Promise<Prov
 
 
 // **** Provider profile apis
-export const providerFetchProfileDetails = async (): Promise<ProviderFetchProfileDetailsResponse> => {
-    const response = await axiosInstance.get('/provider/');
+export const fetchMyProfileDetails = async (): Promise<ProviderFetchMyProfileDetailsResponse> => {
+    const response = await axiosInstance.get('/provider/me');
     return response.data.data;
 }
 
+export const fetchProviderDetailsForAdmin = async (providerId: string): Promise<AdminFetchProviderProfileDetailsResponse> => {
+    const response = await axiosInstance.get(`/providers/${providerId}/profile`);
+    return response.data.data;
+}
+
+export const fetchProviderDetailsForUser = async (providerId: string): Promise<UserFetchProviderProfileDetailsResponse> => {
+    const response = await axiosInstance.get(`/providers/${providerId}`);
+    return response.data.data;
+}
 
 export const providerUpdateProfileImage = createAsyncThunk<ProviderUpdateProfileImageResponse, ProviderUpdateProfileImageRequest>('/provider/profile/image',
     async (data: ProviderUpdateProfileImageRequest) => {

@@ -1,10 +1,10 @@
 import { fetchPayments } from "@/utils/apis/payment.api";
 import CommonTable from "@/components/common/CommonTable";
+import { FetchPaymentsResponse } from "@/utils/interface/api/paymentApiInterface";
 import { useRoleBasedNavigation } from "@/hooks/commonHooks/useRoleBasedNavigation";
 import { PaymentsTableColumn } from "@/components/table/tableColumns/PaymentsTableColumn";
-import { FetchPaymentsResponse } from "@/utils/interface/api/paymentApiInterface";
 
-const UserPaymentsPage = () => {
+const ListPaymentsPage = () => {
 
   const { handleGetPaymentDetailsPage } = useRoleBasedNavigation();
   const column = PaymentsTableColumn(handleGetPaymentDetailsPage);
@@ -19,4 +19,4 @@ const UserPaymentsPage = () => {
   )
 }
 
-export default UserPaymentsPage
+export default ListPaymentsPage;

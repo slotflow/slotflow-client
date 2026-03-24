@@ -6,7 +6,7 @@ import DataFetchingError from "../DataFetchingError";
 import InfoDisplayComponent from "../InfoDisplayComponent";
 import { copyToClipboard } from "@/utils/helper";
 import ProfileDetailsShimmer from "@/components/shimmers/ProfileDetailsShimmer";
-import { ProviderFetchProfileDetailsResponse } from "@/utils/interface/api/providerApiInterface";
+import { ProviderFetchMyProfileDetailsResponse } from "@/utils/interface/api/providerApiInterface";
 import { AdminFetchUserProfileDetailsResponse } from "@/utils/interface/api/adminUserApiInterface";
 import { AdminFetchProviderProfileDetailsResponse } from "@/utils/interface/api/adminProviderApiInterface";
 import { UserFetchProviderProfileDetailsResponse, UserFetchUserProfileDetailsResponse } from "@/utils/interface/api/userApiInterface";
@@ -15,7 +15,7 @@ interface UserOrProviderProfileDetailsComponentProps {
     userOrProviderId?: string;
     fetchApiFunction: (userOrProviderId?: string) => Promise<
         AdminFetchProviderProfileDetailsResponse |
-        ProviderFetchProfileDetailsResponse |
+        ProviderFetchMyProfileDetailsResponse |
         UserFetchProviderProfileDetailsResponse |
         UserFetchUserProfileDetailsResponse |
         AdminFetchUserProfileDetailsResponse
@@ -120,7 +120,7 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
 
                     {/* Provider looking self profile */}
                     {providerSelf && (() => {
-                        const providerProfileData = data as (ProviderFetchProfileDetailsResponse);
+                        const providerProfileData = data as (ProviderFetchMyProfileDetailsResponse);
                         return (
                             <>
                                 <InfoDisplayComponent label="Username" value={authUser?.username || providerProfileData.username} />

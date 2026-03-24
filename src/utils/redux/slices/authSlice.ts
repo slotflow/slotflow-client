@@ -7,7 +7,8 @@ import { userUpdateInfo, userUpdateProfileImage } from "@/utils/apis/user.api";
 import { UserUpdateUserInfoResponse } from "@/utils/interface/api/userApiInterface";
 import { ResendOtpResponse, SigninResponse, SignupResponse } from "@/utils/interface/api/authApiInterface";
 import { ProviderSubmitDetailsResponse, ProviderSubscriptionActivated, ProviderUpdateProviderInfoResponse } from "@/utils/interface/api/providerApiInterface";
-import { providerCreateAddress, providerCreateServiceAvailabilities, providerCreateServiceDetails, providerSubmitDetailsForReview, providerUpdateInfo, providerUpdateProfileImage } from "@/utils/apis/provider.api";
+import { providerCreateServiceAvailabilities, providerCreateServiceDetails, providerSubmitDetailsForReview, providerUpdateInfo, providerUpdateProfileImage } from "@/utils/apis/provider.api";
+import { providerCreateAddress } from "@/utils/apis/address.api";
 
 const initialState: AuthState = {
     authUser: null,

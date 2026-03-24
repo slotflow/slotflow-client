@@ -2,7 +2,6 @@ import { ApiBaseResponse } from "../commonInterface";
 import { Plan } from "../entityInterface/planInterface";
 import { User } from "../entityInterface/userInterface";
 import { Address } from "../entityInterface/addressInterface";
-import { Booking } from "../entityInterface/bookingInterface";
 import { Provider } from "../entityInterface/providerInterface";
 import { Service } from "../entityInterface/appServiceInterface";
 import { ProviderService } from "../entityInterface/providerServiceInterface";
@@ -11,10 +10,6 @@ import { PlanName, SubscriptionStatus, SubscriptionValidity } from "../enums";
 
 // **** Used as the request interface for creating address api
 export type ProviderCreateAddressRequest = Pick<Address, "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location">;
-
-// **** Used as the response type of provider fetch address api
-export type ProviderFetchAddressResponse = Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "updatedAt" | "landMark" | "location" | "countryCode">;
-
 
 // **** Used as the response type of fetch all services api
 export type ProviderFetchAllAppServiceRequest = Pick<Service, "serviceCategory">;
@@ -42,7 +37,7 @@ export interface CreateProviderServiceAvailabilitiesRequest {
 
 
 // **** Used as the response type for provider fetch self profile details api
-export type ProviderFetchProfileDetailsResponse = Pick<Provider, "username" | "email" | "isAdminVerified" | "isBlocked" | "isEmailVerified" | "phone" | "createdAt" | "trustedBySlotflow" | "updatedAt" | "adminVerificationStatus" | "isAddressVerified" | "isAvailabilityVerified" | "isProofsVerified" | "isServiceDetailsVerified">;
+export type ProviderFetchMyProfileDetailsResponse = Pick<Provider, "username" | "email" | "isAdminVerified" | "isBlocked" | "isEmailVerified" | "phone" | "createdAt" | "trustedBySlotflow" | "updatedAt" | "adminVerificationStatus" | "isAddressVerified" | "isAvailabilityVerified" | "isProofsVerified" | "isServiceDetailsVerified">;
 
 
 // **** Used as the response type for provider fetch self service availability
@@ -71,18 +66,6 @@ export type ProviderCheckoutForSubscribePlanRequest = {
 export interface ProviderSubscribeToPlanResponse extends ApiBaseResponse {
   data: string
 }
-
-// **** Interfaces for providerFetchSubscriptions api is in common interface api file
-
-
-// **** Inline interfaces used for the providerSubscribeToTrialPlan api
-
-
-// **** Interfaces for providerFetchPayments api is in common interface api file
-
-
-// **** Interfaces for providerFetchProviderBookingAppointments api is in common interface api file
-
 
 // **** Used as the request type for Provider update providerInfo [username and phone]
 export type ProviderUpdateProviderInfoRequest = Pick<Provider, "username" | "phone">
@@ -157,12 +140,6 @@ export interface ProviderDashboardGraphResponse {
 
 }
 
-
-// **** Used as the request interface for the provider change booking appointment status
-
-
-// **** Address updating interfaces are in common interface file
-
 export interface ProviderSubscriptionActivated {
   providerId: string;
     subscribedPlan: PlanName;
@@ -173,3 +150,8 @@ export interface ProviderSubscriptionActivated {
 export interface ProviderGetMySubscriptionResponse extends ApiBaseResponse {
   data : ProviderSubscriptionActivated
 }
+
+
+export type AdminFetchProviderProfileDetailsResponse = Pick<Provider, "_id" | "username" | "email" | "isBlocked" | "isEmailVerified" | "isAdminVerified" | "phone" | "profileImage" | "createdAt" | "trustedBySlotflow" | "adminVerificationStatus" | "isAddressVerified" | "isAvailabilityVerified" | "isProofsVerified" | "isServiceDetailsVerified">;
+
+export type UserFetchProviderProfileDetailsResponse = Pick<Provider, "username" | "email" | "phone" | "profileImage" | "trustedBySlotflow">;

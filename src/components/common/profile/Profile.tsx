@@ -7,7 +7,7 @@ import { slideIn } from "@/utils/helper/gsapAnimationSlide";
 import { userFetchProfileDetails } from "@/utils/apis/user.api";
 import UserInfoCRUDForm from "@/components/common/UserInfoCRUDForm";
 import ProfileListing from "@/components/common/profile/ProfileListing";
-import { providerFetchProfileDetails } from "@/utils/apis/provider.api";
+import { fetchMyProfileDetails } from "@/utils/apis/provider.api";
 
 const Profile: React.FC = () => {
 
@@ -15,7 +15,7 @@ const Profile: React.FC = () => {
   const isProvider = authUser?.role === "PROVIDER";
 
   const fetchApiFunction = isProvider
-    ? providerFetchProfileDetails
+    ? fetchMyProfileDetails
     : userFetchProfileDetails;
 
   const shimmerRow = isProvider ? 8 : 6;
@@ -40,7 +40,7 @@ const Profile: React.FC = () => {
           <h2 className="text-xl font-semibold"> Profile Details</h2>
         </div>
         <Button
-        title="Edit Info"
+          title="Edit Info"
           variant="default"
           className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
           onClick={(e) => {

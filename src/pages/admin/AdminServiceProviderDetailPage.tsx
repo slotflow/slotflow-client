@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { Role } from "@/utils/interface/enums";
 import ReviewsPage from "../common/ReviewsPage";
 import { providerTabs } from "@/utils/constants";
+import { fetchReviews } from "@/utils/apis/review.api";
+import { fetchPayments } from "@/utils/apis/payment.api";
 import ProfileHead from "@/components/common/profile/ProfileHead";
 import DataFetchingError from "@/components/common/DataFetchingError";
 import AddressListing from "@/components/common/profile/AddressListing";
@@ -13,9 +15,9 @@ import AdminProviderSubscriptions from "@/components/admin/AdminProviderSubscrip
 import ProviderServiceDetails from "@/components/common/profile/ProviderServiceDetails";
 import AdminUserOrProviderPayments from "@/components/admin/AdminUserOrProviderPayments";
 import ProviderServiceAvailability from "@/components/common/profile/ProviderServiceAvailability";
-import { adminFetchProviderServiceAvailability, adminFetchProviderAddress, adminFetchProviderProfileDetails, adminFetchProviderService, adminFetchProviderProofs } from "@/utils/apis/adminProvider.api";
-import { fetchPayments } from "@/utils/apis/payment.api";
-import { fetchReviews } from "@/utils/apis/review.api";
+import { adminFetchProviderServiceAvailability, adminFetchProviderService, adminFetchProviderProofs } from "@/utils/apis/adminProvider.api";
+import { fetchProviderDetailsForAdmin } from "@/utils/apis/provider.api";
+import { fetchAddressByProviderId } from "@/utils/apis/address.api";
 
 const AdminServiceProviderDetailPage = () => {
 
@@ -43,9 +45,9 @@ const AdminServiceProviderDetailPage = () => {
 
                 <div className={`flex-grow`}>
                     {tab === 0 && (
-                        <ProfileListing fetchApiFunction={() => adminFetchProviderProfileDetails(providerId)} queryKey="providerProfile" userOrProviderId={providerId} adminLookingProvider shimmerRow={8} setSelectedUserData={setSelectedUserData} />
+                        <ProfileListing fetchApiFunction={() => fetchProviderDetailsForAdmin(providerId)} queryKey="providerProfile" userOrProviderId={providerId} adminLookingProvider shimmerRow={8} setSelectedUserData={setSelectedUserData} />
                     ) || tab === 1 && (
-                        <AddressListing userOrProviderId={providerId} fetchApiFunction={() => adminFetchProviderAddress(providerId)} queryKey="providerAddress" />
+                        <AddressListing userOrProviderId={providerId} fetchApiFunction={() => fetchAddressByProviderId(providerId)} queryKey="providerAddress" />
                     ) || tab === 2 && (
                         <ProviderServiceDetails providerId={providerId} fetchApiFunction={() => adminFetchProviderService(providerId)} queryKey="providerService" isUser={false} />
                     ) || tab === 3 && (

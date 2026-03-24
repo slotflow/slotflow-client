@@ -4,17 +4,12 @@ import { useQuery } from '@tanstack/react-query';
 import DataFetchingError from '../DataFetchingError';
 import InfoDisplayComponent from '../InfoDisplayComponent';
 import ProfileDetailsShimmer from '@/components/shimmers/ProfileDetailsShimmer';
-import { AdminFetchddressResponse } from '@/utils/interface/api/commonApiInterface';
-import { ProviderFetchAddressResponse } from '@/utils/interface/api/providerApiInterface';
-import { UserFetchProviderAddressResponse, UserFetchAddressResponse } from '@/utils/interface/api/userApiInterface';
+import { FetchAddressResponse, FetchMyAddressResponse } from '@/utils/interface/api/addressApiInterface';
 
 interface UserOrProviderAddressDetailsComponentProps {
     userOrProviderId?: string;
     fetchApiFunction: (userOrProviderId?: string) => Promise<
-        AdminFetchddressResponse |
-        ProviderFetchAddressResponse |
-        UserFetchAddressResponse |
-        UserFetchProviderAddressResponse
+        FetchMyAddressResponse | FetchAddressResponse
     >;
     queryKey: string;
     setLoading?: (data: boolean) => void;

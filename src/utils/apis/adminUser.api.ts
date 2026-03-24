@@ -7,7 +7,7 @@ import {
 import { User } from "../interface/entityInterface/userInterface";
 import { buildQueryParams, parseNewCommonResponse } from "../helper";
 import { FetchFunctionBaseQueryParams, ApiBaseResponse } from "../interface/commonInterface";
-import { AdminFetchddressResponse, ApiFetchFunction } from "../interface/api/commonApiInterface";
+import { ApiFetchFunction } from "../interface/api/commonApiInterface";
 
 export const adminFetchAllUsers: ApiFetchFunction<
     AdminfetchAllUsersResponse,
@@ -28,7 +28,7 @@ export const adminFetchUserProfileDetails = async (userId: User["_id"]): Promise
     return response.data.data;
 }
 
-export const adminFetchUserAddress = async (userId: User["_id"]): Promise<AdminFetchddressResponse> => {
-    const response = await axiosInstance.get(`/admin/users/${userId}/address`);
-    return response.data.data;
-}
+// export const adminFetchUserAddress = async (userId: User["_id"]): Promise<AdminFetchddressResponse> => {
+//     const response = await axiosInstance.get(`/admin/users/${userId}/address`);
+//     return response.data.data;
+// }

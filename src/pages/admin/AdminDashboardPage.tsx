@@ -39,7 +39,7 @@ import {
     SelectItem,
 } from "@/components/ui/select";
 
-const AdminOverviewPage: React.FC = () => {
+const AdminDashboardPage: React.FC = () => {
     const [selectedTab, setSelectedTab] = useState(adminOverviewTabs[0].value);
 
     return (
@@ -145,4 +145,4 @@ const AdminOverviewPage: React.FC = () => {
     );
 };
 
-export default AdminOverviewPage;
+export default AdminDashboardPage;

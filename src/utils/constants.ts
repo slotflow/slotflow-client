@@ -88,7 +88,7 @@ export const updatableStatuses = [AdminVerificationStatus.NOT_REQUESTED, AdminVe
 
 // **** Routes for admin **** \\
 export const adminRoutes: Route[] = [
-  { path: "overview", name: "Overview", icon: Gauge },
+  { path: "dashboard", name: "Dashboard", icon: Gauge },
   { path: "report", name: "Reports", icon: BookLock },
   { path: "service-providers", name: "Service Providers", icon: Handshake },
   { path: "users", name: "Users", icon: Users },

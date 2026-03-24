@@ -9,9 +9,11 @@ import ProfileListing from "@/components/common/profile/ProfileListing";
 import ProfileHorizontalTabs from "@/components/common/ProfileHorizontalTabs";
 import ProviderServiceDetails from "@/components/common/profile/ProviderServiceDetails";
 import ProviderServiceAvailability from "@/components/common/profile/ProviderServiceAvailability";
-import { userFetchProviderAddress, userFetchProviderDetails, userFetchProviderService, userFetchProviderServiceAvailability } from "@/utils/apis/user.api";
+import { userFetchProviderService, userFetchProviderServiceAvailability } from "@/utils/apis/user.api";
 import { Role } from "@/utils/interface/enums";
 import { fetchReviews } from "@/utils/apis/review.api";
+import { fetchProviderDetailsForUser } from "@/utils/apis/provider.api";
+import { fetchAddressByProviderId } from "@/utils/apis/address.api";
 
 const UserServiceProviderDetailPage = () => {
 
@@ -29,8 +31,8 @@ const UserServiceProviderDetailPage = () => {
 
             <ProfileHead
                 updation={false}
-                showDetails
                 isMyProfile={false}
+                showDetails
                 selectedUserData={selectedUserData}
             />
 
@@ -38,9 +40,9 @@ const UserServiceProviderDetailPage = () => {
                 <ProfileHorizontalTabs isAdmin={false} setTab={setTab} tab={tab} tabArray={providerTabs} />
                 <div className="flex-grow">
                     {tab === 0 && (
-                        <ProfileListing fetchApiFunction={() => userFetchProviderDetails(providerId)} queryKey="providerProfile" userOrProviderId={providerId} userLookingProvider shimmerRow={4} setSelectedUserData={setSelectedUserData} />
+                        <ProfileListing fetchApiFunction={() => fetchProviderDetailsForUser(providerId)} queryKey="providerProfile" userOrProviderId={providerId} userLookingProvider shimmerRow={4} setSelectedUserData={setSelectedUserData} />
                     ) || tab === 1 && (
-                        <AddressListing userOrProviderId={providerId} fetchApiFunction={() => userFetchProviderAddress(providerId)} queryKey="providerAddress" />
+                        <AddressListing userOrProviderId={providerId} fetchApiFunction={() => fetchAddressByProviderId(providerId)} queryKey="providerAddress" />
                     ) || tab === 2 && (
                         <ProviderServiceDetails providerId={providerId} fetchApiFunction={() => userFetchProviderService(providerId)} queryKey="providerService" isUser shimmerRow={5} />
                     ) || tab === 3 && (

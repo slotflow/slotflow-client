@@ -1,6 +1,5 @@
 import { ApiBaseResponse, ProviderCardsFilters } from "../commonInterface";
 import { User } from "../entityInterface/userInterface";
-import { Address } from "../entityInterface/addressInterface";
 import { Provider } from "../entityInterface/providerInterface";
 import { Service } from "../entityInterface/appServiceInterface";
 import { ProviderService } from "../entityInterface/providerServiceInterface";
@@ -25,18 +24,6 @@ export type UserUpdateUserInfoRequest = Pick<User, "username" | "phone">;
 export interface UserUpdateUserInfoResponse extends ApiBaseResponse {
     data: UserUpdateUserInfoRequest
 }
-
-
-// **** Used as the request interface of the user add address api
-export type CreateUserAddressRequest = Pick<Address, "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location">;
-export interface UserCreateAddressResponse extends ApiBaseResponse {
-    data: Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location" | "updatedAt">;
-}
-
-
-
-// **** Used as the response type of the user fetching api
-export type UserFetchAddressResponse = Pick<Address, "_id" | "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "landMark" | "location" | "countryCode">;
 
 
 // **** Used as the response type of the user fetch all services for the service selecting page fetching api
@@ -66,15 +53,6 @@ export interface UserFetchServiceProvidersResponse {
     };
 };
 
-
-// **** Used as the response type of the user fetching service providers details fetching api
-export type UserFetchProviderProfileDetailsResponse = Pick<Provider, "username" | "email" | "phone" | "profileImage" | "trustedBySlotflow">;
-
-
-// **** Used as the response type of the user fetching service providers address fetching api
-export type UserFetchProviderAddressResponse = Pick<Address, "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "landMark" | "location">;
-
-
 // **** Used as the response interface of the user fetching service providers service details fetching api
 type FetchServiceDetailsProps = Pick<ProviderService, "serviceName" | "serviceDescription" | "servicePrice" | "serviceExperience" | "videoUrl" | "serviceType" | "serviceMode" | "requirements" | "maxParticipants" | "isGroupService">;
 export interface UserFetchProviderServiceResponse extends FetchServiceDetailsProps {
@@ -87,22 +65,5 @@ export type UserFetchProviderAvailabilityResponse = AvailabilityForResponse;
 
 
 
-
-
-// **** Inline interface used for userSaveAppointmentBooking api
-
-
-// **** Interfaces for userFetchBooking api is in common interface api file
-
-
-// **** Inline interface used for userCancelBooking api
-
-
-// **** Interfaces for userFetchPayments api is in common interface api file
-
-
 // **** Used as the return type of the user fetch providers for the chat side bar
 export type UserFetchProvidersForChatSidebarResponse = Array<Pick<Provider, "_id" | "username" | "profileImage">>;
-
-
-// **** Address updating interfaces are in common interface file

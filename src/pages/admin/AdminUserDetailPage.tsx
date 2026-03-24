@@ -7,9 +7,10 @@ import DataFetchingError from '@/components/common/DataFetchingError';
 import ProfileListing from '@/components/common/profile/ProfileListing';
 import AddressListing from '@/components/common/profile/AddressListing';
 import ProfileHorizontalTabs from '@/components/common/ProfileHorizontalTabs';
-import { adminFetchUserAddress, adminFetchUserProfileDetails } from '@/utils/apis/adminUser.api';
+import { adminFetchUserProfileDetails } from '@/utils/apis/adminUser.api';
 import { Role } from '@/utils/interface/enums';
 import { fetchReviews } from '@/utils/apis/review.api';
+import { fetchAddressByUserId } from '@/utils/apis/address.api';
 
 const AdminUserDetailPage: React.FC = () => {
 
@@ -39,7 +40,7 @@ const AdminUserDetailPage: React.FC = () => {
                     {tab === 0 && (
                         <ProfileListing fetchApiFunction={() => adminFetchUserProfileDetails(userId)} queryKey="userProfile" userOrProviderId={userId} adminLookingUser shimmerRow={8} setSelectedUserData={setSelectedUserData} />
                     ) || tab === 1 && (
-                        <AddressListing fetchApiFunction={() => adminFetchUserAddress(userId)} queryKey='' userOrProviderId={userId} />
+                        <AddressListing fetchApiFunction={() => fetchAddressByUserId(userId)} queryKey='' userOrProviderId={userId} />
                     ) || tab === 2 && (
                         <ReviewsPage fetchFunction={() => fetchReviews({ userId })} role={Role.ADMIN} className='mt-2 md:mt-0' />
                     )}

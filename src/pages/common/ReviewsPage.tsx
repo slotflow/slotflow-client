@@ -22,7 +22,6 @@ import { deleteReview, reportReview, toggleReviewBlockStatus } from "@/utils/api
 import { FetchReviewsQueryParams, FetchReviewsResponse, ToggleReviewBlockStatusRequest } from "@/utils/interface/api/reviewApiInterface";
 
 interface ReviewsPageProps {
-  // id?: string;
   role: Role;
   fetchFunction: (
     query: FetchFunctionBaseQueryParams & FetchReviewsQueryParams
@@ -31,7 +30,6 @@ interface ReviewsPageProps {
 }
 
 const ReviewsPage: React.FC<ReviewsPageProps> = ({
-  // id,
   role,
   fetchFunction,
   className
@@ -50,12 +48,6 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
     isError,
   } = useInfiniteQuery<ApiPaginatedResponse<FetchReviewsResponse>>({
     queryKey: ["reviews"],
-    // queryFn: ({ pageParam = 1 }) =>
-    //   fetchFunction({
-    //     id,
-    //     role,
-    //     pagination: { page: pageParam as number, limit },
-    //   }),
     queryFn: ({ pageParam = 1, ...queryParams }) =>
       fetchFunction({ ...queryParams, page: pageParam as number, limit }),
     getNextPageParam: (lastPage) => {

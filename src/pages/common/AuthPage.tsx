@@ -74,6 +74,8 @@ const AuthPage: React.FC<AuthPageProp> = ({ role, formType }) => {
     };
   }, [active]);
 
+
+
   const formMap: Record<number, React.ReactNode> = {
     0: <LoginForm role={role} />,
     1: <SignUpForm role={role} />,
@@ -86,7 +88,7 @@ const AuthPage: React.FC<AuthPageProp> = ({ role, formType }) => {
     <div className="h-[100vh] flex">
 
       <div className={`w-full md:w-6/12 lg:w-4/12 flex justify-center items-center ${lightTheme ? "bg-[#f5f5f5]" : "bg-[#171717]"}`}>
-        {role === "ADMIN" ? formMap[0] : formMap[formType]}
+        {role === Role.ADMIN ? formMap[0] : formMap[formType]}
       </div>
 
       <div className="w-0 md:w-6/12 lg:w-8/12 relative flex h-full items-center justify-center overflow-hidden bg-[var(--background)]">

@@ -7,9 +7,6 @@ import { AvailabilityForResponse } from "../entityInterface/serviceAvailabilityI
 export type AdminFetchAllProvidersResponse = Pick<Provider, "_id" | "username" | "email" | "isBlocked" | "isAdminVerified" | "isEmailVerified" | "trustedBySlotflow" | "adminVerificationStatus">;
 
 
-// **** Inline interfaces used for the adminApproveProvider api
-
-
 // **** Used as the request interfaces of admin reject provider
 export type AdminRejectProviderRequest = Pick<Provider, "verificationRejectionReason" | "isAddressVerified" | "isServiceDetailsVerified" | "isAvailabilityVerified" | "isProofsVerified"> & {
     providerId: Provider["_id"];
@@ -29,14 +26,6 @@ export type AdminChangeProviderTrustTagRequest = {
     trustedBySlotflow: Provider["trustedBySlotflow"];
 }
 
-
-// **** Used as the response type of the admin fetch provider profile profile details api
-export type AdminFetchProviderProfileDetailsResponse = Pick<Provider, "_id" | "username" | "email" | "isBlocked" | "isEmailVerified" | "isAdminVerified" | "phone" | "profileImage" | "createdAt" | "trustedBySlotflow" | "adminVerificationStatus" | "isAddressVerified" | "isAvailabilityVerified" | "isProofsVerified" | "isServiceDetailsVerified">;
-
-
-// **** Interface for the admin fetch provider address is in common interface file
-
-
 // **** Used as the response type of the admin fetch provider serivde details api
 type FetchProviderServiceApiResponse = Pick<ProviderService, "serviceName" | "serviceDescription" | "servicePrice" | "serviceExperience" | "isGroupService" | "maxParticipants" | "requirements" | "serviceMode" | "serviceType" | "tags" | "videoUrl">;
 export interface AdminFetchProviderServiceResponse extends FetchProviderServiceApiResponse {
@@ -51,11 +40,5 @@ export type AdminFetchProviderAvailabilityRequest = {
 }
 // **** Used as the response type of the admin fetch provider service availability api
 export type AdminFetchProviderAvailabilityResponse = AvailabilityForResponse;
-
-
-
-
-// **** Interface for adminFetchProviderPayments api is in common interface file
-
 
 

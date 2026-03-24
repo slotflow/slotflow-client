@@ -8,8 +8,8 @@ import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import AddressForm from "@/components/form/CommonForms/AddressForm";
 import { CreateAddressFormType } from "@/utils/zod/commonZodFields";
 import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
-import { providerCreateAddress, providerFetchAddress, providerUpdateAddress } from "@/utils/apis/provider.api";
 import { appConfig } from "@/utils/env";
+import { fetchMyAddress, providerCreateAddress, updateAddress } from "@/utils/apis/address.api";
 
 const ProviderAddAddressPage = () => {
 
@@ -21,7 +21,7 @@ const ProviderAddAddressPage = () => {
     const handleSubmit = async (data: CreateAddressFormType) => {
         try {
             if (authUser?.isAddressAdded) {
-                const res = await providerUpdateAddress(data);
+                const res = await updateAddress(data);
                 if (res.success) {
                     toast.success(res.message);
                     goToAuthPage(Role.PROVIDER, RedirectTo.PROVIDER_APPROVAL_PENDING);
@@ -48,8 +48,11 @@ const ProviderAddAddressPage = () => {
         if (!shouldFetchAddress) return;
 
         async function fetchOldAddress() {
-            const result = await providerFetchAddress();
-            setOldAddress(result);
+            const result = await fetchMyAddress();
+            setOldAddress({
+                ...result,
+                countryCode: "IN"
+            });
         };
 
         fetchOldAddress();

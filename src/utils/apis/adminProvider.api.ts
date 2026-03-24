@@ -7,13 +7,12 @@ import {
     AdminChangeProviderBlockStatusRequest,
     AdminFetchProviderAvailabilityRequest,
     AdminFetchProviderAvailabilityResponse,
-    AdminFetchProviderProfileDetailsResponse,
 } from "../interface/api/adminProviderApiInterface";
 import { buildQueryParams, parseNewCommonResponse } from "../helper";
-import { Provider } from "../interface/entityInterface/providerInterface";
 import { ApiFetchFunction } from "../interface/api/commonApiInterface";
+import { Provider } from "../interface/entityInterface/providerInterface";
+import { FetchProvidersProofsResponse } from "../interface/api/commonApiInterface";
 import { FetchFunctionBaseQueryParams, ApiBaseResponse } from "../interface/commonInterface";
-import { AdminFetchddressResponse, FetchProvidersProofsResponse } from "../interface/api/commonApiInterface";
 
 export const adminFetchAllProviders: ApiFetchFunction<
     AdminFetchAllProvidersResponse,
@@ -45,15 +44,10 @@ export const adminChangeProviderTrustTag = async (data: AdminChangeProviderTrust
     return response.data;
 }
 
-export const adminFetchProviderProfileDetails = async (providerId: Provider["_id"]): Promise<AdminFetchProviderProfileDetailsResponse> => {
-    const response = await axiosInstance.get(`/admin/providers/${providerId}/profile`);
-    return response.data.data;
-}
-
-export const adminFetchProviderAddress = async (providerId: Provider["_id"]): Promise<AdminFetchddressResponse> => {
-    const response = await axiosInstance.get(`/admin/providers/${providerId}/address`);
-    return response.data.data;
-}
+// export const adminFetchProviderAddress = async (providerId: Provider["_id"]): Promise<AdminFetchddressResponse> => {
+//     const response = await axiosInstance.get(`/admin/providers/${providerId}/address`);
+//     return response.data.data;
+// }
 
 export const adminFetchProviderService = async (providerId: Provider["_id"]): Promise<AdminFetchProviderServiceResponse> => {
     const response = await axiosInstance.get(`/admin/providers/${providerId}/service`);

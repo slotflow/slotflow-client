@@ -6,15 +6,13 @@ import { Button } from '@/components/ui/button';
 import { useDispatch, useSelector } from "react-redux";
 import { useQueryClient } from "@tanstack/react-query";
 import { Edit, MapPinHouse, Plus, X } from 'lucide-react';
+import { fetchMyAddress, updateAddress, userCreateAddress } from "@/utils/apis/address.api";
 import { setAuthUser } from "@/utils/redux/slices/authSlice";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import AddressForm from "@/components/form/CommonForms/AddressForm";
 import { CreateAddressFormType } from '@/utils/zod/commonZodFields';
 import AddressListing from "@/components/common/profile/AddressListing";
-import { UpdateAddressResponse } from '@/utils/interface/api/commonApiInterface';
-import { UserCreateAddressResponse } from '@/utils/interface/api/userApiInterface';
-import { providerFetchAddress, providerUpdateAddress } from "@/utils/apis/provider.api";
-import { userCreateUserAddress, userFetchAddress, userUpdateAddress } from "@/utils/apis/user.api";
+import { UpdateAddressResponse, UserCreateAddressResponse } from "@/utils/interface/api/addressApiInterface";
 
 const Address: React.FC = () => {
 
@@ -33,12 +31,12 @@ const Address: React.FC = () => {
 
       if (authUser?.role === Role.USER) {
         if (isUpdating) {
-          res = await userUpdateAddress(data);
+          res = await updateAddress(data);
         } else {
-          res = await userCreateUserAddress(data);
+          res = await userCreateAddress(data);
         }
       } else if (authUser?.role === Role.PROVIDER) {
-        res = await providerUpdateAddress(data);
+        res = await updateAddress(data);
       } else {
         throw new Error("Unknown role");
       }
@@ -63,18 +61,16 @@ const Address: React.FC = () => {
   useEffect(() => {
 
     async function fetchOldAddress() {
-      if (authUser?.role === Role.USER) {
-        const result = await userFetchAddress();
-        setOldAddress(result);
-      } else if (authUser?.role === Role.PROVIDER) {
-        const result = await providerFetchAddress();
-        setOldAddress(result);
-      }
+      const result = await fetchMyAddress();
+      setOldAddress({
+        ...result,
+        countryCode: "IN",
+      });
     }
 
     fetchOldAddress();
 
-  },[authUser?.role, isUpdating]);
+  }, [authUser?.role, isUpdating]);
 
   return (
     <div className="min-h-full flex flex-col w-full">
@@ -118,7 +114,7 @@ const Address: React.FC = () => {
         />
       ) : (
         <AddressListing
-          fetchApiFunction={authUser?.role === "USER" ? userFetchAddress : providerFetchAddress}
+          fetchApiFunction={fetchMyAddress}
           queryKey="userAddress"
           setLoading={setLoading}
           setIsUpdating={setIsUpdating}
