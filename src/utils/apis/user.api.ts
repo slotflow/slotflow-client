@@ -3,16 +3,14 @@ import {
     UserUpdateUserInfoResponse,
     UserUpdateProfileImageRequest,
     UserUpdateProfileImageResponse,
-    UserFetchAllAppServicesResponse,
     UserFetchProviderServiceResponse,
     UserFetchServiceProvidersResponse,
     UserFetchServiceProvidersRequest,
     UserFetchUserProfileDetailsResponse,
     UserFetchProvidersForChatSidebarResponse,
-} from "../interface/api/userApiInterface";
+} from "../interface/api/user";
 import { axiosInstance } from "@/lib/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { ServiceCategory } from "../interface/enums";
 import { ApiBaseResponse } from "../interface/commonInterface";
 import { Provider } from "../interface/entityInterface/providerInterface";
 
@@ -41,17 +39,6 @@ export const userSetPushNotification = async (data: boolean): Promise<ApiBaseRes
     return response.data;
 }
 
-// **** user app services apis
-export const userFetchAllAppServices = async (categories: ServiceCategory[]): Promise<Array<UserFetchAllAppServicesResponse>> => {
-    console.log("categories : ", categories);
-    const response = await axiosInstance.get(`/user/appservices`, {
-        params: {
-            categories
-        }
-    });
-    return response.data.data;
-}
-
 
 // **** user service providers apis
 export const userSearchServiceProviders = async (data: UserFetchServiceProvidersRequest): Promise<Array<UserFetchServiceProvidersResponse>> => {
@@ -61,24 +48,10 @@ export const userSearchServiceProviders = async (data: UserFetchServiceProviders
     return response.data.data;
 };
 
-// export const userFetchProviderAddress = async (providerId: Provider["_id"]): Promise<UserFetchProviderAddressResponse> => {
-//     const response = await axiosInstance.get(`/user/providers/${providerId}/address`);
-//     return response.data.data;
-// }
-
 export const userFetchProviderService = async (providerId: Provider["_id"]): Promise<UserFetchProviderServiceResponse> => {
     const response = await axiosInstance.get(`/user/providers/${providerId}/service`);
     return response.data.data;
 }
-
-// export const userFetchProviderServiceAvailability = async (data: { providerId: Provider["_id"], date: Date }): Promise<UserFetchProviderAvailabilityResponse> => {
-//     const response = await axiosInstance.get(`/user/providers/${data.providerId}/availability`, {
-//         params: {
-//             date: data.date.toISOString()
-//         }
-//     });
-//     return response.data.data;
-// }
 
 // user chat apis
 export const UserFetchProvidersForChatSideBar = async (): Promise<UserFetchProvidersForChatSidebarResponse> => {

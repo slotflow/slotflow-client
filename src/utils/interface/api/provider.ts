@@ -8,10 +8,6 @@ import { ProviderService } from "../entityInterface/providerServiceInterface";
 // **** Used as the request interface for creating address api
 export type ProviderCreateAddressRequest = Pick<Address, "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location">;
 
-// **** Used as the response type of fetch all services api
-export type ProviderFetchAllAppServiceRequest = Pick<Service, "serviceCategory">;
-export type ProviderFetchAllServicesResponse = Array<Pick<Service, "_id" | "serviceName">>;
-
 
 // **** Used as the request interface for providerCreateServiceDetails api
 export type ProviderCreateServiceDetailsRequest = Pick<ProviderService, "isGroupService" | "maxParticipants" | "requirements" | "service" | "serviceDescription" | "serviceExperience" | "serviceMode" | "serviceName" | "servicePrice" | "serviceType" | "tags" | "videoUrl">;

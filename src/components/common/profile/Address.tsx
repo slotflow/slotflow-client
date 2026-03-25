@@ -12,7 +12,7 @@ import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import AddressForm from "@/components/form/CommonForms/AddressForm";
 import { CreateAddressFormType } from '@/utils/zod/commonZodFields';
 import AddressListing from "@/components/common/profile/AddressListing";
-import { UpdateAddressResponse, UserCreateAddressResponse } from "@/utils/interface/api/addressApiInterface";
+import { UpdateAddressResponse, UserCreateAddressResponse } from "@/utils/interface/api/address";
 
 const Address: React.FC = () => {
 

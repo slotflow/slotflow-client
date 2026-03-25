@@ -9,8 +9,8 @@ import { AuthState } from "@/utils/interface/sliceInterface";
 import avatar from '../../../assets/defaultImages/avatar.png';
 import { getUploadUrl, uploadToS3 } from "@/utils/apis/s3.api";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { UserUpdateProfileImageResponse } from "@/utils/interface/api/userApiInterface";
-import { ProviderUpdateProfileImageResponse } from "@/utils/interface/api/providerApiInterface";
+import { UserUpdateProfileImageResponse } from "@/utils/interface/api/user";
+import { ProviderUpdateProfileImageResponse } from "@/utils/interface/api/provider";
 import { ProfileHeaderComponentProps } from "@/utils/interface/componentInterface/commonComponentInterface";
 
 const ProfileHead: React.FC<ProfileHeaderComponentProps> = ({

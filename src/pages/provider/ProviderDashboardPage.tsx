@@ -5,7 +5,7 @@ import DashboardStats from '@/components/common/dashboard/DashboardStats';
 import { providerFetchDashboardStatsData } from '@/utils/apis/provider.api';
 import { providerDashboardTabs, statsMapForProvider } from '@/utils/constants';
 import ProviderDashboardGraphs from '@/components/provider/ProviderDashboardGraphs';
-import { ProviderFetchDashboardStatsDataResponse } from '@/utils/interface/api/providerApiInterface';
+import { ProviderFetchDashboardStatsDataResponse } from '@/utils/interface/api/provider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const ProviderDashboardPage: React.FC = () => {

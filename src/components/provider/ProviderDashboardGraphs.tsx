@@ -19,7 +19,7 @@ import LineChartHorizontal from '../common/chart/LineChartHorizontal';
 import { providerFetchDashboardGraphData } from '@/utils/apis/provider.api';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import PieChartCompletionBreakdown from '../common/chart/PieChartCompletionBreakdown';
-import { ProviderDashboardGraphResponse } from '@/utils/interface/api/providerApiInterface';
+import { ProviderDashboardGraphResponse } from '@/utils/interface/api/provider';
 import { appointmentModeChartConfig, appointmentsOverTimeChartConfig, completionBreakdownChartConfig, newVsReturningUsersChartConfig, peakBookingHoursChartConfig, topBookingDaysChartConfig } from '@/utils/constants';
 import { graphView } from '@/utils/helper/GraphView';
 

@@ -2,12 +2,12 @@ import { Button } from "../../ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
-import { AdminChangeServiceBlockStatusRequest, AdminFetchAllServicesResponse } from "@/utils/interface/api/adminServiceApiInterface";
+import { ChangeServiceBlockStatusRequest, FetchServicesResponse } from "@/utils/interface/api/service";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 
 export const AdminAppServicesTableColumns = (
-    handleAdminChangeServiceStatus: (data: AdminChangeServiceBlockStatusRequest) => void,
-): ColumnDef<AdminFetchAllServicesResponse>[] => [
+    handleAdminChangeServiceStatus: (data: ChangeServiceBlockStatusRequest) => void,
+): ColumnDef<FetchServicesResponse>[] => [
         {
             accessorKey: "_id",
             header: "id",

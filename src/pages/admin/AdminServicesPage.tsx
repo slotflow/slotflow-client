@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import TableHeader from "@/components/table/TableHeader";
 import CommonTable from "@/components/common/CommonTable";
 import { slideIn } from "@/utils/helper/gsapAnimationSlide";
-import { adminFetchAllServices } from "@/utils/apis/adminService.api";
+import { fetchServices } from "@/utils/apis/service.api";
 import CreateServiceForm from "@/components/form/AdminForms/CreateServiceForm";
 import { useAdminService } from "@/hooks/adminHooks/useAdminService";
-import { AdminFetchAllServicesResponse } from "@/utils/interface/api/adminServiceApiInterface";
+import { FetchServicesResponse } from "@/utils/interface/api/service";
 import { AdminAppServicesTableColumns } from "@/components/table/tableColumns/AdminAppServicesTableColumn";
 
 const AdminServicesPage = () => {
@@ -29,8 +29,8 @@ const AdminServicesPage = () => {
         onActionClick={() => setShowForm(true)}
       />
 
-      <CommonTable<AdminFetchAllServicesResponse>
-        fetchApiFunction={adminFetchAllServices}
+      <CommonTable<FetchServicesResponse>
+        fetchApiFunction={fetchServices}
         queryKey="appServices"
         column={column}
         columnsCount={5}

@@ -2,7 +2,7 @@ import { axiosInstance } from "@/lib/axios";
 import { buildQueryParams, parseNewCommonResponse } from "../helper";
 import { Booking } from "../interface/entityInterface/bookingInterface";
 import { ApiBaseResponse, ApiFetchFunction } from "../interface/commonInterface";
-import { BookAnAppointmentRequest, BookAppointmentResponse, changeAppointmentStatusRequest, CheckBookingConfirmedResponse, FetchBookingDetailsResponse, FetchBookingsQueryParams, FetchBookingsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, ValidateRoomId } from "../interface/api/bookingApiInterface";
+import { BookAnAppointmentRequest, BookAppointmentResponse, changeAppointmentStatusRequest, CheckBookingConfirmedResponse, FetchBookingDetailsResponse, FetchBookingsQueryParams, FetchBookingsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, ValidateRoomId } from "../interface/api/booking";
 
 // create checkout session for booking an appointment
 export const bookAnAppointment = async (data: BookAnAppointmentRequest): Promise<BookAppointmentResponse> => {

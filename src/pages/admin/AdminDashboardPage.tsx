@@ -23,7 +23,7 @@ import {
     AdminFetchDashboardAppointmentStatsDataResponse,
     AdminFetchDashboardSubscriptionStatsDataResponse,
     AdminFetchDashboardRevenueAndPaymentsStatsDataResponse,
-} from "@/utils/interface/api/dashboardApiInterface";
+} from "@/utils/interface/api/dashboard";
 import DashboardStats from '@/components/common/dashboard/DashboardStats';
 import {
     Tabs,

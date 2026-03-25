@@ -51,7 +51,7 @@ import {
   Home,
   BarChart,
 } from "lucide-react";
-import { ProviderFetchDashboardStatsDataResponse } from "./interface/api/providerApiInterface";
+import { ProviderFetchDashboardStatsDataResponse } from "./interface/api/provider";
 import {
   Route,
   PlanListType,

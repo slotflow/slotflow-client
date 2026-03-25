@@ -1,7 +1,7 @@
 import { axiosInstance } from "../../lib/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ApiBaseResponse } from "../interface/commonInterface";
-import { ResendOtpRequest, ResendOtpResponse, SigninRequest, SigninResponse, SignupRequest, SignupResponse, UpdatePasswordRequest, VerifyOtpRequest } from "../interface/api/authApiInterface";
+import { ResendOtpRequest, ResendOtpResponse, SigninRequest, SigninResponse, SignupRequest, SignupResponse, UpdatePasswordRequest, VerifyOtpRequest } from "../interface/api/auth";
 
 export const signup = createAsyncThunk<SignupResponse, SignupRequest>('auth/signup',
     async (userData: SignupRequest) => {

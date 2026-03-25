@@ -6,7 +6,7 @@ import { createReview } from "@/utils/apis/review.api";
 import { cancelBooking } from "@/utils/apis/booking.api";
 import { toggleReviewCreateForm } from "@/utils/redux/slices/userSlice";
 import { Booking } from "@/utils/interface/entityInterface/bookingInterface";
-import { CreateReviewRequest } from "@/utils/interface/api/reviewApiInterface";
+import { CreateReviewRequest } from "@/utils/interface/api/review";
 
 interface UseUserBookingActionsCustomHookReturnType {
     handleUserCancelBooking: (bookingId: Booking["_id"]) => void;

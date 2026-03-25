@@ -13,8 +13,8 @@ import { CreateAddressFormType } from "@/utils/zod/commonZodFields";
 import { UpdateFileDataRequest, UpdateFileDataResponse } from "../api/commonApiInterface";
 import { ApiBaseResponse, BaseChartData, ChatComponentProps, TimeRange } from "../commonInterface";
 import { AdminFetchProviderServiceResponse } from "../api/adminProviderApiInterface";
-import { UserUpdateProfileImageResponse, UserFetchProviderServiceResponse, UserUpdateProfileImageRequest, UserFetchServiceProvidersResponse } from "../api/userApiInterface";
-import { ProviderFetchServiceDetailsResponse, ProviderUpdateProfileImageRequest, ProviderUpdateProfileImageResponse } from "../api/providerApiInterface";
+import { UserUpdateProfileImageResponse, UserFetchProviderServiceResponse, UserUpdateProfileImageRequest, UserFetchServiceProvidersResponse } from "../api/user";
+import { ProviderFetchServiceDetailsResponse, ProviderUpdateProfileImageRequest, ProviderUpdateProfileImageResponse } from "../api/provider";
 import { FetchServiceAvailabilityResponse } from "../api/serviceAvailability";
 
 // **** Common component interfaces **** \\
@@ -23,56 +23,56 @@ import { FetchServiceAvailabilityResponse } from "../api/serviceAvailability";
 
 // **** profile head compoenent props interface
 export interface ProfileHeaderComponentProps {
-    updation: boolean;
-    updateProfileImageApiFunction?: ReturnType<typeof createAsyncThunk<ProviderUpdateProfileImageResponse | UserUpdateProfileImageResponse, ProviderUpdateProfileImageRequest | UserUpdateProfileImageRequest>>;
-    showDetails?: boolean;
-    isMyProfile?: boolean;
-    selectedUserData?: {selectedUserName: string, selectedUserProfileImage: string| null};
+  updation: boolean;
+  updateProfileImageApiFunction?: ReturnType<typeof createAsyncThunk<ProviderUpdateProfileImageResponse | UserUpdateProfileImageResponse, ProviderUpdateProfileImageRequest | UserUpdateProfileImageRequest>>;
+  showDetails?: boolean;
+  isMyProfile?: boolean;
+  selectedUserData?: { selectedUserName: string, selectedUserProfileImage: string | null };
 }
 
 
 // **** Provider service availabilit component props interface
 type FetchApiFunctionUserOrAdminRequestPayloadProps = {
-    providerId: Provider["_id"]
-    date: Date
+  providerId: Provider["_id"]
+  date: Date
 }
 export type ProviderApiFunctionForPSAcomponent = (date: Date) => Promise<FetchServiceAvailabilityResponse>;
 export type UserOrAdminApiFunctionForPSAcomponent = (payload: FetchApiFunctionUserOrAdminRequestPayloadProps) => Promise<FetchServiceAvailabilityResponse>;
 type FetchApiFunction = ProviderApiFunctionForPSAcomponent | UserOrAdminApiFunctionForPSAcomponent;
 export interface ProviderServiceAvailabilityComponentProps {
-    providerId?: string
-    fetchApiFuntion: FetchApiFunction;
-    queryKey: string;
-    role?: Role;
+  providerId?: string
+  fetchApiFuntion: FetchApiFunction;
+  queryKey: string;
+  role?: Role;
 }
 
 
 // **** Provider Service details showing component props interface
 export interface ProviderServiceDetailsComponentProps {
-    providerId?: Provider["_id"];
-    fetchApiFunction: (providerId?: Provider["_id"]) => Promise<
+  providerId?: Provider["_id"];
+  fetchApiFunction: (providerId?: Provider["_id"]) => Promise<
     AdminFetchProviderServiceResponse |
     ProviderFetchServiceDetailsResponse |
     UserFetchProviderServiceResponse
-    >;
-    queryKey: string;
-    isUser?: boolean;
-    shimmerRow?: number;
+  >;
+  queryKey: string;
+  isUser?: boolean;
+  shimmerRow?: number;
 }
 
 
 // **** DateSelect component interface
 export interface DateSelectInterface {
-    onValueChange: (value: TimeRange) => void;
-    value: string;
+  onValueChange: (value: TimeRange) => void;
+  value: string;
 }
 
 // **** Chart Header component interface
 export interface ChartHeaderInterface {
-    title: string;
-    description?: string;
-    onValueChange?: (value: TimeRange) => void;
-    value?: string;
+  title: string;
+  description?: string;
+  onValueChange?: (value: TimeRange) => void;
+  value?: string;
 }
 
 
@@ -81,7 +81,7 @@ export type AreaGroupChartProps = Pick<ChatComponentProps<BaseChartData>, "title
 
 
 // **** BarChartHorizontal compoenent props type
-export type BarChartHorizontalProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "dataKeyThree" | "chartConfig" | "isLocked">; 
+export type BarChartHorizontalProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "dataKeyThree" | "chartConfig" | "isLocked">;
 
 
 // **** BarChartStacked compoenent props type
@@ -89,15 +89,15 @@ export type BarChartStackedProps = Pick<ChatComponentProps<BaseChartData>, "titl
 
 
 // **** BarChartVertical compoenent props type
-export type BarChartVerticalProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "chartConfig" | "isLocked"> ;
+export type BarChartVerticalProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "chartConfig" | "isLocked">;
 
 
 // **** ChartLineMultiple compoenent props type
-export type ChartLineMultipleProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "chartConfig" | "isLocked"> ;
+export type ChartLineMultipleProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "chartConfig" | "isLocked">;
 
 
 // **** LineChartHorizontal compoenent props type
-export type LineChartHorizontalProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "chartConfig" | "isLocked"> ;
+export type LineChartHorizontalProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "chartConfig" | "isLocked">;
 
 
 // **** PieChartCompletionBreakdown compoenent props type
@@ -160,26 +160,26 @@ export interface FormFieldProps<T extends FieldValues> {
 
 // **** Address Form Props Interface
 export interface AddressFormProps {
-    formClassNames: string;
-    heading: string;
-    headingSize: string;
-    buttonText: string;
-    onSubmit: (data: CreateAddressFormType) => void;
-    setData?: CreateAddressFormType
+  formClassNames: string;
+  heading: string;
+  headingSize: string;
+  buttonText: string;
+  onSubmit: (data: CreateAddressFormType) => void;
+  setData?: CreateAddressFormType
 }
 
 
 // ****
 export interface FileUploaderProps {
-    folderName: string;
-    uploadFunction: (data: UpdateFileDataRequest) => Promise<UpdateFileDataResponse>;
-    message?: string;
-    setStateFunction: (data: string | null) => PayloadAction<string | null>;
-    setLoadingFunction: (data: boolean) => PayloadAction<boolean>;
-    fileUploaded: boolean;
-    deleteFunction: () => Promise<ApiBaseResponse>;
-    loading: boolean;
-    data: string | null;
+  folderName: string;
+  uploadFunction: (data: UpdateFileDataRequest) => Promise<UpdateFileDataResponse>;
+  message?: string;
+  setStateFunction: (data: string | null) => PayloadAction<string | null>;
+  setLoadingFunction: (data: boolean) => PayloadAction<boolean>;
+  fileUploaded: boolean;
+  deleteFunction: () => Promise<ApiBaseResponse>;
+  loading: boolean;
+  data: string | null;
 };
 
 // provider cards listing

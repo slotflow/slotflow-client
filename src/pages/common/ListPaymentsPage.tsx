@@ -1,6 +1,6 @@
 import { fetchPayments } from "@/utils/apis/payment.api";
 import CommonTable from "@/components/common/CommonTable";
-import { FetchPaymentsResponse } from "@/utils/interface/api/paymentApiInterface";
+import { FetchPaymentsResponse } from "@/utils/interface/api/payment";
 import { useRoleBasedNavigation } from "@/hooks/commonHooks/useRoleBasedNavigation";
 import { PaymentsTableColumn } from "@/components/table/tableColumns/PaymentsTableColumn";
 

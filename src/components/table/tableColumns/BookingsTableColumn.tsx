@@ -6,7 +6,7 @@ import { DataTableColumnHeader } from "../DataTableColumnHeader";
 import { AppointmentStatus, Role } from "@/utils/interface/enums";
 import { Booking } from "@/utils/interface/entityInterface/bookingInterface";
 import { Check, MoreHorizontal, NotebookPen, ReceiptText, VideoIcon, X } from "lucide-react";
-import { changeAppointmentStatusRequest, FetchBookingsResponse, ValidateRoomId } from "@/utils/interface/api/bookingApiInterface";
+import { changeAppointmentStatusRequest, FetchBookingsResponse, ValidateRoomId } from "@/utils/interface/api/booking";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 export const BookingsTableColumn = (
@@ -110,7 +110,7 @@ export const BookingsTableColumn = (
                                     </DropdownMenuItem>
                                 </>
                             )}
-                            {role === Role.USER && handleUserCancelBooking &&booking.appointmentStatus === AppointmentStatus.BOOKED && (
+                            {role === Role.USER && handleUserCancelBooking && booking.appointmentStatus === AppointmentStatus.BOOKED && (
                                 <DropdownMenuItem
                                     onClick={() => handleUserCancelBooking(booking._id)}>
                                     Cancel

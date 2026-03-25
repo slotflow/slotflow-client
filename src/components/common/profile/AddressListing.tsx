@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import DataFetchingError from '../DataFetchingError';
 import InfoDisplayComponent from '../InfoDisplayComponent';
 import ProfileDetailsShimmer from '@/components/shimmers/ProfileDetailsShimmer';
-import { FetchAddressResponse, FetchMyAddressResponse } from '@/utils/interface/api/addressApiInterface';
+import { FetchAddressResponse, FetchMyAddressResponse } from '@/utils/interface/api/address';
 
 interface UserOrProviderAddressDetailsComponentProps {
     userOrProviderId?: string;

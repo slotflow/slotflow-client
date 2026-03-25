@@ -1,7 +1,7 @@
 import { axiosInstance } from "@/lib/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ApiBaseResponse } from "../interface/commonInterface";
-import { FetchMyAddressResponse, FetchAddressResponse, CreateAddressRequest, UserCreateAddressResponse, UpdateAddressRequest, UpdateAddressResponse } from "../interface/api/addressApiInterface";
+import { FetchMyAddressResponse, FetchAddressResponse, CreateAddressRequest, UserCreateAddressResponse, UpdateAddressRequest, UpdateAddressResponse } from "../interface/api/address";
 
 export const fetchMyAddress = async (): Promise<FetchMyAddressResponse> => {
     const response = await axiosInstance.get('/addresses/me');

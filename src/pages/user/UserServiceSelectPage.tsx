@@ -1,14 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-// import { useQuery } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { ServiceCategory } from "@/utils/interface/enums";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { pushServiceCategory } from "@/utils/redux/slices/userSlice";
-// import DataFetchingError from "@/components/common/DataFetchingError";
-// import ServiceSelectShimmer from "@/components/shimmers/ServiceSelectShimmer";
-// import { userFetchAllServicesForServiceSelectPage } from "@/utils/apis/user.api";
-// import { UserFetchAllAppServicesResponse } from "@/utils/interface/api/userApiInterface";
 
 const UserServiceSelectPage = () => {
 

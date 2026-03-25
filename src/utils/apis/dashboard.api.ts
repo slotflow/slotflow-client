@@ -7,7 +7,7 @@ import {
     AdminFetchDashboardAppointmentStatsDataResponse,
     AdminFetchDashboardSubscriptionStatsDataResponse,
     AdminFetchDashboardRevenueAndPaymentsStatsDataResponse,
-} from "../interface/api/dashboardApiInterface";
+} from "../interface/api/dashboard";
 
 export const adminFetchDashboardTodayStatsData = async (): Promise<AdminFetchDashboardTodayStatsDataResponse> => {
     const response = await axiosInstance.get('/dashboard/today');

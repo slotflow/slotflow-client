@@ -8,7 +8,7 @@ import { AuthUser } from "@/utils/interface/sliceInterface";
 import { MediaTrackKind, Role } from "@/utils/interface/enums";
 import { toggleMediaTrack } from "@/utils/helper/toggleMediaTrack";
 import { connectVideoSocket } from "@/utils/socket/videoSocketThunk";
-import { JoinRoomCallbackRequest } from "@/utils/interface/api/bookingApiInterface";
+import { JoinRoomCallbackRequest } from "@/utils/interface/api/booking";
 import { setCamera, setMic, startVideoCallTimer, updateVideoCallTimer } from "@/utils/redux/slices/videoSlice";
 
 interface useVideoCallLobbyInterface {
@@ -114,7 +114,7 @@ export const useVideoCallLobby = ({
       dispatch(setMic(audioTrack?.enabled ?? false));
 
     } catch (error) {
-      if(appConfig.dev) {
+      if (appConfig.dev) {
         console.error("Media access error:", error);
       }
       dispatch(setCamera(false));

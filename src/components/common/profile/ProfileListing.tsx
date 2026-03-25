@@ -6,10 +6,10 @@ import DataFetchingError from "../DataFetchingError";
 import InfoDisplayComponent from "../InfoDisplayComponent";
 import { copyToClipboard } from "@/utils/helper";
 import ProfileDetailsShimmer from "@/components/shimmers/ProfileDetailsShimmer";
-import { ProviderFetchMyProfileDetailsResponse } from "@/utils/interface/api/providerApiInterface";
+import { ProviderFetchMyProfileDetailsResponse } from "@/utils/interface/api/provider";
 import { AdminFetchUserProfileDetailsResponse } from "@/utils/interface/api/adminUserApiInterface";
 import { AdminFetchProviderProfileDetailsResponse } from "@/utils/interface/api/adminProviderApiInterface";
-import { UserFetchProviderProfileDetailsResponse, UserFetchUserProfileDetailsResponse } from "@/utils/interface/api/userApiInterface";
+import { UserFetchProviderProfileDetailsResponse, UserFetchUserProfileDetailsResponse } from "@/utils/interface/api/user";
 
 interface UserOrProviderProfileDetailsComponentProps {
     userOrProviderId?: string;
@@ -48,7 +48,7 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
     const { authUser } = useSelector((state: RootState) => state.auth);
     const { data, isLoading, isError, error } = useQuery({
         queryFn: () => fetchApiFunction(userOrProviderId),
-        queryKey: [queryKey,userOrProviderId],
+        queryKey: [queryKey, userOrProviderId],
         staleTime: 60 * 60 * 1000,
         refetchOnWindowFocus: false,
     });
@@ -59,7 +59,7 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
                 setProfileImage(data.profileImage);
             };
 
-            if ((userLookingProvider || adminLookingProvider || adminLookingUser)&& "username" in data && setSelectedUserData) {
+            if ((userLookingProvider || adminLookingProvider || adminLookingUser) && "username" in data && setSelectedUserData) {
                 setSelectedUserData({
                     selectedUserName: data.username,
                     selectedUserProfileImage: "profileImage" in data ? data.profileImage : null
@@ -67,7 +67,7 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
             };
         };
 
-    }, [data, setProfileImage, setSelectedUserData, userLookingProvider, adminLookingProvider,adminLookingUser]);
+    }, [data, setProfileImage, setSelectedUserData, userLookingProvider, adminLookingProvider, adminLookingUser]);
 
     if (isError) {
         return <DataFetchingError message={error?.message} />
@@ -109,11 +109,11 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
                         const userProfileData = data as (AdminFetchUserProfileDetailsResponse)
                         return (
                             <>
-                            <InfoDisplayComponent label="Username" value={userProfileData.username} />
-                            <InfoDisplayComponent label="Email" value={userProfileData.email} copyToClipboard={copyToClipboard} />
-                            <InfoDisplayComponent label="Phone Number" value={userProfileData.phone ?? 'Not yet added'} />
-                            <InfoDisplayComponent label="Email Verified" value={userProfileData.isEmailVerified} isBoolean={true} />
-                            <InfoDisplayComponent label="Account Blocked" value={userProfileData.isBlocked} isBoolean={true} isLast />
+                                <InfoDisplayComponent label="Username" value={userProfileData.username} />
+                                <InfoDisplayComponent label="Email" value={userProfileData.email} copyToClipboard={copyToClipboard} />
+                                <InfoDisplayComponent label="Phone Number" value={userProfileData.phone ?? 'Not yet added'} />
+                                <InfoDisplayComponent label="Email Verified" value={userProfileData.isEmailVerified} isBoolean={true} />
+                                <InfoDisplayComponent label="Account Blocked" value={userProfileData.isBlocked} isBoolean={true} isLast />
                             </>
                         )
                     })()}

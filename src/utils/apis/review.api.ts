@@ -2,7 +2,7 @@ import { axiosInstance } from "@/lib/axios";
 import { buildQueryParams, parseNewCommonResponse } from "../helper";
 import { Review } from "../interface/entityInterface/reviewInterface";
 import { ApiBaseResponse, ApiFetchFunction } from "../interface/commonInterface";
-import { CreateReviewRequest, FetchReviewsQueryParams, FetchReviewsResponse, ToggleReviewBlockStatusRequest } from "../interface/api/reviewApiInterface";
+import { CreateReviewRequest, FetchReviewsQueryParams, FetchReviewsResponse, ToggleReviewBlockStatusRequest } from "../interface/api/review";
 
 export const createReview = async (data: CreateReviewRequest): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.post('/reviews', data);

@@ -4,7 +4,7 @@ import {
     AdminFetchAllPlansResponse,
     ChangePlanBlockStatusRequest,
     ProviderFetchPlansResponse,
-} from "../interface/api/planApiInterface";
+} from "../interface/api/plan";
 import { buildQueryParams, parseNewCommonResponse } from "../helper";
 import { ApiFetchFunction } from "../interface/api/commonApiInterface";
 import { FetchFunctionBaseQueryParams, ApiBaseResponse } from "../interface/commonInterface";

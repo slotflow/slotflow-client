@@ -9,13 +9,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { ServiceCategory } from "@/utils/interface/enums";
 import FilterCompHeader from "../common/FilterCompHeader";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { userFetchAllAppServices } from "@/utils/apis/user.api";
 import { toggleFilterSideBar } from "@/utils/redux/slices/appSlice";
 import { setProviderCardsFilter } from "@/utils/redux/slices/userSlice";
 import { ProviderCardsFilters } from "@/utils/interface/commonInterface";
 import { Location } from "@/utils/interface/entityInterface/addressInterface";
 import { BookCheck, ChartBarStacked, IndianRupee, Locate, SlidersHorizontal } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { fetchServicesByCategory } from "@/utils/apis/service.api";
 
 
 const FilterRightSideBar: React.FC = () => {
@@ -55,7 +55,7 @@ const FilterRightSideBar: React.FC = () => {
     }, [selectedCategories]);
 
     const { data, isLoading } = useQuery({
-        queryFn: () => userFetchAllAppServices(filters.categories),
+        queryFn: () => fetchServicesByCategory(filters.categories),
         queryKey: ["appServices", filters.categories],
         staleTime: 5 * 60 * 1000,
         refetchOnWindowFocus: false,

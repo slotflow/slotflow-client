@@ -1,7 +1,7 @@
-import { ApiBaseResponse, ProviderCardsFilters } from "../commonInterface";
 import { User } from "../entityInterface/userInterface";
 import { Provider } from "../entityInterface/providerInterface";
 import { Service } from "../entityInterface/appServiceInterface";
+import { ApiBaseResponse, ProviderCardsFilters } from "../commonInterface";
 import { ProviderService } from "../entityInterface/providerServiceInterface";
 
 // **** Used as the response type of the user profile details fetching api
@@ -25,8 +25,6 @@ export interface UserUpdateUserInfoResponse extends ApiBaseResponse {
 }
 
 
-// **** Used as the response type of the user fetch all services for the service selecting page fetching api
-export type UserFetchAllAppServicesResponse = Pick<Service, "_id" | "serviceName">;
 
 
 // **** Used as the response interface of the user fetching service providers for the dashboard fetching api

@@ -19,7 +19,7 @@ import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { Review } from "@/utils/interface/entityInterface/reviewInterface";
 import { appConfig } from "@/utils/env";
 import { deleteReview, reportReview, toggleReviewBlockStatus } from "@/utils/apis/review.api";
-import { FetchReviewsQueryParams, FetchReviewsResponse, ToggleReviewBlockStatusRequest } from "@/utils/interface/api/reviewApiInterface";
+import { FetchReviewsQueryParams, FetchReviewsResponse, ToggleReviewBlockStatusRequest } from "@/utils/interface/api/review";
 
 interface ReviewsPageProps {
   role: Role;

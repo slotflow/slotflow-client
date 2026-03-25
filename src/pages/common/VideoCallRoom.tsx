@@ -12,7 +12,7 @@ import { toggleMediaTrack } from "@/utils/helper/toggleMediaTrack";
 import { disconnectVideoSocket } from "@/utils/socket/videoSocketThunk";
 import { MediaTrackKind, PeerValues, Role, VideoCallSocket } from "@/utils/interface/enums";
 import { Mic, MicOff, Video, VideoOff, PhoneOff, Loader } from "lucide-react";
-import { JoinRoomCallbackRequest } from "@/utils/interface/api/bookingApiInterface";
+import { JoinRoomCallbackRequest } from "@/utils/interface/api/booking";
 import { setCamera, setMic, stopVideoCallTimer, updateVideoCallTimer } from "@/utils/redux/slices/videoSlice";
 
 const RoomPage = () => {

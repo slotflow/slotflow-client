@@ -5,7 +5,7 @@ import { slideIn } from '@/utils/helper/gsapAnimationSlide';
 import { adminFetchAllPlans } from '@/utils/apis/plan.api';
 import CreatePlanForm from '@/components/form/AdminForms/CreatePlanForm';
 import { useAdminPlan } from '@/hooks/adminHooks/useAdminPlan';
-import { AdminFetchAllPlansResponse } from '@/utils/interface/api/planApiInterface';
+import { AdminFetchAllPlansResponse } from '@/utils/interface/api/plan';
 import { AdminPlansTableColumns } from '@/components/table/tableColumns/AdminPlansTableColumn';
 
 const AdminPlansPage = () => {

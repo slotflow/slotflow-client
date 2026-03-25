@@ -11,8 +11,8 @@ import ChatSidebarShimmer from "@/components/shimmers/ChatSidebarShimmer";
 import { Message } from "@/utils/interface/entityInterface/message.interface";
 import { Provider } from "@/utils/interface/entityInterface/providerInterface";
 import { setLastMessage, setOnlineUsers, setSelectedUser } from "@/utils/redux/slices/chatSlice";
-import { UserFetchProvidersForChatSidebarResponse } from "@/utils/interface/api/userApiInterface";
-import { ProviderFetchUsersForChatSidebarResponse } from "@/utils/interface/api/providerApiInterface";
+import { UserFetchProvidersForChatSidebarResponse } from "@/utils/interface/api/user";
+import { ProviderFetchUsersForChatSidebarResponse } from "@/utils/interface/api/provider";
 
 type setLatMessageProps = Pick<Message, "senderId" | "text" | "createdAt">
 type UserProps = Pick<User, "_id" | "username" | "profileImage"> | Pick<Provider, "_id" | "username" | "profileImage">;

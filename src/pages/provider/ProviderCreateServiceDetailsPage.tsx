@@ -15,8 +15,9 @@ import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
 import { RedirectTo } from "@/utils/interface/commonInterface";
 import { serviceCategoryOptions, serviceModeOptions, serviceTypeOptions, groupOptions } from "@/utils/constants";
 import { providerCreateServiceDetailsZodSchema, ProviderCreateServiceDetailsFormType } from "@/utils/zod/providerZod";
-import { providerFetchAllAppServices, providerCreateServiceDetails, providerFetchServiceDetails, providerUpdateServiceDetails } from "@/utils/apis/provider.api";
+import { providerCreateServiceDetails, providerFetchServiceDetails, providerUpdateServiceDetails } from "@/utils/apis/provider.api";
 import { appConfig } from "@/utils/env";
+import { fetchServicesByCategory } from "@/utils/apis/service.api";
 
 const ProviderCreateServiceDetailsPage: React.FC = () => {
 
@@ -65,7 +66,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
 
     const fetchServices = async () => {
       try {
-        const res = await providerFetchAllAppServices({ serviceCategory });
+        const res = await fetchServicesByCategory([serviceCategory]);
         const transformed = res.map((srv: { _id: string; serviceName: string }) => ({
           label: srv.serviceName,
           value: srv._id
@@ -135,7 +136,7 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
 
       <div className="w-full md:w-8/12 md:px-10">
         <form
-          onSubmit={handleSubmit(onSubmit, (errors) => {
+          onSubmit={handleSubmit(onSubmit, () => {
             toast.error("Please fill in all required fields correctly.");
           })}
           className="md:mt-10 px-4 md:px-12 py-6 md:py-0"

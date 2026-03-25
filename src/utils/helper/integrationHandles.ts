@@ -1,8 +1,8 @@
 import { toast } from "react-toastify";
 import { AppDispatch } from "../redux/appStore";
 import { appConfig, serviceConfig } from "../env";
-import { connectStripeAccount } from "../apis/provider.api";
 import { setGoogleConnectionLoading, setStripeConnectionLoading } from "../redux/slices/integrationSlice";
+import { connectStripeAccount } from "../apis/payment.api";
 
 export const handleConnectGoogle = (e: React.MouseEvent<HTMLButtonElement>, dispatch: AppDispatch) => {
     e.preventDefault();

@@ -10,10 +10,10 @@ import { handleExportPDF } from '@/utils/helper/pdfGenerator';
 import { OnChangeFn, PaginationState } from '@tanstack/react-table';
 import { handleExportExcel } from '@/utils/helper/excelGenerator.ts';
 import DataFetchingError from '@/components/common/DataFetchingError';
-import { adminFetchRevenueReport } from '@/utils/apis/adminReport.api';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar as CalendarIcon, FileSpreadsheet, NotebookText, RotateCcw } from 'lucide-react';
 import { AdminRevenueTableColumn } from '@/components/table/tableColumns/AdminRevenueTableColumn';
+import { fetchRevenueReportForAdmin } from '@/utils/apis/payment.api';
 
 const AdminRevenueReport: React.FC = () => {
     const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
@@ -28,7 +28,7 @@ const AdminRevenueReport: React.FC = () => {
     };
 
     const { data, isLoading, isError, error, refetch } = useQuery({
-        queryFn: () => adminFetchRevenueReport({
+        queryFn: () => fetchRevenueReportForAdmin({
             startDate: dateRange?.from,
             endDate: dateRange?.to,
             page: pagination.pageIndex + 1,

@@ -5,7 +5,7 @@ import { PaymentFor } from "@/utils/interface/enums";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
 import { formateDate, formatNumberToPrice } from "@/utils/helper/formatter";
 import { Payment } from "@/utils/interface/entityInterface/paymentInterface";
-import { FetchPaymentsResponse } from "@/utils/interface/api/paymentApiInterface";
+import { FetchPaymentsResponse } from "@/utils/interface/api/payment";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 // for admin side, provider side and user side view of payments table

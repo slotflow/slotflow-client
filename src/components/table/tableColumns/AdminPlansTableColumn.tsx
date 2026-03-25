@@ -3,7 +3,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Check, MoreHorizontal, X } from "lucide-react";
 import { formatNumberToPrice } from "@/utils/helper/formatter";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
-import { ChangePlanBlockStatusRequest, AdminFetchAllPlansResponse } from "@/utils/interface/api/planApiInterface";
+import { ChangePlanBlockStatusRequest, AdminFetchAllPlansResponse } from "@/utils/interface/api/plan";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 
 export const AdminPlansTableColumns = (

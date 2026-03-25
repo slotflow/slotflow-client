@@ -1,6 +1,6 @@
 import { Provider } from "../entityInterface/providerInterface";
 import { ApiPaginatedResponse, FetchFunctionBaseQueryParams } from "../commonInterface";
-import { FetchPaymentsQueryParams, FetchPaymentsResponse } from "../api/paymentApiInterface";
+import { FetchPaymentsQueryParams, FetchPaymentsResponse } from "../api/payment";
 
 // Admin fetch provider payments compoenent props interface
 export interface AdminFetchProviderPaymentsComponentProps {

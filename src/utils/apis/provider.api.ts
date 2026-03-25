@@ -2,9 +2,7 @@ import { axiosInstance } from "@/lib/axios";
 import {
     ProviderSubmitDetailsResponse,
     ProviderDashboardGraphResponse,
-    ProviderFetchAllServicesResponse,
     ProviderUpdateProviderInfoRequest,
-    ProviderFetchAllAppServiceRequest,
     ProviderUpdateProfileImageRequest,
     ProviderUpdateProviderInfoResponse,
     ProviderUpdateProfileImageResponse,
@@ -16,26 +14,12 @@ import {
     ProviderFetchUsersForChatSidebarResponse,
     AdminFetchProviderProfileDetailsResponse,
     UserFetchProviderProfileDetailsResponse,
-} from "../interface/api/providerApiInterface";
+} from "../interface/api/provider";
 import { DateRange } from "react-day-picker";
 import { PlanName } from "../interface/enums";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ApiBaseResponse } from "../interface/commonInterface";
 import { FetchProvidersProofsResponse, UpdateFileDataRequest, UpdateFileDataResponse } from "../interface/api/commonApiInterface";
-
-
-// **** App service apis
-export const providerFetchAllAppServices = async (data: ProviderFetchAllAppServiceRequest): Promise<ProviderFetchAllServicesResponse> => {
-    const response = await axiosInstance.get('/provider/appservices', {
-        params: {
-            serviceCategory: [data.serviceCategory]
-        }
-    });
-    return response.data.data;
-}
-
-
-
 
 // **** Provider services apis
 export const providerCreateServiceDetails = createAsyncThunk<ApiBaseResponse, ProviderCreateServiceDetailsRequest>("/provider/addServiceDetails",
@@ -145,10 +129,3 @@ export const providerFetchDashboardGraphData = async (subscription?: PlanName, d
     });
     return response.data.data;
 }
-
-
-// **** provider integration api
-export const connectStripeAccount = async (): Promise<{ url: string }> => {
-    const response = await axiosInstance.post("/provider/stripe/connect");
-    return response.data.data;
-};

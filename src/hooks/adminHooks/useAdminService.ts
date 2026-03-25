@@ -1,32 +1,32 @@
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
-import { adminAddNewService, adminChangeServiceBlockStatus } from "@/utils/apis/adminService.api";
-import { AdminAddNewAppServiceRequest, AdminChangeServiceBlockStatusRequest } from "@/utils/interface/api/adminServiceApiInterface";
+import { createService, changeServiceBlockStatus } from "@/utils/apis/service.api";
+import { CreateServiceRequest, ChangeServiceBlockStatusRequest } from "@/utils/interface/api/service";
 
 interface UseAdminServiceReturnInterface {
-  handleAdminServiceCreating: (data: AdminAddNewAppServiceRequest) => void;
-  handleAdminChangeServiceStatus: (data: AdminChangeServiceBlockStatusRequest) => void;
+  handleAdminServiceCreating: (data: CreateServiceRequest) => void;
+  handleAdminChangeServiceStatus: (data: ChangeServiceBlockStatusRequest) => void;
 }
 
 export const useAdminService = (): UseAdminServiceReturnInterface => {
 
   const queryClient = useQueryClient();
 
-  const handleAdminServiceCreating = ({ serviceName, serviceCategory }: AdminAddNewAppServiceRequest) => {
-    adminAddNewService({ serviceName, serviceCategory })
+  const handleAdminServiceCreating = ({ serviceName, serviceCategory }: CreateServiceRequest) => {
+    createService({ serviceName, serviceCategory })
       .then((res) => {
-        if(res.success) {
+        if (res.success) {
           toast.success(res.message);
           queryClient.invalidateQueries({ queryKey: ["appServices"] });
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
-  const handleAdminChangeServiceStatus = ({ serviceId, isBlocked }: AdminChangeServiceBlockStatusRequest) => {
-    adminChangeServiceBlockStatus({ serviceId, isBlocked })
+  const handleAdminChangeServiceStatus = ({ serviceId, isBlocked }: ChangeServiceBlockStatusRequest) => {
+    changeServiceBlockStatus({ serviceId, isBlocked })
       .then((res) => {
-        if(res.success) {
+        if (res.success) {
           toast.success(res.message);
           queryClient.invalidateQueries({ queryKey: ["appServices"] });
         }

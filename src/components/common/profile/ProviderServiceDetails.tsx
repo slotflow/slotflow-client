@@ -4,7 +4,7 @@ import DataFetchingError from '../DataFetchingError';
 import { ServiceMode } from '@/utils/interface/enums';
 import InfoDisplayComponent from '../InfoDisplayComponent';
 import ProfileDetailsShimmer from '../../shimmers/ProfileDetailsShimmer';
-import { ProviderFetchServiceDetailsResponse } from '@/utils/interface/api/providerApiInterface';
+import { ProviderFetchServiceDetailsResponse } from '@/utils/interface/api/provider';
 import { AdminFetchProviderServiceResponse } from '@/utils/interface/api/adminProviderApiInterface';
 import { ProviderServiceDetailsComponentProps } from '@/utils/interface/componentInterface/commonComponentInterface';
 
