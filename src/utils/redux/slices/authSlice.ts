@@ -6,9 +6,11 @@ import { resendOtp, signin, signout, signup } from "@/utils/apis/auth.api";
 import { userUpdateInfo, userUpdateProfileImage } from "@/utils/apis/user.api";
 import { UserUpdateUserInfoResponse } from "@/utils/interface/api/userApiInterface";
 import { ResendOtpResponse, SigninResponse, SignupResponse } from "@/utils/interface/api/authApiInterface";
-import { ProviderSubmitDetailsResponse, ProviderSubscriptionActivated, ProviderUpdateProviderInfoResponse } from "@/utils/interface/api/providerApiInterface";
-import { providerCreateServiceAvailabilities, providerCreateServiceDetails, providerSubmitDetailsForReview, providerUpdateInfo, providerUpdateProfileImage } from "@/utils/apis/provider.api";
+import { ProviderSubmitDetailsResponse, ProviderUpdateProviderInfoResponse } from "@/utils/interface/api/providerApiInterface";
+import { providerCreateServiceDetails, providerSubmitDetailsForReview, providerUpdateInfo, providerUpdateProfileImage } from "@/utils/apis/provider.api";
 import { providerCreateAddress } from "@/utils/apis/address.api";
+import { createServiceAvailabilities } from "@/utils/apis/serviceAvailability.api";
+import { SubscriptionActivated } from "@/utils/interface/api/subscription";
 
 const initialState: AuthState = {
     authUser: null,
@@ -47,17 +49,17 @@ const authSlice = createSlice({
             };
         },
         setIsProofSubmitted: (state) => {
-            if(state.authUser) {
+            if (state.authUser) {
                 state.authUser.isProofSubmitted = true;
             };
         },
         setAdminVerificationState: (state, action: PayloadAction<AdminVerificationStatus>) => {
-            if(state.authUser) {
+            if (state.authUser) {
                 state.authUser.adminVerificationStatus = action.payload;
             };
         },
         updateNotificationPreference: (state, action: PayloadAction<boolean>) => {
-            if(state.authUser) {
+            if (state.authUser) {
                 state.authUser.allowPushNotification = action.payload;
             };
         },
@@ -69,12 +71,12 @@ const authSlice = createSlice({
             state.eventSocketId = null;
             state.eventSocketIsConnected = false;
         },
-        setSubscription: (state, action: PayloadAction<ProviderSubscriptionActivated>) => {
-            if(state.authUser) {
+        setSubscription: (state, action: PayloadAction<SubscriptionActivated>) => {
+            if (state.authUser) {
                 state.authUser.providerSubscription = action.payload.subscribedPlan;
                 state.authUser.subscriptionStartDate = action.payload.startDate,
-                state.authUser.subscriptionEndDate = action.payload.endDate,
-                state.authUser.subscriptionStatus = action.payload.subscriptionStatus
+                    state.authUser.subscriptionEndDate = action.payload.endDate,
+                    state.authUser.subscriptionStatus = action.payload.subscriptionStatus
             }
         },
         setSubscriptionUpdating: (state, action: PayloadAction<boolean>) => {
@@ -102,7 +104,7 @@ const authSlice = createSlice({
         builder
             .addCase(signin.pending, () => { })
             .addCase(signin.fulfilled, (state, action: PayloadAction<SigninResponse>) => {
-                    state.authUser = action.payload.data;
+                state.authUser = action.payload.data;
             })
             .addCase(signin.rejected, () => { });
 
@@ -192,16 +194,16 @@ const authSlice = createSlice({
             });
 
         builder
-            .addCase(providerCreateServiceAvailabilities.pending, (state) => {
+            .addCase(createServiceAvailabilities.pending, (state) => {
                 state.dataUpdating = true;
             })
-            .addCase(providerCreateServiceAvailabilities.fulfilled, (state, action) => {
+            .addCase(createServiceAvailabilities.fulfilled, (state, action) => {
                 state.dataUpdating = false;
                 if (state.authUser) {
                     state.authUser.isServiceAvailabilityAdded = action.payload.success;
                 }
             })
-            .addCase(providerCreateServiceAvailabilities.rejected, (state) => {
+            .addCase(createServiceAvailabilities.rejected, (state) => {
                 state.dataUpdating = false;
             });
 
@@ -236,14 +238,14 @@ const authSlice = createSlice({
             });
 
         builder
-            .addCase(providerSubmitDetailsForReview.pending, () => {})
+            .addCase(providerSubmitDetailsForReview.pending, () => { })
             .addCase(providerSubmitDetailsForReview.fulfilled, (state, action: PayloadAction<ProviderSubmitDetailsResponse>) => {
                 state.dataUpdating = false;
                 if (state.authUser) {
                     state.authUser.adminVerificationStatus = action.payload.data.adminVerificationStatus;
                 }
             })
-            .addCase(providerSubmitDetailsForReview.rejected, () => {});
+            .addCase(providerSubmitDetailsForReview.rejected, () => { });
     },
 });
 

@@ -12,9 +12,9 @@ import { SubscriptionValidity } from '@/utils/interface/enums';
 import razorpayLogo from '../../assets/iconImages/Razorpay.png';
 import { EventSocketEnum } from '@/utils/interface/socket.interface';
 import { setSubscriptionUpdating } from '@/utils/redux/slices/authSlice';
-import { providerCheckoutForSubscribePlan } from '@/utils/apis/provider.api';
 import { Provider } from '@/utils/interface/entityInterface/providerInterface';
 import { setPaymentSelectionPage, setSubscriptionIsTrailPlan, setSubscriptionPlanDuration, setSubscriptionPlanId } from '@/utils/redux/slices/providerSlice';
+import { checkoutForSubscribePlan } from '@/utils/apis/subscription.api';
 
 type UserBookinAppointmentDataProps = {
     providerId: Provider["_id"]
@@ -132,7 +132,7 @@ const CommonPaymentSelection: React.FC<PaymentSelecionComponentPropst> = ({
                 return;
             }
 
-            const response = await providerCheckoutForSubscribePlan(infoData);
+            const response = await checkoutForSubscribePlan(infoData);
             const sessionId = response.data;
 
             if (!sessionId) {

@@ -34,3 +34,9 @@ export const updateAddress = async (data: UpdateAddressRequest): Promise<UpdateA
     const response = await axiosInstance.patch(`/addresses/${data._id}`, data);
     return response.data;
 }
+
+// Not implemented
+// export const fetchAddress = async (addressId: string): Promise<FetchAddressResponse> => {
+//     const response = await axiosInstance.get(`/addresses/${addressId}`);
+//     return response.data.data;
+// }

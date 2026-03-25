@@ -1,4 +1,4 @@
-// **** Used as the response type of the admin fetch dashboard todays stats data
+// Used as the response type of the admin fetch dashboard todays stats data
 export interface AdminFetchDashboardTodayStatsDataResponse extends Record<string, number> {
   newUsers: number;
   newProviders: number;
@@ -10,14 +10,14 @@ export interface AdminFetchDashboardTodayStatsDataResponse extends Record<string
   todaysCancelledAppointments: number;
 }
 
-// **** Used as the Response type of the admin fetch dashboard user stats data
+// Used as the Response type of the admin fetch dashboard user stats data
 export interface AdminFetchDashboardUserStatsDataResponse extends Record<string, number> {
     totalUsers: number;
     emailVerifiedUsers: number;
     blockedUsers: number;
 }
 
-// **** Used as the response type of the admin fetch dashboard provider stats data
+// Used as the response type of the admin fetch dashboard provider stats data
 export interface AdminFetchDashboardProviderStatsDataResponse extends Record<string, number> {
     totalProviders: number;
     emailVerifiedProviders: number;
@@ -29,7 +29,7 @@ export interface AdminFetchDashboardProviderStatsDataResponse extends Record<str
     slotflowTrustedProviders: number;
 }
 
-// **** Used as the response type of the admin fetch dashboard subscription stats data
+// Used as the response type of the admin fetch dashboard subscription stats data
 export interface AdminFetchDashboardSubscriptionStatsDataResponse extends Record<string, number> {
     activeSubscriptions: number;
     expiredSubscriptions: number;
@@ -39,7 +39,7 @@ export interface AdminFetchDashboardSubscriptionStatsDataResponse extends Record
     subscriptionsByEnterprisePlan: number;
 }
 
-// **** Used as the response type of the admin fetch dashboard revenue stats data
+// Used as the response type of the admin fetch dashboard revenue stats data
 export interface AdminFetchDashboardRevenueAndPaymentsStatsDataResponse extends Record<string, number> {
     totalRevenue: number;
     totalRevenueViaSubscriptions: number;
@@ -52,7 +52,7 @@ export interface AdminFetchDashboardRevenueAndPaymentsStatsDataResponse extends 
     totalPayoutsToProviders: number;
 }
 
-// **** Used as the response type of the admin fetch dashboard appointments stats data
+// Used as the response type of the admin fetch dashboard appointments stats data
 export interface AdminFetchDashboardAppointmentStatsDataResponse extends Record<string, number> {
     totalAppointments: number;
     completedAppointments: number;
@@ -63,7 +63,7 @@ export interface AdminFetchDashboardAppointmentStatsDataResponse extends Record<
 
 
 
-// **** Used as the return interface for the admin fetch dashboard graph data
+// Used as the return interface for the admin fetch dashboard graph data
 export interface AdminDashboardGraphResponse {
     appointmentsOvertimeChartData: Array<{
         date: string;

@@ -8,7 +8,6 @@ import {
     UserFetchServiceProvidersResponse,
     UserFetchServiceProvidersRequest,
     UserFetchUserProfileDetailsResponse,
-    UserFetchProviderAvailabilityResponse,
     UserFetchProvidersForChatSidebarResponse,
 } from "../interface/api/userApiInterface";
 import { axiosInstance } from "@/lib/axios";
@@ -72,14 +71,14 @@ export const userFetchProviderService = async (providerId: Provider["_id"]): Pro
     return response.data.data;
 }
 
-export const userFetchProviderServiceAvailability = async (data: { providerId: Provider["_id"], date: Date }): Promise<UserFetchProviderAvailabilityResponse> => {
-    const response = await axiosInstance.get(`/user/providers/${data.providerId}/availability`, {
-        params: {
-            date: data.date.toISOString()
-        }
-    });
-    return response.data.data;
-}
+// export const userFetchProviderServiceAvailability = async (data: { providerId: Provider["_id"], date: Date }): Promise<UserFetchProviderAvailabilityResponse> => {
+//     const response = await axiosInstance.get(`/user/providers/${data.providerId}/availability`, {
+//         params: {
+//             date: data.date.toISOString()
+//         }
+//     });
+//     return response.data.data;
+// }
 
 // user chat apis
 export const UserFetchProvidersForChatSideBar = async (): Promise<UserFetchProvidersForChatSidebarResponse> => {

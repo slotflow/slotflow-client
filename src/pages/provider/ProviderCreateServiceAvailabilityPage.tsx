@@ -12,12 +12,12 @@ import { SelectField } from '@/components/form/SelectField';
 import React, { useEffect, FormEvent, useMemo } from 'react';
 import { AppDispatch, RootState } from '@/utils/redux/appStore';
 import { RedirectTo } from '@/utils/interface/commonInterface';
-import { providerCreateServiceAvailabilities } from '@/utils/apis/provider.api';
 import { useAuthNavigation } from '@/hooks/systemHooks/useAuthNavigation';
 import { useAddAvailability } from '@/hooks/providerHooks/useServiceAvailability';
 import { daysOfWeekOptions, serviceDurationsOptions, updatableStatuses } from '@/utils/constants';
 import { ProviderServiceAvailabilityFormType, providerServiceAvailabilityZodSchema } from '@/utils/zod/providerZod';
 import { appConfig } from '@/utils/env';
+import { createServiceAvailabilities } from '@/utils/apis/serviceAvailability.api';
 
 const ProviderCreateServiceAvailabilityPage: React.FC = () => {
 
@@ -81,7 +81,7 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
     isModeSelected,
     toggleMode,
     toggleSlot,
-  } = useAddAvailability(getValues, setValue);
+  } = useAddAvailability({getValues, setValue});
 
   const allSlotsSelected = useMemo(() => {
     return (timeSlots && timeSlots.length > 0) && (selectedTimeSlots.length === timeSlots.length);
@@ -93,7 +93,7 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
       toast.info("You didn't add any availability.");
       return;
     }
-    dispatch(providerCreateServiceAvailabilities({ data: availabilities }))
+    dispatch(createServiceAvailabilities({ data: availabilities }))
       .unwrap()
       .then((res) => {
         if (res.success) {

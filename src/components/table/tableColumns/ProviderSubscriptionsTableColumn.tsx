@@ -5,7 +5,7 @@ import { formateDate } from "@/utils/helper/formatter";
 import { SubscriptionStatus } from "@/utils/interface/enums";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
 import { Subscription } from "@/utils/interface/entityInterface/subscriptionInterface";
-import { FetchProviderSubscriptionsResponse } from "@/utils/interface/api/subscriptionApiInterface";
+import { FetchProviderSubscriptionsResponse } from "@/utils/interface/api/subscription";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 
 // For admin side view and provider side view of provider subscriptions

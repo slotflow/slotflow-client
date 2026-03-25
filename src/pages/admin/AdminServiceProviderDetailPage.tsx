@@ -15,9 +15,10 @@ import AdminProviderSubscriptions from "@/components/admin/AdminProviderSubscrip
 import ProviderServiceDetails from "@/components/common/profile/ProviderServiceDetails";
 import AdminUserOrProviderPayments from "@/components/admin/AdminUserOrProviderPayments";
 import ProviderServiceAvailability from "@/components/common/profile/ProviderServiceAvailability";
-import { adminFetchProviderServiceAvailability, adminFetchProviderService, adminFetchProviderProofs } from "@/utils/apis/adminProvider.api";
+import { adminFetchProviderService, adminFetchProviderProofs } from "@/utils/apis/adminProvider.api";
 import { fetchProviderDetailsForAdmin } from "@/utils/apis/provider.api";
 import { fetchAddressByProviderId } from "@/utils/apis/address.api";
+import { fetchServiceAvailabilityByProviderId } from "@/utils/apis/serviceAvailability.api";
 
 const AdminServiceProviderDetailPage = () => {
 
@@ -51,7 +52,7 @@ const AdminServiceProviderDetailPage = () => {
                     ) || tab === 2 && (
                         <ProviderServiceDetails providerId={providerId} fetchApiFunction={() => adminFetchProviderService(providerId)} queryKey="providerService" isUser={false} />
                     ) || tab === 3 && (
-                        <ProviderServiceAvailability providerId={providerId} fetchApiFuntion={adminFetchProviderServiceAvailability} queryKey="providerServiceAvailability" role={Role.ADMIN} />
+                        <ProviderServiceAvailability providerId={providerId} fetchApiFuntion={fetchServiceAvailabilityByProviderId} queryKey="providerServiceAvailability" role={Role.ADMIN} />
                     ) || tab === 4 && (
                         <ReviewsPage fetchFunction={() => fetchReviews({ providerId })} role={Role.ADMIN} className="mt-2 md:mt-0" />
                     ) || tab === 5 && (

@@ -12,9 +12,10 @@ import { createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { CreateAddressFormType } from "@/utils/zod/commonZodFields";
 import { UpdateFileDataRequest, UpdateFileDataResponse } from "../api/commonApiInterface";
 import { ApiBaseResponse, BaseChartData, ChatComponentProps, TimeRange } from "../commonInterface";
-import { AdminFetchProviderAvailabilityResponse, AdminFetchProviderServiceResponse } from "../api/adminProviderApiInterface";
-import { UserUpdateProfileImageResponse, UserFetchProviderAvailabilityResponse, UserFetchProviderServiceResponse, UserUpdateProfileImageRequest, UserFetchServiceProvidersResponse } from "../api/userApiInterface";
-import { ProviderFetchServiceAvailabilityResponse, ProviderFetchServiceDetailsResponse, ProviderUpdateProfileImageRequest, ProviderUpdateProfileImageResponse } from "../api/providerApiInterface";
+import { AdminFetchProviderServiceResponse } from "../api/adminProviderApiInterface";
+import { UserUpdateProfileImageResponse, UserFetchProviderServiceResponse, UserUpdateProfileImageRequest, UserFetchServiceProvidersResponse } from "../api/userApiInterface";
+import { ProviderFetchServiceDetailsResponse, ProviderUpdateProfileImageRequest, ProviderUpdateProfileImageResponse } from "../api/providerApiInterface";
+import { FetchServiceAvailabilityResponse } from "../api/serviceAvailability";
 
 // **** Common component interfaces **** \\
 // **** Used in components / common **** \\
@@ -35,8 +36,8 @@ type FetchApiFunctionUserOrAdminRequestPayloadProps = {
     providerId: Provider["_id"]
     date: Date
 }
-export type ProviderApiFunctionForPSAcomponent = (date: Date) => Promise<ProviderFetchServiceAvailabilityResponse>;
-export type UserOrAdminApiFunctionForPSAcomponent = (payload: FetchApiFunctionUserOrAdminRequestPayloadProps) => Promise<UserFetchProviderAvailabilityResponse | AdminFetchProviderAvailabilityResponse>;
+export type ProviderApiFunctionForPSAcomponent = (date: Date) => Promise<FetchServiceAvailabilityResponse>;
+export type UserOrAdminApiFunctionForPSAcomponent = (payload: FetchApiFunctionUserOrAdminRequestPayloadProps) => Promise<FetchServiceAvailabilityResponse>;
 type FetchApiFunction = ProviderApiFunctionForPSAcomponent | UserOrAdminApiFunctionForPSAcomponent;
 export interface ProviderServiceAvailabilityComponentProps {
     providerId?: string

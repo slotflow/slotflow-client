@@ -3,7 +3,6 @@ import { User } from "../entityInterface/userInterface";
 import { Provider } from "../entityInterface/providerInterface";
 import { Service } from "../entityInterface/appServiceInterface";
 import { ProviderService } from "../entityInterface/providerServiceInterface";
-import { AvailabilityForResponse } from "../entityInterface/serviceAvailabilityInterface";
 
 // **** Used as the response type of the user profile details fetching api
 export type UserFetchUserProfileDetailsResponse = Pick<User, "username" | "email" | "isBlocked" | "isEmailVerified" | "phone" | "createdAt" | "updatedAt">;
@@ -58,11 +57,6 @@ type FetchServiceDetailsProps = Pick<ProviderService, "serviceName" | "serviceDe
 export interface UserFetchProviderServiceResponse extends FetchServiceDetailsProps {
     service: Pick<Service, "serviceName">
 }
-
-
-// **** Used as the response type of the user fetching service providers service availability fetching api
-export type UserFetchProviderAvailabilityResponse = AvailabilityForResponse;
-
 
 
 // **** Used as the return type of the user fetch providers for the chat side bar

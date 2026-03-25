@@ -9,11 +9,12 @@ import ProfileListing from "@/components/common/profile/ProfileListing";
 import ProfileHorizontalTabs from "@/components/common/ProfileHorizontalTabs";
 import ProviderServiceDetails from "@/components/common/profile/ProviderServiceDetails";
 import ProviderServiceAvailability from "@/components/common/profile/ProviderServiceAvailability";
-import { userFetchProviderService, userFetchProviderServiceAvailability } from "@/utils/apis/user.api";
+import { userFetchProviderService } from "@/utils/apis/user.api";
 import { Role } from "@/utils/interface/enums";
 import { fetchReviews } from "@/utils/apis/review.api";
 import { fetchProviderDetailsForUser } from "@/utils/apis/provider.api";
 import { fetchAddressByProviderId } from "@/utils/apis/address.api";
+import { fetchServiceAvailabilityByProviderId } from "@/utils/apis/serviceAvailability.api";
 
 const UserServiceProviderDetailPage = () => {
 
@@ -46,7 +47,7 @@ const UserServiceProviderDetailPage = () => {
                     ) || tab === 2 && (
                         <ProviderServiceDetails providerId={providerId} fetchApiFunction={() => userFetchProviderService(providerId)} queryKey="providerService" isUser shimmerRow={5} />
                     ) || tab === 3 && (
-                        <ProviderServiceAvailability providerId={providerId} fetchApiFuntion={userFetchProviderServiceAvailability} queryKey="providerServiceAvailability" role={Role.USER} />
+                        <ProviderServiceAvailability providerId={providerId} fetchApiFuntion={fetchServiceAvailabilityByProviderId} queryKey="providerServiceAvailability" role={Role.USER} />
                     ) || tab === 4 && (
                         <ReviewsPage fetchFunction={() => fetchReviews({ providerId })} role={Role.USER} className="mt-2 md:mt-0" />
                     )}

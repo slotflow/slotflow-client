@@ -15,7 +15,7 @@ import {
     adminFetchDashboardProviderStatsData,
     adminFetchDashboardAppointmentStatsData,
     adminFetchDashboardSubscriptionStatsData,
-} from '@/utils/apis/adminDashboard.api';
+} from '@/utils/apis/dashboard.api';
 import {
     AdminFetchDashboardUserStatsDataResponse,
     AdminFetchDashboardTodayStatsDataResponse,
@@ -23,7 +23,7 @@ import {
     AdminFetchDashboardAppointmentStatsDataResponse,
     AdminFetchDashboardSubscriptionStatsDataResponse,
     AdminFetchDashboardRevenueAndPaymentsStatsDataResponse,
-} from "@/utils/interface/api/adminDashboardApiInterface";
+} from "@/utils/interface/api/dashboardApiInterface";
 import DashboardStats from '@/components/common/dashboard/DashboardStats';
 import {
     Tabs,

@@ -1,12 +1,9 @@
 import { ApiBaseResponse } from "../commonInterface";
-import { Plan } from "../entityInterface/planInterface";
 import { User } from "../entityInterface/userInterface";
 import { Address } from "../entityInterface/addressInterface";
 import { Provider } from "../entityInterface/providerInterface";
 import { Service } from "../entityInterface/appServiceInterface";
 import { ProviderService } from "../entityInterface/providerServiceInterface";
-import { Availability, AvailabilityForResponse } from "../entityInterface/serviceAvailabilityInterface";
-import { PlanName, SubscriptionStatus, SubscriptionValidity } from "../enums";
 
 // **** Used as the request interface for creating address api
 export type ProviderCreateAddressRequest = Pick<Address, "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location">;
@@ -30,18 +27,8 @@ export interface ProviderFetchServiceDetailsResponse extends FetchServiceDetails
 }
 
 
-// **** Used as the request interface for provider service availability creating api
-export interface CreateProviderServiceAvailabilitiesRequest {
-  data: Availability[];
-}
-
-
 // **** Used as the response type for provider fetch self profile details api
 export type ProviderFetchMyProfileDetailsResponse = Pick<Provider, "username" | "email" | "isAdminVerified" | "isBlocked" | "isEmailVerified" | "phone" | "createdAt" | "trustedBySlotflow" | "updatedAt" | "adminVerificationStatus" | "isAddressVerified" | "isAvailabilityVerified" | "isProofsVerified" | "isServiceDetailsVerified">;
-
-
-// **** Used as the response type for provider fetch self service availability
-export type ProviderFetchServiceAvailabilityResponse = AvailabilityForResponse;
 
 
 // **** Used as the response type for Provider profile image updating api
@@ -50,16 +37,6 @@ export interface ProviderUpdateProfileImageRequest {
 }
 export interface ProviderUpdateProfileImageResponse extends ApiBaseResponse {
   data: Provider["profileImage"]
-}
-
-// **** Used as the request type for Provider subscribe to a plan api
-export type ProviderCheckoutForSubscribePlanRequest = {
-  planId: Plan["_id"];
-  planDuration: SubscriptionValidity
-}
-// **** Used as the response interface for Provider subscribe to a plan api
-export interface ProviderSubscribeToPlanResponse extends ApiBaseResponse {
-  data: string
 }
 
 // **** Used as the request type for Provider update providerInfo [username and phone]
@@ -133,17 +110,6 @@ export interface ProviderDashboardGraphResponse {
     count: number;
   }>;
 
-}
-
-export interface ProviderSubscriptionActivated {
-  providerId: string;
-    subscribedPlan: PlanName;
-    startDate: Date;
-    endDate: Date;
-    subscriptionStatus: SubscriptionStatus;
-}
-export interface ProviderGetMySubscriptionResponse extends ApiBaseResponse {
-  data : ProviderSubscriptionActivated
 }
 
 

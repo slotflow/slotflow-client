@@ -7,11 +7,11 @@ import { Loader2, CheckCircle2, LayoutDashboard, XCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { providerFetchMySubscription } from "@/utils/apis/provider.api";
 import {
   setSubscription,
   setSubscriptionUpdating,
 } from "@/utils/redux/slices/authSlice";
+import { fetchMySubscription } from "@/utils/apis/subscription.api";
 
 interface ProviderSubscriptionConfirmPageProps {
   status: boolean;
@@ -29,7 +29,7 @@ const ProviderSubscriptionConfirmPage: React.FC<ProviderSubscriptionConfirmPageP
 
   const fetchSubscription = async () => {
     try {
-      const res = await providerFetchMySubscription();
+      const res = await fetchMySubscription();
       if (res.success) {
         dispatch(setSubscription(res.data));
         toast.success("Subscription Activated!");

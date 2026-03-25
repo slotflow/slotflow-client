@@ -1,7 +1,6 @@
 import { Provider } from "../entityInterface/providerInterface";
 import { Service } from "../entityInterface/appServiceInterface";
 import { ProviderService } from "../entityInterface/providerServiceInterface";
-import { AvailabilityForResponse } from "../entityInterface/serviceAvailabilityInterface";
 
 // **** Used as the response type of admin fetch all providers api
 export type AdminFetchAllProvidersResponse = Pick<Provider, "_id" | "username" | "email" | "isBlocked" | "isAdminVerified" | "isEmailVerified" | "trustedBySlotflow" | "adminVerificationStatus">;
@@ -31,14 +30,3 @@ type FetchProviderServiceApiResponse = Pick<ProviderService, "serviceName" | "se
 export interface AdminFetchProviderServiceResponse extends FetchProviderServiceApiResponse {
     service: Pick<Service, "serviceName">
 }
-
-
-// **** Used as the request type of the admin fetch provider service availability api
-export type AdminFetchProviderAvailabilityRequest = {
-    providerId: Provider["_id"]
-    date: Date
-}
-// **** Used as the response type of the admin fetch provider service availability api
-export type AdminFetchProviderAvailabilityResponse = AvailabilityForResponse;
-
-

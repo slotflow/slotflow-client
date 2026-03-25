@@ -4,7 +4,7 @@ import { fetchSubscriptions } from "@/utils/apis/subscription.api";
 import { useRoleBasedNavigation } from "@/hooks/commonHooks/useRoleBasedNavigation";
 import { ProvidersSubscriptionsTableColumns } from "../table/tableColumns/ProviderSubscriptionsTableColumn";
 import { AdminFetchProviderSubscriptionsComponentProps } from "@/utils/interface/componentInterface/adminComponentInterface";
-import { FetchProviderSubscriptionsResponse, FetchSubscriptionsQueryParams } from "@/utils/interface/api/subscriptionApiInterface";
+import { FetchProviderSubscriptionsResponse, FetchSubscriptionsQueryParams } from "@/utils/interface/api/subscription";
 
 const AdminProviderSubscriptions: React.FC<AdminFetchProviderSubscriptionsComponentProps> = memo(({
     providerId

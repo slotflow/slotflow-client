@@ -3,8 +3,8 @@ import { RootState } from "../redux/appStore";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { EventSocketEnum } from "../interface/socket.interface";
 import { destroyEventSocket, getEventSocket } from "@/lib/socketService";
-import { ProviderSubscriptionActivated } from "../interface/api/providerApiInterface";
 import { setEventSocketConnected, setEventSocketDisconnected, setSubscription } from "../redux/slices/authSlice";
+import { SubscriptionActivated } from "../interface/api/subscription";
 
 export const connectEventSocket = createAsyncThunk<
     void,
@@ -33,7 +33,7 @@ export const connectEventSocket = createAsyncThunk<
         dispatch(setEventSocketDisconnected());
     });
 
-    socket.on(EventSocketEnum.subscriptionActivated, (payload: ProviderSubscriptionActivated) => {
+    socket.on(EventSocketEnum.subscriptionActivated, (payload: SubscriptionActivated) => {
         console.log("Subscription activated:", payload);
 
         const isOwner = payload.providerId === authUser.uid;

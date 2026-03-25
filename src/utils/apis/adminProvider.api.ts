@@ -5,8 +5,6 @@ import {
     AdminFetchProviderServiceResponse,
     AdminChangeProviderTrustTagRequest,
     AdminChangeProviderBlockStatusRequest,
-    AdminFetchProviderAvailabilityRequest,
-    AdminFetchProviderAvailabilityResponse,
 } from "../interface/api/adminProviderApiInterface";
 import { buildQueryParams, parseNewCommonResponse } from "../helper";
 import { ApiFetchFunction } from "../interface/api/commonApiInterface";
@@ -44,23 +42,9 @@ export const adminChangeProviderTrustTag = async (data: AdminChangeProviderTrust
     return response.data;
 }
 
-// export const adminFetchProviderAddress = async (providerId: Provider["_id"]): Promise<AdminFetchddressResponse> => {
-//     const response = await axiosInstance.get(`/admin/providers/${providerId}/address`);
-//     return response.data.data;
-// }
-
 export const adminFetchProviderService = async (providerId: Provider["_id"]): Promise<AdminFetchProviderServiceResponse> => {
     const response = await axiosInstance.get(`/admin/providers/${providerId}/service`);
     return response.data.data;
-}
-
-export const adminFetchProviderServiceAvailability = async ({ date, providerId }: AdminFetchProviderAvailabilityRequest): Promise<AdminFetchProviderAvailabilityResponse> => {
-    const response = await axiosInstance.get(`/admin/providers/${providerId}/availability`, {
-        params: {
-            date: date.toISOString()
-        }
-    });
-    return response.data;
 }
 
 export const adminFetchProviderProofs = async (providerId: Provider["_id"]): Promise<FetchProvidersProofsResponse> => {
