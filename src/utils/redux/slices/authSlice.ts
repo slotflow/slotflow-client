@@ -2,15 +2,16 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AdminVerificationStatus } from "@/utils/interface/enums";
 import { ApiBaseResponse } from "@/utils/interface/commonInterface";
 import { AuthState, AuthUser } from "@/utils/interface/sliceInterface";
-import { resendOtp, signin, signout, signup } from "@/utils/apis/auth.api";
-import { userUpdateInfo, userUpdateProfileImage } from "@/utils/apis/user.api";
+import { resendOtp, signin, signout, signup } from "@/utils/apis/auth";
+import { userUpdateInfo, userUpdateProfileImage } from "@/utils/apis/user";
 import { UserUpdateUserInfoResponse } from "@/utils/interface/api/user";
 import { ResendOtpResponse, SigninResponse, SignupResponse } from "@/utils/interface/api/auth";
 import { ProviderSubmitDetailsResponse, ProviderUpdateProviderInfoResponse } from "@/utils/interface/api/provider";
-import { providerCreateServiceDetails, providerSubmitDetailsForReview, providerUpdateInfo, providerUpdateProfileImage } from "@/utils/apis/provider.api";
-import { providerCreateAddress } from "@/utils/apis/address.api";
-import { createServiceAvailabilities } from "@/utils/apis/serviceAvailability.api";
+import { providerSubmitDetailsForReview, providerUpdateInfo, providerUpdateProfileImage } from "@/utils/apis/provider";
+import { providerCreateAddress } from "@/utils/apis/address";
+import { createServiceAvailabilities } from "@/utils/apis/serviceAvailability";
 import { SubscriptionActivated } from "@/utils/interface/api/subscription";
+import { providerCreateServiceDetails } from "@/utils/apis/providerService";
 
 const initialState: AuthState = {
     authUser: null,

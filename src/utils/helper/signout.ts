@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import { Role } from "../interface/enums";
 import { roleRoutes } from "../constants";
-import { signout } from "../apis/auth.api";
+import { signout } from "../apis/auth";
 import { disconnectEventSocket } from "../socket/eventSocketThunk";
 import { queryClient } from "@/lib/queryClient";
 import { NavigateFunction } from "react-router-dom";

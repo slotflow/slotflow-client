@@ -4,10 +4,10 @@ import { Edit, UserRoundPen } from "lucide-react";
 import { RootState } from "@/utils/redux/appStore";
 import { useEffect, useRef, useState } from "react";
 import { slideIn } from "@/utils/helper/gsapAnimationSlide";
-import { userFetchProfileDetails } from "@/utils/apis/user.api";
+import { userFetchMyProfileDetails } from "@/utils/apis/user";
 import UserInfoCRUDForm from "@/components/common/UserInfoCRUDForm";
 import ProfileListing from "@/components/common/profile/ProfileListing";
-import { fetchMyProfileDetails } from "@/utils/apis/provider.api";
+import { providerFetchMyProfileDetails } from "@/utils/apis/provider";
 
 const Profile: React.FC = () => {
 
@@ -15,8 +15,8 @@ const Profile: React.FC = () => {
   const isProvider = authUser?.role === "PROVIDER";
 
   const fetchApiFunction = isProvider
-    ? fetchMyProfileDetails
-    : userFetchProfileDetails;
+    ? providerFetchMyProfileDetails
+    : userFetchMyProfileDetails;
 
   const shimmerRow = isProvider ? 8 : 6;
 

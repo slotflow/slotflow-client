@@ -8,7 +8,7 @@ import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { toggleReviewCreateForm } from "@/utils/redux/slices/userSlice";
 import { Review } from "@/utils/interface/entityInterface/reviewInterface";
 import { useModalAnimation } from "@/hooks/systemHooks/useModalAnimation";
-import { createReview } from "@/utils/apis/review.api";
+import { createReview } from "@/utils/apis/review";
 
 type ReviewFormValues = Pick<Review, "reviewText" | "rating">;
 
@@ -55,7 +55,7 @@ const ReviewForm: React.FC = () => {
             if (res.success) {
                 toast.success(res.message);
                 dispatch(toggleReviewCreateForm({ id: null, isOpen: false, providerId: null }));
-            } 
+            }
         } catch {
             toast.error("Review creating failed");
         }

@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import { Role } from "@/utils/interface/enums";
 import ReviewsPage from "../common/ReviewsPage";
 import { providerTabs } from "@/utils/constants";
-import { fetchReviews } from "@/utils/apis/review.api";
-import { fetchPayments } from "@/utils/apis/payment.api";
+import { fetchReviews } from "@/utils/apis/review";
+import { fetchPayments } from "@/utils/apis/payment";
 import ProfileHead from "@/components/common/profile/ProfileHead";
 import DataFetchingError from "@/components/common/DataFetchingError";
 import AddressListing from "@/components/common/profile/AddressListing";
@@ -15,10 +15,11 @@ import AdminProviderSubscriptions from "@/components/admin/AdminProviderSubscrip
 import ProviderServiceDetails from "@/components/common/profile/ProviderServiceDetails";
 import AdminUserOrProviderPayments from "@/components/admin/AdminUserOrProviderPayments";
 import ProviderServiceAvailability from "@/components/common/profile/ProviderServiceAvailability";
-import { adminFetchProviderService, adminFetchProviderProofs } from "@/utils/apis/adminProvider.api";
-import { fetchProviderDetailsForAdmin } from "@/utils/apis/provider.api";
-import { fetchAddressByProviderId } from "@/utils/apis/address.api";
-import { fetchServiceAvailabilityByProviderId } from "@/utils/apis/serviceAvailability.api";
+import { adminFetchProviderProofs } from "@/utils/apis/adminProvider";
+import { fetchProviderDetailsForAdmin } from "@/utils/apis/provider";
+import { fetchAddressByProviderId } from "@/utils/apis/address";
+import { fetchServiceAvailabilityByProviderId } from "@/utils/apis/serviceAvailability";
+import { adminFetchProviderService } from "@/utils/apis/providerService";
 
 const AdminServiceProviderDetailPage = () => {
 

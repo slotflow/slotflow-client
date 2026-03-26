@@ -4,7 +4,7 @@ import { appConfig } from "@/utils/env";
 import { useForm } from "react-hook-form";
 import GoogleButton from "../GoogleButton";
 import { useDispatch, } from "react-redux";
-import { signin } from "@/utils/apis/auth.api";
+import { signin } from "@/utils/apis/auth";
 import { useNavigate } from "react-router-dom";
 import { Role } from "@/utils/interface/enums";
 import { Button } from "@/components/ui/button";
@@ -37,7 +37,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
     });
 
     const handleNavigation = (userRole: Role) => {
-        console.log("navigating role : ",userRole);
+        console.log("navigating role : ", userRole);
         if (userRole === Role.ADMIN) navigate("/admin/dashboard", { replace: true });
         else if (userRole === Role.USER) navigate("/user", { replace: true });
         else if (userRole === Role.PROVIDER) navigate("/provider", { replace: true });

@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
-import { createService, changeServiceBlockStatus } from "@/utils/apis/service.api";
+import { createService, changeServiceBlockStatus } from "@/utils/apis/service";
 import { CreateServiceRequest, ChangeServiceBlockStatusRequest } from "@/utils/interface/api/service";
 
 interface UseAdminServiceReturnInterface {

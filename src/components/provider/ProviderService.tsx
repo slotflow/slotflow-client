@@ -1,7 +1,7 @@
 import { Button } from '../ui/button';
 import { SquareChartGantt } from 'lucide-react';
-import { providerFetchServiceDetails } from '@/utils/apis/provider.api';
 import ProviderServiceDetails from '@/components/common/profile/ProviderServiceDetails';
+import { providerFetchServiceDetails } from '@/utils/apis/providerService';
 
 const ProviderService = () => {
 

@@ -1,5 +1,5 @@
 import CommonTable from '@/components/common/CommonTable';
-import { fetchSubscriptions } from '@/utils/apis/subscription.api';
+import { fetchSubscriptions } from '@/utils/apis/subscription';
 import { useRoleBasedNavigation } from '@/hooks/commonHooks/useRoleBasedNavigation';
 import { ProvidersSubscriptionsTableColumns } from '@/components/table/tableColumns/ProviderSubscriptionsTableColumn';
 import { FetchProviderSubscriptionsResponse } from '@/utils/interface/api/subscription';

@@ -7,10 +7,10 @@ import DataFetchingError from '@/components/common/DataFetchingError';
 import ProfileListing from '@/components/common/profile/ProfileListing';
 import AddressListing from '@/components/common/profile/AddressListing';
 import ProfileHorizontalTabs from '@/components/common/ProfileHorizontalTabs';
-import { adminFetchUserProfileDetails } from '@/utils/apis/adminUser.api';
 import { Role } from '@/utils/interface/enums';
-import { fetchReviews } from '@/utils/apis/review.api';
-import { fetchAddressByUserId } from '@/utils/apis/address.api';
+import { fetchReviews } from '@/utils/apis/review';
+import { fetchAddressByUserId } from '@/utils/apis/address';
+import { fetchUserProfileDetails } from '@/utils/apis/user';
 
 const AdminUserDetailPage: React.FC = () => {
 
@@ -38,7 +38,7 @@ const AdminUserDetailPage: React.FC = () => {
 
                 <div className={`flex-grow`}>
                     {tab === 0 && (
-                        <ProfileListing fetchApiFunction={() => adminFetchUserProfileDetails(userId)} queryKey="userProfile" userOrProviderId={userId} adminLookingUser shimmerRow={8} setSelectedUserData={setSelectedUserData} />
+                        <ProfileListing fetchApiFunction={() => fetchUserProfileDetails(userId)} queryKey="userProfile" userOrProviderId={userId} adminLookingUser shimmerRow={8} setSelectedUserData={setSelectedUserData} />
                     ) || tab === 1 && (
                         <AddressListing fetchApiFunction={() => fetchAddressByUserId(userId)} queryKey='' userOrProviderId={userId} />
                     ) || tab === 2 && (

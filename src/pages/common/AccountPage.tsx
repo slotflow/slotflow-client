@@ -11,11 +11,11 @@ import { profileTabs } from '@/utils/constants';
 import { RootState } from '@/utils/redux/appStore';
 import Address from '@/components/common/profile/Address';
 import Profile from '@/components/common/profile/Profile';
-import { userUpdateProfileImage } from '@/utils/apis/user.api';
+import { userUpdateProfileImage } from '@/utils/apis/user';
 import ProfileHead from '@/components/common/profile/ProfileHead';
 import ProviderService from '@/components/provider/ProviderService';
 import DataFetchingError from '@/components/common/DataFetchingError';
-import { providerUpdateProfileImage } from '@/utils/apis/provider.api';
+import { providerUpdateProfileImage } from '@/utils/apis/provider';
 import ProviderAvailability from '@/components/provider/ProviderAvailability';
 
 const AccountPage: React.FC = () => {
@@ -41,7 +41,7 @@ const AccountPage: React.FC = () => {
             />
 
             <div className="mt-6 flex flex-col md:flex-row gap-6">
-                
+
                 <div className="w-full md:hidden">
                     <Select value={selectedTab} onValueChange={setSelectedTab}>
                         <SelectTrigger className="w-full">
@@ -78,14 +78,14 @@ const AccountPage: React.FC = () => {
                         ))}
                 </div>
 
-                    {selectedTab === "tab1" && <Profile />}
-                    {selectedTab === "tab2" && <Address />}
-                    {isProvider && (
-                        <>
-                            {selectedTab === "tab3" && <ProviderService />}
-                            {selectedTab === "tab4" && <ProviderAvailability />}
-                        </>
-                    )}
+                {selectedTab === "tab1" && <Profile />}
+                {selectedTab === "tab2" && <Address />}
+                {isProvider && (
+                    <>
+                        {selectedTab === "tab3" && <ProviderService />}
+                        {selectedTab === "tab4" && <ProviderAvailability />}
+                    </>
+                )}
             </div>
         </div>
     );

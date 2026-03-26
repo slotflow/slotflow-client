@@ -1,7 +1,7 @@
 import React from 'react';
 import { Role } from '@/utils/interface/enums';
 import ReviewsPage from '../common/ReviewsPage';
-import { fetchReviews } from '@/utils/apis/review.api';
+import { fetchReviews } from '@/utils/apis/review';
 
 const UserReviewPage: React.FC = () => {
     return (

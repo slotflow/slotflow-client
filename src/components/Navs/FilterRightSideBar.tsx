@@ -15,7 +15,7 @@ import { ProviderCardsFilters } from "@/utils/interface/commonInterface";
 import { Location } from "@/utils/interface/entityInterface/addressInterface";
 import { BookCheck, ChartBarStacked, IndianRupee, Locate, SlidersHorizontal } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { fetchServicesByCategory } from "@/utils/apis/service.api";
+import { fetchServicesByCategory } from "@/utils/apis/service";
 
 
 const FilterRightSideBar: React.FC = () => {

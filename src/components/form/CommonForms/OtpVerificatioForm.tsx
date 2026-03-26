@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
 import { FormButton, FormHeading } from "../FormSplits";
 import { updateTimer } from "@/utils/redux/slices/appSlice";
-import { resendOtp, verifyOtp } from "@/utils/apis/auth.api";
+import { resendOtp, verifyOtp } from "@/utils/apis/auth";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { VerifyOtpFormType, verifyOtpZodSchema } from "@/utils/zod/authZod";
 import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
@@ -78,7 +78,7 @@ const OtpVerificatioForm: React.FC<OtpVerificatioFormProps> = ({ role }) => {
             if (appConfig.dev) {
                 console.log("An error occurred while resending OTP.");
             }
-        } 
+        }
     };
 
     return (

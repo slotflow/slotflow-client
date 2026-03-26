@@ -2,25 +2,11 @@ import { ApiBaseResponse } from "../commonInterface";
 import { User } from "../entityInterface/userInterface";
 import { Address } from "../entityInterface/addressInterface";
 import { Provider } from "../entityInterface/providerInterface";
-import { Service } from "../entityInterface/appServiceInterface";
-import { ProviderService } from "../entityInterface/providerServiceInterface";
 
 // **** Used as the request interface for creating address api
 export type ProviderCreateAddressRequest = Pick<Address, "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location">;
 
 
-// **** Used as the request interface for providerCreateServiceDetails api
-export type ProviderCreateServiceDetailsRequest = Pick<ProviderService, "isGroupService" | "maxParticipants" | "requirements" | "service" | "serviceDescription" | "serviceExperience" | "serviceMode" | "serviceName" | "servicePrice" | "serviceType" | "tags" | "videoUrl">;
-
-// **** Used as the request interface for providerUpdateServiceDetails api
-export type ProviderUpdateServiceDetailsRequest = Pick<ProviderService, "_id" | "isGroupService" | "maxParticipants" | "requirements" | "service" | "serviceDescription" | "serviceExperience" | "serviceMode" | "serviceName" | "servicePrice" | "serviceType" | "tags" | "videoUrl">;
-
-
-// **** Used as the response type for provider fetch self service details
-type FetchServiceDetailsResponse = Pick<ProviderService, "_id" | "serviceName" | "serviceDescription" | "servicePrice" | "serviceExperience" | "isGroupService" | "maxParticipants" | "requirements" | "serviceMode" | "serviceType" | "tags" | "videoUrl">;
-export interface ProviderFetchServiceDetailsResponse extends FetchServiceDetailsResponse {
-  service: Pick<Service, "serviceName">
-}
 
 
 // **** Used as the response type for provider fetch self profile details api
@@ -112,3 +98,26 @@ export interface ProviderDashboardGraphResponse {
 export type AdminFetchProviderProfileDetailsResponse = Pick<Provider, "_id" | "username" | "email" | "isBlocked" | "isEmailVerified" | "isAdminVerified" | "phone" | "profileImage" | "createdAt" | "trustedBySlotflow" | "adminVerificationStatus" | "isAddressVerified" | "isAvailabilityVerified" | "isProofsVerified" | "isServiceDetailsVerified">;
 
 export type UserFetchProviderProfileDetailsResponse = Pick<Provider, "username" | "email" | "phone" | "profileImage" | "trustedBySlotflow">;
+
+
+// Used as the response type of admin fetch all providers api
+export type AdminFetchAllProvidersResponse = Pick<Provider, "_id" | "username" | "email" | "isBlocked" | "isAdminVerified" | "isEmailVerified" | "trustedBySlotflow" | "adminVerificationStatus">;
+
+
+// Used as the request interfaces of admin reject provider
+export type AdminRejectProviderRequest = Pick<Provider, "verificationRejectionReason" | "isAddressVerified" | "isServiceDetailsVerified" | "isAvailabilityVerified" | "isProofsVerified"> & {
+    providerId: Provider["_id"];
+}
+
+
+// Used as the request type for the admin change provider block status api
+export type AdminChangeProviderBlockStatusRequest = {
+    providerId: Provider["_id"];
+    isBlocked: Provider["isBlocked"];
+}
+
+// Used as the request type for the admin change provider trust tag api
+export type AdminChangeProviderTrustTagRequest = {
+    providerId: Provider["_id"];
+    trustedBySlotflow: Provider["trustedBySlotflow"];
+}

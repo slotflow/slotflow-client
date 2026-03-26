@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import TableHeader from "@/components/table/TableHeader";
 import CommonTable from "@/components/common/CommonTable";
 import { slideIn } from "@/utils/helper/gsapAnimationSlide";
-import { fetchServices } from "@/utils/apis/service.api";
+import { fetchServices } from "@/utils/apis/service";
 import CreateServiceForm from "@/components/form/AdminForms/CreateServiceForm";
 import { useAdminService } from "@/hooks/adminHooks/useAdminService";
 import { FetchServicesResponse } from "@/utils/interface/api/service";

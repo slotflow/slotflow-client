@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Role } from "@/utils/interface/enums";
 import { RootState } from "@/utils/redux/appStore";
-import { validateRoomId } from "@/utils/apis/booking.api";
+import { validateRoomId } from "@/utils/apis/booking";
 import { ValidateRoomId } from "@/utils/interface/api/booking";
 import { Booking } from "@/utils/interface/entityInterface/bookingInterface";
 import { Payment } from "@/utils/interface/entityInterface/paymentInterface";

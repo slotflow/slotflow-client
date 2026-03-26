@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Calendar, CheckCircle2, XCircle } from "lucide-react";
-import { checkBookingConfirmed } from "@/utils/apis/booking.api";
+import { checkBookingConfirmed } from "@/utils/apis/booking";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 

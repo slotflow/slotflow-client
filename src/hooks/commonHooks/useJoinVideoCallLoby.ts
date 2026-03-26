@@ -3,7 +3,7 @@ import { appConfig } from "@/utils/env";
 import { useEffect, useRef, useState } from "react";
 import { NavigateFunction } from "react-router-dom";
 import { AppDispatch } from "@/utils/redux/appStore";
-import { joinOrLeft } from "@/utils/apis/booking.api";
+import { joinOrLeft } from "@/utils/apis/booking";
 import { AuthUser } from "@/utils/interface/sliceInterface";
 import { MediaTrackKind, Role } from "@/utils/interface/enums";
 import { toggleMediaTrack } from "@/utils/helper/toggleMediaTrack";

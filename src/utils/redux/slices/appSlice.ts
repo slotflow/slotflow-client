@@ -1,6 +1,6 @@
 import { appState } from "@/utils/interface/sliceInterface";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { resendOtp, signup, verifyOtp } from "@/utils/apis/auth.api";
+import { resendOtp, signup, verifyOtp } from "@/utils/apis/auth";
 
 const initialState: appState = {
     lightTheme: true,

@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
-import { updatePassword } from "@/utils/apis/auth.api";
+import { updatePassword } from "@/utils/apis/auth";
 import { FormButton, FormHeading } from "../FormSplits";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { setForgotPassword } from "@/utils/redux/slices/appSlice";
@@ -51,8 +51,8 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ role }) => {
                 goToAuthPage(role, RedirectTo.LOGIN);
                 dispatch(setForgotPassword(false));
             }
-        } catch (error){
-            if(appConfig.dev)console.log("An error occurred while updating password.",error);
+        } catch (error) {
+            if (appConfig.dev) console.log("An error occurred while updating password.", error);
         }
     };
 

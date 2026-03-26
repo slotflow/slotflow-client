@@ -16,7 +16,7 @@ import AreaGroupedChart from '../common/chart/AreaGroupedChart';
 import ChartLineMultiple from '../common/chart/ChatLineMultiple';
 import BarChartHorizontal from '../common/chart/BarChartHorizontal';
 import LineChartHorizontal from '../common/chart/LineChartHorizontal';
-import { providerFetchDashboardGraphData } from '@/utils/apis/provider.api';
+import { providerFetchDashboardGraphData } from '@/utils/apis/provider';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import PieChartCompletionBreakdown from '../common/chart/PieChartCompletionBreakdown';
 import { ProviderDashboardGraphResponse } from '@/utils/interface/api/provider';

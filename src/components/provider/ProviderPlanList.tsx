@@ -1,7 +1,7 @@
 import React from 'react';
 import PlanCard from '../common/PlanCard';
 import { useQuery } from '@tanstack/react-query';
-import { providerFetchPlans } from '@/utils/apis/plan.api';
+import { providerFetchPlans } from '@/utils/apis/plan';
 import DataFetchingError from '../common/DataFetchingError';
 import ProviderPlanCardShimmer from '../shimmers/ProviderPlanCardShimmer';
 

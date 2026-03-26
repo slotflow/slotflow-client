@@ -8,9 +8,9 @@ import { PhoneInput } from "../form/phone-input";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
-import { userUpdateInfo } from "@/utils/apis/user.api";
+import { userUpdateInfo } from "@/utils/apis/user";
 import { slideOut } from "@/utils/helper/gsapAnimationSlide";
-import { providerUpdateInfo } from "@/utils/apis/provider.api";
+import { providerUpdateInfo } from "@/utils/apis/provider";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { UserInfoFormType, userInfoZodSchema } from "@/utils/zod/commonZodFields";
 
@@ -129,11 +129,11 @@ const UserInfoCRUDForm: React.FC<UserInfoCRUDProps> = ({
                             disabled={isSubmitting || !isValid}
                         />
                         <Button
-                        title="Cancel"
-                        variant="destructive" 
-                        className="cursor-pointer w-full" 
-                        type="button" 
-                        onClick={handleCloseForm}
+                            title="Cancel"
+                            variant="destructive"
+                            className="cursor-pointer w-full"
+                            type="button"
+                            onClick={handleCloseForm}
                         >
                             Cancel
                         </Button>

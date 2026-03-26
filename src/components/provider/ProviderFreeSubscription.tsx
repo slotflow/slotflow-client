@@ -7,7 +7,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { setSubscription } from "@/utils/redux/slices/authSlice";
 import { setPaymentSelectionPage, setSubscriptionIsTrailPlan } from "@/utils/redux/slices/providerSlice";
-import { subscribeToTrialPlan } from "@/utils/apis/subscription.api";
+import { subscribeToTrialPlan } from "@/utils/apis/subscription";
 
 const ProviderFreeSubscription = () => {
 

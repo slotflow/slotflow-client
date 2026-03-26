@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import CommonTable from "@/components/common/CommonTable";
 import { slideIn } from "@/utils/helper/gsapAnimationSlide";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { adminFetchAllProviders } from "@/utils/apis/adminProvider.api";
 import { setProviderRejectModal } from "@/utils/redux/slices/adminSlice";
 import RejectproviderForm from "@/components/form/AdminForms/RejectproviderForm";
 import { useAdminProvider } from "@/hooks/adminHooks/useAdminProvider";
-import { AdminFetchAllProvidersResponse } from "@/utils/interface/api/adminProviderApiInterface";
 import { AdminProvidersTableColumns } from "@/components/table/tableColumns/AdminProvidersTableColumn";
+import { fetchServiceProvidersForAdmin } from "@/utils/apis/provider";
+import { AdminFetchAllProvidersResponse } from "@/utils/interface/api/provider";
 
 const AdminServiceProvidersPage = () => {
 
@@ -42,7 +42,7 @@ const AdminServiceProvidersPage = () => {
   return (
     <>
       <CommonTable<AdminFetchAllProvidersResponse>
-        fetchApiFunction={adminFetchAllProviders}
+        fetchApiFunction={fetchServiceProvidersForAdmin}
         queryKey="providers"
         column={columns}
         columnsCount={6}

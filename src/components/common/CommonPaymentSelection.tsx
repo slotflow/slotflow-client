@@ -7,14 +7,14 @@ import { loadStripe } from '@stripe/stripe-js';
 import { getEventSocket } from '@/lib/socketService';
 import paypalLogo from '../../assets/iconImages/Paypal.png';
 import stripeLogo from '../../assets/iconImages/Stripe.jpeg';
-import { bookAnAppointment } from '@/utils/apis/booking.api';
+import { bookAnAppointment } from '@/utils/apis/booking';
 import { SubscriptionValidity } from '@/utils/interface/enums';
 import razorpayLogo from '../../assets/iconImages/Razorpay.png';
 import { EventSocketEnum } from '@/utils/interface/socket.interface';
 import { setSubscriptionUpdating } from '@/utils/redux/slices/authSlice';
 import { Provider } from '@/utils/interface/entityInterface/providerInterface';
 import { setPaymentSelectionPage, setSubscriptionIsTrailPlan, setSubscriptionPlanDuration, setSubscriptionPlanId } from '@/utils/redux/slices/providerSlice';
-import { checkoutForSubscribePlan } from '@/utils/apis/subscription.api';
+import { checkoutForSubscribePlan } from '@/utils/apis/subscription';
 
 type UserBookinAppointmentDataProps = {
     providerId: Provider["_id"]
@@ -48,55 +48,65 @@ const CommonPaymentSelection: React.FC<PaymentSelecionComponentPropst> = ({
     const [paymentLoading, setPaymentLoading] = useState<boolean>(false);
 
     const makeStripePayment = useCallback(async () => {
-    const stripePublishKey = stripeConfig.stripePublishableKey;
+        const stripePublishKey = stripeConfig.stripePublishableKey;
 
-    if (!stripePublishKey) {
-        toast.error("Stripe key is missing!");
-        return;
-    }
+        if (!stripePublishKey) {
+            toast.error("Stripe key is missing!");
+            return;
+        }
 
-    const stripe = await loadStripe(stripePublishKey);
+        const stripe = await loadStripe(stripePublishKey);
 
-    if (!stripe) {
-        toast.error("Stripe failed to load!");
-        return;
-    }
+        if (!stripe) {
+            toast.error("Stripe failed to load!");
+            return;
+        }
 
-    try {
-        setPaymentLoading(true);
+        try {
+            setPaymentLoading(true);
 
-        if (isAppointmentBooking) {
+            if (isAppointmentBooking) {
 
-            const infoData = data as UserBookinAppointmentDataProps;
+                const infoData = data as UserBookinAppointmentDataProps;
 
-            if (!infoData.slotId || !infoData.providerId || !infoData.selectedServiceMode || !infoData.date) {
-                toast.error("Incomplete booking details.");
-                return;
-            }
+                if (!infoData.slotId || !infoData.providerId || !infoData.selectedServiceMode || !infoData.date) {
+                    toast.error("Incomplete booking details.");
+                    return;
+                }
 
-            eventSocket.emit(EventSocketEnum.slotEngageRequest, {
-                providerId: infoData.providerId,
-                date: infoData.date,
-                slotId: infoData.slotId,
-            });
+                eventSocket.emit(EventSocketEnum.slotEngageRequest, {
+                    providerId: infoData.providerId,
+                    date: infoData.date,
+                    slotId: infoData.slotId,
+                });
 
-            eventSocket.once(EventSocketEnum.slotEngageApproved, async () => {
-                try {
+                eventSocket.once(EventSocketEnum.slotEngageApproved, async () => {
+                    try {
 
-                    const response = await bookAnAppointment(infoData);
-                    const sessionId = response.data;
+                        const response = await bookAnAppointment(infoData);
+                        const sessionId = response.data;
 
-                    if (!sessionId) {
-                        toast.error("Failed to create checkout session.");
-                        return;
-                    }
+                        if (!sessionId) {
+                            toast.error("Failed to create checkout session.");
+                            return;
+                        }
 
-                    dispatch(setPaymentSelectionPage(false));
+                        dispatch(setPaymentSelectionPage(false));
 
-                    const result = await stripe.redirectToCheckout({ sessionId });
+                        const result = await stripe.redirectToCheckout({ sessionId });
 
-                    if (result?.error) {
-                        toast.error(result.error.message);
+                        if (result?.error) {
+                            toast.error(result.error.message);
+
+                            eventSocket.emit(EventSocketEnum.slotUnlockRequest, {
+                                providerId: infoData.providerId,
+                                date: infoData.date,
+                                slotId: infoData.slotId,
+                            });
+                        }
+
+                    } catch {
+                        toast.error("Booking payment failed");
 
                         eventSocket.emit(EventSocketEnum.slotUnlockRequest, {
                             providerId: infoData.providerId,
@@ -104,64 +114,54 @@ const CommonPaymentSelection: React.FC<PaymentSelecionComponentPropst> = ({
                             slotId: infoData.slotId,
                         });
                     }
+                });
 
-                } catch {
-                    toast.error("Booking payment failed");
+                eventSocket.once(EventSocketEnum.slotEngageRejected, () => {
+                    toast.error("Slot already engaged by another user");
+                });
 
-                    eventSocket.emit(EventSocketEnum.slotUnlockRequest, {
-                        providerId: infoData.providerId,
-                        date: infoData.date,
-                        slotId: infoData.slotId,
-                    });
+                return;
+            }
+
+            if (isProviderSubscription) {
+
+                const infoData = data as ProviderSubscriptionDataProps;
+
+                if (!infoData.planId || !infoData.planDuration) {
+                    toast.error("Subscription details missing");
+                    return;
                 }
-            });
 
-            eventSocket.once(EventSocketEnum.slotEngageRejected, () => {
-                toast.error("Slot already engaged by another user");
-            });
+                const response = await checkoutForSubscribePlan(infoData);
+                const sessionId = response.data;
 
-            return;
+                if (!sessionId) {
+                    toast.error("Failed to create checkout session.");
+                    return;
+                }
+
+                dispatch(setPaymentSelectionPage(false));
+                dispatch(setSubscriptionUpdating(true));
+
+                const result = await stripe.redirectToCheckout({ sessionId });
+
+                if (result?.error) {
+                    toast.error(result.error.message);
+                }
+            }
+
+        } catch {
+            toast.error("Something went wrong during payment.");
+        } finally {
+
+            setPaymentLoading(false);
+
+            dispatch(setSubscriptionPlanId(null));
+            dispatch(setSubscriptionPlanDuration(null));
+            dispatch(setSubscriptionIsTrailPlan(false));
         }
 
-        if (isProviderSubscription) {
-
-            const infoData = data as ProviderSubscriptionDataProps;
-
-            if (!infoData.planId || !infoData.planDuration) {
-                toast.error("Subscription details missing");
-                return;
-            }
-
-            const response = await checkoutForSubscribePlan(infoData);
-            const sessionId = response.data;
-
-            if (!sessionId) {
-                toast.error("Failed to create checkout session.");
-                return;
-            }
-
-            dispatch(setPaymentSelectionPage(false));
-            dispatch(setSubscriptionUpdating(true));
-
-            const result = await stripe.redirectToCheckout({ sessionId });
-
-            if (result?.error) {
-                toast.error(result.error.message);
-            }
-        }
-
-    } catch {
-        toast.error("Something went wrong during payment.");
-    } finally {
-
-        setPaymentLoading(false);
-
-        dispatch(setSubscriptionPlanId(null));
-        dispatch(setSubscriptionPlanDuration(null));
-        dispatch(setSubscriptionIsTrailPlan(false));
-    }
-
-}, [data, isAppointmentBooking, isProviderSubscription, dispatch]);
+    }, [data, isAppointmentBooking, isProviderSubscription, dispatch]);
 
 
     const paymentGateways = [

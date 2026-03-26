@@ -2,7 +2,7 @@ import React from 'react';
 import { Card } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import DashboardStats from '@/components/common/dashboard/DashboardStats';
-import { providerFetchDashboardStatsData } from '@/utils/apis/provider.api';
+import { providerFetchDashboardStatsData } from '@/utils/apis/provider';
 import { providerDashboardTabs, statsMapForProvider } from '@/utils/constants';
 import ProviderDashboardGraphs from '@/components/provider/ProviderDashboardGraphs';
 import { ProviderFetchDashboardStatsDataResponse } from '@/utils/interface/api/provider';

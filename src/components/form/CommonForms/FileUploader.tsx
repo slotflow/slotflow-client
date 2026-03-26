@@ -9,7 +9,7 @@ import AlertBox from '@/components/common/AlertBox';
 import { AppDispatch } from '@/utils/redux/appStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { getUploadUrl, uploadToS3 } from '@/utils/apis/s3.api';
+import { getUploadUrl, uploadToS3 } from '@/utils/apis/s3';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { ImageFileFormType, imageFileZodeSchema } from '@/utils/zod/providerZod';
 import { FileUploaderProps } from '@/utils/interface/componentInterface/commonComponentInterface';

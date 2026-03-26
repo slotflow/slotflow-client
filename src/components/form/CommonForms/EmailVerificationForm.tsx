@@ -2,7 +2,7 @@ import FormField from "../FormField";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { resendOtp } from "@/utils/apis/auth.api";
+import { resendOtp } from "@/utils/apis/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AppDispatch } from "@/utils/redux/appStore";
 import { FormButton, FormHeading } from "../FormSplits";
@@ -40,8 +40,8 @@ const EmailVerificationForm: React.FC<EmailVerificationFormProps> = ({ role }) =
                 goToAuthPage(role, RedirectTo.VERIFY_OTP);
             }
         } catch (error) {
-            if(appConfig.dev) {
-                console.log("An error occurred during email verification ",error);
+            if (appConfig.dev) {
+                console.log("An error occurred during email verification ", error);
             }
         }
     };

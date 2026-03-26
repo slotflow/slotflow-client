@@ -9,12 +9,12 @@ import ProfileListing from "@/components/common/profile/ProfileListing";
 import ProfileHorizontalTabs from "@/components/common/ProfileHorizontalTabs";
 import ProviderServiceDetails from "@/components/common/profile/ProviderServiceDetails";
 import ProviderServiceAvailability from "@/components/common/profile/ProviderServiceAvailability";
-import { userFetchProviderService } from "@/utils/apis/user.api";
 import { Role } from "@/utils/interface/enums";
-import { fetchReviews } from "@/utils/apis/review.api";
-import { fetchProviderDetailsForUser } from "@/utils/apis/provider.api";
-import { fetchAddressByProviderId } from "@/utils/apis/address.api";
-import { fetchServiceAvailabilityByProviderId } from "@/utils/apis/serviceAvailability.api";
+import { fetchReviews } from "@/utils/apis/review";
+import { fetchProviderDetailsForUser } from "@/utils/apis/provider";
+import { fetchAddressByProviderId } from "@/utils/apis/address";
+import { fetchServiceAvailabilityByProviderId } from "@/utils/apis/serviceAvailability";
+import { userFetchProviderService } from "@/utils/apis/providerService";
 
 const UserServiceProviderDetailPage = () => {
 

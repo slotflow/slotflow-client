@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthState } from "@/utils/interface/sliceInterface";
 import avatar from '../../../assets/defaultImages/avatar.png';
-import { getUploadUrl, uploadToS3 } from "@/utils/apis/s3.api";
+import { getUploadUrl, uploadToS3 } from "@/utils/apis/s3";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import { UserUpdateProfileImageResponse } from "@/utils/interface/api/user";
 import { ProviderUpdateProfileImageResponse } from "@/utils/interface/api/provider";

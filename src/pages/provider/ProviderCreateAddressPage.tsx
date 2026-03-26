@@ -9,7 +9,7 @@ import AddressForm from "@/components/form/CommonForms/AddressForm";
 import { CreateAddressFormType } from "@/utils/zod/commonZodFields";
 import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
 import { appConfig } from "@/utils/env";
-import { fetchMyAddress, providerCreateAddress, updateAddress } from "@/utils/apis/address.api";
+import { fetchMyAddress, providerCreateAddress, updateAddress } from "@/utils/apis/address";
 
 const ProviderAddAddressPage = () => {
 

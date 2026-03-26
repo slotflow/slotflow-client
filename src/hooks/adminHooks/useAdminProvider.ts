@@ -7,8 +7,8 @@ import { AdminVerificationStatus } from "@/utils/interface/enums";
 import { setProviderRejectModal } from "@/utils/redux/slices/adminSlice";
 import { setAdminVerificationState } from "@/utils/redux/slices/authSlice";
 import { Provider } from "@/utils/interface/entityInterface/providerInterface";
-import { adminApproveProvider, adminChangeProviderBlockStatus, adminChangeProviderTrustTag, adminRejectProvider } from "@/utils/apis/adminProvider.api";
-import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminRejectProviderRequest } from "@/utils/interface/api/adminProviderApiInterface";
+import { adminApproveProvider, adminChangeProviderBlockStatus, adminChangeProviderTrustTag, adminRejectProvider } from "@/utils/apis/provider";
+import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminRejectProviderRequest } from "@/utils/interface/api/provider";
 
 interface UseAdminProviderReturnInterface {
   handleAdminApproveProvider: (providerId: Provider["_id"]) => void;

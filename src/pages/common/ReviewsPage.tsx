@@ -18,7 +18,7 @@ import DataFetchingError from "@/components/common/DataFetchingError";
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { Review } from "@/utils/interface/entityInterface/reviewInterface";
 import { appConfig } from "@/utils/env";
-import { deleteReview, reportReview, toggleReviewBlockStatus } from "@/utils/apis/review.api";
+import { deleteReview, reportReview, toggleReviewBlockStatus } from "@/utils/apis/review";
 import { FetchReviewsQueryParams, FetchReviewsResponse, ToggleReviewBlockStatusRequest } from "@/utils/interface/api/review";
 
 interface ReviewsPageProps {

@@ -3,7 +3,7 @@ import { Ellipsis } from "lucide-react";
 import MessageInput from "./MessageInput";
 import { socket } from "@/lib/socketService";
 import { useDispatch, useSelector } from "react-redux";
-import { getMessages } from "@/utils/apis/message.api";
+import { getMessages } from "@/utils/apis/message";
 import React, { useEffect, useRef, useState } from "react";
 import ChatBubbleProfileImage from "./ChatBubbleProfileImage";
 import { formatTo24HourTime } from "@/utils/helper/formatter";
@@ -28,7 +28,7 @@ const ChatContainer: React.FC = () => {
 
     useEffect(() => {
         if (!selectedUser || !authUser) return;
-        
+
         dispatch(connectChatSocket());
         dispatch(getMessages({ selectedUserId: selectedUser._id }));
 
@@ -82,17 +82,17 @@ const ChatContainer: React.FC = () => {
                             className={`flex ${message.senderId === authUser?.uid ? "justify-end" : "justify-start"}`}
                             ref={messageEndRef}
                         >
-                           
+
                             {message.senderId !== authUser?.uid && (
-                               <ChatBubbleProfileImage profileImage={selectedUser.profileImage || "/user_avatar.jpg"} />
-                           )}
+                                <ChatBubbleProfileImage profileImage={selectedUser.profileImage || "/user_avatar.jpg"} />
+                            )}
 
                             <div className={`flex flex-col rounded-md bg-[var(--menuItemHoverBg)] px-4 py-1 max-w-8/12 ${message.senderId !== authUser?.uid ? "ml-3" : "mr-3"}`}>
                                 {message.image && (
                                     <img
-                                    src={message.image}
-                                    alt="Attachment"
-                                    className="sm:max-w-[200px] rounded-md mb-2"
+                                        src={message.image}
+                                        alt="Attachment"
+                                        className="sm:max-w-[200px] rounded-md mb-2"
                                     />
                                 )}
                                 {message.text && (
@@ -103,9 +103,9 @@ const ChatContainer: React.FC = () => {
                                 </time>
                             </div>
 
-                                {message.senderId === authUser?.uid && (
-                                    <ChatBubbleProfileImage profileImage={authUser?.profileImage || "/user_avatar.jpg"} />
-                                )}
+                            {message.senderId === authUser?.uid && (
+                                <ChatBubbleProfileImage profileImage={authUser?.profileImage || "/user_avatar.jpg"} />
+                            )}
 
                         </div>
                     ))}

@@ -17,7 +17,7 @@ import { useAddAvailability } from '@/hooks/providerHooks/useServiceAvailability
 import { daysOfWeekOptions, serviceDurationsOptions, updatableStatuses } from '@/utils/constants';
 import { ProviderServiceAvailabilityFormType, providerServiceAvailabilityZodSchema } from '@/utils/zod/providerZod';
 import { appConfig } from '@/utils/env';
-import { createServiceAvailabilities } from '@/utils/apis/serviceAvailability.api';
+import { createServiceAvailabilities } from '@/utils/apis/serviceAvailability';
 
 const ProviderCreateServiceAvailabilityPage: React.FC = () => {
 
@@ -81,7 +81,7 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
     isModeSelected,
     toggleMode,
     toggleSlot,
-  } = useAddAvailability({getValues, setValue});
+  } = useAddAvailability({ getValues, setValue });
 
   const allSlotsSelected = useMemo(() => {
     return (timeSlots && timeSlots.length > 0) && (selectedTimeSlots.length === timeSlots.length);

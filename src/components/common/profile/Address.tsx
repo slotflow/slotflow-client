@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { useDispatch, useSelector } from "react-redux";
 import { useQueryClient } from "@tanstack/react-query";
 import { Edit, MapPinHouse, Plus, X } from 'lucide-react';
-import { fetchMyAddress, updateAddress, userCreateAddress } from "@/utils/apis/address.api";
+import { fetchMyAddress, updateAddress, userCreateAddress } from "@/utils/apis/address";
 import { setAuthUser } from "@/utils/redux/slices/authSlice";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import AddressForm from "@/components/form/CommonForms/AddressForm";

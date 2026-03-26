@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Calendar } from "@/components/ui/calendar";
 import DataFetchingError from "../DataFetchingError";
 import { getEventSocket } from "@/lib/socketService";
-import { fetchEngagedSlots } from "@/utils/apis/serviceAvailability.api";
+import { fetchEngagedSlots } from "@/utils/apis/serviceAvailability";
 import InfoDisplayComponent from "../InfoDisplayComponent";
 import CommonPaymentSelection from "../CommonPaymentSelection";
 import { Slot } from "@/utils/interface/entityInterface/serviceAvailabilityInterface";

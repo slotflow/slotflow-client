@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import { Image, Send, Trash } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { sendMessage } from "@/utils/apis/message.api";
+import { sendMessage } from "@/utils/apis/message";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
 import React, { Dispatch, SetStateAction, useRef, useState } from "react";
 import { socket } from "@/lib/socketService";

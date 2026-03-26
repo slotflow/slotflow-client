@@ -1,4 +1,4 @@
-import { sendMessage } from "@/utils/apis/message.api";
+import { sendMessage } from "@/utils/apis/message";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Message } from '@/utils/interface/entityInterface/message.interface';
 import { chatSliceInitalState, SelectedUser } from "@/utils/interface/sliceInterface";

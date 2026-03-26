@@ -9,7 +9,7 @@ import { CreditCard, Unplug } from "lucide-react";
 import { RootState } from "@/utils/redux/appStore";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import FeatureLocked from "@/components/common/FeatureLocked";
-import { fetchCalendarEvents } from "@/utils/apis/google.api";
+import { fetchCalendarEvents } from "@/utils/apis/google";
 import CalendarShimmer from '@/components/shimmers/CalendarShimmer';
 import DataFetchingError from '@/components/common/DataFetchingError';
 

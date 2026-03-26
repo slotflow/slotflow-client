@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import GoogleButton from "../GoogleButton";
-import { signup } from "@/utils/apis/auth.api";
+import { signup } from "@/utils/apis/auth";
 import { AppDispatch } from "@/utils/redux/appStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormButton, FormHeading } from "../FormSplits";
@@ -37,12 +37,12 @@ const SignUpForm: React.FC<signUpFormProps> = ({ role }) => {
     const onSubmit = async (data: SignupFormType) => {
         try {
             const res = await dispatch(signup({ ...data, role })).unwrap();
-            if(res.success) {
+            if (res.success) {
                 toast.success(res.message);
                 goToAuthPage(role, RedirectTo.VERIFY_OTP);
             }
         } catch (error) {
-            if(appConfig.dev)console.log("An error occurred while sign up ",error);
+            if (appConfig.dev) console.log("An error occurred while sign up ", error);
         }
     };
 

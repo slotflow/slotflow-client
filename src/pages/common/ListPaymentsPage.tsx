@@ -1,4 +1,4 @@
-import { fetchPayments } from "@/utils/apis/payment.api";
+import { fetchPayments } from "@/utils/apis/payment";
 import CommonTable from "@/components/common/CommonTable";
 import { FetchPaymentsResponse } from "@/utils/interface/api/payment";
 import { useRoleBasedNavigation } from "@/hooks/commonHooks/useRoleBasedNavigation";

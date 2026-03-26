@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { formatDateWithTime } from '@/utils/helper/formatter';
-import { fetchBookingDetails } from '@/utils/apis/booking.api';
+import { fetchBookingDetails } from '@/utils/apis/booking';
 import DataFetchingError from '@/components/common/DataFetchingError';
 import InfoDisplayComponent from '@/components/common/InfoDisplayComponent';
 import { Booking } from '@/utils/interface/entityInterface/bookingInterface';
@@ -11,7 +11,7 @@ import ProfileDetailsShimmer from '@/components/shimmers/ProfileDetailsShimmer';
 const BookingDetailPage: React.FC = () => {
 
   const { bookingId } = useParams<{ bookingId: Booking["_id"] }>();
-  console.log("bookingId : ",bookingId)
+  console.log("bookingId : ", bookingId)
 
   const { data, isLoading, isError, error } = useQuery({
     queryFn: () => fetchBookingDetails(bookingId!),

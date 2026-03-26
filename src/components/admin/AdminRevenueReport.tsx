@@ -13,7 +13,7 @@ import DataFetchingError from '@/components/common/DataFetchingError';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar as CalendarIcon, FileSpreadsheet, NotebookText, RotateCcw } from 'lucide-react';
 import { AdminRevenueTableColumn } from '@/components/table/tableColumns/AdminRevenueTableColumn';
-import { fetchRevenueReportForAdmin } from '@/utils/apis/payment.api';
+import { fetchRevenueReportForAdmin } from '@/utils/apis/payment';
 
 const AdminRevenueReport: React.FC = () => {
     const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);

@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
-import { changeAppointmentStatus } from "@/utils/apis/booking.api";
+import { changeAppointmentStatus } from "@/utils/apis/booking";
 import { changeAppointmentStatusRequest } from "@/utils/interface/api/booking";
 
 interface UseProviderAppointmentReturnInterface {

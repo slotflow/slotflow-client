@@ -11,7 +11,7 @@ import {
   setSubscription,
   setSubscriptionUpdating,
 } from "@/utils/redux/slices/authSlice";
-import { fetchMySubscription } from "@/utils/apis/subscription.api";
+import { fetchMySubscription } from "@/utils/apis/subscription";
 
 interface ProviderSubscriptionConfirmPageProps {
   status: boolean;

@@ -6,10 +6,8 @@ import DataFetchingError from "../DataFetchingError";
 import InfoDisplayComponent from "../InfoDisplayComponent";
 import { copyToClipboard } from "@/utils/helper";
 import ProfileDetailsShimmer from "@/components/shimmers/ProfileDetailsShimmer";
-import { ProviderFetchMyProfileDetailsResponse } from "@/utils/interface/api/provider";
-import { AdminFetchUserProfileDetailsResponse } from "@/utils/interface/api/adminUserApiInterface";
-import { AdminFetchProviderProfileDetailsResponse } from "@/utils/interface/api/adminProviderApiInterface";
-import { UserFetchProviderProfileDetailsResponse, UserFetchUserProfileDetailsResponse } from "@/utils/interface/api/user";
+import { AdminFetchProviderProfileDetailsResponse, ProviderFetchMyProfileDetailsResponse, UserFetchProviderProfileDetailsResponse } from "@/utils/interface/api/provider";
+import { AdminFetchUserProfileDetailsResponse, UserFetchUserProfileDetailsResponse } from "@/utils/interface/api/user";
 
 interface UserOrProviderProfileDetailsComponentProps {
     userOrProviderId?: string;

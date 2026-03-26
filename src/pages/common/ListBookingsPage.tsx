@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/utils/redux/appStore";
-import { fetchBookings } from "@/utils/apis/booking.api";
+import { fetchBookings } from "@/utils/apis/booking";
 import CommonTable from "@/components/common/CommonTable";
 import { useRoleBasedNavigation } from "@/hooks/commonHooks/useRoleBasedNavigation";
 import { useUserBookingActions } from "@/hooks/userHooks/useUserBooking";

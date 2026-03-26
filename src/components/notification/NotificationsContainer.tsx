@@ -4,7 +4,7 @@ import NotificationCard from "./NotificationCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { fetchNotifications } from "@/utils/apis/notification.api";
+import { fetchNotifications } from "@/utils/apis/notification";
 import { toggleNotificationContainer } from "@/utils/redux/slices/appSlice";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import NotificationCardShimmer from "../shimmers/NotificationCardShimmer";
@@ -66,7 +66,7 @@ const NotificationsContainer: React.FC = () => {
                     {isLoading ? (
                         <NotificationCardShimmer />
                     ) : isError ? (
-                       <DataFetchingError message={error?.message || "Failed to fetch notifications"} />
+                        <DataFetchingError message={error?.message || "Failed to fetch notifications"} />
                     ) : notifications.length === 0 ? (
                         <div className="flex flex-col items-center justify-center h-full text-gray-500 opacity-60">
                             <Bell className="w-12 h-12 mb-3 text-gray-400 stroke-[1.5]" />

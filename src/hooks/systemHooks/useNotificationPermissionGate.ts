@@ -3,9 +3,9 @@ import { getFcmToken } from "@/utils/helper/getToken";
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useMemo } from "react";
 import { getDeviceId } from "@/utils/helper/getDeviceId";
-import { registerDevice } from "@/utils/apis/notification.api";
-import { userSetPushNotification } from "@/utils/apis/user.api";
-import { providerSetPushNotification } from "@/utils/apis/provider.api";
+import { registerDevice } from "@/utils/apis/notification";
+import { userSetPushNotification } from "@/utils/apis/user";
+import { providerSetPushNotification } from "@/utils/apis/provider";
 import { PermissionStatus, Platform, Role } from "@/utils/interface/enums";
 import { updateNotificationPreference } from "@/utils/redux/slices/authSlice";
 import { requestNotificationPermission } from "@/utils/helper/requestNotificationPermission";
@@ -59,9 +59,9 @@ export const useNotificationPermissionGate = (): useNotificationPermissionGateIn
 
     if (permission === PermissionStatus.GRANTED) {
       const deviceId = getDeviceId();
-      console.log("deviceId : ",deviceId);
+      console.log("deviceId : ", deviceId);
       const fcmToken = await getFcmToken();
-      console.log("fcmToken : ",fcmToken);
+      console.log("fcmToken : ", fcmToken);
 
       if (!deviceId || !fcmToken) return;
 

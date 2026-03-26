@@ -4,7 +4,7 @@ import { formatTime } from "@/utils/helper";
 import { Button } from "@/components/ui/button";
 import { videoSocket } from "@/lib/socketService";
 import { useEffect, useState, useRef } from "react";
-import { joinOrLeft } from "@/utils/apis/booking.api";
+import { joinOrLeft } from "@/utils/apis/booking";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { AppDispatch, RootState } from "@/utils/redux/appStore";

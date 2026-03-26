@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import DataFetchingError from '@/components/common/DataFetchingError';
-import { fetchSubscriptionDetails } from '@/utils/apis/subscription.api';
+import { fetchSubscriptionDetails } from '@/utils/apis/subscription';
 import InfoDisplayComponent from '@/components/common/InfoDisplayComponent';
 import ProfileDetailsShimmer from '@/components/shimmers/ProfileDetailsShimmer';
 
@@ -29,8 +29,8 @@ const SubscriptionDetailViewPage: React.FC = () => {
         { label: "Subscription price", value: data?.subscriptionPlanId?.price, isPrice: true },
     ];
 
-  return (
-    <div className="w-full p-2 mx-auto mt-0 md:flex justify-start flex-grow bg">
+    return (
+        <div className="w-full p-2 mx-auto mt-0 md:flex justify-start flex-grow bg">
             {isError && error ? (
                 <DataFetchingError message={(error as Error).message} />
             ) : isLoading ? (
@@ -50,7 +50,7 @@ const SubscriptionDetailViewPage: React.FC = () => {
                 <DataFetchingError message="No data found" />
             )}
         </div>
-  )
+    )
 }
 
 export default SubscriptionDetailViewPage;

@@ -9,7 +9,7 @@ import { setIsProofSubmitted } from "@/utils/redux/slices/authSlice";
 import FileUploader from "@/components/form/CommonForms/FileUploader";
 import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
 import { setIdentityProofLoading, setProviderIdentityProofs, setProviderServiceProofs, setServiceProofLoading } from "@/utils/redux/slices/providerSlice";
-import { providerDeleteIdentityProof, providerDeleteServiceProof, providerFetchProofs, providerUpdateIdentityProof, providerUpdateProofServiceProof } from "@/utils/apis/provider.api";
+import { providerDeleteIdentityProof, providerDeleteServiceProof, providerFetchProofs, providerUpdateIdentityProof, providerUpdateProofServiceProof } from "@/utils/apis/provider";
 
 export const ProviderProofSubmissionPage = () => {
 

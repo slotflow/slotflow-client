@@ -1,15 +1,15 @@
 import { Loader } from 'lucide-react';
-import { useEffect, useRef  } from 'react';
+import { useEffect, useRef } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useDispatch, useSelector } from 'react-redux';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { setProviders } from '@/utils/redux/slices/userSlice';
 import { AppDispatch, RootState } from '@/utils/redux/appStore';
-import { userSearchServiceProviders } from '@/utils/apis/user.api';
 import { toggleFilterSideBar } from '@/utils/redux/slices/appSlice';
 import DataFetchingError from '@/components/common/DataFetchingError';
 import UserViewProviderCard from '@/components/user/UserViewProviderCard';
+import { fetchServiceProvidersForUser } from '@/utils/apis/provider';
 
 const UserDashboardPage = () => {
 
@@ -18,49 +18,49 @@ const UserDashboardPage = () => {
   const { selectedCategories, providers, providerCardsfFlter } = useSelector((store: RootState) => store.user);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError, error } = useInfiniteQuery({
-  queryKey: ['providers', providerCardsfFlter],
-  queryFn: ({ pageParam = 0 }) => userSearchServiceProviders({
-    ...providerCardsfFlter,
-    skip: pageParam,
-    limit: 12,
-  }),
-  initialPageParam: 0,
-  getNextPageParam: (lastPage, allPages) => {
-    return lastPage.length === 12 ? allPages.length * 12 : undefined;
-  },
-});
-
-useEffect(() => {
-  if (!loadMoreRef.current) return;
-  if (!hasNextPage) return;
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      const firstEntry = entries[0];
-      if (firstEntry.isIntersecting && hasNextPage && !isFetchingNextPage) {
-        fetchNextPage();
-      }
+    queryKey: ['providers', providerCardsfFlter],
+    queryFn: ({ pageParam = 0 }) => fetchServiceProvidersForUser({
+      ...providerCardsfFlter,
+      skip: pageParam,
+      limit: 12,
+    }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.length === 12 ? allPages.length * 12 : undefined;
     },
-    {
-      root: null,
-      rootMargin: '200px',
-      threshold: 0,
-    }
-  );
-
-  observer.observe(loadMoreRef.current);
-
-  return () => {
-    observer.disconnect();
-  };
-}, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+  });
 
   useEffect(() => {
-    if(data) {
+    if (!loadMoreRef.current) return;
+    if (!hasNextPage) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const firstEntry = entries[0];
+        if (firstEntry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      {
+        root: null,
+        rootMargin: '200px',
+        threshold: 0,
+      }
+    );
+
+    observer.observe(loadMoreRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+
+  useEffect(() => {
+    if (data) {
       const flattenedProviders = data.pages.flat();
       dispatch(setProviders(flattenedProviders));
     };
-  }, [ selectedCategories, dispatch, data ]);
+  }, [selectedCategories, dispatch, data]);
 
 
   return (
@@ -69,7 +69,7 @@ useEffect(() => {
         <div className="relative w-full max-w-md flex space-x-2">
           <Input type="text" placeholder="Search..." className="h-auto" />
           <Button
-          title="Search"
+            title="Search"
             variant="default"
             className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
             onClick={() => dispatch(toggleFilterSideBar())} >
@@ -77,7 +77,7 @@ useEffect(() => {
           </Button>
         </div>
         <Button
-        title="Filters"
+          title="Filters"
           variant="default"
           className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
           onClick={() => dispatch(toggleFilterSideBar())} >
@@ -95,23 +95,23 @@ useEffect(() => {
         </div>
       ) : providers && providers.length > 0 ? (
         <>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 my-4">
-          {providers.map((provider, index) => (
-            <UserViewProviderCard key={index} {...provider} />
-          ))}
-        </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 my-4">
+            {providers.map((provider, index) => (
+              <UserViewProviderCard key={index} {...provider} />
+            ))}
+          </div>
           <div
-      ref={loadMoreRef}
-      className="h-12 flex items-center justify-center"
-    >
-      {isFetchingNextPage && (
-        <div className="flex w-full justify-center gap-2">
-          <p>Fetching more providers...</p>
-          <Loader className="w-6 h-6 animate-spin" />
-        </div>
-      )}
-    </div>
-    </>
+            ref={loadMoreRef}
+            className="h-12 flex items-center justify-center"
+          >
+            {isFetchingNextPage && (
+              <div className="flex w-full justify-center gap-2">
+                <p>Fetching more providers...</p>
+                <Loader className="w-6 h-6 animate-spin" />
+              </div>
+            )}
+          </div>
+        </>
       ) : (
         <div className="flex-1 flex justify-center items-center">
           <DataFetchingError message="No providers found in the database" />

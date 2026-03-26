@@ -15,9 +15,9 @@ import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
 import { RedirectTo } from "@/utils/interface/commonInterface";
 import { serviceCategoryOptions, serviceModeOptions, serviceTypeOptions, groupOptions } from "@/utils/constants";
 import { providerCreateServiceDetailsZodSchema, ProviderCreateServiceDetailsFormType } from "@/utils/zod/providerZod";
-import { providerCreateServiceDetails, providerFetchServiceDetails, providerUpdateServiceDetails } from "@/utils/apis/provider.api";
 import { appConfig } from "@/utils/env";
-import { fetchServicesByCategory } from "@/utils/apis/service.api";
+import { fetchServicesByCategory } from "@/utils/apis/service";
+import { providerCreateServiceDetails, providerFetchServiceDetails, providerUpdateServiceDetails } from "@/utils/apis/providerService";
 
 const ProviderCreateServiceDetailsPage: React.FC = () => {
 
