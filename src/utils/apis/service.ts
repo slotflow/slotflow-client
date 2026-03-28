@@ -15,7 +15,7 @@ export const fetchServices: ApiFetchFunction<
     FetchFunctionBaseQueryParams
 > = async (queryParams) => {
     const query = buildQueryParams(queryParams);
-    const response = await axiosInstance.get(`/services${query ? `?${query}` : ''}`);
+    const response = await axiosInstance.get(`/services?${query}`);
     return parseNewCommonResponse<FetchServicesResponse>(response.data.data);
 }
 

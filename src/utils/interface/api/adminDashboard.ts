@@ -1,15 +1,3 @@
-// Used as the response type of the admin fetch dashboard todays stats data
-export interface AdminFetchDashboardTodayStatsDataResponse extends Record<string, number> {
-  newUsers: number;
-  newProviders: number;
-
-  todaysTotalRevenue: number;
-  todaysTotalPayouts: number;
-
-  todaysAppointments: number;
-  todaysCancelledAppointments: number;
-}
-
 // Used as the Response type of the admin fetch dashboard user stats data
 export interface AdminFetchDashboardUserStatsDataResponse extends Record<string, number> {
     totalUsers: number;
@@ -40,6 +28,12 @@ export interface AdminFetchDashboardSubscriptionStatsDataResponse extends Record
 }
 
 // Used as the response type of the admin fetch dashboard revenue stats data
+export interface AdminStatsDataRequest extends Record<string, Date | undefined> {
+    startDate?: Date;
+    endDate?: Date;
+}
+
+// Used as the response type of the admin fetch dashboard revenue stats data
 export interface AdminFetchDashboardRevenueAndPaymentsStatsDataResponse extends Record<string, number> {
     totalRevenue: number;
     totalRevenueViaSubscriptions: number;
@@ -60,8 +54,6 @@ export interface AdminFetchDashboardAppointmentStatsDataResponse extends Record<
     missedAppointments: number;
     rejectedAppointments: number;
 }
-
-
 
 // Used as the return interface for the admin fetch dashboard graph data
 export interface AdminDashboardGraphResponse {
@@ -104,5 +96,4 @@ export interface AdminDashboardGraphResponse {
         gateWay: string;
         count: number;
     }>
-
 }

@@ -1,32 +1,30 @@
-import { format } from 'date-fns';
-import { Button } from '../ui/button';
-import { Calendar } from '../ui/calendar';
+import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { DateRange } from 'react-day-picker';
-import React, { useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { PlanName } from '@/utils/interface/enums';
 import { RootState } from '@/utils/redux/appStore';
-import RadialChart from '../common/chart/RadialChart';
-import { CalendarIcon, GitGraph } from 'lucide-react';
-import DataFetchingError from '../common/DataFetchingError';
+import RadialChart from '../../chart/RadialChart';
+import { graphView } from '@/utils/helper/graphView';
+import DataFetchingError from '../../DataFetchingError';
+import AreaGroupedChart from '../../chart/AreaGroupedChart';
+import BarChartVertical from '../../chart/BarChartVertical';
 import LoadingFallback from '@/pages/common/LoadingFallback';
-import BarChartVertical from '../common/chart/BarChartVertical';
-import AreaGroupedChart from '../common/chart/AreaGroupedChart';
-import ChartLineMultiple from '../common/chart/ChatLineMultiple';
-import BarChartHorizontal from '../common/chart/BarChartHorizontal';
-import LineChartHorizontal from '../common/chart/LineChartHorizontal';
+import ChartLineMultiple from '../../chart/ChatLineMultiple';
+import BarChartHorizontal from '../../chart/BarChartHorizontal';
+import LineChartHorizontal from '../../chart/LineChartHorizontal';
 import { providerFetchDashboardGraphData } from '@/utils/apis/provider';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import PieChartCompletionBreakdown from '../common/chart/PieChartCompletionBreakdown';
 import { ProviderDashboardGraphResponse } from '@/utils/interface/api/provider';
+import PieChartCompletionBreakdown from '../../chart/PieChartCompletionBreakdown';
 import { appointmentModeChartConfig, appointmentsOverTimeChartConfig, completionBreakdownChartConfig, newVsReturningUsersChartConfig, peakBookingHoursChartConfig, topBookingDaysChartConfig } from '@/utils/constants';
-import { graphView } from '@/utils/helper/GraphView';
 
-const ProviderDashboardGraphs: React.FC = () => {
+export interface ProviderDashboardGraphsProps {
+    dateRange: DateRange;
+}
+
+const ProviderDashboardGraphs: React.FC<ProviderDashboardGraphsProps> = ({ dateRange }) => {
 
     const user = useSelector((store: RootState) => store.auth.authUser);
-    const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
 
     const subscriptionPlan = useMemo(() => {
         if (!user) return PlanName.NO_SUBSCRIPTION;
@@ -47,7 +45,7 @@ const ProviderDashboardGraphs: React.FC = () => {
     });
 
     return (
-        <div className="mt-4">
+        <React.Fragment>
             {isGraphLoading ? (
                 <div className="h-screen flex items-center justify-center">
                     <LoadingFallback />
@@ -56,38 +54,6 @@ const ProviderDashboardGraphs: React.FC = () => {
                 <DataFetchingError message={"Failed to load graphs" + graphError} />
             ) : dashboardGraphData ? (
                 <React.Fragment>
-                    <div className='border rounded-md my-2 p-2'>
-                        <div className='flex justify-between items-center'>
-                            <div className='flex space-x-2'>
-                                <GitGraph />
-                                <h2 className="text-xl font-bold"> Detailed Graph With Aggregated Data</h2>
-                            </div>
-
-                            <Popover>
-                                <PopoverTrigger asChild>
-                                    <Button title="Select Date" variant="default" className="w-full md:w-auto justify-start text-left font-normal cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]">
-                                        <CalendarIcon className="mr-2 h-4 w-4" />
-                                        {dateRange?.from && dateRange?.to ? (
-                                            <>
-                                                {format(dateRange.from, "MMM dd, yyyy")} - {format(dateRange.to, "MMM dd, yyyy")}
-                                            </>
-                                        ) : (
-                                            <span>Select Date Range</span>
-                                        )}
-                                    </Button>
-                                </PopoverTrigger>
-                                <PopoverContent className="w-auto p-0" align="start">
-                                    <Calendar
-                                        mode="range"
-                                        selected={dateRange}
-                                        onSelect={setDateRange}
-                                        numberOfMonths={2}
-                                    />
-                                </PopoverContent>
-                            </Popover>
-
-                        </div>
-                    </div>
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                         <AreaGroupedChart
                             title="Appointments Over Time"
@@ -98,6 +64,7 @@ const ProviderDashboardGraphs: React.FC = () => {
                             dataKeyThree="cancelled"
                             chartConfig={appointmentsOverTimeChartConfig}
                             isLocked={!graphView(subscriptionPlan, "AppointmentsOverTime")}
+                            minimumPlan={PlanName.TRIAL}
                         />
                         <RadialChart
                             title="Top Booking Days"
@@ -107,6 +74,7 @@ const ProviderDashboardGraphs: React.FC = () => {
                             dataKeyTwo="day"
                             chartConfig={topBookingDaysChartConfig}
                             isLocked={!graphView(subscriptionPlan, "TopBookingDays")}
+                            minimumPlan={PlanName.STARTER}
                         />
                         <LineChartHorizontal
                             title="Appointment Mode Trend"
@@ -116,6 +84,7 @@ const ProviderDashboardGraphs: React.FC = () => {
                             dataKeyTwo="offline"
                             chartConfig={appointmentModeChartConfig}
                             isLocked={!graphView(subscriptionPlan, "AppointmentModeTrend")}
+                            minimumPlan={PlanName.STARTER}
                         />
                         <ChartLineMultiple
                             title="New vs Returning Users"
@@ -125,6 +94,7 @@ const ProviderDashboardGraphs: React.FC = () => {
                             dataKeyOne="newUsers"
                             dataKeyTwo="returningUsers"
                             isLocked={!graphView(subscriptionPlan, "NewVsReturningUsers")}
+                            minimumPlan={PlanName.PROFESSIONAL}
                         />
                         <BarChartVertical
                             title="Appointment Distribution"
@@ -134,6 +104,7 @@ const ProviderDashboardGraphs: React.FC = () => {
                             dataKeyTwo="offline"
                             chartConfig={appointmentModeChartConfig}
                             isLocked={!graphView(subscriptionPlan, "AppointmentDistribution")}
+                            minimumPlan={PlanName.PROFESSIONAL}
                         />
                         <BarChartHorizontal
                             title="Peak Booking Hours"
@@ -144,6 +115,7 @@ const ProviderDashboardGraphs: React.FC = () => {
                             dataKeyThree="bookings"
                             chartConfig={peakBookingHoursChartConfig}
                             isLocked={!graphView(subscriptionPlan, "PeakBookingHours")}
+                            minimumPlan={PlanName.ENTERPRISE}
                         />
                         <PieChartCompletionBreakdown
                             title="Appointment Completion Breakdown"
@@ -153,11 +125,12 @@ const ProviderDashboardGraphs: React.FC = () => {
                             chartConfig={completionBreakdownChartConfig}
                             nameKey={"status"}
                             isLocked={!graphView(subscriptionPlan, "AppointmentCompletionBreakdown")}
+                            minimumPlan={PlanName.ENTERPRISE}
                         />
                     </div>
                 </React.Fragment>
             ) : null}
-        </div>
+        </React.Fragment>
     )
 }
 

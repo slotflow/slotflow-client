@@ -13,6 +13,6 @@ FetchNotificationsResponse,
 FetchNotificationsQueryParams
 > = async (queryParams) => {
   const query = buildQueryParams(queryParams);
-  const response = await axiosInstance.get(`/notifications${query ? `?${query}` : ""}`);
+  const response = await axiosInstance.get(`/notifications?${query}`);
   return parseNewCommonResponse<FetchNotificationsResponse>(response.data.data);
 };

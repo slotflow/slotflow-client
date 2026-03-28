@@ -1,19 +1,22 @@
 import { axiosInstance } from "@/lib/axios";
 import {
+    AdminRejectProviderRequest,
     ProviderSubmitDetailsResponse,
+    AdminFetchAllProvidersResponse,
     ProviderDashboardGraphResponse,
     ProviderUpdateProviderInfoRequest,
     ProviderUpdateProfileImageRequest,
     ProviderUpdateProviderInfoResponse,
     ProviderUpdateProfileImageResponse,
-    ProviderFetchMyProfileDetailsResponse,
-    ProviderFetchDashboardStatsDataResponse,
-    AdminFetchProviderProfileDetailsResponse,
-    UserFetchProviderProfileDetailsResponse,
-    AdminFetchAllProvidersResponse,
-    AdminRejectProviderRequest,
-    AdminChangeProviderBlockStatusRequest,
     AdminChangeProviderTrustTagRequest,
+    AdminChangeProviderBlockStatusRequest,
+    ProviderFetchMyProfileDetailsResponse,
+    ProviderFetchDashboardStatsDataRequest,
+    ProviderFetchDashboardStatsDataResponse,
+    UserFetchProviderProfileDetailsResponse,
+    AdminFetchProviderProfileDetailsResponse,
+    ProviderFetchDashboardRevenueStatsDataRequest,
+    ProviderFetchDashboardRevenueStatsDataResponse,
 } from "../interface/api/provider";
 import { DateRange } from "react-day-picker";
 import { PlanName } from "../interface/enums";
@@ -94,14 +97,21 @@ export const providerSetPushNotification = async (data: boolean): Promise<ApiBas
 // **** Provider Dashboard Apis
 
 // provider fetch dashboard stats data
-export const providerFetchDashboardStatsData = async (): Promise<ProviderFetchDashboardStatsDataResponse> => {
-    const response = await axiosInstance.get('/providers-dashboard/');
+export const providerFetchDashboardStatsData = async (payload: ProviderFetchDashboardStatsDataRequest): Promise<ProviderFetchDashboardStatsDataResponse> => {
+    const query = buildQueryParams(payload);
+    const response = await axiosInstance.get(`/provider-dashboard/?${query}`);
+    return response.data.data;
+}
+
+export const providerFetchDashboardRevenueStatsData = async (payload: ProviderFetchDashboardRevenueStatsDataRequest): Promise<ProviderFetchDashboardRevenueStatsDataResponse> => {
+    const query = buildQueryParams(payload);
+    const response = await axiosInstance.get(`/payments/revenue?${query}`);
     return response.data.data;
 }
 
 // provider fetch dashboard graph data
 export const providerFetchDashboardGraphData = async (subscription?: PlanName, dateRange?: DateRange): Promise<ProviderDashboardGraphResponse> => {
-    const response = await axiosInstance.get(`/providers-dashboard/graph`, {
+    const response = await axiosInstance.get(`/provider-dashboard/graph`, {
         params: {
             subscription,
             ...(dateRange ? { start: dateRange.from, end: dateRange.to } : {}),
@@ -129,7 +139,7 @@ AdminFetchAllProvidersResponse,
 FetchFunctionBaseQueryParams
 > = async (queryParams) => {
     const query = buildQueryParams(queryParams);
-    const response = await axiosInstance.get(`/providers${query ? `?${query}` : ''}`);
+    const response = await axiosInstance.get(`/providers?${query}`);
     return parseNewCommonResponse<AdminFetchAllProvidersResponse>(response.data.data);
 };
 

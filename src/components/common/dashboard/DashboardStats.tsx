@@ -1,12 +1,12 @@
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { DateRange } from 'react-day-picker';
 import { useQuery } from '@tanstack/react-query';
 import { RootState } from '@/utils/redux/appStore';
 import { PlanName } from '@/utils/interface/enums';
-import { useEffect, useMemo, useState } from 'react';
 import DataFetchingError from '../DataFetchingError';
 import StatsCard from '@/components/common/dashboard/StatsCard';
 import { statsMapIntrface } from '@/utils/interface/commonInterface';
-import HorizontalChartForAdminReact from '../chart/HorizontalChartForAdmin';
 import DashboardStatsShimmer from '@/components/shimmers/DashboardStatsShimmer';
 
 interface DashboardStatsProps<T extends Record<string, number>> {
@@ -17,7 +17,9 @@ interface DashboardStatsProps<T extends Record<string, number>> {
     shimmerCount: number;
     heading?: string;
     role: string;
+    dependencies: DateRange;
 }
+
 
 const DashboardStats = <T extends Record<string, number>>({
     queryFunction,
@@ -26,16 +28,15 @@ const DashboardStats = <T extends Record<string, number>>({
     shimmerCount,
     heading,
     role,
+    dependencies
 }: DashboardStatsProps<T>) => {
 
     const user = useSelector((store: RootState) => store.auth.authUser);
 
-const subscriptionPlan = useMemo(() => {
-  if (!user) return PlanName.NO_SUBSCRIPTION;
-  return user.providerSubscription ?? PlanName.NO_SUBSCRIPTION;
-}, [user]);
-
-    const [chartData, setChartData] = useState<{ name: string; value: number }[]>();
+    const subscriptionPlan = useMemo(() => {
+        if (!user) return PlanName.NO_SUBSCRIPTION;
+        return user.providerSubscription ?? PlanName.NO_SUBSCRIPTION;
+    }, [user]);
 
     const {
         data: dashboardStats,
@@ -43,22 +44,11 @@ const subscriptionPlan = useMemo(() => {
         isError: isNumericDataError,
         error: numericDataError
     } = useQuery({
-        queryKey: [queryKey],
+        queryKey: [queryKey, dependencies],
         queryFn: queryFunction,
         staleTime: 1 * 60 * 1000,
         refetchOnWindowFocus: false,
     });
-
-    useEffect(() => {
-        if (dashboardStats && statsMap.length > 0) {
-            const formattedData = statsMap.map((stat) => ({
-                name: stat.title,
-                value: dashboardStats[stat.key] ?? 0,
-            }));
-
-            setChartData(formattedData);
-        }
-    }, [dashboardStats, statsMap]);
 
     return (
         <div>
@@ -83,13 +73,6 @@ const subscriptionPlan = useMemo(() => {
                     ) : null}
                 </div>
             )}
-
-            <div className='mt-6'>
-                <HorizontalChartForAdminReact
-                    chartData={chartData ?? []}
-                    isLOading={isNumericDataLoading}
-                />
-            </div>
         </div>
     )
 }

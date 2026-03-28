@@ -1,59 +1,58 @@
 import {
-  Banknote,
-  CalendarCheck,
-  CheckCircle,
-  Clock,
-  Hourglass,
-  Receipt,
-  TrendingUp,
-  Wallet,
-  XCircle,
   Ban,
-  ThumbsDown,
-  UserPlus,
+  Gem,
+  Star,
+  User,
+  Home,
+  Clock,
   Users,
-  UserCheck,
   UserX,
-  ShieldCheck,
-  MapPin,
-  Briefcase,
-  CalendarClock,
-  BadgeCheck,
-  LayoutGrid,
+  Mail,
+  Wallet,
+  Phone,
+  Gauge,
+  Video,
   Layers,
   Rocket,
-  Gem,
-  CreditCard,
-  RotateCcw,
-  Wallet2Icon,
-  WalletCards,
-  WalletMinimal,
-  MessageSquareText,
-  PictureInPicture2,
-  Phone,
-  Mail,
+  MapPin,
+  Shield,
+  Combine,
+  Palette,
+  Receipt,
+  XCircle,
+  Banknote,
   Verified,
-  Gauge,
   BookLock,
+  Settings,
+  Activity,
+  BarChart,
+  Calendar1,
+  UserCheck,
+  Hourglass,
+  Briefcase,
+  RotateCcw,
   Handshake,
   ScanHeart,
-  MessageSquare,
-  Video,
-  Calendar1,
-  Star,
-  Settings,
-  Combine,
-  User,
-  Shield,
-  Palette,
-  Activity,
+  ThumbsDown,
+  CreditCard,
+  BadgeCheck,
+  LayoutGrid,
   DollarSign,
-  Home,
-  BarChart,
+  WalletCards,
+  Wallet2Icon,
+  CheckCircle,
+  ShieldCheck,
+  CalendarClock,
+  MessageSquare,
+  WalletMinimal,
+  CalendarCheck,
+  MessageSquareText,
+  PictureInPicture2,
 } from "lucide-react";
 import { ProviderFetchDashboardStatsDataResponse } from "./interface/api/provider";
 import {
   Route,
+  RedirectTo,
   PlanListType,
   DayMapInterface,
   statsMapIntrface,
@@ -67,26 +66,26 @@ import {
   dataSelectListItemInterface,
   ProviderApprovalMessageInterface,
   gsapBigSvgYDirectionAnimationInterface,
-  RedirectTo,
 } from "./interface/commonInterface";
-
 import chatImage from '../assets/heroImages/caht.jpg';
 import gCalendar from '../assets/iconImages/gCalendar.png';
-import videoCallImage from '../assets/heroImages/videoCall.jpg';
-import calendarImage from '../assets/heroImages/calendar2.png';;
 import { OptionType } from "@/components/form/SelectField";
+import calendarImage from '../assets/heroImages/calendar2.png';
+import videoCallImage from '../assets/heroImages/videoCall.jpg';
 import bookingImage from '../assets/heroImages/heroSectionOneImg2.png';
 import { ContactItem } from "./interface/componentInterface/commonComponentInterface";
 import { AdminVerificationStatus, PlanName, Role, ServiceCategory, ServiceMode, ServiceType } from "./interface/enums";
 
+// Plan Tiers 
 export const PLAN_TIERS = ["free", "starter", "professional", "enterprise"] as const;
 
+// Block Back Statuses
 export const blockBackStatuses = [AdminVerificationStatus.REQUESTED, AdminVerificationStatus.UNDER_REVIEW, AdminVerificationStatus.RESUBMITTED] as const;
 
+// Updatable Statuses
 export const updatableStatuses = [AdminVerificationStatus.NOT_REQUESTED, AdminVerificationStatus.REJECTED] as const;
 
-
-// **** Routes for admin **** \\
+// Routes for admin
 export const adminRoutes: Route[] = [
   { path: "dashboard", name: "Dashboard", icon: Gauge },
   { path: "report", name: "Reports", icon: BookLock },
@@ -99,7 +98,7 @@ export const adminRoutes: Route[] = [
   { path: "health", name: "Health", icon: ScanHeart },
 ]
 
-// **** Routes for user **** \\
+// Routes for user
 export const userRoutes: Route[] = [
   { path: "dashboard", name: "Services", icon: Gauge },
   { path: "profile", name: "Profile", icon: User },
@@ -113,7 +112,7 @@ export const userRoutes: Route[] = [
   { path: "settings", name: "Settings", icon: Settings },
 ]
 
-// **** Routes for provider **** \\
+// Routes for provider
 export const providerRoutes: Route[] = [
   { path: "dashboard", name: "Dashboard", icon: Gauge },
   { path: "profile", name: "Profile", icon: User },
@@ -183,7 +182,7 @@ export const planAccessMap: Record<PlanName, string[]> = {
 };
 
 
-// **** Gsap animation common oject **** \\
+// Gsap animation common oject
 export const gsapBigSvgYDirectionAnimation: gsapBigSvgYDirectionAnimationInterface = {
   y: 20,
   duration: 1,
@@ -192,7 +191,7 @@ export const gsapBigSvgYDirectionAnimation: gsapBigSvgYDirectionAnimationInterfa
   ease: "sine.inOut",
 }
 
-// **** Header Navigation Array ***** \\
+// Header Navigation Array
 export const navigation: HeaderCompoenentNavsProps[] = [
   { name: 'Home', href: '/', current: true },
   { name: 'Features', href: '/#features', current: false },
@@ -202,7 +201,7 @@ export const navigation: HeaderCompoenentNavsProps[] = [
   { name: 'Contact', href: '/contact', current: false },
 ]
 
-// **** Tabs for provider profile showing in admin side and provider side **** \\
+// Tabs for provider profile showing in admin side and provider side
 export const providerTabs: { tabName: string, admin: boolean, user: boolean }[] = [
   { tabName: "Details", admin: true, user: true },
   { tabName: "Address", admin: true, user: true },
@@ -220,7 +219,7 @@ export const userTabs: { tabName: string, admin: boolean, user: boolean }[] = [
   { tabName: "Reviews", admin: true, user: true },
 ];
 
-// **** Provider service availability component day map **** \\
+// Provider service availability component day map
 export const dayMap: DayMapInterface = {
   "Sun": { day: "Sunday", tab: 0 },
   "Mon": { day: "Monday", tab: 1 },
@@ -231,7 +230,7 @@ export const dayMap: DayMapInterface = {
   "Sat": { day: "Saturday", tab: 6 }
 }
 
-// **** Not chat selected shimmer constants **** \\
+// Not chat selected shimmer constants
 export const shimmerMessages: { align: string, height: string, width: string }[] = [
   { align: "end", height: "h-10", width: "w-64" },
   { align: "start", height: "h-24", width: "w-60" },
@@ -244,7 +243,7 @@ export const shimmerMessages: { align: string, height: string, width: string }[]
   { align: "end", height: "h-24", width: "w-56" },
 ];
 
-// **** ChartHeader date selector data **** \\
+// ChartHeader date selector data
 export const dateSelectList: dataSelectListItemInterface[] = [
   { value: "7d", content: "Last 7 days" },
   { value: "14d", content: "Last 14 days" },
@@ -256,7 +255,7 @@ export const dateSelectList: dataSelectListItemInterface[] = [
 ]
 
 
-// **** Pricing Setion Data
+// Pricing Setion Data
 export const PlanList: PlanListType = [
   {
     _id: "0",
@@ -316,8 +315,7 @@ export const PlanList: PlanListType = [
   }
 ]
 
-
-//// **** Plan feature comparison table
+//// Plan feature comparison table
 export const planFeatures: PlanFeatureInterface[] = [
   {
     type: "Support",
@@ -511,7 +509,7 @@ export const planFeatures: PlanFeatureInterface[] = [
 ];
 
 
-// **** FooterBar Data
+// FooterBar Data
 export const footerColumnData: FooterColumnDataInterface[] = [
   {
     title: "Plans For your service",
@@ -551,7 +549,7 @@ export const policies: FooterLinkInterface[] = [
 export const about: string = "Simplifying appointment scheduling for individuals and professionals. Stay organized, save time, and make every slot count.";
 
 
-// **** Approval Pending Page data
+// Approval Pending Page data
 export const approvalMessages: ProviderApprovalMessageInterface = {
   heading: "Approval in Progress",
   message1: "Thank you for your patience. Your request is currently being reviewed. We will notify you as soon as the process is complete.",
@@ -560,7 +558,7 @@ export const approvalMessages: ProviderApprovalMessageInterface = {
 };
 
 
-// **** Features Section Content
+// Features Section Content
 export const featureContent: FeatureContentInterface[] = [
   {
     title: "Real-Time Slot Booking",
@@ -597,7 +595,7 @@ export const featureContent: FeatureContentInterface[] = [
 ];
 
 
-// **** Provider Dashboard Stats Cards Data
+// Provider Dashboard Stats Cards Data
 export const statsMapForProvider: Array<statsMapIntrface<ProviderFetchDashboardStatsDataResponse>> = [
   {
     title: "Total Appointments",
@@ -609,27 +607,6 @@ export const statsMapForProvider: Array<statsMapIntrface<ProviderFetchDashboardS
     title: "Today’s Appointments",
     key: "todaysAppointments",
     icon: Clock,
-    plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
-  },
-  {
-    title: "Subscription Payments",
-    key: "totalSubscriptionPaidAmount",
-    icon: Receipt,
-    price: true,
-    plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
-  },
-  {
-    title: "Total Earnings",
-    key: "totalEarnings",
-    icon: Banknote,
-    price: true,
-    plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
-  },
-  {
-    title: "Total Payouts Made",
-    key: "totalPayoutsMade",
-    icon: Wallet,
-    price: true,
     plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
   },
   {
@@ -656,12 +633,31 @@ export const statsMapForProvider: Array<statsMapIntrface<ProviderFetchDashboardS
     icon: ThumbsDown,
     plans: [PlanName.ENTERPRISE],
   },
-  {
-    title: "Today’s Earnings",
-    key: "todaysEarnings",
-    icon: TrendingUp,
+];
+
+
+
+export const revenueStatsMapForProvider= [
+   {
+    title: "Subscription Payments",
+    key: "totalSubscriptionPaidAmount",
+    icon: Receipt,
     price: true,
-    plans: [PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
+    plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
+  },
+  {
+    title: "Total Earnings",
+    key: "totalEarnings",
+    icon: Banknote,
+    price: true,
+    plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
+  },
+  {
+    title: "Total Payouts Made",
+    key: "totalPayoutsMade",
+    icon: Wallet,
+    price: true,
+    plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
   },
   {
     title: "Pending Payout",
@@ -670,10 +666,10 @@ export const statsMapForProvider: Array<statsMapIntrface<ProviderFetchDashboardS
     price: true,
     plans: [PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
   },
-];
+]
 
 
-// **** Provider Dashboard Graphs map according to plan
+// Provider Dashboard Graphs map according to plan
 export const planChartAccess: Record<string, string[]> = {
   STARTER: [
     "AppointmentsOverTime",
@@ -697,7 +693,7 @@ export const planChartAccess: Record<string, string[]> = {
 };
 
 
-// **** Provider and Admin Dashboard Graphs configs
+// Provider and Admin Dashboard Graphs configs
 export const appointmentsOverTimeChartConfig = {
   completed: {
     label: "Completed",
@@ -810,7 +806,7 @@ export const earningsOverTimeChartConfig = {
 }
 
 
-// **** Admin Dashboard Stats Cards Data
+// Admin Dashboard Stats Cards Data
 export const userStatsMapForAdmin: StatsMapForAdminInterface[] = [
   {
     title: "Total Users",
@@ -872,40 +868,41 @@ export const providerStatsMapForAdmin: StatsMapForAdminInterface[] = [
   },
 ]
 
-export const todayStatsMapForAdmin: StatsMapForAdminInterface[] = [
-  {
-    title: "New Users",
-    key: "newUsers",
-    icon: UserPlus,
-  },
-  {
-    title: "New Providers",
-    key: "newProviders",
-    icon: UserCheck,
-  },
-  {
-    title: "Today’s Revenue",
-    key: "todaysTotalRevenue",
-    icon: TrendingUp,
-    price: true,
-  },
-  {
-    title: "Today’s Payouts",
-    key: "todaysTotalPayouts",
-    icon: Wallet,
-    price: true,
-  },
-  {
-    title: "Today’s Appointments",
-    key: "todaysAppointments",
-    icon: CalendarCheck,
-  },
-  {
-    title: "Today’s Cancellations",
-    key: "todaysCancelledAppointments",
-    icon: Ban,
-  },
-]
+// export const todayStatsMapForAdmin: StatsMapForAdminInterface[] = [
+//   {
+//     title: "New Users",
+//     key: "newUsers",
+//     icon: UserPlus,
+//   },
+//   {
+//     title: "New Providers",
+//     key: "newProviders",
+//     icon: UserCheck,
+//   },
+//   {
+//     title: "Today’s Appointments",
+//     key: "todaysAppointments",
+//     icon: CalendarCheck,
+//   },
+//   {
+//     title: "Today’s Cancellations",
+//     key: "todaysCancelledAppointments",
+//     icon: Ban,
+//   },
+// ]
+
+// export const todayRevenueStatsMapForAdmin: StatsMapForAdminInterface[] = [
+//   {
+//     title: "Today’s Total Revenue",
+//     key: "todaysTotalRevenue",
+//     icon: Banknote,
+//   },
+//   {
+//     title: "Today’s Total Payouts",
+//     key: "todaysTotalPayouts",
+//     icon: Wallet,
+//   },
+// ]
 
 export const subscriptionStatsMapForAdmin: StatsMapForAdminInterface[] = [
   {
@@ -1135,7 +1132,6 @@ export const pathNames: string[] = ["/user", '/provider', '/admin'];
 
 // Admin dashboard overview tabs
 export const adminOverviewTabs: CommonTabInterface[] = [
-  { value: "today", label: "Today", icon: Activity },
   { value: "users", label: "Users", icon: Users },
   { value: "providers", label: "Providers", icon: UserCheck },
   { value: "subscriptions", label: "Subscriptions", icon: CreditCard },

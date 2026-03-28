@@ -14,7 +14,7 @@ export const adminFetchAllPlans: ApiFetchFunction<
     FetchFunctionBaseQueryParams
 > = async (queryParams) => {
     const query = buildQueryParams(queryParams);
-    const response = await axiosInstance.get(`/plans${query ? `?${query}` : ''}`);
+    const response = await axiosInstance.get(`/plans?${query}`);
     return parseNewCommonResponse<AdminFetchAllPlansResponse>(response.data.data);
 };
 

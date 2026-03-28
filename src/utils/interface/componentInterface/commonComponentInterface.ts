@@ -4,22 +4,18 @@ import {
   type UseFormRegister,
   type RegisterOptions,
 } from "react-hook-form";
-import { Role } from "../enums";
+import { PlanName, Role } from "../enums";
 import { LucideIcon } from "lucide-react";
 import { ChartConfig } from "@/components/ui/chart";
 import { Provider } from "../entityInterface/providerInterface";
 import { createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { CreateAddressFormType } from "@/utils/zod/commonZodFields";
+import { FetchServiceAvailabilityResponse } from "../api/serviceAvailability";
 import { UpdateFileDataRequest, UpdateFileDataResponse } from "../api/commonApiInterface";
 import { ApiBaseResponse, BaseChartData, ChatComponentProps, TimeRange } from "../commonInterface";
-import { AdminFetchProviderServiceResponse } from "../api/adminProviderApiInterface";
-import { UserUpdateProfileImageResponse, UserFetchProviderServiceResponse, UserUpdateProfileImageRequest, UserFetchServiceProvidersResponse } from "../api/user";
-import { ProviderFetchServiceDetailsResponse, ProviderUpdateProfileImageRequest, ProviderUpdateProfileImageResponse } from "../api/provider";
-import { FetchServiceAvailabilityResponse } from "../api/serviceAvailability";
-
-// **** Common component interfaces **** \\
-// **** Used in components / common **** \\
-// **** Used in components / chart **** \\
+import { ProviderUpdateProfileImageRequest, ProviderUpdateProfileImageResponse } from "../api/provider";
+import { UserUpdateProfileImageResponse, UserUpdateProfileImageRequest, UserFetchServiceProvidersResponse } from "../api/user";
+import { FetchProviderServiceResponse, UserFetchProviderServiceResponse } from "../api/providerService";
 
 // **** profile head compoenent props interface
 export interface ProfileHeaderComponentProps {
@@ -51,8 +47,7 @@ export interface ProviderServiceAvailabilityComponentProps {
 export interface ProviderServiceDetailsComponentProps {
   providerId?: Provider["_id"];
   fetchApiFunction: (providerId?: Provider["_id"]) => Promise<
-    AdminFetchProviderServiceResponse |
-    ProviderFetchServiceDetailsResponse |
+    FetchProviderServiceResponse |
     UserFetchProviderServiceResponse
   >;
   queryKey: string;
@@ -77,27 +72,27 @@ export interface ChartHeaderInterface {
 
 
 // **** AreaGroupChart compoenent props type
-export type AreaGroupChartProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "dataKeyThree" | "chartConfig" | "isLocked">;
+export type AreaGroupChartProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "dataKeyThree" | "chartConfig" | "isLocked" | "minimumPlan">;
 
 
 // **** BarChartHorizontal compoenent props type
-export type BarChartHorizontalProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "dataKeyThree" | "chartConfig" | "isLocked">;
+export type BarChartHorizontalProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "dataKeyThree" | "chartConfig" | "isLocked" | "minimumPlan">;
 
 
 // **** BarChartStacked compoenent props type
-export type BarChartStackedProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "dataKeyThree" | "chartConfig" | "isLocked">;
+export type BarChartStackedProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "dataKeyThree" | "chartConfig" | "isLocked" | "minimumPlan">;
 
 
 // **** BarChartVertical compoenent props type
-export type BarChartVerticalProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "chartConfig" | "isLocked">;
+export type BarChartVerticalProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "chartConfig" | "isLocked" | "minimumPlan">;
 
 
 // **** ChartLineMultiple compoenent props type
-export type ChartLineMultipleProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "chartConfig" | "isLocked">;
+export type ChartLineMultipleProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "chartConfig" | "isLocked" | "minimumPlan">;
 
 
 // **** LineChartHorizontal compoenent props type
-export type LineChartHorizontalProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "chartConfig" | "isLocked">;
+export type LineChartHorizontalProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "chartConfig" | "isLocked" | "minimumPlan">;
 
 
 // **** PieChartCompletionBreakdown compoenent props type
@@ -124,6 +119,7 @@ export interface RadialChartInterface<T extends ChartDataItem> {
   dataKeyTwo: keyof T;
   chartConfig: ChartConfig;
   isLocked: boolean;
+  minimumPlan: PlanName;
 }
 
 

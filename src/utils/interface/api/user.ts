@@ -52,7 +52,7 @@ export interface UserFetchServiceProvidersResponse {
 export type UserFetchProvidersForChatSidebarResponse = Array<Pick<Provider, "_id" | "username" | "profileImage">>;
 
 // Used as the response type of the fetchUsers api
-export type AdminfetchAllUsersResponse = Pick<User, "_id" | "username" | "email" | "isBlocked" | "isEmailVerified">;;
+export type AdminfetchAllUsersResponse = Pick<User, "_id" | "username" | "email" | "isBlocked" | "isEmailVerified">;
 
 
 // Used as the request type of the changeUserBlockStatus api

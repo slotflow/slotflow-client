@@ -48,7 +48,7 @@ export const fetchUsers: ApiFetchFunction<
     FetchFunctionBaseQueryParams
 > = async (queryParams) => {
     const query = buildQueryParams(queryParams);
-    const response = await axiosInstance.get(`/users${query ? `?${query}` : ''}`);
+    const response = await axiosInstance.get(`/users?${query}`);
     return parseNewCommonResponse<AdminfetchAllUsersResponse>(response.data.data);
 }
 

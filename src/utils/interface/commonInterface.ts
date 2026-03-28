@@ -209,6 +209,7 @@ export interface ChatComponentProps<T extends { date: string }> {
   nameKey: string;
   chartConfig: ChartConfig;
   isLocked: boolean;
+  minimumPlan: PlanName;
 }
 
 

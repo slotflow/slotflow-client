@@ -11,7 +11,7 @@ export const createReview = async (data: CreateReviewRequest): Promise<ApiBaseRe
 
 export const fetchReviews: ApiFetchFunction<FetchReviewsResponse, FetchReviewsQueryParams> = async (queryParams) => {
     const query = buildQueryParams(queryParams);
-    const response = await axiosInstance.get(`/reviews${query ? `?${query}` : ''}`);
+    const response = await axiosInstance.get(`/reviews?${query}`);
     return parseNewCommonResponse(response.data.data);
 }
 

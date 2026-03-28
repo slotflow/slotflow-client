@@ -16,7 +16,7 @@ export const fetchPayments: ApiFetchFunction<
     FetchPaymentsQueryParams
 > = async (queryParams) => {
     const query = buildQueryParams(queryParams);
-    const response = await axiosInstance.get(`/payments${query ? `?${query}` : ""}`);
+    const response = await axiosInstance.get(`/payments?${query}`);
     return parseNewCommonResponse<FetchPaymentsResponse>(response.data.data);
 };
 

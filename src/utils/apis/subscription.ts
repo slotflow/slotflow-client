@@ -11,7 +11,7 @@ export const fetchSubscriptions: ApiFetchFunction<
     FetchSubscriptionsQueryParams
 > = async (queryParams) => {
     const query = buildQueryParams(queryParams);
-    const response = await axiosInstance.get(`/subscriptions${query ? `?${query}` : ""}`);
+    const response = await axiosInstance.get(`/subscriptions?${query}`);
     return parseNewCommonResponse<FetchProviderSubscriptionsResponse>(response.data.data);
 };
 

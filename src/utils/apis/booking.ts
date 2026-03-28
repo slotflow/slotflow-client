@@ -16,7 +16,7 @@ export const fetchBookings: ApiFetchFunction<
     FetchBookingsQueryParams
 > = async (queryParams) => {
     const query = buildQueryParams(queryParams);
-    const response = await axiosInstance.get(`/bookings/${query ? `?${query}` : ''}`);
+    const response = await axiosInstance.get(`/bookings/?${query}`);
     return parseNewCommonResponse(response.data.data);
 }
 
