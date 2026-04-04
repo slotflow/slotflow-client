@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import Header from "@/components/Navs/Header";
+import Header from "@/components/navs/Header";
 import { pathNames } from "@/utils/constants";
 import { Role } from "@/utils/interface/enums";
-import FooterBar from "@/components/Navs/FooterBar";
+import FooterBar from "@/components/navs/FooterBar";
 import { AppDispatch, RootState } from "../../utils/redux/appStore";
 import { useDispatch, useSelector } from "react-redux";
 import { Bounce, ToastContainer } from "react-toastify";

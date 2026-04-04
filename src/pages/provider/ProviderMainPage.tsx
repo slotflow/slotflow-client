@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
-import Sidebar from "@/components/Navs/Sidebar";
+import Sidebar from "@/components/navs/Sidebar";
 import { RootState } from "@/utils/redux/appStore";
 import React, { Suspense, useEffect } from "react";
 import { PlanName } from "@/utils/interface/enums";
-import InfoHeader from "@/components/Navs/InfoHeader";
+import InfoHeader from "@/components/navs/InfoHeader";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import LoadingFallback from "../common/LoadingFallback";
 import avatar from '../../assets/defaultImages/avatar.png';
