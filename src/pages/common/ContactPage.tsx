@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { contactData } from "@/utils/constants";
 import { Textarea } from "@/components/ui/textarea";
-import Heading from "@/components/common/landing/Heading";
+import Heading from "@/components/landing/Heading";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
 const ContactPage = () => {

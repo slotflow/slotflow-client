@@ -1,8 +1,8 @@
 import React from 'react';
-import PlanCard from '../common/PlanCard';
+import PlanCard from '../plan/PlanCard';
 import { useQuery } from '@tanstack/react-query';
 import { providerFetchPlans } from '@/utils/apis/plan';
-import DataFetchingError from '../common/DataFetchingError';
+import DataFetchingError from '../error/DataFetchingError';
 import ProviderPlanCardShimmer from '../shimmers/ProviderPlanCardShimmer';
 
 const ShimmerCount = Array.from({ length: 3 });

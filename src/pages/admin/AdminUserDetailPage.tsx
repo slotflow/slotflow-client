@@ -4,11 +4,11 @@ import { userTabs } from '@/utils/constants';
 import ReviewsPage from '../common/ReviewsPage';
 import { fetchAddressByUserId } from '@/utils/apis/address';
 import { fetchUserProfileDetails } from '@/utils/apis/user';
-import ProfileHead from '@/components/common/profile/ProfileHead';
-import DataFetchingError from '@/components/common/DataFetchingError';
-import ProfileListing from '@/components/common/profile/ProfileListing';
-import AddressListing from '@/components/common/profile/AddressListing';
-import ProfileHorizontalTabs from '@/components/common/ProfileHorizontalTabs';
+import ProfileHead from '@/components/profile/ProfileHead';
+import DataFetchingError from '@/components/error/DataFetchingError';
+import ProfileListing from '@/components/profile/ProfileListing';
+import AddressListing from '@/components/profile/AddressListing';
+import ProfileHorizontalTabs from '@/components/profile/ProfileHorizontalTabs';
 
 const AdminUserDetailPage: React.FC = () => {
 

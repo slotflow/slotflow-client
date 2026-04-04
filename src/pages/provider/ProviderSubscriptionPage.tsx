@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { RootState } from "@/utils/redux/appStore";
 import ProviderPlanList from "@/components/provider/ProviderPlanList";
-import CommonPaymentSelection from "@/components/common/CommonPaymentSelection";
+import PaymentSelection from "@/components/payment/PaymentSelection";
 import ProviderFreeSubscription from "@/components/provider/ProviderFreeSubscription";
 import ProviderSubscriptionHistory from "@/components/provider/ProviderSubscriptionHistory";
 
@@ -26,7 +26,7 @@ const ProviderSubscriptionPage = () => {
             </div>
 
             {paymentSelectionOpen && planId && planDuration && (
-                <CommonPaymentSelection
+                <PaymentSelection
                     data={{
                         planId: planId,
                         planDuration: planDuration,

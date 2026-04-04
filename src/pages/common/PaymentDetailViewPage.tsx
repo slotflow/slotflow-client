@@ -2,8 +2,8 @@ import React from "react"
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPaymentDetails } from "@/utils/apis/payment";
-import DataFetchingError from "@/components/common/DataFetchingError";
-import InfoDisplayComponent from "@/components/common/InfoDisplayComponent";
+import DataFetchingError from "@/components/error/DataFetchingError";
+import InfoDisplayComponent from "@/components/app/InfoDisplayComponent";
 import ProfileDetailsShimmer from "@/components/shimmers/ProfileDetailsShimmer";
 
 const PaymentDetailViewPage: React.FC = () => {

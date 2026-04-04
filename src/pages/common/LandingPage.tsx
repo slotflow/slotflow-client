@@ -1,7 +1,7 @@
-import SectionOne from "@/components/common/landing/SectionOne";
-import SectionPricing from "@/components/common/landing/SectionPricing";
-import SectionReviews from "@/components/common/landing/SectionReviews";
-import SectionFeatures from "@/components/common/landing/SectionFeatures";
+import SectionOne from "@/components/landing/SectionOne";
+import SectionPricing from "@/components/landing/SectionPricing";
+import SectionReviews from "@/components/landing/SectionReviews";
+import SectionFeatures from "@/components/landing/SectionFeatures";
 
 const LandingPage = () => {
 

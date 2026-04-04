@@ -8,7 +8,7 @@ import { fetchNotifications } from "@/utils/apis/notification";
 import { toggleNotificationContainer } from "@/utils/redux/slices/appSlice";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import NotificationCardShimmer from "../shimmers/NotificationCardShimmer";
-import DataFetchingError from "../common/DataFetchingError";
+import DataFetchingError from "../error/DataFetchingError";
 
 const NotificationsContainer: React.FC = () => {
 

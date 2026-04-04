@@ -13,10 +13,10 @@ import {
 } from "@/components/ui/select";
 import React, { useState } from 'react';
 import { DateRange } from 'react-day-picker';
-import DataFilter from '@/components/common/DataFilter';
+import DataFilter from '@/components/filters/DataFilter';
 import { providerDashboardTabs } from '@/utils/constants';
-import ProviderDashboardStats from '@/components/common/dashboard/provider/ProviderDashboardStats';
-import ProviderDashboardGraphs from '@/components/common/dashboard/provider/ProviderDashboardGraphs';
+import ProviderDashboardStats from '@/components/dashboard/provider/ProviderDashboardStats';
+import ProviderDashboardGraphs from '@/components/dashboard/provider/ProviderDashboardGraphs';
 
 const ProviderDashboardPage: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState(providerDashboardTabs[0].value);

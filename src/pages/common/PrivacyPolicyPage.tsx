@@ -1,5 +1,5 @@
 import React from 'react';
-import Heading from '@/components/common/landing/Heading';
+import Heading from '@/components/landing/Heading';
 import { privacyPolicyContent } from '@/utils/constants';
 
 const PrivacyPolicyPage: React.FC = () => {

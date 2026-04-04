@@ -1,9 +1,9 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import DataFetchingError from '@/components/common/DataFetchingError';
+import DataFetchingError from '@/components/error/DataFetchingError';
 import { fetchSubscriptionDetails } from '@/utils/apis/subscription';
-import InfoDisplayComponent from '@/components/common/InfoDisplayComponent';
+import InfoDisplayComponent from '@/components/app/InfoDisplayComponent';
 import ProfileDetailsShimmer from '@/components/shimmers/ProfileDetailsShimmer';
 
 const SubscriptionDetailViewPage: React.FC = () => {

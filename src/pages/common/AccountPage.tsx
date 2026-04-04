@@ -9,12 +9,12 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { profileTabs } from '@/utils/constants';
 import { RootState } from '@/utils/redux/appStore';
-import Address from '@/components/common/profile/Address';
-import Profile from '@/components/common/profile/Profile';
+import Address from '@/components/profile/Address';
+import Profile from '@/components/profile/Profile';
 import { userUpdateProfileImage } from '@/utils/apis/user';
-import ProfileHead from '@/components/common/profile/ProfileHead';
+import ProfileHead from '@/components/profile/ProfileHead';
 import ProviderService from '@/components/provider/ProviderService';
-import DataFetchingError from '@/components/common/DataFetchingError';
+import DataFetchingError from '@/components/error/DataFetchingError';
 import { providerUpdateProfileImage } from '@/utils/apis/provider';
 import ProviderAvailability from '@/components/provider/ProviderAvailability';
 

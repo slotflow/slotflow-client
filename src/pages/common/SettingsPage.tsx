@@ -10,10 +10,10 @@ import React, { useState } from "react";
 import { settingsTabs } from "@/utils/constants";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import AccountSecurity from "@/components/common/settings/AccountSecurity";
-import IntegrationsListing from "@/components/common/settings/IntegrationsListing";
-import PersonalizationList from "@/components/common/settings/PersonalizationList";
-import NotificationSettings from "@/components/common/settings/NotificationSettings";
+import AccountSecurity from "@/components/settings/AccountSecurity";
+import IntegrationsListing from "@/components/settings/IntegrationsListing";
+import PersonalizationList from "@/components/settings/PersonalizationList";
+import NotificationSettings from "@/components/settings/NotificationSettings";
 
 const SettingsPage: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<string>("notifications");

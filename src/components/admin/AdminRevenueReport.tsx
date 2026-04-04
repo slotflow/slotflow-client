@@ -9,7 +9,7 @@ import TableShimmer from '@/components/shimmers/TableShimmer';
 import { handleExportPDF } from '@/utils/helper/pdfGenerator';
 import { OnChangeFn, PaginationState } from '@tanstack/react-table';
 import { handleExportExcel } from '@/utils/helper/excelGenerator.ts';
-import DataFetchingError from '@/components/common/DataFetchingError';
+import DataFetchingError from '@/components/error/DataFetchingError';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar as CalendarIcon, FileSpreadsheet, NotebookText, RotateCcw } from 'lucide-react';
 import { AdminRevenueTableColumn } from '@/components/table/tableColumns/AdminRevenueTableColumn';

@@ -6,7 +6,7 @@ import { RootState } from "@/utils/redux/appStore";
 import React, { useEffect, useRef, useState } from "react";
 import LoginForm from "@/components/form/CommonForms/LoginForm";
 import SignUpForm from "@/components/form/CommonForms/SignUpForm";
-import WorldMapWrapper from "@/components/common/WorldMapWrapper";
+import WorldMapWrapper from "@/components/map/WorldMapWrapper";
 import { useAuthCheckInLogin } from "@/hooks/commonHooks/useAuthCheckInLogin";
 import ResetPasswordForm from "@/components/form/CommonForms/ResetPasswordForm";
 import OtpVerificatioForm from "@/components/form/CommonForms/OtpVerificatioForm";

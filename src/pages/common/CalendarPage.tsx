@@ -8,10 +8,10 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import { CreditCard, Unplug } from "lucide-react";
 import { RootState } from "@/utils/redux/appStore";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import FeatureLocked from "@/components/common/FeatureLocked";
+import FeatureLocked from "@/components/app/FeatureLocked";
 import { fetchCalendarEvents } from "@/utils/apis/google";
 import CalendarShimmer from '@/components/shimmers/CalendarShimmer';
-import DataFetchingError from '@/components/common/DataFetchingError';
+import DataFetchingError from '@/components/error/DataFetchingError';
 
 const CalendarPage: React.FC = () => {
 

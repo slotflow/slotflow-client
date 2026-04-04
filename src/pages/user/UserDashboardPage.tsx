@@ -7,7 +7,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { setProviders } from '@/utils/redux/slices/userSlice';
 import { AppDispatch, RootState } from '@/utils/redux/appStore';
 import { toggleFilterSideBar } from '@/utils/redux/slices/appSlice';
-import DataFetchingError from '@/components/common/DataFetchingError';
+import DataFetchingError from '@/components/error/DataFetchingError';
 import UserViewProviderCard from '@/components/user/UserViewProviderCard';
 import { fetchServiceProvidersForUser } from '@/utils/apis/provider';
 

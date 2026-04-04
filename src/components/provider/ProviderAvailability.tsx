@@ -1,6 +1,6 @@
 import { Button } from "../ui/button";
 import { BetweenHorizontalStart } from "lucide-react";
-import ProviderServiceAvailability from "@/components/common/profile/ProviderServiceAvailability";
+import ProviderServiceAvailability from "@/components/profile/ProviderServiceAvailability";
 import { Role } from "@/utils/interface/enums";
 import { fetchMyServiceAvailability } from "@/utils/apis/serviceAvailability";
 

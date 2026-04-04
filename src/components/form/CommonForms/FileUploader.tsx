@@ -5,7 +5,7 @@ import { Check, Info } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import AlertBox from '@/components/common/AlertBox';
+import AlertBox from '@/components/alert/AlertBox';
 import { AppDispatch } from '@/utils/redux/appStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';

@@ -5,7 +5,7 @@ import { Separator } from '@/components/ui/separator';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from 'recharts/types/state/store';
 import stripeLogo from '../../assets/iconImages/Stripe.jpeg';
-import IntegrationCard from '@/components/common/Integrations';
+import IntegrationCard from '@/components/integrations/Integrations';
 import googleCalendar from '../../assets/iconImages/gCalendar.png';
 import { setGoogleConnect } from '@/utils/redux/slices/authSlice';
 import { handleConnectGoogle, handleStripeConnect } from '@/utils/helper/integrationHandles';

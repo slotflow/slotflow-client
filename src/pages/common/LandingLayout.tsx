@@ -10,7 +10,7 @@ import { AuthUser } from "@/utils/interface/sliceInterface";
 import { setAuthUser } from "@/utils/redux/slices/authSlice";
 import { setAuthModal } from "@/utils/redux/slices/appSlice";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import AuthSelectionModal from "@/components/common/landing/AuthSelectionModal";
+import AuthSelectionModal from "@/components/landing/AuthSelectionModal";
 import { useNotificationPermissionGate } from "@/hooks/systemHooks/useNotificationPermissionGate";
 import { connectEventSocket } from "@/utils/socket/eventSocketThunk";
 

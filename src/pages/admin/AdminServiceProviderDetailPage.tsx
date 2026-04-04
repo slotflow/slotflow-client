@@ -5,19 +5,19 @@ import ReviewsPage from "../common/ReviewsPage";
 import { providerTabs } from "@/utils/constants";
 import { fetchPayments } from "@/utils/apis/payment";
 import { fetchAddressByProviderId } from "@/utils/apis/address";
-import ProfileHead from "@/components/common/profile/ProfileHead";
-import DataFetchingError from "@/components/common/DataFetchingError";
-import AddressListing from "@/components/common/profile/AddressListing";
-import ProfileListing from "@/components/common/profile/ProfileListing";
-import ProviderProofs from "@/components/common/profile/ProviderProofs";
+import ProfileHead from "@/components/profile/ProfileHead";
+import DataFetchingError from "@/components/error/DataFetchingError";
+import AddressListing from "@/components/profile/AddressListing";
+import ProfileListing from "@/components/profile/ProfileListing";
+import ProviderProofs from "@/components/profile/ProviderProofs";
 import { adminFetchProviderService } from "@/utils/apis/providerService";
-import ProfileHorizontalTabs from "@/components/common/ProfileHorizontalTabs";
+import ProfileHorizontalTabs from "@/components/profile/ProfileHorizontalTabs";
 import AdminProviderSubscriptions from "@/components/admin/AdminProviderSubscriptions";
-import ProviderServiceDetails from "@/components/common/profile/ProviderServiceDetails";
+import ProviderServiceDetails from "@/components/profile/ProviderServiceDetails";
 import { fetchServiceAvailabilityByProviderId } from "@/utils/apis/serviceAvailability";
 import AdminUserOrProviderPayments from "@/components/admin/AdminUserOrProviderPayments";
 import { adminFetchProviderProofs, fetchProviderDetailsForAdmin } from "@/utils/apis/provider";
-import ProviderServiceAvailability from "@/components/common/profile/ProviderServiceAvailability";
+import ProviderServiceAvailability from "@/components/profile/ProviderServiceAvailability";
 
 const AdminServiceProviderDetailPage = () => {
 

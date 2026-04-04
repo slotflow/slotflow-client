@@ -10,7 +10,7 @@ import { fetchReviews } from "@/utils/apis/review";
 import ReviewCard from "@/components/review/ReviewCard";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useReviewActions } from "@/hooks/useReviewActions";
-import DataFetchingError from "@/components/common/DataFetchingError";
+import DataFetchingError from "@/components/error/DataFetchingError";
 import ConfirmDeleteAlert from "@/components/alert/ConfirmDeleteAlert";
 import { ApiPaginatedResponse } from "@/utils/interface/commonInterface";
 import ReviewCardsShimmer from "@/components/shimmers/ReviewCardsShimmer";
@@ -147,14 +147,14 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
           {reviews.map((review) => (
             <ReviewCard
               key={review._id}
-            review={review}
-            role={authUser?.role as Role}
-            handleDeleteReview={handleDeleteReview}
-            handleReportReview={handleReportReview}
-            handleChangeReviewBlockStatus={handleChangeReviewBlockStatus}
-          />
-        ))}
-      </div>
+              review={review}
+              role={authUser?.role as Role}
+              handleDeleteReview={handleDeleteReview}
+              handleReportReview={handleReportReview}
+              handleChangeReviewBlockStatus={handleChangeReviewBlockStatus}
+            />
+          ))}
+        </div>
       )}
 
       {hasNextPage && (
