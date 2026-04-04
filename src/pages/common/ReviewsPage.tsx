@@ -6,38 +6,36 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { toast } from "react-toastify";
-import {
-  ApiPaginatedResponse,
-  FetchFunctionBaseQueryParams,
-} from "@/utils/interface/commonInterface";
+import { appConfig } from "@/utils/env";
+import { useSelector } from "react-redux";
 import { Role } from "@/utils/interface/enums";
 import { Button } from "@/components/ui/button";
+import { RootState } from "@/utils/redux/appStore";
 import { ShieldCheck, ShieldX, Trash } from "lucide-react";
 import noProfile from "../../assets/defaultImages/avatar.png";
 import DataFetchingError from "@/components/common/DataFetchingError";
+import { ApiPaginatedResponse } from "@/utils/interface/commonInterface";
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { Review } from "@/utils/interface/entityInterface/reviewInterface";
-import { appConfig } from "@/utils/env";
-import { deleteReview, reportReview, toggleReviewBlockStatus } from "@/utils/apis/review";
-import { FetchReviewsQueryParams, FetchReviewsResponse, ToggleReviewBlockStatusRequest } from "@/utils/interface/api/review";
+import { deleteReview, fetchReviews, reportReview, toggleReviewBlockStatus } from "@/utils/apis/review";
+import { FetchReviewsResponse, ToggleReviewBlockStatusRequest } from "@/utils/interface/api/review";
 
 interface ReviewsPageProps {
-  role: Role;
-  fetchFunction: (
-    query: FetchFunctionBaseQueryParams & FetchReviewsQueryParams
-  ) => Promise<ApiPaginatedResponse<FetchReviewsResponse>>;
-  className: string;
+  isPage?: boolean;
+  providerId?: string;
+  userId?: string;
 }
 
-const ReviewsPage: React.FC<ReviewsPageProps> = ({
-  role,
-  fetchFunction,
-  className
+const ReviewsPage: React.FC<ReviewsPageProps> = ({ 
+  isPage, 
+  providerId,
+  userId
 }) => {
 
   const limit = 2;
 
   const queryClient = useQueryClient();
+  const { authUser } = useSelector((state: RootState) => state.auth);
 
   const {
     data,
@@ -49,7 +47,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
   } = useInfiniteQuery<ApiPaginatedResponse<FetchReviewsResponse>>({
     queryKey: ["reviews"],
     queryFn: ({ pageParam = 1, ...queryParams }) =>
-      fetchFunction({ ...queryParams, page: pageParam as number, limit }),
+      fetchReviews({ ...queryParams, page: pageParam as number, limit, providerId, userId }),
     getNextPageParam: (lastPage) => {
       if (!lastPage.currentPage || !lastPage.totalPages) return undefined;
       return lastPage.currentPage < lastPage.totalPages
@@ -182,7 +180,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
   }
 
   return (
-    <div className={`${className}`}>
+    <div className={`${isPage ? "p-4" : "mt-2 md:mt-0"}`}>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
         {reviews.map((review) => (
           <Card
@@ -205,7 +203,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
 
               <div className="flex-grow" />
 
-              {role !== Role.PROVIDER && (
+              {authUser?.role !== Role.PROVIDER && (
                 <div className="flex items-center gap-3 border-t pt-3 mt-3">
                   <img
                     src={review?.providerId?.profileImage ?? noProfile}
@@ -221,7 +219,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
                 </div>
               )}
 
-              {role !== Role.USER && (
+              {authUser?.role !== Role.USER && (
                 <div className="flex items-center gap-3 border-t pt-3 mt-3">
                   <img
                     src={review?.userId?.profileImage ?? noProfile}
@@ -237,7 +235,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
                 </div>
               )}
 
-              {role !== Role.USER && (
+              {authUser?.role !== Role.USER && (
                 <div className="grid grid-cols-2 gap-4 mt-4 border-t pt-4">
                   <div className="flex items-center">
                     {review.reported ? (
@@ -278,7 +276,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
               )}
 
               <div className="flex gap-2 mt-4">
-                {role === Role.USER && (
+                {authUser?.role === Role.USER && (
                   <Button
                     title="Delete"
                     variant="destructive"
@@ -289,7 +287,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
                     <Trash className="text-red-500" /> Delete
                   </Button>
                 )}
-                {role === Role.PROVIDER && (
+                {authUser?.role === Role.PROVIDER && (
                   <Button
                     title={review.reported ? "Unreport" : "Report"}
                     variant="default"
@@ -314,7 +312,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
                     )}
                   </Button>
                 )}
-                {role === Role.ADMIN && (
+                {authUser?.role === Role.ADMIN && (
                   <Button
                     title={review.isBlocked ? "Unblock" : "Block"}
                     variant="secondary"

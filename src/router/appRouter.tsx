@@ -3,43 +3,37 @@ import PlanGuard from "./planGuard.tsx";
 import { Role } from "@/utils/interface/enums.ts";
 import { ProtectedRoute } from "./protectedRoutes.tsx";
 import { createBrowserRouter, Outlet } from "react-router-dom";
-import BookingDetailPage from "@/pages/common/BookingDetailPage.tsx";
-import PaymentDetailViewPage from "@/pages/common/PaymentDetailViewPage.tsx";
-import SubscriptionDetailViewPage from "@/pages/common/SubscriptionDetailViewPage.tsx";
-import AdminGrafanaDashboard from "@/pages/admin/AdminGrafanaDashboard.tsx";
 
+const ChatPage = lazy(() => import("@/pages/common/ChatPage.tsx"));
 const AuthPage = lazy(() => import("@/pages/common/AuthPage.tsx"));
 const AboutPage = lazy(() => import("@/pages/common/AboutPage.tsx"));
 const ContactPage = lazy(() => import("@/pages/common/ContactPage.tsx"));
+const ReviewsPage = lazy(() => import("@/pages/common/ReviewsPage.tsx"));
 const AccountPage = lazy(() => import("@/pages/common/AccountPage.tsx"));
 const LandingPage = lazy(() => import("../pages/common/LandingPage.tsx"));
 const SettingsPage = lazy(() => import("@/pages/common/SettingsPage.tsx"));
 const Error404Page = lazy(() => import("@/pages/common/Error404Page.tsx"));
 const CalendarPage = lazy(() => import("@/pages/common/CalendarPage.tsx"));
-const VideoCallLoby = lazy(() => import("@/pages/common/VideoCallLobby.tsx"));
 const VideoCallRoom = lazy(() => import("@/pages/common/VideoCallRoom.tsx"));
-const ListBookingsPage = lazy(() => import("@/pages/common/ListBookingsPage.tsx"));
+const VideoCallLoby = lazy(() => import("@/pages/common/VideoCallLobby.tsx"));
 const LandingLayout = lazy(() => import("../pages/common/LandingLayout.tsx"));
-const IntegrationsPage = lazy(() => import("@/pages/common/IntegrationsPage.tsx"));
-const StripeConfirmPage = lazy(() => import("@/pages/common/StripeConfirmPage.tsx"));
-const PrivacyPolicyPage = lazy(() => import("@/pages/common/PrivacyPolicyPage.tsx"));
-const TermsAndConditionsPage = lazy(() => import("@/pages/common/TermsAndConditionsPage.tsx"));
 const ListPaymentsPage = lazy(() => import("@/pages/common/ListPaymentsPage.tsx"));
+const ListBookingsPage = lazy(() => import("@/pages/common/ListBookingsPage.tsx"));
+const IntegrationsPage = lazy(() => import("@/pages/common/IntegrationsPage.tsx"));
+const PrivacyPolicyPage = lazy(() => import("@/pages/common/PrivacyPolicyPage.tsx"));
+const BookingDetailPage = lazy(() => import("@/pages/common/BookingDetailPage.tsx"));
+const PaymentDetailViewPage = lazy(() => import("@/pages/common/PaymentDetailViewPage.tsx"));
+const TermsAndConditionsPage = lazy(() => import("@/pages/common/TermsAndConditionsPage.tsx"));
+const SubscriptionDetailViewPage = lazy(() => import("@/pages/common/SubscriptionDetailViewPage.tsx"));
 
 const UserMainPage = lazy(() => import("@/pages/user/UserMainPage.tsx"));
 const UserDashboardPage = lazy(() => import("@/pages/user/UserDashboardPage.tsx"));
-
-const UserChatPage = lazy(() => import("@/pages/user/UserChatPage.tsx"));
-const UserReviewPage = lazy(() => import("@/pages/user/UserReviewPage"));
 const UserServiceSelectPage = lazy(() => import("@/pages/user/UserServiceSelectPage.tsx"));
 const UserBookingConfirmPage = lazy(() => import("@/pages/user/UserBookingConfirmPage.tsx"));
 const UserServiceProviderDetailPage = lazy(() => import("@/pages/user/UserServiceProviderDetailPage.tsx"));
 
 const ProviderMainPage = lazy(() => import("@/pages/provider/ProviderMainPage.tsx"));
 const ProviderDashboardPage = lazy(() => import("@/pages/provider/ProviderDashboardPage.tsx"));
-
-const ProviderChatPage = lazy(() => import("@/pages/provider/ProviderChatPage.tsx"));
-const ProviderReviewPage = lazy(() => import("@/pages/provider/ProviderReviewPage"));
 const ProviderAddAddressPage = lazy(() => import("@/pages/provider/ProviderCreateAddressPage.tsx"));
 const ProviderSubscriptionPage = lazy(() => import("@/pages/provider/ProviderSubscriptionPage.tsx"));
 const ProviderProofSubmitionPage = lazy(() => import("@/pages/provider/ProviderProofSubmitionPage.tsx"));
@@ -48,15 +42,15 @@ const ProviderSubscriptionConfirmPage = lazy(() => import("@/pages/provider/Prov
 const ProviderCreateServiceDetailsPage = lazy(() => import("@/pages/provider/ProviderCreateServiceDetailsPage.tsx"));
 const ProviderCreateServiceAvailabilityPage = lazy(() => import("@/pages/provider/ProviderCreateServiceAvailabilityPage.tsx"));
 
-const AdminMainPage = lazy(() => import("../pages/admin/AdminMainPage.tsx"));
-const AdminDashboardPage = lazy(() => import("../pages/admin/AdminDashboardPage.tsx"));
-
 const AdminReportPage = lazy(() => import("@/pages/admin/AdminReportPage"));
+const AdminMainPage = lazy(() => import("../pages/admin/AdminMainPage.tsx"));
 const AdminPlansPage = lazy(() => import("@/pages/admin/AdminPlansPage.tsx"));
 const AdminUsersPage = lazy(() => import("@/pages/admin/AdminUsersPage.tsx"));
 const AdminServicesPage = lazy(() => import("@/pages/admin/AdminServicesPage.tsx"));
+const AdminDashboardPage = lazy(() => import("../pages/admin/AdminDashboardPage.tsx"));
 const AdminUserDetailPage = lazy(() => import("@/pages/admin/AdminUserDetailPage.tsx"));
 const AdminApiStrengthPage = lazy(() => import("@/pages/admin/AdminApiStrengthPage.tsx"));
+const AdminGrafanaDashboard = lazy(() => import("@/pages/admin/AdminGrafanaDashboard.tsx"));
 const AdminSubscriptionsPage = lazy(() => import("@/pages/admin/AdminSubscriptionsPage.tsx"));
 const AdminServiceProvidersPage = lazy(() => import("../pages/admin/AdminServiceProvidersPage.tsx"));
 const AdminServiceProviderDetailPage = lazy(() => import("@/pages/admin/AdminServiceProviderDetailPage.tsx"));
@@ -125,7 +119,7 @@ export const appRouter = createBrowserRouter([
                     { path: "payments", element: <ListPaymentsPage /> },
                     { path: "payments/:paymentId", element: <PaymentDetailViewPage /> },
                     { path: "integrations", element: <IntegrationsPage /> },
-                    { path: "chat", element: <UserChatPage /> },
+                    { path: "chat", element: <ChatPage /> },
                     { path: "video-call", element: <ListBookingsPage /> },
                     {
                         path: "video-call-lobby/:roomId",
@@ -136,7 +130,7 @@ export const appRouter = createBrowserRouter([
                         element: <VideoCallRoom />
                     },
                     { path: "calendar", element: <CalendarPage /> },
-                    { path: "reviews", element: <UserReviewPage /> },
+                    { path: "reviews", element: <ReviewsPage /> },
                     { path: "settings", element: <SettingsPage /> },
                     { path: "payment-success", element: <UserBookingConfirmPage status={true} /> },
                     { path: "payment-failed", element: <UserBookingConfirmPage status={false} /> },
@@ -172,7 +166,7 @@ export const appRouter = createBrowserRouter([
                         path: "reviews",
                         element: (
                             <PlanGuard routeName="Reviews">
-                                <ProviderReviewPage />
+                                <ReviewsPage />
                             </PlanGuard>
                         )
                     },
@@ -228,7 +222,7 @@ export const appRouter = createBrowserRouter([
                         path: "chat",
                         element: (
                             <PlanGuard routeName="Chat">
-                                <ProviderChatPage />
+                                <ChatPage />
                             </PlanGuard>
                         )
                     },
@@ -266,8 +260,6 @@ export const appRouter = createBrowserRouter([
                     },
                     { path: "payment-success", element: <ProviderSubscriptionConfirmPage status={true} /> },
                     { path: "payment-failed", element: <ProviderSubscriptionConfirmPage status={false} /> },
-                    { path: "stripe/success", element: <StripeConfirmPage status={true} /> },
-                    { path: "stripe/refresh", element: <StripeConfirmPage status={false} /> },
                     { path: "*", element: <Error404Page /> },
                 ],
             },

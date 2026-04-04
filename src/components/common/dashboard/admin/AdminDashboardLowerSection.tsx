@@ -1,8 +1,7 @@
 import React from 'react';
 import UserListCard from './lower-section/UserListCard';
-import ProviderListCard from './lower-section/ProviderListCard';
-import ServiceHealthCard from './lower-section/ServiceHealthCard';
 import PaymentListCard from './lower-section/PaymentListCard';
+import ProviderListCard from './lower-section/ProviderListCard';
 
 const AdminDashboardLowerSection: React.FC = () => {
   return (
@@ -20,9 +19,6 @@ const AdminDashboardLowerSection: React.FC = () => {
         <UserListCard />
         <ProviderListCard />
         <PaymentListCard />
-        <div className="md:col-span-2 lg:col-span-1">
-          <ServiceHealthCard />
-        </div>
       </div>
     </div>
   );

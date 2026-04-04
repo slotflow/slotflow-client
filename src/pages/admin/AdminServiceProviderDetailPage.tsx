@@ -3,23 +3,21 @@ import { useParams } from "react-router-dom";
 import { Role } from "@/utils/interface/enums";
 import ReviewsPage from "../common/ReviewsPage";
 import { providerTabs } from "@/utils/constants";
-import { fetchReviews } from "@/utils/apis/review";
 import { fetchPayments } from "@/utils/apis/payment";
+import { fetchAddressByProviderId } from "@/utils/apis/address";
 import ProfileHead from "@/components/common/profile/ProfileHead";
 import DataFetchingError from "@/components/common/DataFetchingError";
 import AddressListing from "@/components/common/profile/AddressListing";
 import ProfileListing from "@/components/common/profile/ProfileListing";
 import ProviderProofs from "@/components/common/profile/ProviderProofs";
+import { adminFetchProviderService } from "@/utils/apis/providerService";
 import ProfileHorizontalTabs from "@/components/common/ProfileHorizontalTabs";
 import AdminProviderSubscriptions from "@/components/admin/AdminProviderSubscriptions";
 import ProviderServiceDetails from "@/components/common/profile/ProviderServiceDetails";
-import AdminUserOrProviderPayments from "@/components/admin/AdminUserOrProviderPayments";
-import ProviderServiceAvailability from "@/components/common/profile/ProviderServiceAvailability";
-import { adminFetchProviderProofs } from "@/utils/apis/adminProvider";
-import { fetchProviderDetailsForAdmin } from "@/utils/apis/provider";
-import { fetchAddressByProviderId } from "@/utils/apis/address";
 import { fetchServiceAvailabilityByProviderId } from "@/utils/apis/serviceAvailability";
-import { adminFetchProviderService } from "@/utils/apis/providerService";
+import AdminUserOrProviderPayments from "@/components/admin/AdminUserOrProviderPayments";
+import { adminFetchProviderProofs, fetchProviderDetailsForAdmin } from "@/utils/apis/provider";
+import ProviderServiceAvailability from "@/components/common/profile/ProviderServiceAvailability";
 
 const AdminServiceProviderDetailPage = () => {
 
@@ -55,7 +53,7 @@ const AdminServiceProviderDetailPage = () => {
                     ) || tab === 3 && (
                         <ProviderServiceAvailability providerId={providerId} fetchApiFuntion={fetchServiceAvailabilityByProviderId} queryKey="providerServiceAvailability" role={Role.ADMIN} />
                     ) || tab === 4 && (
-                        <ReviewsPage fetchFunction={() => fetchReviews({ providerId })} role={Role.ADMIN} className="mt-2 md:mt-0" />
+                        <ReviewsPage providerId={providerId} />
                     ) || tab === 5 && (
                         <AdminProviderSubscriptions providerId={providerId} />
                     ) || tab === 6 && (
