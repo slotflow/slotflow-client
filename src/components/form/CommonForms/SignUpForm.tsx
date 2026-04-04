@@ -3,15 +3,15 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import GoogleButton from "../GoogleButton";
-import { signup } from "@/utils/apis/auth";
-import { AppDispatch } from "@/utils/redux/appStore";
+import { signup } from "@/shared/apis/auth";
+import { AppDispatch } from "@/shared/redux/appStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormButton, FormHeading } from "../FormSplits";
-import { handleGoogleLogin } from "@/utils/helper/googleLogin";
-import { SignupFormType, signupZodSchema } from "@/utils/zod/authZod";
+import { handleGoogleLogin } from "@/shared/helper/googleLogin";
+import { SignupFormType, signupZodSchema } from "@/shared/zod/authZod";
 import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
-import { RedirectTo, signUpFormProps } from "@/utils/interface/commonInterface";
-import { appConfig } from "@/utils/env";
+import { RedirectTo, signUpFormProps } from "@/shared/interface/commonInterface";
+import { appConfig } from "@/shared/config/env";
 
 const SignUpForm: React.FC<signUpFormProps> = ({ role }) => {
 

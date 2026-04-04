@@ -1,7 +1,7 @@
 import ProfileDetailsShimmer from "./ProfileDetailsShimmer";
-import { ProviderAvailabilityShimmerProps } from "@/utils/interface/componentInterface/shimmerInterface";
+import { ProviderAvailabilityShimmerProps } from "@/shared/interface/componentInterface/shimmerInterface";
 
-const ProviderAvailabilityShimmer: React.FC<ProviderAvailabilityShimmerProps> = ({ slotCount}) => {
+const ProviderAvailabilityShimmer: React.FC<ProviderAvailabilityShimmerProps> = ({ slotCount }) => {
     return (
         <div className="w-full mx-auto md:flex justify-between flex-grow space-x-1">
             <div className="w-full">

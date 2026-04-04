@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import TableHeader from '@/components/table/TableHeader';
 import CommonTable from '@/components/common/CommonTable';
-import { slideIn } from '@/utils/helper/gsapAnimationSlide';
-import { adminFetchAllPlans } from '@/utils/apis/plan';
+import { slideIn } from '@/shared/helper/gsapAnimationSlide';
+import { adminFetchAllPlans } from '@/shared/apis/plan';
 import CreatePlanForm from '@/components/form/AdminForms/CreatePlanForm';
 import { useAdminPlan } from '@/hooks/adminHooks/useAdminPlan';
-import { AdminFetchAllPlansResponse } from '@/utils/interface/api/plan';
+import { AdminFetchAllPlansResponse } from '@/shared/interface/api/plan';
 import { AdminPlansTableColumns } from '@/components/table/tableColumns/AdminPlansTableColumn';
 
 const AdminPlansPage = () => {

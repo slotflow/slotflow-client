@@ -1,15 +1,15 @@
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
-import { AdminVerificationStatus, Role } from "@/utils/interface/enums";
+import { AdminVerificationStatus, Role } from "@/shared/interface/enums";
 import { useDispatch, useSelector } from "react-redux";
 import RightSideBox from "@/components/provider/SideBox";
-import { RedirectTo } from "@/utils/interface/commonInterface";
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
+import { RedirectTo } from "@/shared/interface/commonInterface";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import AddressForm from "@/components/form/CommonForms/AddressForm";
-import { CreateAddressFormType } from "@/utils/zod/commonZodFields";
+import { CreateAddressFormType } from "@/shared/zod/commonZodFields";
 import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
-import { appConfig } from "@/utils/env";
-import { fetchMyAddress, providerCreateAddress, updateAddress } from "@/utils/apis/address";
+import { appConfig } from "@/shared/config/env";
+import { fetchMyAddress, providerCreateAddress, updateAddress } from "@/shared/apis/address";
 
 const ProviderAddAddressPage = () => {
 

@@ -2,11 +2,11 @@ import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { DateRange } from 'react-day-picker';
 import { useQuery } from '@tanstack/react-query';
-import { RootState } from '@/utils/redux/appStore';
-import { PlanName } from '@/utils/interface/enums';
+import { RootState } from '@/shared/redux/appStore';
+import { PlanName } from '@/shared/interface/enums';
 import DataFetchingError from '../error/DataFetchingError';
 import StatsCard from '@/components/dashboard/StatsCard';
-import { statsMapIntrface } from '@/utils/interface/commonInterface';
+import { statsMapIntrface } from '@/shared/interface/commonInterface';
 import DashboardStatsShimmer from '@/components/shimmers/DashboardStatsShimmer';
 
 interface DashboardStatsProps<T extends Record<string, number>> {

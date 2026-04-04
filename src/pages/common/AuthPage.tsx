@@ -1,8 +1,8 @@
 import gsap from "gsap";
 import { useSelector } from "react-redux";
-import { Role } from "@/utils/interface/enums";
+import { Role } from "@/shared/interface/enums";
 import { Meteors } from "@/components/ui/meteors";
-import { RootState } from "@/utils/redux/appStore";
+import { RootState } from "@/shared/redux/appStore";
 import React, { useEffect, useRef, useState } from "react";
 import LoginForm from "@/components/form/CommonForms/LoginForm";
 import SignUpForm from "@/components/form/CommonForms/SignUpForm";
@@ -10,7 +10,7 @@ import WorldMapWrapper from "@/components/map/WorldMapWrapper";
 import { useAuthCheckInLogin } from "@/hooks/commonHooks/useAuthCheckInLogin";
 import ResetPasswordForm from "@/components/form/CommonForms/ResetPasswordForm";
 import OtpVerificatioForm from "@/components/form/CommonForms/OtpVerificatioForm";
-import AnimatedBeamIntegrations from "@/components/common/AnimatedCircleWithBeam";
+import AnimatedBeamIntegrations from "@/components/animation/AnimatedCircleWithBeam";
 import EmailVerificationForm from "@/components/form/CommonForms/EmailVerificationForm";
 
 interface AuthPageProp {
@@ -96,18 +96,16 @@ const AuthPage: React.FC<AuthPageProp> = ({ role, formType }) => {
 
         <div
           ref={beamRef}
-          className={`absolute w-full flex h-full ${
-            active === "beam" ? "block" : "hidden"
-          }`}
+          className={`absolute w-full flex h-full ${active === "beam" ? "block" : "hidden"
+            }`}
         >
           <AnimatedBeamIntegrations />
         </div>
 
         <div
           ref={mapRef}
-          className={`absolute w-full flex h-full ${
-            active === "map" ? "block" : "hidden"
-          }`}
+          className={`absolute w-full flex h-full ${active === "map" ? "block" : "hidden"
+            }`}
         >
           <WorldMapWrapper />
         </div>

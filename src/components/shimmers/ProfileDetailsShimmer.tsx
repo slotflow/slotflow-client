@@ -1,4 +1,4 @@
-import { ProfileDetailsShimmerProps } from "@/utils/interface/componentInterface/shimmerInterface"
+import { ProfileDetailsShimmerProps } from "@/shared/interface/componentInterface/shimmerInterface"
 
 const ProfileDetailsShimmer: React.FC<ProfileDetailsShimmerProps> = ({ row, className }) => {
     return (

@@ -4,11 +4,11 @@ import { useForm } from "react-hook-form";
 import FormField from "../form/FormField";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { toggleReviewCreateForm } from "@/utils/redux/slices/userSlice";
-import { Review } from "@/utils/interface/entityInterface/reviewInterface";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
+import { toggleReviewCreateForm } from "@/shared/redux/slices/userSlice";
+import { Review } from "@/shared/interface/entityInterface/reviewInterface";
 import { useModalAnimation } from "@/hooks/systemHooks/useModalAnimation";
-import { createReview } from "@/utils/apis/review";
+import { createReview } from "@/shared/apis/review";
 
 type ReviewFormValues = Pick<Review, "reviewText" | "rating">;
 

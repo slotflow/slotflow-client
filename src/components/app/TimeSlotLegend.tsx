@@ -1,5 +1,5 @@
 import React from "react";
-import { Role } from "@/utils/interface/enums";
+import { Role } from "@/shared/interface/enums";
 import { Button } from "@/components/ui/button";
 
 export interface SlotLegendItem {
@@ -36,9 +36,9 @@ const TimeSlotLegend: React.FC<TimeSlotLegendProps> = ({
           </div>
         ))}
       </div>
-       <h3 className="font-bold text-lg">{heading}</h3>
+      <h3 className="font-bold text-lg">{heading}</h3>
       {role === Role.USER && showAdvanceNotice && (
-          <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-muted-foreground">
           Please ensure that you book the slot at least 2 hours in advance.
         </p>
       )}

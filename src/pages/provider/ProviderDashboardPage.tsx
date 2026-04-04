@@ -14,7 +14,7 @@ import {
 import React, { useState } from 'react';
 import { DateRange } from 'react-day-picker';
 import DataFilter from '@/components/filters/DataFilter';
-import { providerDashboardTabs } from '@/utils/constants';
+import { providerDashboardTabs } from '@/shared/utils/constants';
 import ProviderDashboardStats from '@/components/dashboard/provider/ProviderDashboardStats';
 import ProviderDashboardGraphs from '@/components/dashboard/provider/ProviderDashboardGraphs';
 

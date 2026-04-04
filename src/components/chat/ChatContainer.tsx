@@ -3,14 +3,14 @@ import { Ellipsis } from "lucide-react";
 import MessageInput from "./MessageInput";
 import { socket } from "@/lib/socketService";
 import { useDispatch, useSelector } from "react-redux";
-import { getMessages } from "@/utils/apis/message";
+import { getMessages } from "@/shared/apis/message";
 import React, { useEffect, useRef, useState } from "react";
 import ChatBubbleProfileImage from "./ChatBubbleProfileImage";
-import { formatTo24HourTime } from "@/utils/helper/formatter";
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { Message } from "@/utils/interface/entityInterface/message.interface";
+import { formatTo24HourTime } from "@/shared/helper/formatter";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
+import { Message } from "@/shared/interface/entityInterface/message.interface";
 import NoChatSelectedSShimmer from "@/components/shimmers/NoChatSelectedSShimmer";
-import { connectChatSocket, disconnectChatSocket } from "@/utils/socket/chatSocketThunk";
+import { connectChatSocket, disconnectChatSocket } from "@/shared/socket/chatSocketThunk";
 
 interface SocketDataInterface {
     fromUserId: Message["senderId"];

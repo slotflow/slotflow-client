@@ -7,11 +7,11 @@ import working from '../../assets/svgs/working.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import fileUpload from '../../assets/svgs/fileUpload.svg';
 import service from '../../assets/svgs/serviceDetails.svg';
-import { handleSignoutHelper } from '@/utils/helper/signout';
+import { handleSignoutHelper } from '@/shared/helper/signout';
 import availability from '../../assets/svgs/availability.svg';
-import { AppDispatch, RootState } from '@/utils/redux/appStore';
-import { pageLabels, pageDescriptions } from '@/utils/constants';
-import { SideBoxProps } from '@/utils/interface/entityInterface/providerInterface';
+import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import { pageLabels, pageDescriptions } from '@/shared/utils/constants';
+import { SideBoxProps } from '@/shared/interface/entityInterface/providerInterface';
 
 const SideBox: React.FC<SideBoxProps> = ({ props }) => {
 

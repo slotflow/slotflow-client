@@ -2,14 +2,14 @@ import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import FullCalendar from '@fullcalendar/react';
 import { useNavigate } from "react-router-dom";
-import { Role } from "@/utils/interface/enums";
+import { Role } from "@/shared/interface/enums";
 import { useQuery } from '@tanstack/react-query';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { CreditCard, Unplug } from "lucide-react";
-import { RootState } from "@/utils/redux/appStore";
+import { RootState } from "@/shared/redux/appStore";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import FeatureLocked from "@/components/app/FeatureLocked";
-import { fetchCalendarEvents } from "@/utils/apis/google";
+import { fetchCalendarEvents } from "@/shared/apis/google";
 import CalendarShimmer from '@/components/shimmers/CalendarShimmer';
 import DataFetchingError from '@/components/error/DataFetchingError';
 

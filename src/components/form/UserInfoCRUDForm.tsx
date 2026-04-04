@@ -8,11 +8,11 @@ import { PhoneInput } from "./phone-input";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
-import { userUpdateInfo } from "@/utils/apis/user";
-import { slideOut } from "@/utils/helper/gsapAnimationSlide";
-import { providerUpdateInfo } from "@/utils/apis/provider";
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { UserInfoFormType, userInfoZodSchema } from "@/utils/zod/commonZodFields";
+import { userUpdateInfo } from "@/shared/apis/user";
+import { slideOut } from "@/shared/helper/gsapAnimationSlide";
+import { providerUpdateInfo } from "@/shared/apis/provider";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
+import { UserInfoFormType, userInfoZodSchema } from "@/shared/zod/commonZodFields";
 
 interface UserInfoCRUDProps {
     onClose: () => void;

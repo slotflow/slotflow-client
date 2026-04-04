@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import TableHeader from "@/components/table/TableHeader";
 import CommonTable from "@/components/common/CommonTable";
-import { slideIn } from "@/utils/helper/gsapAnimationSlide";
-import { fetchServices } from "@/utils/apis/service";
+import { slideIn } from "@/shared/helper/gsapAnimationSlide";
+import { fetchServices } from "@/shared/apis/service";
 import CreateServiceForm from "@/components/form/AdminForms/CreateServiceForm";
 import { useAdminService } from "@/hooks/adminHooks/useAdminService";
-import { FetchServicesResponse } from "@/utils/interface/api/service";
+import { FetchServicesResponse } from "@/shared/interface/api/service";
 import { AdminAppServicesTableColumns } from "@/components/table/tableColumns/AdminAppServicesTableColumn";
 
 const AdminServicesPage = () => {

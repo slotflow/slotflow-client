@@ -2,17 +2,17 @@ import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import { CardTitle } from "@/components/ui/card";
 import avatar from '../../assets/defaultImages/avatar.png';
-import { formatNumberToPrice } from "@/utils/helper/formatter";
-import { UserViewProviderCardComponentProps } from "@/utils/interface/componentInterface/commonComponentInterface";
+import { formatNumberToPrice } from "@/shared/helper/formatter";
+import { UserViewProviderCardComponentProps } from "@/shared/interface/componentInterface/commonComponentInterface";
 
 const UserViewProviderCard: React.FC<UserViewProviderCardComponentProps> = ({
     provider, serviceDetails
 }) => {
 
     const navigate = useNavigate();
-    
+
     return (
-        <div className="w-full max-w-sm rounded-2xl shadow-sm hover:shadow-md transition-all border p-4 cursor-pointer" 
+        <div className="w-full max-w-sm rounded-2xl shadow-sm hover:shadow-md transition-all border p-4 cursor-pointer"
             onClick={(e) => {
                 e.preventDefault();
                 navigate(`/user/providerProfile/${provider?._id}`);

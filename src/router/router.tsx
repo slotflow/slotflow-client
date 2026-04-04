@@ -1,6 +1,6 @@
 import { lazy } from "react";
 import { RoleLayout } from "./RoleLayout.tsx";
-import { Role } from "@/utils/interface/enums.ts";
+import { Role } from "@/shared/interface/enums.ts";
 import { createBrowserRouter } from "react-router-dom";
 import { ProtectedRouteNew } from "./ProtectedRouteNew.tsx";
 

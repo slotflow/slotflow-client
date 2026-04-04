@@ -1,15 +1,15 @@
 import { toast } from "react-toastify";
-import { appConfig } from "@/utils/env";
+import { appConfig } from "@/shared/config/env";
 import { useEffect, useRef, useState } from "react";
 import { NavigateFunction } from "react-router-dom";
-import { AppDispatch } from "@/utils/redux/appStore";
-import { joinOrLeft } from "@/utils/apis/booking";
-import { AuthUser } from "@/utils/interface/sliceInterface";
-import { MediaTrackKind, Role } from "@/utils/interface/enums";
-import { toggleMediaTrack } from "@/utils/helper/toggleMediaTrack";
-import { connectVideoSocket } from "@/utils/socket/videoSocketThunk";
-import { JoinRoomCallbackRequest } from "@/utils/interface/api/booking";
-import { setCamera, setMic, startVideoCallTimer, updateVideoCallTimer } from "@/utils/redux/slices/videoSlice";
+import { AppDispatch } from "@/shared/redux/appStore";
+import { joinOrLeft } from "@/shared/apis/booking";
+import { AuthUser } from "@/shared/interface/sliceInterface";
+import { MediaTrackKind, Role } from "@/shared/interface/enums";
+import { toggleMediaTrack } from "@/shared/helper/toggleMediaTrack";
+import { connectVideoSocket } from "@/shared/socket/videoSocketThunk";
+import { JoinRoomCallbackRequest } from "@/shared/interface/api/booking";
+import { setCamera, setMic, startVideoCallTimer, updateVideoCallTimer } from "@/shared/redux/slices/videoSlice";
 
 interface useVideoCallLobbyInterface {
   user: AuthUser;

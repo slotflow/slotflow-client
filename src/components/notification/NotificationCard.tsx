@@ -1,6 +1,6 @@
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
-import { formateDate } from "@/utils/helper/formatter";
+import { formateDate } from "@/shared/helper/formatter";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 dayjs.extend(relativeTime)

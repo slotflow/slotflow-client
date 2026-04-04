@@ -5,7 +5,7 @@ import {
 } from "@/components/ui/card";
 import * as React from "react";
 import DateSelect from "./DateSelect";
-import { ChartHeaderInterface } from "@/utils/interface/componentInterface/commonComponentInterface";
+import { ChartHeaderInterface } from "@/shared/interface/componentInterface/commonComponentInterface";
 
 
 const ChartHeader: React.FC<ChartHeaderInterface> = ({
@@ -26,7 +26,7 @@ const ChartHeader: React.FC<ChartHeaderInterface> = ({
                 )}
             </div>
             {value && onValueChange && (
-                <DateSelect value={value} onValueChange={onValueChange}  />
+                <DateSelect value={value} onValueChange={onValueChange} />
             )}
         </CardHeader>
     )

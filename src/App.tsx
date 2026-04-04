@@ -10,8 +10,8 @@ import AosAnimation from './components/animation/AosAnimation';
 import { QueryClientProvider } from '@tanstack/react-query';
 import LoadingFallback from './pages/common/LoadingFallback';
 import { PersistGate } from "redux-persist/integration/react";
-import { appStore, persistAppStore } from './utils/redux/appStore';
-import { onMessageListener } from './utils/helper/onMessageListener';
+import { appStore, persistAppStore } from './shared/redux/appStore';
+import { onMessageListener } from './shared/helper/onMessageListener';
 
 function App() {
   useEffect(() => {

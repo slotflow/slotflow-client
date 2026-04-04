@@ -1,12 +1,12 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import DataFetchingError from '../error/DataFetchingError';
-import { ServiceMode } from '@/utils/interface/enums';
+import { ServiceMode } from '@/shared/interface/enums';
 import InfoDisplayComponent from '../app/InfoDisplayComponent';
 import ProfileDetailsShimmer from '../shimmers/ProfileDetailsShimmer';
-import { ProviderFetchServiceDetailsResponse } from '@/utils/interface/api/provider';
+import { ProviderFetchServiceDetailsResponse } from '@/shared/interface/api/provider';
 import { AdminFetchProviderServiceResponse } from '@/utils/interface/api/adminProviderApiInterface';
-import { ProviderServiceDetailsComponentProps } from '@/utils/interface/componentInterface/commonComponentInterface';
+import { ProviderServiceDetailsComponentProps } from '@/shared/interface/componentInterface/commonComponentInterface';
 
 const ProviderServiceDetails: React.FC<ProviderServiceDetailsComponentProps> = ({
     providerId,

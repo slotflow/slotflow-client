@@ -1,14 +1,14 @@
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { AppDispatch } from "@/utils/redux/appStore";
+import { AppDispatch } from "@/shared/redux/appStore";
 import { useQueryClient } from "@tanstack/react-query";
-import { AdminVerificationStatus } from "@/utils/interface/enums";
-import { setProviderRejectModal } from "@/utils/redux/slices/adminSlice";
-import { setAdminVerificationState } from "@/utils/redux/slices/authSlice";
-import { Provider } from "@/utils/interface/entityInterface/providerInterface";
-import { adminApproveProvider, adminChangeProviderBlockStatus, adminChangeProviderTrustTag, adminRejectProvider } from "@/utils/apis/provider";
-import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminRejectProviderRequest } from "@/utils/interface/api/provider";
+import { AdminVerificationStatus } from "@/shared/interface/enums";
+import { setProviderRejectModal } from "@/shared/redux/slices/adminSlice";
+import { setAdminVerificationState } from "@/shared/redux/slices/authSlice";
+import { Provider } from "@/shared/interface/entityInterface/providerInterface";
+import { adminApproveProvider, adminChangeProviderBlockStatus, adminChangeProviderTrustTag, adminRejectProvider } from "@/shared/apis/provider";
+import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminRejectProviderRequest } from "@/shared/interface/api/provider";
 
 interface UseAdminProviderReturnInterface {
   handleAdminApproveProvider: (providerId: Provider["_id"]) => void;

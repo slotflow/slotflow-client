@@ -1,20 +1,20 @@
 import { toast } from 'react-toastify';
 import { Loader, X } from 'lucide-react';
 import { useDispatch } from 'react-redux';
-import { stripeConfig } from '@/utils/env';
+import { stripeConfig } from '@/shared/config/env';
 import { useCallback, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { getEventSocket } from '@/lib/socketService';
 import paypalLogo from '../../assets/iconImages/Paypal.png';
 import stripeLogo from '../../assets/iconImages/Stripe.jpeg';
-import { bookAnAppointment } from '@/utils/apis/booking';
-import { SubscriptionValidity } from '@/utils/interface/enums';
+import { bookAnAppointment } from '@/shared/apis/booking';
+import { SubscriptionValidity } from '@/shared/interface/enums';
 import razorpayLogo from '../../assets/iconImages/Razorpay.png';
-import { EventSocketEnum } from '@/utils/interface/socket.interface';
-import { setSubscriptionUpdating } from '@/utils/redux/slices/authSlice';
-import { Provider } from '@/utils/interface/entityInterface/providerInterface';
-import { setPaymentSelectionPage, setSubscriptionIsTrailPlan, setSubscriptionPlanDuration, setSubscriptionPlanId } from '@/utils/redux/slices/providerSlice';
-import { checkoutForSubscribePlan } from '@/utils/apis/subscription';
+import { EventSocketEnum } from '@/shared/interface/socket.interface';
+import { setSubscriptionUpdating } from '@/shared/redux/slices/authSlice';
+import { Provider } from '@/shared/interface/entityInterface/providerInterface';
+import { setPaymentSelectionPage, setSubscriptionIsTrailPlan, setSubscriptionPlanDuration, setSubscriptionPlanId } from '@/shared/redux/slices/providerSlice';
+import { checkoutForSubscribePlan } from '@/shared/apis/subscription';
 
 type UserBookinAppointmentDataProps = {
     providerId: Provider["_id"]

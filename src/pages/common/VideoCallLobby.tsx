@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from "react-router-dom";
 import { Mic, MicOff, Video, VideoOff } from 'lucide-react';
-import { AppDispatch, RootState } from '@/utils/redux/appStore';
+import { AppDispatch, RootState } from '@/shared/redux/appStore';
 import { useVideoCallLobby } from "@/hooks/commonHooks/useJoinVideoCallLoby";
 
 const LobbyPage = () => {

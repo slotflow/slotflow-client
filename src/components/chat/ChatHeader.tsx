@@ -1,8 +1,8 @@
 import { X } from "lucide-react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { setLastMessage, setSelectedUser } from "@/utils/redux/slices/chatSlice";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
+import { setLastMessage, setSelectedUser } from "@/shared/redux/slices/chatSlice";
 
 const ChatHeader: React.FC = () => {
 
@@ -21,23 +21,23 @@ const ChatHeader: React.FC = () => {
             }
         }
 
-        if(lastMessage) {
+        if (lastMessage) {
             const userId = checkUserId(lastMessage?.senderId, lastMessage?.receiverId);
-            if (userId) setLastMessage({userId, message : lastMessage?.text, date :lastMessage?.createdAt});
+            if (userId) setLastMessage({ userId, message: lastMessage?.text, date: lastMessage?.createdAt });
         }
         dispatch(setSelectedUser(null));
     }
-    
-    useEffect(() => {},[selectedUser]);
 
-    
+    useEffect(() => { }, [selectedUser]);
+
+
     return (
         <div className="p-2 md:p-3 border-b border-base-300 shadow-md">
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <div className="avatar">
                         <div className="size-8 md:size-10 rounded-full relative">
-                            <img src={selectedUser?.profileImage || "/user_avatar.jpg"} alt={selectedUser?.username} className="size-8 md:size-10 rounded-full"/>
+                            <img src={selectedUser?.profileImage || "/user_avatar.jpg"} alt={selectedUser?.username} className="size-8 md:size-10 rounded-full" />
                         </div>
                     </div>
                     <div>

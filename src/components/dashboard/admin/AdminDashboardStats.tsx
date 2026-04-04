@@ -5,14 +5,14 @@ import {
     AppointmentsStatsMapForAdmin,
     subscriptionStatsMapForAdmin,
     revenueAnAndPaymentsStatsMapForAdmin,
-} from '@/utils/constants';
+} from '@/shared/utils/constants';
 import {
     adminFetchDashboardUserStatsData,
     adminFetchDashboardRevenueStatsData,
     adminFetchDashboardProviderStatsData,
     adminFetchDashboardAppointmentStatsData,
     adminFetchDashboardSubscriptionStatsData,
-} from '@/utils/apis/admin';
+} from '@/shared/apis/admin';
 import {
     Tabs,
     TabsContent,
@@ -34,7 +34,7 @@ import {
     AdminFetchDashboardAppointmentStatsDataResponse,
     AdminFetchDashboardSubscriptionStatsDataResponse,
     AdminFetchDashboardRevenueAndPaymentsStatsDataResponse,
-} from "@/utils/interface/api/adminDashboard";
+} from "@/shared/interface/api/adminDashboard";
 import DataFilter from '@/components/filters/DataFilter';
 import DashboardStats from '@/components/dashboard/DashboardStats';
 

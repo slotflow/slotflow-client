@@ -1,13 +1,13 @@
 import { useSelector } from "react-redux";
 import Sidebar from "@/components/navs/Sidebar";
-import { RootState } from "@/utils/redux/appStore";
+import { RootState } from "@/shared/redux/appStore";
 import React, { Suspense, useEffect } from "react";
-import { PlanName } from "@/utils/interface/enums";
+import { PlanName } from "@/shared/interface/enums";
 import InfoHeader from "@/components/navs/InfoHeader";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import LoadingFallback from "../common/LoadingFallback";
 import avatar from '../../assets/defaultImages/avatar.png';
-import { planAccessMap, providerRoutes } from "@/utils/constants";
+import { planAccessMap, providerRoutes } from "@/shared/utils/constants";
 
 const ProviderMainPage: React.FC = () => {
 

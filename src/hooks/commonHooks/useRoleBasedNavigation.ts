@@ -1,13 +1,13 @@
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Role } from "@/utils/interface/enums";
-import { RootState } from "@/utils/redux/appStore";
-import { validateRoomId } from "@/utils/apis/booking";
-import { ValidateRoomId } from "@/utils/interface/api/booking";
-import { Booking } from "@/utils/interface/entityInterface/bookingInterface";
-import { Payment } from "@/utils/interface/entityInterface/paymentInterface";
-import { Subscription } from "@/utils/interface/entityInterface/subscriptionInterface";
+import { Role } from "@/shared/interface/enums";
+import { RootState } from "@/shared/redux/appStore";
+import { validateRoomId } from "@/shared/apis/booking";
+import { ValidateRoomId } from "@/shared/interface/api/booking";
+import { Booking } from "@/shared/interface/entityInterface/bookingInterface";
+import { Payment } from "@/shared/interface/entityInterface/paymentInterface";
+import { Subscription } from "@/shared/interface/entityInterface/subscriptionInterface";
 
 interface useRoleBasedNavigationReturnInterface {
     handleAdminGetProviderDetailPage: (subscriptionId: Subscription["_id"]) => void;

@@ -3,14 +3,14 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
-import { updatePassword } from "@/utils/apis/auth";
+import { updatePassword } from "@/shared/apis/auth";
 import { FormButton, FormHeading } from "../FormSplits";
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { setForgotPassword } from "@/utils/redux/slices/appSlice";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
+import { setForgotPassword } from "@/shared/redux/slices/appSlice";
 import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
-import { ResetPasswordFormType, resetPasswordZodSchema } from "@/utils/zod/authZod";
-import { RedirectTo, ResetPasswordFormProps } from "@/utils/interface/commonInterface";
-import { appConfig } from "@/utils/env";
+import { ResetPasswordFormType, resetPasswordZodSchema } from "@/shared/zod/authZod";
+import { RedirectTo, ResetPasswordFormProps } from "@/shared/interface/commonInterface";
+import { appConfig } from "@/shared/config/env";
 
 const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ role }) => {
 

@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import { formatTime } from "@/utils/helper";
+import { formatTime } from "@/shared/helper/formatter";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -8,13 +8,13 @@ import React, { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
 import { FormButton, FormHeading } from "../FormSplits";
-import { updateTimer } from "@/utils/redux/slices/appSlice";
-import { resendOtp, verifyOtp } from "@/utils/apis/auth";
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { VerifyOtpFormType, verifyOtpZodSchema } from "@/utils/zod/authZod";
+import { updateTimer } from "@/shared/redux/slices/appSlice";
+import { resendOtp, verifyOtp } from "@/shared/apis/auth";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
+import { VerifyOtpFormType, verifyOtpZodSchema } from "@/shared/zod/authZod";
 import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
-import { RedirectTo, OtpVerificatioFormProps } from "@/utils/interface/commonInterface";
-import { appConfig } from "@/utils/env";
+import { RedirectTo, OtpVerificatioFormProps } from "@/shared/interface/commonInterface";
+import { appConfig } from "@/shared/config/env";
 
 const OtpVerificatioForm: React.FC<OtpVerificatioFormProps> = ({ role }) => {
 

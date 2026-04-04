@@ -1,7 +1,7 @@
 import React from 'react';
 import Heading from '@/components/landing/Heading';
 import ceoImage from '../../assets/defaultImages/ceo.jpg';
-import { aboutFeatures, aboutIntro, devWebPortfoilio } from '@/utils/constants';
+import { aboutFeatures, aboutIntro, devWebPortfoilio } from '@/shared/utils/constants';
 
 const AboutPage: React.FC = () => {
     return (

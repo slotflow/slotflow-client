@@ -1,6 +1,6 @@
 import { lazy } from "react";
 import PlanGuard from "./planGuard.tsx";
-import { Role } from "@/utils/interface/enums.ts";
+import { Role } from "@/shared/interface/enums.ts";
 import { ProtectedRoute } from "./protectedRoutes.tsx";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 

@@ -1,14 +1,14 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CommonTable from "@/components/common/CommonTable";
-import { slideIn } from "@/utils/helper/gsapAnimationSlide";
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { setProviderRejectModal } from "@/utils/redux/slices/adminSlice";
+import { slideIn } from "@/shared/helper/gsapAnimationSlide";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
+import { setProviderRejectModal } from "@/shared/redux/slices/adminSlice";
 import RejectproviderForm from "@/components/form/AdminForms/RejectproviderForm";
 import { useAdminProvider } from "@/hooks/adminHooks/useAdminProvider";
 import { AdminProvidersTableColumns } from "@/components/table/tableColumns/AdminProvidersTableColumn";
-import { fetchServiceProvidersForAdmin } from "@/utils/apis/provider";
-import { AdminFetchAllProvidersResponse } from "@/utils/interface/api/provider";
+import { fetchServiceProvidersForAdmin } from "@/shared/apis/provider";
+import { AdminFetchAllProvidersResponse } from "@/shared/interface/api/provider";
 
 const AdminServiceProvidersPage = () => {
 

@@ -5,14 +5,14 @@ import { useSelector } from "react-redux";
 import { FormButton } from "../FormSplits";
 import { SelectField } from "../SelectField";
 import { Button } from "@/components/ui/button";
-import { RootState } from "@/utils/redux/appStore";
+import { RootState } from "@/shared/redux/appStore";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { verificationOptions } from "@/utils/constants";
-import { slideOut } from "@/utils/helper/gsapAnimationSlide";
-import { handleFormError } from "@/utils/helper/formErrorCatcher";
+import { verificationOptions } from "@/shared/utils/constants";
+import { slideOut } from "@/shared/helper/gsapAnimationSlide";
+import { handleFormError } from "@/shared/helper/formErrorCatcher";
 import { useAdminProvider } from "@/hooks/adminHooks/useAdminProvider";
-import { AdminRejectProviderFormType, adminRejectProviderZodSchema } from "@/utils/zod/adminZod";
-import { appConfig } from "@/utils/env";
+import { AdminRejectProviderFormType, adminRejectProviderZodSchema } from "@/shared/zod/adminZod";
+import { appConfig } from "@/shared/config/env";
 
 interface RejectproviderFormProps {
   onClose: () => void;

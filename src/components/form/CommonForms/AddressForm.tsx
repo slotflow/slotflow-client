@@ -5,16 +5,16 @@ import { useSelector } from 'react-redux';
 import { PhoneInput } from '../phone-input';
 import { countries } from 'country-data-list';
 import { ChevronRight, Info } from 'lucide-react';
-import { RootState } from '@/utils/redux/appStore';
+import { RootState } from '@/shared/redux/appStore';
 import AlertBox from '@/components/alert/AlertBox';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from "react-hook-form";
 import { CountryDropdown } from '../../ui/country-dropdown';
 import LocationPicker from '@/components/map/LocationPicker';
-import { Location } from '@/utils/interface/entityInterface/addressInterface';
-import { CreateAddressFormType, createAddressZodSchema } from '@/utils/zod/commonZodFields';
-import { AddressFormProps } from '@/utils/interface/componentInterface/commonComponentInterface';
-import { addAddressGoogleMapLinkInfo, addAddressGoogleMapLinkInfoHeading } from '@/utils/constants';
+import { Location } from '@/shared/interface/entityInterface/addressInterface';
+import { CreateAddressFormType, createAddressZodSchema } from '@/shared/zod/commonZodFields';
+import { AddressFormProps } from '@/shared/interface/componentInterface/commonComponentInterface';
+import { addAddressGoogleMapLinkInfo, addAddressGoogleMapLinkInfoHeading } from '@/shared/utils/constants';
 
 const AddressForm: React.FC<AddressFormProps> = ({
     formClassNames,

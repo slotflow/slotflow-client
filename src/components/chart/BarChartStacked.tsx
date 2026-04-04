@@ -13,10 +13,10 @@ import {
 import ChartHeader from './ChartHeader';
 import ChartOverlay from './ChartOverlay';
 import ChartDataNotAvailable from './ChartDataNotAvailable';
-import { TimeRange } from '@/utils/interface/commonInterface';
+import { TimeRange } from '@/shared/interface/commonInterface';
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
-import { filterChartDataHelper } from '@/utils/helper/dateFilter';
-import { BarChartStackedProps } from '@/utils/interface/componentInterface/commonComponentInterface';
+import { filterChartDataHelper } from '@/shared/helper/dateFilter';
+import { BarChartStackedProps } from '@/shared/interface/componentInterface/commonComponentInterface';
 
 const BarChartStacked: React.FC<BarChartStackedProps> = ({
     title,

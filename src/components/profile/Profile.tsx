@@ -1,13 +1,13 @@
 import { useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { Edit, UserRoundPen } from "lucide-react";
-import { RootState } from "@/utils/redux/appStore";
+import { RootState } from "@/shared/redux/appStore";
 import { useEffect, useRef, useState } from "react";
-import { slideIn } from "@/utils/helper/gsapAnimationSlide";
-import { userFetchMyProfileDetails } from "@/utils/apis/user";
+import { slideIn } from "@/shared/helper/gsapAnimationSlide";
+import { userFetchMyProfileDetails } from "@/shared/apis/user";
 import UserInfoCRUDForm from "@/components/form/UserInfoCRUDForm";
 import ProfileListing from "@/components/profile/ProfileListing";
-import { providerFetchMyProfileDetails } from "@/utils/apis/provider";
+import { providerFetchMyProfileDetails } from "@/shared/apis/provider";
 
 const Profile: React.FC = () => {
 

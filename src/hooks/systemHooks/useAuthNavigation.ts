@@ -1,8 +1,8 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { Role } from "@/utils/interface/enums";
-import { basePaths, redirectPaths } from "@/utils/constants";
-import { RedirectTo } from "@/utils/interface/commonInterface";
+import { Role } from "@/shared/interface/enums";
+import { basePaths, redirectPaths } from "@/shared/utils/constants";
+import { RedirectTo } from "@/shared/interface/commonInterface";
 
 interface useAuthNavigationReturnInterface {
   goToAuthPage: (role: Role, redirectPage: RedirectTo) => void;

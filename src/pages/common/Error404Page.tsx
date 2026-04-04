@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import React, { useEffect, useRef } from 'react';
 import error404 from '../../assets/svgs/error404.svg';
-import { gsapBigSvgYDirectionAnimation } from '@/utils/constants';
+import { gsapBigSvgYDirectionAnimation } from '@/shared/utils/constants';
 
 const Error404Page: React.FC = () => {
 
@@ -20,11 +20,11 @@ const Error404Page: React.FC = () => {
         src={error404}
         className='h-40 md:h-80'
       />
-      <Button 
+      <Button
         title="Return To Home"
-      onClick={() => {
-        navigate('/')
-      }} className="mt-6 cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]" > \
+        onClick={() => {
+          navigate('/')
+        }} className="mt-6 cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]" > \
         Return To Home
       </Button>
     </div>

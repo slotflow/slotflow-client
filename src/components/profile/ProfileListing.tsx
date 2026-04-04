@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
-import { RootState } from "@/utils/redux/appStore";
+import { RootState } from "@/shared/redux/appStore";
 import DataFetchingError from "../error/DataFetchingError";
 import InfoDisplayComponent from "../app/InfoDisplayComponent";
-import { copyToClipboard } from "@/utils/helper";
+import { copyToClipboard } from "@/shared/helper/copyToClipboard";
 import ProfileDetailsShimmer from "@/components/shimmers/ProfileDetailsShimmer";
-import { AdminFetchProviderProfileDetailsResponse, ProviderFetchMyProfileDetailsResponse, UserFetchProviderProfileDetailsResponse } from "@/utils/interface/api/provider";
-import { AdminFetchUserProfileDetailsResponse, UserFetchUserProfileDetailsResponse } from "@/utils/interface/api/user";
+import { AdminFetchProviderProfileDetailsResponse, ProviderFetchMyProfileDetailsResponse, UserFetchProviderProfileDetailsResponse } from "@/shared/interface/api/provider";
+import { AdminFetchUserProfileDetailsResponse, UserFetchUserProfileDetailsResponse } from "@/shared/interface/api/user";
 
 interface UserOrProviderProfileDetailsComponentProps {
     userOrProviderId?: string;

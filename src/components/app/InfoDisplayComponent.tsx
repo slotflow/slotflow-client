@@ -1,9 +1,9 @@
 import { Copy } from "lucide-react";
-import { Role } from "@/utils/interface/enums";
-import { formateDate } from "@/utils/helper/formatter";
-import { formatBoolean, formatDuration } from "@/utils/helper";
+import { Role } from "@/shared/interface/enums";
+import { formateDate } from "@/shared/helper/formatter";
+import { formatBoolean, formatDuration } from "@/shared/helper/formatter";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { InfoDisplayComponentRowProps } from "@/utils/interface/commonInterface";
+import { InfoDisplayComponentRowProps } from "@/shared/interface/commonInterface";
 
 const InfoDisplayComponent: React.FC<InfoDisplayComponentRowProps> = ({
     defaultValue,
@@ -85,10 +85,10 @@ const InfoDisplayComponent: React.FC<InfoDisplayComponentRowProps> = ({
                 {defaultValue || value}
             </a>
         );
-    } else if(isTime){
+    } else if (isTime) {
         displayValue = formatDuration(value as number);
-    } else if(tags) {
-        displayValue = (value as string[]).map((tag: string) => tag+" ")
+    } else if (tags) {
+        displayValue = (value as string[]).map((tag: string) => tag + " ")
     } else {
         displayValue = value as string;
     };

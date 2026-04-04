@@ -1,12 +1,12 @@
-import { checkJoin } from "@/utils/helper";
+import { checkJoin } from "@/shared/helper/checkJoin";
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import { formateDate } from "@/utils/helper/formatter";
+import { formateDate } from "@/shared/helper/formatter";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
-import { AppointmentStatus, Role } from "@/utils/interface/enums";
-import { Booking } from "@/utils/interface/entityInterface/bookingInterface";
+import { AppointmentStatus, Role } from "@/shared/interface/enums";
+import { Booking } from "@/shared/interface/entityInterface/bookingInterface";
 import { Check, MoreHorizontal, NotebookPen, ReceiptText, VideoIcon, X } from "lucide-react";
-import { changeAppointmentStatusRequest, FetchBookingsResponse, ValidateRoomId } from "@/utils/interface/api/booking";
+import { changeAppointmentStatusRequest, FetchBookingsResponse, ValidateRoomId } from "@/shared/interface/api/booking";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 export const BookingsTableColumn = (

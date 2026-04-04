@@ -1,21 +1,21 @@
 import FormField from "../FormField";
 import { toast } from "react-toastify";
-import { appConfig } from "@/utils/env";
+import { appConfig } from "@/shared/config/env";
 import { useForm } from "react-hook-form";
 import GoogleButton from "../GoogleButton";
 import { useDispatch, } from "react-redux";
-import { signin } from "@/utils/apis/auth";
+import { signin } from "@/shared/apis/auth";
 import { useNavigate } from "react-router-dom";
-import { Role } from "@/utils/interface/enums";
+import { Role } from "@/shared/interface/enums";
 import { Button } from "@/components/ui/button";
-import { AppDispatch } from "@/utils/redux/appStore";
+import { AppDispatch } from "@/shared/redux/appStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormButton, FormHeading } from "../FormSplits";
-import { handleGoogleLogin } from "@/utils/helper/googleLogin";
-import { setForgotPassword } from "@/utils/redux/slices/appSlice";
-import { LoginFormType, LoginZodSchema } from '@/utils/zod/authZod';
+import { handleGoogleLogin } from "@/shared/helper/googleLogin";
+import { setForgotPassword } from "@/shared/redux/slices/appSlice";
+import { LoginFormType, LoginZodSchema } from '@/shared/zod/authZod';
 import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
-import { RedirectTo, LoginFormProps } from "@/utils/interface/commonInterface";
+import { RedirectTo, LoginFormProps } from "@/shared/interface/commonInterface";
 
 const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
 

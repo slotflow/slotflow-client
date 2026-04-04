@@ -3,7 +3,7 @@ import Heading from './Heading';
 import { motion } from "framer-motion";
 import React, { useEffect, useRef } from 'react';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { featureContent } from "@/utils/constants";
+import { featureContent } from "@/shared/utils/constants";
 
 gsap.registerPlugin(ScrollTrigger);
 

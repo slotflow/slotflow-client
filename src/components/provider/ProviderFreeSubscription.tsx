@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { X, Loader, Coins } from "lucide-react";
-import { RootState } from "@/utils/redux/appStore";
-import { PlanName, SubscriptionStatus } from "@/utils/interface/enums";
+import { RootState } from "@/shared/redux/appStore";
+import { PlanName, SubscriptionStatus } from "@/shared/interface/enums";
 import { useQueryClient } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
-import { setSubscription } from "@/utils/redux/slices/authSlice";
-import { setPaymentSelectionPage, setSubscriptionIsTrailPlan } from "@/utils/redux/slices/providerSlice";
-import { subscribeToTrialPlan } from "@/utils/apis/subscription";
+import { setSubscription } from "@/shared/redux/slices/authSlice";
+import { setPaymentSelectionPage, setSubscriptionIsTrailPlan } from "@/shared/redux/slices/providerSlice";
+import { subscribeToTrialPlan } from "@/shared/apis/subscription";
 
 const ProviderFreeSubscription = () => {
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchUsers } from '@/utils/apis/user';
+import { fetchUsers } from '@/shared/apis/user';
 import { User as UserIcon } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import DashboardDataCard from '../../DashboardDataCard';

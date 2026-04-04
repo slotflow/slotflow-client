@@ -1,11 +1,11 @@
 import { Button } from "../../ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
-import { formateDate } from "@/utils/helper/formatter";
-import { SubscriptionStatus } from "@/utils/interface/enums";
+import { formateDate } from "@/shared/helper/formatter";
+import { SubscriptionStatus } from "@/shared/interface/enums";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
-import { Subscription } from "@/utils/interface/entityInterface/subscriptionInterface";
-import { FetchProviderSubscriptionsResponse } from "@/utils/interface/api/subscription";
+import { Subscription } from "@/shared/interface/entityInterface/subscriptionInterface";
+import { FetchProviderSubscriptionsResponse } from "@/shared/interface/api/subscription";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 
 // For admin side view and provider side view of provider subscriptions

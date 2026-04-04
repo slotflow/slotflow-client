@@ -8,16 +8,16 @@ import SideBox from "@/components/provider/SideBox";
 import FormField from "@/components/form/FormField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { OptionType, SelectField } from "@/components/form/SelectField";
-import { AdminVerificationStatus, Role, ServiceCategory, ServiceMode, ServiceType } from "@/utils/interface/enums";
+import { AdminVerificationStatus, Role, ServiceCategory, ServiceMode, ServiceType } from "@/shared/interface/enums";
 import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
-import { RedirectTo } from "@/utils/interface/commonInterface";
-import { serviceCategoryOptions, serviceModeOptions, serviceTypeOptions, groupOptions } from "@/utils/constants";
-import { providerCreateServiceDetailsZodSchema, ProviderCreateServiceDetailsFormType } from "@/utils/zod/providerZod";
-import { appConfig } from "@/utils/env";
-import { fetchServicesByCategory } from "@/utils/apis/service";
-import { providerCreateServiceDetails, providerFetchServiceDetails, providerUpdateServiceDetails } from "@/utils/apis/providerService";
+import { RedirectTo } from "@/shared/interface/commonInterface";
+import { serviceCategoryOptions, serviceModeOptions, serviceTypeOptions, groupOptions } from "@/shared/utils/constants";
+import { providerCreateServiceDetailsZodSchema, ProviderCreateServiceDetailsFormType } from "@/shared/zod/providerZod";
+import { appConfig } from "@/shared/config/env";
+import { fetchServicesByCategory } from "@/shared/apis/service";
+import { providerCreateServiceDetails, providerFetchServiceDetails, providerUpdateServiceDetails } from "@/shared/apis/providerService";
 
 const ProviderCreateServiceDetailsPage: React.FC = () => {
 

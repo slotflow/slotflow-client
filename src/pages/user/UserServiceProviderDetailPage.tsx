@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import ReviewsPage from "../common/ReviewsPage";
-import { providerTabs } from "@/utils/constants";
+import { Role } from "@/shared/interface/enums";
+import { providerTabs } from "@/shared/utils/constants";
 import ProfileHead from "@/components/profile/ProfileHead";
 import DataFetchingError from "@/components/error/DataFetchingError";
 import AddressListing from "@/components/profile/AddressListing";
@@ -9,12 +10,10 @@ import ProfileListing from "@/components/profile/ProfileListing";
 import ProfileHorizontalTabs from "@/components/profile/ProfileHorizontalTabs";
 import ProviderServiceDetails from "@/components/profile/ProviderServiceDetails";
 import ProviderServiceAvailability from "@/components/profile/ProviderServiceAvailability";
-import { Role } from "@/utils/interface/enums";
-import { fetchReviews } from "@/utils/apis/review";
-import { fetchProviderDetailsForUser } from "@/utils/apis/provider";
-import { fetchAddressByProviderId } from "@/utils/apis/address";
-import { fetchServiceAvailabilityByProviderId } from "@/utils/apis/serviceAvailability";
-import { userFetchProviderService } from "@/utils/apis/providerService";
+import { fetchAddressByProviderId } from "@/shared/apis/address";
+import { fetchProviderDetailsForUser } from "@/shared/apis/provider";
+import { fetchServiceAvailabilityByProviderId } from "@/shared/apis/serviceAvailability";
+import { userFetchProviderService } from "@/shared/apis/providerService";
 
 const UserServiceProviderDetailPage = () => {
 
@@ -49,7 +48,7 @@ const UserServiceProviderDetailPage = () => {
                     ) || tab === 3 && (
                         <ProviderServiceAvailability providerId={providerId} fetchApiFuntion={fetchServiceAvailabilityByProviderId} queryKey="providerServiceAvailability" role={Role.USER} />
                     ) || tab === 4 && (
-                        <ReviewsPage fetchFunction={() => fetchReviews({ providerId })} role={Role.USER} className="mt-2 md:mt-0" />
+                        <ReviewsPage providerId={providerId} />
                     )}
                 </div>
 

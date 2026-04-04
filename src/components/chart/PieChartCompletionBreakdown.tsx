@@ -13,7 +13,7 @@ import {
 import ChartHeader from "./ChartHeader";
 import ChartOverlay from "./ChartOverlay";
 import { Pie, PieChart, Cell } from "recharts";
-import { PlanName } from "@/utils/interface/enums";
+import { PlanName } from "@/shared/interface/enums";
 import ChartDataNotAvailable from "./ChartDataNotAvailable";
 
 interface CompletionBreakdownData {

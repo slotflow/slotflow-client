@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { planAccessMap } from "@/utils/constants";
-import { RootState } from "@/utils/redux/appStore";
-import { PlanName } from "@/utils/interface/enums";
+import { planAccessMap } from "@/shared/utils/constants";
+import { RootState } from "@/shared/redux/appStore";
+import { PlanName } from "@/shared/interface/enums";
 
 interface PlanGuardProps {
   routeName: string;

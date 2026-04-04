@@ -1,7 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
-import { PaymentFor, PaymentGateway } from "@/utils/interface/enums";
-import { formateDate, formatNumberToPrice } from "@/utils/helper/formatter";
+import { PaymentFor, PaymentGateway } from "@/shared/interface/enums";
+import { formateDate, formatNumberToPrice } from "@/shared/helper/formatter";
 import { AdminFetchRevenueReportRow } from "@/utils/interface/api/adminReportApiInterface";
 
 export const AdminRevenueTableColumn = (

@@ -2,10 +2,10 @@ import { Button } from "../../ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
-import { Provider } from "@/utils/interface/entityInterface/providerInterface";
+import { Provider } from "@/shared/interface/entityInterface/providerInterface";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
-import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminFetchAllProvidersResponse } from "@/utils/interface/api/provider";
-import { AdminVerificationStatus } from "@/utils/interface/enums";
+import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminFetchAllProvidersResponse } from "@/shared/interface/api/provider";
+import { AdminVerificationStatus } from "@/shared/interface/enums";
 
 export const AdminProvidersTableColumns = (
     handleAdminApproveProvider: (providerId: Provider["_id"]) => void,
@@ -113,18 +113,18 @@ export const AdminProvidersTableColumns = (
                             <DropdownMenuItem onClick={() => handleGetProviderDetailPage(provider._id)}>
                                 Details
                             </DropdownMenuItem>
-                            {(!provider.isAdminVerified && 
-                            (provider.adminVerificationStatus === AdminVerificationStatus.REQUESTED || provider.adminVerificationStatus === AdminVerificationStatus.RESUBMITTED || provider.adminVerificationStatus === AdminVerificationStatus.UNDER_REVIEW)) && (
-                                <DropdownMenuItem onClick={() => handleAdminApproveProvider(provider._id)}>
-                                    Approve
-                                </DropdownMenuItem>
-                            )}
                             {(!provider.isAdminVerified &&
                                 (provider.adminVerificationStatus === AdminVerificationStatus.REQUESTED || provider.adminVerificationStatus === AdminVerificationStatus.RESUBMITTED || provider.adminVerificationStatus === AdminVerificationStatus.UNDER_REVIEW)) && (
-                                <DropdownMenuItem onClick={() => handleOpenProviderRejectModal(provider._id)}>
-                                    Reject
-                                </DropdownMenuItem>
-                            )}
+                                    <DropdownMenuItem onClick={() => handleAdminApproveProvider(provider._id)}>
+                                        Approve
+                                    </DropdownMenuItem>
+                                )}
+                            {(!provider.isAdminVerified &&
+                                (provider.adminVerificationStatus === AdminVerificationStatus.REQUESTED || provider.adminVerificationStatus === AdminVerificationStatus.RESUBMITTED || provider.adminVerificationStatus === AdminVerificationStatus.UNDER_REVIEW)) && (
+                                    <DropdownMenuItem onClick={() => handleOpenProviderRejectModal(provider._id)}>
+                                        Reject
+                                    </DropdownMenuItem>
+                                )}
                             <DropdownMenuItem onClick={() => hanldeAdminChangeProviderBlockStatus({ isBlocked: provider.isBlocked, providerId: provider._id })}>
                                 {provider.isBlocked ? "Unblock" : "Block"}
                             </DropdownMenuItem>

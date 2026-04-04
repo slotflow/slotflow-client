@@ -8,11 +8,11 @@ import ChartHeader from './ChartHeader';
 import ChartOverlay from './ChartOverlay';
 import { Card, CardContent } from '../ui/card';
 import ChartDataNotAvailable from './ChartDataNotAvailable';
-import { TimeRange } from '@/utils/interface/commonInterface';
+import { TimeRange } from '@/shared/interface/commonInterface';
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
-import { filterChartDataHelper } from '@/utils/helper/dateFilter';
+import { filterChartDataHelper } from '@/shared/helper/dateFilter';
 import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
-import { BarChartVerticalProps } from '@/utils/interface/componentInterface/commonComponentInterface';
+import { BarChartVerticalProps } from '@/shared/interface/componentInterface/commonComponentInterface';
 
 const BarChartVertical: React.FC<BarChartVerticalProps> = ({
   title,

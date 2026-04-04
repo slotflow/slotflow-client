@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { Loader, Pen } from "lucide-react";
-import { appConfig } from "@/utils/env";
+import { appConfig } from "@/shared/config/env";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useDispatch, useSelector } from "react-redux";
-import { AuthState } from "@/utils/interface/sliceInterface";
+import { AuthState } from "@/shared/interface/sliceInterface";
 import avatar from '../../../assets/defaultImages/avatar.png';
-import { getUploadUrl, uploadToS3 } from "@/utils/apis/s3";
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { UserUpdateProfileImageResponse } from "@/utils/interface/api/user";
-import { ProviderUpdateProfileImageResponse } from "@/utils/interface/api/provider";
-import { ProfileHeaderComponentProps } from "@/utils/interface/componentInterface/commonComponentInterface";
+import { getUploadUrl, uploadToS3 } from "@/shared/apis/s3";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
+import { UserUpdateProfileImageResponse } from "@/shared/interface/api/user";
+import { ProviderUpdateProfileImageResponse } from "@/shared/interface/api/provider";
+import { ProfileHeaderComponentProps } from "@/shared/interface/componentInterface/commonComponentInterface";
 
 const ProfileHead: React.FC<ProfileHeaderComponentProps> = ({
     updateProfileImageApiFunction,

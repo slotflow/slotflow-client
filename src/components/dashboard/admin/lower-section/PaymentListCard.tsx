@@ -2,9 +2,9 @@ import React from 'react';
 import { format } from 'date-fns';
 import { DollarSign } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-import { fetchPayments } from '@/utils/apis/payment';
+import { fetchPayments } from '@/shared/apis/payment';
 import DashboardDataCard from '../../DashboardDataCard';
-import { formatNumberToPrice } from '@/utils/helper/formatter';
+import { formatNumberToPrice } from '@/shared/helper/formatter';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 const PaymentListCard: React.FC = () => {

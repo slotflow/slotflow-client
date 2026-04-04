@@ -13,10 +13,10 @@ import {
 import ChartHeader from './ChartHeader';
 import ChartOverlay from './ChartOverlay';
 import ChartDataNotAvailable from './ChartDataNotAvailable';
-import { TimeRange } from '@/utils/interface/commonInterface';
+import { TimeRange } from '@/shared/interface/commonInterface';
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
-import { filterChartDataHelper } from '@/utils/helper/dateFilter';
-import { ChartLineMultipleProps } from '@/utils/interface/componentInterface/commonComponentInterface';
+import { filterChartDataHelper } from '@/shared/helper/dateFilter';
+import { ChartLineMultipleProps } from '@/shared/interface/componentInterface/commonComponentInterface';
 
 const ChartLineMultiple: React.FC<ChartLineMultipleProps> = ({
   title,

@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
-import { Role } from "@/utils/interface/enums";
-import { RootState } from "@/utils/redux/appStore";
-import { fetchUsersForChat } from "@/utils/apis/user";
-import { fetchProvidersForChat } from "@/utils/apis/provider";
+import { Role } from "@/shared/interface/enums";
+import { RootState } from "@/shared/redux/appStore";
+import { fetchUsersForChat } from "@/shared/apis/user";
+import { fetchProvidersForChat } from "@/shared/apis/provider";
 import ChatSidebar from "@/components/chat/ChatSideBar";
 import ChatContainer from "@/components/chat/ChatContainer";
 

@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { RootState } from "@/utils/redux/appStore";
+import { RootState } from "@/shared/redux/appStore";
 
 export const useAuthCheckInLogin = (): void => {
-    
+
   const navigate = useNavigate();
   const authUser = useSelector((state: RootState) => state.auth.authUser);
 

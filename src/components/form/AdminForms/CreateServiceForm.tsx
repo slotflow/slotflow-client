@@ -4,13 +4,13 @@ import { FormButton } from "../FormSplits";
 import { SelectField } from "../SelectField";
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { serviceCategoryOptions } from "@/utils/constants";
-import { slideOut } from "@/utils/helper/gsapAnimationSlide";
-import { handleFormError } from "@/utils/helper/formErrorCatcher";
+import { serviceCategoryOptions } from "@/shared/utils/constants";
+import { slideOut } from "@/shared/helper/gsapAnimationSlide";
+import { handleFormError } from "@/shared/helper/formErrorCatcher";
 import { useAdminService } from "@/hooks/adminHooks/useAdminService";
-import { AdminCreateServiceFormType, adminCreateServiceZodSchema } from "@/utils/zod/adminZod";
-import { ServiceCategory } from "@/utils/interface/enums";
-import { appConfig } from "@/utils/env";
+import { AdminCreateServiceFormType, adminCreateServiceZodSchema } from "@/shared/zod/adminZod";
+import { ServiceCategory } from "@/shared/interface/enums";
+import { appConfig } from "@/shared/config/env";
 
 interface CreateServiceFormProps {
   onClose: () => void;

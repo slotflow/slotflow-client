@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import { axiosInstance } from "./axios";
-import { appStore } from "@/utils/redux/appStore";
-import { setAuthUser } from "@/utils/redux/slices/authSlice";
+import { appStore } from "@/shared/redux/appStore";
+import { setAuthUser } from "@/shared/redux/slices/authSlice";
 
 export const setupAxiosInterceptors = () => {
 
@@ -12,9 +12,9 @@ export const setupAxiosInterceptors = () => {
         (error) => {
             const status = error.response?.status;
             const message = error.response?.data?.message || "Unexpected Error";
-             if (!error.response) {
+            if (!error.response) {
                 toast.error("Network error: Please check your internet.");
-                console.log("error : ",error);
+                console.log("error : ", error);
                 return Promise.reject(error);
             }
 

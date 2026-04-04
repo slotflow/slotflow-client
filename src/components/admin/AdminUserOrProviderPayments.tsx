@@ -1,8 +1,8 @@
 import CommonTable from "../common/CommonTable";
 import { useRoleBasedNavigation } from "@/hooks/commonHooks/useRoleBasedNavigation";
 import { PaymentsTableColumn } from "../table/tableColumns/PaymentsTableColumn";
-import { AdminFetchProviderPaymentsComponentProps } from "@/utils/interface/componentInterface/adminComponentInterface";
-import { FetchPaymentsQueryParams, FetchPaymentsResponse } from "@/utils/interface/api/payment";
+import { AdminFetchProviderPaymentsComponentProps } from "@/shared/interface/componentInterface/adminComponentInterface";
+import { FetchPaymentsQueryParams, FetchPaymentsResponse } from "@/shared/interface/api/payment";
 
 const AdminUserOrProviderPayments: React.FC<AdminFetchProviderPaymentsComponentProps> = ({
     providerId,

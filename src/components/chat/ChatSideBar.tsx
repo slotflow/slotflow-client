@@ -4,15 +4,15 @@ import { useQuery } from "@tanstack/react-query";
 import { Checkbox } from "@/components/ui/checkbox";
 import DataFetchingError from "../error/DataFetchingError";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { User } from "@/utils/interface/entityInterface/userInterface";
+import { User } from "@/shared/interface/entityInterface/userInterface";
 import ChatSidebarShimmer from "@/components/shimmers/ChatSidebarShimmer";
-import { Message } from "@/utils/interface/entityInterface/message.interface";
-import { Provider } from "@/utils/interface/entityInterface/providerInterface";
-import { setLastMessage, setOnlineUsers, setSelectedUser } from "@/utils/redux/slices/chatSlice";
-import { UserFetchProvidersForChatSidebarResponse } from "@/utils/interface/api/user";
-import { ProviderFetchUsersForChatSidebarResponse } from "@/utils/interface/api/provider";
+import { Message } from "@/shared/interface/entityInterface/message.interface";
+import { Provider } from "@/shared/interface/entityInterface/providerInterface";
+import { setLastMessage, setOnlineUsers, setSelectedUser } from "@/shared/redux/slices/chatSlice";
+import { UserFetchProvidersForChatSidebarResponse } from "@/shared/interface/api/user";
+import { ProviderFetchUsersForChatSidebarResponse } from "@/shared/interface/api/provider";
 
 type setLatMessageProps = Pick<Message, "senderId" | "text" | "createdAt">
 type UserProps = Pick<User, "_id" | "username" | "profileImage"> | Pick<Provider, "_id" | "username" | "profileImage">;

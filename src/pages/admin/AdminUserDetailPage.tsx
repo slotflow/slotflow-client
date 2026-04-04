@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { userTabs } from '@/utils/constants';
+import { userTabs } from '@/shared/utils/constants';
 import ReviewsPage from '../common/ReviewsPage';
-import { fetchAddressByUserId } from '@/utils/apis/address';
-import { fetchUserProfileDetails } from '@/utils/apis/user';
+import { fetchAddressByUserId } from '@/shared/apis/address';
+import { fetchUserProfileDetails } from '@/shared/apis/user';
 import ProfileHead from '@/components/profile/ProfileHead';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import ProfileListing from '@/components/profile/ProfileListing';

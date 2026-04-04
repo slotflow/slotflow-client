@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import DataFetchingError from "./DataFetchingError";
 import TableShimmer from "../shimmers/TableShimmer";
 import { OnChangeFn, PaginationState } from "@tanstack/react-table";
-import { CommonTableComponentProps, FetchFunctionBaseQueryParams } from "@/utils/interface/commonInterface";
+import { CommonTableComponentProps, FetchFunctionBaseQueryParams } from "@/shared/interface/commonInterface";
 
 const CommonTable = <
   T,

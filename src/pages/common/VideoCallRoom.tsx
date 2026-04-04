@@ -1,19 +1,19 @@
 import { toast } from "react-toastify";
-import peer from "@/utils/service/peer";
-import { formatTime } from "@/utils/helper";
+import peer from "@/shared/service/peer";
+import { formatTime } from "@/shared/helper/formatter";
 import { Button } from "@/components/ui/button";
 import { videoSocket } from "@/lib/socketService";
 import { useEffect, useState, useRef } from "react";
-import { joinOrLeft } from "@/utils/apis/booking";
+import { joinOrLeft } from "@/shared/apis/booking";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { toggleMediaTrack } from "@/utils/helper/toggleMediaTrack";
-import { disconnectVideoSocket } from "@/utils/socket/videoSocketThunk";
-import { MediaTrackKind, PeerValues, Role, VideoCallSocket } from "@/utils/interface/enums";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
+import { toggleMediaTrack } from "@/shared/helper/toggleMediaTrack";
+import { disconnectVideoSocket } from "@/shared/socket/videoSocketThunk";
+import { MediaTrackKind, PeerValues, Role, VideoCallSocket } from "@/shared/interface/enums";
 import { Mic, MicOff, Video, VideoOff, PhoneOff, Loader } from "lucide-react";
-import { JoinRoomCallbackRequest } from "@/utils/interface/api/booking";
-import { setCamera, setMic, stopVideoCallTimer, updateVideoCallTimer } from "@/utils/redux/slices/videoSlice";
+import { JoinRoomCallbackRequest } from "@/shared/interface/api/booking";
+import { setCamera, setMic, stopVideoCallTimer, updateVideoCallTimer } from "@/shared/redux/slices/videoSlice";
 
 const RoomPage = () => {
 

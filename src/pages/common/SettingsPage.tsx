@@ -7,7 +7,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import React, { useState } from "react";
-import { settingsTabs } from "@/utils/constants";
+import { settingsTabs } from "@/shared/utils/constants";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import AccountSecurity from "@/components/settings/AccountSecurity";

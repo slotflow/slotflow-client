@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
-import { ServiceCategory } from "@/utils/interface/enums";
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { pushServiceCategory } from "@/utils/redux/slices/userSlice";
+import { ServiceCategory } from "@/shared/interface/enums";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
+import { pushServiceCategory } from "@/shared/redux/slices/userSlice";
 
 const UserServiceSelectPage = () => {
 
@@ -50,7 +50,7 @@ const UserServiceSelectPage = () => {
                         return (
                             <div
                                 key={category}
-                             className={`p-3 rounded-md border cursor-pointer text-center ${isSelected
+                                className={`p-3 rounded-md border cursor-pointer text-center ${isSelected
                                     ? "border-[var(--mainColor)]"
                                     : "border-gray-300"
                                     }`}

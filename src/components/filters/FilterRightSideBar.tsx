@@ -6,16 +6,16 @@ import React, { useEffect, useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import LocationPicker from "../map/LocationPicker";
 import { useDispatch, useSelector } from "react-redux";
-import { ServiceCategory } from "@/utils/interface/enums";
+import { ServiceCategory } from "@/shared/interface/enums";
 import FilterCompHeader from "../filters/FilterCompHeader";
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { toggleFilterSideBar } from "@/utils/redux/slices/appSlice";
-import { setProviderCardsFilter } from "@/utils/redux/slices/userSlice";
-import { ProviderCardsFilters } from "@/utils/interface/commonInterface";
-import { Location } from "@/utils/interface/entityInterface/addressInterface";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
+import { toggleFilterSideBar } from "@/shared/redux/slices/appSlice";
+import { setProviderCardsFilter } from "@/shared/redux/slices/userSlice";
+import { ProviderCardsFilters } from "@/shared/interface/commonInterface";
+import { Location } from "@/shared/interface/entityInterface/addressInterface";
 import { BookCheck, ChartBarStacked, IndianRupee, Locate, SlidersHorizontal } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { fetchServicesByCategory } from "@/utils/apis/service";
+import { fetchServicesByCategory } from "@/shared/apis/service";
 
 
 const FilterRightSideBar: React.FC = () => {

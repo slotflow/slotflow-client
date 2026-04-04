@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
-import { RootState } from "@/utils/redux/appStore";
+import { RootState } from "@/shared/redux/appStore";
 import ProviderPlanList from "@/components/provider/ProviderPlanList";
 import PaymentSelection from "@/components/payment/PaymentSelection";
 import ProviderFreeSubscription from "@/components/provider/ProviderFreeSubscription";

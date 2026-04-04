@@ -4,8 +4,8 @@ import { Bell, PanelLeft } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import avatar from '../../assets/defaultImages/avatar.png';
-import { AppDispatch, RootState } from '@/utils/redux/appStore';
-import { toggleNotificationContainer, toggleSidebar } from '@/utils/redux/slices/appSlice';
+import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import { toggleNotificationContainer, toggleSidebar } from '@/shared/redux/slices/appSlice';
 
 interface InfoHeaderProps {
     profileImage?: string;

@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { Role } from "@/utils/interface/enums";
-import { RootState } from "@/utils/redux/appStore";
+import { Role } from "@/shared/interface/enums";
+import { RootState } from "@/shared/redux/appStore";
 import UserMainPage from "@/pages/user/UserMainPage";
 import AdminMainPage from "@/pages/admin/AdminMainPage";
 import ProviderMainPage from "@/pages/provider/ProviderMainPage";

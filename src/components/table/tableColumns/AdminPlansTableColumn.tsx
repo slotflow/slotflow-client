@@ -1,9 +1,9 @@
 import { Button } from "../../ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { Check, MoreHorizontal, X } from "lucide-react";
-import { formatNumberToPrice } from "@/utils/helper/formatter";
+import { formatNumberToPrice } from "@/shared/helper/formatter";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
-import { ChangePlanBlockStatusRequest, AdminFetchAllPlansResponse } from "@/utils/interface/api/plan";
+import { ChangePlanBlockStatusRequest, AdminFetchAllPlansResponse } from "@/shared/interface/api/plan";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 
 export const AdminPlansTableColumns = (

@@ -5,12 +5,12 @@ import { Button } from "@/components/ui/button";
 import SideBox from "@/components/provider/SideBox";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, CardContent } from "@/components/ui/card";
-import { RedirectTo } from "@/utils/interface/commonInterface";
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { AdminVerificationStatus, Role } from "@/utils/interface/enums";
-import { providerSubmitDetailsForReview } from "@/utils/apis/provider";
+import { RedirectTo } from "@/shared/interface/commonInterface";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
+import { AdminVerificationStatus, Role } from "@/shared/interface/enums";
+import { providerSubmitDetailsForReview } from "@/shared/apis/provider";
 import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
-import { blockBackStatuses, verificationStatusTextMap } from "@/utils/constants";
+import { blockBackStatuses, verificationStatusTextMap } from "@/shared/utils/constants";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 const ProviderApprovalPendingPage = () => {

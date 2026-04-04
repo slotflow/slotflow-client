@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { userRoutes } from "@/utils/constants";
+import { userRoutes } from "@/shared/utils/constants";
 import Sidebar from "@/components/navs/Sidebar";
 import InfoHeader from "@/components/navs/InfoHeader";
 import ReviewForm from "@/components/user/ReviewForm";
@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { Outlet, useLocation } from "react-router-dom";
 import LoadingFallback from "../common/LoadingFallback";
 import avatar from '../../assets/defaultImages/avatar.png';
-import { RootState } from "@/utils/redux/appStore";
+import { RootState } from "@/shared/redux/appStore";
 import FilterRightSideBar from "@/components/navs/FilterRightSideBar";
 import NotificationsContainer from "@/components/notification/NotificationsContainer";
 

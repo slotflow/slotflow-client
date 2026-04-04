@@ -8,11 +8,11 @@ import { SingleTab } from './SingleTab';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logos/logo-transparent.png';
-import { AuthUser } from '@/utils/interface/sliceInterface';
-import { toggleTheme } from '@/utils/redux/slices/appSlice';
-import { handleSignoutHelper } from '@/utils/helper/signout';
-import { AppDispatch, RootState } from '@/utils/redux/appStore';
-import { SideBarProps } from '@/utils/interface/commonInterface';
+import { AuthUser } from '@/shared/interface/sliceInterface';
+import { toggleTheme } from '@/shared/redux/slices/appSlice';
+import { handleSignoutHelper } from '@/shared/helper/signout';
+import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import { SideBarProps } from '@/shared/interface/commonInterface';
 
 const Sidebar: React.FC<SideBarProps> = ({
     routes,

@@ -4,12 +4,12 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useDispatch, useSelector } from 'react-redux';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { setProviders } from '@/utils/redux/slices/userSlice';
-import { AppDispatch, RootState } from '@/utils/redux/appStore';
-import { toggleFilterSideBar } from '@/utils/redux/slices/appSlice';
+import { setProviders } from '@/shared/redux/slices/userSlice';
+import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import { toggleFilterSideBar } from '@/shared/redux/slices/appSlice';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import UserViewProviderCard from '@/components/user/UserViewProviderCard';
-import { fetchServiceProvidersForUser } from '@/utils/apis/provider';
+import { fetchServiceProvidersForUser } from '@/shared/apis/provider';
 
 const UserDashboardPage = () => {
 

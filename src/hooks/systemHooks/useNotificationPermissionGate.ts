@@ -1,14 +1,14 @@
-import { RootState } from "@/utils/redux/appStore";
-import { getFcmToken } from "@/utils/helper/getToken";
+import { RootState } from "@/shared/redux/appStore";
+import { getFcmToken } from "@/shared/helper/getToken";
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useMemo } from "react";
-import { getDeviceId } from "@/utils/helper/getDeviceId";
-import { registerDevice } from "@/utils/apis/notification";
-import { userSetPushNotification } from "@/utils/apis/user";
-import { providerSetPushNotification } from "@/utils/apis/provider";
-import { PermissionStatus, Platform, Role } from "@/utils/interface/enums";
-import { updateNotificationPreference } from "@/utils/redux/slices/authSlice";
-import { requestNotificationPermission } from "@/utils/helper/requestNotificationPermission";
+import { getDeviceId } from "@/shared/helper/getDeviceId";
+import { registerDevice } from "@/shared/apis/notification";
+import { userSetPushNotification } from "@/shared/apis/user";
+import { providerSetPushNotification } from "@/shared/apis/provider";
+import { PermissionStatus, Platform, Role } from "@/shared/interface/enums";
+import { updateNotificationPreference } from "@/shared/redux/slices/authSlice";
+import { requestNotificationPermission } from "@/shared/helper/requestNotificationPermission";
 
 interface useNotificationPermissionGateInterface {
   askPermission: () => Promise<void>

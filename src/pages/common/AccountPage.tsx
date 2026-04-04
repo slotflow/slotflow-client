@@ -7,15 +7,15 @@ import {
 } from '@/components/ui/select';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { profileTabs } from '@/utils/constants';
-import { RootState } from '@/utils/redux/appStore';
+import { profileTabs } from '@/shared/utils/constants';
+import { RootState } from '@/shared/redux/appStore';
 import Address from '@/components/profile/Address';
 import Profile from '@/components/profile/Profile';
-import { userUpdateProfileImage } from '@/utils/apis/user';
+import { userUpdateProfileImage } from '@/shared/apis/user';
 import ProfileHead from '@/components/profile/ProfileHead';
 import ProviderService from '@/components/provider/ProviderService';
 import DataFetchingError from '@/components/error/DataFetchingError';
-import { providerUpdateProfileImage } from '@/utils/apis/provider';
+import { providerUpdateProfileImage } from '@/shared/apis/provider';
 import ProviderAvailability from '@/components/provider/ProviderAvailability';
 
 const AccountPage: React.FC = () => {

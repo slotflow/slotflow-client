@@ -1,12 +1,12 @@
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/utils/redux/appStore";
+import { AppDispatch } from "@/shared/redux/appStore";
 import { useQueryClient } from "@tanstack/react-query";
-import { createReview } from "@/utils/apis/review";
-import { cancelBooking } from "@/utils/apis/booking";
-import { toggleReviewCreateForm } from "@/utils/redux/slices/userSlice";
-import { Booking } from "@/utils/interface/entityInterface/bookingInterface";
-import { CreateReviewRequest } from "@/utils/interface/api/review";
+import { createReview } from "@/shared/apis/review";
+import { cancelBooking } from "@/shared/apis/booking";
+import { toggleReviewCreateForm } from "@/shared/redux/slices/userSlice";
+import { Booking } from "@/shared/interface/entityInterface/bookingInterface";
+import { CreateReviewRequest } from "@/shared/interface/api/review";
 
 interface UseUserBookingActionsCustomHookReturnType {
     handleUserCancelBooking: (bookingId: Booking["_id"]) => void;

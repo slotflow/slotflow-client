@@ -1,9 +1,9 @@
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { adminRoutes } from "@/utils/constants";
+import { adminRoutes } from "@/shared/utils/constants";
 import Sidebar from "@/components/navs/Sidebar";
-import { RootState } from "@/utils/redux/appStore";
+import { RootState } from "@/shared/redux/appStore";
 import InfoHeader from "@/components/navs/InfoHeader";
 import LoadingFallback from "../common/LoadingFallback";
 import avatar from '../../assets/defaultImages/avatar.png';

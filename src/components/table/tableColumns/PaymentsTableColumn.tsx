@@ -1,11 +1,11 @@
 import { MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import { PaymentFor } from "@/utils/interface/enums";
+import { PaymentFor } from "@/shared/interface/enums";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
-import { formateDate, formatNumberToPrice } from "@/utils/helper/formatter";
-import { Payment } from "@/utils/interface/entityInterface/paymentInterface";
-import { FetchPaymentsResponse } from "@/utils/interface/api/payment";
+import { formateDate, formatNumberToPrice } from "@/shared/helper/formatter";
+import { Payment } from "@/shared/interface/entityInterface/paymentInterface";
+import { FetchPaymentsResponse } from "@/shared/interface/api/payment";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 // for admin side, provider side and user side view of payments table

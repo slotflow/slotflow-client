@@ -1,10 +1,10 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/utils/redux/appStore';
+import { RootState } from '@/shared/redux/appStore';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
-import { formatNumberToPrice } from '@/utils/helper/formatter';
+import { formatNumberToPrice } from '@/shared/helper/formatter';
 import { Activity, LockIcon, LucideIcon, TrendingUp } from 'lucide-react';
 
 interface DashboardCardOneProps {
@@ -16,11 +16,11 @@ interface DashboardCardOneProps {
   trend?: string;
 }
 
-const StatsCard: React.FC<DashboardCardOneProps> = ({ 
-  title, 
-  value, 
-  icon: Icon, 
-  price, 
+const StatsCard: React.FC<DashboardCardOneProps> = ({
+  title,
+  value,
+  icon: Icon,
+  price,
   isShow = true,
   trend = "+12% from last month"
 }) => {
@@ -52,7 +52,7 @@ const StatsCard: React.FC<DashboardCardOneProps> = ({
                   {title}
                 </span>
               </div>
-              
+
               <div className="space-y-1">
                 <h3 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
                   {price ? formatNumberToPrice(value ?? 0) : value?.toLocaleString() ?? 0}
@@ -73,7 +73,7 @@ const StatsCard: React.FC<DashboardCardOneProps> = ({
 
             {/* Decorative background element */}
             <div className="absolute -right-4 -bottom-4 opacity-[0.03] dark:opacity-[0.05] pointer-events-none transform rotate-12">
-               {Icon ? <Icon size={120} /> : <Activity size={120} />}
+              {Icon ? <Icon size={120} /> : <Activity size={120} />}
             </div>
           </div>
         </CardContent>
@@ -81,7 +81,7 @@ const StatsCard: React.FC<DashboardCardOneProps> = ({
         {/* Lock Overlay for No Access */}
         <AnimatePresence>
           {!isShow && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}

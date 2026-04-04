@@ -11,7 +11,7 @@ import ChartHeader from './ChartHeader';
 import ChartOverlay from "./ChartOverlay";
 import ChartDataNotAvailable from "./ChartDataNotAvailable";
 import { LabelList, RadialBar, RadialBarChart } from "recharts";
-import { ChartDataItem, RadialChartInterface } from "@/utils/interface/componentInterface/commonComponentInterface";
+import { ChartDataItem, RadialChartInterface } from "@/shared/interface/componentInterface/commonComponentInterface";
 
 const RadialChart = <T extends ChartDataItem>({
   title,

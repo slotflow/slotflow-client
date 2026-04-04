@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import DataFetchingError from '@/components/error/DataFetchingError';
-import { fetchSubscriptionDetails } from '@/utils/apis/subscription';
+import { fetchSubscriptionDetails } from '@/shared/apis/subscription';
 import InfoDisplayComponent from '@/components/app/InfoDisplayComponent';
 import ProfileDetailsShimmer from '@/components/shimmers/ProfileDetailsShimmer';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { shimmerMessages } from '@/utils/constants';
+import { shimmerMessages } from '@/shared/utils/constants';
 
 interface NoChatSelectedSShimmerProps {
     className: string;

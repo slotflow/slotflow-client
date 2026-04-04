@@ -1,11 +1,11 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { formatDateWithTime } from '@/utils/helper/formatter';
-import { fetchBookingDetails } from '@/utils/apis/booking';
+import { formatDateWithTime } from '@/shared/helper/formatter';
+import { fetchBookingDetails } from '@/shared/apis/booking';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import InfoDisplayComponent from '@/components/app/InfoDisplayComponent';
-import { Booking } from '@/utils/interface/entityInterface/bookingInterface';
+import { Booking } from '@/shared/interface/entityInterface/bookingInterface';
 import ProfileDetailsShimmer from '@/components/shimmers/ProfileDetailsShimmer';
 
 const BookingDetailPage: React.FC = () => {

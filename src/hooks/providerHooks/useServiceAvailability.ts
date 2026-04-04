@@ -1,30 +1,30 @@
 import { useCallback } from "react";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { ServiceMode } from "@/utils/interface/enums";
+import { ServiceMode } from "@/shared/interface/enums";
 import { addMinutes, format, isBefore, isEqual } from "date-fns";
 import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
-import { addAvailability } from "@/utils/redux/slices/providerSlice";
+import { addAvailability } from "@/shared/redux/slices/providerSlice";
 
 interface UseAddAvailabilityInterface {
     getValues: UseFormGetValues<{
-    day: string;
-    duration: number;
-    startTime: Date;
-    endTime: Date;
-    modes: string[];
-    selectedTimeSlots: string[];
-    timeSlots: string[];
-}>,
+        day: string;
+        duration: number;
+        startTime: Date;
+        endTime: Date;
+        modes: string[];
+        selectedTimeSlots: string[];
+        timeSlots: string[];
+    }>,
     setValue: UseFormSetValue<{
-    selectedTimeSlots: string[];
-    day: string;
-    duration: number;
-    startTime: Date;
-    endTime: Date;
-    modes: string[];
-    timeSlots: string[];
-}>,
+        selectedTimeSlots: string[];
+        day: string;
+        duration: number;
+        startTime: Date;
+        endTime: Date;
+        modes: string[];
+        timeSlots: string[];
+    }>,
 }
 
 interface UseAddAvailabilityReturnInterface {

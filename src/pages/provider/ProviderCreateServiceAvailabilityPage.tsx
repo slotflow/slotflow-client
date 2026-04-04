@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify';
-import { Role, ServiceMode } from '@/utils/interface/enums';
+import { Role, ServiceMode } from '@/shared/interface/enums';
 import { Button } from '@/components/ui/button';
 import SideBox from '@/components/provider/SideBox';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -10,14 +10,14 @@ import { TimePicker } from '@/components/ui/TimePicker';
 import { Check, ChevronRight, Goal } from 'lucide-react';
 import { SelectField } from '@/components/form/SelectField';
 import React, { useEffect, FormEvent, useMemo } from 'react';
-import { AppDispatch, RootState } from '@/utils/redux/appStore';
-import { RedirectTo } from '@/utils/interface/commonInterface';
+import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import { RedirectTo } from '@/shared/interface/commonInterface';
 import { useAuthNavigation } from '@/hooks/systemHooks/useAuthNavigation';
 import { useAddAvailability } from '@/hooks/providerHooks/useServiceAvailability';
-import { daysOfWeekOptions, serviceDurationsOptions, updatableStatuses } from '@/utils/constants';
-import { ProviderServiceAvailabilityFormType, providerServiceAvailabilityZodSchema } from '@/utils/zod/providerZod';
-import { appConfig } from '@/utils/env';
-import { createServiceAvailabilities } from '@/utils/apis/serviceAvailability';
+import { daysOfWeekOptions, serviceDurationsOptions, updatableStatuses } from '@/shared/utils/constants';
+import { ProviderServiceAvailabilityFormType, providerServiceAvailabilityZodSchema } from '@/shared/zod/providerZod';
+import { appConfig } from '@/shared/config/env';
+import { createServiceAvailabilities } from '@/shared/apis/serviceAvailability';
 
 const ProviderCreateServiceAvailabilityPage: React.FC = () => {
 

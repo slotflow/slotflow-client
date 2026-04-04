@@ -10,7 +10,7 @@ import {
 import Heading from "./Heading";
 import PlanCard from "../plan/PlanCard";
 import { CheckIcon, MinusIcon } from "lucide-react";
-import { PLAN_TIERS, planFeatures, PlanList } from "@/utils/constants";
+import { PLAN_TIERS, planFeatures, PlanList } from "@/shared/utils/constants";
 
 export default function SectionPricing() {
   return (

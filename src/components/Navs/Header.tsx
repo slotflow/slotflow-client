@@ -1,12 +1,12 @@
 import React from 'react';
 import { Button } from '../ui/button';
 import { Moon, Sun } from 'lucide-react';
-import { navigation } from '@/utils/constants';
+import { navigation } from '@/shared/utils/constants';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import logo from '../../assets/logos/logo-transparent.png';
-import { AppDispatch, RootState } from '../../utils/redux/appStore';
-import { setAuthModal, toggleTheme } from '@/utils/redux/slices/appSlice';
+import { AppDispatch, RootState } from '../../shared/redux/appStore';
+import { setAuthModal, toggleTheme } from '@/shared/redux/slices/appSlice';
 
 const Header: React.FC = () => {
 

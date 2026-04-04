@@ -1,18 +1,18 @@
 import { useEffect } from "react";
 import Header from "@/components/navs/Header";
-import { pathNames } from "@/utils/constants";
-import { Role } from "@/utils/interface/enums";
+import { pathNames } from "@/shared/utils/constants";
+import { Role } from "@/shared/interface/enums";
 import FooterBar from "@/components/navs/FooterBar";
-import { AppDispatch, RootState } from "../../utils/redux/appStore";
+import { AppDispatch, RootState } from "../../shared/redux/appStore";
 import { useDispatch, useSelector } from "react-redux";
 import { Bounce, ToastContainer } from "react-toastify";
-import { AuthUser } from "@/utils/interface/sliceInterface";
-import { setAuthUser } from "@/utils/redux/slices/authSlice";
-import { setAuthModal } from "@/utils/redux/slices/appSlice";
+import { AuthUser } from "@/shared/interface/sliceInterface";
+import { setAuthUser } from "@/shared/redux/slices/authSlice";
+import { setAuthModal } from "@/shared/redux/slices/appSlice";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import AuthSelectionModal from "@/components/landing/AuthSelectionModal";
 import { useNotificationPermissionGate } from "@/hooks/systemHooks/useNotificationPermissionGate";
-import { connectEventSocket } from "@/utils/socket/eventSocketThunk";
+import { connectEventSocket } from "@/shared/socket/eventSocketThunk";
 
 const LandingLayout = () => {
 

@@ -1,13 +1,13 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "@/utils/redux/appStore";
-import { fetchBookings } from "@/utils/apis/booking";
+import { RootState } from "@/shared/redux/appStore";
+import { fetchBookings } from "@/shared/apis/booking";
 import CommonTable from "@/components/common/CommonTable";
 import { useRoleBasedNavigation } from "@/hooks/commonHooks/useRoleBasedNavigation";
 import { useUserBookingActions } from "@/hooks/userHooks/useUserBooking";
 import { BookingsTableColumn } from "@/components/table/tableColumns/BookingsTableColumn";
 import { useProviderAppointment } from "@/hooks/providerHooks/useProviderAppointment";
-import { FetchBookingsResponse } from "@/utils/interface/api/booking";
+import { FetchBookingsResponse } from "@/shared/interface/api/booking";
 
 const ListBookingsPage: React.FC = () => {
 

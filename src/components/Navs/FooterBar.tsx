@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/footer";
 import { cn } from "@/lib/utils";
 import logo from '../../assets/logos/logo.png';
-import { about, footerColumnData, copyright, policies } from "@/utils/constants";
+import { about, footerColumnData, copyright, policies } from "@/shared/utils/constants";
 
 interface FooterProps {
   className?: string;

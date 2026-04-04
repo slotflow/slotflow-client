@@ -1,7 +1,7 @@
 import L from "leaflet";
 import { useEffect, useRef } from "react";
-import { locationIqConfig } from "@/utils/env";
-import { Location } from "@/utils/interface/entityInterface/addressInterface";
+import { locationIqConfig } from "@/shared/config/env";
+import { Location } from "@/shared/interface/entityInterface/addressInterface";
 
 interface LocationPickerProps {
   onLocationSelect: (location: Location) => void;
@@ -17,7 +17,7 @@ export default function LocationPicker({ onLocationSelect }: LocationPickerProps
 
     mapInstance.current = L.map(mapRef.current).setView([20.5937, 78.9629], 5);
 
-    L.tileLayer(locationIqConfig.locationIqMapApiStart+locationIqConfig.locationIqMapApi,
+    L.tileLayer(locationIqConfig.locationIqMapApiStart + locationIqConfig.locationIqMapApi,
       {
         attribution: locationIqConfig.locationIqAttribution,
       }
@@ -32,7 +32,7 @@ export default function LocationPicker({ onLocationSelect }: LocationPickerProps
         markerRef.current.setLatLng([lat, lng]);
       }
 
-      const url = locationIqConfig.locationIqUrlStart+locationIqConfig.locationIqMapApi+ locationIqConfig.locationIqUrlLat+lat+locationIqConfig.locationIqUrlLon+lng+locationIqConfig.locationIqUrlEnd;
+      const url = locationIqConfig.locationIqUrlStart + locationIqConfig.locationIqMapApi + locationIqConfig.locationIqUrlLat + lat + locationIqConfig.locationIqUrlLon + lng + locationIqConfig.locationIqUrlEnd;
 
       const res = await fetch(url);
       const data = await res.json();

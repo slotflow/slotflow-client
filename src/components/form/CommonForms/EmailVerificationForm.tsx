@@ -2,13 +2,13 @@ import FormField from "../FormField";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { resendOtp } from "@/utils/apis/auth";
+import { resendOtp } from "@/shared/apis/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AppDispatch } from "@/utils/redux/appStore";
+import { AppDispatch } from "@/shared/redux/appStore";
 import { FormButton, FormHeading } from "../FormSplits";
-import { VerifyEmailFormType, verifyEmailZodSchema } from "@/utils/zod/authZod";
-import { RedirectTo, EmailVerificationFormProps } from "@/utils/interface/commonInterface";
-import { appConfig } from "@/utils/env";
+import { VerifyEmailFormType, verifyEmailZodSchema } from "@/shared/zod/authZod";
+import { RedirectTo, EmailVerificationFormProps } from "@/shared/interface/commonInterface";
+import { appConfig } from "@/shared/config/env";
 import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
 
 const EmailVerificationForm: React.FC<EmailVerificationFormProps> = ({ role }) => {

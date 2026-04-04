@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { RootState } from "@/utils/redux/appStore";
+import { RootState } from "@/shared/redux/appStore";
 
 export const ProtectedRouteNew = ({ children }: { children: React.ReactNode }) => {
-    
+
     const user = useSelector((store: RootState) => store.auth.authUser);
 
     if (!user) return <Navigate to="/login" />;

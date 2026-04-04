@@ -14,9 +14,9 @@ import ChartHeader from './ChartHeader';
 import ChartOverlay from './ChartOverlay';
 import { Bar, BarChart, XAxis, YAxis } from "recharts";
 import ChartDataNotAvailable from './ChartDataNotAvailable';
-import { TimeRange } from '@/utils/interface/commonInterface';
-import { filterChartDataHelper } from '@/utils/helper/dateFilter';
-import { BarChartHorizontalProps } from '@/utils/interface/componentInterface/commonComponentInterface';
+import { TimeRange } from '@/shared/interface/commonInterface';
+import { filterChartDataHelper } from '@/shared/helper/dateFilter';
+import { BarChartHorizontalProps } from '@/shared/interface/componentInterface/commonComponentInterface';
 
 
 const BarChartHorizontal: React.FC<BarChartHorizontalProps> = ({

@@ -6,12 +6,12 @@ import { motion, AnimatePresence, Variants } from "framer-motion";
 import { Loader2, CheckCircle2, LayoutDashboard, XCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import {
   setSubscription,
   setSubscriptionUpdating,
-} from "@/utils/redux/slices/authSlice";
-import { fetchMySubscription } from "@/utils/apis/subscription";
+} from "@/shared/redux/slices/authSlice";
+import { fetchMySubscription } from "@/shared/apis/subscription";
 
 interface ProviderSubscriptionConfirmPageProps {
   status: boolean;

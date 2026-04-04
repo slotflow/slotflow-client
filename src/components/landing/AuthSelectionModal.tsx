@@ -1,11 +1,11 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import booking from '../../../assets/svgs/booking.svg';
-import service from '../../../assets/svgs/service.svg';
-import { HandleRoleSelectionFunction } from "@/utils/interface/commonInterface";
+import booking from '@/assets/svgs/booking.svg';
+import service from '@/assets/svgs/service.svg';
+import { HandleRoleSelectionFunction } from "@/shared/interface/commonInterface";
 import { useModalAnimation } from "@/hooks/systemHooks/useModalAnimation";
-import { roleRoutes } from "@/utils/constants";
+import { roleRoutes } from "@/shared/utils/constants";
 
 interface AuthSelectionModalProps {
   onClose: () => void;
@@ -14,7 +14,7 @@ interface AuthSelectionModalProps {
 const AuthSelectionModal: React.FC<AuthSelectionModalProps> = ({ onClose }) => {
 
   const navigate = useNavigate();
-  const { modalRef, closeModal } = useModalAnimation(onClose);
+  const { modalRef, closeModal } = useModalAnimation({ onClose });
 
   const handleRoleSelection = useCallback<HandleRoleSelectionFunction>(
     (url: string) => {

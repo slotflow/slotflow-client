@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
-import { createService, changeServiceBlockStatus } from "@/utils/apis/service";
-import { CreateServiceRequest, ChangeServiceBlockStatusRequest } from "@/utils/interface/api/service";
+import { createService, changeServiceBlockStatus } from "@/shared/apis/service";
+import { CreateServiceRequest, ChangeServiceBlockStatusRequest } from "@/shared/interface/api/service";
 
 interface UseAdminServiceReturnInterface {
   handleAdminServiceCreating: (data: CreateServiceRequest) => void;

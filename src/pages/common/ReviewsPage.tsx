@@ -1,20 +1,20 @@
 import React from "react";
 import { toast } from "react-toastify";
-import { appConfig } from "@/utils/env";
+import { appConfig } from "@/shared/config/env";
 import { ArrowDown } from "lucide-react";
 import { useSelector } from "react-redux";
-import { Role } from "@/utils/interface/enums";
+import { Role } from "@/shared/interface/enums";
 import { Button } from "@/components/ui/button";
-import { RootState } from "@/utils/redux/appStore";
-import { fetchReviews } from "@/utils/apis/review";
+import { RootState } from "@/shared/redux/appStore";
+import { fetchReviews } from "@/shared/apis/review";
 import ReviewCard from "@/components/review/ReviewCard";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useReviewActions } from "@/hooks/useReviewActions";
 import DataFetchingError from "@/components/error/DataFetchingError";
 import ConfirmDeleteAlert from "@/components/alert/ConfirmDeleteAlert";
-import { ApiPaginatedResponse } from "@/utils/interface/commonInterface";
+import { ApiPaginatedResponse } from "@/shared/interface/commonInterface";
 import ReviewCardsShimmer from "@/components/shimmers/ReviewCardsShimmer";
-import { FetchReviewsResponse, ToggleReviewBlockStatusRequest } from "@/utils/interface/api/review";
+import { FetchReviewsResponse, ToggleReviewBlockStatusRequest } from "@/shared/interface/api/review";
 
 interface ReviewsPageProps {
   isPage?: boolean;

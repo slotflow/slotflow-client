@@ -1,15 +1,15 @@
 import { useEffect } from "react";
-import { Role } from "@/utils/interface/enums";
+import { Role } from "@/shared/interface/enums";
 import { Button } from "@/components/ui/button";
 import SideBox from "@/components/provider/SideBox";
 import { useDispatch, useSelector } from "react-redux";
-import { RedirectTo } from "@/utils/interface/commonInterface";
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { setIsProofSubmitted } from "@/utils/redux/slices/authSlice";
+import { RedirectTo } from "@/shared/interface/commonInterface";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
+import { setIsProofSubmitted } from "@/shared/redux/slices/authSlice";
 import FileUploader from "@/components/form/CommonForms/FileUploader";
 import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
-import { setIdentityProofLoading, setProviderIdentityProofs, setProviderServiceProofs, setServiceProofLoading } from "@/utils/redux/slices/providerSlice";
-import { providerDeleteIdentityProof, providerDeleteServiceProof, providerFetchProofs, providerUpdateIdentityProof, providerUpdateProofServiceProof } from "@/utils/apis/provider";
+import { setIdentityProofLoading, setProviderIdentityProofs, setProviderServiceProofs, setServiceProofLoading } from "@/shared/redux/slices/providerSlice";
+import { providerDeleteIdentityProof, providerDeleteServiceProof, providerFetchProofs, providerUpdateIdentityProof, providerUpdateProofServiceProof } from "@/shared/apis/provider";
 
 export const ProviderProofSubmissionPage = () => {
 

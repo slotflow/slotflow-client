@@ -1,19 +1,19 @@
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
-import { Role } from "@/utils/interface/enums";
+import { Role } from "@/shared/interface/enums";
 import TimeSlotLegend from "../app/TimeSlotLegend";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { Calendar } from "@/components/ui/calendar";
 import DataFetchingError from "../error/DataFetchingError";
 import { getEventSocket } from "@/lib/socketService";
-import { fetchEngagedSlots } from "@/utils/apis/serviceAvailability";
+import { fetchEngagedSlots } from "@/shared/apis/serviceAvailability";
 import InfoDisplayComponent from "../app/InfoDisplayComponent";
 import PaymentSelection from "../payment/PaymentSelection";
-import { Slot } from "@/utils/interface/entityInterface/serviceAvailabilityInterface";
+import { Slot } from "@/shared/interface/entityInterface/serviceAvailabilityInterface";
 import ProviderAvailabilityShimmer from "@/components/shimmers/ProviderAvailabilityShimmer";
-import { ProviderApiFunctionForPSAcomponent, ProviderServiceAvailabilityComponentProps, UserOrAdminApiFunctionForPSAcomponent } from "@/utils/interface/componentInterface/commonComponentInterface";
-import { EventSocketEnum, SlotEngageRequest } from "@/utils/interface/socket.interface";
+import { ProviderApiFunctionForPSAcomponent, ProviderServiceAvailabilityComponentProps, UserOrAdminApiFunctionForPSAcomponent } from "@/shared/interface/componentInterface/commonComponentInterface";
+import { EventSocketEnum, SlotEngageRequest } from "@/shared/interface/socket.interface";
 
 const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponentProps> = ({
     providerId,

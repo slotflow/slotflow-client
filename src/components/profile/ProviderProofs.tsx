@@ -4,10 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 import DataFetchingError from "../error/DataFetchingError";
 import { ImageUpscale, Minimize2 } from "lucide-react";
 import noImage from "../../../assets/defaultImages/imagePlaceholder.png";
-import { Provider } from "@/utils/interface/entityInterface/providerInterface";
+import { Provider } from "@/shared/interface/entityInterface/providerInterface";
 import ProfileDetailsShimmer from "@/components/shimmers/ProfileDetailsShimmer";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { FetchProvidersProofsResponse } from "@/utils/interface/api/commonApiInterface";
+import { FetchProvidersProofsResponse } from "@/shared/interface/api/commonApiInterface";
 
 interface ProviderProofsProps {
     providerId: Provider["_id"];
