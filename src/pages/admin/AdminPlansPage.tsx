@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import TableHeader from '@/components/table/TableHeader';
-import CommonTable from '@/components/common/CommonTable';
+import CommonTable from '@/components/table/CommonTable';
 import { slideIn } from '@/shared/helper/gsapAnimationSlide';
 import { adminFetchAllPlans } from '@/shared/apis/plan';
 import CreatePlanForm from '@/components/form/AdminForms/CreatePlanForm';

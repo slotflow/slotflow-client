@@ -1,4 +1,4 @@
-import CommonTable from '@/components/common/CommonTable';
+import CommonTable from '@/components/table/CommonTable';
 import { fetchSubscriptions } from '@/shared/apis/subscription';
 import { useRoleBasedNavigation } from '@/hooks/commonHooks/useRoleBasedNavigation';
 import { ProvidersSubscriptionsTableColumns } from '@/components/table/tableColumns/ProviderSubscriptionsTableColumn';

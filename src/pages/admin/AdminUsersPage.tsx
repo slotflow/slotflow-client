@@ -1,4 +1,4 @@
-import CommonTable from "@/components/common/CommonTable";
+import CommonTable from "@/components/table/CommonTable";
 import { useAdminUser } from "@/hooks/adminHooks/useAdminUser";
 import { AdminUsersTableColumns } from "@/components/table/tableColumns/AdminUsersTableColumn";
 import { fetchUsers } from "@/shared/apis/user";

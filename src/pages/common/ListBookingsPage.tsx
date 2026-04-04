@@ -1,28 +1,61 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/shared/redux/appStore";
-import { fetchBookings } from "@/shared/apis/booking";
-import CommonTable from "@/components/common/CommonTable";
+import { cancelBooking, changeAppointmentStatus, fetchBookings } from "@/shared/apis/booking";
+import CommonTable from "@/components/table/CommonTable";
 import { useRoleBasedNavigation } from "@/hooks/commonHooks/useRoleBasedNavigation";
-import { useUserBookingActions } from "@/hooks/userHooks/useUserBooking";
+import { useBooking } from "@/hooks/useUserBooking";
 import { BookingsTableColumn } from "@/components/table/tableColumns/BookingsTableColumn";
-import { useProviderAppointment } from "@/hooks/providerHooks/useProviderAppointment";
-import { FetchBookingsResponse } from "@/shared/interface/api/booking";
+import { changeAppointmentStatusRequest, FetchBookingsResponse } from "@/shared/interface/api/booking";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 const ListBookingsPage: React.FC = () => {
 
+  const queryClient = useQueryClient();
   const authUser = useSelector((state: RootState) => state.auth.authUser);
-
-  const {
-    handleChangeAppointmentStatus
-  } = useProviderAppointment();
 
   const {
     handleJoinCall,
     handleNavigateToBookingsDetailPage
   } = useRoleBasedNavigation();
 
-  const { handleUserCancelBooking, handleReviewAddFormToggle } = useUserBookingActions();
+  const { 
+    handleReviewAddFormToggle 
+  } = useBooking();
+
+  // function to handle change appointment status by provider
+  const handleChangeAppointmentStatus = ({ 
+    appointmentId, appointmentStatus 
+  }: changeAppointmentStatusRequest) => {
+    changeAppointmentStatus({ appointmentId, appointmentStatus })
+      .then((res) => {
+        if (res.success) {
+          toast.success(res.message);
+          queryClient.invalidateQueries({ queryKey: ["bookings"] });
+        }
+      })
+      .catch(() => {
+        toast.error("Please try again");
+      });
+  }
+
+  // function to handle user cancel booking
+  const handleUserCancelBooking = (
+    bookingId: string
+  ) => {
+    // need to add the confirm alert
+    cancelBooking(bookingId)
+      .then((res) => {
+        if (res.success) {
+          queryClient.invalidateQueries({ queryKey: ["bookings"] });
+          toast.success(res.message);
+        }
+      })
+      .catch(() => {
+        toast.error("Please try again");
+      });
+  }
 
   const columns = BookingsTableColumn(
     handleJoinCall,

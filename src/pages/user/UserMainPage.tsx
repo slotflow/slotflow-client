@@ -8,7 +8,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import LoadingFallback from "../common/LoadingFallback";
 import avatar from '../../assets/defaultImages/avatar.png';
 import { RootState } from "@/shared/redux/appStore";
-import FilterRightSideBar from "@/components/navs/FilterRightSideBar";
+import FilterRightSideBar from "@/components/filters/FilterRightSideBar";
 import NotificationsContainer from "@/components/notification/NotificationsContainer";
 
 const UserMainPage = () => {

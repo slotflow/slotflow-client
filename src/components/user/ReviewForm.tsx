@@ -18,8 +18,10 @@ const ReviewForm: React.FC = () => {
         (state: RootState) => state.user
     );
 
-    const { closeModal, modalRef } = useModalAnimation(() => {
-        dispatch(toggleReviewCreateForm({ id: null, isOpen: false, providerId: null }));
+    const { closeModal, modalRef } = useModalAnimation({
+        onClose: () => {
+            dispatch(toggleReviewCreateForm({ id: null, isOpen: false, providerId: null }));
+        }
     });
 
     const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {

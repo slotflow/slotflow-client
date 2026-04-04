@@ -2,7 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { ToggleReviewBlockStatusRequest } from "@/shared/interface/api/review";
 import { deleteReview, reportReview, toggleReviewBlockStatus } from "@/shared/apis/review";
 
-export const useReviewActions = () => {
+export const useReview = () => {
 
     const queryClient = useQueryClient();
 

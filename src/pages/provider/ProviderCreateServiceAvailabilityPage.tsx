@@ -1,31 +1,31 @@
 import { toast } from 'react-toastify';
-import { Role, ServiceMode } from '@/shared/interface/enums';
-import { Button } from '@/components/ui/button';
+import { useForm } from 'react-hook-form';
+import { appConfig } from '@/shared/config/env';
+import { Role } from '@/shared/interface/enums';
 import SideBox from '@/components/provider/SideBox';
-import { Checkbox } from '@/components/ui/checkbox';
-import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch, useSelector } from 'react-redux';
-import { TimePicker } from '@/components/ui/TimePicker';
-import { Check, ChevronRight, Goal } from 'lucide-react';
-import { SelectField } from '@/components/form/SelectField';
+import { updatableStatuses } from '@/shared/utils/constants';
 import React, { useEffect, FormEvent, useMemo } from 'react';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
 import { RedirectTo } from '@/shared/interface/commonInterface';
+import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import { useAddAvailability } from '@/hooks/useServiceAvailability';
+import { addAvailability } from '@/shared/redux/slices/providerSlice';
 import { useAuthNavigation } from '@/hooks/systemHooks/useAuthNavigation';
-import { useAddAvailability } from '@/hooks/providerHooks/useServiceAvailability';
-import { daysOfWeekOptions, serviceDurationsOptions, updatableStatuses } from '@/shared/utils/constants';
-import { ProviderServiceAvailabilityFormType, providerServiceAvailabilityZodSchema } from '@/shared/zod/providerZod';
-import { appConfig } from '@/shared/config/env';
+import TimeRangeSetter from '@/components/serviceAvailability/createServiceAvailabilityPageSplits/TimeRangeSetter';
 import { createServiceAvailabilities } from '@/shared/apis/serviceAvailability';
+import GenerateTimeSlots from '@/components/serviceAvailability/createServiceAvailabilityPageSplits/GenerateTimeSlots';
+import AvailabilityDataSelectionFields from '@/components/serviceAvailability/createServiceAvailabilityPageSplits/AvailabilityDataSelectionFields';
+import CreateServiceAvailabilityFooter from '@/components/serviceAvailability/createServiceAvailabilityPageSplits/CreateServiceAvailabilityFooter';
+import { ProviderServiceAvailabilityFormType, providerServiceAvailabilityZodSchema } from '@/shared/zod/providerZod';
 
 const ProviderCreateServiceAvailabilityPage: React.FC = () => {
 
   const dispatch = useDispatch<AppDispatch>();
   const { goToAuthPage } = useAuthNavigation();
+  const { authUser } = useSelector((state: RootState) => state.auth);
   const { dataUpdating } = useSelector((store: RootState) => store.auth);
   const { availabilities } = useSelector((store: RootState) => store.provider);
-  const { authUser } = useSelector((state: RootState) => state.auth);
   const adminStatus = authUser?.adminVerificationStatus;
   const isUpdatable = adminStatus !== undefined && (updatableStatuses as readonly string[]).includes(adminStatus);
   const redirectUrl: RedirectTo = isUpdatable ? RedirectTo.PROVIDER_APPROVAL_PENDING : RedirectTo.PROVIDER_PROOFS;
@@ -54,6 +54,14 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
   const watched = watch();
   const { timeSlots, selectedTimeSlots } = watched;
 
+  const {
+    handleAddAvailability,
+    generateTimeSlots,
+    isModeSelected,
+    toggleMode,
+    toggleSlot,
+  } = useAddAvailability({ getValues, setValue });
+
   useEffect(() => {
     if (timeSlots && selectedTimeSlots && selectedTimeSlots.length > 0) {
       const filtered = selectedTimeSlots.filter((t) => timeSlots.includes(t));
@@ -63,6 +71,7 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
     }
   }, [timeSlots, selectedTimeSlots, setValue]);
 
+  // Handle all slots
   const handleAllSlots = (push: boolean) => {
     if (push) {
       if (timeSlots && timeSlots.length > 0) {
@@ -75,24 +84,45 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
     }
   };
 
-  const {
-    handleAddAvailability,
-    generateTimeSlots,
-    isModeSelected,
-    toggleMode,
-    toggleSlot,
-  } = useAddAvailability({ getValues, setValue });
+  // Add availability
+  const onAddAvailability = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const res = handleAddAvailability();
+    if (!res.success) {
+      toast.warning(res.message);
+    } else if (res.data) {
+      toast.success(res.message);
+      dispatch(addAvailability(res.data));
+    }
+  };
 
+  // Generate time slots
+  const onGenerateSlots = () => {
+    const start = getValues('startTime');
+    const end = getValues('endTime');
+    const duration = getValues('duration');
+    const res = generateTimeSlots(start, end, duration);
+    if (!res.success) {
+      toast.warning(res.message);
+    } else {
+      toast.success(res.message);
+    }
+  };
+
+  // Check if all slots are selected
   const allSlotsSelected = useMemo(() => {
     return (timeSlots && timeSlots.length > 0) && (selectedTimeSlots.length === timeSlots.length);
   }, [timeSlots, selectedTimeSlots]);
 
+  // Submit availabilities
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (!availabilities || availabilities.length === 0) {
       toast.info("You didn't add any availability.");
       return;
     }
+
     dispatch(createServiceAvailabilities({ data: availabilities }))
       .unwrap()
       .then((res) => {
@@ -102,7 +132,9 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
         }
       })
       .catch((error) => {
-        if (appConfig.dev) console.log("Something went wrong while submitting availabilities : ", error);
+        if (appConfig.dev) {
+          console.log("Something went wrong while submitting availabilities : ", error);
+        }
       });
   };
 
@@ -113,172 +145,36 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
         <form className="md:mt-10 px-4 md:px-12 py-6 md:py-0" onSubmit={onSubmit}>
           <h4 className="xs:text-md md:text-xl lg:text-2xl font-semibold text-start px-6">Service Availability</h4>
           <div className="flex w-full flex-col space-y-6">
-            <div className="space-y-4 md:space-y-0 w-full md:flex space-x-2 px-6 pt-6 md:px-6">
-              <div className="md:w-6/12">
+            <AvailabilityDataSelectionFields
+              register={register}
+              isModeSelected={isModeSelected}
+              toggleMode={toggleMode}
+            />
 
-                <SelectField<ProviderServiceAvailabilityFormType, string>
-                  label="Select Day"
-                  id="day"
-                  register={register}
-                  options={daysOfWeekOptions}
-                  required
-                />
-              </div>
-              <div className="md:w-6/12">
-                <SelectField<ProviderServiceAvailabilityFormType, number>
-                  label="Select Duration"
-                  id="duration"
-                  register={register}
-                  options={serviceDurationsOptions}
-                  required
-                />
-              </div>
-            </div>
+            <TimeRangeSetter
+              control={control}
+              isSubmitting={isSubmitting}
+              onGenerateSlots={onGenerateSlots}
+            />
 
-            <div className="px-6 pt-6 md:px-6">
-              <h6 className='text-sm font-semibold'>Select service modes {<span className="text-red-500"> *</span>}</h6>
-              <div className="w-1/2 flex space-x-4 mt-2">
-                <div
-                  className={`w-1/2 text-xs text-center border rounded-md py-2 px-4 hover:bg-[var(--mainColor)/10] transition-colors duration-200 cursor-pointer ${isModeSelected(ServiceMode.ONLINE) ? 'bg-[var(--mainColor)/20] border-[var(--mainColor)]' : 'border-gray-300'
-                    }`}
-                  onClick={() => toggleMode(ServiceMode.ONLINE)}
-                >
-                  Online
-                </div>
-                <div
-                  className={`w-1/2 text-xs text-center border rounded-md py-2 px-4 hover:bg-[var(--mainColor)/10] transition-colors duration-200 cursor-pointer ${isModeSelected(ServiceMode.OFFLINE) ? 'bg-[var(--mainColor)/20] border-[var(--mainColor)]' : 'border-gray-300'
-                    }`}
-                  onClick={() => toggleMode(ServiceMode.OFFLINE)}
-                >
-                  Offline
-                </div>
-              </div>
-            </div>
-
-            <div className="md:flex items-end space-x-4 space-y-4 md:space-y-0 justify-between px-6 pt-6 md:px-6">
-              <div className="md:w-6/12">
-                <label className="block text-sm font-medium">Start Time (HH:mm){<span className="text-red-500"> *</span>}</label>
-                <div className='mt-2'>
-                  <Controller
-                    name="startTime"
-                    control={control}
-                    render={({ field }) => (
-                      <TimePicker
-                        value={field.value}
-                        onChange={(newTime: Date) => field.onChange(newTime)}
-                      />
-                    )}
-                  />
-                </div>
-              </div>
-              <div className="md:w-6/12">
-                <label className="block text-sm font-medium">End Time (HH:mm){<span className="text-red-500"> *</span>}</label>
-                <div className='mt-2'>
-                  <Controller
-                    name="endTime"
-                    control={control}
-                    render={({ field }) => (
-                      <TimePicker
-                        value={field.value}
-                        onChange={(newTime: Date) => field.onChange(newTime)}
-                      />
-                    )}
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="flex justify-center md:justify-end mt-4 md:mt-6">
-              <Button
-                title="Generate Slots"
-                type="button"
-                variant="default"
-                disabled={isSubmitting}
-                onClick={() => generateTimeSlots(getValues('startTime'), getValues('endTime'), getValues('duration'))}
-                className="w-10/12 md:w-auto cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
-              >
-                Generate Slots <Goal />
-              </Button>
-            </div>
-
-            <div className="w-10/12 md:w-full space-y-6 mx-auto md:px-6">
-              {timeSlots && timeSlots.length > 0 && (
-                <div className="mt-6">
-                  <div className='flex items-center mb-4 justify-between md:justify-start'>
-                    <h3 className="text-sm font-semibold">Select your time slots</h3>
-                    <div className='flex items-center md:mt-0 ml-0 md:ml-2'>
-                      <Controller
-                        name="selectedTimeSlots"
-                        control={control}
-                        render={() => (
-                          <>
-                            <Checkbox
-                              checked={allSlotsSelected}
-                              onCheckedChange={(checked) => handleAllSlots(Boolean(checked))}
-                              className='cursor-pointer'
-                            />
-                          </>
-                        )}
-                      />
-                      <p className='ml-2'>{allSlotsSelected ? "Deselect all slots" : "Select all slots"}</p>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                    {timeSlots.map((timeSlot) => {
-                      const isSelected = selectedTimeSlots.includes(timeSlot);
-                      return (
-                        <div
-                          key={timeSlot}
-                          className={`text-xs text-center border rounded-md py-2 px-2 md:py-2 md:px-4 hover:bg-[var(--mainColor)/10] transition-colors duration-200 cursor-pointer ${isSelected
-                            ? 'bg-[var(--mainColor)/20] border-[var(--mainColor)]'
-                            : 'border-gray-300'
-                            }`}
-                          onClick={() => toggleSlot(timeSlot)}
-                        >
-                          {timeSlot}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-            </div>
-
+            <GenerateTimeSlots
+              timeSlots={timeSlots}
+              selectedTimeSlots={selectedTimeSlots}
+              allSlotsSelected={allSlotsSelected}
+              handleAllSlots={handleAllSlots}
+              toggleSlot={toggleSlot}
+              control={control}
+            />
           </div>
 
-          <>
-            {selectedTimeSlots && selectedTimeSlots.length > 0 && (
-              <div className="flex space-x-2 justify-center md:justify-end mt-4 md:mt-6">
-                <Button
-                  title="Confirm"
-                  type="button"
-                  variant="default"
-                  disabled={isSubmitting}
-                  onClick={handleAddAvailability}
-                  className="cursor-pointer w-10/12 md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
-                >
-                  Confirm <Check />
-                </Button>
-              </div>
-            )}
-            {availabilities && (
-              <div className="flex space-x-2 justify-center md:justify-end mt-4 md:mt-6 ">
-                <Button
-                  title="Submit"
-                  type="submit"
-                  variant="default"
-                  disabled={isSubmitting || !isValid}
-                  className="cursor-pointer w-10/12 md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
-                >
-                  {dataUpdating ? "Loading" : "Submit"} <ChevronRight />
-                </Button>
-              </div>
-            )}
-            <div className='mt-10'>
-              <p className='text-sm text-gray-400 italic'>Note: Please add your daily service available slots by selecting a day, Once you're done, only click Submit</p>
-            </div>
-          </>
-
+          <CreateServiceAvailabilityFooter
+            selectedTimeSlots={selectedTimeSlots}
+            isSubmitting={isSubmitting}
+            onAddAvailability={onAddAvailability}
+            availabilities={availabilities}
+            isValid={isValid}
+            dataUpdating={dataUpdating}
+          />
         </form>
       </div>
     </div>

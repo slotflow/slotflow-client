@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import CommonTable from "@/components/common/CommonTable";
+import CommonTable from "@/components/table/CommonTable";
 import { slideIn } from "@/shared/helper/gsapAnimationSlide";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { setProviderRejectModal } from "@/shared/redux/slices/adminSlice";

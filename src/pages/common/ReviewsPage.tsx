@@ -9,7 +9,7 @@ import { RootState } from "@/shared/redux/appStore";
 import { fetchReviews } from "@/shared/apis/review";
 import ReviewCard from "@/components/review/ReviewCard";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useReviewActions } from "@/hooks/useReviewActions";
+import { useReview } from "@/hooks/useReview";
 import DataFetchingError from "@/components/error/DataFetchingError";
 import ConfirmDeleteAlert from "@/components/alert/ConfirmDeleteAlert";
 import { ApiPaginatedResponse } from "@/shared/interface/commonInterface";
@@ -30,7 +30,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
 
   const limit = 10;
   const { authUser } = useSelector((state: RootState) => state.auth);
-  const { reportReviewHandler, toggleBlockStatusHandler, deleteReviewHandler } = useReviewActions();
+  const { reportReviewHandler, toggleBlockStatusHandler, deleteReviewHandler } = useReview();
 
   const {
     data,
