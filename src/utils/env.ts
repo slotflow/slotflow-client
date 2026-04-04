@@ -40,4 +40,12 @@ export const locationIqConfig = {
 export const jwtConfig = {
     jwtSecret: import.meta.env.VITE_JWT_SECRET,
     jwtExpiresIn: import.meta.env.VITE_JWT_EXPIRES_IN
-}
+};
+
+export const grafanaConfig = {
+    grafanaUrl: import.meta.env.VITE_GRAFANA_URL,
+    grafanaUrlDev: import.meta.env.VITE_GRAFANA_URL_DEV,
+    grafanaUrlQuery: import.meta.env.VITE_GRAFANA_URL_QUERY,
+    grafanaDashboardId: import.meta.env.VITE_GRAFANA_DASHBOARD_ID,
+    grafanaDashboardName: import.meta.env.VITE_GRAFANA_DASHBOARD_NAME
+};

@@ -95,7 +95,7 @@ export const adminRoutes: Route[] = [
   { path: "plans", name: "Plans", icon: LayoutGrid },
   { path: "subscriptions", name: "Subscriptions", icon: CreditCard },
   { path: "payments", name: "Payments", icon: Handshake },
-  { path: "health", name: "Health", icon: ScanHeart },
+  { path: "grafana", name: "Grafana", icon: ScanHeart },
 ]
 
 // Routes for user

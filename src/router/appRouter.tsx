@@ -6,6 +6,7 @@ import { createBrowserRouter, Outlet } from "react-router-dom";
 import BookingDetailPage from "@/pages/common/BookingDetailPage.tsx";
 import PaymentDetailViewPage from "@/pages/common/PaymentDetailViewPage.tsx";
 import SubscriptionDetailViewPage from "@/pages/common/SubscriptionDetailViewPage.tsx";
+import AdminGrafanaDashboard from "@/pages/admin/AdminGrafanaDashboard.tsx";
 
 const AuthPage = lazy(() => import("@/pages/common/AuthPage.tsx"));
 const AboutPage = lazy(() => import("@/pages/common/AboutPage.tsx"));
@@ -103,6 +104,7 @@ export const appRouter = createBrowserRouter([
                     { path: "payments", element: <ListPaymentsPage /> },
                     { path: "payments/:paymentId", element: <PaymentDetailViewPage /> },
                     { path: "health", element: <AdminApiStrengthPage /> },
+                    { path: "grafana", element: <AdminGrafanaDashboard /> },
                     { path: "*", element: <Error404Page /> },
                 ],
             },
