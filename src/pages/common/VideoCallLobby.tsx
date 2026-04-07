@@ -1,32 +1,32 @@
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from "react-router-dom";
+import { RootState } from "@/shared/redux/appStore";
 import { Mic, MicOff, Video, VideoOff } from 'lucide-react';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
-import { useVideoCallLobby } from "@/hooks/commonHooks/useJoinVideoCallLoby";
+import { useVideoCallLobby } from "@/hooks/useJoinVideoCallLoby";
 
 const LobbyPage = () => {
 
   const { roomId } = useParams();
-  const navigate = useNavigate();
-
-  const dispatch = useDispatch<AppDispatch>();
-
-  const user = useSelector((state: RootState) => state.auth.authUser);
   const { isCameraOn, isMicOn } = useSelector((state: RootState) => state.video);
-  const { isVideoCallTimerRunning, videoCallRoomId, videoCallRemainingTime } = useSelector((state: RootState) => state.video);
 
-  const { videoRef, toggleCamera, toggleMic, handleJoin } = useVideoCallLobby({
-    user: user!,
-    roomId: roomId!,
-    dispatch,
-    navigate,
-    videoCallRoomId,
-    videoCallRemainingTime,
-    isCameraOn,
-    isMicOn,
-    isVideoCallTimerRunning
-  });
+  const {
+    videoRef,
+    toggleCamera,
+    toggleMic,
+    videoCallJoinHandler
+  } = useVideoCallLobby({ roomId: roomId!, isCameraOn, isMicOn });
+
+  // function to handle join video call
+  const handleJoinVideoCall = async () => {
+    const res = await videoCallJoinHandler();
+    if (!res.success) {
+      toast.error(res.message);
+    } else {
+      toast.success(res.message);
+    }
+  }
 
   return (
     <div className="grid grid-cols-12 h-screen">
@@ -77,7 +77,7 @@ const LobbyPage = () => {
         </p>
         <Button
           title="Join Now"
-          onClick={handleJoin}
+          onClick={handleJoinVideoCall}
           className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white border-[var(--mainColor)]"
         >
           Join Now

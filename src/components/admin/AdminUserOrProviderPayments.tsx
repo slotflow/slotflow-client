@@ -1,5 +1,5 @@
 import CommonTable from "../common/CommonTable";
-import { useRoleBasedNavigation } from "@/hooks/commonHooks/useRoleBasedNavigation";
+import { useRoleBasedNavigation } from "@/hooks/useRoleBasedNavigation";
 import { PaymentsTableColumn } from "../table/tableColumns/PaymentsTableColumn";
 import { AdminFetchProviderPaymentsComponentProps } from "@/shared/interface/componentInterface/adminComponentInterface";
 import { FetchPaymentsQueryParams, FetchPaymentsResponse } from "@/shared/interface/api/payment";

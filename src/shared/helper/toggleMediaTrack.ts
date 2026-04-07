@@ -66,6 +66,8 @@ export const toggleMediaTrack = async ({
     setIsOn(true);
   } catch (err) {
     toast.error(`Failed to turn on ${kind}`);
-    if (appConfig.dev) console.error(`Cannot turn on ${kind}:`, err);
+    if (appConfig.isDevelopment) {
+      console.error(`Cannot turn on ${kind}:`, err);
+    } 
   }
 };

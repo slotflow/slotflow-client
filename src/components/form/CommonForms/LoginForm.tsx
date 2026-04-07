@@ -51,7 +51,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
                 handleNavigation(res.data.role);
             } else toast.error(res.message);
         } catch (error) {
-            if (appConfig.dev) console.log("An error occurred during login ", error);
+            if (appConfig.isDevelopment) {
+                console.log("An error occurred during login ", error);
+            }
         }
     };
 

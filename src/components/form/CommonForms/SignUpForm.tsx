@@ -42,7 +42,9 @@ const SignUpForm: React.FC<signUpFormProps> = ({ role }) => {
                 goToAuthPage(role, RedirectTo.VERIFY_OTP);
             }
         } catch (error) {
-            if (appConfig.dev) console.log("An error occurred while sign up ", error);
+            if (appConfig.isDevelopment) {
+                console.log("An error occurred while sign up ", error);
+            } 
         }
     };
 

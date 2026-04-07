@@ -1,7 +1,7 @@
 import { memo } from "react";
 import CommonTable from "../common/CommonTable";
 import { fetchSubscriptions } from "@/shared/apis/subscription";
-import { useRoleBasedNavigation } from "@/hooks/commonHooks/useRoleBasedNavigation";
+import { useRoleBasedNavigation } from "@/hooks/useRoleBasedNavigation";
 import { ProvidersSubscriptionsTableColumns } from "../table/tableColumns/ProviderSubscriptionsTableColumn";
 import { AdminFetchProviderSubscriptionsComponentProps } from "@/shared/interface/componentInterface/adminComponentInterface";
 import { FetchProviderSubscriptionsResponse, FetchSubscriptionsQueryParams } from "@/shared/interface/api/subscription";

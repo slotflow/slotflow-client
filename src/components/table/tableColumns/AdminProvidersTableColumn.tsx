@@ -2,17 +2,17 @@ import { Button } from "../../ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
+import { AdminVerificationStatus } from "@/shared/interface/enums";
 import { Provider } from "@/shared/interface/entityInterface/providerInterface";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
-import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminFetchAllProvidersResponse } from "@/shared/interface/api/provider";
-import { AdminVerificationStatus } from "@/shared/interface/enums";
+import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminFetchAllProvidersResponse, AdminRejectProviderModalState } from "@/shared/interface/api/provider";
 
 export const AdminProvidersTableColumns = (
     handleAdminApproveProvider: (providerId: Provider["_id"]) => void,
-    handleOpenProviderRejectModal: (providerId: Provider["_id"]) => void,
+    handleProviderRejectModal: (data: AdminRejectProviderModalState) => void,
     hanldeAdminChangeProviderBlockStatus: (data: AdminChangeProviderBlockStatusRequest) => void,
     handleGetProviderDetailPage: (providerId: Provider["_id"]) => void,
-    hanldeAdminChangeProviderSlotflowTrustTag: (data: AdminChangeProviderTrustTagRequest) => void,
+    handleAdminChangeProviderSlotflowTrustTag: (data: AdminChangeProviderTrustTagRequest) => void,
 ): ColumnDef<AdminFetchAllProvidersResponse>[] => [
         {
             accessorKey: "username",
@@ -121,14 +121,14 @@ export const AdminProvidersTableColumns = (
                                 )}
                             {(!provider.isAdminVerified &&
                                 (provider.adminVerificationStatus === AdminVerificationStatus.REQUESTED || provider.adminVerificationStatus === AdminVerificationStatus.RESUBMITTED || provider.adminVerificationStatus === AdminVerificationStatus.UNDER_REVIEW)) && (
-                                    <DropdownMenuItem onClick={() => handleOpenProviderRejectModal(provider._id)}>
+                                    <DropdownMenuItem onClick={() => handleProviderRejectModal({ modalState: true, providerId: provider._id })}>
                                         Reject
                                     </DropdownMenuItem>
                                 )}
                             <DropdownMenuItem onClick={() => hanldeAdminChangeProviderBlockStatus({ isBlocked: provider.isBlocked, providerId: provider._id })}>
                                 {provider.isBlocked ? "Unblock" : "Block"}
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => hanldeAdminChangeProviderSlotflowTrustTag({ providerId: provider._id, trustedBySlotflow: provider.trustedBySlotflow })}>
+                            <DropdownMenuItem onClick={() => handleAdminChangeProviderSlotflowTrustTag({ providerId: provider._id, trustedBySlotflow: provider.trustedBySlotflow })}>
                                 {provider.trustedBySlotflow ? "Remove Tag" : "Give Tag"}
                             </DropdownMenuItem>
                         </DropdownMenuContent>

@@ -129,3 +129,9 @@ export type AdminChangeProviderTrustTagRequest = {
     providerId: Provider["_id"];
     trustedBySlotflow: Provider["trustedBySlotflow"];
 }
+
+// Used as the state interface for the admin reject provider modal
+export interface AdminRejectProviderModalState {
+  modalState: boolean;
+  providerId: string | null;
+}

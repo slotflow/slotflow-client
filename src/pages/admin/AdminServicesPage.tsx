@@ -1,19 +1,33 @@
+import { toast } from "react-toastify";
 import { useEffect, useRef, useState } from "react";
+import { fetchServices } from "@/shared/apis/service";
 import TableHeader from "@/components/table/TableHeader";
 import CommonTable from "@/components/table/CommonTable";
 import { slideIn } from "@/shared/helper/gsapAnimationSlide";
-import { fetchServices } from "@/shared/apis/service";
+import { useAdminServiceActions } from "@/hooks/adminHooks/useService";
 import CreateServiceForm from "@/components/form/AdminForms/CreateServiceForm";
-import { useAdminService } from "@/hooks/adminHooks/useAdminService";
-import { FetchServicesResponse } from "@/shared/interface/api/service";
+import { ChangeServiceBlockStatusRequest, FetchServicesResponse } from "@/shared/interface/api/service";
 import { AdminAppServicesTableColumns } from "@/components/table/tableColumns/AdminAppServicesTableColumn";
 
 const AdminServicesPage = () => {
-  const { handleAdminChangeServiceStatus } = useAdminService();
-  const column = AdminAppServicesTableColumns(handleAdminChangeServiceStatus);
 
   const [showForm, setShowForm] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
+
+  const { changeServiceStatus } = useAdminServiceActions();
+
+  const handleAdminChangeServiceStatus = async (data: ChangeServiceBlockStatusRequest) => {
+    const res = await changeServiceStatus(data);
+    if (res.success) {
+      toast.success(res.message);
+    } else {
+      toast.error(res.message);
+    }
+  }
+
+  const column = AdminAppServicesTableColumns(
+    handleAdminChangeServiceStatus
+  );
 
   useEffect(() => {
     if (showForm && formRef.current) {

@@ -73,8 +73,9 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
         }));
         setServices(transformed);
       } catch (error) {
-        console.log("error : ", error);
-        if (appConfig.dev) console.log(error)
+        if (appConfig.isDevelopment) {
+          console.log("Error while fetching services by category : ", error)
+        }
       }
     };
     fetchServices();
@@ -126,7 +127,9 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
         }
       }
     } catch (error) {
-      if (appConfig.dev) console.log("An unexpected error occured while saving data : ", error);
+      if (appConfig.isDevelopment) {
+        console.log("An unexpected error occured while saving data : ", error);
+      } 
     }
   };
 

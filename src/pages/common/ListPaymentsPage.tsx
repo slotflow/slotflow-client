@@ -1,7 +1,7 @@
 import { fetchPayments } from "@/shared/apis/payment";
 import CommonTable from "@/components/table/CommonTable";
 import { FetchPaymentsResponse } from "@/shared/interface/api/payment";
-import { useRoleBasedNavigation } from "@/hooks/commonHooks/useRoleBasedNavigation";
+import { useRoleBasedNavigation } from "@/hooks/useRoleBasedNavigation";
 import { PaymentsTableColumn } from "@/components/table/tableColumns/PaymentsTableColumn";
 
 const ListPaymentsPage = () => {

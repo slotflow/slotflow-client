@@ -1,6 +1,5 @@
 export const appConfig = {
-    isDevelopment: import.meta.env.MODE === "development",
-    dev: import.meta.env.DEV,
+    isDevelopment: import.meta.env.DEV,
     version: import.meta.env.VITE_API_VERSION,
 };
 

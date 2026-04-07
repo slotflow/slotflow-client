@@ -7,10 +7,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { serviceCategoryOptions } from "@/shared/utils/constants";
 import { slideOut } from "@/shared/helper/gsapAnimationSlide";
 import { handleFormError } from "@/shared/helper/formErrorCatcher";
-import { useAdminService } from "@/hooks/adminHooks/useAdminService";
 import { AdminCreateServiceFormType, adminCreateServiceZodSchema } from "@/shared/zod/adminZod";
 import { ServiceCategory } from "@/shared/interface/enums";
 import { appConfig } from "@/shared/config/env";
+import { createService } from "@/shared/apis/service";
+import { toast } from "react-toastify";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface CreateServiceFormProps {
   onClose: () => void;
@@ -21,7 +23,7 @@ const CreateServiceForm: React.FC<CreateServiceFormProps> = ({
   onClose,
   formRef,
 }) => {
-  const { handleAdminServiceCreating } = useAdminService();
+  const queryClient = useQueryClient();
 
   const handleCloseForm = () => {
     slideOut(formRef.current, {
@@ -46,13 +48,20 @@ const CreateServiceForm: React.FC<CreateServiceFormProps> = ({
 
   const onSubmit = async (data: AdminCreateServiceFormType) => {
     try {
-      await handleAdminServiceCreating(data);
-      reset();
-      handleCloseForm();
+      const res = await createService(data);
+      if (res.success) {
+        toast.success(res.message);
+        reset();
+        handleCloseForm();
+        queryClient.invalidateQueries({ queryKey: ["appServices"] });
+      } else {
+        toast.error(res.message);
+      }
     } catch (error) {
-      if (appConfig.dev) {
+      if (appConfig.isDevelopment) {
         console.log("Error while saving service:", error);
       }
+      toast.error("Something went wrong while creating service")
     }
   };
 

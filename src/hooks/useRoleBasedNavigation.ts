@@ -1,4 +1,3 @@
-import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Role } from "@/shared/interface/enums";
@@ -12,7 +11,7 @@ import { Subscription } from "@/shared/interface/entityInterface/subscriptionInt
 interface useRoleBasedNavigationReturnInterface {
     handleAdminGetProviderDetailPage: (subscriptionId: Subscription["_id"]) => void;
     handleGetPaymentDetailsPage: (paymentId: Payment["_id"]) => void;
-    handleJoinCall: (data: ValidateRoomId) => void;
+    JoinCallHandler: (data: ValidateRoomId) => Promise<{ success: boolean; message: string }>;
     handleNavigateToBookingsDetailPage: (appointmentId: Booking["_id"]) => void;
 }
 
@@ -39,20 +38,24 @@ export const useRoleBasedNavigation = (): useRoleBasedNavigationReturnInterface 
         }
     }
 
-    const handleJoinCall = async ({ appointmentId, roomId }: ValidateRoomId) => {
-        await validateRoomId({ appointmentId, roomId })
-            .then((res) => {
-                if (res.success) {
-                    if (authUser?.role === Role.PROVIDER) {
-                        navigate(`/provider/video-call-lobby/${roomId}`);
-                    } else if (authUser?.role === Role.USER) {
-                        navigate(`/user/video-call-lobby/${roomId}`);
-                    }
+    const JoinCallHandler = async ({ appointmentId, roomId }: ValidateRoomId): Promise<{ success: boolean; message: string }> => {
+        try {
+            const res = await validateRoomId({ appointmentId, roomId });
+            if (res.success) {
+                if (authUser?.role === Role.PROVIDER) {
+                    navigate(`/provider/video-call-lobby/${roomId}`);
+                } else if (authUser?.role === Role.USER) {
+                    navigate(`/user/video-call-lobby/${roomId}`);
                 }
-            })
-            .catch(() => {
-                toast.error("Invalid Request, please try again after sometimes.");
-            })
+                return { success: true, message: res.message || "Redirecting to video call..." };
+            }
+            return { success: false, message: res.message || "Invalid Room ID" };
+        } catch (error: any) {
+            return {
+                success: false,
+                message: error?.response?.data?.message || "Invalid Request, please try again after sometimes."
+            };
+        }
     };
 
     const handleNavigateToBookingsDetailPage = (appointmentId: Booking["_id"]) => {
@@ -63,5 +66,5 @@ export const useRoleBasedNavigation = (): useRoleBasedNavigationReturnInterface 
         }
     }
 
-    return { handleAdminGetProviderDetailPage, handleGetPaymentDetailsPage, handleJoinCall, handleNavigateToBookingsDetailPage }
+    return { handleAdminGetProviderDetailPage, handleGetPaymentDetailsPage, JoinCallHandler, handleNavigateToBookingsDetailPage }
 }

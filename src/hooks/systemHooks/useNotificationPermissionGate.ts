@@ -9,6 +9,7 @@ import { providerSetPushNotification } from "@/shared/apis/provider";
 import { PermissionStatus, Platform, Role } from "@/shared/interface/enums";
 import { updateNotificationPreference } from "@/shared/redux/slices/authSlice";
 import { requestNotificationPermission } from "@/shared/helper/requestNotificationPermission";
+import { appConfig } from "@/shared/config/env";
 
 interface useNotificationPermissionGateInterface {
   askPermission: () => Promise<void>
@@ -43,8 +44,10 @@ export const useNotificationPermissionGate = (): useNotificationPermissionGateIn
             await providerSetPushNotification(false);
           }
           dispatch(updateNotificationPreference(false));
-        } catch (err) {
-          console.error("Failed to update push notification preference", err);
+        } catch (error) {
+          if(appConfig.isDevelopment) {
+            console.error("Failed to update push notification preference", error);
+          }
         }
       };
 
@@ -59,9 +62,13 @@ export const useNotificationPermissionGate = (): useNotificationPermissionGateIn
 
     if (permission === PermissionStatus.GRANTED) {
       const deviceId = getDeviceId();
-      console.log("deviceId : ", deviceId);
+      if(appConfig.isDevelopment) {
+        console.log("deviceId : ", deviceId);
+      }
       const fcmToken = await getFcmToken();
-      console.log("fcmToken : ", fcmToken);
+      if(appConfig.isDevelopment) {
+        console.log("fcmToken : ", fcmToken);
+      }
 
       if (!deviceId || !fcmToken) return;
 

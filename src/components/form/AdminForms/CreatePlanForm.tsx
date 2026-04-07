@@ -1,13 +1,16 @@
 import FormField from "../FormField";
+import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { FormButton } from "../FormSplits";
 import { SelectField } from "../SelectField";
 import { Button } from "@/components/ui/button";
-import { adVisibility, planNameOptions } from "@/shared/utils/constants";
+import { createPlan } from "@/shared/apis/plan";
+import { appConfig } from "@/shared/config/env";
 import { PlanName } from "@/shared/interface/enums";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 import { slideOut } from "@/shared/helper/gsapAnimationSlide";
-import { useAdminPlan } from "@/hooks/adminHooks/useAdminPlan";
+import { adVisibility, planNameOptions } from "@/shared/utils/constants";
 import { AdminCreatePlanFormType, adminCreatePlanZodSchema } from "@/shared/zod/adminZod";
 
 interface CreatePlanFormProps {
@@ -19,7 +22,8 @@ const CreatePlanForm: React.FC<CreatePlanFormProps> = ({
     onClose,
     formRef
 }) => {
-    const { handleAdminPlanCreating } = useAdminPlan();
+
+    const queryClient = useQueryClient();
 
     const handleCloseForm = () => {
         slideOut(formRef.current, {
@@ -45,10 +49,24 @@ const CreatePlanForm: React.FC<CreatePlanFormProps> = ({
         },
     });
 
-    const onSubmit = (data: AdminCreatePlanFormType) => {
-        handleAdminPlanCreating(data);
-        reset();
-        onClose();
+    const onSubmit = async (data: AdminCreatePlanFormType) => {
+        await createPlan(data)
+            .then((res) => {
+                if (res.success) {
+                    toast.success(res.message);
+                    reset();
+                    onClose();
+                    queryClient.invalidateQueries({ queryKey: ["plans"] });
+                } else {
+                    toast.error(res.message);
+                }
+            })
+            .catch((error) => {
+                if (appConfig.isDevelopment) {
+                    console.log("An error occured while saving plan : ", error);
+                }
+                toast.error(error.message);
+            });
     };
 
     return (

@@ -52,7 +52,9 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ role }) => {
                 dispatch(setForgotPassword(false));
             }
         } catch (error) {
-            if (appConfig.dev) console.log("An error occurred while updating password.", error);
+            if (appConfig.isDevelopment) {
+                console.log("An error occurred while updating password.", error);
+            } 
         }
     };
 

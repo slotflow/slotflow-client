@@ -12,12 +12,12 @@ import { AppDispatch, RootState } from '@/shared/redux/appStore';
 import { useAddAvailability } from '@/hooks/useServiceAvailability';
 import { addAvailability } from '@/shared/redux/slices/providerSlice';
 import { useAuthNavigation } from '@/hooks/systemHooks/useAuthNavigation';
-import TimeRangeSetter from '@/components/serviceAvailability/createServiceAvailabilityPageSplits/TimeRangeSetter';
 import { createServiceAvailabilities } from '@/shared/apis/serviceAvailability';
+import TimeRangeSetter from '@/components/serviceAvailability/createServiceAvailabilityPageSplits/TimeRangeSetter';
+import { ProviderServiceAvailabilityFormType, providerServiceAvailabilityZodSchema } from '@/shared/zod/providerZod';
 import GenerateTimeSlots from '@/components/serviceAvailability/createServiceAvailabilityPageSplits/GenerateTimeSlots';
 import AvailabilityDataSelectionFields from '@/components/serviceAvailability/createServiceAvailabilityPageSplits/AvailabilityDataSelectionFields';
 import CreateServiceAvailabilityFooter from '@/components/serviceAvailability/createServiceAvailabilityPageSplits/CreateServiceAvailabilityFooter';
-import { ProviderServiceAvailabilityFormType, providerServiceAvailabilityZodSchema } from '@/shared/zod/providerZod';
 
 const ProviderCreateServiceAvailabilityPage: React.FC = () => {
 
@@ -132,7 +132,7 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
         }
       })
       .catch((error) => {
-        if (appConfig.dev) {
+        if (appConfig.isDevelopment) {
           console.log("Something went wrong while submitting availabilities : ", error);
         }
       });

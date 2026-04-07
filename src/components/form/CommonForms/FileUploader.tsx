@@ -65,7 +65,9 @@ const FileUploader: React.FC<FileUploaderProps> = ({
                 dispatch(setStateFunction(res.data));
             }
         } catch (error) {
-            if (appConfig.dev) console.error("Upload error:", error);
+            if (appConfig.isDevelopment) {
+                console.error("Upload error:", error);
+            }
             toast.error("Upload failed! Please try again.");
         } finally {
             dispatch(setLoadingFunction(false));
@@ -82,7 +84,9 @@ const FileUploader: React.FC<FileUploaderProps> = ({
                 dispatch(setStateFunction(null));
             }
         } catch (error) {
-            if (appConfig.dev) console.error("Deletion error:", error);
+            if (appConfig.isDevelopment) {
+                console.error("Deletion error:", error);
+            }
             toast.error("Deletion failed! Please try again.");
         } finally {
             dispatch(setLoadingFunction(false));

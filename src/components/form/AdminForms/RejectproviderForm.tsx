@@ -1,18 +1,22 @@
 import FormField from "../FormField";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
 import { FormButton } from "../FormSplits";
 import { SelectField } from "../SelectField";
 import { Button } from "@/components/ui/button";
+import { appConfig } from "@/shared/config/env";
 import { RootState } from "@/shared/redux/appStore";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { verificationOptions } from "@/shared/utils/constants";
+import { useDispatch, useSelector } from "react-redux";
+import { useQueryClient } from "@tanstack/react-query";
+import { AppDispatch } from "recharts/types/state/store";
+import { adminRejectProvider } from "@/shared/apis/provider";
 import { slideOut } from "@/shared/helper/gsapAnimationSlide";
+import { verificationOptions } from "@/shared/utils/constants";
 import { handleFormError } from "@/shared/helper/formErrorCatcher";
-import { useAdminProvider } from "@/hooks/adminHooks/useAdminProvider";
+import { AdminVerificationStatus } from "@/shared/interface/enums";
+import { setAdminVerificationState } from "@/shared/redux/slices/authSlice";
 import { AdminRejectProviderFormType, adminRejectProviderZodSchema } from "@/shared/zod/adminZod";
-import { appConfig } from "@/shared/config/env";
 
 interface RejectproviderFormProps {
   onClose: () => void;
@@ -24,7 +28,9 @@ const RejectproviderForm: React.FC<RejectproviderFormProps> = ({
   formRef,
 }) => {
 
-  const { handleAdminRejectProvider } = useAdminProvider();
+  const dispatch = useDispatch<AppDispatch>();
+  const queryClient = useQueryClient();
+
   const { rejectProviderId } = useSelector((state: RootState) => state.admin);
 
   const handleCloseForm = () => {
@@ -57,11 +63,19 @@ const RejectproviderForm: React.FC<RejectproviderFormProps> = ({
         toast.error("Provider is not selected");
         return;
       }
-      await handleAdminRejectProvider({ providerId: rejectProviderId, ...data });
-      reset();
-      handleCloseForm();
+
+      const res = await adminRejectProvider({ providerId: rejectProviderId, ...data });
+        if (res.success) {
+            toast.success(res.message);
+            reset();
+            handleCloseForm();
+            dispatch(setAdminVerificationState(AdminVerificationStatus.REJECTED));
+            queryClient.invalidateQueries({ queryKey: ["providers"] });
+        } else {
+          toast.error(res.message);
+        }    
     } catch (error) {
-      if (appConfig.dev) {
+      if (appConfig.isDevelopment) {
         console.log("Error while rejecting provider : ", error);
       }
     }

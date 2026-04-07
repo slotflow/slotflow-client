@@ -1,10 +1,9 @@
-import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import { appConfig } from "@/shared/config/env";
-import { useEffect, useRef, useState } from "react";
-import { NavigateFunction } from "react-router-dom";
-import { AppDispatch } from "@/shared/redux/appStore";
 import { joinOrLeft } from "@/shared/apis/booking";
-import { AuthUser } from "@/shared/interface/sliceInterface";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { MediaTrackKind, Role } from "@/shared/interface/enums";
 import { toggleMediaTrack } from "@/shared/helper/toggleMediaTrack";
 import { connectVideoSocket } from "@/shared/socket/videoSocketThunk";
@@ -12,44 +11,37 @@ import { JoinRoomCallbackRequest } from "@/shared/interface/api/booking";
 import { setCamera, setMic, startVideoCallTimer, updateVideoCallTimer } from "@/shared/redux/slices/videoSlice";
 
 interface useVideoCallLobbyInterface {
-  user: AuthUser;
   roomId: string;
-  dispatch: AppDispatch;
-  navigate: NavigateFunction;
-  videoCallRoomId: string | null;
-  videoCallRemainingTime: number;
   isCameraOn: boolean;
   isMicOn: boolean;
-  isVideoCallTimerRunning: boolean;
 }
 
 interface useVideoCallLobbyReturnInterface {
-  handleJoin: () => Promise<void>;
+  videoCallJoinHandler: () => Promise<{ success: boolean; message: string }>;
   videoRef: React.RefObject<HTMLVideoElement | null>;
   toggleCamera: () => void;
   toggleMic: () => void;
 }
 
 export const useVideoCallLobby = ({
-  user,
   roomId,
-  dispatch,
-  navigate,
-  videoCallRoomId,
-  videoCallRemainingTime,
   isCameraOn,
   isMicOn,
-  isVideoCallTimerRunning
 }: useVideoCallLobbyInterface): useVideoCallLobbyReturnInterface => {
 
-  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+
   const streamRef = useRef<MediaStream | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
 
-  const handleJoin = async () => {
+  const { authUser: user } = useSelector((state: RootState) => state.auth);
+  const { isVideoCallTimerRunning, videoCallRoomId, videoCallRemainingTime } = useSelector((state: RootState) => state.video);
+
+  const videoCallJoinHandler = async () => {
     if (!user || !roomId) {
-      toast.error("Something went wrong, please truy again");
-      return;
+      return { success: false, message: "Something went wrong, please truy again" };
     }
 
     const currentTime = new Date();
@@ -65,7 +57,7 @@ export const useVideoCallLobby = ({
 
       if (res.success) {
         if (!res.data.duration) {
-          toast.error("Something went wrong");
+          return { success: false, message: "Something went wrong" };
         } else {
           const totalDurationInSec = res.data.duration * 60;
           dispatch(connectVideoSocket());
@@ -79,17 +71,17 @@ export const useVideoCallLobby = ({
             remainingTime,
             roomId
           }));
-          toast.success("Welcome to meet");
           navigate(`/${user.role === Role.PROVIDER ? "provider" : "user"}/video-call-room/${roomId}`);
+          return { success: true, message: "Welcome to meet" };
         }
       } else {
-        toast.error(res.message || "Unable to join, please try again");
+        return { success: false, message: res.message || "Unable to join, please try again" };
       }
     } catch (error) {
-      if (appConfig.dev) {
+      if (appConfig.isDevelopment) {
         console.error("Join room error:", error);
       }
-      toast.error("Please try again");
+      return { success: false, message: "Please try again" };
     }
   };
 
@@ -114,7 +106,7 @@ export const useVideoCallLobby = ({
       dispatch(setMic(audioTrack?.enabled ?? false));
 
     } catch (error) {
-      if (appConfig.dev) {
+      if (appConfig.isDevelopment) {
         console.error("Media access error:", error);
       }
       dispatch(setCamera(false));
@@ -168,7 +160,7 @@ export const useVideoCallLobby = ({
   }, [isVideoCallTimerRunning, dispatch]);
 
   return {
-    handleJoin,
+    videoCallJoinHandler,
     videoRef,
     toggleCamera,
     toggleMic

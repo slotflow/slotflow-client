@@ -34,7 +34,7 @@ const ProviderAddAddressPage = () => {
                 }
             }
         } catch (error) {
-            if (appConfig.dev) console.log("Failed to Save Address : ", error);
+            if (appConfig.isDevelopment) console.log("Failed to Save Address : ", error);
         }
     }
 

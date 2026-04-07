@@ -8,8 +8,8 @@ import { Booking } from "./entityInterface/bookingInterface";
 
 // **** Common Response interface
 export interface ApiBaseResponse {
-  success?: boolean;
-  message?: string;
+  success: boolean;
+  message: string;
 }
 
 

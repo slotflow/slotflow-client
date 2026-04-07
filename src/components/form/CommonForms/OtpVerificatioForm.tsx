@@ -64,7 +64,9 @@ const OtpVerificatioForm: React.FC<OtpVerificatioFormProps> = ({ role }) => {
                 else goToAuthPage(role, RedirectTo.LOGIN);
             }
         } catch (error) {
-            if (appConfig.dev) console.log("An error occurred during OTP verification ", error);
+            if (appConfig.isDevelopment) {
+                console.log("An error occurred during OTP verification ", error);
+            }
         }
     };
 
@@ -75,7 +77,7 @@ const OtpVerificatioForm: React.FC<OtpVerificatioFormProps> = ({ role }) => {
             const res = await dispatch(resendOtp({ verificationToken, role })).unwrap();
             if (res.success) toast.success(res.message);
         } catch {
-            if (appConfig.dev) {
+            if (appConfig.isDevelopment) {
                 console.log("An error occurred while resending OTP.");
             }
         }
