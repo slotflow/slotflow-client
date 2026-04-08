@@ -1,4 +1,4 @@
-import world from '../../../assets/svgs/world2.svg';
+import world from '../../assets/svgs/world2.svg';
 
 const SectionOne = () => {
 

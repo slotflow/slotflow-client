@@ -1,23 +1,20 @@
-import { useEffect, useRef } from "react";
 import { toast } from "react-toastify";
+import { useEffect, useRef } from "react";
+import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
+import { fetchMySubscription } from "@/shared/apis/subscription";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { Loader2, CheckCircle2, LayoutDashboard, XCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { AppDispatch, RootState } from "@/shared/redux/appStore";
-import {
-  setSubscription,
-  setSubscriptionUpdating,
-} from "@/shared/redux/slices/authSlice";
-import { fetchMySubscription } from "@/shared/apis/subscription";
+import { setSubscription, setSubscriptionUpdating } from "@/shared/redux/slices/authSlice";
 
-interface ProviderSubscriptionConfirmPageProps {
-  status: boolean;
-}
+const ProviderSubscriptionConfirmPage: React.FC = () => {
 
-const ProviderSubscriptionConfirmPage: React.FC<ProviderSubscriptionConfirmPageProps> = ({ status }) => {
+  const [searchParams] = useSearchParams();
+  const statusParam =  searchParams.get("status");
+  const status = statusParam === "success";
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();

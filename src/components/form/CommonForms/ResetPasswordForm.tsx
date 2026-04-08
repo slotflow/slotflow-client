@@ -2,22 +2,20 @@ import FormField from "../FormField";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updatePassword } from "@/shared/apis/auth";
 import { FormButton, FormHeading } from "../FormSplits";
-import { AppDispatch, RootState } from "@/shared/redux/appStore";
+import { AppDispatch } from "@/shared/redux/appStore";
 import { setForgotPassword } from "@/shared/redux/slices/appSlice";
-import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
 import { ResetPasswordFormType, resetPasswordZodSchema } from "@/shared/zod/authZod";
-import { RedirectTo, ResetPasswordFormProps } from "@/shared/interface/commonInterface";
 import { appConfig } from "@/shared/config/env";
+import { useNavigate } from "react-router-dom";
+import { redirectPaths } from "@/shared/utils/constants";
 
-const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ role }) => {
+const ResetPasswordForm: React.FC = () => {
 
+    const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>();
-    const { goToAuthPage } = useAuthNavigation();
-    const authUser = useSelector((store: RootState) => store.auth.authUser);
-    const verificationToken: string | undefined = authUser?.verificationToken;
 
     const {
         register,
@@ -34,21 +32,15 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ role }) => {
     });
 
     const onSubmit = async (data: ResetPasswordFormType) => {
-        if (!role || !verificationToken) {
-            toast.error("Something went wrong. Please try again.");
-            return;
-        }
 
         try {
             const res = await dispatch(updatePassword({
-                role,
-                verificationToken,
                 password: data.password,
             })).unwrap();
 
             if (res.success) {
                 toast.success(res.message);
-                goToAuthPage(role, RedirectTo.LOGIN);
+                navigate(redirectPaths.LOGIN);
                 dispatch(setForgotPassword(false));
             }
         } catch (error) {
@@ -98,7 +90,7 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ role }) => {
                         <p className="mt-6 flex justify-between text-xs md:text-sm/6 text-[var(--textTwo)] px-2">
                             <span
                                 className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
-                                onClick={() => goToAuthPage(role, RedirectTo.LOGIN)}
+                                onClick={() => navigate(redirectPaths.LOGIN)}
                             >
                                 Cancel
                             </span>

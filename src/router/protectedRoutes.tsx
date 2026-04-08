@@ -9,6 +9,7 @@ interface ProtectedRouteProps {
 }
 
 export const ProtectedRoute = ({ allowedRoles, children }: ProtectedRouteProps) => {
+  
   const user = useSelector((store: RootState) => store.auth.authUser);
 
   if (!user || !user.role) {

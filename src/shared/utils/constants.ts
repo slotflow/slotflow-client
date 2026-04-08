@@ -11,7 +11,6 @@ import {
   Wallet,
   Phone,
   Gauge,
-  Video,
   Layers,
   Rocket,
   MapPin,
@@ -52,7 +51,6 @@ import {
 import { ProviderFetchDashboardStatsDataResponse } from "../interface/api/provider";
 import {
   Route,
-  RedirectTo,
   PlanListType,
   DayMapInterface,
   statsMapIntrface,
@@ -95,7 +93,7 @@ export const adminRoutes: Route[] = [
   { path: "plans", name: "Plans", icon: LayoutGrid },
   { path: "subscriptions", name: "Subscriptions", icon: CreditCard },
   { path: "payments", name: "Payments", icon: Handshake },
-  { path: "grafana", name: "Grafana", icon: ScanHeart },
+  { path: "grafana-dashboard", name: "Grafana Dashboard", icon: ScanHeart },
 ]
 
 // Routes for user
@@ -107,7 +105,6 @@ export const userRoutes: Route[] = [
   { path: "integrations", name: "Integrations", icon: Combine },
   { path: "chat", name: "Chat", icon: MessageSquare },
   { path: "calendar", name: "Calendar", icon: Calendar1 },
-  { path: "video-call", name: "Video call", icon: Video },
   { path: "reviews", name: "Reviews", icon: Star },
   { path: "settings", name: "Settings", icon: Settings },
 ]
@@ -116,71 +113,77 @@ export const userRoutes: Route[] = [
 export const providerRoutes: Route[] = [
   { path: "dashboard", name: "Dashboard", icon: Gauge },
   { path: "profile", name: "Profile", icon: User },
-  { path: "appointments", name: "Appointments", icon: CalendarCheck },
+  { path: "bookings", name: "Appointments", icon: CalendarCheck },
   { path: "subscriptions", name: "Subscriptions", icon: CreditCard },
   { path: "payments", name: "Payments", icon: Handshake },
   { path: "integrations", name: "Integrations", icon: Combine },
   { path: "calendar", name: "Calendar", icon: Calendar1 },
   { path: "chat", name: "Chat", icon: MessageSquare },
-  { path: "video-call", name: "Video call", icon: Video },
   { path: "reviews", name: "Reviews", icon: Star },
   { path: "settings", name: "Settings", icon: Settings },
 ]
 
+export enum RouteAccess {
+  DASHBOARD = "Dashboard",
+  PROFILE = "Profile",
+  BOOKINGS = "Bookings",
+  PAYMENTS = "Payments",
+  INTEGRATIONS = "Integrations",
+  CHAT = "Chat",
+  REVIEWS = "Reviews",
+  SETTINGS = "Settings",
+  CALENDAR = "Calendar",
+  SUBSCRIPTIONS = "Subscriptions",
+}
+
 // Access Control For Provider
-export const planAccessMap: Record<PlanName, string[]> = {
+export const planAccessMap: Record<PlanName, RouteAccess[]> = {
   [PlanName.NO_SUBSCRIPTION]: [
-    "Dashboard",
-    "Profile",
-    "Subscriptions",
-    "Settings",
+    RouteAccess.DASHBOARD,
+    RouteAccess.PROFILE,
+    RouteAccess.SUBSCRIPTIONS,
+    RouteAccess.SETTINGS,
   ],
   [PlanName.TRIAL]: [
-    "Dashboard",
-    "Profile",
-    "Appointments",
-    "Subscriptions",
-    "Settings",
+    RouteAccess.DASHBOARD,
+    RouteAccess.PROFILE,
+    RouteAccess.BOOKINGS,
+    RouteAccess.SUBSCRIPTIONS,
+    RouteAccess.SETTINGS,
   ],
   [PlanName.STARTER]: [
-    "Dashboard",
-    "Profile",
-    "Appointments",
-    "Subscriptions",
-    "Payments",
-    "Integrations",
-    "Notifications",
-    "Settings",
+    RouteAccess.DASHBOARD,
+    RouteAccess.PROFILE,
+    RouteAccess.BOOKINGS,
+    RouteAccess.SUBSCRIPTIONS,
+    RouteAccess.PAYMENTS,
+    RouteAccess.INTEGRATIONS,
+    RouteAccess.SETTINGS,
   ],
   [PlanName.PROFESSIONAL]: [
-    "Dashboard",
-    "Profile",
-    "Appointments",
-    "Subscriptions",
-    "Payments",
-    "Notifications",
-    "Integrations",
-    "Chat",
-    "Video call",
-    "Reviews",
-    "Settings",
+    RouteAccess.DASHBOARD,
+    RouteAccess.PROFILE,
+    RouteAccess.BOOKINGS,
+    RouteAccess.SUBSCRIPTIONS,
+    RouteAccess.PAYMENTS,
+    RouteAccess.INTEGRATIONS,
+    RouteAccess.CHAT,
+    RouteAccess.REVIEWS,
+    RouteAccess.SETTINGS,
   ],
   [PlanName.ENTERPRISE]: [
-    "Dashboard",
-    "Profile",
-    "Appointments",
-    "Subscriptions",
-    "Payments",
-    "Notifications",
-    "Integrations",
-    "Chat",
-    "Calendar",
-    "Video call",
-    "Reviews",
-    "Settings",
+    RouteAccess.DASHBOARD,
+    RouteAccess.PROFILE,
+    RouteAccess.BOOKINGS,
+    RouteAccess.SUBSCRIPTIONS,
+    RouteAccess.PAYMENTS,
+    RouteAccess.INTEGRATIONS,
+    RouteAccess.CHAT,
+    RouteAccess.REVIEWS,
+    RouteAccess.CALENDAR,
+    RouteAccess.SETTINGS,
   ],
 };
-
 
 // Gsap animation common oject
 export const gsapBigSvgYDirectionAnimation: gsapBigSvgYDirectionAnimationInterface = {
@@ -868,42 +871,6 @@ export const providerStatsMapForAdmin: StatsMapForAdminInterface[] = [
   },
 ]
 
-// export const todayStatsMapForAdmin: StatsMapForAdminInterface[] = [
-//   {
-//     title: "New Users",
-//     key: "newUsers",
-//     icon: UserPlus,
-//   },
-//   {
-//     title: "New Providers",
-//     key: "newProviders",
-//     icon: UserCheck,
-//   },
-//   {
-//     title: "Today’s Appointments",
-//     key: "todaysAppointments",
-//     icon: CalendarCheck,
-//   },
-//   {
-//     title: "Today’s Cancellations",
-//     key: "todaysCancelledAppointments",
-//     icon: Ban,
-//   },
-// ]
-
-// export const todayRevenueStatsMapForAdmin: StatsMapForAdminInterface[] = [
-//   {
-//     title: "Today’s Total Revenue",
-//     key: "todaysTotalRevenue",
-//     icon: Banknote,
-//   },
-//   {
-//     title: "Today’s Total Payouts",
-//     key: "todaysTotalPayouts",
-//     icon: Wallet,
-//   },
-// ]
-
 export const subscriptionStatsMapForAdmin: StatsMapForAdminInterface[] = [
   {
     title: "Active Subscriptions",
@@ -1330,18 +1297,17 @@ export const roleRoutes: Record<string, string> = {
   admin: "/admin/login"
 };
 
-export const redirectPaths: Record<RedirectTo, string> = {
-  [RedirectTo.LOGIN]: "/login",
-  [RedirectTo.REGISTER]: "/register",
-  [RedirectTo.VERIFY_EMAIL]: "/verify/email",
-  [RedirectTo.RESET_PASSWORD]: "/reset/password",
-  [RedirectTo.VERIFY_OTP]: "/verify/otp",
-
-  [RedirectTo.PROVIDER_ADDRESS]: "/onboarding/address",
-  [RedirectTo.PROVIDER_SERVICE_DETAILS]: "/onboarding/service",
-  [RedirectTo.PROVIDER_AVAILABILITY]: "/onboarding/availability",
-  [RedirectTo.PROVIDER_PROOFS]: "/onboarding/proofs",
-  [RedirectTo.PROVIDER_APPROVAL_PENDING]: "/onboarding/pending",
+export const redirectPaths: Record<string, string> = {
+  LOGIN: "/login",
+  REGISTER: "/register",
+  VERIFY_EMAIL: "/verify/email",
+  RESET_PASSWORD: "/reset/password",
+  VERIFY_OTP: "/verify/otp",
+  ONBOARDING_ADDRESS: "/onboarding/address",
+  ONBOARDING_SERVICE: "/onboarding/service",
+  ONBOARDING_AVAILABILITY: "/onboarding/availability",
+  ONBOARDING_PROOFS: "/onboarding/proofs",
+  ONBOARDING_PENDING: "/onboarding/pending",
 };
 
 export const basePaths: Record<string, string> = {

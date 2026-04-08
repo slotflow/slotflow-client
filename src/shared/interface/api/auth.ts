@@ -1,34 +1,27 @@
-import { AdminVerificationStatus, PlanName, Role } from "../enums";
 import { ApiBaseResponse } from "../commonInterface";
+import { User } from "../entityInterface/userInterface";
+import { AdminVerificationStatus, PlanName, Role } from "../enums";
 
-interface UserBaseInterface {
-    username: string;
+// Used as the request type of the user or provider sign up api
+export type SignupRequest = Pick<User, "username" | "email" | "password">;
+
+// Used as the request type of the otp verification api
+export interface VerifyOtpRequest {
+    otp: string
+};
+
+// Used as the request type of the verify email api
+export interface VerifyEmailRequest {
+    email: string;
+}
+
+// Used as the request type of user or provider or admin sign in api
+export interface SigninRequest {
     email: string;
     password: string;
-    role: string;
-    verificationToken: string;
-    otp: string;
-}
+};
 
-
-// **** Used as the request type of the user or provider sign up api
-export type SignupRequest = Pick<UserBaseInterface, "username" | "email" | "password" | "role">;
-// **** Used as the response interface of the user or provider sign up api
-export interface SignupResponse extends ApiBaseResponse {
-    data: {
-        verificationToken: string;
-        role: Role;
-    };
-}
-
-
-// **** Used as the request type of the otp verification api
-export type VerifyOtpRequest = Pick<UserBaseInterface, "otp" | "verificationToken" | "role">;
-
-
-// **** Used as the request type of user or provider or admin sign in api
-export type SigninRequest = Pick<UserBaseInterface, "email" | "password" | "role">;
-// **** Used as the response interface of user or provider or admin sign in api
+// Used as the response interface of user or provider or admin sign in api
 export interface SigninResponse extends ApiBaseResponse {
     data: {
         username: string;
@@ -52,24 +45,12 @@ export interface SigninResponse extends ApiBaseResponse {
         isAvailabilityVerified?: boolean,
         isProofsVerified?: boolean,
         allowPushNotification?: boolean;
+        googleId?: string;
+        stripeAccountId?: string;
+        stripeConnected?: boolean;
     };
 
 }
 
-
-// **** Inline interface used for the signout api
-
-
-// **** Used as the request type of the resend otp api
-export type ResendOtpRequest = Pick<UserBaseInterface, "role"> & Partial<Pick<UserBaseInterface, "verificationToken" | "email">>;
-// **** Used as the response interface of the resend otp api
-export interface ResendOtpResponse extends ApiBaseResponse {
-    data: {
-        verificationToken: string;
-        role: Role;
-    };
-}
-
-
-// ****  Used as the Request type of update password api
-export type UpdatePasswordRequest = Pick<UserBaseInterface, "password" | "role" | "verificationToken">;
+//  Used as the Request type of update password api
+export type UpdatePasswordRequest = Pick<User, "password">;

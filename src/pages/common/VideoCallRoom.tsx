@@ -227,7 +227,7 @@ const RoomPage = () => {
           }));
         }
 
-        navigate(`/${user?.role === Role.PROVIDER ? "provider/appointments" : "user/bookings"}`, { replace: true });
+        navigate(`/${user?.role === Role.PROVIDER ? "provider/bookings" : "user/bookings"}`, { replace: true });
       } else {
         toast.error(res.message || "Unable to join, please try again");
       }

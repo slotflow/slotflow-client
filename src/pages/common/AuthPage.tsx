@@ -1,12 +1,11 @@
 import gsap from "gsap";
 import { useSelector } from "react-redux";
-import { Role } from "@/shared/interface/enums";
 import { Meteors } from "@/components/ui/meteors";
 import { RootState } from "@/shared/redux/appStore";
 import React, { useEffect, useRef, useState } from "react";
+import WorldMapWrapper from "@/components/map/WorldMapWrapper";
 import LoginForm from "@/components/form/CommonForms/LoginForm";
 import SignUpForm from "@/components/form/CommonForms/SignUpForm";
-import WorldMapWrapper from "@/components/map/WorldMapWrapper";
 import { useAuthCheckInLogin } from "@/hooks/useAuthCheckInLogin";
 import ResetPasswordForm from "@/components/form/CommonForms/ResetPasswordForm";
 import OtpVerificatioForm from "@/components/form/CommonForms/OtpVerificatioForm";
@@ -14,11 +13,10 @@ import AnimatedBeamIntegrations from "@/components/animation/AnimatedCircleWithB
 import EmailVerificationForm from "@/components/form/CommonForms/EmailVerificationForm";
 
 interface AuthPageProp {
-  role: Role;
   formType: number;
 }
 
-const AuthPage: React.FC<AuthPageProp> = ({ role, formType }) => {
+const AuthPage: React.FC<AuthPageProp> = ({ formType }) => {
 
   useAuthCheckInLogin();
 
@@ -77,18 +75,18 @@ const AuthPage: React.FC<AuthPageProp> = ({ role, formType }) => {
 
 
   const formMap: Record<number, React.ReactNode> = {
-    0: <LoginForm role={role} />,
-    1: <SignUpForm role={role} />,
-    2: <EmailVerificationForm role={role} />,
-    3: <ResetPasswordForm role={role} />,
-    4: <OtpVerificatioForm role={role} />,
+    0: <LoginForm />,
+    1: <SignUpForm />,
+    2: <EmailVerificationForm />,
+    3: <ResetPasswordForm />,
+    4: <OtpVerificatioForm />,
   };
 
   return (
     <div className="h-[100vh] flex">
 
       <div className={`w-full md:w-6/12 lg:w-4/12 flex justify-center items-center ${lightTheme ? "bg-[#f5f5f5]" : "bg-[#171717]"}`}>
-        {role === Role.ADMIN ? formMap[0] : formMap[formType]}
+        {formMap[formType]}
       </div>
 
       <div className="w-0 md:w-6/12 lg:w-8/12 relative flex h-full items-center justify-center overflow-hidden bg-[var(--background)]">

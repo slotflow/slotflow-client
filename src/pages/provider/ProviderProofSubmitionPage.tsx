@@ -1,20 +1,19 @@
 import { useEffect } from "react";
-import { Role } from "@/shared/interface/enums";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import SideBox from "@/components/provider/SideBox";
 import { useDispatch, useSelector } from "react-redux";
-import { RedirectTo } from "@/shared/interface/commonInterface";
+import { redirectPaths } from "@/shared/utils/constants";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { setIsProofSubmitted } from "@/shared/redux/slices/authSlice";
 import FileUploader from "@/components/form/CommonForms/FileUploader";
-import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
 import { setIdentityProofLoading, setProviderIdentityProofs, setProviderServiceProofs, setServiceProofLoading } from "@/shared/redux/slices/providerSlice";
 import { providerDeleteIdentityProof, providerDeleteServiceProof, providerFetchProofs, providerUpdateIdentityProof, providerUpdateProofServiceProof } from "@/shared/apis/provider";
 
 export const ProviderProofSubmissionPage = () => {
 
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { goToAuthPage } = useAuthNavigation();
   const { authUser } = useSelector((state: RootState) => state.auth);
   const { identityProof, serviceProof, identityProofLoading, serviceProofLoading } = useSelector((state: RootState) => state.provider);
 
@@ -37,7 +36,7 @@ export const ProviderProofSubmissionPage = () => {
   const handleNextutton = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     dispatch(setIsProofSubmitted());
-    goToAuthPage(Role.PROVIDER, RedirectTo.PROVIDER_APPROVAL_PENDING);
+    navigate(redirectPaths.PROVIDER_APPROVAL_PENDING);
   }
 
   return (

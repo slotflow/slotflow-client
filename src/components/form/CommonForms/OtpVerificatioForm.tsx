@@ -1,30 +1,25 @@
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import { formatTime } from "@/shared/helper/formatter";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
+import { appConfig } from "@/shared/config/env";
 import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { formatTime } from "@/shared/helper/formatter";
 import { useDispatch, useSelector } from "react-redux";
 import { FormButton, FormHeading } from "../FormSplits";
-import { updateTimer } from "@/shared/redux/slices/appSlice";
 import { resendOtp, verifyOtp } from "@/shared/apis/auth";
+import { updateTimer } from "@/shared/redux/slices/appSlice";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { VerifyOtpFormType, verifyOtpZodSchema } from "@/shared/zod/authZod";
-import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
-import { RedirectTo, OtpVerificatioFormProps } from "@/shared/interface/commonInterface";
-import { appConfig } from "@/shared/config/env";
 
-const OtpVerificatioForm: React.FC<OtpVerificatioFormProps> = ({ role }) => {
+const OtpVerificatioForm: React.FC = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const { goToAuthPage } = useAuthNavigation();
-    const authUser = useSelector((store: RootState) => store.auth.authUser);
     const { otpRemainingTime, otpTimerIsRunning, forgotPassword } = useSelector((store: RootState) => store.app);
 
-    const verificationToken: string | undefined = authUser?.verificationToken;
     const [resentLoading, setResendLoading] = useState(false);
 
     const {
@@ -51,17 +46,15 @@ const OtpVerificatioForm: React.FC<OtpVerificatioFormProps> = ({ role }) => {
     }, [otpTimerIsRunning, dispatch]);
 
     const onSubmit = async (data: VerifyOtpFormType) => {
-        if (!verificationToken || !role) {
-            toast.error("Something went wrong. Try again.");
-            return;
-        }
-
         try {
-            const res = await dispatch(verifyOtp({ otp: data.otp, verificationToken, role })).unwrap();
+            const res = await dispatch(verifyOtp({ otp: data.otp })).unwrap();
             if (res.success) {
                 toast.success(res.message);
-                if (forgotPassword) goToAuthPage(role, RedirectTo.RESET_PASSWORD);
-                else goToAuthPage(role, RedirectTo.LOGIN);
+                if (forgotPassword) {
+                    navigate("/reset/password")
+                } else {
+                    navigate("/login")
+                }
             }
         } catch (error) {
             if (appConfig.isDevelopment) {
@@ -71,10 +64,9 @@ const OtpVerificatioForm: React.FC<OtpVerificatioFormProps> = ({ role }) => {
     };
 
     const handleResendOtp = async () => {
-        if (!verificationToken || !role) return;
         setResendLoading(true);
         try {
-            const res = await dispatch(resendOtp({ verificationToken, role })).unwrap();
+            const res = await dispatch(resendOtp()).unwrap();
             if (res.success) toast.success(res.message);
         } catch {
             if (appConfig.isDevelopment) {
@@ -150,7 +142,7 @@ const OtpVerificatioForm: React.FC<OtpVerificatioFormProps> = ({ role }) => {
                         <p className="mt-6 flex justify-between text-xs md:text-sm/6 text-[var(--textTwo)] px-2">
                             <span
                                 className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
-                                onClick={() => goToAuthPage(role, RedirectTo.LOGIN)}
+                                onClick={() => navigate("/login")}
                             >
                                 Cancel
                             </span>

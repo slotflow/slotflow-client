@@ -11,7 +11,7 @@ import DataFetchingError from '@/components/error/DataFetchingError';
 import UserViewProviderCard from '@/components/user/UserViewProviderCard';
 import { fetchServiceProvidersForUser } from '@/shared/apis/provider';
 
-const UserDashboardPage = () => {
+const UserListProvidersCardsPage = () => {
 
   const dispatch = useDispatch<AppDispatch>();
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
@@ -122,4 +122,4 @@ const UserDashboardPage = () => {
   );
 };
 
-export default UserDashboardPage;
+export default UserListProvidersCardsPage;

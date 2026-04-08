@@ -6,14 +6,13 @@ import { Plan } from "./entityInterface/planInterface";
 import { PlanName, Role, ServiceCategory } from "./enums";
 import { Booking } from "./entityInterface/bookingInterface";
 
-// **** Common Response interface
+// Common Response interface
 export interface ApiBaseResponse {
   success: boolean;
   message: string;
 }
 
-
-// **** Paginated response api return data interface
+// Paginated response api return data interface
 export interface ApiPaginatedResponse<T> extends ApiBaseResponse {
   data?: T[];
   totalCount?: number;
@@ -21,51 +20,20 @@ export interface ApiPaginatedResponse<T> extends ApiBaseResponse {
   totalPages?: number;
 }
 
-
-// **** Form data common interface
-interface CommonFormFields {
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  otp: string;
-  role: Role;
-  verificationToken: string;
-}
-
-
-// **** Signup form props type
-export type signUpFormProps = Pick<CommonFormFields, "role">;
-
-
-
-// **** Login form props interface
-export interface LoginFormProps extends Pick<CommonFormFields, "role"> {
-  isAdmin?: boolean;
-}
-
-
-// **** Email verification form props type
-export type EmailVerificationFormProps = Pick<CommonFormFields, "role">;
-
-export type OtpVerificatioFormProps = Pick<CommonFormFields, "role">;
-export type ResetPasswordFormProps = Pick<CommonFormFields, "role">;
-
-
-// **** Authtication form heading component props interface
+// Authtication form heading component props interface
 export interface AuthFormsHeadingProps {
   title: string;
   description?: string;
 }
-// **** Authtication form button component props interface
+
+// Authtication form button component props interface
 export interface AuthFormsButtonProps {
   text: string;
   loading: boolean;
   disabled?: boolean;
 }
 
-
-// **** InfoDisplay component props interface
+// InfoDisplay component props interface
 export interface InfoDisplayComponentRowProps {
   defaultValue?: string;
   label: string;
@@ -86,8 +54,7 @@ export interface InfoDisplayComponentRowProps {
   tags?: boolean;
 }
 
-
-// **** Common button props interface
+// Common button props interface
 export interface CommonButtonProps {
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void,
   text: string,
@@ -96,23 +63,21 @@ export interface CommonButtonProps {
   icon?: LucideIcon;
 }
 
-
-// **** Nav compoenents interfaces
+// Nav compoenents interfaces
 export interface SideBarProps {
   routes: Route[];
   filteredRoutes?: Route[];
 }
 
-
-// **** Constant file interfaces
-// **** Routes array interface
+// Constant file interfaces
+// Routes array interface
 export interface Route {
   path: string;
   name: string;
   icon: LucideIcon;
 }
 
-// **** Gsap animation object interface
+// Gsap animation object interface
 export interface gsapBigSvgYDirectionAnimationInterface {
   y: number,
   duration: number,
@@ -120,25 +85,22 @@ export interface gsapBigSvgYDirectionAnimationInterface {
   repeat: number,
   ease: string,
 }
-// **** Header compoenent Navs Array Interface
+// Header compoenent Navs Array Interface
 export interface HeaderCompoenentNavsProps {
   name: string;
   href: string;
   current: boolean;
 }
 
-
-// **** Common Forms Input handle change function type
+// Common Forms Input handle change function type
 export type HandleChangeFunction = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
 export type HandleFeatureChangeFunction = (e: ChangeEvent<HTMLInputElement>, index: number) => void;
 
-
-// **** Section one interface
-// **** Role section Button function interface 
+// Section one interface
+// Role section Button function interface 
 export type HandleRoleSelectionFunction = (url: string) => void;
 
-
-// **** Common Table compoenent
+// Common Table compoenent
 export interface CommonTableComponentProps<
   T,
   Q extends object = {}
@@ -157,6 +119,7 @@ export interface CommonTableComponentProps<
   queryParams?: Q;
 }
 
+// Api fetch function interface
 export type ApiFetchFunction<
   T,
   Q extends object = {}
@@ -164,8 +127,7 @@ export type ApiFetchFunction<
   queryParams?: FetchFunctionBaseQueryParams & Q
 ) => Promise<ApiPaginatedResponse<T>>;
 
-
-// **** Api common request parameter interface
+// Api common request parameter interface
 export interface FetchFunctionBaseQueryParams {
   page?: number;
   limit?: number;
@@ -173,8 +135,7 @@ export interface FetchFunctionBaseQueryParams {
   sortOrder?: "asc" | "desc";
 }
 
-
-// **** Formate date timeRage Enum
+// Formate date timeRage Enum
 export type TimeRange = "7d"
   | "14d"
   | "30d"
@@ -184,21 +145,20 @@ export type TimeRange = "7d"
   | "180d"
   | "365d"
 
-
-// **** DateSelect data interface
+// DateSelect data interface
 export interface dataSelectListItemInterface {
   value: string;
   content: string;
 }
 
-// **** AppointmentOverTimeInterface
+// AppointmentOverTimeInterface
 export interface AppointmentOverTimeInterface {
   completed: number,
   missed: number,
   cancelled: number
 }
 
-//  **** Chart Common Interface
+//  Chart Common Interface
 export interface ChatComponentProps<T extends { date: string }> {
   title: string;
   description: string;
@@ -212,15 +172,13 @@ export interface ChatComponentProps<T extends { date: string }> {
   minimumPlan: PlanName;
 }
 
-
-// **** Chat Common Interface Base Type
+// Chat Common Interface Base Type
 export type BaseChartData = {
   date: string;
   [key: string]: number | string | undefined;
 };
 
-
-//// **** Provider service availability component day map interface
+// Provider service availability component day map interface
 export interface DayMapInterface {
   [key: string]: {
     day: string,
@@ -228,8 +186,7 @@ export interface DayMapInterface {
   }
 }
 
-
-//// ****  
+// Plan feature interface
 export interface PlanFeatureInterface {
   type: string;
   features: {
@@ -241,26 +198,22 @@ export interface PlanFeatureInterface {
   }[];
 }
 
-
-//// **** 
+// Plan list type interface
 export type PlanListType = Array<Pick<Plan, "_id" | "planName" | "description" | "features" | "price">>
 
-
-//// **** 
+// Footer link interface
 export interface FooterLinkInterface {
   text: string;
   href: string;
 }
 
-
-//// **** 
+// Footer column data interface
 export interface FooterColumnDataInterface {
   title: string;
   links: FooterLinkInterface[];
 }
 
-
-//// **** 
+// Provider approval message interface
 export interface ProviderApprovalMessageInterface {
   heading: string;
   message1: string;
@@ -268,8 +221,7 @@ export interface ProviderApprovalMessageInterface {
   footerNote: string;
 }
 
-
-//// **** Feature Content interface
+// Feature Content interface
 export interface FeatureContentInterface {
   title: string;
   description: string;
@@ -279,8 +231,7 @@ export interface FeatureContentInterface {
   islogo: boolean;
 }
 
-
-//// ****
+// Stats map interface
 export interface statsMapIntrface<T> {
   title: string;
   key: keyof T;
@@ -289,8 +240,7 @@ export interface statsMapIntrface<T> {
   plans?: PlanName[];
 }
 
-
-//// ****
+// Stats map for admin interface
 export interface StatsMapForAdminInterface {
   title: string;
   key: string;
@@ -298,8 +248,7 @@ export interface StatsMapForAdminInterface {
   price?: boolean;
 }
 
-
-//// ****
+// Google calendar event interface
 export interface GoogleCalendarEvent extends Partial<Booking> {
   id?: string;
   iCalUID?: string;
@@ -350,7 +299,7 @@ export interface GoogleCalendarEvent extends Partial<Booking> {
   },
 }
 
-
+// Common tab interface
 export interface CommonTabInterface {
   value: string;
   label: string;
@@ -358,21 +307,10 @@ export interface CommonTabInterface {
   role?: Role[];
 }
 
-export enum RedirectTo {
-  LOGIN = 0,
-  REGISTER = 1,
-  VERIFY_EMAIL = 2,
-  RESET_PASSWORD = 3,
-  VERIFY_OTP = 4,
-  PROVIDER_ADDRESS = 5,
-  PROVIDER_SERVICE_DETAILS = 6,
-  PROVIDER_AVAILABILITY = 7,
-  PROVIDER_PROOFS = 8,
-  PROVIDER_APPROVAL_PENDING = 9
-}
-
+// Select options interface
 export type SelectOptions = Array<{ label: string, value: string }>;
 
+// Provider cards filters interface
 export interface ProviderCardsFilters {
   appServiceIds: string[];
   minPrice: number;
@@ -386,11 +324,3 @@ export interface ProviderCardsFilters {
   skip: number;
   limit: number;
 };
-
-export interface JwtClaims {
-  userOrProviderId?: string;
-  email?: string;
-  role?: string;
-  iat?: number;
-  exp?: number;
-}

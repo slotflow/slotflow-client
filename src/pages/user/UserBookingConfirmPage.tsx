@@ -1,19 +1,17 @@
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Calendar, CheckCircle2, XCircle } from "lucide-react";
 import { checkBookingConfirmed } from "@/shared/apis/booking";
+import { Calendar, CheckCircle2, XCircle } from "lucide-react";
+import { useNavigate, useSearchParams,  } from "react-router-dom";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-interface UserBookingConfirmPageProps {
-  status: boolean;
-}
+const UserBookingConfirmPage: React.FC = () => {
 
-const UserBookingConfirmPage: React.FC<UserBookingConfirmPageProps> = ({
-  status,
-}) => {
+  const [searchParams] = useSearchParams();
+  const statusParam =  searchParams.get("status");
+  const status = statusParam === "success";
 
   const navigate = useNavigate();
 

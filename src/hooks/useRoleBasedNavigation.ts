@@ -60,7 +60,7 @@ export const useRoleBasedNavigation = (): useRoleBasedNavigationReturnInterface 
 
     const handleNavigateToBookingsDetailPage = (appointmentId: Booking["_id"]) => {
         if (authUser?.role === Role.PROVIDER) {
-            navigate(`/provider/appointments/${appointmentId}`);
+            navigate(`/provider/bookings/${appointmentId}`);
         } else if (authUser?.role === Role.USER) {
             navigate(`/user/bookings/${appointmentId}`);
         }

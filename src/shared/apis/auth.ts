@@ -1,9 +1,9 @@
 import { axiosInstance } from "../../lib/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ApiBaseResponse } from "../interface/commonInterface";
-import { ResendOtpRequest, ResendOtpResponse, SigninRequest, SigninResponse, SignupRequest, SignupResponse, UpdatePasswordRequest, VerifyOtpRequest } from "../interface/api/auth";
+import { SigninRequest, SigninResponse, SignupRequest, UpdatePasswordRequest, VerifyEmailRequest, VerifyOtpRequest } from "../interface/api/auth";
 
-export const signup = createAsyncThunk<SignupResponse, SignupRequest>('auth/signup',
+export const signup = createAsyncThunk<ApiBaseResponse, SignupRequest>('auth/signup',
     async (userData: SignupRequest) => {
         const response = await axiosInstance.post("/auth/signup", userData);
         return response.data;
@@ -17,9 +17,15 @@ export const verifyOtp = createAsyncThunk<ApiBaseResponse, VerifyOtpRequest>("au
     }
 )
 
+export const resendOtp = createAsyncThunk<ApiBaseResponse>("auth/resendOtp",
+    async () => {
+        const response = await axiosInstance.post("/auth/resendOtp");
+        return response.data;
+    }
+)
+
 export const signin = createAsyncThunk<SigninResponse, SigninRequest>("auth/signin",
     async (userData: SigninRequest) => {
-        console.log("auth singin api calling");
         const response = await axiosInstance.post('/auth/signin', userData);
         return response.data;
     }
@@ -32,9 +38,9 @@ export const signout = createAsyncThunk<ApiBaseResponse>("auth/signOut",
     }
 )
 
-export const resendOtp = createAsyncThunk<ResendOtpResponse, ResendOtpRequest>("auth/resendOtp",
-    async (authData: ResendOtpRequest) => {
-        const response = await axiosInstance.post("/auth/resendOtp", authData);
+export const verifyEmail = createAsyncThunk<ApiBaseResponse, VerifyEmailRequest>("auth/verifyEmail",
+    async (authData: VerifyEmailRequest) => {
+        const response = await axiosInstance.post('/auth/verify-email', authData);
         return response.data;
     }
 )

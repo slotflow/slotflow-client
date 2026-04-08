@@ -1,6 +1,5 @@
 import FormField from "../FormField";
 import { toast } from "react-toastify";
-import { appConfig } from "@/shared/config/env";
 import { useForm } from "react-hook-form";
 import GoogleButton from "../GoogleButton";
 import { useDispatch, } from "react-redux";
@@ -11,17 +10,14 @@ import { Button } from "@/components/ui/button";
 import { AppDispatch } from "@/shared/redux/appStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormButton, FormHeading } from "../FormSplits";
-import { handleGoogleLogin } from "@/shared/helper/googleLogin";
+import { appConfig, serviceConfig } from "@/shared/config/env";
 import { setForgotPassword } from "@/shared/redux/slices/appSlice";
 import { LoginFormType, LoginZodSchema } from '@/shared/zod/authZod';
-import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
-import { RedirectTo, LoginFormProps } from "@/shared/interface/commonInterface";
 
-const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
+const LoginForm: React.FC = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const { goToAuthPage } = useAuthNavigation();
 
     const {
         register,
@@ -43,9 +39,21 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
         else if (userRole === Role.PROVIDER) navigate("/provider", { replace: true });
     };
 
+    const handleGoogleLogin = ({ e }: { e: React.MouseEvent<HTMLButtonElement, MouseEvent> }) => {
+        try {
+            e.preventDefault();;
+            window.location.href = `${serviceConfig.apiGatewayUrl + appConfig.version}/auth/google`;
+        } catch (error) {
+            if (appConfig.isDevelopment) {
+                console.error("Google login error:", error);
+            }
+            toast.error("Failed to initiate Google login");
+        }
+    }
+
     const onSubmit = async (data: LoginFormType) => {
         try {
-            const res = await dispatch(signin({ ...data, role })).unwrap();
+            const res = await dispatch(signin({ ...data })).unwrap();
             if (res.success) {
                 toast.success(res.message);
                 handleNavigation(res.data.role);
@@ -92,7 +100,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
                                     className="px-0 block text-xs md:text-sm font-medium text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
                                     onClick={() => {
                                         dispatch(setForgotPassword(true));
-                                        goToAuthPage(role, RedirectTo.VERIFY_EMAIL)
+                                        navigate(`/verify/email`);
                                     }}
                                 >
                                     Forgot Password ?
@@ -109,21 +117,20 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
                         </div>
 
                         <GoogleButton
-                            onClick={(e) => handleGoogleLogin({ e, role })}
+                            onClick={(e) => handleGoogleLogin({ e })}
                             text="Sign up with Google"
                         />
 
-                        {!isAdmin && (
-                            <p className="mt-10 text-center text-sm text-[var(--textOne)] hover:text-[var(--textOneHover)]">
-                                New to Slotflow ?
-                                <span
-                                    className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
-                                    onClick={() => goToAuthPage(role, RedirectTo.REGISTER)}
-                                >
-                                    {" "} Sign Up
-                                </span>
-                            </p>
-                        )}
+                        <p className="mt-10 text-center text-sm text-[var(--textOne)] hover:text-[var(--textOneHover)]">
+                            New to Slotflow ?
+                            <span
+                                className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
+                                onClick={() => navigate(`/signup`)}
+                            >
+                                {" "} Sign Up
+                            </span>
+                        </p>
+
                     </div>
                 </div>
             </div>

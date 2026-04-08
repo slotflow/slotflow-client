@@ -1,7 +1,8 @@
 import { lazy } from "react";
-import PlanGuard from "./planGuard.tsx";
+import PlanGuard from "./PlanGuard.tsx";
 import { Role } from "@/shared/interface/enums.ts";
-import { ProtectedRoute } from "./protectedRoutes.tsx";
+import { ProtectedRoute } from "./ProtectedRoutes.tsx";
+import { RouteAccess } from "@/shared/utils/constants.ts";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 
 const ChatPage = lazy(() => import("@/pages/common/ChatPage.tsx"));
@@ -27,7 +28,7 @@ const TermsAndConditionsPage = lazy(() => import("@/pages/common/TermsAndConditi
 const SubscriptionDetailViewPage = lazy(() => import("@/pages/common/SubscriptionDetailViewPage.tsx"));
 
 const UserMainPage = lazy(() => import("@/pages/user/UserMainPage.tsx"));
-const UserDashboardPage = lazy(() => import("@/pages/user/UserDashboardPage.tsx"));
+const UserListProvidersCardsPage = lazy(() => import("@/pages/user/UserListProvidersCardsPage.tsx"));
 const UserServiceSelectPage = lazy(() => import("@/pages/user/UserServiceSelectPage.tsx"));
 const UserBookingConfirmPage = lazy(() => import("@/pages/user/UserBookingConfirmPage.tsx"));
 const UserServiceProviderDetailPage = lazy(() => import("@/pages/user/UserServiceProviderDetailPage.tsx"));
@@ -49,7 +50,6 @@ const AdminUsersPage = lazy(() => import("@/pages/admin/AdminUsersPage.tsx"));
 const AdminServicesPage = lazy(() => import("@/pages/admin/AdminServicesPage.tsx"));
 const AdminDashboardPage = lazy(() => import("../pages/admin/AdminDashboardPage.tsx"));
 const AdminUserDetailPage = lazy(() => import("@/pages/admin/AdminUserDetailPage.tsx"));
-const AdminApiStrengthPage = lazy(() => import("@/pages/admin/AdminApiStrengthPage.tsx"));
 const AdminGrafanaDashboard = lazy(() => import("@/pages/admin/AdminGrafanaDashboard.tsx"));
 const AdminSubscriptionsPage = lazy(() => import("@/pages/admin/AdminSubscriptionsPage.tsx"));
 const AdminServiceProvidersPage = lazy(() => import("../pages/admin/AdminServiceProvidersPage.tsx"));
@@ -65,17 +65,11 @@ export const appRouter = createBrowserRouter([
             { path: "/contact", element: <ContactPage /> },
             { path: "/privacy-policy", element: <PrivacyPolicyPage /> },
             { path: "/terms-and-conditions", element: <TermsAndConditionsPage /> },
-            { path: "/admin/login", element: <AuthPage role={Role.ADMIN} formType={0} /> },
-            { path: "/user/login", element: <AuthPage role={Role.USER} formType={0} /> },
-            { path: "/provider/login", element: <AuthPage role={Role.PROVIDER} formType={0} /> },
-            { path: "/user/register", element: <AuthPage role={Role.USER} formType={1} /> },
-            { path: "/provider/register", element: <AuthPage role={Role.PROVIDER} formType={1} /> },
-            { path: "/user/verify/email", element: <AuthPage role={Role.USER} formType={2} /> },
-            { path: "/provider/verify/email", element: <AuthPage role={Role.PROVIDER} formType={2} /> },
-            { path: "/user/reset/password", element: <AuthPage role={Role.USER} formType={3} /> },
-            { path: "/provider/reset/password", element: <AuthPage role={Role.PROVIDER} formType={3} /> },
-            { path: "/user/verify/otp", element: <AuthPage role={Role.USER} formType={4} /> },
-            { path: "/provider/verify/otp", element: <AuthPage role={Role.PROVIDER} formType={4} /> },
+            { path: "/login", element: <AuthPage formType={0} /> },
+            { path: "/register", element: <AuthPage formType={1} /> },
+            { path: "/verify/email", element: <AuthPage formType={2} /> },
+            { path: "/reset/password", element: <AuthPage formType={3} /> },
+            { path: "/verify/otp", element: <AuthPage formType={4} /> },
             { path: "*", element: <Error404Page /> },
             {
                 path: "/admin",
@@ -97,8 +91,7 @@ export const appRouter = createBrowserRouter([
                     { path: "subscriptions/:subscriptionId", element: <SubscriptionDetailViewPage /> },
                     { path: "payments", element: <ListPaymentsPage /> },
                     { path: "payments/:paymentId", element: <PaymentDetailViewPage /> },
-                    { path: "health", element: <AdminApiStrengthPage /> },
-                    { path: "grafana", element: <AdminGrafanaDashboard /> },
+                    { path: "grafana-dashboard", element: <AdminGrafanaDashboard /> },
                     { path: "*", element: <Error404Page /> },
                 ],
             },
@@ -111,7 +104,7 @@ export const appRouter = createBrowserRouter([
                 ),
                 children: [
                     { index: true, element: <UserServiceSelectPage /> },
-                    { path: "dashboard", element: <UserDashboardPage /> },
+                    { path: "dashboard", element: <UserListProvidersCardsPage /> },
                     { path: "providerProfile/:providerId", element: <UserServiceProviderDetailPage /> },
                     { path: "profile", element: <AccountPage /> },
                     { path: "bookings", element: <ListBookingsPage /> },
@@ -120,20 +113,18 @@ export const appRouter = createBrowserRouter([
                     { path: "payments/:paymentId", element: <PaymentDetailViewPage /> },
                     { path: "integrations", element: <IntegrationsPage /> },
                     { path: "chat", element: <ChatPage /> },
-                    { path: "video-call", element: <ListBookingsPage /> },
                     {
                         path: "video-call-lobby/:roomId",
                         element: <VideoCallLoby />
                     },
                     {
-                        path: "video-call-room/:roomId",
+                        path: "video-call-room?status",
                         element: <VideoCallRoom />
                     },
                     { path: "calendar", element: <CalendarPage /> },
                     { path: "reviews", element: <ReviewsPage /> },
                     { path: "settings", element: <SettingsPage /> },
-                    { path: "payment-success", element: <UserBookingConfirmPage status={true} /> },
-                    { path: "payment-failed", element: <UserBookingConfirmPage status={false} /> },
+                    { path: "booking/confirm", element: <UserBookingConfirmPage /> },
                     { path: "*", element: <Error404Page /> },
                 ],
             },
@@ -165,31 +156,27 @@ export const appRouter = createBrowserRouter([
                     {
                         path: "reviews",
                         element: (
-                            <PlanGuard routeName="Reviews">
+                            <PlanGuard routeName={RouteAccess.REVIEWS}>
                                 <ReviewsPage />
                             </PlanGuard>
                         )
                     },
                     {
-                        path: "appointments",
+                        path: "bookings",
                         element: (
-                            <PlanGuard routeName="Appointments">
+                            <PlanGuard routeName={RouteAccess.BOOKINGS}>
                                 <ListBookingsPage />
                             </PlanGuard>
                         )
                     },
                     {
-                        path: "appointments/:bookingId",
-                        element: (
-                            <PlanGuard routeName="Appointments">
-                                <BookingDetailPage />
-                            </PlanGuard>
-                        )
+                        path: "bookings/:bookingId",
+                        element: <BookingDetailPage />
                     },
                     {
                         path: "subscriptions",
                         element: (
-                            <PlanGuard routeName="Subscriptions">
+                            <PlanGuard routeName={RouteAccess.SUBSCRIPTIONS}>
                                 <ProviderSubscriptionPage />
                             </PlanGuard>
                         )
@@ -201,7 +188,7 @@ export const appRouter = createBrowserRouter([
                     {
                         path: "payments",
                         element: (
-                            <PlanGuard routeName="Payments">
+                            <PlanGuard routeName={RouteAccess.PAYMENTS}>
                                 <ListPaymentsPage />
                             </PlanGuard>
                         )
@@ -213,7 +200,7 @@ export const appRouter = createBrowserRouter([
                     {
                         path: "integrations",
                         element: (
-                            <PlanGuard routeName="Integrations">
+                            <PlanGuard routeName={RouteAccess.INTEGRATIONS}>
                                 <IntegrationsPage />
                             </PlanGuard>
                         )
@@ -221,18 +208,10 @@ export const appRouter = createBrowserRouter([
                     {
                         path: "chat",
                         element: (
-                            <PlanGuard routeName="Chat">
+                            <PlanGuard routeName={RouteAccess.CHAT}>
                                 <ChatPage />
                             </PlanGuard>
                         )
-                    },
-                    {
-                        path: "video-call",
-                        element: (
-                            <PlanGuard routeName="Video call">
-                                <ListBookingsPage />
-                            </PlanGuard>
-                        ),
                     },
                     {
                         path: "video-call-lobby/:roomId",
@@ -245,7 +224,7 @@ export const appRouter = createBrowserRouter([
                     {
                         path: "calendar",
                         element: (
-                            <PlanGuard routeName="Calendar">
+                            <PlanGuard routeName={RouteAccess.CALENDAR}>
                                 < CalendarPage />
                             </PlanGuard>
                         )
@@ -253,13 +232,12 @@ export const appRouter = createBrowserRouter([
                     {
                         path: "settings",
                         element: (
-                            <PlanGuard routeName="Settings">
+                            <PlanGuard routeName={RouteAccess.SETTINGS}>
                                 <SettingsPage />
                             </PlanGuard>
                         )
                     },
-                    { path: "payment-success", element: <ProviderSubscriptionConfirmPage status={true} /> },
-                    { path: "payment-failed", element: <ProviderSubscriptionConfirmPage status={false} /> },
+                    { path: "subscription/confirm", element: <ProviderSubscriptionConfirmPage /> },
                     { path: "*", element: <Error404Page /> },
                 ],
             },

@@ -1,25 +1,24 @@
 import { useEffect } from "react";
-import { toast } from "react-toastify";
 import { Edit } from "lucide-react";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import SideBox from "@/components/provider/SideBox";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, CardContent } from "@/components/ui/card";
-import { RedirectTo } from "@/shared/interface/commonInterface";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
-import { AdminVerificationStatus, Role } from "@/shared/interface/enums";
+import { AdminVerificationStatus } from "@/shared/interface/enums";
 import { providerSubmitDetailsForReview } from "@/shared/apis/provider";
-import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
-import { blockBackStatuses, verificationStatusTextMap } from "@/shared/utils/constants";
+import { blockBackStatuses, redirectPaths, verificationStatusTextMap } from "@/shared/utils/constants";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 const ProviderApprovalPendingPage = () => {
 
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { authUser } = useSelector((state: RootState) => state.auth);
   const adminStatus = authUser?.adminVerificationStatus;
   const isBackBlocked = adminStatus !== undefined && (blockBackStatuses as readonly string[]).includes(adminStatus);
-  const { goToAuthPage } = useAuthNavigation();
 
   useEffect(() => {
     if (!isBackBlocked) return;
@@ -40,22 +39,22 @@ const ProviderApprovalPendingPage = () => {
     {
       label: "Address Verification",
       verified: authUser?.isAddressVerified,
-      redirect: RedirectTo.PROVIDER_ADDRESS
+      redirect: redirectPaths.PROVIDER_ADDRESS
     },
     {
       label: "Service Details Verification",
       verified: authUser?.isServiceDetailsVerified,
-      redirect: RedirectTo.PROVIDER_SERVICE_DETAILS
+      redirect: redirectPaths.PROVIDER_SERVICE_DETAILS
     },
     {
       label: "Availability Verification",
       verified: authUser?.isAvailabilityVerified,
-      redirect: RedirectTo.PROVIDER_AVAILABILITY
+      redirect: redirectPaths.PROVIDER_AVAILABILITY
     },
     {
       label: "Proofs Verification",
       verified: authUser?.isProofsVerified,
-      redirect: RedirectTo.PROVIDER_PROOFS
+      redirect: redirectPaths.PROVIDER_PROOFS
     },
   ];
 
@@ -109,7 +108,7 @@ const ProviderApprovalPendingPage = () => {
                           title="Update"
                           variant="default"
                           className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
-                          onClick={() => goToAuthPage(Role.PROVIDER, row.redirect)}
+                          onClick={() => navigate(row.redirect)}
                         ><Edit />
                         </Button>
                       </TableCell>

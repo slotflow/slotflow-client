@@ -64,14 +64,15 @@ const ListBookingsPage: React.FC = () => {
     handleChangeAppointmentStatus,
   );
 
+  // can implement a custom filter and pass as query paramas
+
   return (
     <CommonTable<FetchBookingsResponse>
       fetchApiFunction={(params) =>
-        fetchBookings({ ...params, online: true })
+        fetchBookings({ ...params })
       }
       columnsCount={6}
       column={columns}
-      queryParams={{ online: true }}
       queryKey="bookings"
     />
   );

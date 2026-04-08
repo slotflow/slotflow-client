@@ -1,20 +1,20 @@
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
-import { AdminVerificationStatus, Role } from "@/shared/interface/enums";
+import { AdminVerificationStatus } from "@/shared/interface/enums";
 import { useDispatch, useSelector } from "react-redux";
 import RightSideBox from "@/components/provider/SideBox";
-import { RedirectTo } from "@/shared/interface/commonInterface";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import AddressForm from "@/components/form/CommonForms/AddressForm";
 import { CreateAddressFormType } from "@/shared/zod/commonZodFields";
-import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
 import { appConfig } from "@/shared/config/env";
 import { fetchMyAddress, providerCreateAddress, updateAddress } from "@/shared/apis/address";
+import { useNavigate } from "react-router-dom";
+import { redirectPaths } from "@/shared/utils/constants";
 
 const ProviderAddAddressPage = () => {
 
+    const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const { goToAuthPage } = useAuthNavigation();
     const { authUser } = useSelector((state: RootState) => state.auth);
     const [oldAddress, setOldAddress] = useState<CreateAddressFormType>();
 
@@ -24,13 +24,13 @@ const ProviderAddAddressPage = () => {
                 const res = await updateAddress(data);
                 if (res.success) {
                     toast.success(res.message);
-                    goToAuthPage(Role.PROVIDER, RedirectTo.PROVIDER_APPROVAL_PENDING);
+                    navigate(redirectPaths.PROVIDER_APPROVAL_PENDING);
                 }
             } else {
                 const res = await dispatch(providerCreateAddress(data)).unwrap();
                 if (res.success) {
                     toast.success(res.message);
-                    goToAuthPage(Role.PROVIDER, RedirectTo.PROVIDER_SERVICE_DETAILS);
+                    navigate(redirectPaths.PROVIDER_SERVICE_DETAILS);
                 }
             }
         } catch (error) {

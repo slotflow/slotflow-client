@@ -1,28 +1,27 @@
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { ChevronRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { appConfig } from "@/shared/config/env";
 import TagInput from "@/components/form/TagInput";
 import React, { useEffect, useState } from "react";
 import SideBox from "@/components/provider/SideBox";
 import FormField from "@/components/form/FormField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchServicesByCategory } from "@/shared/apis/service";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { OptionType, SelectField } from "@/components/form/SelectField";
-import { AdminVerificationStatus, Role, ServiceCategory, ServiceMode, ServiceType } from "@/shared/interface/enums";
-import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
-import { RedirectTo } from "@/shared/interface/commonInterface";
-import { serviceCategoryOptions, serviceModeOptions, serviceTypeOptions, groupOptions } from "@/shared/utils/constants";
+import { AdminVerificationStatus, ServiceCategory, ServiceMode, ServiceType } from "@/shared/interface/enums";
 import { providerCreateServiceDetailsZodSchema, ProviderCreateServiceDetailsFormType } from "@/shared/zod/providerZod";
-import { appConfig } from "@/shared/config/env";
-import { fetchServicesByCategory } from "@/shared/apis/service";
+import { serviceCategoryOptions, serviceModeOptions, serviceTypeOptions, groupOptions, redirectPaths } from "@/shared/utils/constants";
 import { providerCreateServiceDetails, providerFetchServiceDetails, providerUpdateServiceDetails } from "@/shared/apis/providerService";
 
 const ProviderCreateServiceDetailsPage: React.FC = () => {
 
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { goToAuthPage } = useAuthNavigation();
   const { dataUpdating } = useSelector((store: RootState) => store.auth);
   const [services, setServices] = useState<OptionType<string>[]>([]);
   const { authUser } = useSelector((state: RootState) => state.auth);
@@ -117,13 +116,13 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
         const res = await providerUpdateServiceDetails(data);
         if (res.success) {
           toast.success(res.message);
-          goToAuthPage(Role.PROVIDER, RedirectTo.PROVIDER_APPROVAL_PENDING);
+          navigate(redirectPaths.PROVIDER_APPROVAL_PENDING);
         }
       } else {
         const res = await dispatch(providerCreateServiceDetails(data)).unwrap();
         if (res.success) {
           toast.success(res.message);
-          goToAuthPage(Role.PROVIDER, RedirectTo.PROVIDER_AVAILABILITY);
+          navigate(redirectPaths.PROVIDER_AVAILABILITY);
         }
       }
     } catch (error) {

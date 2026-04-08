@@ -2,7 +2,7 @@ import "leaflet/dist/leaflet.css";
 import { Provider } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Suspense, useEffect } from 'react';
-import { appRouter } from './router/appRouter';
+import { appRouter } from './router/AppRouter';
 import { queryClient } from './lib/queryClient';
 import { RouterProvider } from 'react-router-dom';
 import ThemeSync from './components/app/ThemeSync';

@@ -1,17 +1,17 @@
+import { signin, signout } from "@/shared/apis/auth";
+import { SigninResponse } from "@/shared/interface/api/auth";
+import { providerCreateAddress } from "@/shared/apis/address";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AdminVerificationStatus } from "@/shared/interface/enums";
 import { ApiBaseResponse } from "@/shared/interface/commonInterface";
 import { AuthState, AuthUser } from "@/shared/interface/sliceInterface";
-import { resendOtp, signin, signout, signup } from "@/shared/apis/auth";
-import { userUpdateInfo, userUpdateProfileImage } from "@/shared/apis/user";
 import { UserUpdateUserInfoResponse } from "@/shared/interface/api/user";
-import { ResendOtpResponse, SigninResponse, SignupResponse } from "@/shared/interface/api/auth";
-import { ProviderSubmitDetailsResponse, ProviderUpdateProviderInfoResponse } from "@/shared/interface/api/provider";
-import { providerSubmitDetailsForReview, providerUpdateInfo, providerUpdateProfileImage } from "@/shared/apis/provider";
-import { providerCreateAddress } from "@/shared/apis/address";
-import { createServiceAvailabilities } from "@/shared/apis/serviceAvailability";
+import { userUpdateInfo, userUpdateProfileImage } from "@/shared/apis/user";
 import { SubscriptionActivated } from "@/shared/interface/api/subscription";
 import { providerCreateServiceDetails } from "@/shared/apis/providerService";
+import { createServiceAvailabilities } from "@/shared/apis/serviceAvailability";
+import { ProviderSubmitDetailsResponse, ProviderUpdateProviderInfoResponse } from "@/shared/interface/api/provider";
+import { providerSubmitDetailsForReview, providerUpdateInfo, providerUpdateProfileImage } from "@/shared/apis/provider";
 
 const initialState: AuthState = {
     authUser: null,
@@ -85,21 +85,6 @@ const authSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        // Sign Up Api
-        builder
-            .addCase(signup.pending, (state: AuthState) => {
-                state.authUser = null
-            })
-            .addCase(signup.fulfilled, (state: AuthState, action: PayloadAction<SignupResponse>) => {
-                state.authUser = {
-                    ...state.authUser,
-                    verificationToken: action.payload.data.verificationToken,
-                    role: action.payload.data.role,
-                };
-            })
-            .addCase(signup.rejected, (state: AuthState) => {
-                state.authUser = null
-            });
 
         // Sign In Api
         builder
@@ -108,18 +93,6 @@ const authSlice = createSlice({
                 state.authUser = action.payload.data;
             })
             .addCase(signin.rejected, () => { });
-
-        // Resend Otp Ap
-        builder
-            .addCase(resendOtp.pending, () => { })
-            .addCase(resendOtp.fulfilled, (state, action: PayloadAction<ResendOtpResponse>) => {
-                state.authUser = {
-                    ...state.authUser,
-                    verificationToken: action.payload.data.verificationToken,
-                    role: action.payload.data.role,
-                };
-            })
-            .addCase(resendOtp.rejected, () => { });
 
         // Sign Out Api
         builder

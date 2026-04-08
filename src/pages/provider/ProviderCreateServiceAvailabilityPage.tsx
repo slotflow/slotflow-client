@@ -1,17 +1,15 @@
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { appConfig } from '@/shared/config/env';
-import { Role } from '@/shared/interface/enums';
 import SideBox from '@/components/provider/SideBox';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch, useSelector } from 'react-redux';
-import { updatableStatuses } from '@/shared/utils/constants';
 import React, { useEffect, FormEvent, useMemo } from 'react';
-import { RedirectTo } from '@/shared/interface/commonInterface';
 import { AppDispatch, RootState } from '@/shared/redux/appStore';
 import { useAddAvailability } from '@/hooks/useServiceAvailability';
 import { addAvailability } from '@/shared/redux/slices/providerSlice';
-import { useAuthNavigation } from '@/hooks/systemHooks/useAuthNavigation';
+import { redirectPaths, updatableStatuses } from '@/shared/utils/constants';
 import { createServiceAvailabilities } from '@/shared/apis/serviceAvailability';
 import TimeRangeSetter from '@/components/serviceAvailability/createServiceAvailabilityPageSplits/TimeRangeSetter';
 import { ProviderServiceAvailabilityFormType, providerServiceAvailabilityZodSchema } from '@/shared/zod/providerZod';
@@ -21,14 +19,14 @@ import CreateServiceAvailabilityFooter from '@/components/serviceAvailability/cr
 
 const ProviderCreateServiceAvailabilityPage: React.FC = () => {
 
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { goToAuthPage } = useAuthNavigation();
   const { authUser } = useSelector((state: RootState) => state.auth);
   const { dataUpdating } = useSelector((store: RootState) => store.auth);
   const { availabilities } = useSelector((store: RootState) => store.provider);
   const adminStatus = authUser?.adminVerificationStatus;
   const isUpdatable = adminStatus !== undefined && (updatableStatuses as readonly string[]).includes(adminStatus);
-  const redirectUrl: RedirectTo = isUpdatable ? RedirectTo.PROVIDER_APPROVAL_PENDING : RedirectTo.PROVIDER_PROOFS;
+  const redirectUrl: string = isUpdatable ? redirectPaths.PROVIDER_APPROVAL_PENDING : redirectPaths.PROVIDER_PROOFS;
 
   const {
     control,
@@ -128,7 +126,7 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
       .then((res) => {
         if (res.success) {
           toast.success(res.message);
-          goToAuthPage(Role.PROVIDER, redirectUrl);
+          navigate(redirectUrl)
         }
       })
       .catch((error) => {
