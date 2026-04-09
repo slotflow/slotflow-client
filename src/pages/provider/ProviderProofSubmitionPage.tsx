@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import SideBox from "@/components/provider/SideBox";
+import SideBox from "@/components/navs/SideBox";
 import { useDispatch, useSelector } from "react-redux";
 import { redirectPaths } from "@/shared/utils/constants";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
@@ -41,7 +41,7 @@ export const ProviderProofSubmissionPage = () => {
 
   return (
     <div className="md:h-screen md:flex justify-center w-full bg-[var(--background)]">
-      <SideBox props={{ pageNumber: 4 }} />
+      <SideBox pageNumber={4} />
       <div className="w-full md:w-8/12 md:px-10 overflow-y-scroll no-scrollbar">
         <div className="md:mt-10 px-4 md:px-12 py-6">
           <h4 className="xs:text-md md:text-xl lg:text-2xl font-semibold text-start px-6">Upload Proofs</h4>

@@ -13,6 +13,7 @@ import { FormButton, FormHeading } from "../FormSplits";
 import { appConfig, serviceConfig } from "@/shared/config/env";
 import { setForgotPassword } from "@/shared/redux/slices/appSlice";
 import { LoginFormType, LoginZodSchema } from '@/shared/zod/authZod';
+import { redirectPaths } from "../../../shared/utils/constants";
 
 const LoginForm: React.FC = () => {
 
@@ -125,7 +126,7 @@ const LoginForm: React.FC = () => {
                             New to Slotflow ?
                             <span
                                 className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
-                                onClick={() => navigate(`/signup`)}
+                                onClick={() => navigate(redirectPaths.REGISTER)}
                             >
                                 {" "} Sign Up
                             </span>

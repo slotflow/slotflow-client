@@ -31,13 +31,13 @@ const GenerateTimeSlots: React.FC<GenerateTimeSlotsProps> = ({
                                 name="selectedTimeSlots"
                                 control={control}
                                 render={() => (
-                                    <>
+                                    <React.Fragment>
                                         <Checkbox
                                             checked={allSlotsSelected}
                                             onCheckedChange={(checked) => handleAllSlots(Boolean(checked))}
                                             className='cursor-pointer'
                                         />
-                                    </>
+                                    </React.Fragment>
                                 )}
                             />
                             <p className='ml-2'>{allSlotsSelected ? "Deselect all slots" : "Select all slots"}</p>

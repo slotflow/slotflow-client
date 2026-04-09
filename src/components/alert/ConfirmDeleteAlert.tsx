@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "../ui/button";
 import { toast } from "react-toastify";
+import { appConfig } from "@/shared/config/env";
 
 interface ConfirmDeleteAlertProps {
     message: string;
@@ -21,15 +22,22 @@ const ConfirmDeleteAlert: React.FC<ConfirmDeleteAlertProps> = ({
 }) => {
 
     const handleDelete = async () => {
-    try {
-        const res = await deleteReviewHandler(reviewId);
-        toast.success(res.message || successMessage);
-    } catch {
-        toast.error(errorMessage);
-    } finally {
-        closeToast?.();
-    }
-};
+        try {
+            const res = await deleteReviewHandler(reviewId);
+            if (res.success) {
+                toast.success(res.message || successMessage);
+            } else {
+                toast.error(res.message || errorMessage);
+            }
+        } catch (error) {
+            if (appConfig.isDevelopment) {
+                console.log("Error in deleteReviewHandler ", error);
+            }
+            toast.error(errorMessage);
+        } finally {
+            closeToast?.();
+        }
+    };
 
     return (
         <div className="flex flex-col gap-2">

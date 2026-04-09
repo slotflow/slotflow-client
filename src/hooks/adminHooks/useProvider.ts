@@ -8,14 +8,14 @@ import { Provider } from "@/shared/interface/entityInterface/providerInterface";
 import { adminApproveProvider, adminChangeProviderBlockStatus, adminChangeProviderTrustTag } from "@/shared/apis/provider";
 import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminRejectProviderModalState } from "@/shared/interface/api/provider";
 
-interface UseAdminProviderActionsReturnInterface {
+interface UseAdminProviderReturn {
   approveProviderHandler: (providerId: Provider["_id"]) => Promise<ApiBaseResponse>;
   changeProviderBlockStatusHandler: (data: AdminChangeProviderBlockStatusRequest) => Promise<ApiBaseResponse>;
   changeProviderSlotflowTrustTag: (data: AdminChangeProviderTrustTagRequest) => Promise<ApiBaseResponse>;
   handleProviderRejectModal: (data: AdminRejectProviderModalState) => void;
 }
 
-export const useAdminProviderActions = (): UseAdminProviderActionsReturnInterface => {
+export const useAdminProvider = (): UseAdminProviderReturn => {
 
   const queryClient = useQueryClient();
   const dispatch = useDispatch<AppDispatch>();

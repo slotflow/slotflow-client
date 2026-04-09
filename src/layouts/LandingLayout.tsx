@@ -1,28 +1,20 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import Header from "@/components/navs/Header";
-import { pathNames } from "@/shared/utils/constants";
 import { Role } from "@/shared/interface/enums";
 import FooterBar from "@/components/navs/FooterBar";
-import { AppDispatch, RootState } from "../../shared/redux/appStore";
 import { useDispatch, useSelector } from "react-redux";
-import { Bounce, ToastContainer } from "react-toastify";
+import { Outlet, useNavigate } from "react-router-dom";
 import { AuthUser } from "@/shared/interface/sliceInterface";
 import { setAuthUser } from "@/shared/redux/slices/authSlice";
-import { setAuthModal } from "@/shared/redux/slices/appSlice";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import AuthSelectionModal from "@/components/landing/AuthSelectionModal";
-import { useNotificationPermissionGate } from "@/hooks/systemHooks/useNotificationPermissionGate";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { connectEventSocket } from "@/shared/socket/eventSocketThunk";
+import { useNotificationPermissionGate } from "@/hooks/systemHooks/useNotificationPermissionGate";
 
 const LandingLayout = () => {
 
-  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const location = useLocation();
-  const state = useSelector((state: RootState) => state.app);
+  const dispatch = useDispatch<AppDispatch>();
   const authUser = useSelector((state: RootState) => state.auth.authUser);
-  const themeMode = useSelector((store: RootState) => store.app?.lightTheme);
-  const shouldHideFooter = pathNames.some((path) => location.pathname.startsWith(path));
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -65,35 +57,18 @@ const LandingLayout = () => {
   useNotificationPermissionGate();
 
   useEffect(() => {
-    // Connect when user logs in, but only if not already connected
     if (authUser) {
       console.log("Connecting event Socket");
       dispatch(connectEventSocket());
     }
-
-    // We remove the auto-disconnect on cleanup to prevent navigation-based disconnects.
-    // Disconnection is now handled explicitly in the signout process.
   }, [authUser, dispatch]);
 
-  const handleCloseModal = () => {
-    dispatch(setAuthModal(false));
-  };
-
   return (
-    <>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        pauseOnHover
-        theme={themeMode ? "light" : "dark"}
-        transition={Bounce}
-      />
-      {!shouldHideFooter && <Header />}
-      {state.authModal && <AuthSelectionModal onClose={handleCloseModal} />}
+    <React.Fragment>
+      <Header />
       <Outlet />
-      {!shouldHideFooter && <FooterBar />}
-    </>
+      <FooterBar />
+    </React.Fragment>
   )
 }
 

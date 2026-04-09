@@ -4,11 +4,11 @@ import { changeUserBlockStatus } from "@/shared/apis/user";
 import { ApiBaseResponse } from "@/shared/interface/commonInterface";
 import { AdminChangeUserStatusRequest } from "@/shared/interface/api/user";
 
-interface AdminUserActionsReturnType {
+interface AdminUserReturn {
     changeUserStatus: (data: AdminChangeUserStatusRequest) => Promise<ApiBaseResponse>;
 }
 
-export const useAdminUserActions = (): AdminUserActionsReturnType => {
+export const useAdminUser = (): AdminUserReturn => {
     const queryClient = useQueryClient();
 
     const changeUserStatus = async (data: AdminChangeUserStatusRequest) => {

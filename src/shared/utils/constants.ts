@@ -83,47 +83,7 @@ export const blockBackStatuses = [AdminVerificationStatus.REQUESTED, AdminVerifi
 // Updatable Statuses
 export const updatableStatuses = [AdminVerificationStatus.NOT_REQUESTED, AdminVerificationStatus.REJECTED] as const;
 
-// Routes for admin
-export const adminRoutes: Route[] = [
-  { path: "dashboard", name: "Dashboard", icon: Gauge },
-  { path: "report", name: "Reports", icon: BookLock },
-  { path: "service-providers", name: "Service Providers", icon: Handshake },
-  { path: "users", name: "Users", icon: Users },
-  { path: "services", name: "Services", icon: Briefcase },
-  { path: "plans", name: "Plans", icon: LayoutGrid },
-  { path: "subscriptions", name: "Subscriptions", icon: CreditCard },
-  { path: "payments", name: "Payments", icon: Handshake },
-  { path: "grafana-dashboard", name: "Grafana Dashboard", icon: ScanHeart },
-]
-
-// Routes for user
-export const userRoutes: Route[] = [
-  { path: "dashboard", name: "Services", icon: Gauge },
-  { path: "profile", name: "Profile", icon: User },
-  { path: "bookings", name: "Bookings", icon: CalendarCheck },
-  { path: "payments", name: "Payments", icon: CreditCard },
-  { path: "integrations", name: "Integrations", icon: Combine },
-  { path: "chat", name: "Chat", icon: MessageSquare },
-  { path: "calendar", name: "Calendar", icon: Calendar1 },
-  { path: "reviews", name: "Reviews", icon: Star },
-  { path: "settings", name: "Settings", icon: Settings },
-]
-
-// Routes for provider
-export const providerRoutes: Route[] = [
-  { path: "dashboard", name: "Dashboard", icon: Gauge },
-  { path: "profile", name: "Profile", icon: User },
-  { path: "bookings", name: "Appointments", icon: CalendarCheck },
-  { path: "subscriptions", name: "Subscriptions", icon: CreditCard },
-  { path: "payments", name: "Payments", icon: Handshake },
-  { path: "integrations", name: "Integrations", icon: Combine },
-  { path: "calendar", name: "Calendar", icon: Calendar1 },
-  { path: "chat", name: "Chat", icon: MessageSquare },
-  { path: "reviews", name: "Reviews", icon: Star },
-  { path: "settings", name: "Settings", icon: Settings },
-]
-
-export enum RouteAccess {
+export enum RouteNames {
   DASHBOARD = "Dashboard",
   PROFILE = "Profile",
   BOOKINGS = "Bookings",
@@ -134,54 +94,100 @@ export enum RouteAccess {
   SETTINGS = "Settings",
   CALENDAR = "Calendar",
   SUBSCRIPTIONS = "Subscriptions",
+  REPORTS = "Reports",
+  SERVICE_PROVIDERS = "Service Providers",
+  USERS = "Users",
+  SERVICES = "Services",
+  PLANS = "Plans",
+  GRAFANA_DASHBOARD = "Grafana Dashboard",
 }
 
+// Routes for admin
+export const adminRoutes: Route[] = [
+  { path: "dashboard", name: RouteNames.DASHBOARD, icon: Gauge },
+  { path: "report", name: RouteNames.REPORTS, icon: BookLock },
+  { path: "service-providers", name: RouteNames.SERVICE_PROVIDERS, icon: Handshake },
+  { path: "users", name: RouteNames.USERS, icon: Users },
+  { path: "services", name: RouteNames.SERVICES, icon: Briefcase },
+  { path: "plans", name: RouteNames.PLANS, icon: LayoutGrid },
+  { path: "subscriptions", name: RouteNames.SUBSCRIPTIONS, icon: CreditCard },
+  { path: "payments", name: RouteNames.PAYMENTS, icon: Handshake },
+  { path: "grafana-dashboard", name: RouteNames.GRAFANA_DASHBOARD, icon: ScanHeart },
+]
+
+// Routes for user
+export const userRoutes: Route[] = [
+  { path: "dashboard", name: RouteNames.SERVICES, icon: Gauge },
+  { path: "profile", name: RouteNames.PROFILE, icon: User },
+  { path: "bookings", name: RouteNames.BOOKINGS, icon: CalendarCheck },
+  { path: "payments", name: RouteNames.PAYMENTS, icon: CreditCard },
+  { path: "integrations", name: RouteNames.INTEGRATIONS, icon: Combine },
+  { path: "chat", name: RouteNames.CHAT, icon: MessageSquare },
+  { path: "calendar", name: RouteNames.CALENDAR, icon: Calendar1 },
+  { path: "reviews", name: RouteNames.REVIEWS, icon: Star },
+  { path: "settings", name: RouteNames.SETTINGS, icon: Settings },
+]
+
+// Routes for provider
+export const providerRoutes: Route[] = [
+  { path: "dashboard", name: RouteNames.DASHBOARD, icon: Gauge },
+  { path: "profile", name: RouteNames.PROFILE, icon: User },
+  { path: "bookings", name: RouteNames.BOOKINGS, icon: CalendarCheck },
+  { path: "subscriptions", name: RouteNames.SUBSCRIPTIONS, icon: CreditCard },
+  { path: "payments", name: RouteNames.PAYMENTS, icon: Handshake },
+  { path: "integrations", name: RouteNames.INTEGRATIONS, icon: Combine },
+  { path: "calendar", name: RouteNames.CALENDAR, icon: Calendar1 },
+  { path: "chat", name: RouteNames.CHAT, icon: MessageSquare },
+  { path: "reviews", name: RouteNames.REVIEWS, icon: Star },
+  { path: "settings", name: RouteNames.SETTINGS, icon: Settings },
+]
+
 // Access Control For Provider
-export const planAccessMap: Record<PlanName, RouteAccess[]> = {
+export const planAccessMap: Record<PlanName, RouteNames[]> = {
   [PlanName.NO_SUBSCRIPTION]: [
-    RouteAccess.DASHBOARD,
-    RouteAccess.PROFILE,
-    RouteAccess.SUBSCRIPTIONS,
-    RouteAccess.SETTINGS,
+    RouteNames.DASHBOARD,
+    RouteNames.PROFILE,
+    RouteNames.SUBSCRIPTIONS,
+    RouteNames.SETTINGS,
   ],
   [PlanName.TRIAL]: [
-    RouteAccess.DASHBOARD,
-    RouteAccess.PROFILE,
-    RouteAccess.BOOKINGS,
-    RouteAccess.SUBSCRIPTIONS,
-    RouteAccess.SETTINGS,
+    RouteNames.DASHBOARD,
+    RouteNames.PROFILE,
+    RouteNames.BOOKINGS,
+    RouteNames.SUBSCRIPTIONS,
+    RouteNames.SETTINGS,
   ],
   [PlanName.STARTER]: [
-    RouteAccess.DASHBOARD,
-    RouteAccess.PROFILE,
-    RouteAccess.BOOKINGS,
-    RouteAccess.SUBSCRIPTIONS,
-    RouteAccess.PAYMENTS,
-    RouteAccess.INTEGRATIONS,
-    RouteAccess.SETTINGS,
+    RouteNames.DASHBOARD,
+    RouteNames.PROFILE,
+    RouteNames.BOOKINGS,
+    RouteNames.SUBSCRIPTIONS,
+    RouteNames.PAYMENTS,
+    RouteNames.INTEGRATIONS,
+    RouteNames.SETTINGS,
   ],
   [PlanName.PROFESSIONAL]: [
-    RouteAccess.DASHBOARD,
-    RouteAccess.PROFILE,
-    RouteAccess.BOOKINGS,
-    RouteAccess.SUBSCRIPTIONS,
-    RouteAccess.PAYMENTS,
-    RouteAccess.INTEGRATIONS,
-    RouteAccess.CHAT,
-    RouteAccess.REVIEWS,
-    RouteAccess.SETTINGS,
+    RouteNames.DASHBOARD,
+    RouteNames.PROFILE,
+    RouteNames.BOOKINGS,
+    RouteNames.SUBSCRIPTIONS,
+    RouteNames.PAYMENTS,
+    RouteNames.INTEGRATIONS,
+    RouteNames.CHAT,
+    RouteNames.REVIEWS,
+    RouteNames.SETTINGS,
   ],
   [PlanName.ENTERPRISE]: [
-    RouteAccess.DASHBOARD,
-    RouteAccess.PROFILE,
-    RouteAccess.BOOKINGS,
-    RouteAccess.SUBSCRIPTIONS,
-    RouteAccess.PAYMENTS,
-    RouteAccess.INTEGRATIONS,
-    RouteAccess.CHAT,
-    RouteAccess.REVIEWS,
-    RouteAccess.CALENDAR,
-    RouteAccess.SETTINGS,
+    RouteNames.DASHBOARD,
+    RouteNames.PROFILE,
+    RouteNames.BOOKINGS,
+    RouteNames.SUBSCRIPTIONS,
+    RouteNames.PAYMENTS,
+    RouteNames.INTEGRATIONS,
+    RouteNames.CHAT,
+    RouteNames.REVIEWS,
+    RouteNames.CALENDAR,
+    RouteNames.SETTINGS,
   ],
 };
 
@@ -640,8 +646,8 @@ export const statsMapForProvider: Array<statsMapIntrface<ProviderFetchDashboardS
 
 
 
-export const revenueStatsMapForProvider= [
-   {
+export const revenueStatsMapForProvider = [
+  {
     title: "Subscription Payments",
     key: "totalSubscriptionPaidAmount",
     icon: Receipt,
@@ -992,14 +998,17 @@ export const AppointmentsStatsMapForAdmin: StatsMapForAdminInterface[] = [
 
 // Address creating, service details creating and service availability creating page side box data
 export const progressBars: { [key: number]: boolean[] } = {
-  1: [true, false, false, false],
-  2: [true, true, false, false],
-  3: [true, true, true, false],
-  4: [true, true, true, false],
+  0: [true, false, false, false, false],
+  1: [true, false, false, false, false],
+  2: [true, true, false, false, false],
+  3: [true, true, true, false, false],
+  4: [true, true, true, true, false],
+  5: [true, true, true, true, true],
 };
 
-const sidebarHeadings: string[] = ['Address', 'Service', 'Availability', "Upload Proofs", "Approval"];
+const sidebarHeadings: string[] = ['Purpose', 'Address', 'Service', 'Availability', "Upload Proofs", "Approval"];
 export const pageLabels: { [key: number]: string[] } = {
+  0: sidebarHeadings,
   1: sidebarHeadings,
   2: sidebarHeadings,
   3: sidebarHeadings,
@@ -1007,16 +1016,17 @@ export const pageLabels: { [key: number]: string[] } = {
   5: sidebarHeadings
 };
 
-
 export const pageDescriptions: { [key: number]: string } = {
-  1: 'Add your service address accurately to ensure seamless customer bookings.',
-  2: 'Provide detailed information about your services for clarity and transparency.',
-  3: 'Set your service availability to manage customer appointments efficiently.',
-  4: 'Upload your proof of identity. Make sure to upload the current documents within the specified size and format limits.',
-  5: 'Our team is reviewing your service registration request. You will be notified via email once your request is approved. Thank you for your patience.',
+  0: "Welcome to Slotflow! We're excited to have you on board. Let’s get you set up what would you like to do?.",
+  1: "Provide your service address accurately to ensure seamless customer bookings.",
+  2: "Provide detailed information about your services for clarity and transparency.",
+  3: "Set your service availability to manage customer appointments efficiently.",
+  4: "Upload your proof of identity. Make sure to upload the current documents within the specified size and format limits.",
+  5: "Our team is reviewing your service registration request. You will be notified via email once your request is approved. Thank you for your patience.",
 };
 
 export const addAddressGoogleMapLinkInfoHeading: string = "Select Your Exact Location";
+
 export const addAddressGoogleMapLinkInfo: string = `Use the map to select your exact location.  
 Click on the map to drop a marker at your address.  
 This helps us provide accurate location based services and ensures more precise search results.  
@@ -1091,11 +1101,6 @@ export const termsAndConditionsContent: string[] = [
   "Payments for paid plans are billed according to the selected subscription and must be completed on time to maintain access to premium features.",
   "Slotflow may update these terms periodically. Continued use of the platform after updates indicates your acceptance of the revised terms."
 ];
-
-
-// Landing Layout paths
-export const pathNames: string[] = ["/user", '/provider', '/admin'];
-
 
 // Admin dashboard overview tabs
 export const adminOverviewTabs: CommonTabInterface[] = [
@@ -1289,12 +1294,6 @@ export const planNameOptions: OptionType<PlanName>[] = [
 export const storeConstants: Record<string, string> = {
   storeKey: "slotflow",
   resetState: "RESET_STATE"
-};
-
-export const roleRoutes: Record<string, string> = {
-  user: "/user/login",
-  provider: "/provider/login",
-  admin: "/admin/login"
 };
 
 export const redirectPaths: Record<string, string> = {

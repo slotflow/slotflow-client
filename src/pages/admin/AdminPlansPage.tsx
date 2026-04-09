@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 import { adminFetchAllPlans } from '@/shared/apis/plan';
 import TableHeader from '@/components/table/TableHeader';
 import CommonTable from '@/components/table/CommonTable';
+import { useAdminPlan } from '@/hooks/adminHooks/usePlan';
 import { slideIn } from '@/shared/helper/gsapAnimationSlide';
-import { useAdminPlanActions } from '@/hooks/adminHooks/usePlan';
 import CreatePlanForm from '@/components/form/AdminForms/CreatePlanForm';
 import { AdminPlansTableColumns } from '@/components/table/tableColumns/AdminPlansTableColumn';
 import { AdminFetchAllPlansResponse, ChangePlanBlockStatusRequest } from '@/shared/interface/api/plan';
@@ -14,7 +14,7 @@ const AdminPlansPage = () => {
     const [showForm, setShowForm] = useState(false);
     const formRef = useRef<HTMLDivElement>(null);
 
-    const { changePlanStatus } = useAdminPlanActions();
+    const { changePlanStatus } = useAdminPlan();
 
     const handleAdminChangePlanStatus = async (data: ChangePlanBlockStatusRequest) => {
         const res = await changePlanStatus(data);

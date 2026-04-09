@@ -39,20 +39,20 @@ export const Meteors = ({
   // }, [number, minDelay, maxDelay, minDuration, maxDuration, angle])
 
   useEffect(() => {
-  const styles = [...new Array(number)].map(() => ({
-    "--angle": -angle + "deg",
-    top: `${Math.random() * 100}%`, // 👈 random anywhere vertically
-    left: `${Math.random() * 100}%`, // 👈 random anywhere horizontally
-    animationDelay: Math.random() * (maxDelay - minDelay) + minDelay + "s",
-    animationDuration:
-      Math.floor(Math.random() * (maxDuration - minDuration) + minDuration) +
-      "s",
-  }))
-  setMeteorStyles(styles)
-}, [number, minDelay, maxDelay, minDuration, maxDuration, angle])
+    const styles = [...new Array(number)].map(() => ({
+      "--angle": -angle + "deg",
+      top: `${Math.random() * 100}%`, // 👈 random anywhere vertically
+      left: `${Math.random() * 100}%`, // 👈 random anywhere horizontally
+      animationDelay: Math.random() * (maxDelay - minDelay) + minDelay + "s",
+      animationDuration:
+        Math.floor(Math.random() * (maxDuration - minDuration) + minDuration) +
+        "s",
+    }))
+    setMeteorStyles(styles)
+  }, [number, minDelay, maxDelay, minDuration, maxDuration, angle])
 
   return (
-    <>
+    <React.Fragment>
       {[...meteorStyles].map((style, idx) => (
         // Meteor Head
         <span
@@ -67,6 +67,6 @@ export const Meteors = ({
           <div className="pointer-events-none absolute top-1/2 -z-10 h-px w-[50px] -translate-y-1/2 bg-gradient-to-r from-zinc-500 to-transparent" />
         </span>
       ))}
-    </>
+    </React.Fragment>
   )
 }

@@ -14,6 +14,7 @@ export interface AuthUser {
   email?: string;
   verificationToken?: string;
   role: Role;
+  hasSelectedRole?: boolean;
   isBlocked?: boolean;
   isLoggedIn?: boolean;
   isAddressAdded?: boolean;
@@ -61,7 +62,6 @@ export interface appState {
   lightTheme: boolean;
   sidebarOpen: boolean;
   filterSideBarOpen: boolean;
-  authModal: boolean;
   forgotPassword: boolean;
   otpRemainingTime: number;
   otpTimerIsRunning: boolean;

@@ -118,7 +118,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
                     )}
 
                     {(selectedImage) && (
-                        <>
+                        <React.Fragment>
                             <h5>Selected File</h5>
                             {!loading ? (
                                 <img
@@ -130,11 +130,11 @@ const FileUploader: React.FC<FileUploaderProps> = ({
                                 <div className='w-full h-48 shimmer'></div>
                             )
                             }
-                        </>
+                        </React.Fragment>
                     )}
 
                     {data && (
-                        <>
+                        <React.Fragment>
                             <h5>Uploaded File</h5>
                             {!loading ? (
                                 <img
@@ -155,7 +155,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
                             >
                                 Delete File
                             </Button>
-                        </>
+                        </React.Fragment>
                     )}
 
                     {message && (

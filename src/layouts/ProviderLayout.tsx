@@ -1,20 +1,16 @@
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import Sidebar from "@/components/navs/Sidebar";
 import { RootState } from "@/shared/redux/appStore";
-import React, { Suspense, useEffect } from "react";
 import { PlanName } from "@/shared/interface/enums";
-import InfoHeader from "@/components/navs/InfoHeader";
+import MainLayout from "./MainLayout";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import LoadingFallback from "../common/LoadingFallback";
-import avatar from '../../assets/defaultImages/avatar.png';
 import { planAccessMap, providerRoutes } from "@/shared/utils/constants";
 
-const ProviderMainPage: React.FC = () => {
+const ProviderLayout: React.FC = () => {
 
-  const { authUser: user } = useSelector((store: RootState) => store.auth);
-  const { sidebarOpen } = useSelector((store: RootState) => store.app);
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
+  const { authUser: user } = useSelector((store: RootState) => store.auth);
 
   const planName = user?.providerSubscription;
   const allowedRouteNames = planName ? planAccessMap[planName] : planAccessMap[PlanName.NO_SUBSCRIPTION];
@@ -59,18 +55,15 @@ const ProviderMainPage: React.FC = () => {
   }, [user, navigate]);
 
   return (
-    <div className="flex h-screen bg-[var(--background)] transition-all duration-300">
-      <Sidebar routes={providerRoutes} filteredRoutes={filteredRoutes} />
-      <div className={`flex-1 flex flex-col  ${sidebarOpen ? 'w-[82%]' : 'w-[95%]'} transition-all duration-300`}>
-        <InfoHeader profileImage={user?.profileImage ?? avatar} username={user?.username ?? ""} />
-        <div className="flex-1 overflow-y-auto overscroll-y-contain no-scrollbar px-2">
-          <Suspense fallback={<LoadingFallback />}>
-            <Outlet />
-          </Suspense>
-        </div>
-      </div>
-    </div>
+    <MainLayout
+      routes={providerRoutes}
+      filteredRoutes={filteredRoutes}
+      profileImage={user?.profileImage}
+      username={user?.username}
+    >
+      <Outlet />
+    </MainLayout>
   )
 }
 
-export default ProviderMainPage;
+export default ProviderLayout;

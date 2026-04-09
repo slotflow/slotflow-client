@@ -60,9 +60,9 @@ const AdminRevenueReport: React.FC = () => {
                             className="w-full md:w-auto justify-start text-left font-normal cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]">
                             <CalendarIcon className="mr-2 h-4 w-4" />
                             {dateRange?.from && dateRange?.to ? (
-                                <>
+                                <React.Fragment>
                                     {format(dateRange.from, "MMM dd, yyyy")} - {format(dateRange.to, "MMM dd, yyyy")}
-                                </>
+                                </React.Fragment>
                             ) : (
                                 <span>Select Date Range</span>
                             )}
@@ -109,7 +109,7 @@ const AdminRevenueReport: React.FC = () => {
                 isLoading ? (
                     <TableShimmer columnsCount={8} />
                 ) : data ? (
-                    <>
+                    <React.Fragment>
                         <DataTable
                             columns={column}
                             data={data?.data?.rows}
@@ -134,7 +134,7 @@ const AdminRevenueReport: React.FC = () => {
                                 <span className="text-blue-700">₹ {data.data.grandInitalAmount.toFixed(2)}</span>
                             </p>
                         </div>
-                    </>
+                    </React.Fragment>
                 ) : isError && error ? (
                     <DataFetchingError message={(error as Error).message} className="min-h-full" />
                 ) : (

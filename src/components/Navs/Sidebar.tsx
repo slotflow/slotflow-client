@@ -4,13 +4,15 @@ import {
     Moon,
 } from 'lucide-react';
 import React from 'react';
+import { toast } from 'react-toastify';
 import { SingleTab } from './SingleTab';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { redirectPaths } from '@/shared/utils/constants';
 import logo from '../../assets/logos/logo-transparent.png';
+import { useSignout } from '@/hooks/systemHooks/useSignout';
 import { AuthUser } from '@/shared/interface/sliceInterface';
 import { toggleTheme } from '@/shared/redux/slices/appSlice';
-import { handleSignoutHelper } from '@/shared/helper/signout';
 import { AppDispatch, RootState } from '@/shared/redux/appStore';
 import { SideBarProps } from '@/shared/interface/commonInterface';
 
@@ -22,9 +24,21 @@ const Sidebar: React.FC<SideBarProps> = ({
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
+    const { signoutHandler } = useSignout();
+
     const sidebarOpen: boolean = useSelector((store: RootState) => store.app.sidebarOpen);
     const user: Partial<AuthUser> | null = useSelector((store: RootState) => store.auth?.authUser);
     const themeMode: boolean = useSelector((store: RootState) => store.app.lightTheme);
+
+    const handleSignout = async () => {
+        const res = await signoutHandler();
+        if (res.success) {
+            toast.success(res.message);
+            navigate(redirectPaths.LOGIN);
+        } else {
+            toast.error(res.message);
+        }
+    }
 
     const changeTheme = (): void => {
         dispatch(toggleTheme());
@@ -97,7 +111,7 @@ const Sidebar: React.FC<SideBarProps> = ({
                     <SingleTab
                         icon={LogOut}
                         text="Logout"
-                        onClick={() => handleSignoutHelper({ role: user.role!, dispatch, navigate })}
+                        onClick={handleSignout}
                         sidebarOpen={sidebarOpen}
                         className="text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 hover:text-red-600 dark:hover:text-red-400"
                     />

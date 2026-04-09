@@ -2,7 +2,7 @@
 const ServiceSelectShimmer = () => {
 
     return (
-        <>
+        <React.Fragment>
             {Array.from({ length: 26 }).map((_, index) => (
                 <div
                     key={index}
@@ -10,7 +10,7 @@ const ServiceSelectShimmer = () => {
                 >
                 </div>
             ))}
-        </>
+        </React.Fragment>
     )
 }
 

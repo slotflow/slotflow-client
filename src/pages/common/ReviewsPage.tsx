@@ -1,19 +1,19 @@
 import React from "react";
 import { toast } from "react-toastify";
-import { appConfig } from "@/shared/config/env";
 import { ArrowDown } from "lucide-react";
 import { useSelector } from "react-redux";
+import { useReview } from "@/hooks/useReview";
 import { Role } from "@/shared/interface/enums";
 import { Button } from "@/components/ui/button";
 import { RootState } from "@/shared/redux/appStore";
 import { fetchReviews } from "@/shared/apis/review";
 import ReviewCard from "@/components/review/ReviewCard";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useReview } from "@/hooks/useReview";
 import DataFetchingError from "@/components/error/DataFetchingError";
 import ConfirmDeleteAlert from "@/components/alert/ConfirmDeleteAlert";
 import { ApiPaginatedResponse } from "@/shared/interface/commonInterface";
 import ReviewCardsShimmer from "@/components/shimmers/ReviewCardsShimmer";
+import { Review } from "@/shared/interface/entityInterface/reviewInterface";
 import { FetchReviewsResponse, ToggleReviewBlockStatusRequest } from "@/shared/interface/api/review";
 
 interface ReviewsPageProps {
@@ -52,67 +52,28 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
     initialPageParam: 1,
   });
 
-  const handleChangeReviewBlockStatus = async (
-    e: React.MouseEvent<HTMLButtonElement>,
-    data: ToggleReviewBlockStatusRequest
-  ) => {
+  const handleChangeReviewBlockStatus = async (e: React.MouseEvent<HTMLButtonElement>, data: ToggleReviewBlockStatusRequest) => {
     e.preventDefault();
-
-    if (!data.reviewId) {
-      toast.error("Please try again later");
-      return;
-    }
-
-    try {
       const res = await toggleBlockStatusHandler(data);
-
       if (res.success) {
         toast.success(res.message);
+      } else {
+        toast.error(res.message);
       }
-    } catch (error) {
-      if (appConfig.isDevelopment) {
-        console.log("Review block status updating failed", error);
-      }
-      toast.error("Review block status updating failed");
+  };
+
+  const handleReportReview = async (e: React.MouseEvent<HTMLButtonElement>, reviewId: Review["_id"]) => {
+    e.preventDefault();
+    const res = await reportReviewHandler(reviewId);
+    if (res.success) {
+      toast.success(res.message);
+    } else {
+      toast.error(res.message);
     }
   };
 
-  const handleReportReview = async (
-    e: React.MouseEvent<HTMLButtonElement>,
-    reviewId: string
-  ) => {
+  const handleDeleteReview = (e: React.MouseEvent<HTMLButtonElement>, reviewId: Review["_id"]) => {
     e.preventDefault();
-
-    if (!reviewId) {
-      toast.error("Please try again later");
-      return;
-    }
-
-    try {
-      const res = await reportReviewHandler(reviewId);
-
-      if (res.success) {
-        toast.success(res.message);
-      }
-    } catch (error) {
-      if (appConfig.isDevelopment) {
-        console.log("Review reporting failed", error);
-      }
-      toast.error("Review reporting failed");
-    }
-  };
-
-  const handleDeleteReview = (
-    e: React.MouseEvent<HTMLButtonElement>,
-    reviewId: string
-  ) => {
-    e.preventDefault();
-
-    if (!reviewId) {
-      toast.error("Please try again later");
-      return;
-    }
-
     toast(({ closeToast }) => (
       <ConfirmDeleteAlert
         message="Are you sure you want to delete this review?"

@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { AdminVerificationStatus } from "@/shared/interface/enums";
 import { useDispatch, useSelector } from "react-redux";
-import RightSideBox from "@/components/provider/SideBox";
+import SideBox from "@/components/navs/SideBox";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import AddressForm from "@/components/form/CommonForms/AddressForm";
 import { CreateAddressFormType } from "@/shared/zod/commonZodFields";
@@ -60,9 +60,7 @@ const ProviderAddAddressPage = () => {
 
     return (
         <div className="min-h-screen md:flex justify-center w-full bg-[var(--background)]">
-            <RightSideBox
-                props={{ pageNumber: 1 }}
-            />
+            <SideBox pageNumber={1} />
             <div className="w-full md:w-8/12 md:px-10">
                 <AddressForm
                     onSubmit={handleSubmit}

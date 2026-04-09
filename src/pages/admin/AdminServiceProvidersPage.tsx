@@ -6,7 +6,7 @@ import { RootState } from "@/shared/redux/appStore";
 import CommonTable from "@/components/table/CommonTable";
 import { slideIn } from "@/shared/helper/gsapAnimationSlide";
 import { fetchServiceProvidersForAdmin } from "@/shared/apis/provider";
-import { useAdminProviderActions } from "@/hooks/adminHooks/useProvider";
+import { useAdminProvider } from "@/hooks/adminHooks/useProvider";
 import RejectproviderForm from "@/components/form/AdminForms/RejectproviderForm";
 import { AdminProvidersTableColumns } from "@/components/table/tableColumns/AdminProvidersTableColumn";
 import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminFetchAllProvidersResponse } from "@/shared/interface/api/provider";
@@ -21,7 +21,7 @@ const AdminServiceProvidersPage = () => {
     handleProviderRejectModal,
     changeProviderBlockStatusHandler,
     changeProviderSlotflowTrustTag
-  } = useAdminProviderActions();
+  } = useAdminProvider();
 
   const handleAdminApproveProvider = async (providerId: string) => {
     const res = await approveProviderHandler(providerId);
@@ -71,7 +71,7 @@ const AdminServiceProvidersPage = () => {
   }, [isProviderRejectModalOpen]);
 
   return (
-    <>
+    <React.Fragment>
       <CommonTable<AdminFetchAllProvidersResponse>
         fetchApiFunction={fetchServiceProvidersForAdmin}
         queryKey="providers"
@@ -88,7 +88,7 @@ const AdminServiceProvidersPage = () => {
           />
         </div>
       )}
-    </>
+    </React.Fragment>
   );
 
 };

@@ -5,6 +5,7 @@ import { ChartConfig } from "@/components/ui/chart";
 import { Plan } from "./entityInterface/planInterface";
 import { PlanName, Role, ServiceCategory } from "./enums";
 import { Booking } from "./entityInterface/bookingInterface";
+import { RouteNames } from "../utils/constants";
 
 // Common Response interface
 export interface ApiBaseResponse {
@@ -73,7 +74,7 @@ export interface SideBarProps {
 // Routes array interface
 export interface Route {
   path: string;
-  name: string;
+  name: RouteNames;
   icon: LucideIcon;
 }
 

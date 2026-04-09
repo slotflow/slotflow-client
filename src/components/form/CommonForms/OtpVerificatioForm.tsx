@@ -84,10 +84,9 @@ const OtpVerificatioForm: React.FC = () => {
                         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                             <div className="flex justify-between gap-2">
                                 {Array.from({ length: 6 }).map((_, i) => (
-                                    <>
+                                    <React.Fragment key={i}>
                                         <input type="hidden" {...register("otp")} />
                                         <Input
-                                            key={i}
                                             type="text"
                                             maxLength={1}
                                             className="w-12 h-12 text-center text-lg font-medium"
@@ -131,7 +130,7 @@ const OtpVerificatioForm: React.FC = () => {
                                             }}
                                             id={`otp-${i}`}
                                         />
-                                    </>
+                                    </React.Fragment>
                                 ))}
                             </div>
                             {errors.otp && <p className="text-red-500 text-sm">{errors.otp.message}</p>}

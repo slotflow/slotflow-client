@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { appConfig } from "@/shared/config/env";
 import TagInput from "@/components/form/TagInput";
 import React, { useEffect, useState } from "react";
-import SideBox from "@/components/provider/SideBox";
+import SideBox from "@/components/navs/SideBox";
 import FormField from "@/components/form/FormField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
@@ -128,13 +128,13 @@ const ProviderCreateServiceDetailsPage: React.FC = () => {
     } catch (error) {
       if (appConfig.isDevelopment) {
         console.log("An unexpected error occured while saving data : ", error);
-      } 
+      }
     }
   };
 
   return (
     <div className="md:min-h-screen md:flex justify-center w-full bg-[var(--background)] ">
-      <SideBox props={{ pageNumber: 2 }} />
+      <SideBox pageNumber={2} />
 
       <div className="w-full md:w-8/12 md:px-10">
         <form

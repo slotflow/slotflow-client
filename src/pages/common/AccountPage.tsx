@@ -81,10 +81,10 @@ const AccountPage: React.FC = () => {
                 {selectedTab === "tab1" && <Profile />}
                 {selectedTab === "tab2" && <Address />}
                 {isProvider && (
-                    <>
+                    <React.Fragment>
                         {selectedTab === "tab3" && <ProviderService />}
                         {selectedTab === "tab4" && <ProviderAvailability />}
-                    </>
+                    </React.Fragment>
                 )}
             </div>
         </div>

@@ -5,7 +5,7 @@ const TableShimmer: React.FC<TableShimmerProps> = ({
 }) => {
 
     return (
-        <>
+        <React.Fragment>
             <div className="flex flex-col rounded-md overflow-hidden">
                 <div className="h-15 flex items-center justify-between">
                     <div className="h-8 w-4/12 shimmer rounded-md"></div>
@@ -21,7 +21,7 @@ const TableShimmer: React.FC<TableShimmerProps> = ({
                     </div>
                 ))}
             </div>
-        </>
+        </React.Fragment>
     );
 };
 

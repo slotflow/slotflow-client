@@ -1,12 +1,12 @@
 import React from 'react';
 import { Button } from '../ui/button';
 import { Moon, Sun } from 'lucide-react';
-import { navigation } from '@/shared/utils/constants';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import logo from '../../assets/logos/logo-transparent.png';
+import { toggleTheme } from '@/shared/redux/slices/appSlice';
+import { navigation, redirectPaths } from '@/shared/utils/constants';
 import { AppDispatch, RootState } from '../../shared/redux/appStore';
-import { setAuthModal, toggleTheme } from '@/shared/redux/slices/appSlice';
 
 const Header: React.FC = () => {
 
@@ -17,10 +17,6 @@ const Header: React.FC = () => {
 
   const changeTheme = (): void => {
     dispatch(toggleTheme());
-  }
-
-  const handleAuthClick = () => {
-    dispatch(setAuthModal(true));
   }
 
   return (
@@ -57,7 +53,7 @@ const Header: React.FC = () => {
           <Button
             title="Login"
             variant={"ghost"}
-            onClick={handleAuthClick}
+            onClick={() => navigate(redirectPaths.LOGIN)}
             className="cursor-pointer px-4 py-2 rounded-lg text-sm font-semibold bg-[var(--mainColor)] text-white hover:opacity-90 transition border border-[var(--mainColor)] hover:text-[var(--mainColor)] "
           >
             Login
@@ -66,7 +62,7 @@ const Header: React.FC = () => {
           <Button
             title="Sign Up"
             variant={"ghost"}
-            onClick={handleAuthClick}
+            onClick={() => navigate(redirectPaths.REGISTER)}
             className="hidden md:blockml-2 cursor-pointer px-4 py-2 rounded-lg text-sm font-semibold border border-[var(--mainColor)] text-[var(--mainColor)] hover:bg-[var(--mainColor)] hover:text-white transition"
           >
             Sign Up

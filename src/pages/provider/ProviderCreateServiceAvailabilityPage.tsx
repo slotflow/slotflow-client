@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { appConfig } from '@/shared/config/env';
-import SideBox from '@/components/provider/SideBox';
+import SideBox from '@/components/navs/SideBox';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect, FormEvent, useMemo } from 'react';
@@ -138,7 +138,7 @@ const ProviderCreateServiceAvailabilityPage: React.FC = () => {
 
   return (
     <div className="md:h-screen md:flex justify-center w-full bg-[var(--background)]">
-      <SideBox props={{ pageNumber: 3 }} />
+      <SideBox pageNumber={3} />
       <div className="w-full md:w-8/12 md:px-10 overflow-y-scroll no-scrollbar">
         <form className="md:mt-10 px-4 md:px-12 py-6 md:py-0" onSubmit={onSubmit}>
           <h4 className="xs:text-md md:text-xl lg:text-2xl font-semibold text-start px-6">Service Availability</h4>

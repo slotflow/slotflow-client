@@ -4,11 +4,11 @@ import { changePlanBlockStatus } from "@/shared/apis/plan";
 import { ApiBaseResponse } from "@/shared/interface/commonInterface";
 import { ChangePlanBlockStatusRequest } from "@/shared/interface/api/plan";
 
-interface UseAdminPlanActionsReturnInterface {
+interface UseAdminPlanReturn {
     changePlanStatus: (data: ChangePlanBlockStatusRequest) => Promise<ApiBaseResponse>;
 }
 
-export const useAdminPlanActions = (): UseAdminPlanActionsReturnInterface => {
+export const useAdminPlan = (): UseAdminPlanReturn => {
     const queryClient = useQueryClient();
 
     const changePlanStatus = async (data: ChangePlanBlockStatusRequest) => {

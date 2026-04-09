@@ -1,30 +1,44 @@
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 import { motion } from 'framer-motion';
+import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import choose from '../../assets/svgs/choose.svg';
 import address from '../../assets/svgs/address.svg';
 import working from '../../assets/svgs/working.svg';
-import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@/shared/redux/appStore';
 import fileUpload from '../../assets/svgs/fileUpload.svg';
 import service from '../../assets/svgs/serviceDetails.svg';
-import { handleSignoutHelper } from '@/shared/helper/signout';
+import { useSignout } from '@/hooks/systemHooks/useSignout';
 import availability from '../../assets/svgs/availability.svg';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
-import { pageLabels, pageDescriptions } from '@/shared/utils/constants';
 import { SideBoxProps } from '@/shared/interface/entityInterface/providerInterface';
+import { pageLabels, pageDescriptions, redirectPaths } from '@/shared/utils/constants';
+import { Role } from '@/shared/interface/enums';
 
-const SideBox: React.FC<SideBoxProps> = ({ props }) => {
+const SideBox: React.FC<SideBoxProps> = ({ pageNumber }) => {
 
-  const { pageNumber } = props;
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
+  const { signoutHandler } = useSignout();
   const user = useSelector((store: RootState) => store.auth.authUser);
 
-  const labels = pageLabels[pageNumber];
+  const handleSignout = async () => {
+    const res = await signoutHandler();
+    if (res.success) {
+      toast.success(res.message);
+      navigate(redirectPaths.LOGIN);
+    } else {
+      toast.error(res.message);
+    }
+  }
+
+  const allLabels = pageLabels[pageNumber];
+  const labels = user?.role === Role.USER ? [allLabels[0]] : allLabels;
   const description = pageDescriptions[pageNumber] || '';
   const activeStep = pageNumber;
 
   const images = {
+    0: choose,
     1: address,
     2: service,
     3: availability,
@@ -42,13 +56,7 @@ const SideBox: React.FC<SideBoxProps> = ({ props }) => {
             <Button
               title="Logout"
               variant="default"
-              onClick={() =>
-                handleSignoutHelper({
-                  role: user?.role,
-                  dispatch,
-                  navigate,
-                })
-              }
+              onClick={handleSignout}
               className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
             >
               Logout
@@ -62,6 +70,7 @@ const SideBox: React.FC<SideBoxProps> = ({ props }) => {
 
         <div className="flex flex-col gap-6 w-full mt-8">
           {labels.map((label, index) => {
+    
             const step = index + 1;
             const isActive = step === activeStep;
             const isCompleted = step < activeStep;

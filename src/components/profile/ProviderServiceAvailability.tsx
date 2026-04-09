@@ -104,7 +104,7 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
     };
 
     return (
-        <>
+        <React.Fragment>
             <div className="flex w-full space-x-1">
                 <div className="">
                     <Calendar
@@ -124,7 +124,7 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
                 ) : (
                     <div className="w-full flex flex-col">
                         {(
-                            <>
+                            <React.Fragment>
                                 <div className=" border rounded-md overflow-hidden w-full">
                                     <table className="table-auto w-full">
                                         <tbody className="w-1/2">
@@ -200,7 +200,7 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
                                         )}
                                     </div>
                                 </div>
-                            </>
+                            </React.Fragment>
                         )}
                     </div>
                 )}
@@ -219,7 +219,7 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
                 />
             )}
 
-        </>
+        </React.Fragment>
     )
 }
 

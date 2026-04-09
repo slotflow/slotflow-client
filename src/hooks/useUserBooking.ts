@@ -30,7 +30,6 @@ export const useBooking = (): UseBookingCustomHookReturnType => {
 
     const changeAppointmentStatusHandler = async (data: changeAppointmentStatusRequest) => {
         try {
-
             const res = await changeAppointmentStatus(data);
             if (res.success) {
                 queryClient.invalidateQueries({ queryKey: ["bookings"] });
@@ -46,7 +45,6 @@ export const useBooking = (): UseBookingCustomHookReturnType => {
 
     const cancelBookingHandler = async (bookingId: string) => {
         try {
-
             const res = await cancelBooking(bookingId);
             if (res.success) {
                 queryClient.invalidateQueries({ queryKey: ["bookings"] });

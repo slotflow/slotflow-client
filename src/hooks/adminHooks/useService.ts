@@ -4,14 +4,14 @@ import { changeServiceBlockStatus } from "@/shared/apis/service";
 import { ApiBaseResponse } from "@/shared/interface/commonInterface";
 import { ChangeServiceBlockStatusRequest } from "@/shared/interface/api/service";
 
-interface AdminServiceActionsReturnType {
-    changeServiceStatus: (data: ChangeServiceBlockStatusRequest) => Promise<ApiBaseResponse>;
+interface AdminServiceReturn {
+  changeServiceStatus: (data: ChangeServiceBlockStatusRequest) => Promise<ApiBaseResponse>;
 }
 
-export const useAdminServiceActions = (): AdminServiceActionsReturnType => {
-    const queryClient = useQueryClient();
+export const useAdminService = (): AdminServiceReturn => {
+  const queryClient = useQueryClient();
 
-   const changeServiceStatus = async (data: ChangeServiceBlockStatusRequest) => {
+  const changeServiceStatus = async (data: ChangeServiceBlockStatusRequest) => {
     try {
       const res = await changeServiceBlockStatus(data);
       if (res.success) {
@@ -19,7 +19,7 @@ export const useAdminServiceActions = (): AdminServiceActionsReturnType => {
       }
       return res;
     } catch (error) {
-      if(appConfig.isDevelopment) {
+      if (appConfig.isDevelopment) {
         console.log("Error while changing service status:", error);
       }
       return { success: false, message: "Please try again" };

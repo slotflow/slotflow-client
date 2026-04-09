@@ -4,7 +4,7 @@ import { fetchServices } from "@/shared/apis/service";
 import TableHeader from "@/components/table/TableHeader";
 import CommonTable from "@/components/table/CommonTable";
 import { slideIn } from "@/shared/helper/gsapAnimationSlide";
-import { useAdminServiceActions } from "@/hooks/adminHooks/useService";
+import { useAdminService } from "@/hooks/adminHooks/useService";
 import CreateServiceForm from "@/components/form/AdminForms/CreateServiceForm";
 import { ChangeServiceBlockStatusRequest, FetchServicesResponse } from "@/shared/interface/api/service";
 import { AdminAppServicesTableColumns } from "@/components/table/tableColumns/AdminAppServicesTableColumn";
@@ -14,7 +14,7 @@ const AdminServicesPage = () => {
   const [showForm, setShowForm] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
 
-  const { changeServiceStatus } = useAdminServiceActions();
+  const { changeServiceStatus } = useAdminService();
 
   const handleAdminChangeServiceStatus = async (data: ChangeServiceBlockStatusRequest) => {
     const res = await changeServiceStatus(data);

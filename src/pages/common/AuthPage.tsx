@@ -1,12 +1,13 @@
 import gsap from "gsap";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { Role } from "@/shared/interface/enums";
 import { Meteors } from "@/components/ui/meteors";
 import { RootState } from "@/shared/redux/appStore";
 import React, { useEffect, useRef, useState } from "react";
 import WorldMapWrapper from "@/components/map/WorldMapWrapper";
 import LoginForm from "@/components/form/CommonForms/LoginForm";
 import SignUpForm from "@/components/form/CommonForms/SignUpForm";
-import { useAuthCheckInLogin } from "@/hooks/useAuthCheckInLogin";
 import ResetPasswordForm from "@/components/form/CommonForms/ResetPasswordForm";
 import OtpVerificatioForm from "@/components/form/CommonForms/OtpVerificatioForm";
 import AnimatedBeamIntegrations from "@/components/animation/AnimatedCircleWithBeam";
@@ -18,12 +19,24 @@ interface AuthPageProp {
 
 const AuthPage: React.FC<AuthPageProp> = ({ formType }) => {
 
-  useAuthCheckInLogin();
-
+  const navigate = useNavigate();
+  const authUser = useSelector((state: RootState) => state.auth.authUser);
   const beamRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState<"beam" | "map">("beam");
   const lightTheme: boolean = useSelector((state: RootState) => state.app.lightTheme);
+
+  useEffect(() => {
+      if (authUser?.isLoggedIn) {
+        if (authUser.role === Role.ADMIN) {
+          navigate("/admin/dashboard");
+        } else if (authUser.role === Role.USER) {
+          navigate("/user/dashboard");
+        } else if (authUser.role === Role.PROVIDER) {
+          navigate("/provider/dashboard");
+        }
+      }
+    }, [authUser, navigate]);
 
   useEffect(() => {
     const fadeInOut = (el: HTMLDivElement, onComplete: () => void) => {

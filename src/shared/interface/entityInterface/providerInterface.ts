@@ -40,9 +40,7 @@ export interface Provider {
 
 // This is the interface of a right side showing compoenent in the provider address creating, service creating and availability creating page
 export interface SideBoxProps {
-  props: {
     pageNumber: number;
-  };
 }
 
 

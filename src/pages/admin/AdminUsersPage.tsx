@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { fetchUsers } from "@/shared/apis/user";
 import CommonTable from "@/components/table/CommonTable";
-import { useAdminUserActions } from "@/hooks/adminHooks/useUser";
+import { useAdminUser } from "@/hooks/adminHooks/useUser";
 import { User } from "@/shared/interface/entityInterface/userInterface";
 import { AdminfetchAllUsersResponse } from "@/shared/interface/api/user";
 import { AdminChangeUserStatusRequest } from "@/shared/interface/api/user";
@@ -12,7 +12,7 @@ const AdminUsersPage = () => {
 
   const navigate = useNavigate();
 
-  const { changeUserStatus } = useAdminUserActions();
+  const { changeUserStatus } = useAdminUser();
 
   const handleAdminChangeUserBlockStatus = async (data: AdminChangeUserStatusRequest) => {
     const res = await changeUserStatus(data);
