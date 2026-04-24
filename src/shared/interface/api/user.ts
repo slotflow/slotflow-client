@@ -1,9 +1,17 @@
+import { Role } from "../enums";
 import { User } from "../entityInterface/userInterface";
-import { Provider } from "../entityInterface/providerInterface";
 import { ApiBaseResponse, ProviderCardsFilters } from "../commonInterface";
 
+// Used as the request type of the setRole api
+export interface setRoleRequest {
+    role: Role
+};
+export interface setRoleResponse extends ApiBaseResponse {
+    data: Pick<User, "hasSelectedRole" | "isOnboardingCompleted">;
+}
+
 // Used as the response type of the user profile details fetching api
-export type UserFetchUserProfileDetailsResponse = Pick<User, "username" | "email" | "isBlocked" | "isEmailVerified" | "phone" | "createdAt" | "updatedAt">;
+export type UserFetchUserProfileDetailsResponse = Pick<User, "username" | "email" | "isBlocked" | "phone" | "createdAt" | "updatedAt">;
 
 
 // Used as the response type of the user profile image updating api
@@ -48,11 +56,8 @@ export interface UserFetchServiceProvidersResponse {
     };
 };
 
-// Used as the return type of the user fetch providers for the chat side bar
-export type UserFetchProvidersForChatSidebarResponse = Array<Pick<Provider, "_id" | "username" | "profileImage">>;
-
 // Used as the response type of the fetchUsers api
-export type AdminfetchAllUsersResponse = Pick<User, "_id" | "username" | "email" | "isBlocked" | "isEmailVerified">;
+export type AdminfetchAllUsersResponse = Pick<User, "_id" | "username" | "email" | "isBlocked">;
 
 
 // Used as the request type of the changeUserBlockStatus api
@@ -62,4 +67,4 @@ export type AdminChangeUserStatusRequest = {
 }
 
 // Used as the response type of admin fetch user profile details
-export type AdminFetchUserProfileDetailsResponse = Pick<User, "username" | "phone" | "profileImage" | "isEmailVerified" | "isBlocked" | "email">;
+export type AdminFetchUserProfileDetailsResponse = Pick<User, "username" | "phone" | "profileImage" | "isBlocked" | "email">;

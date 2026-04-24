@@ -3,7 +3,7 @@ import { Edit } from "lucide-react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import SideBox from "@/components/navs/SideBox";
+import SideBox from "@/components/onboarding/SideBox";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, CardContent } from "@/components/ui/card";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
@@ -68,13 +68,11 @@ const ProviderApprovalPendingPage = () => {
   }
 
   return (
-    <div className="md:h-screen md:flex justify-center w-full bg-[var(--background)]">
+    <div className="md:min-h-screen md:flex justify-center w-full bg-[var(--background)] ">
       <SideBox pageNumber={5} />
-
-      <div className="w-full md:w-8/12 overflow-y-scroll no-scrollbar md:mt-10 px-4 md:px-12 py-6 md:py-0">
-        <h4 className="xs:text-md md:text-xl lg:text-2xl font-semibold text-start px-6">Approval</h4>
+      <div className="w-full md:w-8/12 p-6 md:p-10">
+        <h4 className="text-xl lg:text-2xl font-semibold text-start">Profile Approval Status</h4>
         <Card className="w-full my-4">
-
           <CardContent className="space-y-6">
 
             <div className="flex space-x-4">

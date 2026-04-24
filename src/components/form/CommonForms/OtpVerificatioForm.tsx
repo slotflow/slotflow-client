@@ -13,6 +13,7 @@ import { resendOtp, verifyOtp } from "@/shared/apis/auth";
 import { updateTimer } from "@/shared/redux/slices/appSlice";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { VerifyOtpFormType, verifyOtpZodSchema } from "@/shared/zod/authZod";
+import { redirectPaths } from "@/shared/utils/constants";
 
 const OtpVerificatioForm: React.FC = () => {
 
@@ -51,9 +52,9 @@ const OtpVerificatioForm: React.FC = () => {
             if (res.success) {
                 toast.success(res.message);
                 if (forgotPassword) {
-                    navigate("/reset/password")
+                    navigate(redirectPaths.RESET_PASSWORD)
                 } else {
-                    navigate("/login")
+                    navigate(redirectPaths.LOGIN)
                 }
             }
         } catch (error) {
@@ -141,7 +142,7 @@ const OtpVerificatioForm: React.FC = () => {
                         <p className="mt-6 flex justify-between text-xs md:text-sm/6 text-[var(--textTwo)] px-2">
                             <span
                                 className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
-                                onClick={() => navigate("/login")}
+                                onClick={() => navigate(redirectPaths.LOGIN)}
                             >
                                 Cancel
                             </span>

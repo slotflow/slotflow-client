@@ -1,5 +1,5 @@
-import { FetchFunctionBaseQueryParams } from "../commonInterface";
 import { Payment } from "../entityInterface/paymentInterface";
+import { FetchFunctionBaseQueryParams } from "../commonInterface";
 
 export type FetchPaymentDetailsResponse = Omit<Payment, "_id" | "chargeId" | "receiptEmail" | "receiptNumber" | "updatedAt" | "userId" | "providerId"> | null;
 
@@ -16,15 +16,7 @@ export interface AdmminFetchRevenueReportRequest extends FetchFunctionBaseQueryP
   endDate?: Date;
 }
 // Admin fetch revenue report response
-export type AdminFetchRevenueReportRow = Pick<
-  Payment,
-  | "createdAt"
-  | "discountAmount"
-  | "initialAmount"
-  | "totalAmount"
-  | "paymentGateway"
-  | "paymentFor"
->;
+export type AdminFetchRevenueReportRow = Pick<Payment, "createdAt" | "discountAmount" | "initialAmount" | "totalAmount" | "paymentGateway" | "paymentFor">;
 
 export interface AdminFetchRevenueReportResponse {
   data: {

@@ -1,10 +1,7 @@
-import { Button } from "../ui/button";
-import { BetweenHorizontalStart } from "lucide-react";
-import ProviderServiceAvailability from "@/components/profile/ProviderServiceAvailability";
 import { Role } from "@/shared/interface/enums";
+import { BetweenHorizontalStart } from "lucide-react";
 import { fetchMyServiceAvailability } from "@/shared/apis/serviceAvailability";
-
-// TODO 
+import ProviderServiceAvailability from "@/components/profile/ProviderServiceAvailability";
 
 const ProviderAvailability = () => {
 
@@ -17,17 +14,14 @@ const ProviderAvailability = () => {
                         <BetweenHorizontalStart />
                         <h2 className="text-xl font-semibold">Service Availability</h2>
                     </div>
-                    <Button
-                        title="Edit Details"
-                        variant="default"
-                        // disabled={loading}
-                        // onClick={}
-                        className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
-                    >Edit Details</Button>
                 </div>
             </div>
 
-            <ProviderServiceAvailability fetchApiFuntion={fetchMyServiceAvailability} queryKey="serviceAvailability" role={Role.PROVIDER} />
+            <ProviderServiceAvailability
+                fetchApiFuntion={fetchMyServiceAvailability}
+                queryKey="serviceAvailability"
+                role={Role.PROVIDER}
+            />
         </div>
     )
 

@@ -7,13 +7,21 @@ import {
     UserUpdateProfileImageResponse,
     UserFetchUserProfileDetailsResponse,
     AdminFetchUserProfileDetailsResponse,
+    setRoleRequest,
+    setRoleResponse,
 } from "../interface/api/user";
 import { axiosInstance } from "@/lib/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { parseResponse } from "../helper/parseResponse";
+import { buildQueryParams } from "../helper/buildQueryParams";
 import { ProviderFetchUsersForChatSidebarResponse } from "../interface/api/provider";
 import { ApiBaseResponse, ApiFetchFunction, FetchFunctionBaseQueryParams } from "../interface/commonInterface";
-import { buildQueryParams } from "../helper/buildQueryParams";
+
+// user set role
+export const setRole = async (data: setRoleRequest): Promise<setRoleResponse> => {
+    const response = await axiosInstance.patch('/users/me/role', data);
+    return response.data;
+}
 
 // user fetch own profile details
 export const userFetchMyProfileDetails = async (): Promise<UserFetchUserProfileDetailsResponse> => {

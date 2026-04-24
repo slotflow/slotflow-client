@@ -1,11 +1,9 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import DataFetchingError from '../error/DataFetchingError';
 import { ServiceMode } from '@/shared/interface/enums';
+import DataFetchingError from '../error/DataFetchingError';
 import InfoDisplayComponent from '../app/InfoDisplayComponent';
 import ProfileDetailsShimmer from '../shimmers/ProfileDetailsShimmer';
-import { ProviderFetchServiceDetailsResponse } from '@/shared/interface/api/provider';
-import { AdminFetchProviderServiceResponse } from '@/utils/interface/api/adminProviderApiInterface';
 import { ProviderServiceDetailsComponentProps } from '@/shared/interface/componentInterface/commonComponentInterface';
 
 const ProviderServiceDetails: React.FC<ProviderServiceDetailsComponentProps> = ({
@@ -37,7 +35,7 @@ const ProviderServiceDetails: React.FC<ProviderServiceDetailsComponentProps> = (
         <div className="border rounded-md overflow-hidden w-full mt-2 md:mt-0">
             <table className="table-auto w-full">
                 <tbody className="w-1/2">
-                    <InfoDisplayComponent label="Category" value={data?.service?.serviceName} />
+                    <InfoDisplayComponent label="Category" value={data?.serviceId?.serviceName} />
                     <InfoDisplayComponent label="Name" value={data?.serviceName} />
                     <InfoDisplayComponent label="Description" value={data?.serviceDescription} />
                     {data?.isGroupService && (
@@ -57,7 +55,7 @@ const ProviderServiceDetails: React.FC<ProviderServiceDetailsComponentProps> = (
                         <InfoDisplayComponent label="Demo" value={data?.videoUrl} link defaultValue="Watch Demo" />
                     )}
                     {!isUser && (
-                        <InfoDisplayComponent label="Tags" value={(data as AdminFetchProviderServiceResponse | ProviderFetchServiceDetailsResponse)?.tags} tags />
+                        <InfoDisplayComponent label="Tags" value={data?.tags} tags />
                     )}
                     <InfoDisplayComponent label="Price" value={data?.servicePrice} isPrice={true} />
                     <InfoDisplayComponent label="Experience" value={data?.serviceExperience} isLast />

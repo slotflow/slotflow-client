@@ -1,5 +1,5 @@
 import { Loader } from 'lucide-react';
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,7 +9,7 @@ import { AppDispatch, RootState } from '@/shared/redux/appStore';
 import { toggleFilterSideBar } from '@/shared/redux/slices/appSlice';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import UserViewProviderCard from '@/components/user/UserViewProviderCard';
-import { fetchServiceProvidersForUser } from '@/shared/apis/provider';
+import { fetchServiceProvidersForUser } from '@/shared/apis/providerService';
 
 const UserListProvidersCardsPage = () => {
 

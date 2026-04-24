@@ -11,6 +11,7 @@ import { RouteNames } from "../utils/constants";
 export interface ApiBaseResponse {
   success: boolean;
   message: string;
+  statusCode: number;
 }
 
 // Paginated response api return data interface

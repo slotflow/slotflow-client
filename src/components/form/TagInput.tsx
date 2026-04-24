@@ -23,8 +23,7 @@ const TagInput: React.FC<TagInputProps> = ({ value, onChange }) => {
   return (
     <div className="w-full">
       <label className="text-sm font-medium">Tags</label>
-
-      <div className="flex gap-2 mt-2">
+      <div className="flex flex-col gap-2 mt-1">
         <Input
           type="text"
           value={input}
@@ -37,7 +36,7 @@ const TagInput: React.FC<TagInputProps> = ({ value, onChange }) => {
           type="button"
           variant="default"
           onClick={addTag}
-          className="cursor-pointer w-10/12 md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
+          className="cursor-pointer md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center mt-2"
         >
           Add
         </Button>

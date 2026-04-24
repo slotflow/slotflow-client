@@ -27,7 +27,10 @@ export interface SigninResponse extends ApiBaseResponse {
         username: string;
         phone: string;
         profileImage: string;
+        email: string;
         role: Role;
+        hasSelectedRole: boolean;
+        isOnboardingCompleted: boolean;
         isBlocked: boolean;
         isLoggedIn: boolean;
         isAddressAdded?: boolean,
@@ -36,7 +39,7 @@ export interface SigninResponse extends ApiBaseResponse {
         isAdminVerified?: boolean,
         providerSubscription?: PlanName;
         googleConnected: boolean;
-        uid?: string;
+        uid: string;
         isProofSubmitted?: boolean;
         verificationRejectionReason?: string | null,
         adminVerificationStatus?: AdminVerificationStatus,

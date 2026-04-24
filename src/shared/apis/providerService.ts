@@ -1,7 +1,8 @@
 import { axiosInstance } from "@/lib/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ApiBaseResponse } from "../interface/commonInterface";
-import { FetchProviderServiceResponse, ProviderCreateServiceDetailsRequest, ProviderUpdateServiceDetailsRequest, UserFetchProviderServiceResponse } from "../interface/api/providerService";
+import { FetchProviderServiceResponse, ProviderCreateServiceDetailsRequest, ProviderUpdateServiceDetailsRequest } from "../interface/api/providerService";
+import { UserFetchServiceProvidersRequest, UserFetchServiceProvidersResponse } from "../interface/api/user";
 
 export const providerCreateServiceDetails = createAsyncThunk<ApiBaseResponse, ProviderCreateServiceDetailsRequest>("/provider/addServiceDetails",
     async (data: ProviderCreateServiceDetailsRequest) => {
@@ -16,11 +17,11 @@ export const providerUpdateServiceDetails = async (data: ProviderUpdateServiceDe
 }
 
 export const providerFetchServiceDetails = async (): Promise<FetchProviderServiceResponse> => {
-    const response = await axiosInstance.get('/provider-services');
+    const response = await axiosInstance.get('/provider-services/me');
     return response.data.data;
 }
 
-export const userFetchProviderService = async (providerId: string): Promise<UserFetchProviderServiceResponse> => {
+export const userFetchProviderService = async (providerId: string): Promise<FetchProviderServiceResponse> => {
     const response = await axiosInstance.get(`/providers/${providerId}/provider-services`);
     return response.data.data;
 }
@@ -29,3 +30,11 @@ export const adminFetchProviderService = async (providerId: string): Promise<Fet
     const response = await axiosInstance.get(`/providers/${providerId}/provider-services`);
     return response.data.data;
 }
+
+// user fetch service providers
+export const fetchServiceProvidersForUser = async (data: UserFetchServiceProvidersRequest): Promise<Array<UserFetchServiceProvidersResponse>> => {
+    const response = await axiosInstance.get(`/provider-service`, {
+        params: { ...data },
+    });
+    return response.data.data;
+};

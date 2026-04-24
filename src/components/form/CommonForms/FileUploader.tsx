@@ -97,7 +97,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
         <form onSubmit={handleSubmit(onSubmit)}>
             <Card className="rounded-2xl shadow-md">
                 <CardContent className="p-6 space-y-4">
-                    <Label className="font-medium">
+                    <Label className="text-sm font-medium">
                         Identity Proof <span className="text-red-500">*</span>
                     </Label>
                     {!fileUploaded ? (

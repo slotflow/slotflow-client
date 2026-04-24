@@ -94,6 +94,12 @@ export enum PaymentStatus {
     REFUNDED = "REFUNDED",
 };
 
+export enum PaymentMethod {
+    CARD = "card",
+    UPI = "upi",
+    NETBANKING = "netbanking"
+}
+
 export enum PlanName {
   TRIAL = "TRIAL",
   STARTER = "STARTER",
@@ -190,4 +196,21 @@ export enum PeerValues {
 export enum MediaTrackKind {
   VIDEO = "video",
   AUDIO = "audio",
+}
+
+export enum RefundStatus {
+    PENDING = "PENDING",
+    SUCCESS = "SUCCEEDED",
+    FAILED = "FAILED",
+}
+
+export enum RefundReason {
+    DUPLICATE = "duplicate",
+    FRAUDUKENT = "fraudulent",
+    REQUESTED_BY_CUSTOMER = "requested_by_customer"
+}
+
+export enum RefundFor {
+    CANCEL_BOOKING = "CANCEL_BOOKING",
+    CANCEL_SUBSCRIPTION = "CANCEL_SUBSCRIPTION",
 }

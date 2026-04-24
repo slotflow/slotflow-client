@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import MapPreview from '../map/MapPreview';
 import { useQuery } from '@tanstack/react-query';
 import DataFetchingError from '../error/DataFetchingError';
@@ -12,16 +11,12 @@ interface UserOrProviderAddressDetailsComponentProps {
         FetchMyAddressResponse | FetchAddressResponse
     >;
     queryKey: string;
-    setLoading?: (data: boolean) => void;
-    setIsUpdating?: (data: boolean) => void;
 }
 
 const AddressListing: React.FC<UserOrProviderAddressDetailsComponentProps> = ({
     userOrProviderId,
     fetchApiFunction,
     queryKey,
-    setLoading,
-    setIsUpdating
 }) => {
 
     const { data, isLoading, isError, error } = useQuery({
@@ -31,26 +26,6 @@ const AddressListing: React.FC<UserOrProviderAddressDetailsComponentProps> = ({
         staleTime: 1000 * 60 * 60,
         gcTime: 1000 * 60 * 60,
     });
-
-    useEffect(() => {
-        if (setLoading) {
-            if (isLoading) {
-                setLoading(true);
-            } else {
-                setLoading(false)
-            }
-        }
-    }, [isLoading, setLoading])
-
-    useEffect(() => {
-        if (setIsUpdating) {
-            if (data && Object.values(data).length !== 0) {
-                setIsUpdating(true);
-            } else {
-                setIsUpdating(false)
-            }
-        }
-    }, [data, setIsUpdating])
 
     if (isError) {
         return <DataFetchingError message={error?.message} />

@@ -1,10 +1,10 @@
 import { axiosInstance } from "@/lib/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ApiBaseResponse } from "../interface/commonInterface";
-import { FetchServiceAvailabilityRequest, FetchServiceAvailabilityResponse, CreateServiceAvailabilitiesRequest } from "../interface/api/serviceAvailability";
+import { FetchServiceAvailabilityRequest, FetchServiceAvailabilityResponse, CreateServiceAvailabilitiesRequest, FetchEngagedSlotsRequest, FetchEngagedSlotsResponse } from "../interface/api/serviceAvailability";
 
-export const fetchEngagedSlots = async (providerId: string, date: Date): Promise<string[]> => {
-    const response = await axiosInstance.get(`/service-availabilities/engaged-slots/${providerId}/${date.toISOString()}`);
+export const fetchEngagedSlots = async (data: FetchEngagedSlotsRequest): Promise<FetchEngagedSlotsResponse> => {
+    const response = await axiosInstance.get(`/service-availabilities/engaged-slots/${data.providerId}/${data.date.toISOString()}`);
     return response.data.data;
 };
 

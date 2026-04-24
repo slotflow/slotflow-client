@@ -9,7 +9,7 @@ interface CreateServiceAvailabilityFooterProps {
     onAddAvailability: (e: React.MouseEvent<HTMLButtonElement>) => void;
     availabilities: Availability[] | null;
     isValid: boolean;
-    dataUpdating: boolean;
+    isUpdating: boolean;
 }
 
 const CreateServiceAvailabilityFooter: React.FC<CreateServiceAvailabilityFooterProps> = ({
@@ -18,41 +18,41 @@ const CreateServiceAvailabilityFooter: React.FC<CreateServiceAvailabilityFooterP
     onAddAvailability,
     availabilities,
     isValid,
-    dataUpdating
+    isUpdating
 }) => {
     return (
-        <React.Fragment>
+        <div className="flex flex-col gap-4">
             {selectedTimeSlots && selectedTimeSlots.length > 0 && (
-                <div className="flex space-x-2 justify-center md:justify-end mt-4 md:mt-6">
+                <div className="flex justify-center md:justify-end">
                     <Button
                         title="Confirm"
                         type="button"
                         variant="default"
                         disabled={isSubmitting}
                         onClick={onAddAvailability}
-                        className="cursor-pointer w-10/12 md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
+                        className="cursor-pointer w-full md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
                     >
                         Confirm <Check />
                     </Button>
                 </div>
             )}
             {availabilities && (
-                <div className="flex space-x-2 justify-center md:justify-end mt-4 md:mt-6 ">
+                <div className="flex justify-center md:justify-end">
                     <Button
-                        title="Submit"
+                        title={"Submit"}
                         type="submit"
                         variant="default"
                         disabled={isSubmitting || !isValid}
-                        className="cursor-pointer w-10/12 md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
+                        className="cursor-pointer w-full md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
                     >
-                        {dataUpdating ? "Loading" : "Submit"} <ChevronRight />
+                        {isSubmitting ? "Loading" : isUpdating ? "Update" : "Submit"} <ChevronRight />
                     </Button>
                 </div>
             )}
             <div className='mt-10'>
                 <p className='text-sm text-gray-400 italic'>Note: Please add your daily service available slots by selecting a day, Once you're done, only click Submit</p>
             </div>
-        </React.Fragment>
+        </div>
     );
 };
 

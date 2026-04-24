@@ -4,10 +4,6 @@ import {
     ProviderSubmitDetailsResponse,
     AdminFetchAllProvidersResponse,
     ProviderDashboardGraphResponse,
-    ProviderUpdateProviderInfoRequest,
-    ProviderUpdateProfileImageRequest,
-    ProviderUpdateProviderInfoResponse,
-    ProviderUpdateProfileImageResponse,
     AdminChangeProviderTrustTagRequest,
     AdminChangeProviderBlockStatusRequest,
     ProviderFetchMyProfileDetailsResponse,
@@ -22,32 +18,15 @@ import { DateRange } from "react-day-picker";
 import { PlanName } from "../interface/enums";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { parseResponse } from "../helper/parseResponse";
+import { buildQueryParams } from "../helper/buildQueryParams";
 import { ApiBaseResponse, ApiFetchFunction, FetchFunctionBaseQueryParams } from "../interface/commonInterface";
 import { FetchProvidersProofsResponse, UpdateFileDataRequest, UpdateFileDataResponse } from "../interface/api/commonApiInterface";
-import { UserFetchProvidersForChatSidebarResponse, UserFetchServiceProvidersRequest, UserFetchServiceProvidersResponse } from "../interface/api/user";
-import { buildQueryParams } from "../helper/buildQueryParams";
 
 // provider fetching own profile details
 export const providerFetchMyProfileDetails = async (): Promise<ProviderFetchMyProfileDetailsResponse> => {
     const response = await axiosInstance.get('/providers/me');
     return response.data.data;
 }
-
-// provider updating own profile image
-export const providerUpdateProfileImage = createAsyncThunk<ProviderUpdateProfileImageResponse, ProviderUpdateProfileImageRequest>('/provider/profile/image',
-    async (data: ProviderUpdateProfileImageRequest) => {
-        const response = await axiosInstance.patch('/providers/me/image', data);
-        return response.data;
-    }
-)
-
-// provider updating own profile info
-export const providerUpdateInfo = createAsyncThunk<ProviderUpdateProviderInfoResponse, ProviderUpdateProviderInfoRequest>('/provider/profile',
-    async (data: ProviderUpdateProviderInfoRequest) => {
-        const response = await axiosInstance.patch('/providers/me', data);
-        return response.data;
-    }
-)
 
 // provider updating own identity proof
 export const providerUpdateIdentityProof = async (data: UpdateFileDataRequest): Promise<UpdateFileDataResponse> => {
@@ -123,7 +102,6 @@ export const providerFetchDashboardGraphData = async (subscription?: PlanName, d
 
 
 
-
 // **** other roles apis for providers resource
 
 // admin
@@ -180,19 +158,5 @@ export const adminFetchProviderProofs = async (providerId: string): Promise<Fetc
 // user fetch provider profile details
 export const fetchProviderDetailsForUser = async (providerId: string): Promise<UserFetchProviderProfileDetailsResponse> => {
     const response = await axiosInstance.get(`/providers/${providerId}`);
-    return response.data.data;
-}
-
-// user fetch service providers
-export const fetchServiceProvidersForUser = async (data: UserFetchServiceProvidersRequest): Promise<Array<UserFetchServiceProvidersResponse>> => {
-    const response = await axiosInstance.get(`/providers`, {
-        params: { ...data },
-    });
-    return response.data.data;
-};
-
-// user fetch providers for chat
-export const fetchProvidersForChat = async (): Promise<UserFetchProvidersForChatSidebarResponse> => {
-    const response = await axiosInstance.get('/providers/chat');
     return response.data.data;
 }

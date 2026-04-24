@@ -34,6 +34,7 @@ export const adminFetchDashboardAppointmentStatsData = async (payload: AdminStat
     return response.data.data;
 }
 
+// need to use
 export const adminFetchDashboardGraphData = async (payload: AdminStatsDataRequest): Promise<AdminDashboardGraphResponse> => {
     const query = buildQueryParams(payload);
     const response = await axiosInstance.get(`/admin-dashboard/graph?${query}`);

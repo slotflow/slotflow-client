@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AppDispatch } from "@/shared/redux/appStore";
 import { FormButton, FormHeading } from "../FormSplits";
 import { VerifyEmailFormType, verifyEmailZodSchema } from "@/shared/zod/authZod";
+import { redirectPaths } from "@/shared/utils/constants";
 
 const EmailVerificationForm: React.FC = () => {
 
@@ -66,7 +67,7 @@ const EmailVerificationForm: React.FC = () => {
                         <p className="mt-6 flex justify-between text-xs md:text-sm/6 text-[var(--textTwo)] px-2">
                             <span
                                 className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
-                                onClick={() => navigate("/login")}
+                                onClick={() => navigate(redirectPaths.LOGIN)}
                             >
                                 Cancel
                             </span>

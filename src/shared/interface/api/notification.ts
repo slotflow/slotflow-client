@@ -1,5 +1,5 @@
-import { Notification } from "../entityInterface/notificationInterface";
 import { Platform } from "../enums";
+import { Notification } from "../entityInterface/notificationInterface";
 
 export interface RegisterDeviceRequest {
     fcmToken: string;
@@ -9,6 +9,4 @@ export interface RegisterDeviceRequest {
 
 export type FetchNotificationsResponse = Pick<Notification, "_id" | "title" | "body" | "isRead" | "createdAt" >
 
-export interface FetchNotificationsQueryParams {
-    
-}; 
+export interface FetchNotificationsQueryParams {}; 

@@ -1,9 +1,9 @@
 import { axiosInstance } from "@/lib/axios";
-import { ApiFetchFunction } from "../interface/commonInterface";
 import { parseResponse } from "../helper/parseResponse";
+import { buildQueryParams } from "../helper/buildQueryParams";
+import { ApiFetchFunction } from "../interface/commonInterface";
 import { Payment } from "../interface/entityInterface/paymentInterface";
 import { AdminFetchRevenueReportResponse, AdmminFetchRevenueReportRequest, FetchPaymentDetailsResponse, FetchPaymentsQueryParams, FetchPaymentsResponse } from "../interface/api/payment";
-import { buildQueryParams } from "../helper/buildQueryParams";
 
 // fetch a single payment details
 export const fetchPaymentDetails = async (paymentId: Payment["_id"]): Promise<FetchPaymentDetailsResponse> => {
@@ -34,7 +34,7 @@ export const fetchRevenueReportForAdmin = async (payload: AdmminFetchRevenueRepo
     return response.data.data as AdminFetchRevenueReportResponse;
 }
 
-// 
+// create stripe account
 export const connectStripeAccount = async (): Promise<{ url: string }> => {
     const response = await axiosInstance.post("/payments/stripe/account-link");
     return response.data.data;

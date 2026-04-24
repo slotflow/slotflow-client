@@ -1,23 +1,14 @@
 import gsap from "gsap";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { Role } from "@/shared/interface/enums";
 import { Meteors } from "@/components/ui/meteors";
 import { RootState } from "@/shared/redux/appStore";
+import { Outlet, useNavigate } from "react-router-dom";
 import React, { useEffect, useRef, useState } from "react";
 import WorldMapWrapper from "@/components/map/WorldMapWrapper";
-import LoginForm from "@/components/form/CommonForms/LoginForm";
-import SignUpForm from "@/components/form/CommonForms/SignUpForm";
-import ResetPasswordForm from "@/components/form/CommonForms/ResetPasswordForm";
-import OtpVerificatioForm from "@/components/form/CommonForms/OtpVerificatioForm";
 import AnimatedBeamIntegrations from "@/components/animation/AnimatedCircleWithBeam";
-import EmailVerificationForm from "@/components/form/CommonForms/EmailVerificationForm";
 
-interface AuthPageProp {
-  formType: number;
-}
-
-const AuthPage: React.FC<AuthPageProp> = ({ formType }) => {
+const AuthLayout: React.FC = () => {
 
   const navigate = useNavigate();
   const authUser = useSelector((state: RootState) => state.auth.authUser);
@@ -85,21 +76,10 @@ const AuthPage: React.FC<AuthPageProp> = ({ formType }) => {
     };
   }, [active]);
 
-
-
-  const formMap: Record<number, React.ReactNode> = {
-    0: <LoginForm />,
-    1: <SignUpForm />,
-    2: <EmailVerificationForm />,
-    3: <ResetPasswordForm />,
-    4: <OtpVerificatioForm />,
-  };
-
   return (
     <div className="h-[100vh] flex">
-
       <div className={`w-full md:w-6/12 lg:w-4/12 flex justify-center items-center ${lightTheme ? "bg-[#f5f5f5]" : "bg-[#171717]"}`}>
-        {formMap[formType]}
+        <Outlet />
       </div>
 
       <div className="w-0 md:w-6/12 lg:w-8/12 relative flex h-full items-center justify-center overflow-hidden bg-[var(--background)]">
@@ -112,7 +92,6 @@ const AuthPage: React.FC<AuthPageProp> = ({ formType }) => {
         >
           <AnimatedBeamIntegrations />
         </div>
-
         <div
           ref={mapRef}
           className={`absolute w-full flex h-full ${active === "map" ? "block" : "hidden"
@@ -125,4 +104,4 @@ const AuthPage: React.FC<AuthPageProp> = ({ formType }) => {
   );
 };
 
-export default AuthPage;
+export default AuthLayout;

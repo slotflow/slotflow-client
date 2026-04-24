@@ -77,7 +77,7 @@ export interface AdminDashboardGraphResponse {
     }>;
 
     completionBreakdownChartData: Array<{
-        status: 'completed' | 'missed' | 'cancelled' | 'rejected';
+        status: 'completed' | 'missed' | 'cancelled' | 'rejected' | "confirmed" | "booked" | "pending";
         value: number;
     }>;
 
@@ -91,9 +91,4 @@ export interface AdminDashboardGraphResponse {
         day: string;
         count: number;
     }>;
-
-    earningThroughGatewaysChartData: Array<{
-        gateWay: string;
-        count: number;
-    }>
 }

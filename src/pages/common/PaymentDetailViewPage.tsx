@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPaymentDetails } from "@/shared/apis/payment";
@@ -27,11 +27,6 @@ const PaymentDetailViewPage: React.FC = () => {
         { label: "Initial Amount", value: data?.initialAmount, isPrice: true },
         { label: "Discount Amount", value: data?.discountAmount, isPrice: true },
         { label: "Total Amount", value: data?.totalAmount, isPrice: true },
-        { label: "Refund ID", value: data?.refundId },
-        { label: "Refund Amount", value: data?.refundAmount, isPrice: true },
-        { label: "Refund Status", value: data?.refundStatus },
-        { label: "Refund Reason", value: data?.refundReason },
-        { label: "Refunded At", value: data?.refundAt, isDate: true },
         { label: "Receipt URL", value: data?.receiptUrl },
         { label: "Customer Email", value: data?.customerEmail },
         { label: "Description", value: data?.description },

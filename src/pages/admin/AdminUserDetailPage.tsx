@@ -25,7 +25,7 @@ const AdminUserDetailPage: React.FC = () => {
         <div className="min-h-full p-2 flex flex-col">
 
             <ProfileHead
-                updation={false}
+                canUpdate={false}
                 isMyProfile={false}
                 showDetails
                 selectedUserData={selectedUserData}

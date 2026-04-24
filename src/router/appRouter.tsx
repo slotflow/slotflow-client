@@ -6,10 +6,16 @@ import OnBoardingGuard from "./OnBoardingGuard.tsx";
 import { ProtectedRoute } from "./ProtectedRoutes.tsx";
 import { RouteNames } from "@/shared/utils/constants.ts";
 import { createBrowserRouter, Outlet } from "react-router-dom";
-import RoleSelectPage from "@/pages/common/RoleSelectPage.tsx";
+
+import RoleSelectPage from "@/pages/onBoarding/RoleSelectPage.tsx";
+import AuthLayout from "@/layouts/AuthLayout.tsx";
+import LoginForm from "@/components/form/CommonForms/LoginForm.tsx";
+import SignUpForm from "@/components/form/CommonForms/SignUpForm.tsx";
+import EmailVerificationForm from "@/components/form/CommonForms/EmailVerificationForm.tsx";
+import ResetPasswordForm from "@/components/form/CommonForms/ResetPasswordForm.tsx";
+import OtpVerificatioForm from "@/components/form/CommonForms/OtpVerificatioForm.tsx";
 
 const ChatPage = lazy(() => import("@/pages/common/ChatPage.tsx"));
-const AuthPage = lazy(() => import("@/pages/common/AuthPage.tsx"));
 const AboutPage = lazy(() => import("@/pages/common/AboutPage.tsx"));
 const ContactPage = lazy(() => import("@/pages/common/ContactPage.tsx"));
 const ReviewsPage = lazy(() => import("@/pages/common/ReviewsPage.tsx"));
@@ -36,13 +42,13 @@ const UserListProvidersCardsPage = lazy(() => import("@/pages/user/UserListProvi
 const UserServiceProviderDetailPage = lazy(() => import("@/pages/user/UserServiceProviderDetailPage.tsx"));
 
 const ProviderDashboardPage = lazy(() => import("@/pages/provider/ProviderDashboardPage.tsx"));
-const ProviderAddAddressPage = lazy(() => import("@/pages/provider/ProviderCreateAddressPage.tsx"));
+const ProviderAddAddressPage = lazy(() => import("@/pages/onBoarding/ProviderCreateAddressPage.tsx"));
 const ProviderSubscriptionPage = lazy(() => import("@/pages/provider/ProviderSubscriptionPage.tsx"));
 const ProviderProofSubmitionPage = lazy(() => import("@/pages/provider/ProviderProofSubmitionPage.tsx"));
-const ProviderApprovalPendingPage = lazy(() => import("@/pages/provider/ProviderApprovalPendingPage.tsx"));
+const ProviderApprovalPendingPage = lazy(() => import("@/pages/onBoarding/ProviderApprovalPendingPage.tsx"));
 const ProviderSubscriptionConfirmPage = lazy(() => import("@/pages/provider/ProviderSubscriptionConfirmPage.tsx"));
-const ProviderCreateServiceDetailsPage = lazy(() => import("@/pages/provider/ProviderCreateServiceDetailsPage.tsx"));
-const ProviderCreateServiceAvailabilityPage = lazy(() => import("@/pages/provider/ProviderCreateServiceAvailabilityPage.tsx"));
+const ProviderCreateServiceDetailsPage = lazy(() => import("@/pages/onBoarding/ProviderCreateServiceDetailsPage.tsx"));
+const ProviderCreateServiceAvailabilityPage = lazy(() => import("@/pages/onBoarding/ProviderCreateServiceAvailabilityPage.tsx"));
 
 const AdminPlansPage = lazy(() => import("@/pages/admin/AdminPlansPage.tsx"));
 const AdminUsersPage = lazy(() => import("@/pages/admin/AdminUsersPage.tsx"));
@@ -56,12 +62,6 @@ const AdminServiceProvidersPage = lazy(() => import("@/pages/admin/AdminServiceP
 const AdminServiceProviderDetailPage = lazy(() => import("@/pages/admin/AdminServiceProviderDetailPage.tsx"));
 
 export const appRouter = createBrowserRouter([
-    { path: "/login", element: <AuthPage formType={0} /> },
-    { path: "/register", element: <AuthPage formType={1} /> },
-    { path: "/verify/email", element: <AuthPage formType={2} /> },
-    { path: "/reset/password", element: <AuthPage formType={3} /> },
-    { path: "/verify/otp", element: <AuthPage formType={4} /> },
-    { path: "*", element: <Error404Page /> },
     {
         path: "/",
         element: <LandingLayout />,
@@ -71,6 +71,17 @@ export const appRouter = createBrowserRouter([
             { path: "/contact", element: <ContactPage /> },
             { path: "/privacy-policy", element: <PrivacyPolicyPage /> },
             { path: "/terms-and-conditions", element: <TermsAndConditionsPage /> },
+        ]
+    },
+   {
+        path: "/auth",
+        element: <AuthLayout />,
+        children: [
+            { path: "login", element: <LoginForm /> },
+            { path: "register", element: <SignUpForm /> },
+            { path: "verify/email", element: <EmailVerificationForm /> },
+            { path: "reset/password", element: <ResetPasswordForm /> },
+            { path: "verify/otp", element: <OtpVerificatioForm /> },
         ]
     },
     {
@@ -98,7 +109,7 @@ export const appRouter = createBrowserRouter([
         ],
     },
     {
-        path: "/user/onboarding",
+        path: "/onboarding",
         element: (
             <ProtectedRoute allowedRoles={[Role.USER]}>
                 <Outlet />
@@ -106,6 +117,12 @@ export const appRouter = createBrowserRouter([
         ),
         children: [
             { path: "role-select", element: <RoleSelectPage /> },
+            { path: "address", element: <ProviderAddAddressPage /> },
+            { path: "service", element: <ProviderCreateServiceDetailsPage /> },
+            { path: "availability", element: <ProviderCreateServiceAvailabilityPage /> },
+            { path: "proofs", element: <ProviderProofSubmitionPage /> },
+            { path: "pending", element: <ProviderApprovalPendingPage /> },
+            { path: "*", element: <Error404Page /> },
         ]
     },
     {
@@ -149,22 +166,6 @@ export const appRouter = createBrowserRouter([
                 ],
             }
         ],
-    },
-    {
-        path: "/provider/onboarding",
-        element: (
-            <ProtectedRoute allowedRoles={[Role.PROVIDER]}>
-                <Outlet />
-            </ProtectedRoute>
-        ),
-        children: [
-            { path: "role-select", element: <RoleSelectPage /> },
-            { path: "address", element: <ProviderAddAddressPage /> },
-            { path: "service", element: <ProviderCreateServiceDetailsPage /> },
-            { path: "availability", element: <ProviderCreateServiceAvailabilityPage /> },
-            { path: "proofs", element: <ProviderProofSubmitionPage /> },
-            { path: "pending", element: <ProviderApprovalPendingPage /> },
-        ]
     },
     {
         path: "/provider",
@@ -273,4 +274,5 @@ export const appRouter = createBrowserRouter([
             }
         ]
     },
+    { path: "*", element: <Error404Page /> },
 ])

@@ -9,23 +9,32 @@ const OnBoardingGuard = ({ children }: { children: React.ReactNode }) => {
     const user = useSelector((store: RootState) => store.auth.authUser);
 
     if (!user) {
-        return <Navigate to="/login" replace />;
+        return <Navigate to="/auth/login" replace />;
+    }
+
+    if (user.role === Role.ADMIN) {
+        return <Navigate to="/admin" replace />;
     }
 
     if (!user.hasSelectedRole) {
-        return user.role === Role.USER ? (
-            <Navigate to="/user/onboarding/role-select" replace />
-        ) : (
-            <Navigate to="/provider/onboarding/role-select" replace />
-        );
+        return <Navigate to="/onboarding/role-select" replace />;
     }
 
-    if (user.role === Role.PROVIDER) {
-        if (!user.isAddressAdded) return <Navigate to="/provider/onboarding/address" replace />;
-        if (!user.isServiceDetailsAdded) return <Navigate to="/provider/onboarding/service" replace />;
-        if (!user.isServiceAvailabilityAdded) return <Navigate to="/provider/onboarding/availability" replace />;
-        if (!user.isProofSubmitted) return <Navigate to="/provider/onboarding/proofs" replace />;
-        if (!user.isAdminVerified) return <Navigate to="/provider/onboarding/pending" replace />;
+    if (!user.isOnboardingCompleted) {
+        if (!user.isAddressAdded && !user.isAddressVerified)
+            return <Navigate to="/onboarding/address" replace />;
+
+        if (!user.isServiceDetailsAdded && !user.isServiceDetailsVerified)
+            return <Navigate to="/onboarding/service" replace />;
+
+        if (!user.isServiceAvailabilityAdded && !user.isAvailabilityVerified)
+            return <Navigate to="/onboarding/availability" replace />;
+
+        if (!user.isProofSubmitted && !user.isProofsVerified)
+            return <Navigate to="/onboarding/proofs" replace />;
+
+        if (!user.isAdminVerified)
+            return <Navigate to="/onboarding/pending" replace />;
     }
 
     return <React.Fragment>{children}</React.Fragment>;

@@ -10,12 +10,11 @@ import avatar from '../../../assets/defaultImages/avatar.png';
 import { getUploadUrl, uploadToS3 } from "@/shared/apis/s3";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { UserUpdateProfileImageResponse } from "@/shared/interface/api/user";
-import { ProviderUpdateProfileImageResponse } from "@/shared/interface/api/provider";
 import { ProfileHeaderComponentProps } from "@/shared/interface/componentInterface/commonComponentInterface";
+import { userUpdateProfileImage } from "@/shared/apis/user";
 
 const ProfileHead: React.FC<ProfileHeaderComponentProps> = ({
-    updateProfileImageApiFunction,
-    updation,
+    canUpdate,
     showDetails,
     isMyProfile,
     selectedUserData
@@ -35,12 +34,12 @@ const ProfileHead: React.FC<ProfileHeaderComponentProps> = ({
         const formData = new FormData();
         formData.append("profileImage", file);
 
-        if (updation && updateProfileImageApiFunction) {
+        if (canUpdate) {
             const { uploadUrl, key } = await getUploadUrl({ file: file, folder: "profiles" });
             await uploadToS3(file, uploadUrl);
-            await dispatch(updateProfileImageApiFunction({ s3FileKey: key }))
+            await dispatch(userUpdateProfileImage({ s3FileKey: key }))
                 .unwrap()
-                .then((res: ProviderUpdateProfileImageResponse | UserUpdateProfileImageResponse) => {
+                .then((res: UserUpdateProfileImageResponse) => {
                     toast.success(res.message);
                 })
                 .catch((error) => {
@@ -67,13 +66,13 @@ const ProfileHead: React.FC<ProfileHeaderComponentProps> = ({
                     alt="Profile"
                 />
 
-                {(updation && profileImageUpdating) && (
+                {(canUpdate && profileImageUpdating) && (
                     <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 rounded-lg">
                         <Loader className="w-6 h-6 text-white animate-spin" />
                     </div>
                 )}
 
-                {updation && (
+                {canUpdate && (
                     <Label
                         htmlFor="avatar-upload"
                         className={`absolute bottom-0 right-0 bg-black opacity-40 bg-base-content hover:scale-105 p-2 cursor-pointer transition-all duration-200 ${profileImageUpdating ? "cursor-not-allowed opacity-30" : "opacity-100"}`}

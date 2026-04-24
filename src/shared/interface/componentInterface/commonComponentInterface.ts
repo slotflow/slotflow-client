@@ -8,19 +8,16 @@ import { PlanName, Role } from "../enums";
 import { LucideIcon } from "lucide-react";
 import { ChartConfig } from "@/components/ui/chart";
 import { Provider } from "../entityInterface/providerInterface";
-import { createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { CreateAddressFormType } from "@/shared/zod/commonZodFields";
+import { PayloadAction } from "@reduxjs/toolkit";
 import { FetchServiceAvailabilityResponse } from "../api/serviceAvailability";
 import { UpdateFileDataRequest, UpdateFileDataResponse } from "../api/commonApiInterface";
 import { ApiBaseResponse, BaseChartData, ChatComponentProps, TimeRange } from "../commonInterface";
-import { ProviderUpdateProfileImageRequest, ProviderUpdateProfileImageResponse } from "../api/provider";
-import { UserUpdateProfileImageResponse, UserUpdateProfileImageRequest, UserFetchServiceProvidersResponse } from "../api/user";
-import { FetchProviderServiceResponse, UserFetchProviderServiceResponse } from "../api/providerService";
+import { UserFetchServiceProvidersResponse } from "../api/user";
+import { FetchProviderServiceResponse } from "../api/providerService";
 
 // **** profile head compoenent props interface
 export interface ProfileHeaderComponentProps {
-  updation: boolean;
-  updateProfileImageApiFunction?: ReturnType<typeof createAsyncThunk<ProviderUpdateProfileImageResponse | UserUpdateProfileImageResponse, ProviderUpdateProfileImageRequest | UserUpdateProfileImageRequest>>;
+  canUpdate: boolean;
   showDetails?: boolean;
   isMyProfile?: boolean;
   selectedUserData?: { selectedUserName: string, selectedUserProfileImage: string | null };
@@ -46,10 +43,7 @@ export interface ProviderServiceAvailabilityComponentProps {
 // **** Provider Service details showing component props interface
 export interface ProviderServiceDetailsComponentProps {
   providerId?: Provider["_id"];
-  fetchApiFunction: (providerId?: Provider["_id"]) => Promise<
-    FetchProviderServiceResponse |
-    UserFetchProviderServiceResponse
-  >;
+  fetchApiFunction: (providerId?: Provider["_id"]) => Promise<FetchProviderServiceResponse>;
   queryKey: string;
   isUser?: boolean;
   shimmerRow?: number;
@@ -152,18 +146,6 @@ export interface FormFieldProps<T extends FieldValues> {
   labelInfo?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
-
-
-// **** Address Form Props Interface
-export interface AddressFormProps {
-  formClassNames: string;
-  heading: string;
-  headingSize: string;
-  buttonText: string;
-  onSubmit: (data: CreateAddressFormType) => void;
-  setData?: CreateAddressFormType
-}
-
 
 // ****
 export interface FileUploaderProps {

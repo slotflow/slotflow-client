@@ -27,24 +27,37 @@ const LandingLayout = () => {
         uid: rawUser._id,
         username: rawUser.username,
         email: rawUser.email,
-        profileImage: rawUser.profileImage,
-        isBlocked: rawUser.isBlocked,
+
         role: rawUser.role,
+        hasSelectedRole: rawUser.hasSelectedRole,
+        isOnboardingCompleted: rawUser.isOnboardingCompleted,
+
+        isBlocked: rawUser.isBlocked,
         isLoggedIn: true,
+
+        phone: rawUser.phone,
+        profileImage: rawUser.profileImage,
+
         isAddressAdded: rawUser.isAddressAdded,
         isServiceDetailsAdded: rawUser.isServiceDetailsAdded,
         isServiceAvailabilityAdded: rawUser.isServiceAvailabilityAdded,
         isProofSubmitted: rawUser.isProofSubmitted,
-        isAdminVerified: rawUser.isAdminVerified,
-        googleId: rawUser.googleId,
-        googleConnected: rawUser.googleConnected,
-        providerSubscription: rawUser.providerSubscription,
         isAddressVerified: rawUser.isAddressVerified,
+        isServiceDetailsVerified: rawUser.isServiceDetailsVerified,
         isAvailabilityVerified: rawUser.isAvailabilityVerified,
         isProofsVerified: rawUser.isProofsVerified,
-        isServiceDetailsVerified: rawUser.isServiceDetailsVerified,
+        isAdminVerified: rawUser.isAdminVerified,
+        providerSubscription: rawUser.providerSubscription,
         verificationRejectionReason: rawUser.verificationRejectionReason,
         adminVerificationStatus: rawUser.adminVerificationStatus,
+
+        googleId: rawUser.googleId,
+        googleConnected: rawUser.googleConnected,
+
+        stripeConnected: rawUser.stripeConnected,
+        stripeAccountId: rawUser.stripeAccountId,
+        stripeCustomerId: rawUser.stripeCustomerId,
+
         allowPushNotification: rawUser.allowPushNotification,
       };
       dispatch(setAuthUser(authUser));

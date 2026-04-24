@@ -1,3 +1,5 @@
+import { ApiBaseResponse } from "../commonInterface";
+
 // **** Provider service availability interface **** \\
 
 // 1. Provider service availability interface used in the AdminProviderServiceAvailability compoenent
@@ -19,7 +21,7 @@ export interface Slot {
 }
 
 //  Availability interface for the response
-export interface AvailabilityForResponse extends Omit<Availability, "slots"> {
+export interface AvailabilityForResponse extends Omit<Availability, "slots">, ApiBaseResponse {
     slots: Slot[];
 }
 

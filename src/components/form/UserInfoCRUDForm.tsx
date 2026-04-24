@@ -10,7 +10,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
 import { userUpdateInfo } from "@/shared/apis/user";
 import { slideOut } from "@/shared/helper/gsapAnimationSlide";
-import { providerUpdateInfo } from "@/shared/apis/provider";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { UserInfoFormType, userInfoZodSchema } from "@/shared/zod/commonZodFields";
 
@@ -56,15 +55,7 @@ const UserInfoCRUDForm: React.FC<UserInfoCRUDProps> = ({
         }
         setLoading(true);
         try {
-            let updateFn;
-            if (role === "PROVIDER") updateFn = providerUpdateInfo;
-            else if (role === "USER") updateFn = userUpdateInfo;
-            else {
-                toast.error("Invalid user role");
-                return;
-            }
-
-            const res = await dispatch(updateFn(data)).unwrap();
+            const res = await dispatch(userUpdateInfo(data)).unwrap();
             if (res.success) {
                 toast.success(res.message || "Info updated successfully");
                 handleCloseForm();

@@ -14,6 +14,7 @@ import { appConfig, serviceConfig } from "@/shared/config/env";
 import { setForgotPassword } from "@/shared/redux/slices/appSlice";
 import { LoginFormType, LoginZodSchema } from '@/shared/zod/authZod';
 import { redirectPaths } from "../../../shared/utils/constants";
+import { SigninResponse } from "@/shared/interface/api/auth";
 
 const LoginForm: React.FC = () => {
 
@@ -33,11 +34,40 @@ const LoginForm: React.FC = () => {
         }
     });
 
-    const handleNavigation = (userRole: Role) => {
-        console.log("navigating role : ", userRole);
-        if (userRole === Role.ADMIN) navigate("/admin/dashboard", { replace: true });
-        else if (userRole === Role.USER) navigate("/user", { replace: true });
-        else if (userRole === Role.PROVIDER) navigate("/provider", { replace: true });
+    const handleNavigation = (data: SigninResponse["data"]) => {
+        if (data.role === Role.ADMIN) {
+            navigate("/admin/dashboard", { replace: true });
+            return;
+        }
+
+        if (!data.hasSelectedRole) {
+            navigate("/onboarding/role-select", { replace: true });
+            return;
+        }
+
+        if (!data.isOnboardingCompleted) {
+            // Granular redirect to the correct onboarding step
+            if (!data.isAddressAdded && !data.isAddressVerified) {
+                navigate("/onboarding/address", { replace: true });
+            } else if (!data.isServiceDetailsAdded && !data.isServiceDetailsVerified) {
+                navigate("/onboarding/service", { replace: true });
+            } else if (!data.isServiceAvailabilityAdded && !data.isAvailabilityVerified) {
+                navigate("/onboarding/availability", { replace: true });
+            } else if (!data.isProofSubmitted && !data.isProofsVerified) {
+                navigate("/onboarding/proofs", { replace: true });
+            } else if (!data.isAdminVerified) {
+                navigate("/onboarding/pending", { replace: true });
+            } else {
+                navigate("/onboarding/address", { replace: true }); // fallback
+            }
+            return;
+        }
+
+        if (data.role === Role.USER) {
+            navigate("/user", { replace: true });
+        } else if (data.role === Role.PROVIDER) {
+            navigate("/provider", { replace: true });
+        }
     };
 
     const handleGoogleLogin = ({ e }: { e: React.MouseEvent<HTMLButtonElement, MouseEvent> }) => {
@@ -57,7 +87,7 @@ const LoginForm: React.FC = () => {
             const res = await dispatch(signin({ ...data })).unwrap();
             if (res.success) {
                 toast.success(res.message);
-                handleNavigation(res.data.role);
+                handleNavigation(res.data);
             } else toast.error(res.message);
         } catch (error) {
             if (appConfig.isDevelopment) {
@@ -101,7 +131,7 @@ const LoginForm: React.FC = () => {
                                     className="px-0 block text-xs md:text-sm font-medium text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
                                     onClick={() => {
                                         dispatch(setForgotPassword(true));
-                                        navigate(`/verify/email`);
+                                        navigate(redirectPaths.VERIFY_EMAIL);
                                     }}
                                 >
                                     Forgot Password ?

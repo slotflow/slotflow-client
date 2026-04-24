@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Role } from "@/shared/interface/enums";
 import TimeSlotLegend from "../app/TimeSlotLegend";
 import { Button } from "@/components/ui/button";
@@ -24,9 +24,10 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
 
     const [date, setDate] = useState<Date | undefined>(new Date());
     const [openPayment, setOpenPayment] = useState<boolean>(false);
-    const [selectedSlotId, setSelectedSlotId] = useState<string | null>(null);
     const [selectedMode, setSelectedMode] = useState<string | null>(null);
+    const [selectedSlotId, setSelectedSlotId] = useState<string | null>(null);
     const [engagedSlotIds, setEngagedSlotIds] = useState<Set<string>>(new Set());
+    
     const eventSocket = getEventSocket();
 
     const { data, isLoading, isError, error } = useQuery({

@@ -7,14 +7,14 @@ import { Message } from "./entityInterface/message.interface";
 
 // Auth slice state
 export interface AuthUser {
-  uid?: string;
-  username?: string;
-  profileImage?: string;
-  phone?: string;
-  email?: string;
-  verificationToken?: string;
+  uid: string;
+  username: string;
+  profileImage: string;
+  phone: string | null;
+  email: string;
   role: Role;
-  hasSelectedRole?: boolean;
+  hasSelectedRole: boolean;
+  isOnboardingCompleted: boolean;
   isBlocked?: boolean;
   isLoggedIn?: boolean;
   isAddressAdded?: boolean;

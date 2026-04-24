@@ -4,7 +4,6 @@ import { Role } from "@/shared/interface/enums";
 import ReviewsPage from "../common/ReviewsPage";
 import { providerTabs } from "@/shared/utils/constants";
 import { fetchPayments } from "@/shared/apis/payment";
-import { fetchAddressByProviderId } from "@/shared/apis/address";
 import ProfileHead from "@/components/profile/ProfileHead";
 import DataFetchingError from "@/components/error/DataFetchingError";
 import AddressListing from "@/components/profile/AddressListing";
@@ -18,6 +17,7 @@ import { fetchServiceAvailabilityByProviderId } from "@/shared/apis/serviceAvail
 import AdminUserOrProviderPayments from "@/components/admin/AdminUserOrProviderPayments";
 import { adminFetchProviderProofs, fetchProviderDetailsForAdmin } from "@/shared/apis/provider";
 import ProviderServiceAvailability from "@/components/profile/ProviderServiceAvailability";
+import { fetchAddressByUserId } from "@/shared/apis/address";
 
 const AdminServiceProviderDetailPage = () => {
 
@@ -34,7 +34,7 @@ const AdminServiceProviderDetailPage = () => {
         <div className="min-h-full p-2 flex flex-col">
 
             <ProfileHead
-                updation={false}
+                canUpdate={false}
                 isMyProfile={false}
                 showDetails
                 selectedUserData={selectedUserData}
@@ -47,7 +47,7 @@ const AdminServiceProviderDetailPage = () => {
                     {tab === 0 && (
                         <ProfileListing fetchApiFunction={() => fetchProviderDetailsForAdmin(providerId)} queryKey="providerProfile" userOrProviderId={providerId} adminLookingProvider shimmerRow={8} setSelectedUserData={setSelectedUserData} />
                     ) || tab === 1 && (
-                        <AddressListing userOrProviderId={providerId} fetchApiFunction={() => fetchAddressByProviderId(providerId)} queryKey="providerAddress" />
+                        <AddressListing userOrProviderId={providerId} fetchApiFunction={() => fetchAddressByUserId(providerId)} queryKey="providerAddress" />
                     ) || tab === 2 && (
                         <ProviderServiceDetails providerId={providerId} fetchApiFunction={() => adminFetchProviderService(providerId)} queryKey="providerService" isUser={false} />
                     ) || tab === 3 && (

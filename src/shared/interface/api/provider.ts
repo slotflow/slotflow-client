@@ -9,24 +9,6 @@ export type ProviderCreateAddressRequest = Pick<Address, "addressLine" | "landMa
 // Used as the response type for provider fetch self profile details api
 export type ProviderFetchMyProfileDetailsResponse = Pick<Provider, "username" | "email" | "isAdminVerified" | "isBlocked" | "isEmailVerified" | "phone" | "createdAt" | "trustedBySlotflow" | "updatedAt" | "adminVerificationStatus" | "isAddressVerified" | "isAvailabilityVerified" | "isProofsVerified" | "isServiceDetailsVerified">;
 
-// Used as the response type for Provider profile image updating api
-export interface ProviderUpdateProfileImageRequest {
-  s3FileKey: string
-}
-
-// Used as the response interface for Provider profile image updating api
-export interface ProviderUpdateProfileImageResponse extends ApiBaseResponse {
-  data: Provider["profileImage"]
-}
-
-// Used as the request type for Provider update providerInfo [username and phone]
-export type ProviderUpdateProviderInfoRequest = Pick<Provider, "username" | "phone">;
-
-// Used as the response interface for Provider update providerInfo [username and phone]
-export interface ProviderUpdateProviderInfoResponse extends ApiBaseResponse {
-  data: ProviderUpdateProviderInfoRequest
-}
-
 // Used as the request interface of provider submit detials for review
 export interface ProviderSubmitDetailsResponse extends ApiBaseResponse {
   data: Pick<Provider, "adminVerificationStatus">;

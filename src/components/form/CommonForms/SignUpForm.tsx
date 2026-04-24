@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormButton, FormHeading } from "../FormSplits";
 import { appConfig, serviceConfig } from "@/shared/config/env";
 import { SignupFormType, signupZodSchema } from "@/shared/zod/authZod";
+import { redirectPaths } from "@/shared/utils/constants";
 
 const SignUpForm: React.FC = () => {
 
@@ -50,7 +51,7 @@ const SignUpForm: React.FC = () => {
             const res = await dispatch(signup({ ...data })).unwrap();
             if (res.success) {
                 toast.success(res.message);
-                navigate('/verify/otp');
+                navigate(redirectPaths.VERIFY_OTP);
             }
         } catch (error) {
             if (appConfig.isDevelopment) {

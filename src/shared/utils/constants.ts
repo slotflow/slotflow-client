@@ -1037,11 +1037,11 @@ Your selected location will also be used to automatically fill address details w
 export const heroSectionButtons: { text: string, href: string }[] = [
   {
     text: "Book Appointment",
-    href: "/user/login"
+    href: "/auth/login"
   },
   {
     text: "Provide Service",
-    href: "/provider/login"
+    href: "/auth/login"
   },
 ]
 
@@ -1297,16 +1297,20 @@ export const storeConstants: Record<string, string> = {
 };
 
 export const redirectPaths: Record<string, string> = {
-  LOGIN: "/login",
-  REGISTER: "/register",
-  VERIFY_EMAIL: "/verify/email",
-  RESET_PASSWORD: "/reset/password",
-  VERIFY_OTP: "/verify/otp",
+  LOGIN: "/auth/login",
+  REGISTER: "/auth/register",
+  VERIFY_EMAIL: "/auth/verify/email",
+  RESET_PASSWORD: "/auth/reset/password",
+  VERIFY_OTP: "/auth/verify/otp",
+  ONBOARDING_ROLE_SELECT: "/onboarding/role-select",
   ONBOARDING_ADDRESS: "/onboarding/address",
   ONBOARDING_SERVICE: "/onboarding/service",
   ONBOARDING_AVAILABILITY: "/onboarding/availability",
   ONBOARDING_PROOFS: "/onboarding/proofs",
   ONBOARDING_PENDING: "/onboarding/pending",
+  USER_HOME: "/user",
+  PROVIDER_HOME: "/provider",
+  ADMIN_DASHBOARD: "/admin/dashboard",
 };
 
 export const basePaths: Record<string, string> = {
