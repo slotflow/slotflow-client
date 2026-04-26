@@ -38,7 +38,7 @@ const ProviderServiceForm: React.FC = () => {
         defaultValues: {
             _id: "",
             serviceCategory: undefined,
-            service: "",
+            serviceId: "",
             serviceName: "",
             serviceDescription: "",
             servicePrice: 0,
@@ -149,11 +149,11 @@ const ProviderServiceForm: React.FC = () => {
                     />
 
                     <SelectField<ProviderCreateServiceDetailsFormType, string>
-                        id="service"
+                        id="serviceId"
                         label="Service"
                         options={services}
                         register={register}
-                        error={errors.service}
+                        error={errors.serviceId}
                         required
                     />
 

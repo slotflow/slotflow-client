@@ -24,3 +24,5 @@ export const adhaarRegex = /^\d{6}$/;
 export const serviceExperienceRegex = /^[\w\d !"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]{1,500}$/;
 
 export const verificationRejectionReasonRegex = /^[A-Za-z0-9\s.,\-_'()@#!?&/:]+$/;
+
+export const objectIdRegex = /^[a-fA-F0-9]{24}$/;

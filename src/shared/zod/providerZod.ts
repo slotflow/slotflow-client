@@ -1,6 +1,6 @@
 import z from "zod";
 import { ServiceCategory, ServiceMode, ServiceType, SubscriptionValidity } from "../interface/enums";
-import { serviceExperienceRegex, serviceDescriptionRegex, serviceNameRegex } from "./regex";
+import { serviceExperienceRegex, serviceDescriptionRegex, serviceNameRegex, objectIdRegex } from "./regex";
 
 export const providerCreateServiceDetailsZodSchema = z.object({
   _id: z.string(),
@@ -48,10 +48,7 @@ export const providerCreateServiceDetailsZodSchema = z.object({
       "Invalid experience. Only alphanumeric characters, spaces, and symbols allowed (1–500 chars)."
     ),
 
-  service: z
-    .string()
-    .min(1, "Service Category ID is required")
-    .max(100, "Service Category ID cannot exceed 100 characters"),
+  serviceId: z.string().regex(objectIdRegex, "Invalid serviceId"),
 
   serviceType: z.nativeEnum(ServiceType),
 

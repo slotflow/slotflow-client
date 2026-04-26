@@ -4,7 +4,7 @@ import { ServiceMode, ServiceType } from "../enums";
 export interface ProviderService {
     _id: string;
     providerId: string;
-    service: string; // id of the appservice
+    serviceId: string; // id of the appservice
     serviceName: string;
     serviceDescription: string;
     servicePrice: number;
