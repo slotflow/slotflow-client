@@ -5,10 +5,9 @@ import {
 } from "@/components/ui/card";
 import * as React from "react";
 import DateSelect from "./DateSelect";
-import { ChartHeaderInterface } from "@/shared/interface/componentInterface/commonComponentInterface";
+import { ChartHeaderProps } from "@/shared/interface/componentInterface";
 
-
-const ChartHeader: React.FC<ChartHeaderInterface> = ({
+const ChartHeader: React.FC<ChartHeaderProps> = ({
     title = "Title",
     description = "Description",
     onValueChange,

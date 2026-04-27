@@ -13,7 +13,7 @@ import {
     AdminFetchProviderProfileDetailsResponse,
     ProviderFetchDashboardRevenueStatsDataRequest,
     ProviderFetchDashboardRevenueStatsDataResponse,
-} from "../interface/api/provider";
+} from "../interface/api/providerProfile";
 import { DateRange } from "react-day-picker";
 import { PlanName } from "../interface/enums";
 import { createAsyncThunk } from "@reduxjs/toolkit";

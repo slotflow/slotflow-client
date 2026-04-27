@@ -1,11 +1,6 @@
 import React from 'react';
 import { Button } from '../ui/button';
-
-interface GoogleButtonProps {
-    onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-    text: string;
-    className?: string;
-}
+import { GoogleButtonProps } from '@/shared/interface/componentInterface';
 
 const GoogleButton: React.FC<GoogleButtonProps> = ({
     onClick,

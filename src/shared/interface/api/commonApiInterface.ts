@@ -1,7 +1,7 @@
-import { Provider } from "../entityInterface/providerInterface";
+import { ProviderProfile } from "../entityInterface/providerProfileInterface";
 import { ApiPaginatedResponse, FetchFunctionBaseQueryParams } from "../commonInterface";
 
-// Used as the response type of fetch functions
+// response type of fetch functions
 export type ApiFetchFunction<
   T,
   Q extends object = {}
@@ -9,11 +9,11 @@ export type ApiFetchFunction<
   queryParams?: FetchFunctionBaseQueryParams & Q
 ) => Promise<ApiPaginatedResponse<T>>;
 
-// Used as the request interface of update file
+// request interface of update file
 export interface UpdateFileDataRequest {
   s3FileKey: string;
   field: string;
 }
 
-// Used as the response type admin or provider fetching providers proofs
-export type FetchProvidersProofsResponse = Pick<Provider, "identityProof" | "serviceProof">;
+// response type admin or provider fetching providers proofs
+export type FetchProvidersProofsResponse = Pick<ProviderProfile, "identityProof" | "serviceProof">;

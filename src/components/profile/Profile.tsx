@@ -5,8 +5,8 @@ import { RootState } from "@/shared/redux/appStore";
 import { useEffect, useRef, useState } from "react";
 import { slideIn } from "@/shared/helper/gsapAnimationSlide";
 import { userFetchMyProfileDetails } from "@/shared/apis/user";
-import UserInfoCRUDForm from "@/components/form/UserInfoCRUDForm";
 import ProfileListing from "@/components/profile/ProfileListing";
+import UserInfoCRUDForm from "@/components/form/UserInfoCRUDForm";
 import { providerFetchMyProfileDetails } from "@/shared/apis/providerProfile";
 
 const Profile: React.FC = () => {

@@ -1,6 +1,7 @@
 import { AdminVerificationStatus } from "../enums";
 
-export interface ProviderProfileProps {
+// ProviderProfile
+export interface ProviderProfile {
   _id: string;
   userId: string;
   isAdminVerified: boolean;

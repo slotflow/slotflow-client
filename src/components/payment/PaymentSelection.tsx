@@ -1,41 +1,22 @@
 import { toast } from 'react-toastify';
 import { Loader, X } from 'lucide-react';
 import { useDispatch } from 'react-redux';
-import { stripeConfig } from '@/shared/config/env';
 import { useCallback, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
+import { stripeConfig } from '@/shared/config/env';
 import { getEventSocket } from '@/lib/socketService';
+import { bookAnAppointment } from '@/shared/apis/booking';
 import paypalLogo from '../../assets/iconImages/Paypal.png';
 import stripeLogo from '../../assets/iconImages/Stripe.jpeg';
-import { bookAnAppointment } from '@/shared/apis/booking';
-import { SubscriptionValidity } from '@/shared/interface/enums';
 import razorpayLogo from '../../assets/iconImages/Razorpay.png';
 import { EventSocketEnum } from '@/shared/interface/socket.interface';
-import { setSubscriptionUpdating } from '@/shared/redux/slices/authSlice';
-import { Provider } from '@/shared/interface/entityInterface/providerInterface';
-import { setPaymentSelectionPage, setSubscriptionIsTrailPlan, setSubscriptionPlanDuration, setSubscriptionPlanId } from '@/shared/redux/slices/providerSlice';
 import { checkoutForSubscribePlan } from '@/shared/apis/subscription';
+import { setSubscriptionUpdating } from '@/shared/redux/slices/authSlice';
+import { PaymentSelecionComponentProps } from '@/shared/interface/componentInterface';
+import { ProviderSubscriptionDataProps, UserBookinAppointmentDataProps } from '@/shared/interface/commonInterface';
+import { setPaymentSelectionPage, setSubscriptionIsTrailPlan, setSubscriptionPlanDuration, setSubscriptionPlanId } from '@/shared/redux/slices/providerSlice';
 
-type UserBookinAppointmentDataProps = {
-    providerId: Provider["_id"]
-    slotId: string;
-    date: Date;
-    selectedServiceMode: string;
-}
-
-interface ProviderSubscriptionDataProps {
-    planId: string;
-    planDuration: SubscriptionValidity;
-}
-
-interface PaymentSelecionComponentPropst {
-    setOpenPayment?: (data: boolean) => void;
-    data: UserBookinAppointmentDataProps | ProviderSubscriptionDataProps;
-    isAppointmentBooking?: boolean;
-    isProviderSubscription?: boolean;
-}
-
-const PaymentSelection: React.FC<PaymentSelecionComponentPropst> = ({
+const PaymentSelection: React.FC<PaymentSelecionComponentProps> = ({
     setOpenPayment,
     data,
     isAppointmentBooking,

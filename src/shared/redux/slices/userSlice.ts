@@ -2,7 +2,7 @@ import { ServiceCategory } from "@/shared/interface/enums";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserStateVariables } from "@/shared/interface/sliceInterface";
 import { ProviderCardsFilters } from "@/shared/interface/commonInterface";
-import { UserViewProviderCardComponentProps } from "@/shared/interface/componentInterface/commonComponentInterface";
+import { UserViewProviderCardProps } from "@/shared/interface/componentInterface";
 
 const initialState: UserStateVariables = {
   isReviewCreateFormOpen: false,
@@ -34,7 +34,7 @@ const userSlice = createSlice({
       state.selectedBookingId = action.payload.id;
       state.selectedBookingProviderId = action.payload.providerId;
     },
-    setProviders: (state, action: PayloadAction<Array<UserViewProviderCardComponentProps>>) => {
+    setProviders: (state, action: PayloadAction<Array<UserViewProviderCardProps>>) => {
       state.providers = action.payload;
     },
     setProviderCardsFilter: (state, action: PayloadAction<ProviderCardsFilters>) => {

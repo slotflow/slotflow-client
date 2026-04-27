@@ -1,28 +1,28 @@
 import { Payment } from "../entityInterface/paymentInterface";
 import { FetchFunctionBaseQueryParams } from "../commonInterface";
 
-// fetch payment details response
+// response type of fetch payment details api
 export type FetchPaymentDetailsResponse = Omit<Payment, "_id" | "chargeId" | "receiptEmail" | "receiptNumber" | "updatedAt" | "userId" | "providerId"> | null;
 
-// fetch payments query parameters
+// request type of fetch payments api
 export interface FetchPaymentsQueryParams {
   providerId?: string;
   userId?: string;
 }
 
-// fetch payments response
+// response type of fetch payments api
 export type FetchPaymentsResponse = Pick<Payment, "_id" |"createdAt" | "totalAmount" | "paymentFor" | "paymentMethod" | "paymentStatus" | "discountAmount">;
 
-// Admin fetch revenue report request
+// request type of admin fetch revenue report api
 export interface AdmminFetchRevenueReportRequest extends FetchFunctionBaseQueryParams {
   startDate?: Date;
   endDate?: Date;
 }
 
-// Admin fetch revenue report response row
+// response type of admin fetch revenue report api row
 export type AdminFetchRevenueReportRow = Pick<Payment, "createdAt" | "discountAmount" | "initialAmount" | "totalAmount" | "paymentGateway" | "paymentFor">;
 
-// Admin fetch revenue report response
+// response type of admin fetch revenue report api
 export interface AdminFetchRevenueReportResponse {
   data: {
     rows: AdminFetchRevenueReportRow[];
@@ -35,7 +35,7 @@ export interface AdminFetchRevenueReportResponse {
   totalCount: number;
 }
 
-// connect stripe account response
+// response type of connect stripe account api
 export interface ConnexctStripeAccountResponse {
   url: string;
 }

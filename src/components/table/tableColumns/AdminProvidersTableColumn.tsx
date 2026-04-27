@@ -3,15 +3,16 @@ import { MoreHorizontal } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
 import { AdminVerificationStatus } from "@/shared/interface/enums";
-import { Provider } from "@/shared/interface/entityInterface/providerInterface";
+import { User } from "@/shared/interface/entityInterface/userInterface";
+import { AdminRejectProviderModalState } from "@/shared/interface/commonInterface";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
-import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminFetchAllProvidersResponse, AdminRejectProviderModalState } from "@/shared/interface/api/provider";
+import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminFetchAllProvidersResponse } from "@/shared/interface/api/providerProfile";
 
 export const AdminProvidersTableColumns = (
-    handleAdminApproveProvider: (providerId: Provider["_id"]) => void,
+    handleAdminApproveProvider: (providerId: User["_id"]) => void,
     handleProviderRejectModal: (data: AdminRejectProviderModalState) => void,
     hanldeAdminChangeProviderBlockStatus: (data: AdminChangeProviderBlockStatusRequest) => void,
-    handleGetProviderDetailPage: (providerId: Provider["_id"]) => void,
+    handleGetProviderDetailPage: (providerId: User["_id"]) => void,
     handleAdminChangeProviderSlotflowTrustTag: (data: AdminChangeProviderTrustTagRequest) => void,
 ): ColumnDef<AdminFetchAllProvidersResponse>[] => [
         {
@@ -66,18 +67,6 @@ export const AdminProvidersTableColumns = (
                         return <span className="text-gray-500 font-semibold">Not Requested</span>;
                     default:
                         return <span>{status}</span>;
-                }
-            },
-        },
-        {
-            accessorKey: "isEmailVerified",
-            header: "Email Verication",
-            cell: ({ row }) => {
-                const isEmailVerified = row.original.isEmailVerified;
-                if (isEmailVerified) {
-                    return <span className="text-green-500 font-semibold">Verified</span>
-                } else {
-                    return <span className="text-red-500 font-semibold">Pending</span>
                 }
             },
         },

@@ -7,13 +7,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
-
-interface ProfileHorizontalTabsComponentProps {
-    isAdmin: boolean;
-    tab: number;
-    setTab: (index: number) => void;
-    tabArray: { tabName: string; admin: boolean; user: boolean }[];
-}
+import { ProfileHorizontalTabsComponentProps } from "@/shared/interface/componentInterface";
 
 const ProfileHorizontalTabs: React.FC<ProfileHorizontalTabsComponentProps> = ({
     isAdmin,

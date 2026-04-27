@@ -4,17 +4,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/shared/redux/appStore';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
+import { Activity, LockIcon, TrendingUp } from 'lucide-react';
 import { formatNumberToPrice } from '@/shared/helper/formatter';
-import { Activity, LockIcon, LucideIcon, TrendingUp } from 'lucide-react';
-
-interface DashboardCardOneProps {
-  title: string;
-  value: number;
-  icon: LucideIcon;
-  price?: boolean;
-  isShow?: boolean;
-  trend?: string;
-}
+import { DashboardCardOneProps } from '@/shared/interface/componentInterface';
 
 const StatsCard: React.FC<DashboardCardOneProps> = ({
   title,

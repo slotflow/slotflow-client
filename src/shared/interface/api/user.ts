@@ -2,37 +2,38 @@ import { Role } from "../enums";
 import { User } from "../entityInterface/userInterface";
 import { ProviderCardsFilters } from "../commonInterface";
 
-// Used as the request type of the setRole api
+// request type of the setRole api
 export interface setRoleRequest {
     role: Role
 };
+
+// response type of the setRole api
 export type setRoleResponse = Pick<User, "hasSelectedRole" | "isOnboardingCompleted">;
 
-// Used as the response type of the user profile details fetching api
+// response type of the user profile details fetching api
 export type UserFetchUserProfileDetailsResponse = Pick<User, "username" | "email" | "isBlocked" | "phone" | "createdAt" | "updatedAt">;
 
-
-// Used as the response type of the user profile image updating api
+// request type of the user profile image updating api
 export interface UserUpdateProfileImageRequest {
     s3FileKey: string;
 }
+
+// response type of the user profile image updating api
 export type UserUpdateProfileImageResponse = User["profileImage"];
 
-
-// Used as the request type of user update userInfo api
+// request type of the user update userInfo api
 export type UserUpdateUserInfoRequest = Pick<User, "username" | "phone">;
-// Used as the response interface of user update userInfo api
+
+// response type of the user update userInfo api
 export type UserUpdateUserInfoResponse = UserUpdateUserInfoRequest;
 
-
-
-
-// Used as the response interface of the user fetching service providers for the dashboard fetching api
+// request type of the user fetching service providers for the dashboard fetching api
 export type UserFetchServiceProvidersRequest = Partial<ProviderCardsFilters> & {
     skip: number;
     limit: number;
 };
 
+// response type of the user fetching service providers for the dashboard fetching api
 export interface UserFetchServiceProvidersResponse {
     _id: string,
     provider: {
@@ -50,15 +51,18 @@ export interface UserFetchServiceProvidersResponse {
     };
 };
 
-// Used as the response type of the fetchUsers api
+// response type of the fetchUsers api
 export type AdminfetchAllUsersResponse = Pick<User, "_id" | "username" | "email" | "isBlocked">;
 
 
-// Used as the request type of the changeUserBlockStatus api
+// request type of the changeUserBlockStatus api
 export type AdminChangeUserStatusRequest = {
     userId: User["_id"];
     isBlocked: User["isBlocked"];
 }
 
-// Used as the response type of admin fetch user profile details
+// response type of admin fetch user profile details
 export type AdminFetchUserProfileDetailsResponse = Pick<User, "username" | "phone" | "profileImage" | "isBlocked" | "email">;
+
+// return type for the provider fetch users for the chat side bar
+export type FetchUsersForChatSidebarResponse = Array<Pick<User, "_id" | "username" | "profileImage">>

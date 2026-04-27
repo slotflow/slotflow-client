@@ -31,18 +31,6 @@ export const AdminUsersTableColumns = (
             },
         },
         {
-            accessorKey: "isVerified",
-            header: "Email Verication",
-            cell: ({ row }) => {
-                const isVerified = row.original.isEmailVerified;
-                if (isVerified) {
-                    return <span className="text-green-500 font-semibold">Verified</span>
-                } else {
-                    return <span className="text-red-500 font-semibold">Pending</span>
-                }
-            }
-        },
-        {
             accessorKey: "actions",
             header: "Actions",
             id: "actions",

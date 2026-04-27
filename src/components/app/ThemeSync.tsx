@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/shared/redux/appStore";
 
-const ThemeSync = () => {
+const ThemeSync: React.FC = () => {
   const lightTheme = useSelector(
     (state: RootState) => state.app.lightTheme
   );

@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, Info } from "lucide-react";
 import { type FieldValues } from "react-hook-form";
 import { CustomValidator } from "@/shared/utils/validator";
-import { FormFieldProps } from "@/shared/interface/componentInterface/commonComponentInterface";
+import { FormFieldProps } from "@/shared/interface/componentInterface";
 
 const FormField = <T extends FieldValues>({
   id,

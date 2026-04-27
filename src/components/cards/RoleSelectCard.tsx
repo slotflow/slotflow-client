@@ -1,16 +1,14 @@
 import { motion } from "framer-motion";
-import { Role } from "@/shared/interface/enums";
+import { RoleSelectCardProps } from "@/shared/interface/componentInterface";
 
-interface RoleSelectCardProps {
-    role: Role;
-    icon: string;
-    title: string;
-    description: string;
-    selectedRole: Role | null;
-    onSelect: (role: Role) => void;
-}
-
-const RoleSelectCard: React.FC<RoleSelectCardProps> = ({ role, icon, title, description, selectedRole, onSelect }) => {
+const RoleSelectCard: React.FC<RoleSelectCardProps> = ({ 
+    role, 
+    icon, 
+    title, 
+    description, 
+    selectedRole, 
+    onSelect 
+}) => {
     const isSelected = selectedRole === role;
 
     return (

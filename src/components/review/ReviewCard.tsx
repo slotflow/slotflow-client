@@ -6,15 +6,7 @@ import ReviewUserProfile from "./ReviewUserProfile";
 import { ShieldCheck, ShieldX, Trash } from "lucide-react";
 import noProfile from '../../assets/defaultImages/avatar.png';
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { FetchReviewsResponse, ToggleReviewBlockStatusRequest } from "@/shared/interface/api/review";
-
-interface ReviewCardProps {
-  review: FetchReviewsResponse;
-  role: Role;
-  handleDeleteReview: (e: React.MouseEvent<HTMLButtonElement>, reviewId: string) => void;
-  handleReportReview: (e: React.MouseEvent<HTMLButtonElement>, reviewId: string) => void;
-  handleChangeReviewBlockStatus: (e: React.MouseEvent<HTMLButtonElement>, data: ToggleReviewBlockStatusRequest) => void;
-}
+import { ReviewCardProps } from "@/shared/interface/componentInterface";
 
 const ReviewCard: React.FC<ReviewCardProps> = ({
   review,

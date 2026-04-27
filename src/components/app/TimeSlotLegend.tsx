@@ -1,19 +1,7 @@
 import React from "react";
 import { Role } from "@/shared/interface/enums";
 import { Button } from "@/components/ui/button";
-
-export interface SlotLegendItem {
-  label: string;
-  description?: string;
-  className: string;
-}
-
-interface TimeSlotLegendProps {
-  role?: Role;
-  showAdvanceNotice?: boolean;
-  heading?: string;
-  legendItems: SlotLegendItem[];
-}
+import { TimeSlotLegendProps } from "@/shared/interface/componentInterface";
 
 const TimeSlotLegend: React.FC<TimeSlotLegendProps> = ({
   role,

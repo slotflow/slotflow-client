@@ -1,16 +1,7 @@
 import React from "react";
 import { Checkbox } from "../../ui/checkbox";
-import { Control, Controller } from "react-hook-form";
-import { ProviderServiceAvailabilityFormType } from "@/shared/zod/providerZod";
-
-interface GenerateTimeSlotsProps {
-    timeSlots: string[];
-    selectedTimeSlots: string[];
-    allSlotsSelected: boolean;
-    handleAllSlots: (push: boolean) => void;
-    toggleSlot: (timeSlot: string) => void;
-    control: Control<ProviderServiceAvailabilityFormType>;
-}
+import { Controller } from "react-hook-form";
+import { GenerateTimeSlotsProps } from "@/shared/interface/componentInterface";
 
 const GenerateTimeSlots: React.FC<GenerateTimeSlotsProps> = ({
     timeSlots,

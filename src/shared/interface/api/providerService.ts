@@ -1,7 +1,9 @@
 import { ProviderService } from "../entityInterface/providerServiceInterface";
 
-// **** Used as the response type for provider fetch self service details
+// response type of provider fetch self service details api
 type FetchServiceDetailsResponse = Pick<ProviderService, "serviceName" | "serviceDescription" | "servicePrice" | "serviceExperience" | "serviceType" | "serviceMode" | "requirements" | "maxParticipants" | "isGroupService" | "videoUrl">;
+
+// response type of provider fetch self service details api
 export interface FetchProviderServiceResponse extends FetchServiceDetailsResponse {
    serviceId: { serviceName: string };
     _id?: string;
@@ -9,7 +11,8 @@ export interface FetchProviderServiceResponse extends FetchServiceDetailsRespons
     tags: string[] | [];
 }
 
+// request type of provider update service details api
 export type ProviderUpdateServiceDetailsRequest = Pick<ProviderService, "_id" | "isGroupService" | "maxParticipants" | "requirements" | "serviceId" | "serviceDescription" | "serviceExperience" | "serviceMode" | "serviceName" | "servicePrice" | "serviceType" | "tags" | "videoUrl">;
 
-
+// request type of provider create service details api
 export type ProviderCreateServiceDetailsRequest = Pick<ProviderService, "isGroupService" | "maxParticipants" | "requirements" | "serviceId" | "serviceDescription" | "serviceExperience" | "serviceMode" | "serviceName" | "servicePrice" | "serviceType" | "tags" | "videoUrl">;

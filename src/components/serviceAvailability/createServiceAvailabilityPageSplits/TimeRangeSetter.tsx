@@ -2,16 +2,13 @@ import React from "react";
 import TimeField from "./TimeField";
 import { Goal } from "lucide-react";
 import { Button } from "../../ui/button";
-import { Control } from "react-hook-form";
-import { ProviderServiceAvailabilityFormType } from "@/shared/zod/providerZod";
+import { TimeRangeSetterProps } from "@/shared/interface/componentInterface";
 
-interface TimeRangeSetterProps {
-    control: Control<ProviderServiceAvailabilityFormType>;
-    isSubmitting: boolean;
-    onGenerateSlots: () => void;
-}
-
-const TimeRangeSetter: React.FC<TimeRangeSetterProps> = ({ control, isSubmitting, onGenerateSlots }) => {
+const TimeRangeSetter: React.FC<TimeRangeSetterProps> = ({ 
+    control, 
+    isSubmitting, 
+    onGenerateSlots 
+}) => {
     return (
         <React.Fragment>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">

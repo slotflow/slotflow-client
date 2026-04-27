@@ -1,13 +1,12 @@
-import { TimePicker } from "@/components/ui/TimePicker";
 import { Controller } from "react-hook-form";
+import { TimePicker } from "@/components/ui/TimePicker";
+import { TimeFieldProps } from "@/shared/interface/componentInterface";
 
-interface TimeFieldProps {
-    label: string;
-    name: "startTime" | "endTime";
-    control: any;
-}
-
-const TimeField: React.FC<TimeFieldProps> = ({ label, name, control }) => {
+const TimeField: React.FC<TimeFieldProps> = ({ 
+    label, 
+    name, 
+    control 
+}) => {
     return (
         <div className="w-full">
             <label className="block text-sm font-medium">

@@ -1,5 +1,5 @@
 import ProfileDetailsShimmer from "./ProfileDetailsShimmer";
-import { ProviderAvailabilityShimmerProps } from "@/shared/interface/componentInterface/shimmerInterface";
+import { ProviderAvailabilityShimmerProps } from "@/shared/interface/shimmerInterface";
 
 const ProviderAvailabilityShimmer: React.FC<ProviderAvailabilityShimmerProps> = ({ slotCount }) => {
     return (

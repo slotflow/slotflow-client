@@ -1,17 +1,15 @@
 import React from "react";
-import { UseFormRegister } from "react-hook-form";
 import { SelectField } from "../../form/SelectField";
 import { ServiceMode } from "@/shared/interface/enums";
 import { ProviderServiceAvailabilityFormType } from "@/shared/zod/providerZod";
 import { daysOfWeekOptions, serviceDurationsOptions } from "@/shared/utils/constants";
+import { AvailabilityDataSelectionFieldsProps } from "@/shared/interface/componentInterface";
 
-interface AvailabilityDataSelectionFieldsProps {
-    register: UseFormRegister<ProviderServiceAvailabilityFormType>;
-    isModeSelected: (mode: ServiceMode) => boolean;
-    toggleMode: (mode: ServiceMode) => void;
-}
-
-const AvailabilityDataSelectionFields: React.FC<AvailabilityDataSelectionFieldsProps> = ({ register, isModeSelected, toggleMode }) => {
+const AvailabilityDataSelectionFields: React.FC<AvailabilityDataSelectionFieldsProps> = ({ 
+    register, 
+    isModeSelected, 
+    toggleMode 
+}) => {
     return (
         <React.Fragment>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-6">

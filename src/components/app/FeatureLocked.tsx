@@ -1,14 +1,6 @@
 import React from "react";
-import { LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-interface FeatureLockedProps {
-  icon?: LucideIcon;
-  message: string;
-  buttonText?: string;
-  onButtonClick?: () => void;
-  buttonVariant?: "default" | "outline" | "ghost" | "destructive";
-}
+import { FeatureLockedProps } from "@/shared/interface/componentInterface";
 
 const FeatureLocked: React.FC<FeatureLockedProps> = ({
   icon: Icon,

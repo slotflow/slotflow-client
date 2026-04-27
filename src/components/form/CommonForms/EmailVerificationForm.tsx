@@ -8,8 +8,8 @@ import { verifyEmail } from "@/shared/apis/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AppDispatch } from "@/shared/redux/appStore";
 import { FormButton, FormHeading } from "../FormSplits";
-import { VerifyEmailFormType, verifyEmailZodSchema } from "@/shared/zod/authZod";
 import { redirectPaths } from "@/shared/utils/constants";
+import { VerifyEmailFormType, verifyEmailZodSchema } from "@/shared/zod/authZod";
 
 const EmailVerificationForm: React.FC = () => {
 

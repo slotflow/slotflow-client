@@ -11,12 +11,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { slideOut } from "@/shared/helper/gsapAnimationSlide";
 import { adVisibility, planNameOptions } from "@/shared/utils/constants";
+import { CreatePlanFormProps } from "@/shared/interface/componentInterface";
 import { AdminCreatePlanFormType, adminCreatePlanZodSchema } from "@/shared/zod/adminZod";
-
-interface CreatePlanFormProps {
-    onClose: () => void;
-    formRef: React.RefObject<HTMLDivElement | null>;
-}
 
 const CreatePlanForm: React.FC<CreatePlanFormProps> = ({
     onClose,

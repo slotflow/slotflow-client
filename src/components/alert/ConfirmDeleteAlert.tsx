@@ -2,15 +2,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import { toast } from "react-toastify";
 import { appConfig } from "@/shared/config/env";
-
-interface ConfirmDeleteAlertProps {
-    message: string;
-    reviewId: string;
-    deleteReviewHandler: (reviewId: string) => Promise<any>;
-    closeToast: () => void;
-    errorMessage: string;
-    successMessage: string;
-}
+import { ConfirmDeleteAlertProps } from "@/shared/interface/componentInterface";
 
 const ConfirmDeleteAlert: React.FC<ConfirmDeleteAlertProps> = ({
     message,

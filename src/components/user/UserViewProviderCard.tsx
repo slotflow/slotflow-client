@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { CardTitle } from "@/components/ui/card";
 import avatar from '../../assets/defaultImages/avatar.png';
 import { formatNumberToPrice } from "@/shared/helper/formatter";
-import { UserViewProviderCardComponentProps } from "@/shared/interface/componentInterface/commonComponentInterface";
+import { UserViewProviderCardProps } from "@/shared/interface/componentInterface";
 
-const UserViewProviderCard: React.FC<UserViewProviderCardComponentProps> = ({
+const UserViewProviderCard: React.FC<UserViewProviderCardProps> = ({
     provider, serviceDetails
 }) => {
 

@@ -16,7 +16,7 @@ import ChartDataNotAvailable from "./ChartDataNotAvailable";
 import { TimeRange } from "@/shared/interface/commonInterface";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 import { filterChartDataHelper } from "@/shared/helper/dateFilter";
-import { AreaGroupChartProps } from "@/shared/interface/componentInterface/commonComponentInterface";
+import { AreaGroupChartProps } from "@/shared/interface/componentInterface";
 
 const AreaGroupedChart: React.FC<AreaGroupChartProps> = ({
   title,

@@ -7,7 +7,6 @@ import { featureContent } from "@/shared/utils/constants";
 
 gsap.registerPlugin(ScrollTrigger);
 
-
 const SectionFeatures: React.FC = () => {
 
   const racesWrapperRef = useRef<HTMLDivElement>(null);

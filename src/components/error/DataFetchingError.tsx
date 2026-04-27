@@ -1,9 +1,5 @@
 import fetchError from "../../assets/svgs/fetchError.svg";
-
-interface dataFetchingError {
-    message: string;
-    className? : string
-}
+import { dataFetchingError } from "@/shared/interface/componentInterface";
 
 const DataFetchingError: React.FC<dataFetchingError> = ({ message, className }) => {
     return (

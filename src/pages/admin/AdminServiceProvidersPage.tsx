@@ -9,7 +9,7 @@ import { fetchServiceProvidersForAdmin } from "@/shared/apis/providerProfile";
 import { useAdminProvider } from "@/hooks/adminHooks/useProvider";
 import RejectproviderForm from "@/components/form/AdminForms/RejectproviderForm";
 import { AdminProvidersTableColumns } from "@/components/table/tableColumns/AdminProvidersTableColumn";
-import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminFetchAllProvidersResponse } from "@/shared/interface/api/provider";
+import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminFetchAllProvidersResponse } from "@/shared/interface/api/providerProfile";
 
 const AdminServiceProvidersPage = () => {
 

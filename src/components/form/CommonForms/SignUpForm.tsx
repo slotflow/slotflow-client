@@ -8,9 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "@/shared/redux/appStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormButton, FormHeading } from "../FormSplits";
+import { redirectPaths } from "@/shared/utils/constants";
 import { appConfig, serviceConfig } from "@/shared/config/env";
 import { SignupFormType, signupZodSchema } from "@/shared/zod/authZod";
-import { redirectPaths } from "@/shared/utils/constants";
 
 const SignUpForm: React.FC = () => {
 

@@ -1,16 +1,12 @@
+import React from "react";
 import { motion } from "motion/react";
+import { AnimatedHeadingSectionProps } from "@/shared/interface/componentInterface";
 
-interface AnimatedHeadingSectionProps {
-  title: string;
-  animatedWord: string;
-  description: string;
-}
-
-const AnimatedHeadingSection = ({
+const AnimatedHeadingSection: React.FC<AnimatedHeadingSectionProps> = ({
   title,
   animatedWord,
   description
-}: AnimatedHeadingSectionProps) => {
+}) => {
   return (
     <div className="max-w-7xl mx-auto text-center">
       <p className="font-bold text-xl md:text-4xl dark:text-white text-black">

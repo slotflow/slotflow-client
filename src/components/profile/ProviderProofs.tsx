@@ -3,17 +3,10 @@ import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { ImageUpscale, Minimize2 } from "lucide-react";
 import DataFetchingError from "../error/DataFetchingError";
-import { ApiBaseResponse } from "@/shared/interface/commonInterface";
 import noImage from "../../../assets/defaultImages/imagePlaceholder.png";
-import { Provider } from "@/shared/interface/entityInterface/providerInterface";
+import { ProviderProofsProps } from "@/shared/interface/componentInterface";
 import ProfileDetailsShimmer from "@/components/shimmers/ProfileDetailsShimmer";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { FetchProvidersProofsResponse } from "@/shared/interface/api/commonApiInterface";
-
-interface ProviderProofsProps {
-    providerId: Provider["_id"];
-    fetchApiFunction: (providerId?: string) => Promise<ApiBaseResponse<FetchProvidersProofsResponse>>;
-}
 
 const ProviderProofs: React.FC<ProviderProofsProps> = ({
     providerId,

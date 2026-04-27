@@ -1,11 +1,5 @@
 import React from "react";
-import { LucideIcon } from "lucide-react";
-
-interface AlertProps {
-  icon?: LucideIcon;
-  heading: string;
-  message: string;
-}
+import { AlertProps } from "@/shared/interface/componentInterface";
 
 const AlertBox: React.FC<AlertProps> = ({
   icon: Icon,

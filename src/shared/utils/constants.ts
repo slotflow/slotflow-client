@@ -48,7 +48,7 @@ import {
   MessageSquareText,
   PictureInPicture2,
 } from "lucide-react";
-import { ProviderFetchDashboardStatsDataResponse } from "../interface/api/provider";
+import { ProviderFetchDashboardStatsDataResponse } from "../interface/api/providerProfile";
 import {
   Route,
   PlanListType,
@@ -64,15 +64,17 @@ import {
   dataSelectListItemInterface,
   ProviderApprovalMessageInterface,
   gsapBigSvgYDirectionAnimationInterface,
+  MapDotLitLocationsCoordinates,
 } from "../interface/commonInterface";
 import chatImage from '../../assets/heroImages/chat.jpg';
+import { ContactItem } from "../interface/commonInterface";
+import { OptionType } from '../interface/commonInterface';
 import gCalendar from '../../assets/iconImages/gCalendar.png';
-import { OptionType } from "@/components/form/SelectField";
 import calendarImage from '../../assets/heroImages/calendar2.png';
 import videoCallImage from '../../assets/heroImages/videoCall.jpg';
 import bookingImage from '../../assets/heroImages/heroSectionOneImg2.png';
-import { ContactItem } from "../interface/componentInterface/commonComponentInterface";
 import { AdminVerificationStatus, PlanName, Role, ServiceCategory, ServiceMode, ServiceType } from "../interface/enums";
+import { ChartConfig } from "@/components/ui/chart";
 
 // Plan Tiers 
 export const PLAN_TIERS = ["free", "starter", "professional", "enterprise"] as const;
@@ -1319,3 +1321,23 @@ export const basePaths: Record<string, string> = {
   admin: "/admin",
   login: "/login"
 };
+
+export const chartConfig = {
+  value: {
+    label: "Value",
+    color: "var(--chart-2)",
+  },
+  label: {
+    color: "var(--background)",
+  },
+} satisfies ChartConfig;
+
+export const mapDotLitLocationsCoordinates: MapDotLitLocationsCoordinates[] = [
+          { start: { lat: 64.2008, lng: -149.4937 }, end: { lat: 34.0522, lng: -118.2437 } },
+          { start: { lat: 64.2008, lng: -149.4937 }, end: { lat: -15.7975, lng: -47.8919 } },
+          { start: { lat: -15.7975, lng: -47.8919 }, end: { lat: 38.7223, lng: -9.1393 } },
+          { start: { lat: 51.5074, lng: -0.1278 }, end: { lat: 28.6139, lng: 77.209 } },
+          { start: { lat: 19.0760, lng: 72.8777 }, end: { lat: 28.6139, lng: 77.209 } },
+          { start: { lat: 28.6139, lng: 77.209 }, end: { lat: 43.1332, lng: 131.9113 } },
+          { start: { lat: 22.5726, lng: 88.3639 }, end: { lat: 28.6139, lng: 77.209 } }
+        ]

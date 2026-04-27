@@ -4,24 +4,15 @@ import { toast } from "react-toastify";
 import { CheckIcon } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { planDurations } from "@/shared/utils/constants";
 import { SelectField } from "../form/SelectField";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { planDurations } from "@/shared/utils/constants";
 import { formatNumberToPrice } from "@/shared/helper/formatter";
-import { Plan } from "@/shared/interface/entityInterface/planInterface";
 import { PlanName, SubscriptionValidity } from "@/shared/interface/enums";
+import { ProviderPlanCardProps } from "@/shared/interface/componentInterface";
 import { PlanDurationFormType, planDurationZodSchema } from "@/shared/zod/providerZod";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
 import { setSubscriptionPlanId, setPaymentSelectionPage, setSubscriptionIsTrailPlan, setSubscriptionPlanDuration } from "@/shared/redux/slices/providerSlice";
-
-type CardProps = Pick<Plan, "_id" | "planName" | "description" | "features" | "price">;
-
-interface ProviderPlanCardProps {
-  plan: CardProps;
-  isTrial?: boolean;
-  dummy?: boolean;
-  popular?: boolean;
-}
 
 const PlanCard: React.FC<ProviderPlanCardProps> = ({
   plan,

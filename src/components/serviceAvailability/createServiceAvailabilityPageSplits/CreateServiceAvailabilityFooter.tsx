@@ -1,16 +1,7 @@
 import React from "react";
 import { Button } from "../../ui/button";
 import { Check, ChevronRight } from "lucide-react";
-import { Availability } from "@/shared/interface/entityInterface/serviceAvailabilityInterface";
-
-interface CreateServiceAvailabilityFooterProps {
-    selectedTimeSlots: string[];
-    isSubmitting: boolean;
-    onAddAvailability: (e: React.MouseEvent<HTMLButtonElement>) => void;
-    availabilities: Availability[] | null;
-    isValid: boolean;
-    isUpdating: boolean;
-}
+import { CreateServiceAvailabilityFooterProps } from "@/shared/interface/componentInterface";
 
 const CreateServiceAvailabilityFooter: React.FC<CreateServiceAvailabilityFooterProps> = ({
     selectedTimeSlots,

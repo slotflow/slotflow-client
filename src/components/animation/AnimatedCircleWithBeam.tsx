@@ -3,12 +3,12 @@ import React, { forwardRef, useRef } from "react";
 import { AnimatedBeam } from "@/components/ui/animated-beam";
 import stripeIcon from '../../assets/svgs/stripe-s-icon.svg';
 import paypalIcon from '../../assets/svgs/paypal-p-icon.svg';
+import AnimatedHeadingSection from "./AnimatedHeadingSection";
 import razorpayIcon from '../../assets/iconImages/Razorpay.png';
 import slotflowIcon from '../../assets/logos/logo-transparent.png';
 import googleDriveIcon from '../../assets/svgs/google_drive-icon.svg';
 import whatsappIcon from '../../assets/svgs/whatsapp-phone-icon.svg';
 import googleCalendarIcon from '../../assets/iconImages/gCalendar.png';
-import AnimatedHeadingSection from "./AnimatedHeadingSection";
 
 const Circle = forwardRef<
     HTMLDivElement,

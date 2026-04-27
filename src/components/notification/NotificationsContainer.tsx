@@ -3,12 +3,12 @@ import { Bell, Loader2 } from "lucide-react";
 import NotificationCard from "./NotificationCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { AppDispatch, RootState } from "@/shared/redux/appStore";
+import DataFetchingError from "../error/DataFetchingError";
 import { fetchNotifications } from "@/shared/apis/notification";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
+import NotificationCardShimmer from "../shimmers/NotificationCardShimmer";
 import { toggleNotificationContainer } from "@/shared/redux/slices/appSlice";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import NotificationCardShimmer from "../shimmers/NotificationCardShimmer";
-import DataFetchingError from "../error/DataFetchingError";
 
 const NotificationsContainer: React.FC = () => {
 

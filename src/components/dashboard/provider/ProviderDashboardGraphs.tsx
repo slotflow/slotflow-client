@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { DateRange } from 'react-day-picker';
 import { useQuery } from '@tanstack/react-query';
 import { PlanName } from '@/shared/interface/enums';
 import { RootState } from '@/shared/redux/appStore';
@@ -14,13 +13,10 @@ import DataFetchingError from '../../error/DataFetchingError';
 import BarChartHorizontal from '../../chart/BarChartHorizontal';
 import LineChartHorizontal from '../../chart/LineChartHorizontal';
 import { providerFetchDashboardGraphData } from '@/shared/apis/providerProfile';
-import { ProviderDashboardGraphResponse } from '@/shared/interface/api/provider';
 import PieChartCompletionBreakdown from '../../chart/PieChartCompletionBreakdown';
+import { ProviderDashboardGraphsProps } from '@/shared/interface/componentInterface';
+import { ProviderDashboardGraphResponse } from '@/shared/interface/api/providerProfile';
 import { appointmentModeChartConfig, appointmentsOverTimeChartConfig, completionBreakdownChartConfig, newVsReturningUsersChartConfig, peakBookingHoursChartConfig, topBookingDaysChartConfig } from '@/shared/utils/constants';
-
-export interface ProviderDashboardGraphsProps {
-    dateRange: DateRange;
-}
 
 const ProviderDashboardGraphs: React.FC<ProviderDashboardGraphsProps> = ({ dateRange }) => {
 

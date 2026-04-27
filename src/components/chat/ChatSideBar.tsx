@@ -2,20 +2,14 @@ import { Users } from "lucide-react";
 import { socket } from "@/lib/socketService";
 import { useQuery } from "@tanstack/react-query";
 import { Checkbox } from "@/components/ui/checkbox";
-import DataFetchingError from "../error/DataFetchingError";
 import { useDispatch, useSelector } from "react-redux";
+import DataFetchingError from "../error/DataFetchingError";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { User } from "@/shared/interface/entityInterface/userInterface";
 import ChatSidebarShimmer from "@/components/shimmers/ChatSidebarShimmer";
-import { Message } from "@/shared/interface/entityInterface/message.interface";
-import { Provider } from "@/shared/interface/entityInterface/providerInterface";
+import { FetchUsersForChatSidebarResponse } from "@/shared/interface/api/user";
 import { setLastMessage, setOnlineUsers, setSelectedUser } from "@/shared/redux/slices/chatSlice";
-import { FetchUsersForChatSidebarResponse } from "@/shared/interface/api/provider";
-import { ApiBaseResponse } from "@/shared/interface/commonInterface";
-
-type setLatMessageProps = Pick<Message, "senderId" | "text" | "createdAt">
-type UserProps = Pick<User, "_id" | "username" | "profileImage"> | Pick<Provider, "_id" | "username" | "profileImage">;
+import { ApiBaseResponse, ChatListUserProps, setLatMessageProps } from "@/shared/interface/commonInterface";
 
 const formatDate = (date: string) => {
     const now = new Date();
@@ -67,7 +61,7 @@ const ChatSidebar: React.FC<ChatSideBarProps> = ({
 
     const filteredUsers = useMemo(() => {
         return showOnlineOnly
-            ? data?.filter((user: UserProps) => onlineUsers?.includes(user._id))
+            ? data?.filter((user: ChatListUserProps) => onlineUsers?.includes(user._id))
             : data;
     }, [showOnlineOnly, data, onlineUsers]);
 
@@ -112,7 +106,7 @@ const ChatSidebar: React.FC<ChatSideBarProps> = ({
             </div>
 
             <div className="overflow-y-auto w-full flex-1">
-                {filteredUsers?.map((user: UserProps) => (
+                {filteredUsers?.map((user: ChatListUserProps) => (
                     <button
                         key={user._id}
                         onClick={() => dispatch(setSelectedUser(user))}

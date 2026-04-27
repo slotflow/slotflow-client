@@ -1,22 +1,11 @@
 import React from 'react';
-import { LucideIcon, RefreshCw, AlertCircle } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { cn } from '@/lib/utils';
+import { RefreshCw, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-interface DashboardDataCardProps {
-  title: string;
-  icon: LucideIcon;
-  isLoading: boolean;
-  isError: boolean;
-  onReload: () => void;
-  children: React.ReactNode;
-  className?: string;
-  empty?: boolean;
-  emptyMessage?: string;
-}
+import { DashboardDataCardProps } from '@/shared/interface/componentInterface';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const DashboardDataCard: React.FC<DashboardDataCardProps> = ({
   title,

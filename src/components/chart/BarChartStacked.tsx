@@ -16,7 +16,7 @@ import ChartDataNotAvailable from './ChartDataNotAvailable';
 import { TimeRange } from '@/shared/interface/commonInterface';
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import { filterChartDataHelper } from '@/shared/helper/dateFilter';
-import { BarChartStackedProps } from '@/shared/interface/componentInterface/commonComponentInterface';
+import { BarChartStackedProps } from '@/shared/interface/componentInterface';
 
 const BarChartStacked: React.FC<BarChartStackedProps> = ({
     title,

@@ -1,26 +1,26 @@
 import { User } from "../entityInterface/userInterface";
 import { AdminVerificationStatus, PlanName, Role } from "../enums";
 
-// Used as the request type of the user or provider sign up api
+// request type of the user or provider sign up api
 export type SignupRequest = Pick<User, "username" | "email" | "password">;
 
-// Used as the request type of the otp verification api
+// request type of the otp verification api
 export interface VerifyOtpRequest {
     otp: string
 };
 
-// Used as the request type of the verify email api
+// request type of the verify email api
 export interface VerifyEmailRequest {
     email: string;
 }
 
-// Used as the request type of user or provider or admin sign in api
+// request type of user or provider or admin sign in api
 export interface SigninRequest {
     email: string;
     password: string;
 };
 
-// Used as the response interface of user or provider or admin sign in api
+// response interface of user or provider or admin sign in api
 export interface SigninResponse {
     username: string;
     phone: string;
@@ -51,5 +51,5 @@ export interface SigninResponse {
     stripeConnected?: boolean;
 }
 
-//  Used as the Request type of update password api
+//  request type of update password api
 export type UpdatePasswordRequest = Pick<User, "password">;

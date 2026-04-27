@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Footer,
   FooterBottom,
@@ -6,15 +7,12 @@ import {
 } from "@/components/ui/footer";
 import { cn } from "@/lib/utils";
 import logo from '../../assets/logos/logo.png';
+import { FooterProps } from "react-day-picker";
 import { about, footerColumnData, copyright, policies } from "@/shared/utils/constants";
 
-interface FooterProps {
-  className?: string;
-}
-
-const FooterBar = ({
+const FooterBar: React.FC<FooterProps> = ({
   className,
-}: FooterProps) => {
+}) => {
 
   return (
     <footer className={cn("bg-background w-full", className)}>

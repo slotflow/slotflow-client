@@ -1,17 +1,10 @@
 import React from "react";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { DateRange } from "react-day-picker";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import { DataFilterProps } from "@/shared/interface/componentInterface";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-
-interface DataFilterProps {
-  dateRange: DateRange | undefined;
-  setDateRange: (range: DateRange) => void;
-  title?: string;
-  description?: string;
-}
 
 const DataFilter: React.FC<DataFilterProps> = ({
   dateRange,

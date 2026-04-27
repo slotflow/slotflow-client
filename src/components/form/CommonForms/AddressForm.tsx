@@ -16,14 +16,11 @@ import { CountryDropdown } from '../../ui/country-dropdown';
 import LocationPicker from '@/components/map/LocationPicker';
 import { AppDispatch, RootState } from '@/shared/redux/appStore';
 import { AdminVerificationStatus, Role } from '@/shared/interface/enums';
+import { AddressFormProps } from '@/shared/interface/componentInterface';
 import { Location } from '@/shared/interface/entityInterface/addressInterface';
 import { createAddress, fetchMyAddress, updateAddress } from '@/shared/apis/address';
 import { CreateAddressFormType, createAddressZodSchema } from '@/shared/zod/commonZodFields';
 import { addAddressGoogleMapLinkInfo, addAddressGoogleMapLinkInfoHeading, redirectPaths } from '@/shared/utils/constants';
-
-interface AddressFormProps {
-    isUpdating?: boolean;
-}
 
 const AddressForm: React.FC<AddressFormProps> = ({ 
     isUpdating = false

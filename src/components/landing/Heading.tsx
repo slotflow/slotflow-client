@@ -1,9 +1,5 @@
 import React from 'react';
-
-interface HeadingProps {
-  heading: string;
-  headingDescription: string;
-}
+import { HeadingProps } from '@/shared/interface/componentInterface';
 
 const Heading: React.FC<HeadingProps> = ({
   heading,

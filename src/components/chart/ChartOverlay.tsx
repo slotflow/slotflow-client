@@ -2,13 +2,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '@/shared/redux/appStore';
+import { ChartOverlayProps } from '@/shared/interface/componentInterface';
 
-interface ChartOverlay {
-    stringOne: string;
-    chartTitle: string;
-}
-
-const ChartOverlay: React.FC<ChartOverlay> = ({
+const ChartOverlay: React.FC<ChartOverlayProps> = ({
     stringOne,
     chartTitle
 }) => {

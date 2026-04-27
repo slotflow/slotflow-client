@@ -5,12 +5,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import avatar from '../../assets/defaultImages/avatar.png';
 import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import { InfoHeaderProps } from '@/shared/interface/componentInterface';
 import { toggleNotificationContainer, toggleSidebar } from '@/shared/redux/slices/appSlice';
-
-interface InfoHeaderProps {
-    profileImage?: string;
-    username: string;
-}
 
 const InfoHeader: React.FC<InfoHeaderProps> = ({
     profileImage,

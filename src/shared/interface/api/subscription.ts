@@ -2,21 +2,26 @@ import { Plan } from "../entityInterface/planInterface";
 import { Subscription } from "../entityInterface/subscriptionInterface";
 import { PlanName, SubscriptionStatus, SubscriptionValidity } from "../enums";
 
-// interface for fetch subscriptions
+// query params of fetch subscription
 export interface FetchSubscriptionsQueryParams {
   providerId?: string;
 }
 
-// type for fetch subscriptions response
+// response of fetch subscriptions
 export type FetchProviderSubscriptionsResponse = Pick<Subscription, "_id" | "startDate" | "endDate" | "subscriptionStatus"> & Pick<Plan, "planName">;
 
+// subscription props
 type SubscriptionProps = Pick<Subscription, "startDate" | "endDate" | "subscriptionStatus" | "createdAt">;
+
+// plan props
 type PlanProps = Pick<Plan, "planName" | "price" | "adVisibility" | "maxBookingPerMonth">;
-// interface for fetch subscription details response
+
+// response of fetch subscription details
 export interface FetchSubscriptionDetailsResponse extends SubscriptionProps {
   subscriptionPlanId: PlanProps,
 }
 
+// response of fetch activated subscription
 export interface SubscriptionActivated {
   providerId: string;
   subscribedPlan: PlanName;
@@ -24,10 +29,11 @@ export interface SubscriptionActivated {
   endDate: Date;
   subscriptionStatus: SubscriptionStatus;
 }
-// interface for fetch my subscription response
+
+// response of fetch my subscription
 export type FetchMySubscriptionResponse = SubscriptionActivated
 
-// interface for checkout for subscribe plan request
+// request of checkout for subscribe plan
 export interface CheckoutForSubscribePlanRequest {
   planId: Plan["_id"];
   planDuration: SubscriptionValidity

@@ -13,7 +13,7 @@ import fileUpload from '../../assets/svgs/fileUpload.svg';
 import service from '../../assets/svgs/serviceDetails.svg';
 import { useSignout } from '@/hooks/systemHooks/useSignout';
 import availability from '../../assets/svgs/availability.svg';
-import { SideBoxProps } from '@/shared/interface/entityInterface/providerInterface';
+import { SideBoxProps } from '@/shared/interface/componentInterface';
 import { pageLabels, pageDescriptions, redirectPaths } from '@/shared/utils/constants';
 
 const SideBox: React.FC<SideBoxProps> = ({ pageNumber }) => {

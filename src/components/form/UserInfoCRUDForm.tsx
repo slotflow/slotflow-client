@@ -1,22 +1,18 @@
 import { useState } from "react";
+import FormField from "./FormField";
 import { Loader } from "lucide-react";
 import { Button } from "../ui/button";
 import { toast } from "react-toastify";
-import FormField from "./FormField";
 import { FormButton } from "./FormSplits";
 import { PhoneInput } from "./phone-input";
+import { userUpdateInfo } from "@/shared/apis/user";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
-import { userUpdateInfo } from "@/shared/apis/user";
 import { slideOut } from "@/shared/helper/gsapAnimationSlide";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
+import { UserInfoCRUDProps } from "@/shared/interface/componentInterface";
 import { UserInfoFormType, userInfoZodSchema } from "@/shared/zod/commonZodFields";
-
-interface UserInfoCRUDProps {
-    onClose: () => void;
-    formRef: React.RefObject<HTMLDivElement | null>;
-}
 
 const UserInfoCRUDForm: React.FC<UserInfoCRUDProps> = ({
     onClose,

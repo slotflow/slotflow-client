@@ -1,4 +1,4 @@
-import { TableShimmerProps } from "@/shared/interface/componentInterface/shimmerInterface";
+import { TableShimmerProps } from "@/shared/interface/shimmerInterface";
 
 const TableShimmer: React.FC<TableShimmerProps> = ({
     columnsCount

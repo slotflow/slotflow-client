@@ -1,8 +1,8 @@
 import { Copy } from "lucide-react";
 import { Role } from "@/shared/interface/enums";
 import { formateDate } from "@/shared/helper/formatter";
-import { formatBoolean, formatDuration } from "@/shared/helper/formatter";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import { formatBoolean, formatDuration } from "@/shared/helper/formatter";
 import { InfoDisplayComponentRowProps } from "@/shared/interface/commonInterface";
 
 const InfoDisplayComponent: React.FC<InfoDisplayComponentRowProps> = ({

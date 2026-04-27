@@ -14,7 +14,7 @@ import { useSignout } from '@/hooks/systemHooks/useSignout';
 import { AuthUser } from '@/shared/interface/sliceInterface';
 import { toggleTheme } from '@/shared/redux/slices/appSlice';
 import { AppDispatch, RootState } from '@/shared/redux/appStore';
-import { SideBarProps } from '@/shared/interface/commonInterface';
+import { SideBarProps } from '@/shared/interface/componentInterface';
 
 const Sidebar: React.FC<SideBarProps> = ({
     routes,

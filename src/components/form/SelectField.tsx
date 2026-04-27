@@ -5,30 +5,10 @@ import {
   SelectItem,
   SelectValue,
 } from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
-import {
-  FieldValues,
-  FieldError,
-  Path,
-  UseFormRegister,
-} from "react-hook-form";
 import { Input } from '../ui/input';
-
-export type OptionType<K> = {
-  label: string;
-  value: K;
-};
-
-interface SelectFieldProps<T extends FieldValues, K> {
-  id: Path<T>;
-  label: string;
-  options: OptionType<K>[];
-  placeholder?: string;
-  error?: FieldError | string;
-  register: UseFormRegister<T>;
-  required?: boolean;
-  defaultValue?: string | number | boolean;
-}
+import { Label } from "@/components/ui/label";
+import { FieldValues } from "react-hook-form";
+import { SelectFieldProps } from "@/shared/interface/componentInterface";
 
 export const SelectField = <T extends FieldValues,K>({
   id,

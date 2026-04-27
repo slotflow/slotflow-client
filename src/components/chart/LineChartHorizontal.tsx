@@ -16,7 +16,7 @@ import ChartDataNotAvailable from './ChartDataNotAvailable';
 import { TimeRange } from '@/shared/interface/commonInterface';
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 import { filterChartDataHelper } from '@/shared/helper/dateFilter';
-import { LineChartHorizontalProps } from '@/shared/interface/componentInterface/commonComponentInterface';
+import { LineChartHorizontalProps } from '@/shared/interface/componentInterface';
 
 const LineChartHorizontal: React.FC<LineChartHorizontalProps> = ({
   title,

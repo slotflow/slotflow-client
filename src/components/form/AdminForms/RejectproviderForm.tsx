@@ -10,18 +10,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
 import { useQueryClient } from "@tanstack/react-query";
 import { AppDispatch } from "recharts/types/state/store";
-import { adminRejectProvider } from "@/shared/apis/providerProfile";
 import { slideOut } from "@/shared/helper/gsapAnimationSlide";
 import { verificationOptions } from "@/shared/utils/constants";
 import { handleFormError } from "@/shared/helper/formErrorCatcher";
 import { AdminVerificationStatus } from "@/shared/interface/enums";
+import { adminRejectProvider } from "@/shared/apis/providerProfile";
 import { setAdminVerificationState } from "@/shared/redux/slices/authSlice";
+import { RejectproviderFormProps } from "@/shared/interface/componentInterface";
 import { AdminRejectProviderFormType, adminRejectProviderZodSchema } from "@/shared/zod/adminZod";
-
-interface RejectproviderFormProps {
-  onClose: () => void;
-  formRef: React.RefObject<HTMLDivElement | null>;
-}
 
 const RejectproviderForm: React.FC<RejectproviderFormProps> = ({
   onClose,

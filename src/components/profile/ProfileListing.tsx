@@ -5,30 +5,10 @@ import { RootState } from "@/shared/redux/appStore";
 import DataFetchingError from "../error/DataFetchingError";
 import InfoDisplayComponent from "../app/InfoDisplayComponent";
 import { copyToClipboard } from "@/shared/helper/copyToClipboard";
-import { ApiBaseResponse } from "@/shared/interface/commonInterface";
 import ProfileDetailsShimmer from "@/components/shimmers/ProfileDetailsShimmer";
+import { UserOrProviderProfileDetailsComponentProps } from "@/shared/interface/componentInterface";
 import { AdminFetchUserProfileDetailsResponse, UserFetchUserProfileDetailsResponse } from "@/shared/interface/api/user";
-import { AdminFetchProviderProfileDetailsResponse, ProviderFetchMyProfileDetailsResponse, UserFetchProviderProfileDetailsResponse } from "@/shared/interface/api/provider";
-
-interface UserOrProviderProfileDetailsComponentProps {
-    userOrProviderId?: string;
-    fetchApiFunction: (userOrProviderId?: string) => Promise<ApiBaseResponse<
-        AdminFetchProviderProfileDetailsResponse |
-        ProviderFetchMyProfileDetailsResponse |
-        UserFetchProviderProfileDetailsResponse |
-        UserFetchUserProfileDetailsResponse |
-        AdminFetchUserProfileDetailsResponse>
-    >;
-    queryKey: string;
-    adminLookingProvider?: boolean;
-    adminLookingUser?: boolean;
-    providerSelf?: boolean;
-    userSelf?: boolean;
-    userLookingProvider?: boolean;
-    setProfileImage?: (image: string) => void;
-    shimmerRow: number;
-    setSelectedUserData?: (data: { selectedUserName: string; selectedUserProfileImage: string | null }) => void;
-}
+import { AdminFetchProviderProfileDetailsResponse, ProviderFetchMyProfileDetailsResponse, UserFetchProviderProfileDetailsResponse } from "@/shared/interface/api/providerProfile";
 
 const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
     userOrProviderId,
@@ -93,7 +73,6 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
                                 <InfoDisplayComponent label="Email" value={providerProfileData.email} copyToClipboard={copyToClipboard} />
                                 <InfoDisplayComponent label="Phone Number" value={providerProfileData.phone ?? 'Not yet added'} />
                                 <InfoDisplayComponent label="Slotflow Trusted" value={providerProfileData.trustedBySlotflow} isBoolean={true} />
-                                <InfoDisplayComponent label="Email Verified" value={providerProfileData.isEmailVerified} isBoolean={true} />
                                 <InfoDisplayComponent label="Account Blocked" value={providerProfileData.isBlocked} isBoolean={true} />
                                 <InfoDisplayComponent label="Admin Verified" value={providerProfileData.isAdminVerified} isBoolean={true} />
                                 <InfoDisplayComponent label="Verification Status" value={providerProfileData.adminVerificationStatus} />
@@ -133,7 +112,6 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
                                 <InfoDisplayComponent label="Service Details" value={authUser?.isServiceDetailsAdded} isBoolean={true} />
                                 <InfoDisplayComponent label="Availability Details" value={authUser?.isServiceAvailabilityAdded} isBoolean={true} />
                                 <InfoDisplayComponent label="Subscription" value={authUser?.providerSubscription} />
-                                <InfoDisplayComponent label="Email Verified" value={providerProfileData.isEmailVerified} isBoolean={true} />
                                 <InfoDisplayComponent label="Account Blocked" value={providerProfileData.isBlocked} isBoolean={true} />
                                 <InfoDisplayComponent label="Admin Verified" value={providerProfileData.isAdminVerified} isBoolean={true} />
                                 <InfoDisplayComponent label="Verification Status" value={providerProfileData.adminVerificationStatus} />

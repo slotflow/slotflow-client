@@ -1,16 +1,11 @@
 import { toast } from "react-toastify";
-import { Image, Send, Trash } from "lucide-react";
-import { useDispatch, useSelector } from "react-redux";
-import { sendMessage } from "@/shared/apis/message";
-import { AppDispatch, RootState } from "@/shared/redux/appStore";
-import React, { Dispatch, SetStateAction, useRef, useState } from "react";
 import { socket } from "@/lib/socketService";
-
-interface MessageInputProps {
-    setIsTyping(data: boolean): void;
-    isTyping: boolean;
-    setMessageSenderId: Dispatch<SetStateAction<string | null>>;
-}
+import React, { useRef, useState } from "react";
+import { Image, Send, Trash } from "lucide-react";
+import { sendMessage } from "@/shared/apis/message";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
+import { MessageInputProps } from "@/shared/interface/componentInterface";
 
 const MessageInput: React.FC<MessageInputProps> = ({
     setIsTyping,

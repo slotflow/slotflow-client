@@ -1,10 +1,4 @@
-import { LucideIcon } from "lucide-react";
-
-interface ReviewStatusProps {
-    status: string;
-    icon: LucideIcon;
-    isNot?: boolean;
-}
+import { ReviewStatusProps } from "@/shared/interface/componentInterface";
 
 const ReviewStatus: React.FC<ReviewStatusProps> = ({ 
     status,

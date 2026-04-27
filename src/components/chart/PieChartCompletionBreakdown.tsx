@@ -3,7 +3,6 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import {
-  ChartConfig,
   ChartLegend,
   ChartTooltip,
   ChartContainer,
@@ -13,26 +12,10 @@ import {
 import ChartHeader from "./ChartHeader";
 import ChartOverlay from "./ChartOverlay";
 import { Pie, PieChart, Cell } from "recharts";
-import { PlanName } from "@/shared/interface/enums";
 import ChartDataNotAvailable from "./ChartDataNotAvailable";
+import { CompletionChartProps } from "@/shared/interface/componentInterface";
 
-interface CompletionBreakdownData {
-  status: string;
-  value: number;
-}
-
-interface CompletionChartProps {
-  title: string;
-  description: string;
-  chartData: CompletionBreakdownData[];
-  dataKey: string;
-  chartConfig: ChartConfig;
-  nameKey: string;
-  isLocked: boolean;
-  minimumPlan: PlanName;
-}
-
-const PieChartCompletionBreakdown = ({
+const PieChartCompletionBreakdown: React.FC<CompletionChartProps> = ({
   title,
   description,
   chartData,
@@ -41,7 +24,7 @@ const PieChartCompletionBreakdown = ({
   nameKey,
   isLocked,
   minimumPlan
-}: CompletionChartProps) => {
+}) => {
   return (
     <Card className="relative overflow-hidden">
       {isLocked && (<ChartOverlay stringOne={minimumPlan} chartTitle={title} />)}

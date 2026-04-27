@@ -1,11 +1,6 @@
 import React from "react";
 import noProfile from "../../assets/defaultImages/avatar.png";
-
-interface ReviewUserProfileProps {
-    profileImage: string;
-    username: string;
-    text: string;
-}
+import { ReviewUserProfileProps } from "@/shared/interface/componentInterface";
 
 const ReviewUserProfile: React.FC<ReviewUserProfileProps> = ({
     profileImage,

@@ -1,16 +1,16 @@
 import FormField from "../FormField";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { appConfig } from "@/shared/config/env";
 import { updatePassword } from "@/shared/apis/auth";
-import { FormButton, FormHeading } from "../FormSplits";
 import { AppDispatch } from "@/shared/redux/appStore";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FormButton, FormHeading } from "../FormSplits";
+import { redirectPaths } from "@/shared/utils/constants";
 import { setForgotPassword } from "@/shared/redux/slices/appSlice";
 import { ResetPasswordFormType, resetPasswordZodSchema } from "@/shared/zod/authZod";
-import { appConfig } from "@/shared/config/env";
-import { useNavigate } from "react-router-dom";
-import { redirectPaths } from "@/shared/utils/constants";
 
 const ResetPasswordForm: React.FC = () => {
 

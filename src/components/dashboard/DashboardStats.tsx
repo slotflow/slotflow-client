@@ -1,25 +1,12 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { DateRange } from 'react-day-picker';
 import { useQuery } from '@tanstack/react-query';
 import { RootState } from '@/shared/redux/appStore';
 import { PlanName } from '@/shared/interface/enums';
 import StatsCard from '@/components/dashboard/StatsCard';
 import DataFetchingError from '../error/DataFetchingError';
+import { DashboardStatsProps } from '@/shared/interface/componentInterface';
 import DashboardStatsShimmer from '@/components/shimmers/DashboardStatsShimmer';
-import { ApiBaseResponse, statsMapIntrface } from '@/shared/interface/commonInterface';
-
-interface DashboardStatsProps<T extends Record<string, number>> {
-    queryFunction(): Promise<ApiBaseResponse<T>>;
-    queryKey: string;
-    statsMap: Array<statsMapIntrface<T>>;
-    plan?: string;
-    shimmerCount: number;
-    heading?: string;
-    role: string;
-    dependencies: DateRange;
-}
-
 
 const DashboardStats = <T extends Record<string, number>>({
     queryFunction,

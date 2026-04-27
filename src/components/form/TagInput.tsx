@@ -1,11 +1,7 @@
 import { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-
-interface TagInputProps {
-  value: string[];
-  onChange: (tags: string[]) => void;
-}
+import { TagInputProps } from "@/shared/interface/componentInterface";
 
 const TagInput: React.FC<TagInputProps> = ({ value, onChange }) => {
   const [input, setInput] = useState("");

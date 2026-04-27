@@ -14,7 +14,7 @@ import { axiosInstance } from "@/lib/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { parseResponse } from "../helper/parseResponse";
 import { buildQueryParams } from "../helper/buildQueryParams";
-import { FetchUsersForChatSidebarResponse } from "../interface/api/provider";
+import { FetchUsersForChatSidebarResponse } from "../interface/api/user";
 import { ApiBaseResponse, ApiFetchFunction, FetchFunctionBaseQueryParams } from "../interface/commonInterface";
 
 // user set role

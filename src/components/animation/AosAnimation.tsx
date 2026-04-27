@@ -1,12 +1,11 @@
 import AOS from "aos";
 import 'aos/dist/aos.css';
-import { useEffect, type ReactElement, type ReactNode } from "react";
+import React, { useEffect } from "react";
+import { AosAnimationProps } from "@/shared/interface/componentInterface";
 
-interface AosAnimationProps {
-    children: ReactNode | ReactElement;
-}
-
-const AosAnimation = ({ children }: AosAnimationProps) => {
+const AosAnimation: React.FC<AosAnimationProps> = ({ 
+    children 
+}) => {
     useEffect(() => {
         AOS.init({
             duration: 1200,

@@ -4,9 +4,9 @@ import { ServiceMode } from '@/shared/interface/enums';
 import DataFetchingError from '../error/DataFetchingError';
 import InfoDisplayComponent from '../app/InfoDisplayComponent';
 import ProfileDetailsShimmer from '../shimmers/ProfileDetailsShimmer';
-import { ProviderServiceDetailsComponentProps } from '@/shared/interface/componentInterface/commonComponentInterface';
+import { ProviderServiceDetailsProps } from '@/shared/interface/componentInterface';
 
-const ProviderServiceDetails: React.FC<ProviderServiceDetailsComponentProps> = ({
+const ProviderServiceDetails: React.FC<ProviderServiceDetailsProps> = ({
     providerId,
     fetchApiFunction,
     queryKey,

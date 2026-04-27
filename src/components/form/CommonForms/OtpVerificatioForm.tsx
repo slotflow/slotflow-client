@@ -9,11 +9,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { formatTime } from "@/shared/helper/formatter";
 import { useDispatch, useSelector } from "react-redux";
 import { FormButton, FormHeading } from "../FormSplits";
+import { redirectPaths } from "@/shared/utils/constants";
 import { resendOtp, verifyOtp } from "@/shared/apis/auth";
 import { updateTimer } from "@/shared/redux/slices/appSlice";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { VerifyOtpFormType, verifyOtpZodSchema } from "@/shared/zod/authZod";
-import { redirectPaths } from "@/shared/utils/constants";
 
 const OtpVerificatioForm: React.FC = () => {
 

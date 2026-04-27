@@ -2,20 +2,15 @@ import ChatHeader from "./ChatHeader";
 import { Ellipsis } from "lucide-react";
 import MessageInput from "./MessageInput";
 import { socket } from "@/lib/socketService";
-import { useDispatch, useSelector } from "react-redux";
 import { getMessages } from "@/shared/apis/message";
+import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useRef, useState } from "react";
 import ChatBubbleProfileImage from "./ChatBubbleProfileImage";
 import { formatTo24HourTime } from "@/shared/helper/formatter";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
-import { Message } from "@/shared/interface/entityInterface/message.interface";
+import { SocketDataInterface } from "@/shared/interface/commonInterface";
 import NoChatSelectedSShimmer from "@/components/shimmers/NoChatSelectedSShimmer";
 import { connectChatSocket, disconnectChatSocket } from "@/shared/socket/chatSocketThunk";
-
-interface SocketDataInterface {
-    fromUserId: Message["senderId"];
-    toUserId: Message["receiverId"];
-}
 
 const ChatContainer: React.FC = () => {
 

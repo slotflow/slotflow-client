@@ -1,14 +1,10 @@
 import React from "react";
-import { DateRange } from "react-day-picker";
 import DashboardStats from "../DashboardStats";
 import { Role } from "@/shared/interface/enums";
+import { ProviderDashboardStatsProps } from "@/shared/interface/componentInterface";
 import { revenueStatsMapForProvider, statsMapForProvider } from "@/shared/utils/constants";
 import { providerFetchDashboardRevenueStatsData, providerFetchDashboardStatsData } from "@/shared/apis/providerProfile";
-import { ProviderFetchDashboardRevenueStatsDataResponse, ProviderFetchDashboardStatsDataResponse } from "@/shared/interface/api/provider";
-
-export interface ProviderDashboardStatsProps {
-    dateRange: DateRange;
-}
+import { ProviderFetchDashboardRevenueStatsDataResponse, ProviderFetchDashboardStatsDataResponse } from "@/shared/interface/api/providerProfile";
 
 const ProviderDashboardStats: React.FC<ProviderDashboardStatsProps> = ({
     dateRange

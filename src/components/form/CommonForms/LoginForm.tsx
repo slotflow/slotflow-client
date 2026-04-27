@@ -10,11 +10,11 @@ import { Button } from "@/components/ui/button";
 import { AppDispatch } from "@/shared/redux/appStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormButton, FormHeading } from "../FormSplits";
+import { SigninResponse } from "@/shared/interface/api/auth";
 import { appConfig, serviceConfig } from "@/shared/config/env";
+import { redirectPaths } from "../../../shared/utils/constants";
 import { setForgotPassword } from "@/shared/redux/slices/appSlice";
 import { LoginFormType, LoginZodSchema } from '@/shared/zod/authZod';
-import { redirectPaths } from "../../../shared/utils/constants";
-import { SigninResponse } from "@/shared/interface/api/auth";
 
 const LoginForm: React.FC = () => {
 
@@ -34,7 +34,7 @@ const LoginForm: React.FC = () => {
         }
     });
 
-    const handleNavigation = (data: SigninResponse["data"]) => {
+    const handleNavigation = (data: SigninResponse) => {
         if (data.role === Role.ADMIN) {
             navigate("/admin/dashboard", { replace: true });
             return;

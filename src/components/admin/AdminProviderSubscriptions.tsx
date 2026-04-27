@@ -1,12 +1,12 @@
 import { memo } from "react";
-import CommonTable from "../common/CommonTable";
+import CommonTable from "../table/CommonTable";
 import { fetchSubscriptions } from "@/shared/apis/subscription";
 import { useRoleBasedNavigation } from "@/hooks/useRoleBasedNavigation";
+import { AdminFetchProviderSubscriptionsProps } from "@/shared/interface/componentInterface";
 import { ProvidersSubscriptionsTableColumns } from "../table/tableColumns/ProviderSubscriptionsTableColumn";
-import { AdminFetchProviderSubscriptionsComponentProps } from "@/shared/interface/componentInterface/adminComponentInterface";
 import { FetchProviderSubscriptionsResponse, FetchSubscriptionsQueryParams } from "@/shared/interface/api/subscription";
 
-const AdminProviderSubscriptions: React.FC<AdminFetchProviderSubscriptionsComponentProps> = memo(({
+const AdminProviderSubscriptions: React.FC<AdminFetchProviderSubscriptionsProps> = memo(({
     providerId
 }) => {
 

@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 import { Loader } from "lucide-react";
 import logo from '../../assets/logos/logo-transparent.png';
 import { CardDescription, CardHeader, CardTitle } from "../ui/card";
-import { AuthFormsButtonProps, AuthFormsHeadingProps } from "@/shared/interface/commonInterface";
+import { AuthFormsButtonProps, AuthFormsHeadingProps } from "@/shared/interface/componentInterface";
 
 export const FormHeading: React.FC<AuthFormsHeadingProps> = React.memo(({ title, description }) => {
     return (

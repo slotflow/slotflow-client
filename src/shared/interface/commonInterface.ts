@@ -4,8 +4,10 @@ import { RouteNames } from "../utils/constants";
 import { ColumnDef } from "@tanstack/react-table";
 import { ChartConfig } from "@/components/ui/chart";
 import { Plan } from "./entityInterface/planInterface";
-import { PlanName, Role, ServiceCategory } from "./enums";
+import { User } from "./entityInterface/userInterface";
+import { PlanName, Role, ServiceCategory, SubscriptionValidity } from "./enums";
 import { Booking } from "./entityInterface/bookingInterface";
+import { Message } from "./entityInterface/message.interface";
 
 // Common Response interface
 export interface ApiBaseResponse<T = null> {
@@ -22,19 +24,6 @@ export interface ApiPaginatedResponse<T> {
   totalPages?: number;
   success: boolean;
   message: string;
-}
-
-// Authtication form heading component props interface
-export interface AuthFormsHeadingProps {
-  title: string;
-  description?: string;
-}
-
-// Authtication form button component props interface
-export interface AuthFormsButtonProps {
-  text: string;
-  loading: boolean;
-  disabled?: boolean;
 }
 
 // InfoDisplay component props interface
@@ -67,13 +56,6 @@ export interface CommonButtonProps {
   icon?: LucideIcon;
 }
 
-// Nav compoenents interfaces
-export interface SideBarProps {
-  routes: Route[];
-  filteredRoutes?: Route[];
-}
-
-// Constant file interfaces
 // Routes array interface
 export interface Route {
   path: string;
@@ -89,6 +71,7 @@ export interface gsapBigSvgYDirectionAnimationInterface {
   repeat: number,
   ease: string,
 }
+
 // Header compoenent Navs Array Interface
 export interface HeaderCompoenentNavsProps {
   name: string;
@@ -328,3 +311,58 @@ export interface ProviderCardsFilters {
   skip: number;
   limit: number;
 };
+
+// Contact item interface
+export interface ContactItem {
+  icon: LucideIcon;
+  label: string;
+  value: string;
+  href?: string;
+}
+
+// admin reject provider modal state
+export interface AdminRejectProviderModalState {
+  modalState: boolean;
+  providerId: User["_id"] | null;
+}
+
+// Chat Data interface
+export interface SocketDataInterface {
+  fromUserId: Message["senderId"];
+  toUserId: Message["receiverId"];
+}
+
+// set last message interface
+export type setLatMessageProps = Pick<Message, "senderId" | "text" | "createdAt">
+
+// Chat list user interface
+export type ChatListUserProps = Pick<User, "_id" | "username" | "profileImage"> | Pick<User, "_id" | "username" | "profileImage">;
+
+// Option type interface
+export type OptionType<K> = {
+  label: string;
+  value: K;
+};
+
+// Map dot lit locations coordinates interface
+export interface MapDotLitLocationsCoordinates {
+  start: { lat: number, lng: number },
+  end: { lat: number, lng: number }
+}
+
+//
+export interface UserBookinAppointmentDataProps {
+    providerId: User["_id"]
+    slotId: string;
+    date: Date;
+    selectedServiceMode: string;
+}
+
+//
+export interface ProviderSubscriptionDataProps {
+    planId: string;
+    planDuration: SubscriptionValidity;
+}
+
+//
+export type CardProps = Pick<Plan, "_id" | "planName" | "description" | "features" | "price">;

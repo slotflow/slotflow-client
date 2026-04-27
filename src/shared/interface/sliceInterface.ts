@@ -1,7 +1,7 @@
-import { Provider } from "./entityInterface/providerInterface";
+import { Provider } from "./entityInterface/providerProfileInterface";
 import { AdminVerificationStatus, PlanName, Role, ServiceCategory, SubscriptionStatus } from "./enums";
 import { Availability } from "./entityInterface/serviceAvailabilityInterface";
-import { UserViewProviderCardComponentProps } from "./componentInterface/commonComponentInterface";
+import { UserViewProviderCardProps } from "./componentInterface";
 import { ProviderCardsFilters } from "./commonInterface";
 import { Message } from "./entityInterface/message.interface";
 import { User } from "./entityInterface/userInterface";
@@ -40,7 +40,7 @@ export interface AuthUser {
 
   googleId?: string;
   googleConnected?: boolean;
-  
+
   stripeAccountId?: string;
   stripeConnected?: boolean;
 
@@ -104,7 +104,7 @@ export interface UserStateVariables {
   isReviewCreateFormOpen: boolean;
   selectedBookingId: string | null;
   selectedBookingProviderId: string | null;
-  providers: Array<UserViewProviderCardComponentProps> | null;
+  providers: Array<UserViewProviderCardProps> | null;
   selectedCategories: ServiceCategory[];
   providerCardsfFlter: ProviderCardsFilters;
 }
@@ -113,22 +113,22 @@ export interface UserStateVariables {
 
 // chat slice
 type LastMessages = Record<
-    string,
-    {
-        message: string;
-        date: string;
-    }
+  string,
+  {
+    message: string;
+    date: string;
+  }
 >;
 
 export type SelectedUser = Pick<User, "_id" | "username" | "profileImage">;
 
 
 export interface chatSliceInitalState {
-    onlineUsers: string[] | null;
-    lastMessages: LastMessages,
-    selectedUser: SelectedUser | null,
-    socketId: string | null;
-    isConnected: boolean;
-    messages: Message[] | null;
-    isMessagesLoading: boolean;
+  onlineUsers: string[] | null;
+  lastMessages: LastMessages,
+  selectedUser: SelectedUser | null,
+  socketId: string | null;
+  isConnected: boolean;
+  messages: Message[] | null;
+  isMessagesLoading: boolean;
 }

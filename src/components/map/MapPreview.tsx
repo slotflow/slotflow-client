@@ -2,11 +2,7 @@ import L from "leaflet";
 import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import googleMap from '../../assets/iconImages/googleMap.png';
-
-interface MapPreviewProps {
-    lat: number;
-    lon: number;
-}
+import { MapPreviewProps } from "@/shared/interface/componentInterface";
 
 const MapPreview: React.FC<MapPreviewProps> = ({ lat, lon }) => {
     const mapRef = useRef<HTMLDivElement | null>(null);

@@ -7,9 +7,9 @@ import {
     SelectTrigger,
 } from "@/components/ui/select";
 import { dateSelectList } from '@/shared/utils/constants';
-import { DateSelectInterface } from '@/shared/interface/componentInterface/commonComponentInterface';
+import { DateSelectProps } from '@/shared/interface/componentInterface';
 
-const DateSelect: React.FC<DateSelectInterface> = ({
+const DateSelect: React.FC<DateSelectProps> = ({
     onValueChange,
     value
 }) => {

@@ -1,14 +1,5 @@
 import { Lock } from "lucide-react";
-
-interface SingleTabProps {
-    icon: React.ElementType;
-    text: string;
-    sidebarOpen: boolean;
-    onClick?: () => void;
-    className?: string;
-    locked?: boolean;
-    active?: boolean;
-}
+import { SingleTabProps } from "@/shared/interface/componentInterface";
 
 export const SingleTab: React.FC<SingleTabProps> = ({
     icon: Icon,

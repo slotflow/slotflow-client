@@ -1,21 +1,21 @@
 import { toast } from "react-toastify";
-import React, { useEffect, useState } from "react";
 import { Role } from "@/shared/interface/enums";
-import TimeSlotLegend from "../app/TimeSlotLegend";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
+import TimeSlotLegend from "../app/TimeSlotLegend";
 import { Calendar } from "@/components/ui/calendar";
-import DataFetchingError from "../error/DataFetchingError";
+import React, { useEffect, useState } from "react";
 import { getEventSocket } from "@/lib/socketService";
-import { fetchEngagedSlots } from "@/shared/apis/serviceAvailability";
-import InfoDisplayComponent from "../app/InfoDisplayComponent";
+import DataFetchingError from "../error/DataFetchingError";
 import PaymentSelection from "../payment/PaymentSelection";
+import InfoDisplayComponent from "../app/InfoDisplayComponent";
+import { fetchEngagedSlots } from "@/shared/apis/serviceAvailability";
 import { Slot } from "@/shared/interface/entityInterface/serviceAvailabilityInterface";
-import ProviderAvailabilityShimmer from "@/components/shimmers/ProviderAvailabilityShimmer";
-import { ProviderApiFunctionForPSAcomponent, ProviderServiceAvailabilityComponentProps, UserOrAdminApiFunctionForPSAcomponent } from "@/shared/interface/componentInterface/commonComponentInterface";
 import { EventSocketEnum, SlotEngageRequest } from "@/shared/interface/socket.interface";
+import ProviderAvailabilityShimmer from "@/components/shimmers/ProviderAvailabilityShimmer";
+import { ProviderApiFunctionForPSAComponent, ProviderServiceAvailabilityProps, UserOrAdminApiFunctionForPSAcomponent } from "@/shared/interface/componentInterface";
 
-const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponentProps> = ({
+const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityProps> = ({
     providerId,
     fetchApiFuntion,
     queryKey,
@@ -27,7 +27,7 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
     const [selectedMode, setSelectedMode] = useState<string | null>(null);
     const [selectedSlotId, setSelectedSlotId] = useState<string | null>(null);
     const [engagedSlotIds, setEngagedSlotIds] = useState<Set<string>>(new Set());
-    
+
     const eventSocket = getEventSocket();
 
     const { data, isLoading, isError, error } = useQuery({
@@ -38,7 +38,7 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
                 const res = await (fetchApiFuntion as UserOrAdminApiFunctionForPSAcomponent)({ date, providerId });
                 return res.data;
             } else if (role === Role.PROVIDER) {
-                const res = await (fetchApiFuntion as ProviderApiFunctionForPSAcomponent)(date);
+                const res = await (fetchApiFuntion as ProviderApiFunctionForPSAComponent)(date);
                 return res.data;
             }
         },
@@ -51,8 +51,8 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
     useEffect(() => {
         const loadEngagedSlots = async () => {
             if (providerId && date) {
-                const res = await fetchEngagedSlots({providerId, date});
-                if(res.success) {
+                const res = await fetchEngagedSlots({ providerId, date });
+                if (res.success) {
                     setEngagedSlotIds(new Set(res.data));
                 }
             }

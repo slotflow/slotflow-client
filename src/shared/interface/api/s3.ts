@@ -1,10 +1,10 @@
-// Request interfaces for S3 upload operations
+// request type of get upload url api
 export interface GetUploadUrlRequest {
     file: File; 
     folder: string;
 }
 
-// Response interface for getting a presigned upload URL from the server
+// response type of get upload url api
 export interface GetUploadUrlResponse {
     key: string; 
     uploadUrl: string;

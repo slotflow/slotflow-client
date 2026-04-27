@@ -1,19 +1,19 @@
 import { Address } from "../entityInterface/addressInterface";
 
-// type for fetching own address apis
+// response type of user fetch own address apis
 export type FetchMyAddressResponse = Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location">;
 
-// type for fetching other's address apis
+// response type of user fetch other's address apis
 export type FetchAddressResponse = Pick<Address, "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "landMark" | "location">;
 
-// type for creating address apis
+// request type of user creating address api
 export type CreateAddressRequest = Pick<Address, "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location">;
 
-// type for user creating address apis
+// response type of user creating address api
 export type UserCreateAddressResponse = Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location" | "updatedAt">;
 
-// type for updating address apis
+// request type of user updating address api
 export type UpdateAddressRequest = Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location">;
 
-// type for updating address apis
+// response type of user updating address api
 export type UpdateAddressResponse = Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location" | "updatedAt">;

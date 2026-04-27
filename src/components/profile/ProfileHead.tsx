@@ -1,20 +1,20 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { Loader, Pen } from "lucide-react";
-import { appConfig } from "@/shared/config/env";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { appConfig } from "@/shared/config/env";
 import { useDispatch, useSelector } from "react-redux";
+import { getUploadUrl, uploadToS3 } from "@/shared/apis/s3";
+import { userUpdateProfileImage } from "@/shared/apis/user";
 import { AuthState } from "@/shared/interface/sliceInterface";
 import avatar from '../../../assets/defaultImages/avatar.png';
-import { getUploadUrl, uploadToS3 } from "@/shared/apis/s3";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
-import { UserUpdateProfileImageResponse } from "@/shared/interface/api/user";
-import { ProfileHeaderComponentProps } from "@/shared/interface/componentInterface/commonComponentInterface";
-import { userUpdateProfileImage } from "@/shared/apis/user";
 import { ApiBaseResponse } from "@/shared/interface/commonInterface";
+import { ProfileHeaderProps } from "@/shared/interface/componentInterface";
+import { UserUpdateProfileImageResponse } from "@/shared/interface/api/user";
 
-const ProfileHead: React.FC<ProfileHeaderComponentProps> = ({
+const ProfileHead: React.FC<ProfileHeaderProps> = ({
     canUpdate,
     showDetails,
     isMyProfile,

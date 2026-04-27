@@ -8,7 +8,7 @@ import { userUpdateInfo, userUpdateProfileImage } from "@/shared/apis/user";
 import { SubscriptionActivated } from "@/shared/interface/api/subscription";
 import { providerCreateServiceDetails } from "@/shared/apis/providerService";
 import { createServiceAvailabilities } from "@/shared/apis/serviceAvailability";
-import { ProviderSubmitDetailsResponse } from "@/shared/interface/api/provider";
+import { ProviderSubmitDetailsResponse } from "@/shared/interface/api/providerProfile";
 import { providerSubmitDetailsForReview } from "@/shared/apis/providerProfile";
 import { createAddress } from "@/shared/apis/address";
 import { ApiBaseResponse } from "@/shared/interface/commonInterface";

@@ -3,16 +3,9 @@ import { Button } from '../ui/button';
 import { useDispatch } from 'react-redux';
 import { Check, Loader2 } from 'lucide-react';
 import { AppDispatch } from 'recharts/types/state/store';
+import { IntegrationCardProps } from '@/shared/interface/componentInterface';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
-interface IntegrationCardProps {
-    image: string;
-    heading: string;
-    description: string;
-    connectOnClick: (e: React.MouseEvent<HTMLButtonElement>, dispatch: AppDispatch) => void;
-    isConnected: boolean;
-    connectingLoading: boolean;
-}
 const IntegrationCard: React.FC<IntegrationCardProps> = ({
     image,
     heading,
