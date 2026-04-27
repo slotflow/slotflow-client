@@ -4,37 +4,32 @@ import { ApiBaseResponse } from "../interface/commonInterface";
 import { FetchProviderServiceResponse, ProviderCreateServiceDetailsRequest, ProviderUpdateServiceDetailsRequest } from "../interface/api/providerService";
 import { UserFetchServiceProvidersRequest, UserFetchServiceProvidersResponse } from "../interface/api/user";
 
-export const providerCreateServiceDetails = createAsyncThunk<ApiBaseResponse, ProviderCreateServiceDetailsRequest>("/provider/addServiceDetails",
+export const providerCreateServiceDetails = createAsyncThunk<ApiBaseResponse<void>, ProviderCreateServiceDetailsRequest>("/provider/addServiceDetails",
     async (data: ProviderCreateServiceDetailsRequest) => {
         const response = await axiosInstance.post(`/provider-services`, data);
         return response.data;
     }
 )
 
-export const providerUpdateServiceDetails = async (data: ProviderUpdateServiceDetailsRequest): Promise<ApiBaseResponse> => {
+export const providerUpdateServiceDetails = async (data: ProviderUpdateServiceDetailsRequest): Promise<ApiBaseResponse<void>> => {
     const response = await axiosInstance.patch(`/provider-services/${data._id}`, data);
     return response.data;
 }
 
-export const providerFetchServiceDetails = async (): Promise<FetchProviderServiceResponse> => {
+export const providerFetchServiceDetails = async (): Promise<ApiBaseResponse<FetchProviderServiceResponse>> => {
     const response = await axiosInstance.get('/provider-services/me');
-    return response.data.data;
+    return response.data;
 }
 
-export const userFetchProviderService = async (providerId: string): Promise<FetchProviderServiceResponse> => {
+export const fetchProviderServiceByProviderId = async (providerId: string): Promise<ApiBaseResponse<FetchProviderServiceResponse>> => {
     const response = await axiosInstance.get(`/providers/${providerId}/provider-services`);
-    return response.data.data;
-}
-
-export const adminFetchProviderService = async (providerId: string): Promise<FetchProviderServiceResponse> => {
-    const response = await axiosInstance.get(`/providers/${providerId}/provider-services`);
-    return response.data.data;
+    return response.data;
 }
 
 // user fetch service providers
-export const fetchServiceProvidersForUser = async (data: UserFetchServiceProvidersRequest): Promise<Array<UserFetchServiceProvidersResponse>> => {
+export const fetchServiceProvidersForUser = async (data: UserFetchServiceProvidersRequest): Promise<ApiBaseResponse<Array<UserFetchServiceProvidersResponse>>> => {
     const response = await axiosInstance.get(`/provider-service`, {
         params: { ...data },
     });
-    return response.data.data;
+    return response.data;
 };

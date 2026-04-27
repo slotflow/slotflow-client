@@ -1,4 +1,3 @@
-import { ApiBaseResponse } from "../commonInterface";
 import { User } from "../entityInterface/userInterface";
 import { Booking } from "../entityInterface/bookingInterface";
 import { Provider } from "../entityInterface/providerInterface";
@@ -12,26 +11,17 @@ export interface FetchBookingsQueryParams {
 // Used as the response interface of the fetch bookings api
 export type FetchBookingsResponse = Pick<Booking, "_id" | "appointmentDate" | "appointmentStatus" | "appointmentTime" | "videoCallRoomId" | "createdAt" | "serviceProviderId">;
 
-
 // Used as the response interface of the fetch bookings api
 export interface FetchBookingDetailsResponse extends Pick<Booking, "appointmentDate" | "appointmentMode" | "appointmentStatus" | "appointmentTime" | "createdAt" | "onlineTrack" | "statusTrack" | "videoCallRoomId"> {
   userId: Pick<User, "username" | "email">;
   serviceProviderId: Pick<Provider, "username" | "email">;
-} 
-
+}
 
 // Used as the request type of the validate room id api
 export interface ValidateRoomId {
   appointmentId: Booking["_id"];
   roomId: Booking["videoCallRoomId"];
 }
-
-
-// Used as the response interface of the validate room id api
-export interface CheckBookingConfirmedResponse extends ApiBaseResponse {
-  data: boolean
-}
-
 
 // Used as the request type of the book an appointment api
 export type BookAnAppointmentRequest = {
@@ -42,9 +32,7 @@ export type BookAnAppointmentRequest = {
 }
 
 // Used as the response interface of the book an appointment api
-export interface BookAppointmentResponse extends ApiBaseResponse {
-    data: string
-}
+export type BookAppointmentResponse = string
 
 // Used as the request type of the join room callback api
 export interface JoinRoomCallbackRequest {
@@ -55,9 +43,7 @@ export interface JoinRoomCallbackRequest {
 }
 
 // Used as the response interface of the join room callback api
-export interface JoinRoomCallbackResponse extends ApiBaseResponse {
-  data: Pick<Availability, "duration">
-};
+export type JoinRoomCallbackResponse = Pick<Availability, "duration">;
 
 // Used as the request type of the provider change booking appointment status api
 export interface changeAppointmentStatusRequest {

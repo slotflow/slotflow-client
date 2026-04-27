@@ -12,6 +12,7 @@ import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { UserUpdateProfileImageResponse } from "@/shared/interface/api/user";
 import { ProfileHeaderComponentProps } from "@/shared/interface/componentInterface/commonComponentInterface";
 import { userUpdateProfileImage } from "@/shared/apis/user";
+import { ApiBaseResponse } from "@/shared/interface/commonInterface";
 
 const ProfileHead: React.FC<ProfileHeaderComponentProps> = ({
     canUpdate,
@@ -35,11 +36,12 @@ const ProfileHead: React.FC<ProfileHeaderComponentProps> = ({
         formData.append("profileImage", file);
 
         if (canUpdate) {
-            const { uploadUrl, key } = await getUploadUrl({ file: file, folder: "profiles" });
+            const res = await getUploadUrl({ file: file, folder: "profiles" });
+            const { uploadUrl, key } = res.data;
             await uploadToS3(file, uploadUrl);
             await dispatch(userUpdateProfileImage({ s3FileKey: key }))
                 .unwrap()
-                .then((res: UserUpdateProfileImageResponse) => {
+                .then((res: ApiBaseResponse<UserUpdateProfileImageResponse>) => {
                     toast.success(res.message);
                 })
                 .catch((error) => {

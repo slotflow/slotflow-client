@@ -1,10 +1,10 @@
 import { axiosInstance } from "@/lib/axios";
 import { parseResponse } from "../helper/parseResponse";
+import { buildQueryParams } from "../helper/buildQueryParams";
 import { ApiBaseResponse, ApiFetchFunction } from "../interface/commonInterface";
 import { FetchNotificationsQueryParams, FetchNotificationsResponse, RegisterDeviceRequest } from "../interface/api/notification";
-import { buildQueryParams } from "../helper/buildQueryParams";
 
-export const registerDevice = async (data: RegisterDeviceRequest): Promise<ApiBaseResponse> => {
+export const registerDevice = async (data: RegisterDeviceRequest): Promise<ApiBaseResponse<void>> => {
   const response = await axiosInstance.post('/user-devices', data);
   return response.data;
 };

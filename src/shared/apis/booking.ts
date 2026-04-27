@@ -1,12 +1,12 @@
 import { axiosInstance } from "@/lib/axios";
 import { parseResponse } from "../helper/parseResponse";
+import { buildQueryParams } from "../helper/buildQueryParams";
 import { Booking } from "../interface/entityInterface/bookingInterface";
 import { ApiBaseResponse, ApiFetchFunction } from "../interface/commonInterface";
-import { BookAnAppointmentRequest, BookAppointmentResponse, changeAppointmentStatusRequest, CheckBookingConfirmedResponse, FetchBookingDetailsResponse, FetchBookingsQueryParams, FetchBookingsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, ValidateRoomId } from "../interface/api/booking";
-import { buildQueryParams } from "../helper/buildQueryParams";
+import { BookAnAppointmentRequest, BookAppointmentResponse, changeAppointmentStatusRequest, FetchBookingDetailsResponse, FetchBookingsQueryParams, FetchBookingsResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, ValidateRoomId } from "../interface/api/booking";
 
 // create checkout session for booking an appointment
-export const bookAnAppointment = async (data: BookAnAppointmentRequest): Promise<BookAppointmentResponse> => {
+export const bookAnAppointment = async (data: BookAnAppointmentRequest): Promise<ApiBaseResponse<BookAppointmentResponse>> => {
     const response = await axiosInstance.post('/bookings', data);
     return response.data;
 }
@@ -22,31 +22,31 @@ export const fetchBookings: ApiFetchFunction<
 }
 
 // fetch a single booking details
-export const fetchBookingDetails = async (bookingId: Booking["_id"]): Promise<FetchBookingDetailsResponse> => {
+export const fetchBookingDetails = async (bookingId: Booking["_id"]): Promise<ApiBaseResponse<FetchBookingDetailsResponse>> => {
     const response = await axiosInstance.get(`/bookings/${bookingId}`);
-    return response.data.data;
+    return response.data;
 }
 
 // validate joinRoom
-export const validateRoomId = async (data: ValidateRoomId): Promise<ApiBaseResponse> => {
+export const validateRoomId = async (data: ValidateRoomId): Promise<ApiBaseResponse<void>> => {
     const response = await axiosInstance.get(`/bookings/${data.appointmentId}/access?roomId=${data.roomId}`);
     return response.data;
 }
 
 // check booking confirmed
-export const checkBookingConfirmed = async (): Promise<CheckBookingConfirmedResponse> => {
+export const checkBookingConfirmed = async (): Promise<ApiBaseResponse<boolean>> => {
     const response = await axiosInstance.get('/bookings/recent');
     return response.data;
 }
 
 // cancel booking
-export const cancelBooking = async (bookingId: Booking["_id"]): Promise<ApiBaseResponse> => {
+export const cancelBooking = async (bookingId: Booking["_id"]): Promise<ApiBaseResponse<void>> => {
     const response = await axiosInstance.patch(`/bookings/${bookingId}`);
     return response.data;
 }
 
 // join or left online room
-export const joinOrLeft = async (data: JoinRoomCallbackRequest): Promise<JoinRoomCallbackResponse> => {
+export const joinOrLeft = async (data: JoinRoomCallbackRequest): Promise<ApiBaseResponse<JoinRoomCallbackResponse>> => {
     const response = await axiosInstance.patch(`/bookings/${data.videoCallRoomId}/join-left`, {
         joined: data.joined,
         joinedTime: data.joinedTime,
@@ -56,7 +56,7 @@ export const joinOrLeft = async (data: JoinRoomCallbackRequest): Promise<JoinRoo
 }
 
 // change appointment status
-export const changeAppointmentStatus = async (data: changeAppointmentStatusRequest): Promise<ApiBaseResponse> => {
+export const changeAppointmentStatus = async (data: changeAppointmentStatusRequest): Promise<ApiBaseResponse<void>> => {
     const response = await axiosInstance.patch(`/bookings/${data.appointmentId}/change-status`, data);
     return response.data;
 }

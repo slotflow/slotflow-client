@@ -35,7 +35,10 @@ const CalendarPage: React.FC = () => {
     }, [authUser]);
 
     const { data: calendarEvents, isLoading, isError, error } = useQuery({
-        queryFn: fetchCalendarEvents,
+        queryFn: async () => {
+            const res = await fetchCalendarEvents()
+            return res.data;
+        },
         queryKey: ["calendarEvents"],
         staleTime: 60 * 60 * 1000,
         refetchOnWindowFocus: false,

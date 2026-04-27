@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
-import DataFetchingError from "../error/DataFetchingError";
 import { ImageUpscale, Minimize2 } from "lucide-react";
+import DataFetchingError from "../error/DataFetchingError";
+import { ApiBaseResponse } from "@/shared/interface/commonInterface";
 import noImage from "../../../assets/defaultImages/imagePlaceholder.png";
 import { Provider } from "@/shared/interface/entityInterface/providerInterface";
 import ProfileDetailsShimmer from "@/components/shimmers/ProfileDetailsShimmer";
@@ -11,7 +12,7 @@ import { FetchProvidersProofsResponse } from "@/shared/interface/api/commonApiIn
 
 interface ProviderProofsProps {
     providerId: Provider["_id"];
-    fetchApiFunction: (providerId?: string) => Promise<FetchProvidersProofsResponse>;
+    fetchApiFunction: (providerId?: string) => Promise<ApiBaseResponse<FetchProvidersProofsResponse>>;
 }
 
 const ProviderProofs: React.FC<ProviderProofsProps> = ({
@@ -19,7 +20,10 @@ const ProviderProofs: React.FC<ProviderProofsProps> = ({
     fetchApiFunction,
 }) => {
     const { data, isLoading, isError, error } = useQuery({
-        queryFn: () => fetchApiFunction(providerId),
+        queryFn: async () => {
+            const res = await fetchApiFunction(providerId);
+            return res.data;
+        },
         queryKey: ["providerProofs", providerId],
         refetchOnWindowFocus: false,
         staleTime: 1000 * 60 * 60,

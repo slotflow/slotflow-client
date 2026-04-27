@@ -1,14 +1,12 @@
 import { Role } from "../enums";
 import { User } from "../entityInterface/userInterface";
-import { ApiBaseResponse, ProviderCardsFilters } from "../commonInterface";
+import { ProviderCardsFilters } from "../commonInterface";
 
 // Used as the request type of the setRole api
 export interface setRoleRequest {
     role: Role
 };
-export interface setRoleResponse extends ApiBaseResponse {
-    data: Pick<User, "hasSelectedRole" | "isOnboardingCompleted">;
-}
+export type setRoleResponse = Pick<User, "hasSelectedRole" | "isOnboardingCompleted">;
 
 // Used as the response type of the user profile details fetching api
 export type UserFetchUserProfileDetailsResponse = Pick<User, "username" | "email" | "isBlocked" | "phone" | "createdAt" | "updatedAt">;
@@ -18,17 +16,13 @@ export type UserFetchUserProfileDetailsResponse = Pick<User, "username" | "email
 export interface UserUpdateProfileImageRequest {
     s3FileKey: string;
 }
-export interface UserUpdateProfileImageResponse extends ApiBaseResponse {
-    data: User["profileImage"]
-}
+export type UserUpdateProfileImageResponse = User["profileImage"];
 
 
 // Used as the request type of user update userInfo api
 export type UserUpdateUserInfoRequest = Pick<User, "username" | "phone">;
 // Used as the response interface of user update userInfo api
-export interface UserUpdateUserInfoResponse extends ApiBaseResponse {
-    data: UserUpdateUserInfoRequest
-}
+export type UserUpdateUserInfoResponse = UserUpdateUserInfoRequest;
 
 
 

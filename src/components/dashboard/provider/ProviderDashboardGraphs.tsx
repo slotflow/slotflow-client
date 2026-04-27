@@ -6,14 +6,14 @@ import { PlanName } from '@/shared/interface/enums';
 import { RootState } from '@/shared/redux/appStore';
 import RadialChart from '../../chart/RadialChart';
 import { graphView } from '@/shared/helper/graphView';
-import DataFetchingError from '../../error/DataFetchingError';
 import AreaGroupedChart from '../../chart/AreaGroupedChart';
 import BarChartVertical from '../../chart/BarChartVertical';
 import LoadingFallback from '@/pages/common/LoadingFallback';
 import ChartLineMultiple from '../../chart/ChatLineMultiple';
+import DataFetchingError from '../../error/DataFetchingError';
 import BarChartHorizontal from '../../chart/BarChartHorizontal';
 import LineChartHorizontal from '../../chart/LineChartHorizontal';
-import { providerFetchDashboardGraphData } from '@/shared/apis/provider';
+import { providerFetchDashboardGraphData } from '@/shared/apis/providerProfile';
 import { ProviderDashboardGraphResponse } from '@/shared/interface/api/provider';
 import PieChartCompletionBreakdown from '../../chart/PieChartCompletionBreakdown';
 import { appointmentModeChartConfig, appointmentsOverTimeChartConfig, completionBreakdownChartConfig, newVsReturningUsersChartConfig, peakBookingHoursChartConfig, topBookingDaysChartConfig } from '@/shared/utils/constants';
@@ -38,7 +38,10 @@ const ProviderDashboardGraphs: React.FC<ProviderDashboardGraphsProps> = ({ dateR
         error: graphError,
     } = useQuery({
         queryKey: ['providerDashboardGraph', subscriptionPlan, dateRange],
-        queryFn: () => providerFetchDashboardGraphData(subscriptionPlan, dateRange),
+        queryFn: async () => {
+            const res = await providerFetchDashboardGraphData(subscriptionPlan, dateRange);
+            return res.data;
+        },
         staleTime: 60 * 60 * 1000,
         refetchOnWindowFocus: false,
         enabled: subscriptionPlan !== PlanName.NO_SUBSCRIPTION

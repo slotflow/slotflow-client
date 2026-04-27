@@ -1,4 +1,3 @@
-import { ApiBaseResponse } from "../commonInterface";
 import { User } from "../entityInterface/userInterface";
 import { Address } from "../entityInterface/addressInterface";
 import { Provider } from "../entityInterface/providerInterface";
@@ -10,12 +9,10 @@ export type ProviderCreateAddressRequest = Pick<Address, "addressLine" | "landMa
 export type ProviderFetchMyProfileDetailsResponse = Pick<Provider, "username" | "email" | "isAdminVerified" | "isBlocked" | "isEmailVerified" | "phone" | "createdAt" | "trustedBySlotflow" | "updatedAt" | "adminVerificationStatus" | "isAddressVerified" | "isAvailabilityVerified" | "isProofsVerified" | "isServiceDetailsVerified">;
 
 // Used as the request interface of provider submit detials for review
-export interface ProviderSubmitDetailsResponse extends ApiBaseResponse {
-  data: Pick<Provider, "adminVerificationStatus">;
-}
+export type ProviderSubmitDetailsResponse = Pick<Provider, "adminVerificationStatus">;
 
 // Used as the return type for the provider fetch users for the chat side bar
-export type ProviderFetchUsersForChatSidebarResponse = Array<Pick<User, "_id" | "username" | "profileImage">>
+export type FetchUsersForChatSidebarResponse = Array<Pick<User, "_id" | "username" | "profileImage">>
 
 // Used as the request interface for the provider fetch dashboard data
 export interface ProviderFetchDashboardStatsDataRequest {
@@ -97,19 +94,19 @@ export type AdminFetchAllProvidersResponse = Pick<Provider, "_id" | "username" |
 
 // Used as the request interfaces of admin reject provider
 export type AdminRejectProviderRequest = Pick<Provider, "verificationRejectionReason" | "isAddressVerified" | "isServiceDetailsVerified" | "isAvailabilityVerified" | "isProofsVerified"> & {
-    providerId: Provider["_id"];
+  providerId: Provider["_id"];
 }
 
 // Used as the request type for the admin change provider block status api
 export type AdminChangeProviderBlockStatusRequest = {
-    providerId: Provider["_id"];
-    isBlocked: Provider["isBlocked"];
+  providerId: Provider["_id"];
+  isBlocked: Provider["isBlocked"];
 }
 
 // Used as the request type for the admin change provider trust tag api
 export type AdminChangeProviderTrustTagRequest = {
-    providerId: Provider["_id"];
-    trustedBySlotflow: Provider["trustedBySlotflow"];
+  providerId: Provider["_id"];
+  trustedBySlotflow: Provider["trustedBySlotflow"];
 }
 
 // Used as the state interface for the admin reject provider modal

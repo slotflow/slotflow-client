@@ -1,6 +1,5 @@
-import { ApiBaseResponse } from "../commonInterface";
-import { Availability, AvailabilityForResponse } from "../entityInterface/serviceAvailabilityInterface";
 import { User } from "../entityInterface/userInterface";
+import { Availability, AvailabilityForResponse } from "../entityInterface/serviceAvailabilityInterface";
 
 // Used as the request type of the admin fetch provider service availability api
 export type FetchServiceAvailabilityRequest = {
@@ -23,6 +22,4 @@ export interface FetchEngagedSlotsRequest {
 }
 
 // Used as the response type of the fetch engaged slots api
-export interface FetchEngagedSlotsResponse extends ApiBaseResponse {
-  data: string[];
-}
+export type FetchEngagedSlotsResponse = string[];

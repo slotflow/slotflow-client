@@ -75,7 +75,7 @@ export const useVideoCallLobby = ({
           return { success: true, message: "Welcome to meet" };
         }
       } else {
-        return { success: false, message: res.message || "Unable to join, please try again" };
+        return { success: res.success || false, message: res.message || "Unable to join, please try again" };
       }
     } catch (error) {
       if (appConfig.isDevelopment) {

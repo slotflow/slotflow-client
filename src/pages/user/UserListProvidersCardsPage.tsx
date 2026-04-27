@@ -19,11 +19,14 @@ const UserListProvidersCardsPage = () => {
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError, error } = useInfiniteQuery({
     queryKey: ['providers', providerCardsfFlter],
-    queryFn: ({ pageParam = 0 }) => fetchServiceProvidersForUser({
-      ...providerCardsfFlter,
-      skip: pageParam,
-      limit: 12,
-    }),
+    queryFn: async ({ pageParam = 0 }) => {
+      const res = await fetchServiceProvidersForUser({
+        ...providerCardsfFlter,
+        skip: pageParam,
+        limit: 12,
+      });
+      return res.data;
+    },
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => {
       return lastPage.length === 12 ? allPages.length * 12 : undefined;

@@ -1,25 +1,27 @@
 import { ChangeEvent } from "react";
 import { LucideIcon } from "lucide-react";
+import { RouteNames } from "../utils/constants";
 import { ColumnDef } from "@tanstack/react-table";
 import { ChartConfig } from "@/components/ui/chart";
 import { Plan } from "./entityInterface/planInterface";
 import { PlanName, Role, ServiceCategory } from "./enums";
 import { Booking } from "./entityInterface/bookingInterface";
-import { RouteNames } from "../utils/constants";
 
 // Common Response interface
-export interface ApiBaseResponse {
+export interface ApiBaseResponse<T = null> {
   success: boolean;
   message: string;
-  statusCode: number;
+  data: T;
 }
 
 // Paginated response api return data interface
-export interface ApiPaginatedResponse<T> extends ApiBaseResponse {
+export interface ApiPaginatedResponse<T> {
   data?: T[];
   totalCount?: number;
   currentPage?: number;
   totalPages?: number;
+  success: boolean;
+  message: string;
 }
 
 // Authtication form heading component props interface

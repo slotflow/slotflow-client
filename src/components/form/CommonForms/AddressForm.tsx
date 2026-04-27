@@ -93,7 +93,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
            async function fetchOldAddress() {
                const result = await fetchMyAddress();
                reset({
-                ...result,
+                ...result.data,
                 countryCode: "IN"
                });
            };

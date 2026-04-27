@@ -5,7 +5,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { ApiBaseResponse } from "@/shared/interface/commonInterface";
 import { setProviderRejectModal } from "@/shared/redux/slices/adminSlice";
 import { Provider } from "@/shared/interface/entityInterface/providerInterface";
-import { adminApproveProvider, adminChangeProviderBlockStatus, adminChangeProviderTrustTag } from "@/shared/apis/provider";
+import { adminApproveProvider, adminChangeProviderBlockStatus, adminChangeProviderTrustTag } from "@/shared/apis/providerProfile";
 import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminRejectProviderModalState } from "@/shared/interface/api/provider";
 
 interface UseAdminProviderReturn {

@@ -4,13 +4,13 @@ import { DateRange } from 'react-day-picker';
 import { useQuery } from '@tanstack/react-query';
 import { RootState } from '@/shared/redux/appStore';
 import { PlanName } from '@/shared/interface/enums';
-import DataFetchingError from '../error/DataFetchingError';
 import StatsCard from '@/components/dashboard/StatsCard';
-import { statsMapIntrface } from '@/shared/interface/commonInterface';
+import DataFetchingError from '../error/DataFetchingError';
 import DashboardStatsShimmer from '@/components/shimmers/DashboardStatsShimmer';
+import { ApiBaseResponse, statsMapIntrface } from '@/shared/interface/commonInterface';
 
 interface DashboardStatsProps<T extends Record<string, number>> {
-    queryFunction(): Promise<T>;
+    queryFunction(): Promise<ApiBaseResponse<T>>;
     queryKey: string;
     statsMap: Array<statsMapIntrface<T>>;
     plan?: string;
@@ -50,6 +50,8 @@ const DashboardStats = <T extends Record<string, number>>({
         refetchOnWindowFocus: false,
     });
 
+    const dashboardStatsData = dashboardStats?.data;
+
     return (
         <div>
             <h4 className='text-lg font-bold'>{heading}</h4>
@@ -64,7 +66,7 @@ const DashboardStats = <T extends Record<string, number>>({
                             <StatsCard
                                 key={key as string}
                                 title={title}
-                                value={dashboardStats?.[key] ?? 0}
+                                value={dashboardStatsData?.[key] ?? 0}
                                 icon={icon}
                                 price={price}
                                 isShow={role === "PROVIDER" ? plans?.includes(subscriptionPlan) : true}

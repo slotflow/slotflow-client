@@ -2,13 +2,14 @@ import MapPreview from '../map/MapPreview';
 import { useQuery } from '@tanstack/react-query';
 import DataFetchingError from '../error/DataFetchingError';
 import InfoDisplayComponent from '../app/InfoDisplayComponent';
+import { ApiBaseResponse } from '@/shared/interface/commonInterface';
 import ProfileDetailsShimmer from '@/components/shimmers/ProfileDetailsShimmer';
 import { FetchAddressResponse, FetchMyAddressResponse } from '@/shared/interface/api/address';
 
 interface UserOrProviderAddressDetailsComponentProps {
     userOrProviderId?: string;
     fetchApiFunction: (userOrProviderId?: string) => Promise<
-        FetchMyAddressResponse | FetchAddressResponse
+        ApiBaseResponse<FetchMyAddressResponse> | ApiBaseResponse<FetchAddressResponse>
     >;
     queryKey: string;
 }
@@ -20,7 +21,10 @@ const AddressListing: React.FC<UserOrProviderAddressDetailsComponentProps> = ({
 }) => {
 
     const { data, isLoading, isError, error } = useQuery({
-        queryFn: () => fetchApiFunction(userOrProviderId),
+        queryFn: async () => {
+            const res = await fetchApiFunction(userOrProviderId)
+            return res.data;
+        },
         queryKey: [queryKey, userOrProviderId],
         refetchOnWindowFocus: false,
         staleTime: 1000 * 60 * 60,

@@ -57,7 +57,8 @@ const FileUploader: React.FC<FileUploaderProps> = ({
 
         try {
             dispatch(setLoadingFunction(true));
-            const { uploadUrl, key } = await getUploadUrl({ file: file, folder: folderName });
+            const uploadRes = await getUploadUrl({ file: file, folder: folderName });
+            const { uploadUrl, key } = uploadRes.data;
             await uploadToS3(file, uploadUrl);
             const res = await uploadFunction({ field: "identityProof", s3FileKey: key });
             if (res.success) {

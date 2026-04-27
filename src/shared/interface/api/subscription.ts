@@ -1,4 +1,3 @@
-import { ApiBaseResponse } from "../commonInterface";
 import { Plan } from "../entityInterface/planInterface";
 import { Subscription } from "../entityInterface/subscriptionInterface";
 import { PlanName, SubscriptionStatus, SubscriptionValidity } from "../enums";
@@ -26,17 +25,10 @@ export interface SubscriptionActivated {
   subscriptionStatus: SubscriptionStatus;
 }
 // interface for fetch my subscription response
-export interface FetchMySubscriptionResponse extends ApiBaseResponse {
-  data: SubscriptionActivated
-}
+export type FetchMySubscriptionResponse = SubscriptionActivated
 
 // interface for checkout for subscribe plan request
 export interface CheckoutForSubscribePlanRequest {
   planId: Plan["_id"];
   planDuration: SubscriptionValidity
-}
-
-// interface for checkout for subscribe plan response
-export interface CheckoutForSubscribePlanResponse extends ApiBaseResponse {
-  data: string
 }

@@ -1,31 +1,27 @@
 import axios from "axios";
 import { axiosInstance } from "@/lib/axios";
 import { ApiBaseResponse } from "../interface/commonInterface";
+import { GetUploadUrlRequest, GetUploadUrlResponse } from "../interface/api/s3";
 
-export const getUploadUrl = async (
-  data: { file: File; folder: string }
-): Promise<{key: string, uploadUrl: string}> => {
-  const apiData = {
+export const getUploadUrl = async (data: GetUploadUrlRequest): Promise<ApiBaseResponse<GetUploadUrlResponse>> => {
+  const response = await axiosInstance.get("/s3/presigned-upload-url",{
+    params: {
         fileName: data.file.name,
         fileType: data.file.type,
         folderName: data.folder,
-  };
-  const response = await axiosInstance.get("/s3/presigned-upload-url",{
-    params: apiData,
+  },
   });
-  return response.data.data;
+  return response.data;
 };
 
-export const getSignedUrl = async (s3FileKey: string): Promise<string> => {
+export const getSignedUrl = async (s3FileKey: string): Promise<ApiBaseResponse<string>> => {
   const response = await axiosInstance.get("/s3/file/presigned-get-url", {
     params: { s3FileKey },
   });
-  return response.data.data;
+  return response.data;
 };
 
-export const deleteUserFileFromS3 = async (
-  folder: string,
-): Promise<ApiBaseResponse> => {
+export const deleteUserFileFromS3 = async (folder: string): Promise<ApiBaseResponse> => {
   const response = await axiosInstance.delete("/s3/file", {
     data: { folder },
   });

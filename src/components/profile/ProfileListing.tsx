@@ -1,22 +1,23 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 import { RootState } from "@/shared/redux/appStore";
 import DataFetchingError from "../error/DataFetchingError";
 import InfoDisplayComponent from "../app/InfoDisplayComponent";
 import { copyToClipboard } from "@/shared/helper/copyToClipboard";
+import { ApiBaseResponse } from "@/shared/interface/commonInterface";
 import ProfileDetailsShimmer from "@/components/shimmers/ProfileDetailsShimmer";
-import { AdminFetchProviderProfileDetailsResponse, ProviderFetchMyProfileDetailsResponse, UserFetchProviderProfileDetailsResponse } from "@/shared/interface/api/provider";
 import { AdminFetchUserProfileDetailsResponse, UserFetchUserProfileDetailsResponse } from "@/shared/interface/api/user";
+import { AdminFetchProviderProfileDetailsResponse, ProviderFetchMyProfileDetailsResponse, UserFetchProviderProfileDetailsResponse } from "@/shared/interface/api/provider";
 
 interface UserOrProviderProfileDetailsComponentProps {
     userOrProviderId?: string;
-    fetchApiFunction: (userOrProviderId?: string) => Promise<
+    fetchApiFunction: (userOrProviderId?: string) => Promise<ApiBaseResponse<
         AdminFetchProviderProfileDetailsResponse |
         ProviderFetchMyProfileDetailsResponse |
         UserFetchProviderProfileDetailsResponse |
         UserFetchUserProfileDetailsResponse |
-        AdminFetchUserProfileDetailsResponse
+        AdminFetchUserProfileDetailsResponse>
     >;
     queryKey: string;
     adminLookingProvider?: boolean;
@@ -45,7 +46,10 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
 
     const { authUser } = useSelector((state: RootState) => state.auth);
     const { data, isLoading, isError, error } = useQuery({
-        queryFn: () => fetchApiFunction(userOrProviderId),
+        queryFn: async () => {
+            const res = await fetchApiFunction(userOrProviderId);
+            return res.data;
+        },
         queryKey: [queryKey, userOrProviderId],
         staleTime: 60 * 60 * 1000,
         refetchOnWindowFocus: false,
@@ -110,7 +114,6 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
                                 <InfoDisplayComponent label="Username" value={userProfileData.username} />
                                 <InfoDisplayComponent label="Email" value={userProfileData.email} copyToClipboard={copyToClipboard} />
                                 <InfoDisplayComponent label="Phone Number" value={userProfileData.phone ?? 'Not yet added'} />
-                                <InfoDisplayComponent label="Email Verified" value={userProfileData.isEmailVerified} isBoolean={true} />
                                 <InfoDisplayComponent label="Account Blocked" value={userProfileData.isBlocked} isBoolean={true} isLast />
                             </React.Fragment>
                         )
@@ -164,7 +167,6 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
                                 <InfoDisplayComponent label="Email" value={authUser?.email || userProfileData?.email} />
                                 <InfoDisplayComponent label="Phone Number" value={authUser?.phone || userProfileData?.phone} />
                                 <InfoDisplayComponent label="Joined On" value={userProfileData?.createdAt} isDate />
-                                <InfoDisplayComponent label="Email Verified" value={userProfileData?.isEmailVerified} isBoolean={true} />
                                 <InfoDisplayComponent label="Account Blocked" value={userProfileData?.isBlocked} isBoolean={true} />
                             </React.Fragment>
                         );

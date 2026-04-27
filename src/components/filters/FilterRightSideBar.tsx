@@ -8,14 +8,14 @@ import LocationPicker from "../map/LocationPicker";
 import { useDispatch, useSelector } from "react-redux";
 import { ServiceCategory } from "@/shared/interface/enums";
 import FilterCompHeader from "../filters/FilterCompHeader";
+import { fetchServicesByCategory } from "@/shared/apis/service";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { toggleFilterSideBar } from "@/shared/redux/slices/appSlice";
 import { setProviderCardsFilter } from "@/shared/redux/slices/userSlice";
 import { ProviderCardsFilters } from "@/shared/interface/commonInterface";
 import { Location } from "@/shared/interface/entityInterface/addressInterface";
-import { BookCheck, ChartBarStacked, IndianRupee, Locate, SlidersHorizontal } from "lucide-react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { fetchServicesByCategory } from "@/shared/apis/service";
+import { BookCheck, ChartBarStacked, IndianRupee, Locate, SlidersHorizontal } from "lucide-react";
 
 
 const FilterRightSideBar: React.FC = () => {
@@ -55,7 +55,10 @@ const FilterRightSideBar: React.FC = () => {
     }, [selectedCategories]);
 
     const { data, isLoading } = useQuery({
-        queryFn: () => fetchServicesByCategory(filters.categories),
+        queryFn: async () => {
+            const res = await fetchServicesByCategory(filters.categories);
+            return res.data;
+        },
         queryKey: ["appServices", filters.categories],
         staleTime: 5 * 60 * 1000,
         refetchOnWindowFocus: false,

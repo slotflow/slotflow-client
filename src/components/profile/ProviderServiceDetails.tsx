@@ -15,7 +15,10 @@ const ProviderServiceDetails: React.FC<ProviderServiceDetailsComponentProps> = (
 }) => {
 
     const { data, isLoading, isError, error } = useQuery({
-        queryFn: () => fetchApiFunction(providerId),
+        queryFn: async () => {
+            const res = await fetchApiFunction(providerId);
+            return res.data;
+        },
         queryKey: [queryKey, providerId],
         staleTime: 1 * 60 * 1000,
         refetchOnWindowFocus: false,

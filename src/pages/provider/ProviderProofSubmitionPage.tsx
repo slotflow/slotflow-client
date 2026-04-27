@@ -8,7 +8,7 @@ import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { setIsProofSubmitted } from "@/shared/redux/slices/authSlice";
 import FileUploader from "@/components/form/CommonForms/FileUploader";
 import { setIdentityProofLoading, setProviderIdentityProofs, setProviderServiceProofs, setServiceProofLoading } from "@/shared/redux/slices/providerSlice";
-import { providerDeleteIdentityProof, providerDeleteServiceProof, providerFetchProofs, providerUpdateIdentityProof, providerUpdateProofServiceProof } from "@/shared/apis/provider";
+import { providerDeleteIdentityProof, providerDeleteServiceProof, providerFetchProofs, providerUpdateIdentityProof, providerUpdateProofServiceProof } from "@/shared/apis/providerProfile";
 
 export const ProviderProofSubmissionPage = () => {
 
@@ -23,8 +23,8 @@ export const ProviderProofSubmissionPage = () => {
     async function fetchOldProofs() {
       const result = await providerFetchProofs();
       if (result) {
-        dispatch(setProviderIdentityProofs(result.identityProof as string))
-        dispatch(setProviderServiceProofs(result.serviceProof as string))
+        dispatch(setProviderIdentityProofs(result.data.identityProof as string))
+        dispatch(setProviderServiceProofs(result.data.serviceProof as string))
       }
     }
 

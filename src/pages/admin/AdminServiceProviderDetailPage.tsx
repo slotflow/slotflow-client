@@ -9,13 +9,13 @@ import DataFetchingError from "@/components/error/DataFetchingError";
 import AddressListing from "@/components/profile/AddressListing";
 import ProfileListing from "@/components/profile/ProfileListing";
 import ProviderProofs from "@/components/profile/ProviderProofs";
-import { adminFetchProviderService } from "@/shared/apis/providerService";
+import { fetchProviderServiceByProviderId } from "@/shared/apis/providerService";
 import ProfileHorizontalTabs from "@/components/profile/ProfileHorizontalTabs";
 import AdminProviderSubscriptions from "@/components/admin/AdminProviderSubscriptions";
 import ProviderServiceDetails from "@/components/profile/ProviderServiceDetails";
 import { fetchServiceAvailabilityByProviderId } from "@/shared/apis/serviceAvailability";
 import AdminUserOrProviderPayments from "@/components/admin/AdminUserOrProviderPayments";
-import { adminFetchProviderProofs, fetchProviderDetailsForAdmin } from "@/shared/apis/provider";
+import { adminFetchProviderProofs, fetchProviderDetailsForAdmin } from "@/shared/apis/providerProfile";
 import ProviderServiceAvailability from "@/components/profile/ProviderServiceAvailability";
 import { fetchAddressByUserId } from "@/shared/apis/address";
 
@@ -49,7 +49,7 @@ const AdminServiceProviderDetailPage = () => {
                     ) || tab === 1 && (
                         <AddressListing userOrProviderId={providerId} fetchApiFunction={() => fetchAddressByUserId(providerId)} queryKey="providerAddress" />
                     ) || tab === 2 && (
-                        <ProviderServiceDetails providerId={providerId} fetchApiFunction={() => adminFetchProviderService(providerId)} queryKey="providerService" isUser={false} />
+                        <ProviderServiceDetails providerId={providerId} fetchApiFunction={() => fetchProviderServiceByProviderId(providerId)} queryKey="providerService" isUser={false} />
                     ) || tab === 3 && (
                         <ProviderServiceAvailability providerId={providerId} fetchApiFuntion={fetchServiceAvailabilityByProviderId} queryKey="providerServiceAvailability" role={Role.ADMIN} />
                     ) || tab === 4 && (

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { formatDateWithTime } from '@/shared/helper/formatter';
 import { fetchBookingDetails } from '@/shared/apis/booking';
+import { formatDateWithTime } from '@/shared/helper/formatter';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import InfoDisplayComponent from '@/components/app/InfoDisplayComponent';
 import { Booking } from '@/shared/interface/entityInterface/bookingInterface';
@@ -14,7 +14,10 @@ const BookingDetailPage: React.FC = () => {
   console.log("bookingId : ", bookingId)
 
   const { data, isLoading, isError, error } = useQuery({
-    queryFn: () => fetchBookingDetails(bookingId!),
+    queryFn: async () => {
+      const res = await fetchBookingDetails(bookingId!);
+      return res.data;
+    },
     queryKey: ["booking", bookingId],
     staleTime: 60 * 60 * 1000,
     refetchOnWindowFocus: false,

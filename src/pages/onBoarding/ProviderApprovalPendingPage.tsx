@@ -8,9 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Card, CardContent } from "@/components/ui/card";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { AdminVerificationStatus } from "@/shared/interface/enums";
-import { providerSubmitDetailsForReview } from "@/shared/apis/provider";
-import { blockBackStatuses, redirectPaths, verificationStatusTextMap } from "@/shared/utils/constants";
+import { providerSubmitDetailsForReview } from "@/shared/apis/providerProfile";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { blockBackStatuses, redirectPaths, verificationStatusTextMap } from "@/shared/utils/constants";
 
 const ProviderApprovalPendingPage = () => {
 

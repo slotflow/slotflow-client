@@ -31,13 +31,15 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
     const eventSocket = getEventSocket();
 
     const { data, isLoading, isError, error } = useQuery({
-        queryFn: () => {
+        queryFn: async () => {
             if (!date) throw new Error("Missing date");
             if (role === Role.USER || role === Role.ADMIN) {
                 if (!providerId) throw new Error("Missing provider Id");
-                return (fetchApiFuntion as UserOrAdminApiFunctionForPSAcomponent)({ date, providerId });
+                const res = await (fetchApiFuntion as UserOrAdminApiFunctionForPSAcomponent)({ date, providerId });
+                return res.data;
             } else if (role === Role.PROVIDER) {
-                return (fetchApiFuntion as ProviderApiFunctionForPSAcomponent)(date);
+                const res = await (fetchApiFuntion as ProviderApiFunctionForPSAcomponent)(date);
+                return res.data;
             }
         },
         queryKey: [queryKey, date, providerId],
@@ -49,8 +51,10 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityComponent
     useEffect(() => {
         const loadEngagedSlots = async () => {
             if (providerId && date) {
-                const slots = await fetchEngagedSlots(providerId, date);
-                setEngagedSlotIds(new Set(slots));
+                const res = await fetchEngagedSlots({providerId, date});
+                if(res.success) {
+                    setEngagedSlotIds(new Set(res.data));
+                }
             }
         };
         loadEngagedSlots();

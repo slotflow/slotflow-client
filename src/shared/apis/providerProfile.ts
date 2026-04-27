@@ -19,85 +19,79 @@ import { PlanName } from "../interface/enums";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { parseResponse } from "../helper/parseResponse";
 import { buildQueryParams } from "../helper/buildQueryParams";
+import { FetchProvidersProofsResponse, UpdateFileDataRequest } from "../interface/api/commonApiInterface";
 import { ApiBaseResponse, ApiFetchFunction, FetchFunctionBaseQueryParams } from "../interface/commonInterface";
-import { FetchProvidersProofsResponse, UpdateFileDataRequest, UpdateFileDataResponse } from "../interface/api/commonApiInterface";
 
 // provider fetching own profile details
-export const providerFetchMyProfileDetails = async (): Promise<ProviderFetchMyProfileDetailsResponse> => {
+export const providerFetchMyProfileDetails = async (): Promise<ApiBaseResponse<ProviderFetchMyProfileDetailsResponse>> => {
     const response = await axiosInstance.get('/providers/me');
-    return response.data.data;
+    return response.data;
 }
 
 // provider updating own identity proof
-export const providerUpdateIdentityProof = async (data: UpdateFileDataRequest): Promise<UpdateFileDataResponse> => {
+export const providerUpdateIdentityProof = async (data: UpdateFileDataRequest): Promise<ApiBaseResponse<string>> => {
     const response = await axiosInstance.patch('/providers/me/identity', data);
     return response.data;
 }
 
 // provider updating own service proof
-export const providerUpdateProofServiceProof = async (data: UpdateFileDataRequest): Promise<UpdateFileDataResponse> => {
+export const providerUpdateProofServiceProof = async (data: UpdateFileDataRequest): Promise<ApiBaseResponse<string>> => {
     const response = await axiosInstance.patch('/providers/me/service', data);
     return response.data;
 }
 
 // provider fetching own proofs
-export const providerFetchProofs = async (): Promise<FetchProvidersProofsResponse> => {
+export const providerFetchProofs = async (): Promise<ApiBaseResponse<FetchProvidersProofsResponse>> => {
     const response = await axiosInstance.get(`/providers/me/proofs`);
-    return response.data.data;
+    return response.data;
 }
 
 // provider deleting own identity proof
-export const providerDeleteIdentityProof = async (): Promise<ApiBaseResponse> => {
+export const providerDeleteIdentityProof = async (): Promise<ApiBaseResponse<void>> => {
     const response = await axiosInstance.delete('/providers/me/identity');
     return response.data;
 }
 
 // provider deleting own service proof
-export const providerDeleteServiceProof = async (): Promise<ApiBaseResponse> => {
+export const providerDeleteServiceProof = async (): Promise<ApiBaseResponse<void>> => {
     const response = await axiosInstance.delete('/providers/me/service');
     return response.data;
 }
 
 // provider submitting own details for review
-export const providerSubmitDetailsForReview = createAsyncThunk<ProviderSubmitDetailsResponse>('/provider/profile/details',
+export const providerSubmitDetailsForReview = createAsyncThunk<ApiBaseResponse<ProviderSubmitDetailsResponse>>('/provider/profile/details',
     async () => {
         const response = await axiosInstance.patch('/providers/me/approval');
         return response.data;
     }
 )
 
-// provider setting push notification
-export const providerSetPushNotification = async (data: boolean): Promise<ApiBaseResponse> => {
-    const response = await axiosInstance.patch('/providers/me/notification-settings', { allowPushNotification: data });
-    return response.data;
-}
-
 
 
 // **** Provider Dashboard Apis
 
 // provider fetch dashboard stats data
-export const providerFetchDashboardStatsData = async (payload: ProviderFetchDashboardStatsDataRequest): Promise<ProviderFetchDashboardStatsDataResponse> => {
+export const providerFetchDashboardStatsData = async (payload: ProviderFetchDashboardStatsDataRequest): Promise<ApiBaseResponse<ProviderFetchDashboardStatsDataResponse>> => {
     const query = buildQueryParams(payload);
     const response = await axiosInstance.get(`/provider-dashboard/?${query}`);
-    return response.data.data;
+    return response.data;
 }
 
-export const providerFetchDashboardRevenueStatsData = async (payload: ProviderFetchDashboardRevenueStatsDataRequest): Promise<ProviderFetchDashboardRevenueStatsDataResponse> => {
+export const providerFetchDashboardRevenueStatsData = async (payload: ProviderFetchDashboardRevenueStatsDataRequest): Promise<ApiBaseResponse<ProviderFetchDashboardRevenueStatsDataResponse>> => {
     const query = buildQueryParams(payload);
     const response = await axiosInstance.get(`/payments/revenue?${query}`);
-    return response.data.data;
+    return response.data;
 }
 
 // provider fetch dashboard graph data
-export const providerFetchDashboardGraphData = async (subscription?: PlanName, dateRange?: DateRange): Promise<ProviderDashboardGraphResponse> => {
+export const providerFetchDashboardGraphData = async (subscription?: PlanName, dateRange?: DateRange): Promise<ApiBaseResponse<ProviderDashboardGraphResponse>> => {
     const response = await axiosInstance.get(`/provider-dashboard/graph`, {
         params: {
             subscription,
             ...(dateRange ? { start: dateRange.from, end: dateRange.to } : {}),
         }
     });
-    return response.data.data;
+    return response.data;
 }
 
 
@@ -107,7 +101,7 @@ export const providerFetchDashboardGraphData = async (subscription?: PlanName, d
 // admin
 
 // admin fetch provider profile details
-export const fetchProviderDetailsForAdmin = async (providerId: string): Promise<AdminFetchProviderProfileDetailsResponse> => {
+export const fetchProviderDetailsForAdmin = async (providerId: string): Promise<ApiBaseResponse<AdminFetchProviderProfileDetailsResponse>> => {
     const response = await axiosInstance.get(`/providers/${providerId}`);
     return response.data.data;
 }
@@ -148,15 +142,15 @@ export const adminChangeProviderTrustTag = async (data: AdminChangeProviderTrust
 }
 
 // admin fetch provider proofs
-export const adminFetchProviderProofs = async (providerId: string): Promise<FetchProvidersProofsResponse> => {
+export const adminFetchProviderProofs = async (providerId: string): Promise<ApiBaseResponse<FetchProvidersProofsResponse>> => {
     const response = await axiosInstance.get(`/providers/${providerId}/proofs`);
-    return response.data.data;
+    return response.data;
 }
 
 // user
 
 // user fetch provider profile details
-export const fetchProviderDetailsForUser = async (providerId: string): Promise<UserFetchProviderProfileDetailsResponse> => {
+export const fetchProviderDetailsForUser = async (providerId: string): Promise<ApiBaseResponse<UserFetchProviderProfileDetailsResponse>> => {
     const response = await axiosInstance.get(`/providers/${providerId}`);
-    return response.data.data;
+    return response.data;
 }

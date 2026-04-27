@@ -1,8 +1,7 @@
-import { ApiBaseResponse } from "../commonInterface";
 import { Address } from "../entityInterface/addressInterface";
 
 // type for fetching own address apis
-export type FetchMyAddressResponse = Pick<Address, "_id" | "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "landMark" | "location">;
+export type FetchMyAddressResponse = Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location">;
 
 // type for fetching other's address apis
 export type FetchAddressResponse = Pick<Address, "addressLine" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "landMark" | "location">;
@@ -11,14 +10,10 @@ export type FetchAddressResponse = Pick<Address, "addressLine" | "phone" | "plac
 export type CreateAddressRequest = Pick<Address, "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location">;
 
 // type for user creating address apis
-export interface UserCreateAddressResponse extends ApiBaseResponse {
-    data: Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location" | "updatedAt">;
-}
+export type UserCreateAddressResponse = Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location" | "updatedAt">;
 
 // type for updating address apis
 export type UpdateAddressRequest = Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location">;
 
 // type for updating address apis
-export interface UpdateAddressResponse extends ApiBaseResponse {
-  data: Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location" | "updatedAt">;
-}
+export type UpdateAddressResponse = Pick<Address, "_id" | "addressLine" | "landMark" | "phone" | "place" | "city" | "district" | "pincode" | "state" | "country" | "location" | "updatedAt">;

@@ -14,23 +14,23 @@ import { axiosInstance } from "@/lib/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { parseResponse } from "../helper/parseResponse";
 import { buildQueryParams } from "../helper/buildQueryParams";
-import { ProviderFetchUsersForChatSidebarResponse } from "../interface/api/provider";
+import { FetchUsersForChatSidebarResponse } from "../interface/api/provider";
 import { ApiBaseResponse, ApiFetchFunction, FetchFunctionBaseQueryParams } from "../interface/commonInterface";
 
 // user set role
-export const setRole = async (data: setRoleRequest): Promise<setRoleResponse> => {
+export const setRole = async (data: setRoleRequest): Promise<ApiBaseResponse<setRoleResponse>> => {
     const response = await axiosInstance.patch('/users/me/role', data);
     return response.data;
 }
 
 // user fetch own profile details
-export const userFetchMyProfileDetails = async (): Promise<UserFetchUserProfileDetailsResponse> => {
+export const userFetchMyProfileDetails = async (): Promise<ApiBaseResponse<UserFetchUserProfileDetailsResponse>> => {
     const response = await axiosInstance.get('/users/me');
-    return response.data.data;
+    return response.data;
 }
 
 // user update profile image
-export const userUpdateProfileImage = createAsyncThunk<UserUpdateProfileImageResponse, UserUpdateProfileImageRequest>("/user/updateProfileImage",
+export const userUpdateProfileImage = createAsyncThunk<ApiBaseResponse<UserUpdateProfileImageResponse>, UserUpdateProfileImageRequest>("/user/updateProfileImage",
     async (data: UserUpdateProfileImageRequest) => {
         const response = await axiosInstance.patch('/users/me/image', data);
         return response.data;
@@ -38,7 +38,7 @@ export const userUpdateProfileImage = createAsyncThunk<UserUpdateProfileImageRes
 )
 
 // user update info
-export const userUpdateInfo = createAsyncThunk<UserUpdateUserInfoResponse, UserUpdateUserInfoRequest>('/user/updaterUserInfo',
+export const userUpdateInfo = createAsyncThunk<ApiBaseResponse<UserUpdateUserInfoResponse>, UserUpdateUserInfoRequest>('/user/updaterUserInfo',
     async (data: UserUpdateUserInfoRequest) => {
         const response = await axiosInstance.patch('/users/me', data);
         return response.data;
@@ -46,7 +46,7 @@ export const userUpdateInfo = createAsyncThunk<UserUpdateUserInfoResponse, UserU
 )
 
 // user set push notification
-export const userSetPushNotification = async (data: boolean): Promise<ApiBaseResponse> => {
+export const userSetPushNotification = async (data: boolean): Promise<ApiBaseResponse<void>> => {
     const response = await axiosInstance.patch('/users/me/notification-settings', { allowPushNotification: data });
     return response.data;
 }
@@ -62,19 +62,19 @@ export const fetchUsers: ApiFetchFunction<
 }
 
 // admin changing user block status
-export const changeUserBlockStatus = async (data: AdminChangeUserStatusRequest): Promise<ApiBaseResponse> => {
+export const changeUserBlockStatus = async (data: AdminChangeUserStatusRequest): Promise<ApiBaseResponse<void>> => {
     const response = await axiosInstance.patch(`/users/${data.userId}/block`, { blockStatus: data.isBlocked });
     return response.data;
 }
 
 // admin fetching user profile details
-export const fetchUserProfileDetails = async (userId: string): Promise<AdminFetchUserProfileDetailsResponse> => {
+export const fetchUserProfileDetails = async (userId: string): Promise<ApiBaseResponse<AdminFetchUserProfileDetailsResponse>> => {
     const response = await axiosInstance.get(`/users/${userId}`);
-    return response.data.data;
+    return response.data;
 }
 
 // provider fetching users for chat
-export const fetchUsersForChat = async (): Promise<ProviderFetchUsersForChatSidebarResponse> => {
+export const fetchUsersForChat = async (): Promise<ApiBaseResponse<FetchUsersForChatSidebarResponse>> => {
     const response = await axiosInstance.get('/users');
-    return response.data.data
+    return response.data;
 }

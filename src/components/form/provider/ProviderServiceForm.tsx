@@ -65,7 +65,7 @@ const ProviderServiceForm: React.FC = () => {
         const fetchServices = async () => {
             try {
                 const res = await fetchServicesByCategory([serviceCategory]);
-                const transformed = res.map((srv: { _id: string; serviceName: string }) => ({
+                const transformed = res.data.map((srv: { _id: string; serviceName: string }) => ({
                     label: srv.serviceName,
                     value: srv._id
                 }));
@@ -89,7 +89,8 @@ const ProviderServiceForm: React.FC = () => {
         if (!shouldFetchDetails) return;
 
         async function fetchOldServiceDetails() {
-            const result = await providerFetchServiceDetails();
+            const res = await providerFetchServiceDetails();
+            const result = res.data;
             reset({
                 _id: result._id,
                 isGroupService: result.isGroupService,

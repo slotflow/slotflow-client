@@ -11,7 +11,10 @@ const PaymentDetailViewPage: React.FC = () => {
     const { paymentId } = useParams<{ paymentId: string }>();
 
     const { data, isLoading, isError, error } = useQuery({
-        queryFn: () => fetchPaymentDetails(paymentId!),
+        queryFn: async () => {
+            const res = await fetchPaymentDetails(paymentId!);
+            return res.data;
+        },
         queryKey: ["payment", paymentId],
         staleTime: 60 * 60 * 1000,
         refetchOnWindowFocus: false,

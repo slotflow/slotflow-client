@@ -10,7 +10,7 @@ import { ChartConfig } from "@/components/ui/chart";
 import { Provider } from "../entityInterface/providerInterface";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { FetchServiceAvailabilityResponse } from "../api/serviceAvailability";
-import { UpdateFileDataRequest, UpdateFileDataResponse } from "../api/commonApiInterface";
+import { UpdateFileDataRequest } from "../api/commonApiInterface";
 import { ApiBaseResponse, BaseChartData, ChatComponentProps, TimeRange } from "../commonInterface";
 import { UserFetchServiceProvidersResponse } from "../api/user";
 import { FetchProviderServiceResponse } from "../api/providerService";
@@ -29,12 +29,11 @@ type FetchApiFunctionUserOrAdminRequestPayloadProps = {
   providerId: Provider["_id"]
   date: Date
 }
-export type ProviderApiFunctionForPSAcomponent = (date: Date) => Promise<FetchServiceAvailabilityResponse>;
-export type UserOrAdminApiFunctionForPSAcomponent = (payload: FetchApiFunctionUserOrAdminRequestPayloadProps) => Promise<FetchServiceAvailabilityResponse>;
-type FetchApiFunction = ProviderApiFunctionForPSAcomponent | UserOrAdminApiFunctionForPSAcomponent;
+export type ProviderApiFunctionForPSAcomponent = (date: Date) => Promise<ApiBaseResponse<FetchServiceAvailabilityResponse>>;
+export type UserOrAdminApiFunctionForPSAcomponent = (payload: FetchApiFunctionUserOrAdminRequestPayloadProps) => Promise<ApiBaseResponse<FetchServiceAvailabilityResponse>>;
 export interface ProviderServiceAvailabilityComponentProps {
   providerId?: string
-  fetchApiFuntion: FetchApiFunction;
+  fetchApiFuntion: ProviderApiFunctionForPSAcomponent | UserOrAdminApiFunctionForPSAcomponent;
   queryKey: string;
   role?: Role;
 }
@@ -43,7 +42,7 @@ export interface ProviderServiceAvailabilityComponentProps {
 // **** Provider Service details showing component props interface
 export interface ProviderServiceDetailsComponentProps {
   providerId?: Provider["_id"];
-  fetchApiFunction: (providerId?: Provider["_id"]) => Promise<FetchProviderServiceResponse>;
+  fetchApiFunction: (providerId?: Provider["_id"]) => Promise<ApiBaseResponse<FetchProviderServiceResponse>>;
   queryKey: string;
   isUser?: boolean;
   shimmerRow?: number;
@@ -150,7 +149,7 @@ export interface FormFieldProps<T extends FieldValues> {
 // ****
 export interface FileUploaderProps {
   folderName: string;
-  uploadFunction: (data: UpdateFileDataRequest) => Promise<UpdateFileDataResponse>;
+  uploadFunction: (data: UpdateFileDataRequest) => Promise<ApiBaseResponse<string>>;
   message?: string;
   setStateFunction: (data: string | null) => PayloadAction<string | null>;
   setLoadingFunction: (data: boolean) => PayloadAction<boolean>;

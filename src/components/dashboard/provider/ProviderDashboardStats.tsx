@@ -3,7 +3,7 @@ import { DateRange } from "react-day-picker";
 import DashboardStats from "../DashboardStats";
 import { Role } from "@/shared/interface/enums";
 import { revenueStatsMapForProvider, statsMapForProvider } from "@/shared/utils/constants";
-import { providerFetchDashboardRevenueStatsData, providerFetchDashboardStatsData } from "@/shared/apis/provider";
+import { providerFetchDashboardRevenueStatsData, providerFetchDashboardStatsData } from "@/shared/apis/providerProfile";
 import { ProviderFetchDashboardRevenueStatsDataResponse, ProviderFetchDashboardStatsDataResponse } from "@/shared/interface/api/provider";
 
 export interface ProviderDashboardStatsProps {

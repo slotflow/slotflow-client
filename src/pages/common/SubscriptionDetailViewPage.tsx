@@ -11,7 +11,10 @@ const SubscriptionDetailViewPage: React.FC = () => {
     const { subscriptionId } = useParams<{ subscriptionId: string }>();
 
     const { data, isLoading, isError, error } = useQuery({
-        queryFn: () => fetchSubscriptionDetails(subscriptionId!),
+        queryFn: async () => {
+            const res = await fetchSubscriptionDetails(subscriptionId!);
+            return res.data;
+        },
         queryKey: ["subcription", subscriptionId],
         staleTime: 60 * 60 * 1000,
         refetchOnWindowFocus: false,

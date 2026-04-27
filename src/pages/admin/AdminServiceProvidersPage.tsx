@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { RootState } from "@/shared/redux/appStore";
 import CommonTable from "@/components/table/CommonTable";
 import { slideIn } from "@/shared/helper/gsapAnimationSlide";
-import { fetchServiceProvidersForAdmin } from "@/shared/apis/provider";
+import { fetchServiceProvidersForAdmin } from "@/shared/apis/providerProfile";
 import { useAdminProvider } from "@/hooks/adminHooks/useProvider";
 import RejectproviderForm from "@/components/form/AdminForms/RejectproviderForm";
 import { AdminProvidersTableColumns } from "@/components/table/tableColumns/AdminProvidersTableColumn";

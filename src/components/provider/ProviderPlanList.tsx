@@ -10,7 +10,10 @@ const ShimmerCount = Array.from({ length: 3 });
 const ProviderPlanList: React.FC = () => {
 
     const { data, isLoading, isError, error } = useQuery({
-        queryFn: providerFetchPlans,
+        queryFn: async () => {
+            const res = await providerFetchPlans();
+            return res.data;
+        },
         queryKey: ["plans"],
         staleTime: 60 * 60 * 1000,
         refetchOnWindowFocus: false,

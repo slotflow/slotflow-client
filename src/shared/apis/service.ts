@@ -7,9 +7,9 @@ import {
 import { axiosInstance } from "@/lib/axios";
 import { ServiceCategory } from "../interface/enums";
 import { parseResponse } from "../helper/parseResponse";
+import { buildQueryParams } from "../helper/buildQueryParams";
 import { ApiFetchFunction } from "../interface/api/commonApiInterface";
 import { FetchFunctionBaseQueryParams, ApiBaseResponse } from "../interface/commonInterface";
-import { buildQueryParams } from "../helper/buildQueryParams";
 
 export const fetchServices: ApiFetchFunction<
     FetchServicesResponse,
@@ -20,21 +20,21 @@ export const fetchServices: ApiFetchFunction<
     return parseResponse<FetchServicesResponse>(response.data.data);
 }
 
-export const createService = async (data: CreateServiceRequest): Promise<ApiBaseResponse> => {
+export const createService = async (data: CreateServiceRequest): Promise<ApiBaseResponse<void>> => {
     const response = await axiosInstance.post('/services', data);
     return response.data;
 }
 
-export const changeServiceBlockStatus = async (data: ChangeServiceBlockStatusRequest): Promise<ApiBaseResponse> => {
+export const changeServiceBlockStatus = async (data: ChangeServiceBlockStatusRequest): Promise<ApiBaseResponse<void>> => {
     const response = await axiosInstance.patch(`/services/${data.serviceId}`, { blockStatus: data.isBlocked });
     return response.data;
 }
 
-export const fetchServicesByCategory = async (categories: ServiceCategory[]): Promise<Array<FetchServicesByCategoryResponse>> => {
+export const fetchServicesByCategory = async (categories: ServiceCategory[]): Promise<ApiBaseResponse<Array<FetchServicesByCategoryResponse>>> => {
     const response = await axiosInstance.get(`/services`, {
         params: {
             serviceCategory: categories
         }
     });
-    return response.data.data;
+    return response.data;
 }

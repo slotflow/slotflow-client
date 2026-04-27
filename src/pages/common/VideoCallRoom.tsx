@@ -195,7 +195,7 @@ const RoomPage = () => {
       const res = await joinOrLeft(data);
 
       if (res.success) {
-        toast.success("You leaved meet successfully");
+        toast.success("You left meet successfully");
         myStream?.getTracks().forEach((t) => t.stop());
         peer.peer.close();
         videoSocket?.emit("room:leave", { roomId });

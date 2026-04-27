@@ -7,7 +7,7 @@ import { slideIn } from "@/shared/helper/gsapAnimationSlide";
 import { userFetchMyProfileDetails } from "@/shared/apis/user";
 import UserInfoCRUDForm from "@/components/form/UserInfoCRUDForm";
 import ProfileListing from "@/components/profile/ProfileListing";
-import { providerFetchMyProfileDetails } from "@/shared/apis/provider";
+import { providerFetchMyProfileDetails } from "@/shared/apis/providerProfile";
 
 const Profile: React.FC = () => {
 

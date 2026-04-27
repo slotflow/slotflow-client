@@ -1,5 +1,6 @@
 import { sendMessage } from "@/shared/apis/message";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ApiBaseResponse } from "@/shared/interface/commonInterface";
 import { Message } from '@/shared/interface/entityInterface/message.interface';
 import { chatSliceInitalState, SelectedUser } from "@/shared/interface/sliceInterface";
 
@@ -44,8 +45,8 @@ const chatSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(sendMessage.fulfilled, (state, action) => {
-            state.messages?.push(action.payload);
+        builder.addCase(sendMessage.fulfilled, (state, action: PayloadAction<ApiBaseResponse<Message>>) => {
+            state.messages?.push(action.payload.data);
         })
     }
 });

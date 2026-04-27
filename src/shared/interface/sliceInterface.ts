@@ -4,6 +4,7 @@ import { Availability } from "./entityInterface/serviceAvailabilityInterface";
 import { UserViewProviderCardComponentProps } from "./componentInterface/commonComponentInterface";
 import { ProviderCardsFilters } from "./commonInterface";
 import { Message } from "./entityInterface/message.interface";
+import { User } from "./entityInterface/userInterface";
 
 // Auth slice state
 export interface AuthUser {
@@ -119,11 +120,7 @@ type LastMessages = Record<
     }
 >;
 
-export interface SelectedUser {
-    _id: string;
-    username: string;
-    profileImage: string;
-}
+export type SelectedUser = Pick<User, "_id" | "username" | "profileImage">;
 
 
 export interface chatSliceInitalState {

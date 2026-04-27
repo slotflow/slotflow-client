@@ -11,8 +11,8 @@ import ChatSidebarShimmer from "@/components/shimmers/ChatSidebarShimmer";
 import { Message } from "@/shared/interface/entityInterface/message.interface";
 import { Provider } from "@/shared/interface/entityInterface/providerInterface";
 import { setLastMessage, setOnlineUsers, setSelectedUser } from "@/shared/redux/slices/chatSlice";
-import { UserFetchProvidersForChatSidebarResponse } from "@/shared/interface/api/user";
-import { ProviderFetchUsersForChatSidebarResponse } from "@/shared/interface/api/provider";
+import { FetchUsersForChatSidebarResponse } from "@/shared/interface/api/provider";
+import { ApiBaseResponse } from "@/shared/interface/commonInterface";
 
 type setLatMessageProps = Pick<Message, "senderId" | "text" | "createdAt">
 type UserProps = Pick<User, "_id" | "username" | "profileImage"> | Pick<Provider, "_id" | "username" | "profileImage">;
@@ -39,7 +39,7 @@ const formatDate = (date: string) => {
 };
 
 interface ChatSideBarProps {
-    getUsers: () => Promise<ProviderFetchUsersForChatSidebarResponse | UserFetchProvidersForChatSidebarResponse>;
+    getUsers: () => Promise<ApiBaseResponse<FetchUsersForChatSidebarResponse>>;
 }
 
 const ChatSidebar: React.FC<ChatSideBarProps> = ({
@@ -54,7 +54,10 @@ const ChatSidebar: React.FC<ChatSideBarProps> = ({
 
 
     const { data, isLoading, isError, error } = useQuery({
-        queryFn: getUsers,
+        queryFn: async () => {
+            const res = await getUsers();
+            return res.data;
+        },
         queryKey: ["chatUsers"],
         staleTime: 1 * 60 * 1000,
         refetchOnWindowFocus: false,

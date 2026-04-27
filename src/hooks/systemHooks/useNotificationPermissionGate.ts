@@ -1,3 +1,4 @@
+import { appConfig } from "@/shared/config/env";
 import { RootState } from "@/shared/redux/appStore";
 import { getFcmToken } from "@/shared/helper/getToken";
 import { useDispatch, useSelector } from "react-redux";
@@ -5,11 +6,9 @@ import { useCallback, useEffect, useMemo } from "react";
 import { getDeviceId } from "@/shared/helper/getDeviceId";
 import { registerDevice } from "@/shared/apis/notification";
 import { userSetPushNotification } from "@/shared/apis/user";
-import { providerSetPushNotification } from "@/shared/apis/provider";
-import { PermissionStatus, Platform, Role } from "@/shared/interface/enums";
+import { PermissionStatus, Platform } from "@/shared/interface/enums";
 import { updateNotificationPreference } from "@/shared/redux/slices/authSlice";
 import { requestNotificationPermission } from "@/shared/helper/requestNotificationPermission";
-import { appConfig } from "@/shared/config/env";
 
 interface useNotificationPermissionGateInterface {
   askPermission: () => Promise<void>
@@ -38,12 +37,12 @@ export const useNotificationPermissionGate = (): useNotificationPermissionGateIn
     if (Notification.permission === PermissionStatus.DENIED) {
       const updateServer = async () => {
         try {
-          if (authUser.role === Role.USER) {
-            await userSetPushNotification(false);
-          } else if (authUser.role === Role.PROVIDER) {
-            await providerSetPushNotification(false);
+          const res = await userSetPushNotification(false);
+          if(res.success) {
+            dispatch(updateNotificationPreference(true));
+          } else {
+            dispatch(updateNotificationPreference(false));
           }
-          dispatch(updateNotificationPreference(false));
         } catch (error) {
           if(appConfig.isDevelopment) {
             console.error("Failed to update push notification preference", error);
@@ -78,13 +77,12 @@ export const useNotificationPermissionGate = (): useNotificationPermissionGateIn
         platform: Platform.WEB,
       });
 
-      if (authUser?.role === Role.USER) {
-        await userSetPushNotification(true);
-      } else if (authUser?.role === Role.PROVIDER) {
-        await providerSetPushNotification(true);
-      }
-
-      dispatch(updateNotificationPreference(true));
+        const res = await userSetPushNotification(true);
+        if(res.success) {
+          dispatch(updateNotificationPreference(true));
+        } else {
+          dispatch(updateNotificationPreference(false));
+        }
       return;
     }
 
