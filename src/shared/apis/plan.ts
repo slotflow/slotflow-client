@@ -19,12 +19,12 @@ export const adminFetchAllPlans: ApiFetchFunction<
     return parseResponse<AdminFetchAllPlansResponse>(response.data.data);
 };
 
-export const createPlan = async (formData: CreatePlanRequest): Promise<ApiBaseResponse<void>> => {
+export const createPlan = async (formData: CreatePlanRequest): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.post('/plans', formData);
     return response.data;
 }
 
-export const changePlanBlockStatus = async (data: ChangePlanBlockStatusRequest): Promise<ApiBaseResponse<void>> => {
+export const changePlanBlockStatus = async (data: ChangePlanBlockStatusRequest): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.patch(`/plans/${data.planId}/block`, { blockStatus: data.isBlocked });
     return response.data;
 }

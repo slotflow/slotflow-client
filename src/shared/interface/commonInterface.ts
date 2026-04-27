@@ -8,12 +8,13 @@ import { User } from "./entityInterface/userInterface";
 import { PlanName, Role, ServiceCategory, SubscriptionValidity } from "./enums";
 import { Booking } from "./entityInterface/bookingInterface";
 import { Message } from "./entityInterface/message.interface";
+import { Review } from "./entityInterface/reviewInterface";
 
 // Common Response interface
 export interface ApiBaseResponse<T = null> {
   success: boolean;
   message: string;
-  data: T;
+  data?: T;
 }
 
 // Paginated response api return data interface
@@ -350,7 +351,7 @@ export interface MapDotLitLocationsCoordinates {
   end: { lat: number, lng: number }
 }
 
-//
+// User booking appointment data props interface
 export interface UserBookinAppointmentDataProps {
     providerId: User["_id"]
     slotId: string;
@@ -358,11 +359,22 @@ export interface UserBookinAppointmentDataProps {
     selectedServiceMode: string;
 }
 
-//
+// Provider subscription data props interface
 export interface ProviderSubscriptionDataProps {
     planId: string;
     planDuration: SubscriptionValidity;
 }
 
-//
+// Card props interface
 export type CardProps = Pick<Plan, "_id" | "planName" | "description" | "features" | "price">;
+
+// Tab item interface
+export interface TabItem {
+  value: string;
+  label: string;
+  icon?: React.ElementType;
+  role?: string[];
+}
+
+// Review form values interface
+export type ReviewFormValues = Pick<Review, "reviewText" | "rating">;

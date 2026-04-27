@@ -2,15 +2,11 @@ import { useDispatch } from "react-redux";
 import { signout } from "@/shared/apis/auth";
 import { appConfig } from "@/shared/config/env";
 import { useQueryClient } from "@tanstack/react-query";
-import { ApiBaseResponse } from "@/shared/interface/commonInterface";
+import { useSignoutReturn } from "@/shared/interface/hooksInterface";
 import { AppDispatch, persistAppStore } from "@/shared/redux/appStore";
 import { disconnectEventSocket } from "@/shared/socket/eventSocketThunk";
 
-export interface useSignoutReturnType {
-    signoutHandler: () => Promise<ApiBaseResponse>;
-}
-
-export const useSignout = (): useSignoutReturnType => {
+export const useSignout = (): useSignoutReturn => {
 
     const dispatch = useDispatch<AppDispatch>();
     const queryClient = useQueryClient();

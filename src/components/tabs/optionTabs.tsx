@@ -1,4 +1,3 @@
-import React, { useMemo } from "react";
 import {
   Select,
   SelectItem,
@@ -6,20 +5,9 @@ import {
   SelectContent,
   SelectTrigger,
 } from "@/components/ui/select";
+import React, { useMemo } from "react";
+import { OptionTabsProps } from "@/shared/interface/componentInterface";
 
-interface TabItem {
-  value: string;
-  label: string;
-  icon?: React.ElementType;
-  role?: string[];
-}
-
-interface OptionTabsProps {
-  selectedTab: string;
-  setSelectedTab: (value: string) => void;
-  profileTabs: TabItem[];
-  authUser: { role?: string };
-}
 const OptionTabs: React.FC<OptionTabsProps> = ({
   selectedTab,
   setSelectedTab,

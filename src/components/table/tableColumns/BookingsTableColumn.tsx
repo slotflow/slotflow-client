@@ -1,6 +1,7 @@
-import { checkJoin } from "@/shared/helper/checkJoin";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
+import { checkJoin } from "@/shared/helper/checkJoin";
 import { formateDate } from "@/shared/helper/formatter";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
 import { AppointmentStatus, Role } from "@/shared/interface/enums";

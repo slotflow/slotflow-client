@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { DataTable } from "../table/data-table";
 import { useQuery } from "@tanstack/react-query";
-import DataFetchingError from "./DataFetchingError";
 import TableShimmer from "../shimmers/TableShimmer";
+import DataFetchingError from "../error/DataFetchingError";
 import { OnChangeFn, PaginationState } from "@tanstack/react-table";
 import { CommonTableComponentProps, FetchFunctionBaseQueryParams } from "@/shared/interface/commonInterface";
 

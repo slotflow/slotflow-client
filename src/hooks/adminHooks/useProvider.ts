@@ -2,19 +2,12 @@ import { useDispatch } from "react-redux";
 import { appConfig } from "@/shared/config/env";
 import { AppDispatch } from "@/shared/redux/appStore";
 import { useQueryClient } from "@tanstack/react-query";
-import { ApiBaseResponse } from "@/shared/interface/commonInterface";
 import { User } from "@/shared/interface/entityInterface/userInterface";
 import { setProviderRejectModal } from "@/shared/redux/slices/adminSlice";
+import { UseAdminProviderReturn } from "@/shared/interface/hooksInterface";
 import { AdminRejectProviderModalState } from "@/shared/interface/commonInterface";
 import { adminApproveProvider, adminChangeProviderBlockStatus, adminChangeProviderTrustTag } from "@/shared/apis/providerProfile";
 import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest } from "@/shared/interface/api/providerProfile";
-
-interface UseAdminProviderReturn {
-  approveProviderHandler: (providerId: User["_id"]) => Promise<ApiBaseResponse>;
-  changeProviderBlockStatusHandler: (data: AdminChangeProviderBlockStatusRequest) => Promise<ApiBaseResponse>;
-  changeProviderSlotflowTrustTag: (data: AdminChangeProviderTrustTagRequest) => Promise<ApiBaseResponse>;
-  handleProviderRejectModal: (data: AdminRejectProviderModalState) => void;
-}
 
 export const useAdminProvider = (): UseAdminProviderReturn => {
 

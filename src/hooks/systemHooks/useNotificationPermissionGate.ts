@@ -8,13 +8,10 @@ import { registerDevice } from "@/shared/apis/notification";
 import { userSetPushNotification } from "@/shared/apis/user";
 import { PermissionStatus, Platform } from "@/shared/interface/enums";
 import { updateNotificationPreference } from "@/shared/redux/slices/authSlice";
+import { useNotificationPermissionGateReturn } from "@/shared/interface/hooksInterface";
 import { requestNotificationPermission } from "@/shared/helper/requestNotificationPermission";
 
-interface useNotificationPermissionGateInterface {
-  askPermission: () => Promise<void>
-}
-
-export const useNotificationPermissionGate = (): useNotificationPermissionGateInterface => {
+export const useNotificationPermissionGate = (): useNotificationPermissionGateReturn => {
   const dispatch = useDispatch();
   const authUser = useSelector((state: RootState) => state.auth.authUser);
 

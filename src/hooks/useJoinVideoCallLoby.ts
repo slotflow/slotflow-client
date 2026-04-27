@@ -3,31 +3,19 @@ import { appConfig } from "@/shared/config/env";
 import { joinOrLeft } from "@/shared/apis/booking";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { MediaTrackKind, Role } from "@/shared/interface/enums";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { toggleMediaTrack } from "@/shared/helper/toggleMediaTrack";
 import { connectVideoSocket } from "@/shared/socket/videoSocketThunk";
 import { JoinRoomCallbackRequest } from "@/shared/interface/api/booking";
+import { useVideoCallLobbyParams, useVideoCallLobbyReturn } from "@/shared/interface/hooksInterface";
 import { setCamera, setMic, startVideoCallTimer, updateVideoCallTimer } from "@/shared/redux/slices/videoSlice";
-
-interface useVideoCallLobbyInterface {
-  roomId: string;
-  isCameraOn: boolean;
-  isMicOn: boolean;
-}
-
-interface useVideoCallLobbyReturnInterface {
-  videoCallJoinHandler: () => Promise<{ success: boolean; message: string }>;
-  videoRef: React.RefObject<HTMLVideoElement | null>;
-  toggleCamera: () => void;
-  toggleMic: () => void;
-}
 
 export const useVideoCallLobby = ({
   roomId,
   isCameraOn,
   isMicOn,
-}: useVideoCallLobbyInterface): useVideoCallLobbyReturnInterface => {
+}: useVideoCallLobbyParams): useVideoCallLobbyReturn => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
@@ -54,9 +42,8 @@ export const useVideoCallLobby = ({
 
     try {
       const res = await joinOrLeft(data);
-
       if (res.success) {
-        if (!res.data.duration) {
+        if (!res.data) {
           return { success: false, message: "Something went wrong" };
         } else {
           const totalDurationInSec = res.data.duration * 60;

@@ -1,9 +1,6 @@
 import React from 'react';
 import { shimmerMessages } from '@/shared/utils/constants';
-
-interface NoChatSelectedSShimmerProps {
-    className: string;
-}
+import { NoChatSelectedSShimmerProps } from '@/shared/interface/shimmerInterface';
 
 const NoChatSelectedSShimmer: React.FC<NoChatSelectedSShimmerProps> = ({
     className

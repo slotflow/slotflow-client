@@ -2,19 +2,12 @@ import { useDispatch } from "react-redux";
 import { appConfig } from "@/shared/config/env";
 import { AppDispatch } from "@/shared/redux/appStore";
 import { useQueryClient } from "@tanstack/react-query";
-import { ApiBaseResponse } from "@/shared/interface/commonInterface";
 import { toggleReviewCreateForm } from "@/shared/redux/slices/userSlice";
-import { Booking } from "@/shared/interface/entityInterface/bookingInterface";
 import { cancelBooking, changeAppointmentStatus } from "@/shared/apis/booking";
+import { UseBookingCustomHookReturn } from "@/shared/interface/hooksInterface";
 import { changeAppointmentStatusRequest } from "@/shared/interface/api/booking";
 
-interface UseBookingCustomHookReturnType {
-    handleReviewAddFormToggle: (e: React.MouseEvent<HTMLDivElement>, bookingId: string, providerId: string) => void;
-    changeAppointmentStatusHandler: (data: changeAppointmentStatusRequest) => Promise<ApiBaseResponse>;
-    cancelBookingHandler: (bookingId: Booking["_id"]) => Promise<ApiBaseResponse>;
-}
-
-export const useBooking = (): UseBookingCustomHookReturnType => {
+export const useBooking = (): UseBookingCustomHookReturn => {
 
     const queryClient = useQueryClient();
     const dispatch = useDispatch<AppDispatch>();

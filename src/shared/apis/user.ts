@@ -46,7 +46,7 @@ export const userUpdateInfo = createAsyncThunk<ApiBaseResponse<UserUpdateUserInf
 )
 
 // user set push notification
-export const userSetPushNotification = async (data: boolean): Promise<ApiBaseResponse<void>> => {
+export const userSetPushNotification = async (data: boolean): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.patch('/users/me/notification-settings', { allowPushNotification: data });
     return response.data;
 }
@@ -62,7 +62,7 @@ export const fetchUsers: ApiFetchFunction<
 }
 
 // admin changing user block status
-export const changeUserBlockStatus = async (data: AdminChangeUserStatusRequest): Promise<ApiBaseResponse<void>> => {
+export const changeUserBlockStatus = async (data: AdminChangeUserStatusRequest): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.patch(`/users/${data.userId}/block`, { blockStatus: data.isBlocked });
     return response.data;
 }

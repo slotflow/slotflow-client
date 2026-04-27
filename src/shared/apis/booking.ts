@@ -28,7 +28,7 @@ export const fetchBookingDetails = async (bookingId: Booking["_id"]): Promise<Ap
 }
 
 // validate joinRoom
-export const validateRoomId = async (data: ValidateRoomId): Promise<ApiBaseResponse<void>> => {
+export const validateRoomId = async (data: ValidateRoomId): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.get(`/bookings/${data.appointmentId}/access?roomId=${data.roomId}`);
     return response.data;
 }
@@ -40,7 +40,7 @@ export const checkBookingConfirmed = async (): Promise<ApiBaseResponse<boolean>>
 }
 
 // cancel booking
-export const cancelBooking = async (bookingId: Booking["_id"]): Promise<ApiBaseResponse<void>> => {
+export const cancelBooking = async (bookingId: Booking["_id"]): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.patch(`/bookings/${bookingId}`);
     return response.data;
 }
@@ -56,7 +56,7 @@ export const joinOrLeft = async (data: JoinRoomCallbackRequest): Promise<ApiBase
 }
 
 // change appointment status
-export const changeAppointmentStatus = async (data: changeAppointmentStatusRequest): Promise<ApiBaseResponse<void>> => {
+export const changeAppointmentStatus = async (data: changeAppointmentStatusRequest): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.patch(`/bookings/${data.appointmentId}/change-status`, data);
     return response.data;
 }

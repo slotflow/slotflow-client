@@ -2,16 +2,13 @@ import { appConfig } from "@/shared/config/env";
 import { useQueryClient } from "@tanstack/react-query";
 import { changeServiceBlockStatus } from "@/shared/apis/service";
 import { ApiBaseResponse } from "@/shared/interface/commonInterface";
+import { UseAdminServiceReturn } from "@/shared/interface/hooksInterface";
 import { ChangeServiceBlockStatusRequest } from "@/shared/interface/api/service";
 
-interface AdminServiceReturn {
-  changeServiceStatus: (data: ChangeServiceBlockStatusRequest) => Promise<ApiBaseResponse>;
-}
-
-export const useAdminService = (): AdminServiceReturn => {
+export const useAdminService = (): UseAdminServiceReturn => {
   const queryClient = useQueryClient();
 
-  const changeServiceStatus = async (data: ChangeServiceBlockStatusRequest) => {
+  const changeServiceStatus = async (data: ChangeServiceBlockStatusRequest): Promise<ApiBaseResponse> => {
     try {
       const res = await changeServiceBlockStatus(data);
       if (res.success) {

@@ -1,10 +1,7 @@
 import React from "react"
+import { useIsMobileReturn } from "@/shared/interface/hooksInterface"
 
-interface useIsMobileReturnInterface {
-  isMobile: boolean;
-}
-
-export const useIsMobile = (): useIsMobileReturnInterface => {
+export const useIsMobile = (): useIsMobileReturn => {
 
   const MOBILE_BREAKPOINT = 768
   const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)

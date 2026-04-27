@@ -23,7 +23,7 @@ export const fetchSubscriptionDetails = async (subscriptionId: Subscription["_id
 }
 
 // subscribe to trial plan
-export const subscribeToTrialPlan = async (): Promise<ApiBaseResponse<void>> => {
+export const subscribeToTrialPlan = async (): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.post('/subscriptions/trial');
     return response.data;
 }

@@ -1,42 +1,12 @@
 import { useCallback } from "react";
 import { ServiceMode } from "@/shared/interface/enums";
 import { addMinutes, format, isBefore, isEqual } from "date-fns";
-import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
-import { Availability } from "@/shared/interface/entityInterface/serviceAvailabilityInterface";
-
-interface UseAddAvailabilityInterface {
-    getValues: UseFormGetValues<{
-        day: string;
-        duration: number;
-        startTime: Date;
-        endTime: Date;
-        modes: string[];
-        selectedTimeSlots: string[];
-        timeSlots: string[];
-    }>,
-    setValue: UseFormSetValue<{
-        selectedTimeSlots: string[];
-        day: string;
-        duration: number;
-        startTime: Date;
-        endTime: Date;
-        modes: string[];
-        timeSlots: string[];
-    }>,
-}
-
-interface UseAddAvailabilityReturnInterface {
-    handleAddAvailability: () => { success: boolean; message: string, data?: Availability };
-    generateTimeSlots: (start: Date, end: Date, intervalMinutes: number) => { success: boolean; message: string };
-    toggleSlot: (slot: string) => void;
-    isModeSelected: (mode: string) => boolean;
-    toggleMode: (mode: ServiceMode) => void;
-}
+import { UseAddAvailabilityParams, UseAddAvailabilityReturn } from "@/shared/interface/hooksInterface";
 
 export const useAddAvailability = ({
     getValues,
     setValue,
-}: UseAddAvailabilityInterface): UseAddAvailabilityReturnInterface => {
+}: UseAddAvailabilityParams): UseAddAvailabilityReturn => {
 
     const handleAddAvailability = useCallback(() => {
 

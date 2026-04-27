@@ -47,13 +47,13 @@ export const providerFetchProofs = async (): Promise<ApiBaseResponse<FetchProvid
 }
 
 // provider deleting own identity proof
-export const providerDeleteIdentityProof = async (): Promise<ApiBaseResponse<void>> => {
+export const providerDeleteIdentityProof = async (): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.delete('/providers/me/identity');
     return response.data;
 }
 
 // provider deleting own service proof
-export const providerDeleteServiceProof = async (): Promise<ApiBaseResponse<void>> => {
+export const providerDeleteServiceProof = async (): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.delete('/providers/me/service');
     return response.data;
 }

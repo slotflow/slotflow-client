@@ -13,3 +13,13 @@ export interface ProviderAvailabilityShimmerProps {
 export interface TableShimmerProps {
     columnsCount?: number;
 }
+
+// Shimmer for dashboard stats
+export interface DashboardStatsShimmerProps {
+    count: number;
+}
+
+// No chat selected shimmer interface
+export interface NoChatSelectedSShimmerProps {
+    className: string;
+}

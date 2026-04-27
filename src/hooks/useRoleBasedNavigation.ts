@@ -6,16 +6,10 @@ import { validateRoomId } from "@/shared/apis/booking";
 import { ValidateRoomId } from "@/shared/interface/api/booking";
 import { Booking } from "@/shared/interface/entityInterface/bookingInterface";
 import { Payment } from "@/shared/interface/entityInterface/paymentInterface";
+import { useRoleBasedNavigationReturn } from "@/shared/interface/hooksInterface";
 import { Subscription } from "@/shared/interface/entityInterface/subscriptionInterface";
 
-interface useRoleBasedNavigationReturnInterface {
-    handleAdminGetProviderDetailPage: (subscriptionId: Subscription["_id"]) => void;
-    handleGetPaymentDetailsPage: (paymentId: Payment["_id"]) => void;
-    JoinCallHandler: (data: ValidateRoomId) => Promise<{ success: boolean; message: string }>;
-    handleNavigateToBookingsDetailPage: (appointmentId: Booking["_id"]) => void;
-}
-
-export const useRoleBasedNavigation = (): useRoleBasedNavigationReturnInterface => {
+export const useRoleBasedNavigation = (): useRoleBasedNavigationReturn => {
 
     const navigate = useNavigate();
     const { authUser } = useSelector((state: RootState) => state.auth);

@@ -8,7 +8,7 @@ export const fetchEngagedSlots = async (data: FetchEngagedSlotsRequest): Promise
     return response.data;
 };
 
-export const createServiceAvailabilities = createAsyncThunk<ApiBaseResponse<void>, CreateServiceAvailabilitiesRequest>("/provider/create-service-availability",
+export const createServiceAvailabilities = createAsyncThunk<ApiBaseResponse, CreateServiceAvailabilitiesRequest>("/provider/create-service-availability",
     async ({ data }: CreateServiceAvailabilitiesRequest) => {
         const response = await axiosInstance.post(`/service-availabilities/`, data);
         return response.data;

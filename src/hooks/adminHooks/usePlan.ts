@@ -1,12 +1,8 @@
 import { appConfig } from "@/shared/config/env";
 import { useQueryClient } from "@tanstack/react-query";
 import { changePlanBlockStatus } from "@/shared/apis/plan";
-import { ApiBaseResponse } from "@/shared/interface/commonInterface";
+import { UseAdminPlanReturn } from "@/shared/interface/hooksInterface";
 import { ChangePlanBlockStatusRequest } from "@/shared/interface/api/plan";
-
-interface UseAdminPlanReturn {
-    changePlanStatus: (data: ChangePlanBlockStatusRequest) => Promise<ApiBaseResponse>;
-}
 
 export const useAdminPlan = (): UseAdminPlanReturn => {
     const queryClient = useQueryClient();

@@ -1,15 +1,9 @@
 import { appConfig } from "@/shared/config/env";
 import { useQueryClient } from "@tanstack/react-query";
-import { ApiBaseResponse } from "@/shared/interface/commonInterface";
+import { useReviewReturn } from "@/shared/interface/hooksInterface";
 import { Review } from "@/shared/interface/entityInterface/reviewInterface";
 import { ToggleReviewBlockStatusRequest } from "@/shared/interface/api/review";
 import { deleteReview, reportReview, toggleReviewBlockStatus } from "@/shared/apis/review";
-
-export interface useReviewReturn {
-    reportReviewHandler: (reviewId: Review["_id"]) => Promise<ApiBaseResponse>;
-    toggleBlockStatusHandler: (data: ToggleReviewBlockStatusRequest) => Promise<ApiBaseResponse>;
-    deleteReviewHandler: (reviewId: Review["_id"]) => Promise<ApiBaseResponse>;
-}
 
 export const useReview = (): useReviewReturn => {
 

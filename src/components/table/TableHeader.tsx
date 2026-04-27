@@ -1,11 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-
-interface TableHeaderProps {
-  title: string;
-  actionLabel?: string;
-  onActionClick?: () => void;
-}
+import { TableHeaderProps } from "@/shared/interface/componentInterface";
 
 const TableHeader: React.FC<TableHeaderProps> = ({
   title,

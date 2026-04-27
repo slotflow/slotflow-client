@@ -4,14 +4,14 @@ import { ApiBaseResponse } from "../interface/commonInterface";
 import { FetchProviderServiceResponse, ProviderCreateServiceDetailsRequest, ProviderUpdateServiceDetailsRequest } from "../interface/api/providerService";
 import { UserFetchServiceProvidersRequest, UserFetchServiceProvidersResponse } from "../interface/api/user";
 
-export const providerCreateServiceDetails = createAsyncThunk<ApiBaseResponse<void>, ProviderCreateServiceDetailsRequest>("/provider/addServiceDetails",
+export const providerCreateServiceDetails = createAsyncThunk<ApiBaseResponse, ProviderCreateServiceDetailsRequest>("/provider/addServiceDetails",
     async (data: ProviderCreateServiceDetailsRequest) => {
         const response = await axiosInstance.post(`/provider-services`, data);
         return response.data;
     }
 )
 
-export const providerUpdateServiceDetails = async (data: ProviderUpdateServiceDetailsRequest): Promise<ApiBaseResponse<void>> => {
+export const providerUpdateServiceDetails = async (data: ProviderUpdateServiceDetailsRequest): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.patch(`/provider-services/${data._id}`, data);
     return response.data;
 }

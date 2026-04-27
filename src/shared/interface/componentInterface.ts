@@ -17,7 +17,7 @@ import { FetchProviderServiceResponse } from "./api/providerService";
 import { Dispatch, ReactElement, ReactNode, SetStateAction } from "react";
 import { FetchServiceAvailabilityResponse } from "./api/serviceAvailability";
 import { FetchPaymentsQueryParams, FetchPaymentsResponse } from "./api/payment";
-import { ApiBaseResponse, ApiPaginatedResponse, BaseChartData, CardProps, ChatComponentProps, FetchFunctionBaseQueryParams, OptionType, ProviderSubscriptionDataProps, Route, statsMapIntrface, TimeRange, UserBookinAppointmentDataProps } from "./commonInterface";
+import { ApiBaseResponse, ApiPaginatedResponse, BaseChartData, CardProps, ChatComponentProps, FetchFunctionBaseQueryParams, OptionType, ProviderSubscriptionDataProps, Route, statsMapIntrface, TabItem, TimeRange, UserBookinAppointmentDataProps } from "./commonInterface";
 import { DateRange } from "react-day-picker";
 import * as RPNInput from "react-phone-number-input";
 import { AppDispatch } from "../redux/appStore";
@@ -27,6 +27,7 @@ import { AdminFetchProviderProfileDetailsResponse, ProviderFetchMyProfileDetails
 import { FetchReviewsResponse, ToggleReviewBlockStatusRequest } from "./api/review";
 import { ProviderServiceAvailabilityFormType } from "../zod/providerZod";
 import { Availability } from "./entityInterface/serviceAvailabilityInterface";
+import { Column, ColumnDef, OnChangeFn, PaginationState } from "@tanstack/react-table";
 
 // profile head compoenent props interface
 export interface ProfileHeaderProps {
@@ -612,4 +613,36 @@ export interface TimeRangeSetterProps {
     control: Control<ProviderServiceAvailabilityFormType>;
     isSubmitting: boolean;
     onGenerateSlots: () => void;
+}
+
+// Data table component props interface
+export interface DataTableProps<TData, TValue> {
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
+  filterAccessorKeys?: string[];
+  pageCount?: number;
+  onPaginationChange?: OnChangeFn<PaginationState>;
+  pagination?: PaginationState;
+}
+
+// Data table column header props interface
+export interface DataTableColumnHeaderProps<TData, TValue>
+  extends React.HTMLAttributes<HTMLDivElement> {
+  column: Column<TData, TValue>
+  title: string
+}
+
+// Table header component props interface
+export interface TableHeaderProps {
+  title: string;
+  actionLabel?: string;
+  onActionClick?: () => void;
+}
+
+// Option tabs component props interface
+export interface OptionTabsProps {
+  selectedTab: string;
+  setSelectedTab: (value: string) => void;
+  profileTabs: TabItem[];
+  authUser: { role?: string };
 }

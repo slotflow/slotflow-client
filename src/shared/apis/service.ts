@@ -20,12 +20,12 @@ export const fetchServices: ApiFetchFunction<
     return parseResponse<FetchServicesResponse>(response.data.data);
 }
 
-export const createService = async (data: CreateServiceRequest): Promise<ApiBaseResponse<void>> => {
+export const createService = async (data: CreateServiceRequest): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.post('/services', data);
     return response.data;
 }
 
-export const changeServiceBlockStatus = async (data: ChangeServiceBlockStatusRequest): Promise<ApiBaseResponse<void>> => {
+export const changeServiceBlockStatus = async (data: ChangeServiceBlockStatusRequest): Promise<ApiBaseResponse> => {
     const response = await axiosInstance.patch(`/services/${data.serviceId}`, { blockStatus: data.isBlocked });
     return response.data;
 }

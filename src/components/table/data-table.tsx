@@ -1,5 +1,4 @@
 import {
-  ColumnDef,
   ColumnFiltersState,
   SortingState,
   VisibilityState,
@@ -11,8 +10,7 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table"
-
+} from "@tanstack/react-table";
 import {
   Table,
   TableBody,
@@ -20,29 +18,17 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../ui/table"
-
-import { Button } from "../ui/button"
-
-import * as React from "react"
-
-import { Input } from "../ui/input"
-
+} from "../ui/table";
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu"
-
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
-  filterAccessorKeys?: string[];
-  pageCount?: number;
-  onPaginationChange?: OnChangeFn<PaginationState>;
-  pagination?: PaginationState;
-}
+  DropdownMenuCheckboxItem,
+} from "../ui/dropdown-menu";
+import * as React from "react";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { DataTableProps } from "@/shared/interface/componentInterface";
 
 export function DataTable<TData, TValue>({
   columns,

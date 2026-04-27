@@ -3,14 +3,12 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import FormField from "../form/FormField";
 import { Button } from "@/components/ui/button";
+import { createReview } from "@/shared/apis/review";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
+import { ReviewFormValues } from "@/shared/interface/commonInterface";
 import { toggleReviewCreateForm } from "@/shared/redux/slices/userSlice";
-import { Review } from "@/shared/interface/entityInterface/reviewInterface";
 import { useModalAnimation } from "@/hooks/systemHooks/useModalAnimation";
-import { createReview } from "@/shared/apis/review";
-
-type ReviewFormValues = Pick<Review, "reviewText" | "rating">;
 
 const ReviewForm: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
