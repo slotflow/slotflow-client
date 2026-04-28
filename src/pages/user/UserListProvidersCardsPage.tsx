@@ -1,7 +1,7 @@
 import { Loader } from 'lucide-react';
-import React, { useEffect, useRef } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { setProviders } from '@/shared/redux/slices/userSlice';
@@ -10,8 +10,9 @@ import { toggleFilterSideBar } from '@/shared/redux/slices/appSlice';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import UserViewProviderCard from '@/components/user/UserViewProviderCard';
 import { fetchServiceProvidersForUser } from '@/shared/apis/providerService';
+import { UserFetchServiceProvidersResponse } from '@/shared/interface/api/user';
 
-const UserListProvidersCardsPage = () => {
+const UserListProvidersCardsPage: React.FC = () => {
 
   const dispatch = useDispatch<AppDispatch>();
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
@@ -25,11 +26,11 @@ const UserListProvidersCardsPage = () => {
         skip: pageParam,
         limit: 12,
       });
-      return res.data;
+      return res.data as UserFetchServiceProvidersResponse[];
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => {
-      return lastPage.length === 12 ? allPages.length * 12 : undefined;
+      return lastPage?.length === 12 ? allPages.length * 12 : undefined;
     },
   });
 
@@ -60,7 +61,7 @@ const UserListProvidersCardsPage = () => {
 
   useEffect(() => {
     if (data) {
-      const flattenedProviders = data.pages.flat();
+      const flattenedProviders = data?.pages.flat();
       dispatch(setProviders(flattenedProviders));
     };
   }, [selectedCategories, dispatch, data]);

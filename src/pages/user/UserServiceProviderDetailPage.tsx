@@ -1,21 +1,21 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import ReviewsPage from "../common/ReviewsPage";
 import { Role } from "@/shared/interface/enums";
 import { providerTabs } from "@/shared/utils/constants";
 import ProfileHead from "@/components/profile/ProfileHead";
-import DataFetchingError from "@/components/error/DataFetchingError";
+import { fetchAddressByUserId } from "@/shared/apis/address";
 import AddressListing from "@/components/profile/AddressListing";
 import ProfileListing from "@/components/profile/ProfileListing";
+import DataFetchingError from "@/components/error/DataFetchingError";
+import { fetchProviderDetailsForUser } from "@/shared/apis/providerProfile";
 import ProfileHorizontalTabs from "@/components/profile/ProfileHorizontalTabs";
 import ProviderServiceDetails from "@/components/profile/ProviderServiceDetails";
-import ProviderServiceAvailability from "@/components/profile/ProviderServiceAvailability";
-import { fetchProviderDetailsForUser } from "@/shared/apis/providerProfile";
-import { fetchServiceAvailabilityByProviderId } from "@/shared/apis/serviceAvailability";
 import { fetchProviderServiceByProviderId } from "@/shared/apis/providerService";
-import { fetchAddressByUserId } from "@/shared/apis/address";
+import { fetchServiceAvailabilityByProviderId } from "@/shared/apis/serviceAvailability";
+import ProviderServiceAvailability from "@/components/profile/ProviderServiceAvailability";
 
-const UserServiceProviderDetailPage = () => {
+const UserServiceProviderDetailPage: React.FC = () => {
 
     const { providerId } = useParams<string>();
     const [tab, setTab] = useState<number>(0);

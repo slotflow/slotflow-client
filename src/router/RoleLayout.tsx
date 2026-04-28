@@ -1,3 +1,4 @@
+import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import UserLayout from "@/layouts/UserLayout";
@@ -6,7 +7,7 @@ import AdminLayout from "@/layouts/AdminLayout";
 import { RootState } from "@/shared/redux/appStore";
 import ProviderLayout from "@/layouts/ProviderLayout";
 
-export const RoleLayout = () => {
+const RoleLayout: React.FC = () => {
   const { authUser } = useSelector((state: RootState) => state.auth);
 
   switch (authUser?.role) {
@@ -20,3 +21,5 @@ export const RoleLayout = () => {
       return <Navigate to="/" replace />;
   }
 };
+
+export default RoleLayout;

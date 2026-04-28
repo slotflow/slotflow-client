@@ -22,6 +22,7 @@ export interface SigninRequest {
 
 // response interface of user or provider or admin sign in api
 export interface SigninResponse {
+    uid: string;
     username: string;
     phone: string;
     profileImage: string;
@@ -31,24 +32,24 @@ export interface SigninResponse {
     isOnboardingCompleted: boolean;
     isBlocked: boolean;
     isLoggedIn: boolean;
-    isAddressAdded?: boolean,
-    isServiceDetailsAdded?: boolean,
-    isServiceAvailabilityAdded?: boolean,
-    isAdminVerified?: boolean,
+    isAddressAdded: boolean,
+    isServiceDetailsAdded: boolean,
+    isServiceAvailabilityAdded: boolean,
+    isAdminVerified: boolean,
     providerSubscription?: PlanName;
     googleConnected: boolean;
-    uid: string;
-    isProofSubmitted?: boolean;
-    verificationRejectionReason?: string | null,
-    adminVerificationStatus?: AdminVerificationStatus,
-    isAddressVerified?: boolean,
-    isServiceDetailsVerified?: boolean,
-    isAvailabilityVerified?: boolean,
-    isProofsVerified?: boolean,
-    allowPushNotification?: boolean;
+    isProofSubmitted: boolean;
+    verificationRejectionReason?: string,
+    adminVerificationStatus: AdminVerificationStatus,
+    isAddressVerified: boolean,
+    isServiceDetailsVerified: boolean,
+    isAvailabilityVerified: boolean,
+    isProofsVerified: boolean,
+    allowPushNotification: boolean;
     googleId?: string;
     stripeAccountId?: string;
-    stripeConnected?: boolean;
+    stripeConnected: boolean;
+    stripeCustomerId?: string;
 }
 
 //  request type of update password api

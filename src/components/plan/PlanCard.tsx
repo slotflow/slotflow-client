@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { CheckIcon } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { SelectField } from "../form/SelectField";
+import SelectField from "../form/SelectField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { planDurations } from "@/shared/utils/constants";
 import { formatNumberToPrice } from "@/shared/helper/formatter";

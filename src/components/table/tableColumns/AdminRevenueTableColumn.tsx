@@ -1,10 +1,10 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
 import { PaymentFor, PaymentGateway } from "@/shared/interface/enums";
+import { AdminFetchRevenueReportRow } from "@/shared/interface/api/payment";
 import { formateDate, formatNumberToPrice } from "@/shared/helper/formatter";
-import { AdminFetchRevenueReportRow } from "@/utils/interface/api/adminReportApiInterface";
 
-export const AdminRevenueTableColumn = (
+const AdminRevenueTableColumn = (
 
 ): ColumnDef<AdminFetchRevenueReportRow>[] => [
     {
@@ -81,3 +81,5 @@ export const AdminRevenueTableColumn = (
       }
     },
   ]
+
+  export default AdminRevenueTableColumn;

@@ -1,6 +1,6 @@
 import React from "react"
 
-const ServiceSelectShimmer = () => {
+const ServiceSelectShimmer: React.FC = () => {
 
     return (
         <React.Fragment>

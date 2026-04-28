@@ -29,7 +29,7 @@ const Circle = forwardRef<
 
 Circle.displayName = "Circle"
 
-const AnimatedBeamIntegrations = () => {
+const AnimatedBeamIntegrations: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const div1Ref = useRef<HTMLDivElement>(null);
     const div2Ref = useRef<HTMLDivElement>(null);

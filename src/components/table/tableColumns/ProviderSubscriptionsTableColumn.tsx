@@ -9,7 +9,7 @@ import { FetchProviderSubscriptionsResponse } from "@/shared/interface/api/subsc
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 
 // For admin side view and provider side view of provider subscriptions
-export const ProvidersSubscriptionsTableColumns = (
+const ProvidersSubscriptionsTableColumns = (
     handleAdminGetProviderDetailPage: (subscriptionId: Subscription["_id"]) => void,
 ): ColumnDef<FetchProviderSubscriptionsResponse>[] => [
         {
@@ -85,3 +85,5 @@ export const ProvidersSubscriptionsTableColumns = (
             },
         }
     ]
+
+    export default ProvidersSubscriptionsTableColumns;

@@ -6,7 +6,7 @@ import { useBooking } from "@/hooks/useUserBooking";
 import { fetchBookings } from "@/shared/apis/booking";
 import CommonTable from "@/components/table/CommonTable";
 import { useRoleBasedNavigation } from "@/hooks/useRoleBasedNavigation";
-import { BookingsTableColumn } from "@/components/table/tableColumns/BookingsTableColumn";
+import BookingsTableColumn from "@/components/table/tableColumns/BookingsTableColumn";
 import { changeAppointmentStatusRequest, FetchBookingsResponse, ValidateRoomId } from "@/shared/interface/api/booking";
 
 const ListBookingsPage: React.FC = () => {

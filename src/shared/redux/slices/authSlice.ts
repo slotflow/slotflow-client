@@ -1,22 +1,21 @@
 import { signin, signout } from "@/shared/apis/auth";
+import { createAddress } from "@/shared/apis/address";
 import { SigninResponse } from "@/shared/interface/api/auth";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AdminVerificationStatus } from "@/shared/interface/enums";
+import { ApiBaseResponse } from "@/shared/interface/commonInterface";
 import { AuthState, AuthUser } from "@/shared/interface/sliceInterface";
-import { UserUpdateProfileImageResponse, UserUpdateUserInfoResponse } from "@/shared/interface/api/user";
 import { userUpdateInfo, userUpdateProfileImage } from "@/shared/apis/user";
 import { SubscriptionActivated } from "@/shared/interface/api/subscription";
 import { providerCreateServiceDetails } from "@/shared/apis/providerService";
+import { providerSubmitDetailsForReview } from "@/shared/apis/providerProfile";
 import { createServiceAvailabilities } from "@/shared/apis/serviceAvailability";
 import { ProviderSubmitDetailsResponse } from "@/shared/interface/api/providerProfile";
-import { providerSubmitDetailsForReview } from "@/shared/apis/providerProfile";
-import { createAddress } from "@/shared/apis/address";
-import { ApiBaseResponse } from "@/shared/interface/commonInterface";
+import { UserUpdateProfileImageResponse, UserUpdateUserInfoResponse } from "@/shared/interface/api/user";
 
 const initialState: AuthState = {
     authUser: null,
     profileImageUpdating: false,
-    dataUpdating: false,
     eventSocketId: null,
     eventSocketIsConnected: false,
     subscriptionUpdating: false,
@@ -90,7 +89,9 @@ const authSlice = createSlice({
         builder
             .addCase(signin.pending, () => { })
             .addCase(signin.fulfilled, (state, action: PayloadAction<ApiBaseResponse<SigninResponse>>) => {
-                state.authUser = action.payload.data;
+                if(action.payload.data) {
+                    state.authUser = action.payload.data;
+                }
             })
             .addCase(signin.rejected, () => { });
 
@@ -99,7 +100,6 @@ const authSlice = createSlice({
             .addCase(signout.pending, () => { })
             .addCase(signout.fulfilled, (state) => {
                 state.authUser = null;
-                state.dataUpdating = false;
                 state.profileImageUpdating = false;
             })
             .addCase(signout.rejected, () => { });
@@ -120,72 +120,53 @@ const authSlice = createSlice({
 
         builder
             .addCase(createAddress.pending, (state) => {
-                state.dataUpdating = true;
                 if (state.authUser) {
                     state.authUser.isAddressAdded = false;
                 }
             })
             .addCase(createAddress.fulfilled, (state, action: PayloadAction<ApiBaseResponse<any>>) => {
-                state.dataUpdating = false;
                 if (state.authUser) {
                     state.authUser.isAddressAdded = action.payload.success;
                 }
             })
             .addCase(createAddress.rejected, (state) => {
-                state.dataUpdating = false;
                 if (state.authUser) {
                     state.authUser.isAddressAdded = false;
                 }
             });
 
         builder
-            .addCase(providerCreateServiceDetails.pending, (state) => {
-                state.dataUpdating = true;
-            })
+            .addCase(providerCreateServiceDetails.pending, () => {})
             .addCase(providerCreateServiceDetails.fulfilled, (state, action) => {
-                state.dataUpdating = false;
                 if (state.authUser) {
                     state.authUser.isServiceDetailsAdded = action.payload.success;
                 }
             })
-            .addCase(providerCreateServiceDetails.rejected, (state) => {
-                state.dataUpdating = false;
-            });
+            .addCase(providerCreateServiceDetails.rejected, () => {});
 
         builder
-            .addCase(createServiceAvailabilities.pending, (state) => {
-                state.dataUpdating = true;
-            })
+            .addCase(createServiceAvailabilities.pending, () => {})
             .addCase(createServiceAvailabilities.fulfilled, (state, action) => {
-                state.dataUpdating = false;
                 if (state.authUser) {
                     state.authUser.isServiceAvailabilityAdded = action.payload.success;
                 }
             })
-            .addCase(createServiceAvailabilities.rejected, (state) => {
-                state.dataUpdating = false;
-            });
+            .addCase(createServiceAvailabilities.rejected, () => {});
 
         builder
-            .addCase(userUpdateInfo.pending, (state) => {
-                state.dataUpdating = true;
-            })
+            .addCase(userUpdateInfo.pending, () => {})
             .addCase(userUpdateInfo.fulfilled, (state, action: PayloadAction<ApiBaseResponse<UserUpdateUserInfoResponse>>) => {
-                state.dataUpdating = false;
-                if (state.authUser) {
+                if (state.authUser && action.payload.data) {
                     state.authUser.username = action.payload.data.username;
                     state.authUser.phone = action.payload.data.phone as string;
                 }
             })
-            .addCase(userUpdateInfo.rejected, (state) => {
-                state.dataUpdating = false;
-            });
+            .addCase(userUpdateInfo.rejected, () => {});
 
         builder
             .addCase(providerSubmitDetailsForReview.pending, () => { })
             .addCase(providerSubmitDetailsForReview.fulfilled, (state, action: PayloadAction<ApiBaseResponse<ProviderSubmitDetailsResponse>>) => {
-                state.dataUpdating = false;
-                if (state.authUser) {
+                if (state.authUser && action.payload.data) {
                     state.authUser.adminVerificationStatus = action.payload.data.adminVerificationStatus;
                 }
             })

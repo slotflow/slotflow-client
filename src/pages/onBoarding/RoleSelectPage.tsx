@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { toast } from 'react-toastify';
+import React, { useState } from 'react';
 import { setRole } from '@/shared/apis/user';
 import { useNavigate } from 'react-router-dom';
 import service from '@/assets/svgs/service.svg';
@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAuthUser } from '@/shared/redux/slices/authSlice';
 import RoleSelectCard from '@/components/cards/RoleSelectCard';
 
-const RoleSelectPage = () => {
+const RoleSelectPage: React.FC = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();

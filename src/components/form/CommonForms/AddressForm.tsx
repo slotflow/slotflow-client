@@ -28,7 +28,6 @@ const AddressForm: React.FC<AddressFormProps> = ({
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const { dataUpdating } = useSelector((store: RootState) => store.auth);
     const { authUser } = useSelector((state: RootState) => state.auth);
 
     const {
@@ -38,7 +37,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
         reset,
         setValue,
         watch,
-        formState: { errors, isSubmitting, isValid }
+        formState: { errors, isSubmitting, isValid, isLoading }
     } = useForm<CreateAddressFormType>({
         resolver: zodResolver(createAddressZodSchema),
         mode: "onChange",
@@ -272,9 +271,9 @@ const AddressForm: React.FC<AddressFormProps> = ({
                     type="submit"
                     variant="default"
                     className="cursor-pointer w-10/12 md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
-                    disabled={!isValid || isSubmitting || dataUpdating}
+                    disabled={!isValid || isSubmitting || isLoading}
                 >
-                    {dataUpdating ? "Loading" : isUpdating ? "Update" : "Submit"} <ChevronRight />
+                    {(isSubmitting || isLoading) ? "Loading" : isUpdating ? "Update" : "Submit"} <ChevronRight />
                 </Button>
             </div>
         </form>

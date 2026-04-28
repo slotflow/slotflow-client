@@ -10,7 +10,7 @@ import { Check, MoreHorizontal, NotebookPen, ReceiptText, VideoIcon, X } from "l
 import { changeAppointmentStatusRequest, FetchBookingsResponse, ValidateRoomId } from "@/shared/interface/api/booking";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
-export const BookingsTableColumn = (
+const BookingsTableColumn = (
     handleJoinCall: (data: ValidateRoomId) => void,
     handleNavigateToBookingsDetailPage: (appointmentId: Booking["_id"]) => void,
     role: Role,
@@ -137,3 +137,5 @@ export const BookingsTableColumn = (
             },
         }
     ]
+
+    export default BookingsTableColumn;

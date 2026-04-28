@@ -1,6 +1,6 @@
 import world from '../../assets/svgs/world2.svg';
 
-const SectionOne = () => {
+const SectionOne: React.FC = () => {
 
     return (
         <section

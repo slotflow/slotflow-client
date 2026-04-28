@@ -1,62 +1,57 @@
-import { Provider } from "./entityInterface/providerProfileInterface";
-import { AdminVerificationStatus, PlanName, Role, ServiceCategory, SubscriptionStatus } from "./enums";
-import { Availability } from "./entityInterface/serviceAvailabilityInterface";
-import { UserViewProviderCardProps } from "./componentInterface";
+import { User } from "./entityInterface/userInterface";
 import { ProviderCardsFilters } from "./commonInterface";
 import { Message } from "./entityInterface/message.interface";
-import { User } from "./entityInterface/userInterface";
+import { UserViewProviderCardProps } from "./componentInterface";
+import { PlanName, ServiceCategory, SubscriptionStatus } from "./enums";
+import { Availability } from "./entityInterface/serviceAvailabilityInterface";
+import { ProviderProfile } from "./entityInterface/providerProfileInterface";
 
 // Auth slice state
-export interface AuthUser {
+export type AuthUser = Pick<User, 
+"username" | 
+"profileImage" | 
+"phone" | 
+"email" | 
+"role" | 
+"hasSelectedRole" | 
+"isOnboardingCompleted" | 
+"isBlocked" | 
+"googleConnected" | 
+"googleId" | 
+"stripeAccountId" | 
+"stripeConnected" | 
+"stripeCustomerId" | 
+"allowPushNotification"> & 
+Pick<ProviderProfile, 
+"isAddressVerified" | 
+"isAdminVerified" | 
+"isAvailabilityVerified" | 
+"isProofsVerified" | 
+"isServiceDetailsVerified" | 
+"verificationRejectionReason" | 
+"adminVerificationStatus"> & {
   uid: string;
-  username: string;
-  profileImage: string;
-  phone: string | null;
-  email: string;
-  role: Role;
-  hasSelectedRole: boolean;
-  isOnboardingCompleted: boolean;
-  isBlocked?: boolean;
   isLoggedIn?: boolean;
   isAddressAdded?: boolean;
   isServiceDetailsAdded?: boolean;
   isServiceAvailabilityAdded?: boolean;
   isProofSubmitted?: boolean;
-  isAdminVerified?: boolean;
-  verificationRejectionReason?: string | null;
-
-  adminVerificationStatus?: AdminVerificationStatus,
-  isAddressVerified?: boolean,
-  isServiceDetailsVerified?: boolean,
-  isAvailabilityVerified?: boolean,
-  isProofsVerified?: boolean,
-
+  isAdminVerified?: boolean; 
   providerSubscription?: PlanName;
   subscriptionStartDate?: Date;
   subscriptionEndDate?: Date;
   subscriptionStatus?: SubscriptionStatus;
-
   serviceDescription?: string;
-
-  googleId?: string;
-  googleConnected?: boolean;
-
-  stripeAccountId?: string;
-  stripeConnected?: boolean;
-
-  allowPushNotification?: boolean | null;
   token?: string;
 }
 
 export interface AuthState {
   authUser: AuthUser | null;
   profileImageUpdating: boolean;
-  dataUpdating: boolean; // used for the data update loading state in provider add address, provider add service availability, provider add service details, profile info updating
   eventSocketId: string | null,
   eventSocketIsConnected: boolean,
   subscriptionUpdating: boolean;
 }
-
 
 // app slice
 export interface appState {
@@ -69,7 +64,6 @@ export interface appState {
   isNotificationsOpen: boolean;
 }
 
-
 // admin slice
 export interface AdminState {
   rejectProviderId: string | null;
@@ -78,10 +72,8 @@ export interface AdminState {
 
 export interface SetProviderRejectModalType {
   modalState: boolean,
-  providerId: Provider["_id"] | null,
+  providerId: User["_id"] | null,
 }
-
-
 
 // provider slice
 export interface ProviderState {
@@ -97,8 +89,6 @@ export interface ProviderState {
   serviceProofLoading: boolean;
 }
 
-
-
 // user slice
 export interface UserStateVariables {
   isReviewCreateFormOpen: boolean;
@@ -109,8 +99,6 @@ export interface UserStateVariables {
   providerCardsfFlter: ProviderCardsFilters;
 }
 
-
-
 // chat slice
 type LastMessages = Record<
   string,
@@ -120,9 +108,10 @@ type LastMessages = Record<
   }
 >;
 
+// selected user for chat
 export type SelectedUser = Pick<User, "_id" | "username" | "profileImage">;
 
-
+// chat slice initial state
 export interface chatSliceInitalState {
   onlineUsers: string[] | null;
   lastMessages: LastMessages,

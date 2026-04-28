@@ -1,5 +1,5 @@
 import React from "react";
-import { SelectField } from "../../form/SelectField";
+import SelectField from "../../form/SelectField";
 import { ServiceMode } from "@/shared/interface/enums";
 import { ProviderServiceAvailabilityFormType } from "@/shared/zod/providerZod";
 import { daysOfWeekOptions, serviceDurationsOptions } from "@/shared/utils/constants";

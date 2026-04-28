@@ -4,8 +4,8 @@ import {
     Moon,
 } from 'lucide-react';
 import React from 'react';
+import SingleTab from './SingleTab';
 import { toast } from 'react-toastify';
-import { SingleTab } from './SingleTab';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { redirectPaths } from '@/shared/utils/constants';

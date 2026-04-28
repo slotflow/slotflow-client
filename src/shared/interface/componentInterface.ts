@@ -28,6 +28,7 @@ import { FetchReviewsResponse, ToggleReviewBlockStatusRequest } from "./api/revi
 import { ProviderServiceAvailabilityFormType } from "../zod/providerZod";
 import { Availability } from "./entityInterface/serviceAvailabilityInterface";
 import { Column, ColumnDef, OnChangeFn, PaginationState } from "@tanstack/react-table";
+import { RouteNames } from "../utils/constants";
 
 // profile head compoenent props interface
 export interface ProfileHeaderProps {
@@ -645,4 +646,29 @@ export interface OptionTabsProps {
   setSelectedTab: (value: string) => void;
   profileTabs: TabItem[];
   authUser: { role?: string };
+}
+
+//
+export interface ReviewsPageProps {
+  isPage?: boolean;
+  providerId?: string;
+  userId?: string;
+}
+
+//
+export interface PlanGuardProps {
+  routeName: RouteNames;
+  children: React.ReactNode;
+}
+
+//
+export interface ProtectedRouteProps {
+  allowedRoles: (Role)[];
+  children: React.ReactNode;
+}
+
+//
+export interface OnbooardingGuardProps { 
+  children: 
+  React.ReactNode 
 }

@@ -4,20 +4,20 @@ export interface User {
     _id: string
     username: string;
     email: string;
-    password: string | null;
+    password?: string;
     role: Role;
     hasSelectedRole: boolean;
     isOnboardingCompleted: boolean;
     isBlocked: boolean;
-    phone: string | null;
-    profileImage: string | null;
-    addressId: string | null;
+    phone?: string;
+    profileImage?: string;
+    addressId?: string;
     googleConnected: boolean;
-    googleId: string | null;
+    googleId?: string;
     stripeConnected: boolean;
-    stripeAccountId: string | null;
-    stripeCustomerId: string | null;
-    allowPushNotification: boolean | null;
+    stripeAccountId?: string;
+    stripeCustomerId?: string;
+    allowPushNotification: boolean;
     createdAt: Date,
     updatedAt: Date
 }

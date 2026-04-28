@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
-const ProviderPlanCardShimmer = () => {
+const ProviderPlanCardShimmer: React.FC = () => {
     return (
         <Card className="p-4 border rounded-2xl shadow-sm flex flex-col h-full">
             <CardHeader>

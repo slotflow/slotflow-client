@@ -8,7 +8,7 @@ import { AdminRejectProviderModalState } from "@/shared/interface/commonInterfac
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminFetchAllProvidersResponse } from "@/shared/interface/api/providerProfile";
 
-export const AdminProvidersTableColumns = (
+const AdminProvidersTableColumns = (
     handleAdminApproveProvider: (providerId: User["_id"]) => void,
     handleProviderRejectModal: (data: AdminRejectProviderModalState) => void,
     hanldeAdminChangeProviderBlockStatus: (data: AdminChangeProviderBlockStatusRequest) => void,
@@ -126,3 +126,5 @@ export const AdminProvidersTableColumns = (
             }
         },
     ]
+
+    export default AdminProvidersTableColumns;

@@ -6,8 +6,8 @@ import CommonTable from "@/components/table/CommonTable";
 import { slideIn } from "@/shared/helper/gsapAnimationSlide";
 import { useAdminService } from "@/hooks/adminHooks/useService";
 import CreateServiceForm from "@/components/form/AdminForms/CreateServiceForm";
+import AdminAppServicesTableColumns from "@/components/table/tableColumns/AdminAppServicesTableColumn";
 import { ChangeServiceBlockStatusRequest, FetchServicesResponse } from "@/shared/interface/api/service";
-import { AdminAppServicesTableColumns } from "@/components/table/tableColumns/AdminAppServicesTableColumn";
 
 const AdminServicesPage = () => {
 

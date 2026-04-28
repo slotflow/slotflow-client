@@ -27,7 +27,7 @@ const ProviderSubscriptionConfirmPage: React.FC = () => {
   const fetchSubscription = async () => {
     try {
       const res = await fetchMySubscription();
-      if (res.success) {
+      if (res.success && res.data) {
         dispatch(setSubscription(res.data));
         toast.success("Subscription Activated!");
       }

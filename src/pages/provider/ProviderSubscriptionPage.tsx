@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { RootState } from "@/shared/redux/appStore";
@@ -7,7 +7,7 @@ import PaymentSelection from "@/components/payment/PaymentSelection";
 import ProviderFreeSubscription from "@/components/provider/ProviderFreeSubscription";
 import ProviderSubscriptionHistory from "@/components/provider/ProviderSubscriptionHistory";
 
-const ProviderSubscriptionPage = () => {
+const ProviderSubscriptionPage: React.FC = () => {
 
     const [showPlans, setShowPlans] = useState<boolean>(false);
     const { planId, planDuration, isTrialPlan, paymentSelectionOpen } = useSelector((store: RootState) => store.provider);

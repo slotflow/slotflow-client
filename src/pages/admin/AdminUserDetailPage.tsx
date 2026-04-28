@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { userTabs } from '@/shared/utils/constants';
 import ReviewsPage from '../common/ReviewsPage';
+import { userTabs } from '@/shared/utils/constants';
+import ProfileHead from '@/components/profile/ProfileHead';
 import { fetchAddressByUserId } from '@/shared/apis/address';
 import { fetchUserProfileDetails } from '@/shared/apis/user';
-import ProfileHead from '@/components/profile/ProfileHead';
-import DataFetchingError from '@/components/error/DataFetchingError';
 import ProfileListing from '@/components/profile/ProfileListing';
 import AddressListing from '@/components/profile/AddressListing';
+import DataFetchingError from '@/components/error/DataFetchingError';
 import ProfileHorizontalTabs from '@/components/profile/ProfileHorizontalTabs';
 
 const AdminUserDetailPage: React.FC = () => {

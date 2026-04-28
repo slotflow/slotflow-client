@@ -6,7 +6,7 @@ import CommonTable from '@/components/table/CommonTable';
 import { useAdminPlan } from '@/hooks/adminHooks/usePlan';
 import { slideIn } from '@/shared/helper/gsapAnimationSlide';
 import CreatePlanForm from '@/components/form/AdminForms/CreatePlanForm';
-import { AdminPlansTableColumns } from '@/components/table/tableColumns/AdminPlansTableColumn';
+import AdminPlansTableColumns from '@/components/table/tableColumns/AdminPlansTableColumn';
 import { AdminFetchAllPlansResponse, ChangePlanBlockStatusRequest } from '@/shared/interface/api/plan';
 
 const AdminPlansPage = () => {

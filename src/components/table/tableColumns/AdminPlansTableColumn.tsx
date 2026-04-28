@@ -6,7 +6,7 @@ import { DataTableColumnHeader } from "../DataTableColumnHeader";
 import { ChangePlanBlockStatusRequest, AdminFetchAllPlansResponse } from "@/shared/interface/api/plan";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 
-export const AdminPlansTableColumns = (
+const AdminPlansTableColumns = (
   handleAdminChangePlanStatus: (data: ChangePlanBlockStatusRequest) => void,
 ): ColumnDef<AdminFetchAllPlansResponse>[] => [
     {
@@ -86,4 +86,4 @@ export const AdminPlansTableColumns = (
     }
   ]
 
-
+export default AdminPlansTableColumns;

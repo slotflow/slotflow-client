@@ -3,7 +3,7 @@ import CommonTable from "../table/CommonTable";
 import { fetchSubscriptions } from "@/shared/apis/subscription";
 import { useRoleBasedNavigation } from "@/hooks/useRoleBasedNavigation";
 import { AdminFetchProviderSubscriptionsProps } from "@/shared/interface/componentInterface";
-import { ProvidersSubscriptionsTableColumns } from "../table/tableColumns/ProviderSubscriptionsTableColumn";
+import ProvidersSubscriptionsTableColumns from "../table/tableColumns/ProviderSubscriptionsTableColumn";
 import { FetchProviderSubscriptionsResponse, FetchSubscriptionsQueryParams } from "@/shared/interface/api/subscription";
 
 const AdminProviderSubscriptions: React.FC<AdminFetchProviderSubscriptionsProps> = memo(({

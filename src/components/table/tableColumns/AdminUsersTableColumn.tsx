@@ -6,7 +6,7 @@ import { User } from "@/shared/interface/entityInterface/userInterface";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 import { AdminChangeUserStatusRequest, AdminfetchAllUsersResponse } from "@/shared/interface/api/user";
 
-export const AdminUsersTableColumns = (
+const AdminUsersTableColumns = (
     handleAdminChangeUserBlockStatus: (data: AdminChangeUserStatusRequest) => void,
     handleGetUserDetailPage: (e: React.MouseEvent<HTMLDivElement>, userId: User["_id"]) => void,
 ): ColumnDef<AdminfetchAllUsersResponse>[] => [
@@ -58,3 +58,5 @@ export const AdminUsersTableColumns = (
             },
         }
     ]
+
+    export default AdminUsersTableColumns;

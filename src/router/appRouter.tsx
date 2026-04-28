@@ -1,19 +1,19 @@
 import { lazy } from "react";
 import PlanGuard from "./PlanGuard.tsx";
-import { RoleLayout } from "./RoleLayout.tsx";
+import RoleLayout from "./RoleLayout.tsx";
 import { Role } from "@/shared/interface/enums.ts";
 import OnBoardingGuard from "./OnBoardingGuard.tsx";
 import { ProtectedRoute } from "./ProtectedRoutes.tsx";
 import { RouteNames } from "@/shared/utils/constants.ts";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 
-import RoleSelectPage from "@/pages/onBoarding/RoleSelectPage.tsx";
-import AuthLayout from "@/layouts/AuthLayout.tsx";
-import LoginForm from "@/components/form/CommonForms/LoginForm.tsx";
-import SignUpForm from "@/components/form/CommonForms/SignUpForm.tsx";
-import EmailVerificationForm from "@/components/form/CommonForms/EmailVerificationForm.tsx";
-import ResetPasswordForm from "@/components/form/CommonForms/ResetPasswordForm.tsx";
-import OtpVerificatioForm from "@/components/form/CommonForms/OtpVerificatioForm.tsx";
+const  AuthLayout = lazy(() => import("@/layouts/AuthLayout.tsx"));
+const  RoleSelectPage = lazy(() => import("@/pages/onBoarding/RoleSelectPage.tsx"));
+const  LoginForm = lazy(() => import("@/components/form/CommonForms/LoginForm.tsx"));
+const  SignUpForm = lazy(() => import("@/components/form/CommonForms/SignUpForm.tsx"));
+const  ResetPasswordForm = lazy(() => import("@/components/form/CommonForms/ResetPasswordForm.tsx"));
+const  OtpVerificatioForm = lazy(() => import("@/components/form/CommonForms/OtpVerificatioForm.tsx"));
+const  EmailVerificationForm = lazy(() => import("@/components/form/CommonForms/EmailVerificationForm.tsx"));
 
 const ChatPage = lazy(() => import("@/pages/common/ChatPage.tsx"));
 const AboutPage = lazy(() => import("@/pages/common/AboutPage.tsx"));

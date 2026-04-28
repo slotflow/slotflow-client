@@ -5,27 +5,11 @@ import { ServiceCategory } from "@/shared/interface/enums";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { pushServiceCategory } from "@/shared/redux/slices/userSlice";
 
-const UserServiceSelectPage = () => {
+const UserServiceSelectPage: React.FC = () => {
 
     const dispatch = useDispatch<AppDispatch>();
     const { selectedCategories } = useSelector((store: RootState) => store.user);
     const navigate = useNavigate();
-
-    // const { data, isLoading, isError, error } = useQuery({
-    //     queryFn: userFetchAllServicesForServiceSelectPage,
-    //     queryKey: ["services"],
-    //     staleTime: 5 * 60 * 1000,
-    //     refetchOnWindowFocus: false,
-    // });
-
-    // const handleServiceToggle = (serviceId: string) => {
-    //     const currentServices = selectedServices ?? [];
-    //     if (currentServices.includes(serviceId)) {
-    //         dispatch(pushService(currentServices.filter((id) => id !== serviceId)));
-    //     } else {
-    //         dispatch(pushService([...currentServices, serviceId]));
-    //     }
-    // };
 
     const handleCategoryToggle = (category: ServiceCategory) => {
         const currentCategories = selectedCategories ?? [];

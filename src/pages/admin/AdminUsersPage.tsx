@@ -6,7 +6,7 @@ import { useAdminUser } from "@/hooks/adminHooks/useUser";
 import { User } from "@/shared/interface/entityInterface/userInterface";
 import { AdminfetchAllUsersResponse } from "@/shared/interface/api/user";
 import { AdminChangeUserStatusRequest } from "@/shared/interface/api/user";
-import { AdminUsersTableColumns } from "@/components/table/tableColumns/AdminUsersTableColumn";
+import AdminUsersTableColumns from "@/components/table/tableColumns/AdminUsersTableColumn";
 
 const AdminUsersPage = () => {
 

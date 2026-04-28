@@ -1,14 +1,14 @@
 import { toast } from "react-toastify";
-import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import React, { useEffect, useRef } from "react";
 import { RootState } from "@/shared/redux/appStore";
 import CommonTable from "@/components/table/CommonTable";
 import { slideIn } from "@/shared/helper/gsapAnimationSlide";
-import { fetchServiceProvidersForAdmin } from "@/shared/apis/providerProfile";
 import { useAdminProvider } from "@/hooks/adminHooks/useProvider";
+import { fetchServiceProvidersForAdmin } from "@/shared/apis/providerProfile";
 import RejectproviderForm from "@/components/form/AdminForms/RejectproviderForm";
-import { AdminProvidersTableColumns } from "@/components/table/tableColumns/AdminProvidersTableColumn";
+import AdminProvidersTableColumns from "@/components/table/tableColumns/AdminProvidersTableColumn";
 import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminFetchAllProvidersResponse } from "@/shared/interface/api/providerProfile";
 
 const AdminServiceProvidersPage = () => {

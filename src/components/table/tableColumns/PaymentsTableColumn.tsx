@@ -9,7 +9,7 @@ import { FetchPaymentsResponse } from "@/shared/interface/api/payment";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 // for admin side, provider side and user side view of payments table
-export const PaymentsTableColumn = (
+const PaymentsTableColumn = (
   handleGetPaymentDetailsPage: (paymentId: Payment["_id"]) => void
 ): ColumnDef<FetchPaymentsResponse>[] => [
     {
@@ -92,3 +92,5 @@ export const PaymentsTableColumn = (
       },
     }
   ]
+
+  export default PaymentsTableColumn;

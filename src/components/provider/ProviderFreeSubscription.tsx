@@ -9,7 +9,7 @@ import { subscribeToTrialPlan } from "@/shared/apis/subscription";
 import { PlanName, SubscriptionStatus } from "@/shared/interface/enums";
 import { setPaymentSelectionPage, setSubscriptionIsTrailPlan } from "@/shared/redux/slices/providerSlice";
 
-const ProviderFreeSubscription = () => {
+const ProviderFreeSubscription: React.FC = () => {
 
     const dispatch = useDispatch();
     const queryClient = useQueryClient();

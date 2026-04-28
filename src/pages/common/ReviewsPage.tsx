@@ -13,14 +13,9 @@ import DataFetchingError from "@/components/error/DataFetchingError";
 import ConfirmDeleteAlert from "@/components/alert/ConfirmDeleteAlert";
 import { ApiPaginatedResponse } from "@/shared/interface/commonInterface";
 import ReviewCardsShimmer from "@/components/shimmers/ReviewCardsShimmer";
+import { ReviewsPageProps } from "@/shared/interface/componentInterface";
 import { Review } from "@/shared/interface/entityInterface/reviewInterface";
 import { FetchReviewsResponse, ToggleReviewBlockStatusRequest } from "@/shared/interface/api/review";
-
-interface ReviewsPageProps {
-  isPage?: boolean;
-  providerId?: string;
-  userId?: string;
-}
 
 const ReviewsPage: React.FC<ReviewsPageProps> = ({
   isPage = true,

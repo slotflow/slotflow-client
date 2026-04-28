@@ -1,7 +1,7 @@
 import { Lock } from "lucide-react";
 import { SingleTabProps } from "@/shared/interface/componentInterface";
 
-export const SingleTab: React.FC<SingleTabProps> = ({
+const SingleTab: React.FC<SingleTabProps> = ({
     icon: Icon,
     text,
     sidebarOpen,
@@ -44,3 +44,5 @@ export const SingleTab: React.FC<SingleTabProps> = ({
         </li>
     );
 };
+
+export default SingleTab;

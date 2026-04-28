@@ -2,7 +2,7 @@ import { SquareChartGantt } from 'lucide-react';
 import ProviderServiceDetails from '@/components/profile/ProviderServiceDetails';
 import { providerFetchServiceDetails } from '@/shared/apis/providerService';
 
-const ProviderService = () => {
+const ProviderService: React.FC = () => {
 
   return (
     <div className="min-h-full flex flex-col w-full space-y-2">

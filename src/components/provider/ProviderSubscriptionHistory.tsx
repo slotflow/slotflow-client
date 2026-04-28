@@ -1,10 +1,10 @@
 import CommonTable from '../table/CommonTable';
 import { fetchSubscriptions } from '@/shared/apis/subscription';
 import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
-import { ProvidersSubscriptionsTableColumns } from '../table/tableColumns/ProviderSubscriptionsTableColumn';
+import ProvidersSubscriptionsTableColumns from '../table/tableColumns/ProviderSubscriptionsTableColumn';
 import { FetchProviderSubscriptionsResponse, FetchSubscriptionsQueryParams } from '@/shared/interface/api/subscription';
 
-const ProviderSubscriptionHistory = () => {
+const ProviderSubscriptionHistory: React.FC = () => {
 
     const {
         handleAdminGetProviderDetailPage

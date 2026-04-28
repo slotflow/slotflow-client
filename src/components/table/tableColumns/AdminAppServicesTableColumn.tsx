@@ -5,7 +5,7 @@ import { DataTableColumnHeader } from "../DataTableColumnHeader";
 import { ChangeServiceBlockStatusRequest, FetchServicesResponse } from "@/shared/interface/api/service";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 
-export const AdminAppServicesTableColumns = (
+const AdminAppServicesTableColumns = (
     handleAdminChangeServiceStatus: (data: ChangeServiceBlockStatusRequest) => void,
 ): ColumnDef<FetchServicesResponse>[] => [
         {
@@ -63,3 +63,5 @@ export const AdminAppServicesTableColumns = (
             },
         }
     ]
+
+    export default AdminAppServicesTableColumns;

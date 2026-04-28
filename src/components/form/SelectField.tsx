@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { FieldValues } from "react-hook-form";
 import { SelectFieldProps } from "@/shared/interface/componentInterface";
 
-export const SelectField = <T extends FieldValues,K>({
+const SelectField = <T extends FieldValues,K>({
   id,
   label,
   options,
@@ -82,3 +82,5 @@ export const SelectField = <T extends FieldValues,K>({
     </div>
   );
 };
+
+export default SelectField;

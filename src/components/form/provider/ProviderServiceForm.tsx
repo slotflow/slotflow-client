@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 import FormField from "@/components/form/FormField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
-import { SelectField } from "@/components/form/SelectField";
+import SelectField from "@/components/form/SelectField";
 import { fetchServicesByCategory } from "@/shared/apis/service";
 import { OptionType } from "@/shared/interface/commonInterface";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
@@ -22,7 +22,6 @@ const ProviderServiceForm: React.FC = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const { dataUpdating } = useSelector((store: RootState) => store.auth);
     const [services, setServices] = useState<OptionType<string>[]>([]);
     const { authUser } = useSelector((state: RootState) => state.auth);
 
@@ -32,7 +31,7 @@ const ProviderServiceForm: React.FC = () => {
         setValue,
         watch,
         reset,
-        formState: { errors, isValid, isSubmitting }
+        formState: { errors, isValid, isSubmitting, isLoading }
     } = useForm<ProviderCreateServiceDetailsFormType>({
         resolver: zodResolver(providerCreateServiceDetailsZodSchema),
         mode: "onChange",
@@ -66,10 +65,11 @@ const ProviderServiceForm: React.FC = () => {
         const fetchServices = async () => {
             try {
                 const res = await fetchServicesByCategory([serviceCategory]);
-                const transformed = res.data.map((srv: { _id: string; serviceName: string }) => ({
+                const transformed = res.data?.map((srv: { _id: string; serviceName: string }) => ({
                     label: srv.serviceName,
                     value: srv._id
                 }));
+                if(!transformed) return;
                 setServices(transformed);
             } catch (error) {
                 if (appConfig.isDevelopment) {
@@ -92,6 +92,7 @@ const ProviderServiceForm: React.FC = () => {
         async function fetchOldServiceDetails() {
             const res = await providerFetchServiceDetails();
             const result = res.data;
+            if(!result) return;
             reset({
                 _id: result._id,
                 isGroupService: result.isGroupService,
@@ -267,10 +268,10 @@ const ProviderServiceForm: React.FC = () => {
                     title={authUser?.isServiceDetailsAdded ? "Update" : "Submit"}
                     type="submit"
                     variant="default"
-                    disabled={!isValid || isSubmitting || dataUpdating}
+                    disabled={!isValid || isSubmitting || isLoading}
                     className="cursor-pointer w-full md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
                 >
-                    {isSubmitting ? "Loading" : authUser?.isServiceDetailsAdded ? "Update" : "Submit"}
+                    {(isSubmitting || isLoading) ? "Loading" : authUser?.isServiceDetailsAdded ? "Update" : "Submit"}
                     <ChevronRight />
                 </Button>
             </div>

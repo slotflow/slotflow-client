@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import SideBox from "@/components/onboarding/SideBox";
@@ -10,7 +10,7 @@ import FileUploader from "@/components/form/CommonForms/FileUploader";
 import { setIdentityProofLoading, setProviderIdentityProofs, setProviderServiceProofs, setServiceProofLoading } from "@/shared/redux/slices/providerSlice";
 import { providerDeleteIdentityProof, providerDeleteServiceProof, providerFetchProofs, providerUpdateIdentityProof, providerUpdateProofServiceProof } from "@/shared/apis/providerProfile";
 
-export const ProviderProofSubmissionPage = () => {
+const ProviderProofSubmissionPage: React.FC = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
@@ -23,8 +23,8 @@ export const ProviderProofSubmissionPage = () => {
     async function fetchOldProofs() {
       const result = await providerFetchProofs();
       if (result) {
-        dispatch(setProviderIdentityProofs(result.data.identityProof as string))
-        dispatch(setProviderServiceProofs(result.data.serviceProof as string))
+        dispatch(setProviderIdentityProofs(result.data?.identityProof as string))
+        dispatch(setProviderServiceProofs(result.data?.serviceProof as string))
       }
     }
 
