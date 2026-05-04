@@ -1,5 +1,4 @@
 import { axiosInstance } from "@/lib/axios";
-import { parseResponse } from "../helper/parseResponse";
 import { buildQueryParams } from "../helper/buildQueryParams";
 import { ApiBaseResponse, ApiFetchFunction } from "../interface/commonInterface";
 import { FetchNotificationsQueryParams, FetchNotificationsResponse, RegisterDeviceRequest } from "../interface/api/notification";
@@ -15,5 +14,5 @@ export const fetchNotifications: ApiFetchFunction<
 > = async (queryParams) => {
   const query = buildQueryParams(queryParams);
   const response = await axiosInstance.get(`/notifications?${query}`);
-  return parseResponse<FetchNotificationsResponse>(response.data.data);
+  return response.data.data;
 };

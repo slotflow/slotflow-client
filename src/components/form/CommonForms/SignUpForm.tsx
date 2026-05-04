@@ -50,8 +50,8 @@ const SignUpForm: React.FC = () => {
         try {
             const res = await dispatch(signup({ ...data })).unwrap();
             if (res.success) {
-                toast.success(res.message);
                 navigate(redirectPaths.VERIFY_OTP);
+                toast.success(res.message);
             }
         } catch (error) {
             if (appConfig.isDevelopment) {
@@ -114,7 +114,12 @@ const SignUpForm: React.FC = () => {
                                     }
                                     required={true}
                                 />
-                                <FormButton text={"Sign Up"} loading={isSubmitting} disabled={isSubmitting || !isValid} />
+                                <FormButton
+                                    text={isSubmitting ? "Signing up" : "Sign up"}
+                                    loading={isSubmitting}
+                                    disabled={isSubmitting || !isValid}
+                                    title="Sign up"
+                                />
                             </fieldset>
                         </form>
 

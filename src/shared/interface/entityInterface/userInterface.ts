@@ -1,4 +1,4 @@
-import { Role } from "../enums";
+import { HearAboutUsOptionValue, Role } from "../enums";
 
 export interface User {
     _id: string
@@ -18,6 +18,8 @@ export interface User {
     stripeAccountId?: string;
     stripeCustomerId?: string;
     allowPushNotification: boolean;
+    whereDidHearAboutUs: HearAboutUsOptionValue;
+    referralCode?: string;
     createdAt: Date,
     updatedAt: Date
 }

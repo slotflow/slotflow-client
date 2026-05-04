@@ -42,6 +42,7 @@ export const useAddAvailability = ({
     const generateTimeSlots = (start: Date, end: Date, intervalMinutes: number) => {
 
         if (!start || !end) return { success: false, message: "Please select the startTime and endTime" };
+        if(start >= end) return { success: false, message: "Start time must be before end time" };
         if (!intervalMinutes || intervalMinutes == 0) return { success: false, message: "Invalid interval" };
 
         const slots: string[] = [];

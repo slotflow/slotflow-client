@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { FormButton, FormHeading } from "../FormSplits";
 import { redirectPaths } from "@/shared/utils/constants";
 import { resendOtp, verifyOtp } from "@/shared/apis/auth";
-import { updateTimer } from "@/shared/redux/slices/appSlice";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { VerifyOtpFormType, verifyOtpZodSchema } from "@/shared/zod/authZod";
 
@@ -19,9 +18,10 @@ const OtpVerificatioForm: React.FC = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const { otpRemainingTime, otpTimerIsRunning, forgotPassword } = useSelector((store: RootState) => store.app);
+    const { otpTimerIsRunning, forgotPassword, otpExpiresAt } = useSelector((store: RootState) => store.app);
 
-    const [resentLoading, setResendLoading] = useState(false);
+    const [resentLoading, setResendLoading] = useState<boolean>(false);
+    const [timeLeft, setTimeLeft] = useState<number>(0);
 
     const {
         handleSubmit,
@@ -40,22 +40,32 @@ const OtpVerificatioForm: React.FC = () => {
     const otpValue = watch("otp");
 
     useEffect(() => {
-        if (otpTimerIsRunning) {
-            const interval = setInterval(() => dispatch(updateTimer()), 1000);
-            return () => clearInterval(interval);
-        }
-    }, [otpTimerIsRunning, dispatch]);
+        if (!otpExpiresAt) return;
+
+        const interval = setInterval(() => {
+            const remaining = Math.max(
+                Math.floor((otpExpiresAt - Date.now()) / 1000),
+                0
+            );
+
+            setTimeLeft(remaining);
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [otpExpiresAt]);
 
     const onSubmit = async (data: VerifyOtpFormType) => {
         try {
             const res = await dispatch(verifyOtp({ otp: data.otp })).unwrap();
             if (res.success) {
-                toast.success(res.message);
+                // Navigate immediately for instant UX
                 if (forgotPassword) {
                     navigate(redirectPaths.RESET_PASSWORD)
                 } else {
                     navigate(redirectPaths.LOGIN)
                 }
+                // Show toast after navigation (toast uses portal so still visible)
+                toast.success(res.message);
             }
         } catch (error) {
             if (appConfig.isDevelopment) {
@@ -73,6 +83,8 @@ const OtpVerificatioForm: React.FC = () => {
             if (appConfig.isDevelopment) {
                 console.log("An error occurred while resending OTP.");
             }
+        } finally {
+            setResendLoading(false);
         }
     };
 
@@ -136,7 +148,12 @@ const OtpVerificatioForm: React.FC = () => {
                             </div>
                             {errors.otp && <p className="text-red-500 text-sm">{errors.otp.message}</p>}
 
-                            <FormButton text="Verify" loading={isSubmitting} disabled={isSubmitting || !isValid} />
+                            <FormButton 
+                            text={isSubmitting ? "Verifying" : "Verify"} 
+                            loading={isSubmitting} 
+                            disabled={isSubmitting || !isValid} 
+                            title="Verify Otp"
+                            />
                         </form>
 
                         <p className="mt-6 flex justify-between text-xs md:text-sm/6 text-[var(--textTwo)] px-2">
@@ -149,9 +166,9 @@ const OtpVerificatioForm: React.FC = () => {
 
                             {resentLoading ? (
                                 <span className="font-semibold text-[var(--mainColor)]">Sending...</span>
-                            ) : otpTimerIsRunning ? (
+                            ) : otpTimerIsRunning && timeLeft > 0 ? (
                                 <span className="text-center text-xs md:text-sm/6 text-[var(--textTwo)]">
-                                    {formatTime(otpRemainingTime)}
+                                    {formatTime(timeLeft)}
                                 </span>
                             ) : (
                                 <span

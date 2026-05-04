@@ -35,7 +35,10 @@ Pick<ProviderProfile,
   isAddressAdded?: boolean;
   isServiceDetailsAdded?: boolean;
   isServiceAvailabilityAdded?: boolean;
-  isProofSubmitted?: boolean;
+  isProofSubmitted?: {
+    identityProof: boolean;
+    serviceProof: boolean;
+  };
   isAdminVerified?: boolean; 
   providerSubscription?: PlanName;
   subscriptionStartDate?: Date;
@@ -47,9 +50,10 @@ Pick<ProviderProfile,
 
 export interface AuthState {
   authUser: AuthUser | null;
+  isAuthLoading: boolean;
   profileImageUpdating: boolean;
-  eventSocketId: string | null,
-  eventSocketIsConnected: boolean,
+  eventSocketId: string | null;
+  eventSocketIsConnected: boolean;
   subscriptionUpdating: boolean;
 }
 
@@ -59,7 +63,7 @@ export interface appState {
   sidebarOpen: boolean;
   filterSideBarOpen: boolean;
   forgotPassword: boolean;
-  otpRemainingTime: number;
+  otpExpiresAt: number | null;
   otpTimerIsRunning: boolean;
   isNotificationsOpen: boolean;
 }
@@ -75,6 +79,12 @@ export interface SetProviderRejectModalType {
   providerId: User["_id"] | null,
 }
 
+// Proof data type for provider slice
+export interface SetProofDataProps {
+  file: string | null;
+  isLoading: boolean;
+}
+
 // provider slice
 export interface ProviderState {
   availabilities: Availability[] | null;
@@ -83,10 +93,13 @@ export interface ProviderState {
   paymentSelectionOpen: boolean;
   isTrialPlan: boolean;
   paymentPageOpen: boolean;
-  identityProof: string | null;
-  serviceProof: string | null;
-  identityProofLoading: boolean;
-  serviceProofLoading: boolean;
+  identityProof: SetProofDataProps;
+  serviceProof: SetProofDataProps;
+}
+
+export interface SetProofDataProps {
+  file: string | null;
+  isLoading: boolean;
 }
 
 // user slice

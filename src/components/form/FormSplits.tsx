@@ -19,10 +19,15 @@ export const FormHeading: React.FC<AuthFormsHeadingProps> = React.memo(({ title,
     )
 });
 
-export const FormButton: React.FC<AuthFormsButtonProps> = React.memo(({ text, loading = false, disabled }) => {
+export const FormButton: React.FC<AuthFormsButtonProps> = React.memo(({ 
+    text, 
+    loading = false,
+    disabled ,
+    title
+}) => {
     return (
         <Button
-            title={text}
+            title={title}
             variant="default"
             type="submit"
             disabled={disabled}
@@ -31,7 +36,7 @@ export const FormButton: React.FC<AuthFormsButtonProps> = React.memo(({ text, lo
             {loading ? (
                 <span className="flex items-center gap-2">
                     <Loader className="animate-spin size-4" />
-                    <span>Loading</span>
+                    <span>{text}</span>
                 </span>
             ) : (
                 text

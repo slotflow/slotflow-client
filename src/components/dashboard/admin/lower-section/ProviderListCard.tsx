@@ -11,7 +11,7 @@ const ProviderListCard: React.FC = () => {
     queryFn: () => fetchServiceProvidersForAdmin({ limit: 5, sortBy: 'createdAt', sortOrder: 'desc' }),
   });
 
-  const providers = data?.data || [];
+  const providers = data?.items || [];
 
   return (
     <DashboardDataCard

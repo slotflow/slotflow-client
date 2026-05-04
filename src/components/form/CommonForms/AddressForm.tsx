@@ -3,11 +3,11 @@ import { toast } from 'react-toastify';
 import { Button } from '../../ui/button';
 import React, { useEffect } from "react";
 import { PhoneInput } from '../phone-input';
+import { Info, Loader } from 'lucide-react';
 import { countries } from 'country-data-list';
 import { Label } from '@/components/ui/label';
 import { useNavigate } from 'react-router-dom';
 import { appConfig } from '@/shared/config/env';
-import { ChevronRight, Info } from 'lucide-react';
 import AlertBox from '@/components/alert/AlertBox';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from "react-hook-form";
@@ -22,9 +22,10 @@ import { createAddress, fetchMyAddress, updateAddress } from '@/shared/apis/addr
 import { CreateAddressFormType, createAddressZodSchema } from '@/shared/zod/commonZodFields';
 import { addAddressGoogleMapLinkInfo, addAddressGoogleMapLinkInfoHeading, redirectPaths } from '@/shared/utils/constants';
 
-const AddressForm: React.FC<AddressFormProps> = ({ 
-    isUpdating = false
- }) => {
+const AddressForm: React.FC<AddressFormProps> = ({
+    isUpdating = false,
+    heading
+}) => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
@@ -61,6 +62,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
     });
 
     const handleLocationSelect = (location: Location) => {
+        console.log("Selected Location: ", location);
         setValue("location", {
             type: "Point",
             coordinates: [location.lon, location.lat],
@@ -77,43 +79,49 @@ const AddressForm: React.FC<AddressFormProps> = ({
         setValue("district", location?.address?.state_district);
         setValue("pincode", location?.address?.postcode);
     };
-   
-       useEffect(() => {
-           if (!authUser) return;
-           const shouldFetchAddress =
-               authUser.isAddressAdded &&
-               authUser.adminVerificationStatus !== AdminVerificationStatus.NOT_REQUESTED;
-   
-           if (!shouldFetchAddress) return;
-   
-           async function fetchOldAddress() {
-               const result = await fetchMyAddress();
-               reset({
+
+    useEffect(() => {
+        if (!authUser) return;
+        const shouldFetchAddress = isUpdating && authUser.adminVerificationStatus !== AdminVerificationStatus.NOT_REQUESTED;
+
+        if (!shouldFetchAddress) return;
+
+        async function fetchOldAddress() {
+            const result = await fetchMyAddress();
+            reset({
                 ...result.data,
                 countryCode: "IN"
-               });
-           };
-   
-           fetchOldAddress();
-       }, [authUser]);
+            });
+        };
+
+        fetchOldAddress();
+    }, [isUpdating, authUser]);
 
     const submitHandler = async (data: CreateAddressFormType) => {
         try {
-            if (authUser?.isAddressAdded || isUpdating) {
+            if (isUpdating) {
                 const res = await updateAddress(data);
                 if (res.success) {
-                    toast.success(res.message);
-                    if(authUser?.role === Role.PROVIDER) {
-                        navigate(redirectPaths.PROVIDER_APPROVAL_PENDING);
+                    if (authUser?.role === Role.PROVIDER) {
+                        if (!authUser?.isOnboardingCompleted) {
+                            navigate(redirectPaths.ONBOARDING_PENDING);
+                        }
                     }
+                    toast.success(res.message);
                 }
             } else {
                 const res = await dispatch(createAddress(data)).unwrap();
+                console.log("res : ", res);
+                console.log("authUser : ", authUser);
                 if (res.success) {
-                    toast.success(res.message);
-                    if(authUser?.role === Role.PROVIDER) {
-                        navigate(redirectPaths.PROVIDER_SERVICE_DETAILS);
+                    if (!authUser?.isOnboardingCompleted && authUser?.role === Role.PROVIDER) {
+                        if (authUser?.adminVerificationStatus === AdminVerificationStatus.NOT_REQUESTED) {
+                            navigate(redirectPaths.ONBOARDING_SERVICE);
+                        } else if (authUser?.adminVerificationStatus === AdminVerificationStatus.REJECTED) {
+                            navigate(redirectPaths.ONBOARDING_PENDING);
+                        }
                     }
+                    toast.success(res.message);
                 }
             }
         } catch (error) {
@@ -126,9 +134,11 @@ const AddressForm: React.FC<AddressFormProps> = ({
 
     return (
         <form onSubmit={handleSubmit(submitHandler)} >
-            <h4 className="text-xl lg:text-2xl font-semibold text-start">
-                {authUser?.isAddressAdded ? "Update Your Address" : "Tell Us About Your Business Location"}
-            </h4>
+            {heading && (
+                <h4 className="text-xl lg:text-2xl font-semibold text-start">
+                    {heading}
+                </h4>
+            )}
             <div className="md:flex w-full space-y-6 space-x-2">
                 <div className="space-y-4 w-full space-x-2 pt-6">
                     <FormField<CreateAddressFormType>
@@ -273,7 +283,14 @@ const AddressForm: React.FC<AddressFormProps> = ({
                     className="cursor-pointer w-10/12 md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
                     disabled={!isValid || isSubmitting || isLoading}
                 >
-                    {(isSubmitting || isLoading) ? "Loading" : isUpdating ? "Update" : "Submit"} <ChevronRight />
+                    {isSubmitting ? (
+                        <>
+                            <Loader className="animate-spin size-4 mr-2" />
+                            {(isUpdating && isSubmitting) ? "Updating" : "Submitting"}
+                        </>
+                    ) : (
+                        isUpdating ? "Update" : "Submit"
+                    )}
                 </Button>
             </div>
         </form>

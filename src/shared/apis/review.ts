@@ -1,5 +1,4 @@
 import { axiosInstance } from "@/lib/axios";
-import { parseResponse } from "../helper/parseResponse";
 import { buildQueryParams } from "../helper/buildQueryParams";
 import { Review } from "../interface/entityInterface/reviewInterface";
 import { ApiBaseResponse, ApiFetchFunction } from "../interface/commonInterface";
@@ -15,7 +14,7 @@ FetchReviewsResponse,
 FetchReviewsQueryParams> = async (queryParams) => {
     const query = buildQueryParams(queryParams);
     const response = await axiosInstance.get(`/reviews?${query}`);
-    return parseResponse(response.data.data);
+    return response.data.data;
 }
 
 export const deleteReview = async (reviewId: Review["_id"]): Promise<ApiBaseResponse> => {

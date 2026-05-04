@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "../../ui/button";
-import { Check, ChevronRight } from "lucide-react";
+import { Check, Loader } from "lucide-react";
 import { CreateServiceAvailabilityFooterProps } from "@/shared/interface/componentInterface";
 
 const CreateServiceAvailabilityFooter: React.FC<CreateServiceAvailabilityFooterProps> = ({
@@ -9,21 +9,22 @@ const CreateServiceAvailabilityFooter: React.FC<CreateServiceAvailabilityFooterP
     onAddAvailability,
     availabilities,
     isValid,
-    isUpdating
+    isUpdating,
+    isLoading
 }) => {
     return (
         <div className="flex flex-col gap-4">
             {selectedTimeSlots && selectedTimeSlots.length > 0 && (
                 <div className="flex justify-center md:justify-end">
                     <Button
-                        title="Confirm"
+                        title="Add this availability (not saved yet)"
                         type="button"
                         variant="default"
                         disabled={isSubmitting}
                         onClick={onAddAvailability}
                         className="cursor-pointer w-full md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
                     >
-                        Confirm <Check />
+                        Add Availability <Check />
                     </Button>
                 </div>
             )}
@@ -33,10 +34,17 @@ const CreateServiceAvailabilityFooter: React.FC<CreateServiceAvailabilityFooterP
                         title={"Submit"}
                         type="submit"
                         variant="default"
-                        disabled={isSubmitting || !isValid}
+                        disabled={isSubmitting || !isValid || isLoading}
                         className="cursor-pointer w-full md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
                     >
-                        {isSubmitting ? "Loading" : isUpdating ? "Update" : "Submit"} <ChevronRight />
+                        {isSubmitting ? (
+                            <>
+                                <Loader className="animate-spin size-4 mr-2" />
+                                {(isUpdating && isSubmitting) ? "Updating" : "Submitting"}
+                            </>
+                        ) : (
+                            isUpdating ? "Update" : "Submit"
+                        )}
                     </Button>
                 </div>
             )}

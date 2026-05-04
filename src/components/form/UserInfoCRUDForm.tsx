@@ -111,9 +111,10 @@ const UserInfoCRUDForm: React.FC<UserInfoCRUDProps> = ({
 
                     <div className="space-y-2">
                         <FormButton
-                            text="Update"
+                            text={isSubmitting ? "Updating" : "Update"}
                             loading={isSubmitting}
                             disabled={isSubmitting || !isValid}
+                            title="Update"
                         />
                         <Button
                             title="Cancel"

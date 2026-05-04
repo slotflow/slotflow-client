@@ -7,13 +7,13 @@ import { ProtectedRoute } from "./ProtectedRoutes.tsx";
 import { RouteNames } from "@/shared/utils/constants.ts";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 
-const  AuthLayout = lazy(() => import("@/layouts/AuthLayout.tsx"));
-const  RoleSelectPage = lazy(() => import("@/pages/onBoarding/RoleSelectPage.tsx"));
-const  LoginForm = lazy(() => import("@/components/form/CommonForms/LoginForm.tsx"));
-const  SignUpForm = lazy(() => import("@/components/form/CommonForms/SignUpForm.tsx"));
-const  ResetPasswordForm = lazy(() => import("@/components/form/CommonForms/ResetPasswordForm.tsx"));
-const  OtpVerificatioForm = lazy(() => import("@/components/form/CommonForms/OtpVerificatioForm.tsx"));
-const  EmailVerificationForm = lazy(() => import("@/components/form/CommonForms/EmailVerificationForm.tsx"));
+const AuthLayout = lazy(() => import("@/layouts/AuthLayout.tsx"));
+const PreBoardingPage = lazy(() => import("@/pages/boarding/PreBoardingPage.tsx"));
+const LoginForm = lazy(() => import("@/components/form/CommonForms/LoginForm.tsx"));
+const SignUpForm = lazy(() => import("@/components/form/CommonForms/SignUpForm.tsx"));
+const ResetPasswordForm = lazy(() => import("@/components/form/CommonForms/ResetPasswordForm.tsx"));
+const OtpVerificatioForm = lazy(() => import("@/components/form/CommonForms/OtpVerificatioForm.tsx"));
+const EmailVerificationForm = lazy(() => import("@/components/form/CommonForms/EmailVerificationForm.tsx"));
 
 const ChatPage = lazy(() => import("@/pages/common/ChatPage.tsx"));
 const AboutPage = lazy(() => import("@/pages/common/AboutPage.tsx"));
@@ -42,13 +42,13 @@ const UserListProvidersCardsPage = lazy(() => import("@/pages/user/UserListProvi
 const UserServiceProviderDetailPage = lazy(() => import("@/pages/user/UserServiceProviderDetailPage.tsx"));
 
 const ProviderDashboardPage = lazy(() => import("@/pages/provider/ProviderDashboardPage.tsx"));
-const ProviderAddAddressPage = lazy(() => import("@/pages/onBoarding/ProviderCreateAddressPage.tsx"));
+const ProviderAddAddressPage = lazy(() => import("@/pages/boarding/ProviderCreateAddressPage.tsx"));
 const ProviderSubscriptionPage = lazy(() => import("@/pages/provider/ProviderSubscriptionPage.tsx"));
-const ProviderProofSubmitionPage = lazy(() => import("@/pages/provider/ProviderProofSubmitionPage.tsx"));
-const ProviderApprovalPendingPage = lazy(() => import("@/pages/onBoarding/ProviderApprovalPendingPage.tsx"));
+const ProviderProofSubmitionPage = lazy(() => import("@/pages/boarding/ProviderProofSubmitionPage.tsx"));
+const ProviderApprovalPendingPage = lazy(() => import("@/pages/boarding/ProviderApprovalPendingPage.tsx"));
 const ProviderSubscriptionConfirmPage = lazy(() => import("@/pages/provider/ProviderSubscriptionConfirmPage.tsx"));
-const ProviderCreateServiceDetailsPage = lazy(() => import("@/pages/onBoarding/ProviderCreateServiceDetailsPage.tsx"));
-const ProviderCreateServiceAvailabilityPage = lazy(() => import("@/pages/onBoarding/ProviderCreateServiceAvailabilityPage.tsx"));
+const ProviderCreateServiceDetailsPage = lazy(() => import("@/pages/boarding/ProviderCreateServiceDetailsPage.tsx"));
+const ProviderCreateServiceAvailabilityPage = lazy(() => import("@/pages/boarding/ProviderCreateServiceAvailabilityPage.tsx"));
 
 const AdminPlansPage = lazy(() => import("@/pages/admin/AdminPlansPage.tsx"));
 const AdminUsersPage = lazy(() => import("@/pages/admin/AdminUsersPage.tsx"));
@@ -73,7 +73,7 @@ export const appRouter = createBrowserRouter([
             { path: "/terms-and-conditions", element: <TermsAndConditionsPage /> },
         ]
     },
-   {
+    {
         path: "/auth",
         element: <AuthLayout />,
         children: [
@@ -111,12 +111,12 @@ export const appRouter = createBrowserRouter([
     {
         path: "/onboarding",
         element: (
-            <ProtectedRoute allowedRoles={[Role.USER]}>
+            <OnBoardingGuard>
                 <Outlet />
-            </ProtectedRoute>
+            </OnBoardingGuard>
         ),
         children: [
-            { path: "role-select", element: <RoleSelectPage /> },
+            { path: "setup", element: <PreBoardingPage /> },
             { path: "address", element: <ProviderAddAddressPage /> },
             { path: "service", element: <ProviderCreateServiceDetailsPage /> },
             { path: "availability", element: <ProviderCreateServiceAvailabilityPage /> },

@@ -14,7 +14,8 @@ T extends object
         value !== null &&
         value !== ""
       ) {
-        query.append(String(key), String(value));
+        const stringValue = value instanceof Date ? value.toISOString() : String(value);
+        query.append(String(key), stringValue);
       }
     });
 

@@ -54,10 +54,10 @@ const CommonTable = <
         <div className="mt-2">
           <TableShimmer columnsCount={columnsCount} />
         </div>
-      ) : data?.data ? (
+      ) : data?.items ? (
         <DataTable
           columns={column}
-          data={data.data}
+          data={data.items}
           pageCount={data.totalPages}
           pagination={pagination}
           onPaginationChange={handlePaginationChange}

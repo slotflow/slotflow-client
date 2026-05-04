@@ -136,7 +136,12 @@ const CreatePlanForm: React.FC<CreatePlanFormProps> = ({
                     required
                 />
 
-                <FormButton text="Save" loading={isSubmitting} disabled={isSubmitting || !isValid} />
+                <FormButton
+                    text={isSubmitting ? "Saving" : "Save"}
+                    loading={isSubmitting}
+                    disabled={isSubmitting || !isValid}
+                    title="Save"
+                />
                 <Button
                     title="Cancel"
                     variant="destructive"

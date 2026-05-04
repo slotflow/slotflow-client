@@ -17,7 +17,6 @@ import {
 import { DateRange } from "react-day-picker";
 import { PlanName } from "../interface/enums";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { parseResponse } from "../helper/parseResponse";
 import { buildQueryParams } from "../helper/buildQueryParams";
 import { FetchProvidersProofsResponse, UpdateFileDataRequest } from "../interface/api/commonApiInterface";
 import { ApiBaseResponse, ApiFetchFunction, FetchFunctionBaseQueryParams } from "../interface/commonInterface";
@@ -113,7 +112,7 @@ export const fetchServiceProvidersForAdmin: ApiFetchFunction<
 > = async (queryParams) => {
     const query = buildQueryParams(queryParams);
     const response = await axiosInstance.get(`/providers?${query}`);
-    return parseResponse<AdminFetchAllProvidersResponse>(response.data.data);
+    return response.data.data;
 };
 
 // admin approve provider

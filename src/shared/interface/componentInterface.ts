@@ -29,6 +29,7 @@ import { ProviderServiceAvailabilityFormType } from "../zod/providerZod";
 import { Availability } from "./entityInterface/serviceAvailabilityInterface";
 import { Column, ColumnDef, OnChangeFn, PaginationState } from "@tanstack/react-table";
 import { RouteNames } from "../utils/constants";
+import { SetProofDataProps } from "./sliceInterface";
 
 // profile head compoenent props interface
 export interface ProfileHeaderProps {
@@ -171,12 +172,10 @@ export interface FileUploaderProps {
   folderName: string;
   uploadFunction: (data: UpdateFileDataRequest) => Promise<ApiBaseResponse<string>>;
   message?: string;
-  setStateFunction: (data: string | null) => PayloadAction<string | null>;
-  setLoadingFunction: (data: boolean) => PayloadAction<boolean>;
-  fileUploaded: boolean;
+  setStateFunction: (data: Partial<SetProofDataProps>) => PayloadAction<Partial<SetProofDataProps>>;
   deleteFunction: () => Promise<ApiBaseResponse>;
-  loading: boolean;
-  data: string | null;
+  data: SetProofDataProps;
+  title: string;
 };
 
 // provider cards listing
@@ -369,6 +368,19 @@ export interface RejectproviderFormProps {
 // Address form component props interface
 export interface AddressFormProps {
   isUpdating?: boolean;
+  heading?: string;
+}
+
+// Provider Service form component props interface
+export interface ProviderServiceFormProps {
+  isUpdating?: boolean;
+  heading?: string;
+}
+
+// Provider service availability form component props interface
+export interface ProviderServiceAvailabilityFormProps {
+  isUpdating?: boolean;
+  heading?: string;
 }
 
 // Authtication form heading component props interface
@@ -382,6 +394,7 @@ export interface AuthFormsButtonProps {
   text: string;
   loading: boolean;
   disabled?: boolean;
+  title: string;
 }
 
 // google button props interface
@@ -590,6 +603,7 @@ export interface CreateServiceAvailabilityFooterProps {
     availabilities: Availability[] | null;
     isValid: boolean;
     isUpdating: boolean;
+    isLoading: boolean;
 }
 
 // GenerateTimeSlots component props interface

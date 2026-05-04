@@ -4,27 +4,34 @@ import {
   Star,
   User,
   Home,
+  Mail,
   Clock,
   Users,
   UserX,
-  Mail,
-  Wallet,
   Phone,
   Gauge,
+  Wallet,
   Layers,
   Rocket,
   MapPin,
   Shield,
+  AtSign,
+  Search,
+  Youtube,
+  Twitter,
   Combine,
   Palette,
   Receipt,
   XCircle,
+  Linkedin,
+  Facebook,
   Banknote,
   Verified,
   BookLock,
   Settings,
   Activity,
   BarChart,
+  Instagram,
   Calendar1,
   UserCheck,
   Hourglass,
@@ -32,6 +39,7 @@ import {
   RotateCcw,
   Handshake,
   ScanHeart,
+  HelpCircle,
   ThumbsDown,
   CreditCard,
   BadgeCheck,
@@ -41,6 +49,7 @@ import {
   Wallet2Icon,
   CheckCircle,
   ShieldCheck,
+  MessageCircle,
   CalendarClock,
   MessageSquare,
   WalletMinimal,
@@ -48,33 +57,34 @@ import {
   MessageSquareText,
   PictureInPicture2,
 } from "lucide-react";
-import { ProviderFetchDashboardStatsDataResponse } from "../interface/api/providerProfile";
 import {
   Route,
   PlanListType,
   DayMapInterface,
   statsMapIntrface,
   CommonTabInterface,
+  HearAboutUsOptions,
   FooterLinkInterface,
   PlanFeatureInterface,
   FeatureContentInterface,
-  StatsMapForAdminInterface,
-  FooterColumnDataInterface,
   HeaderCompoenentNavsProps,
+  FooterColumnDataInterface,
+  StatsMapForAdminInterface,
   dataSelectListItemInterface,
+  MapDotLitLocationsCoordinates,
   ProviderApprovalMessageInterface,
   gsapBigSvgYDirectionAnimationInterface,
-  MapDotLitLocationsCoordinates,
 } from "../interface/commonInterface";
+import { ChartConfig } from "@/components/ui/chart";
 import chatImage from '../../assets/heroImages/chat.jpg';
-import { ContactItem } from "../interface/commonInterface";
 import { OptionType } from '../interface/commonInterface';
+import { ContactItem } from "../interface/commonInterface";
 import gCalendar from '../../assets/iconImages/gCalendar.png';
 import calendarImage from '../../assets/heroImages/calendar2.png';
 import videoCallImage from '../../assets/heroImages/videoCall.jpg';
 import bookingImage from '../../assets/heroImages/heroSectionOneImg2.png';
-import { AdminVerificationStatus, PlanName, Role, ServiceCategory, ServiceMode, ServiceType } from "../interface/enums";
-import { ChartConfig } from "@/components/ui/chart";
+import { ProviderFetchDashboardStatsDataResponse } from "../interface/api/providerProfile";
+import { AdminVerificationStatus, HearAboutUsOptionValue, PlanName, Role, ServiceCategory, ServiceMode, ServiceType } from "../interface/enums";
 
 // Plan Tiers 
 export const PLAN_TIERS = ["free", "starter", "professional", "enterprise"] as const;
@@ -1008,7 +1018,15 @@ export const progressBars: { [key: number]: boolean[] } = {
   5: [true, true, true, true, true],
 };
 
-const sidebarHeadings: string[] = ['Purpose', 'Address', 'Service', 'Availability', "Upload Proofs", "Approval"];
+const sidebarHeadings: string[] = [
+  'Setup',
+  'Address',
+  'Service',
+  'Availability',
+  "Upload Proofs",
+  "Approval"
+];
+
 export const pageLabels: { [key: number]: string[] } = {
   0: sidebarHeadings,
   1: sidebarHeadings,
@@ -1304,7 +1322,7 @@ export const redirectPaths: Record<string, string> = {
   VERIFY_EMAIL: "/auth/verify/email",
   RESET_PASSWORD: "/auth/reset/password",
   VERIFY_OTP: "/auth/verify/otp",
-  ONBOARDING_ROLE_SELECT: "/onboarding/role-select",
+  ONBOARDING_PRE_BOARDING: "/onboarding/setup",
   ONBOARDING_ADDRESS: "/onboarding/address",
   ONBOARDING_SERVICE: "/onboarding/service",
   ONBOARDING_AVAILABILITY: "/onboarding/availability",
@@ -1333,11 +1351,64 @@ export const chartConfig = {
 } satisfies ChartConfig;
 
 export const mapDotLitLocationsCoordinates: MapDotLitLocationsCoordinates[] = [
-          { start: { lat: 64.2008, lng: -149.4937 }, end: { lat: 34.0522, lng: -118.2437 } },
-          { start: { lat: 64.2008, lng: -149.4937 }, end: { lat: -15.7975, lng: -47.8919 } },
-          { start: { lat: -15.7975, lng: -47.8919 }, end: { lat: 38.7223, lng: -9.1393 } },
-          { start: { lat: 51.5074, lng: -0.1278 }, end: { lat: 28.6139, lng: 77.209 } },
-          { start: { lat: 19.0760, lng: 72.8777 }, end: { lat: 28.6139, lng: 77.209 } },
-          { start: { lat: 28.6139, lng: 77.209 }, end: { lat: 43.1332, lng: 131.9113 } },
-          { start: { lat: 22.5726, lng: 88.3639 }, end: { lat: 28.6139, lng: 77.209 } }
-        ]
+  { start: { lat: 64.2008, lng: -149.4937 }, end: { lat: 34.0522, lng: -118.2437 } },
+  { start: { lat: 64.2008, lng: -149.4937 }, end: { lat: -15.7975, lng: -47.8919 } },
+  { start: { lat: -15.7975, lng: -47.8919 }, end: { lat: 38.7223, lng: -9.1393 } },
+  { start: { lat: 51.5074, lng: -0.1278 }, end: { lat: 28.6139, lng: 77.209 } },
+  { start: { lat: 19.0760, lng: 72.8777 }, end: { lat: 28.6139, lng: 77.209 } },
+  { start: { lat: 28.6139, lng: 77.209 }, end: { lat: 43.1332, lng: 131.9113 } },
+  { start: { lat: 22.5726, lng: 88.3639 }, end: { lat: 28.6139, lng: 77.209 } }
+]
+
+export const hearAboutUsOptions: HearAboutUsOptions[] = [
+  { label: "Google Search", value: HearAboutUsOptionValue.GOOGLE, icon: Search },
+  { label: "Friend / Referral", value: HearAboutUsOptionValue.REFERRAL, icon: Users },
+  { label: "YouTube", value: HearAboutUsOptionValue.YOUTUBE, icon: Youtube },
+  { label: "LinkedIn", value: HearAboutUsOptionValue.LINKEDIN, icon: Linkedin },
+  { label: "Twitter (X)", value: HearAboutUsOptionValue.TWITTER, icon: Twitter },
+  { label: "Instagram", value: HearAboutUsOptionValue.INSTAGRAM, icon: Instagram },
+  { label: "WhatsApp", value: HearAboutUsOptionValue.WHATSAPP, icon: MessageCircle },
+  { label: "Facebook", value: HearAboutUsOptionValue.FACEBOOK, icon: Facebook },
+  { label: "Threads", value: HearAboutUsOptionValue.THREADS, icon: AtSign },
+  { label: "Other", value: HearAboutUsOptionValue.OTHER, icon: HelpCircle },
+]
+
+//
+export const preBoardingTitles: string[] = [
+  "Choose your account type",
+  "Where did you hear about us?"
+]
+
+// onboarding titles
+export const onboardingContent = {
+  setupRole: {
+    title: "Select Your Account Type",
+    description: "Choose how you will use the platform.",
+  },
+  hearAboutUs: {
+    title: "Source of Discovery",
+    description: "Tell us how you found our platform.",
+  },
+  address: {
+    title: "Provide Your Address",
+    description: "Enter your location for accurate service matching.",
+  },
+  serviceDetails: {
+    title: "Define Your Services",
+    description: "Describe the services you offer to customers.",
+  },
+  availability: {
+    title: "Set Your Availability",
+    description: "Specify when you are available for bookings.",
+  },
+  proofs: {
+    title: "Upload Verification Documents",
+    description: "Submit required documents for identity verification.",
+  },
+  profileApproval: {
+    title: "Profile Review and Approval",
+    description: "Submit your profile for verification and approval.",
+    description2: "Submit your profile for review. Our team will verify your details within one business day.",
+    description3: "Your profile is under review. This may take up to 24 hours."
+  },
+};

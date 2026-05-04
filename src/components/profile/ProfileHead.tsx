@@ -5,10 +5,10 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { appConfig } from "@/shared/config/env";
 import { useDispatch, useSelector } from "react-redux";
+import avatar from '../../assets/defaultImages/avatar.png';
 import { getUploadUrl, uploadToS3 } from "@/shared/apis/s3";
 import { userUpdateProfileImage } from "@/shared/apis/user";
 import { AuthState } from "@/shared/interface/sliceInterface";
-import avatar from '../../../assets/defaultImages/avatar.png';
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { ApiBaseResponse } from "@/shared/interface/commonInterface";
 import { ProfileHeaderProps } from "@/shared/interface/componentInterface";
@@ -36,10 +36,14 @@ const ProfileHead: React.FC<ProfileHeaderProps> = ({
         formData.append("profileImage", file);
 
         if (canUpdate) {
-            const res = await getUploadUrl({ file: file, folder: "profiles" });
-            const { uploadUrl, key } = res.data;
-            await uploadToS3(file, uploadUrl);
-            await dispatch(userUpdateProfileImage({ s3FileKey: key }))
+            try {
+                const res = await getUploadUrl({ file: file, folder: "profiles" });
+                if(!res.data) {
+                    throw new Error("Failed to get upload URL");
+                }
+                const { uploadUrl, key } = res.data;
+                await uploadToS3(file, uploadUrl);
+                await dispatch(userUpdateProfileImage({ s3FileKey: key }))
                 .unwrap()
                 .then((res: ApiBaseResponse<UserUpdateProfileImageResponse>) => {
                     toast.success(res.message);
@@ -47,6 +51,11 @@ const ProfileHead: React.FC<ProfileHeaderProps> = ({
                 .catch((error) => {
                     if (appConfig.isDevelopment) console.error("Profile Image Upload error : ", error);
                 });
+            } catch (error) {
+                if (appConfig.isDevelopment) console.error("Error getting upload URL : ", error);
+                toast.error("Failed to upload image. Please try again.");
+                return;
+            }
         };
     };
 

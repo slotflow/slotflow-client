@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ProviderState } from "@/shared/interface/sliceInterface";
+import { ProviderState, SetProofDataProps } from "@/shared/interface/sliceInterface";
 import { Availability } from "@/shared/interface/entityInterface/serviceAvailabilityInterface";
 
 const initialState: ProviderState = {
@@ -9,10 +9,14 @@ const initialState: ProviderState = {
   paymentSelectionOpen: false,
   isTrialPlan: false,
   paymentPageOpen: false,
-  identityProof: null,
-  serviceProof: null,
-  identityProofLoading: false,
-  serviceProofLoading: false,
+  identityProof: {
+    file: null,
+    isLoading: false,
+  },
+  serviceProof: {
+    file: null,
+    isLoading: false,
+  },
 };
 
 const providerSlice = createSlice({
@@ -41,6 +45,11 @@ const providerSlice = createSlice({
 
       state.availabilities.push(newAvailability);
     },
+    removeAvailability: (state, action: PayloadAction<string>) => {
+      const dayToRemove = action.payload;
+      if(!state.availabilities) return;
+      state.availabilities = state.availabilities.filter((item) => item.day !== dayToRemove);
+    },
     setSubscriptionPlanId: (state, action: PayloadAction<string | null>) => {
       state.planId = action.payload;
     },
@@ -53,31 +62,28 @@ const providerSlice = createSlice({
     setPaymentSelectionPage: (state, action: PayloadAction<boolean>) => {
       state.paymentSelectionOpen = action.payload;
     },
-    setProviderIdentityProofs: (state, action: PayloadAction<string | null>) => {
-      state.identityProof = action.payload
+    setProviderIdentityProofs: (state, action: PayloadAction<Partial<SetProofDataProps>>) => {
+      const { file, isLoading } = action.payload;
+      if (file !== undefined) state.identityProof.file = file;
+      if (isLoading !== undefined) state.identityProof.isLoading = isLoading;
     },
-    setProviderServiceProofs: (state, action: PayloadAction<string | null>) => {
-      state.serviceProof = action.payload
-    },
-    setIdentityProofLoading: (state, action: PayloadAction<boolean>) => {
-      state.identityProofLoading = action.payload;
-    },
-    setServiceProofLoading: (state, action: PayloadAction<boolean>) => {
-      state.serviceProofLoading = action.payload;
+    setProviderServiceProofs: (state, action: PayloadAction<Partial<SetProofDataProps>>) => {
+      const { file, isLoading } = action.payload;
+      if (file !== undefined) state.serviceProof.file = file;
+      if (isLoading !== undefined) state.serviceProof.isLoading = isLoading;
     },
   },
 });
 
 export const {
   addAvailability,
+  removeAvailability,
   setSubscriptionPlanId,
-  setSubscriptionPlanDuration,
   setPaymentSelectionPage,
-  setSubscriptionIsTrailPlan,
-  setProviderIdentityProofs,
   setProviderServiceProofs,
-  setIdentityProofLoading,
-  setServiceProofLoading
+  setProviderIdentityProofs,
+  setSubscriptionIsTrailPlan,
+  setSubscriptionPlanDuration,
 } = providerSlice.actions;
 
 export default providerSlice.reducer;

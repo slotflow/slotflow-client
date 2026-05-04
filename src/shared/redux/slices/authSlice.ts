@@ -15,6 +15,7 @@ import { UserUpdateProfileImageResponse, UserUpdateUserInfoResponse } from "@/sh
 
 const initialState: AuthState = {
     authUser: null,
+    isAuthLoading: false,
     profileImageUpdating: false,
     eventSocketId: null,
     eventSocketIsConnected: false,
@@ -50,7 +51,10 @@ const authSlice = createSlice({
         },
         setIsProofSubmitted: (state) => {
             if (state.authUser) {
-                state.authUser.isProofSubmitted = true;
+                state.authUser.isProofSubmitted = {
+                    identityProof: true,
+                    serviceProof: true
+                };
             };
         },
         setAdminVerificationState: (state, action: PayloadAction<AdminVerificationStatus>) => {
@@ -90,7 +94,7 @@ const authSlice = createSlice({
             .addCase(signin.pending, () => { })
             .addCase(signin.fulfilled, (state, action: PayloadAction<ApiBaseResponse<SigninResponse>>) => {
                 if(action.payload.data) {
-                    state.authUser = action.payload.data;
+                    state.authUser = action.payload.data.user;
                 }
             })
             .addCase(signin.rejected, () => { });

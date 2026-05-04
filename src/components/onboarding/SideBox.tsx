@@ -73,7 +73,7 @@ const SideBox: React.FC<SideBoxProps> = ({ pageNumber }) => {
 
         <div className="flex flex-col gap-6">
           {labels.map((label, index) => {
-            const step = index + 1;
+            const step = index;
             const isActive = step === activeStep;
             const isCompleted = step < activeStep;
 
@@ -109,19 +109,19 @@ const SideBox: React.FC<SideBoxProps> = ({ pageNumber }) => {
                   <span
                     className={cn(
                       'absolute xs:text-xs text-sm font-semibold',
-                      isCompleted || isActive
+                      (isCompleted || isActive)
                         ? 'text-[var(--mainColor)]'
                         : 'text-gray-600'
                     )}
                   >
-                    {step}
+                    {step + 1}
                   </span>
                 </motion.div>
 
                 <p
                   className={cn(
                     'text-sm',
-                    isActive
+                    (isCompleted || isActive)
                       ? 'font-semibold text-[var(--mainColor)]'
                       : 'text-gray-700'
                   )}

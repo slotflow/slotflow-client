@@ -1,8 +1,6 @@
 import { axiosInstance } from "@/lib/axios";
-import { parseResponse } from "../helper/parseResponse";
 import { buildQueryParams } from "../helper/buildQueryParams";
-import { ApiBaseResponse } from "../interface/commonInterface";
-import { ApiFetchFunction } from "../interface/api/commonApiInterface";
+import { ApiBaseResponse, ApiFetchFunction } from "../interface/commonInterface";
 import { Subscription } from "../interface/entityInterface/subscriptionInterface";
 import { CheckoutForSubscribePlanRequest, FetchMySubscriptionResponse, FetchProviderSubscriptionsResponse, FetchSubscriptionDetailsResponse, FetchSubscriptionsQueryParams } from "../interface/api/subscription";
 
@@ -13,7 +11,7 @@ export const fetchSubscriptions: ApiFetchFunction<
 > = async (queryParams) => {
     const query = buildQueryParams(queryParams);
     const response = await axiosInstance.get(`/subscriptions?${query}`);
-    return parseResponse<FetchProviderSubscriptionsResponse>(response.data.data);
+    return response.data.data;
 };
 
 // fetch a single subscription details

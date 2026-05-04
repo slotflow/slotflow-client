@@ -8,8 +8,8 @@ const initialState: appState = {
     filterSideBarOpen: true, // TODO make it starting with is
     isNotificationsOpen: false,
     forgotPassword: false,
-    otpRemainingTime: 0,
     otpTimerIsRunning: false,
+    otpExpiresAt: null,
 }
 
 const stateSlice = createSlice({
@@ -31,64 +31,50 @@ const stateSlice = createSlice({
         setForgotPassword: (state, action: PayloadAction<boolean>) => {
             state.forgotPassword = action.payload;
         },
-        updateTimer: (state) => {
-            if (state.otpRemainingTime > 0 && state.otpTimerIsRunning) {
-                state.otpRemainingTime -= 1;
-            } else {
-                state.otpTimerIsRunning = false;
-            }
-        },
     },
     extraReducers(builder) {
         builder.addCase(signup.pending, (state) => {
-            state.otpRemainingTime = 0;
             state.otpTimerIsRunning = false;
         })
             .addCase(signup.fulfilled, (state) => {
-                state.otpRemainingTime = 300;
+                state.otpExpiresAt = Date.now() + 300000;
                 state.otpTimerIsRunning = true;
             })
             .addCase(signup.rejected, (state) => {
-                state.otpRemainingTime = 0;
                 state.otpTimerIsRunning = false;
             });
 
         builder.addCase(verifyOtp.pending, () => { })
             .addCase(verifyOtp.fulfilled, (state) => {
-                state.otpRemainingTime = 0;
+                state.otpExpiresAt = 0;
                 state.otpTimerIsRunning = false;
             })
             .addCase(verifyOtp.rejected, () => { });
 
         builder.addCase(resendOtp.pending, (state) => {
-            state.otpRemainingTime = 0;
             state.otpTimerIsRunning = false;
         })
             .addCase(resendOtp.fulfilled, (state) => {
-                state.otpRemainingTime = 300;
+                state.otpExpiresAt = Date.now() + 300 * 1000;
                 state.otpTimerIsRunning = true;
             })
             .addCase(resendOtp.rejected, (state) => {
-                state.otpRemainingTime = 0;
                 state.otpTimerIsRunning = false;
             })
         builder.addCase(verifyEmail.pending, (state) => {
-            state.otpRemainingTime = 0;
             state.otpTimerIsRunning = false;
         })
             .addCase(verifyEmail.fulfilled, (state) => {
-                state.otpRemainingTime = 300;
+                state.otpExpiresAt = Date.now() + 300000;
                 state.otpTimerIsRunning = true;
             })
             .addCase(verifyEmail.rejected, (state) => {
-                state.otpRemainingTime = 0;
                 state.otpTimerIsRunning = false;
             })
     },
 });
 
 export const {
-    updateTimer,
     toggleTheme,
     toggleSidebar,
     setForgotPassword,

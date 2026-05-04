@@ -16,6 +16,7 @@ import { Calendar as CalendarIcon, FileSpreadsheet, NotebookText, RotateCcw } fr
 import AdminRevenueTableColumn from '@/components/table/tableColumns/AdminRevenueTableColumn';
 
 const AdminRevenueReport: React.FC = () => {
+
     const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
 
     const [pagination, setPagination] = useState<PaginationState>({
@@ -29,8 +30,8 @@ const AdminRevenueReport: React.FC = () => {
 
     const { data, isLoading, isError, error, refetch } = useQuery({
         queryFn: () => fetchRevenueReportForAdmin({
-            startDate: dateRange?.from,
-            endDate: dateRange?.to,
+            startDate: dateRange?.from ?? new Date(new Date().setDate(new Date().getDate() - 30)),
+            endDate: dateRange?.to ?? new Date(),
             page: pagination.pageIndex + 1,
             limit: pagination.pageSize
         }),
@@ -45,12 +46,12 @@ const AdminRevenueReport: React.FC = () => {
         refetchOnWindowFocus: false,
     });
 
+    console.log("data : ", data);
+
     const column = AdminRevenueTableColumn();
 
     return (
         <div className="p-2">
-            <h2 className={`text-2xl font-bold mb-4`}>Revenue Report</h2>
-
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
                 <Popover>
                     <PopoverTrigger asChild>
@@ -87,7 +88,7 @@ const AdminRevenueReport: React.FC = () => {
                         title="Generate PDF"
                         variant="default"
                         className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
-                        onClick={(e) => handleExportPDF(e, data?.data?.rows || [], "Revenue")}
+                        onClick={(e) => handleExportPDF(e, data?.items.rows || [], "Revenue")}
                     >
                         <NotebookText />
                         Generate PDF
@@ -97,7 +98,7 @@ const AdminRevenueReport: React.FC = () => {
                         title="Generate Excel"
                         variant="default"
                         className="cursor-pointerhover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
-                        onClick={(e) => handleExportExcel(e, data?.data?.rows || [], "Revenue")}
+                        onClick={(e) => handleExportExcel(e, data?.items.rows || [], "Revenue")}
                     >
                         <FileSpreadsheet />
                         Generate Excel
@@ -112,7 +113,7 @@ const AdminRevenueReport: React.FC = () => {
                     <React.Fragment>
                         <DataTable
                             columns={column}
-                            data={data?.data?.rows}
+                            data={data.items.rows}
                             pageCount={data.totalPages}
                             pagination={pagination}
                             onPaginationChange={handlePaginationChange}
@@ -121,17 +122,17 @@ const AdminRevenueReport: React.FC = () => {
                         <div className="flex flex-col items-end mt-4 w-full gap-2">
                             <p className="text-lg font-bold flex justify-between w-full md:w-1/2 border-t border-b px-4 py-2 rounded-md">
                                 <span className="text-gray-500">Grand Total:</span>
-                                <span className="text-green-700">₹ {data.data.grandTotal.toFixed(2)}</span>
+                                <span className="text-green-700">₹ {data.items.grandTotal.toFixed(2)}</span>
                             </p>
 
                             <p className="text-lg font-bold flex justify-between w-full md:w-1/2 border-t border-b px-4 py-2 rounded-md">
                                 <span className="text-gray-500">Grand Discount:</span>
-                                <span className="text-yellow-700">₹ {data.data.grandDiscount.toFixed(2)}</span>
+                                <span className="text-yellow-700">₹ {data.items.grandDiscount.toFixed(2)}</span>
                             </p>
 
                             <p className="text-lg font-bold flex justify-between w-full md:w-1/2 border-t border-b px-4 py-2 rounded-md">
                                 <span className="text-gray-500">Total Initial Amount:</span>
-                                <span className="text-blue-700">₹ {data.data.grandInitalAmount.toFixed(2)}</span>
+                                <span className="text-blue-700">₹ {data.items.grandInitalAmount.toFixed(2)}</span>
                             </p>
                         </div>
                     </React.Fragment>

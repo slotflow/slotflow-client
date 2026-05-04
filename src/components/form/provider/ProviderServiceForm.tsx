@@ -1,6 +1,6 @@
+import { Loader } from "lucide-react";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import { ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { appConfig } from "@/shared/config/env";
@@ -13,12 +13,16 @@ import SelectField from "@/components/form/SelectField";
 import { fetchServicesByCategory } from "@/shared/apis/service";
 import { OptionType } from "@/shared/interface/commonInterface";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
+import { ProviderServiceFormProps } from "@/shared/interface/componentInterface";
 import { AdminVerificationStatus, ServiceCategory, ServiceMode, ServiceType } from "@/shared/interface/enums";
 import { providerCreateServiceDetailsZodSchema, ProviderCreateServiceDetailsFormType } from "@/shared/zod/providerZod";
 import { serviceCategoryOptions, serviceModeOptions, serviceTypeOptions, groupOptions, redirectPaths } from "@/shared/utils/constants";
 import { providerCreateServiceDetails, providerFetchServiceDetails, providerUpdateServiceDetails } from "@/shared/apis/providerService";
 
-const ProviderServiceForm: React.FC = () => {
+const ProviderServiceForm: React.FC<ProviderServiceFormProps> = ({
+    isUpdating = false,
+    heading
+}) => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
@@ -69,7 +73,7 @@ const ProviderServiceForm: React.FC = () => {
                     label: srv.serviceName,
                     value: srv._id
                 }));
-                if(!transformed) return;
+                if (!transformed) return;
                 setServices(transformed);
             } catch (error) {
                 if (appConfig.isDevelopment) {
@@ -83,16 +87,14 @@ const ProviderServiceForm: React.FC = () => {
     useEffect(() => {
         if (!authUser) return;
 
-        const shouldFetchDetails =
-            authUser.isServiceDetailsAdded &&
-            authUser.adminVerificationStatus !== AdminVerificationStatus.NOT_REQUESTED;
+        const shouldFetchDetails = isUpdating && authUser.adminVerificationStatus !== AdminVerificationStatus.NOT_REQUESTED;
 
         if (!shouldFetchDetails) return;
 
         async function fetchOldServiceDetails() {
             const res = await providerFetchServiceDetails();
             const result = res.data;
-            if(!result) return;
+            if (!result) return;
             reset({
                 _id: result._id,
                 isGroupService: result.isGroupService,
@@ -110,21 +112,23 @@ const ProviderServiceForm: React.FC = () => {
         }
 
         fetchOldServiceDetails();
-    }, [authUser?.isServiceDetailsAdded, reset]);
+    }, [isUpdating, reset]);
 
     const onSubmit = async (data: ProviderCreateServiceDetailsFormType) => {
         try {
-            if (authUser?.isServiceDetailsAdded) {
+            if (isUpdating) {
                 const res = await providerUpdateServiceDetails(data);
                 if (res.success) {
+                    if (!authUser?.isOnboardingCompleted) {
+                        navigate(redirectPaths.PROVIDER_APPROVAL_PENDING);
+                    }
                     toast.success(res.message);
-                    navigate(redirectPaths.PROVIDER_APPROVAL_PENDING);
                 }
             } else {
                 const res = await dispatch(providerCreateServiceDetails(data)).unwrap();
                 if (res.success) {
+                    navigate(redirectPaths.ONBOARDING_AVAILABILITY);
                     toast.success(res.message);
-                    navigate(redirectPaths.PROVIDER_AVAILABILITY);
                 }
             }
         } catch (error) {
@@ -137,9 +141,11 @@ const ProviderServiceForm: React.FC = () => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <h4 className="text-xl lg:text-2xl font-semibold text-start">
-                {authUser?.isServiceDetailsAdded ? "Update your service details" : "Tell us about your service"}
-            </h4>
+            {heading && (
+                <h4 className="text-xl lg:text-2xl font-semibold text-start">
+                    {heading}
+                </h4>
+            )}
             <div className="md:flex w-full space-y-6 space-x-2">
                 <div className="space-y-4 w-full space-x-2 pt-6">
                     <SelectField<ProviderCreateServiceDetailsFormType, ServiceCategory>
@@ -271,8 +277,14 @@ const ProviderServiceForm: React.FC = () => {
                     disabled={!isValid || isSubmitting || isLoading}
                     className="cursor-pointer w-full md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
                 >
-                    {(isSubmitting || isLoading) ? "Loading" : authUser?.isServiceDetailsAdded ? "Update" : "Submit"}
-                    <ChevronRight />
+                    {isSubmitting ? (
+                        <>
+                            <Loader className="animate-spin size-4 mr-2" />
+                            {(isUpdating && isSubmitting) ? "Updating" : "Submitting"}
+                        </>
+                    ) : (
+                        isUpdating ? "Update" : "Submit"
+                    )}
                 </Button>
             </div>
 

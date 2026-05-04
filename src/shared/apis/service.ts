@@ -6,10 +6,8 @@ import {
 } from "../interface/api/service";
 import { axiosInstance } from "@/lib/axios";
 import { ServiceCategory } from "../interface/enums";
-import { parseResponse } from "../helper/parseResponse";
 import { buildQueryParams } from "../helper/buildQueryParams";
-import { ApiFetchFunction } from "../interface/api/commonApiInterface";
-import { FetchFunctionBaseQueryParams, ApiBaseResponse } from "../interface/commonInterface";
+import { FetchFunctionBaseQueryParams, ApiBaseResponse, ApiFetchFunction } from "../interface/commonInterface";
 
 export const fetchServices: ApiFetchFunction<
     FetchServicesResponse,
@@ -17,7 +15,7 @@ export const fetchServices: ApiFetchFunction<
 > = async (queryParams) => {
     const query = buildQueryParams(queryParams);
     const response = await axiosInstance.get(`/services?${query}`);
-    return parseResponse<FetchServicesResponse>(response.data.data);
+    return response.data.data;
 }
 
 export const createService = async (data: CreateServiceRequest): Promise<ApiBaseResponse> => {

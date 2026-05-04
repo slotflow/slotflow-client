@@ -32,8 +32,10 @@ const EmailVerificationForm: React.FC = () => {
         try {
             const res = await dispatch(verifyEmail({ email: data.email })).unwrap();
             if (res.success) {
-                toast.success(res.message);
+                // Navigate immediately for instant UX
                 navigate("verify/otp");
+                // Show toast after navigation (toast uses portal so still visible)
+                toast.success(res.message);
             } else {
                 toast.error(res.message);
             }
@@ -61,7 +63,12 @@ const EmailVerificationForm: React.FC = () => {
                                 error={errors.email?.message}
                                 required={true}
                             />
-                            <FormButton text="Submit" loading={isSubmitting} disabled={isSubmitting || !isValid} />
+                            <FormButton
+                                text={isSubmitting ? "Verifying" : "Verify"}
+                                loading={isSubmitting}
+                                disabled={isSubmitting || !isValid}
+                                title="Verify Email"
+                            />
                         </form>
 
                         <p className="mt-6 flex justify-between text-xs md:text-sm/6 text-[var(--textTwo)] px-2">

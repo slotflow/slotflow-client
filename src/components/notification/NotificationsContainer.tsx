@@ -38,7 +38,7 @@ const NotificationsContainer: React.FC = () => {
         gcTime: 10 * 60 * 1000,
     });
 
-    const notifications = notificationsData?.pages.flatMap((page) => page.data || []) || [];
+    const notifications = notificationsData?.pages.flatMap((page) => page.items || []) || [];
 
     const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
         const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;

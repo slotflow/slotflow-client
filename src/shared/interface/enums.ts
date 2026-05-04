@@ -214,3 +214,16 @@ export enum RefundFor {
     CANCEL_BOOKING = "CANCEL_BOOKING",
     CANCEL_SUBSCRIPTION = "CANCEL_SUBSCRIPTION",
 }
+
+export enum HearAboutUsOptionValue {
+  GOOGLE = "google",
+  REFERRAL = "referral",
+  YOUTUBE = "youtube",
+  LINKEDIN = "linkedin",
+  TWITTER = "twitter",
+  INSTAGRAM = "instagram",
+  WHATSAPP = "whatsapp",
+  FACEBOOK = "facebook",
+  THREADS = "threads",
+  OTHER = "other",
+}

@@ -16,7 +16,7 @@ const AccountPage: React.FC = () => {
     const { authUser } = useSelector((state: RootState) => state.auth);
     const [selectedTab, setSelectedTab] = useState<string>("tab1");
 
-    const isProvider = authUser?.role === Role.ADMIN;
+    const isProvider = authUser?.role === Role.PROVIDER;
 
     if (!authUser) return <DataFetchingError message="User not found" />;
 

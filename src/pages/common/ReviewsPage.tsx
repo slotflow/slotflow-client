@@ -81,7 +81,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
     ), { autoClose: false });
   };
 
-  const reviews = data?.pages.flatMap((page) => (page.data ? page.data : [])) || [];
+  const reviews = data?.pages.flatMap((page) => (page.items ? page.items : [])) || [];
 
   return (
     <div className={`h-full ${isPage ? "p-2" : "mt-2 md:mt-0"}`}>

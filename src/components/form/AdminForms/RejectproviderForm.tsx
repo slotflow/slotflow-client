@@ -61,15 +61,15 @@ const RejectproviderForm: React.FC<RejectproviderFormProps> = ({
       }
 
       const res = await adminRejectProvider({ providerId: rejectProviderId, ...data });
-        if (res.success) {
-            toast.success(res.message);
-            reset();
-            handleCloseForm();
-            dispatch(setAdminVerificationState(AdminVerificationStatus.REJECTED));
-            queryClient.invalidateQueries({ queryKey: ["providers"] });
-        } else {
-          toast.error(res.message);
-        }    
+      if (res.success) {
+        toast.success(res.message);
+        reset();
+        handleCloseForm();
+        dispatch(setAdminVerificationState(AdminVerificationStatus.REJECTED));
+        queryClient.invalidateQueries({ queryKey: ["providers"] });
+      } else {
+        toast.error(res.message);
+      }
     } catch (error) {
       if (appConfig.isDevelopment) {
         console.log("Error while rejecting provider : ", error);
@@ -132,9 +132,10 @@ const RejectproviderForm: React.FC<RejectproviderFormProps> = ({
 
         <div className="space-y-2">
           <FormButton
-            text="Confirm"
+            text={isSubmitting ? "Rejecting..." : "Reject Provider"}
             loading={isSubmitting}
             disabled={isSubmitting || !isValid}
+            title="Reject Provider"
           />
           <Button
             title="Cancel"

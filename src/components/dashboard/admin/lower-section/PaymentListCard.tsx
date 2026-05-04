@@ -13,7 +13,7 @@ const PaymentListCard: React.FC = () => {
     queryFn: () => fetchPayments({ limit: 5, sortBy: 'createdAt', sortOrder: 'desc' }),
   });
 
-  const payments = data?.data || [];
+  const payments = data?.items || [];
 
   return (
     <DashboardDataCard

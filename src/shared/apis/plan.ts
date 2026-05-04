@@ -5,10 +5,8 @@ import {
     ChangePlanBlockStatusRequest,
     ProviderFetchPlansResponse,
 } from "../interface/api/plan";
-import { parseResponse } from "../helper/parseResponse";
 import { buildQueryParams } from "../helper/buildQueryParams";
-import { ApiFetchFunction } from "../interface/api/commonApiInterface";
-import { FetchFunctionBaseQueryParams, ApiBaseResponse } from "../interface/commonInterface";
+import { FetchFunctionBaseQueryParams, ApiBaseResponse, ApiFetchFunction } from "../interface/commonInterface";
 
 export const adminFetchAllPlans: ApiFetchFunction<
     AdminFetchAllPlansResponse,
@@ -16,7 +14,7 @@ export const adminFetchAllPlans: ApiFetchFunction<
 > = async (queryParams) => {
     const query = buildQueryParams(queryParams);
     const response = await axiosInstance.get(`/plans?${query}`);
-    return parseResponse<AdminFetchAllPlansResponse>(response.data.data);
+    return response.data.data;
 };
 
 export const createPlan = async (formData: CreatePlanRequest): Promise<ApiBaseResponse> => {

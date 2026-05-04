@@ -35,37 +35,48 @@ const LoginForm: React.FC = () => {
     });
 
     const handleNavigation = (data: SigninResponse) => {
-        if (data.role === Role.ADMIN) {
+        const user = data.user;
+        if (user.role === Role.ADMIN) {
+            console.log("one")
             navigate("/admin/dashboard", { replace: true });
             return;
         }
 
-        if (!data.hasSelectedRole) {
-            navigate("/onboarding/role-select", { replace: true });
+        if (!user.hasSelectedRole) {
+            console.log("two")
+            navigate("/onboarding/setup", { replace: true });
             return;
         }
 
-        if (!data.isOnboardingCompleted) {
+        if (!user.isOnboardingCompleted) {
+            console.log("three")
             // Granular redirect to the correct onboarding step
-            if (!data.isAddressAdded && !data.isAddressVerified) {
+            if (!user.isAddressAdded && !user.isAddressVerified) {
+                console.log("four")
                 navigate("/onboarding/address", { replace: true });
-            } else if (!data.isServiceDetailsAdded && !data.isServiceDetailsVerified) {
+            } else if (!user.isServiceDetailsAdded && !user.isServiceDetailsVerified) {
+                console.log("five")
                 navigate("/onboarding/service", { replace: true });
-            } else if (!data.isServiceAvailabilityAdded && !data.isAvailabilityVerified) {
+            } else if (!user.isServiceAvailabilityAdded && !user.isAvailabilityVerified) {
+                console.log("six")
                 navigate("/onboarding/availability", { replace: true });
-            } else if (!data.isProofSubmitted && !data.isProofsVerified) {
+            } else if (!user.isProofSubmitted && !user.isProofsVerified) {
+                console.log("seven")
                 navigate("/onboarding/proofs", { replace: true });
-            } else if (!data.isAdminVerified) {
+            } else if (!user.isAdminVerified) {
+                console.log("eight")
                 navigate("/onboarding/pending", { replace: true });
             } else {
+                console.log("nine")
                 navigate("/onboarding/address", { replace: true }); // fallback
             }
+            console.log("ten")
             return;
         }
 
-        if (data.role === Role.USER) {
+        if (user.role === Role.USER) {
             navigate("/user", { replace: true });
-        } else if (data.role === Role.PROVIDER) {
+        } else if (user.role === Role.PROVIDER) {
             navigate("/provider", { replace: true });
         }
     };
@@ -86,8 +97,8 @@ const LoginForm: React.FC = () => {
         try {
             const res = await dispatch(signin({ ...data })).unwrap();
             if (res.success) {
+                handleNavigation(res.data as SigninResponse);
                 toast.success(res.message);
-                handleNavigation(res.data);
             } else toast.error(res.message);
         } catch (error) {
             if (appConfig.isDevelopment) {
@@ -137,7 +148,12 @@ const LoginForm: React.FC = () => {
                                     Forgot Password ?
                                 </Button>
 
-                                <FormButton text="Sign In" loading={isSubmitting} disabled={isSubmitting || !isValid} />
+                                <FormButton
+                                    text={isSubmitting ? "Signing In" : "Sign In"}
+                                    loading={isSubmitting}
+                                    disabled={isSubmitting || !isValid}
+                                    title="Sign In"
+                                />
                             </fieldset>
                         </form>
 

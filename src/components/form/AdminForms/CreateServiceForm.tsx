@@ -92,9 +92,10 @@ const CreateServiceForm: React.FC<CreateServiceFormProps> = ({
 
         <div className="space-y-2">
           <FormButton
-            text="Save"
+            text={isSubmitting ? "Saving" : "Save"}
             loading={isSubmitting}
             disabled={isSubmitting || !isValid}
+            title="Save"
           />
           <Button
             title="Cancel"

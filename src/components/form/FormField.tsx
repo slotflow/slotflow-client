@@ -125,7 +125,7 @@ const FormField = <T extends FieldValues>({
               onClick={() => setShow(!show)}
               className="absolute inset-y-0 right-0 pr-3 flex items-center text-muted-foreground"
             >
-              {show ? <EyeOff /> : <Eye />}
+              {show ? <Eye /> : <EyeOff />}
             </button>
           )}
         </div>

@@ -1,4 +1,6 @@
 import {
+    PreBoardingRequest,
+    PreBoardingResponse,
     UserUpdateUserInfoRequest,
     UserUpdateUserInfoResponse,
     AdminfetchAllUsersResponse,
@@ -7,19 +9,16 @@ import {
     UserUpdateProfileImageResponse,
     UserFetchUserProfileDetailsResponse,
     AdminFetchUserProfileDetailsResponse,
-    setRoleRequest,
-    setRoleResponse,
 } from "../interface/api/user";
 import { axiosInstance } from "@/lib/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { parseResponse } from "../helper/parseResponse";
 import { buildQueryParams } from "../helper/buildQueryParams";
 import { FetchUsersForChatSidebarResponse } from "../interface/api/user";
 import { ApiBaseResponse, ApiFetchFunction, FetchFunctionBaseQueryParams } from "../interface/commonInterface";
 
-// user set role
-export const setRole = async (data: setRoleRequest): Promise<ApiBaseResponse<setRoleResponse>> => {
-    const response = await axiosInstance.patch('/users/me/role', data);
+// user preboarding
+export const postPreBoarding = async (payload: PreBoardingRequest): Promise<ApiBaseResponse<PreBoardingResponse>> => {
+    const response = await axiosInstance.patch("/users/me/preboarding", payload);
     return response.data;
 }
 
@@ -58,7 +57,7 @@ export const fetchUsers: ApiFetchFunction<
 > = async (queryParams) => {
     const query = buildQueryParams(queryParams);
     const response = await axiosInstance.get(`/users?${query}`);
-    return parseResponse<AdminfetchAllUsersResponse>(response.data.data);
+    return response.data.data;
 }
 
 // admin changing user block status

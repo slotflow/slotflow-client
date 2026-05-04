@@ -28,13 +28,13 @@ const TagInput: React.FC<TagInputProps> = ({ value, onChange }) => {
           className="border rounded-md px-3 py-2 w-full text-sm"
         />
         <Button
-          title="Add"
+          title="Create Tag"
           type="button"
           variant="default"
           onClick={addTag}
           className="cursor-pointer md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center mt-2"
         >
-          Add
+          Create
         </Button>
       </div>
 

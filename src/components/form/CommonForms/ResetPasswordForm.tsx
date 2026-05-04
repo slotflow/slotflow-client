@@ -84,7 +84,12 @@ const ResetPasswordForm: React.FC = () => {
                                 }
                             />
 
-                            <FormButton text="Update" loading={isSubmitting} disabled={isSubmitting || !isValid} />
+                            <FormButton 
+                            text={isSubmitting ? "Updating" : "Update"} 
+                            loading={isSubmitting} 
+                            disabled={isSubmitting || !isValid} 
+                            title="Update"
+                            />
                         </form>
 
                         <p className="mt-6 flex justify-between text-xs md:text-sm/6 text-[var(--textTwo)] px-2">

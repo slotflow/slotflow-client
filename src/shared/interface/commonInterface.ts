@@ -5,10 +5,10 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ChartConfig } from "@/components/ui/chart";
 import { Plan } from "./entityInterface/planInterface";
 import { User } from "./entityInterface/userInterface";
-import { PlanName, Role, ServiceCategory, SubscriptionValidity } from "./enums";
+import { Review } from "./entityInterface/reviewInterface";
 import { Booking } from "./entityInterface/bookingInterface";
 import { Message } from "./entityInterface/message.interface";
-import { Review } from "./entityInterface/reviewInterface";
+import { HearAboutUsOptionValue, PlanName, Role, ServiceCategory, SubscriptionValidity } from "./enums";
 
 // Common Response interface
 export interface ApiBaseResponse<T = null> {
@@ -19,12 +19,10 @@ export interface ApiBaseResponse<T = null> {
 
 // Paginated response api return data interface
 export interface ApiPaginatedResponse<T> {
-  data?: T[];
+  items?: T[];
   totalCount?: number;
   currentPage?: number;
   totalPages?: number;
-  success: boolean;
-  message: string;
 }
 
 // InfoDisplay component props interface
@@ -378,3 +376,10 @@ export interface TabItem {
 
 // Review form values interface
 export type ReviewFormValues = Pick<Review, "reviewText" | "rating">;
+
+// Hear about us options interface
+export type HearAboutUsOptions = {
+    label: string
+    value: HearAboutUsOptionValue
+    icon: React.ComponentType<{ className?: string }>
+}

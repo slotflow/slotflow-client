@@ -24,7 +24,7 @@ export type AdminFetchRevenueReportRow = Pick<Payment, "createdAt" | "discountAm
 
 // response type of admin fetch revenue report api
 export interface AdminFetchRevenueReportResponse {
-  data: {
+  items: {
     rows: AdminFetchRevenueReportRow[];
     grandTotal: number;
     grandDiscount: number;

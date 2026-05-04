@@ -1,14 +1,19 @@
-import { Role } from "../enums";
+import { HearAboutUsOptionValue, Role } from "../enums";
 import { User } from "../entityInterface/userInterface";
 import { ProviderCardsFilters } from "../commonInterface";
+import { ProviderProfile } from "../entityInterface/providerProfileInterface";
 
-// request type of the setRole api
-export interface setRoleRequest {
-    role: Role
-};
+// request type for the user preboarding api
+export type PreBoardingRequest = {
+    role: Role;
+    whereDidHearAboutUs: HearAboutUsOptionValue;
+    referralCode?: string
+}
 
 // response type of the setRole api
-export type setRoleResponse = Pick<User, "hasSelectedRole" | "isOnboardingCompleted">;
+export type PreBoardingResponse = Pick<User, "hasSelectedRole" | "isOnboardingCompleted" | "role"> & {
+    adminVerificationStatus: ProviderProfile["adminVerificationStatus"] | null 
+};
 
 // response type of the user profile details fetching api
 export type UserFetchUserProfileDetailsResponse = Pick<User, "username" | "email" | "isBlocked" | "phone" | "createdAt" | "updatedAt">;

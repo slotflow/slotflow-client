@@ -12,7 +12,7 @@ const GenerateTimeSlots: React.FC<GenerateTimeSlotsProps> = ({
     control
 }) => {
     return (
-        <div className="w-10/12 md:w-full space-y-6 mx-auto md:px-6">
+        <div className="w-10/12 md:w-full space-y-6 mx-auto">
             {timeSlots && timeSlots.length > 0 && (
                 <div className="mt-6">
                     <div className='flex items-center mb-4 justify-between md:justify-start'>

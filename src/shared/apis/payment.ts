@@ -1,5 +1,4 @@
 import { axiosInstance } from "@/lib/axios";
-import { parseResponse } from "../helper/parseResponse";
 import { buildQueryParams } from "../helper/buildQueryParams";
 import { Payment } from "../interface/entityInterface/paymentInterface";
 import { ApiBaseResponse, ApiFetchFunction } from "../interface/commonInterface";
@@ -18,20 +17,14 @@ export const fetchPayments: ApiFetchFunction<
 > = async (queryParams) => {
     const query = buildQueryParams(queryParams);
     const response = await axiosInstance.get(`/payments?${query}`);
-    return parseResponse<FetchPaymentsResponse>(response.data.data);
+    return response.data.data;
 };
 
 // admin fetch revenue report
 export const fetchRevenueReportForAdmin = async (payload: AdmminFetchRevenueReportRequest): Promise<AdminFetchRevenueReportResponse> => {
-    const { endDate, startDate } = payload;
     const query = buildQueryParams(payload);
-    const response = await axiosInstance.get(`/payments/reports/revenue${query ? `?${query}` : ''}`, {
-        params: {
-            startDate: startDate?.toISOString(),
-            endDate: endDate?.toISOString(),
-        }
-    });
-    return response.data.data as AdminFetchRevenueReportResponse;
+    const response = await axiosInstance.get(`/payments/reports/revenue${query ? `?${query}` : ''}`);
+    return response.data.data;
 }
 
 // create stripe account

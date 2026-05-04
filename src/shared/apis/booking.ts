@@ -1,5 +1,4 @@
 import { axiosInstance } from "@/lib/axios";
-import { parseResponse } from "../helper/parseResponse";
 import { buildQueryParams } from "../helper/buildQueryParams";
 import { Booking } from "../interface/entityInterface/bookingInterface";
 import { ApiBaseResponse, ApiFetchFunction } from "../interface/commonInterface";
@@ -18,7 +17,7 @@ export const fetchBookings: ApiFetchFunction<
 > = async (queryParams) => {
     const query = buildQueryParams(queryParams);
     const response = await axiosInstance.get(`/bookings/?${query}`);
-    return parseResponse(response.data.data);
+    return response.data.data;
 }
 
 // fetch a single booking details

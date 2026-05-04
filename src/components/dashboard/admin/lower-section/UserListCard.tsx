@@ -11,7 +11,7 @@ const UserListCard: React.FC = () => {
     queryFn: () => fetchUsers({ limit: 5, sortBy: 'createdAt', sortOrder: 'desc' }),
   });
 
-  const users = data?.data || [];
+  const users = data?.items || [];
 
   return (
     <DashboardDataCard
