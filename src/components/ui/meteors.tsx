@@ -52,7 +52,7 @@ export const Meteors = ({
   }, [number, minDelay, maxDelay, minDuration, maxDuration, angle])
 
   return (
-    <React.Fragment>
+    <>
       {[...meteorStyles].map((style, idx) => (
         // Meteor Head
         <span
@@ -67,6 +67,6 @@ export const Meteors = ({
           <div className="pointer-events-none absolute top-1/2 -z-10 h-px w-[50px] -translate-y-1/2 bg-gradient-to-r from-zinc-500 to-transparent" />
         </span>
       ))}
-    </React.Fragment>
+    </>
   )
 }

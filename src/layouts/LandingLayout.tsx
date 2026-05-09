@@ -10,7 +10,7 @@ import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { connectEventSocket } from "@/shared/socket/eventSocketThunk";
 import { useNotificationPermissionGate } from "@/hooks/systemHooks/useNotificationPermissionGate";
 
-const LandingLayout = () => {
+const LandingLayout: React.FC = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
@@ -29,8 +29,8 @@ const LandingLayout = () => {
         email: rawUser.email,
 
         role: rawUser.role,
-        hasSelectedRole: rawUser.hasSelectedRole,
-        isOnboardingCompleted: rawUser.isOnboardingCompleted,
+        onboardingStatus: rawUser.onboardingStatus,
+        onboardingType: rawUser.onboardingType,
 
         isBlocked: rawUser.isBlocked,
         isLoggedIn: true,
@@ -77,11 +77,11 @@ const LandingLayout = () => {
   }, [authUser, dispatch]);
 
   return (
-    <React.Fragment>
+    <>
       <Header />
       <Outlet />
       <FooterBar />
-    </React.Fragment>
+    </>
   )
 }
 

@@ -52,13 +52,13 @@ const ProviderProofs: React.FC<ProviderProofsProps> = ({
                         onClick={() => setExpandIdentity(!expandIdentity)}
                     >
                         {expandIdentity ? (
-                            <React.Fragment>
+                            <>
                                 <Minimize2 className="h-4 w-4 mr-1" /> Minimize
-                            </React.Fragment>
+                            </>
                         ) : (
-                            <React.Fragment>
+                            <>
                                 <ImageUpscale className="h-4 w-4 mr-1" /> Maximize
-                            </React.Fragment>
+                            </>
                         )}
                     </Button>
                 </CardHeader>
@@ -85,13 +85,13 @@ const ProviderProofs: React.FC<ProviderProofsProps> = ({
                         onClick={() => setExpandService(!expandService)}
                     >
                         {expandService ? (
-                            <React.Fragment>
+                            <>
                                 <Minimize2 className="h-4 w-4 mr-1" /> Minimize
-                            </React.Fragment>
+                            </>
                         ) : (
-                            <React.Fragment>
+                            <>
                                 <ImageUpscale className="h-4 w-4 mr-1" /> Maximize
-                            </React.Fragment>
+                            </>
                         )}
                     </Button>
                 </CardHeader>

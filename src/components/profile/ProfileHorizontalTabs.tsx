@@ -27,7 +27,7 @@ const ProfileHorizontalTabs: React.FC<ProfileHorizontalTabsComponentProps> = ({
     }, [isAdmin, tabArray]);
 
     return (
-        <React.Fragment>
+        <>
             <div className="hidden md:block w-2/12">
                 <ScrollArea className="h-[calc(100vh-150px)]">
                     <div className="flex flex-col space-y-2 px-2">
@@ -62,7 +62,7 @@ const ProfileHorizontalTabs: React.FC<ProfileHorizontalTabsComponentProps> = ({
                     </SelectContent>
                 </Select>
             </div>
-        </React.Fragment>
+        </>
     );
 };
 

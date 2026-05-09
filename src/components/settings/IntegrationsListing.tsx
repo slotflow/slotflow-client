@@ -6,7 +6,7 @@ import { Card, CardContent } from '../ui/card';
 
 const IntegrationsListing: React.FC = () => {
     return (
-        <React.Fragment>
+        <>
             <div className='flex-none'>
                 <h3 className='text-lg font-medium'>Integrations</h3>
                 <p className='text-muted-foreground text-sm'>Integrations description</p>
@@ -34,7 +34,7 @@ const IntegrationsListing: React.FC = () => {
                     </div>
                 </CardContent>
             </Card>
-        </React.Fragment>
+        </>
     )
 }
 

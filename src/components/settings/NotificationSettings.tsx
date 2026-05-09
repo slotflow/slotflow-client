@@ -6,7 +6,7 @@ import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 
 const NotificationSettings: React.FC = () => {
     return (
-        <React.Fragment>
+        <>
             <div className='flex-none'>
                 <h3 className='text-lg font-medium'>Notifications</h3>
                 <p className='text-muted-foreground text-sm'>Notifications description</p>
@@ -69,7 +69,7 @@ const NotificationSettings: React.FC = () => {
                     </div>
                 </div>
             </div>
-        </React.Fragment>
+        </>
     )
 }
 

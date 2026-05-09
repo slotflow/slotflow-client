@@ -138,7 +138,7 @@ const SignUpForm: React.FC = () => {
                             Already a Slotflow member?
                             <span
                                 className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
-                                onClick={() => navigate('/signin')}
+                                onClick={() => navigate(redirectPaths.LOGIN)}
                             >
                                 {" "}Sign In
                             </span>

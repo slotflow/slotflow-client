@@ -1322,7 +1322,8 @@ export const redirectPaths: Record<string, string> = {
   VERIFY_EMAIL: "/auth/verify/email",
   RESET_PASSWORD: "/auth/reset/password",
   VERIFY_OTP: "/auth/verify/otp",
-  ONBOARDING_PRE_BOARDING: "/onboarding/setup",
+  PRE_BOARDING_ROLE: "/preboarding/role",
+  PRE_BOARDING_HEAR_ABOUT_US: "/preboarding/hear-about-us",
   ONBOARDING_ADDRESS: "/onboarding/address",
   ONBOARDING_SERVICE: "/onboarding/service",
   ONBOARDING_AVAILABILITY: "/onboarding/availability",
@@ -1412,3 +1413,10 @@ export const onboardingContent = {
     description3: "Your profile is under review. This may take up to 24 hours."
   },
 };
+
+export const defaultButtonClassName = "cursor-pointer transition-colors duration-300 hover:text-white hover:bg-[var(--mainColor)]";
+
+export const destructiveButtonClassName = "cursor-pointer transition-colors duration-300 hover:text-white hover:bg-red-500";
+
+// main actions : default
+// side actions : secondary

@@ -16,7 +16,7 @@ import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { ProviderServiceFormProps } from "@/shared/interface/componentInterface";
 import { AdminVerificationStatus, ServiceCategory, ServiceMode, ServiceType } from "@/shared/interface/enums";
 import { providerCreateServiceDetailsZodSchema, ProviderCreateServiceDetailsFormType } from "@/shared/zod/providerZod";
-import { serviceCategoryOptions, serviceModeOptions, serviceTypeOptions, groupOptions, redirectPaths } from "@/shared/utils/constants";
+import { serviceCategoryOptions, serviceModeOptions, serviceTypeOptions, groupOptions, redirectPaths, defaultButtonClassName } from "@/shared/utils/constants";
 import { providerCreateServiceDetails, providerFetchServiceDetails, providerUpdateServiceDetails } from "@/shared/apis/providerService";
 
 const ProviderServiceForm: React.FC<ProviderServiceFormProps> = ({
@@ -275,7 +275,7 @@ const ProviderServiceForm: React.FC<ProviderServiceFormProps> = ({
                     type="submit"
                     variant="default"
                     disabled={!isValid || isSubmitting || isLoading}
-                    className="cursor-pointer w-full md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
+                    className={defaultButtonClassName}
                 >
                     {isSubmitting ? (
                         <>

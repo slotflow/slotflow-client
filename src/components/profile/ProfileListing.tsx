@@ -68,7 +68,7 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
                     {adminLookingProvider && (() => {
                         const providerProfileData = data as (AdminFetchProviderProfileDetailsResponse);
                         return (
-                            <React.Fragment>
+                            <>
                                 <InfoDisplayComponent label="Username" value={providerProfileData.username} />
                                 <InfoDisplayComponent label="Email" value={providerProfileData.email} copyToClipboard={copyToClipboard} />
                                 <InfoDisplayComponent label="Phone Number" value={providerProfileData.phone ?? 'Not yet added'} />
@@ -81,7 +81,7 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
                                 <InfoDisplayComponent label="Availability Verified" value={providerProfileData.isAvailabilityVerified} isBoolean={true} />
                                 <InfoDisplayComponent label="Proofs Verified" value={providerProfileData.isProofsVerified} isBoolean={true} />
                                 <InfoDisplayComponent label="Joined On" value={providerProfileData.createdAt} isDate isLast />
-                            </React.Fragment>
+                            </>
                         );
                     })()}
 
@@ -89,12 +89,12 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
                     {adminLookingUser && (() => {
                         const userProfileData = data as (AdminFetchUserProfileDetailsResponse)
                         return (
-                            <React.Fragment>
+                            <>
                                 <InfoDisplayComponent label="Username" value={userProfileData.username} />
                                 <InfoDisplayComponent label="Email" value={userProfileData.email} copyToClipboard={copyToClipboard} />
                                 <InfoDisplayComponent label="Phone Number" value={userProfileData.phone ?? 'Not yet added'} />
                                 <InfoDisplayComponent label="Account Blocked" value={userProfileData.isBlocked} isBoolean={true} isLast />
-                            </React.Fragment>
+                            </>
                         )
                     })()}
 
@@ -102,7 +102,7 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
                     {providerSelf && (() => {
                         const providerProfileData = data as (ProviderFetchMyProfileDetailsResponse);
                         return (
-                            <React.Fragment>
+                            <>
                                 <InfoDisplayComponent label="Username" value={authUser?.username || providerProfileData.username} />
                                 <InfoDisplayComponent label="Email" value={authUser?.email || providerProfileData.email} />
                                 <InfoDisplayComponent label="Phone Number" value={authUser?.phone || providerProfileData.phone || 'Not yet added'} />
@@ -119,7 +119,7 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
                                 <InfoDisplayComponent label="Service Details Verified" value={providerProfileData.isServiceDetailsVerified} isBoolean={true} />
                                 <InfoDisplayComponent label="Availability Verified" value={providerProfileData.isAvailabilityVerified} isBoolean={true} />
                                 <InfoDisplayComponent label="Proofs Verified" value={providerProfileData.isProofsVerified} isBoolean={true} isLast />
-                            </React.Fragment>
+                            </>
                         );
                     })()}
 
@@ -127,12 +127,12 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
                     {userLookingProvider && (() => {
                         const providerProfileData = data as (UserFetchProviderProfileDetailsResponse);
                         return (
-                            <React.Fragment>
+                            <>
                                 <InfoDisplayComponent label="Username" value={providerProfileData.username} />
                                 <InfoDisplayComponent label="Email" value={providerProfileData.email} copyToClipboard={copyToClipboard} />
                                 <InfoDisplayComponent label="Phone Number" value={providerProfileData.phone ?? 'Not yet added'} />
                                 <InfoDisplayComponent label="Slotflow Trusted" value={providerProfileData.trustedBySlotflow} isBoolean={true} isLast />
-                            </React.Fragment>
+                            </>
                         );
                     })()}
 
@@ -140,13 +140,13 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
                     {userSelf && (() => {
                         const userProfileData = data as (UserFetchUserProfileDetailsResponse);
                         return (
-                            <React.Fragment>
+                            <>
                                 <InfoDisplayComponent label="Username" value={authUser?.username || userProfileData?.username} />
                                 <InfoDisplayComponent label="Email" value={authUser?.email || userProfileData?.email} />
                                 <InfoDisplayComponent label="Phone Number" value={authUser?.phone || userProfileData?.phone} />
                                 <InfoDisplayComponent label="Joined On" value={userProfileData?.createdAt} isDate />
                                 <InfoDisplayComponent label="Account Blocked" value={userProfileData?.isBlocked} isBoolean={true} />
-                            </React.Fragment>
+                            </>
                         );
                     })()}
 

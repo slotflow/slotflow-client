@@ -23,7 +23,7 @@ const AppContent = () => {
   }, []);
 
   return (
-    <React.Fragment>
+    <>
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -39,7 +39,7 @@ const AppContent = () => {
           <RouterProvider router={appRouter} />
         </Suspense>
       </QueryClientProvider>
-    </React.Fragment>
+    </>
   );
 };
 

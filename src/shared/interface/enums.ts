@@ -227,3 +227,11 @@ export enum HearAboutUsOptionValue {
   THREADS = "threads",
   OTHER = "other",
 }
+
+export enum OnboardingStatus {
+  NOT_STARTED = "NOT_STARTED",
+  IN_PROGRESS = "IN_PROGRESS",
+  SUBMITTED = "SUBMITTED",
+  APPROVED = "APPROVED",
+  REJECTED = "REJECTED",
+}

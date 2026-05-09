@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 
 const PersonalizationList: React.FC = () => {
     return (
-        <React.Fragment>
+        <>
             <div className='flex-none'>
                 <h3 className='text-lg font-medium'>Personalization</h3>
                 <p className='text-muted-foreground text-sm'>Personalization description</p>
@@ -31,7 +31,7 @@ const PersonalizationList: React.FC = () => {
                     </div>
                 </CardContent>
             </Card>
-        </React.Fragment>
+        </>
     )
 }
 

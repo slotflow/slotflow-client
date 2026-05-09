@@ -1,4 +1,4 @@
-import { HearAboutUsOptionValue, Role } from "../enums";
+import { HearAboutUsOptionValue, OnboardingStatus, Role } from "../enums";
 
 export interface User {
     _id: string
@@ -6,8 +6,8 @@ export interface User {
     email: string;
     password?: string;
     role: Role;
-    hasSelectedRole: boolean;
-    isOnboardingCompleted: boolean;
+    onboardingType: Role | null;
+    onboardingStatus: OnboardingStatus;
     isBlocked: boolean;
     phone?: string;
     profileImage?: string;

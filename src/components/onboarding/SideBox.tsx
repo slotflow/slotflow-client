@@ -1,38 +1,59 @@
+import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Role } from '@/shared/interface/enums';
+import { appConfig } from '@/shared/config/env';
 import choose from '../../assets/svgs/choose.svg';
 import address from '../../assets/svgs/address.svg';
 import working from '../../assets/svgs/working.svg';
-import { RootState } from '@/shared/redux/appStore';
+import { useDispatch, useSelector } from 'react-redux';
+import { Loader, LogOut, Moon, Sun } from 'lucide-react';
 import fileUpload from '../../assets/svgs/fileUpload.svg';
 import service from '../../assets/svgs/serviceDetails.svg';
 import { useSignout } from '@/hooks/systemHooks/useSignout';
 import availability from '../../assets/svgs/availability.svg';
+import { toggleTheme } from '@/shared/redux/slices/appSlice';
+import { AppDispatch, RootState } from '@/shared/redux/appStore';
 import { SideBoxProps } from '@/shared/interface/componentInterface';
-import { pageLabels, pageDescriptions, redirectPaths } from '@/shared/utils/constants';
+import { pageLabels, pageDescriptions, redirectPaths, defaultButtonClassName } from '@/shared/utils/constants';
 
 const SideBox: React.FC<SideBoxProps> = ({ pageNumber }) => {
+
   const navigate = useNavigate();
   const { signoutHandler } = useSignout();
+  const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((store: RootState) => store.auth.authUser);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const themeMode: boolean = useSelector((store: RootState) => store.app.lightTheme);
+
+  const changeTheme = (): void => {
+    dispatch(toggleTheme());
+  }
 
   const handleSignout = async () => {
-    const res = await signoutHandler();
-    if (res.success) {
-      toast.success(res.message);
-      navigate(redirectPaths.LOGIN);
-    } else {
-      toast.error(res.message);
+    setIsLoading(true);
+    try {
+      const res = await signoutHandler();
+      if (res.success) {
+        toast.success(res.message);
+        navigate(redirectPaths.LOGIN);
+      } else {
+        toast.error(res.message);
+      }
+    } catch (error) {
+      if (appConfig.isDevelopment) {
+        console.error("Error during signout:", error);
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const allLabels = pageLabels[pageNumber];
-  const labels = user?.role === Role.USER ? [allLabels[0]] : allLabels;
+  const labels = pageNumber === 0 ? [allLabels[0]] : allLabels;
   const description = pageDescriptions[pageNumber] || '';
   const activeStep = pageNumber;
 
@@ -55,16 +76,33 @@ const SideBox: React.FC<SideBoxProps> = ({ pageNumber }) => {
             Slotflow
           </h3>
 
-          {user && (
-            <Button
-              title="Logout"
-              variant="default"
-              onClick={handleSignout}
-              className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
-            >
-              Logout
-            </Button>
-          )}
+          <div className="flex items-center gap-2">
+            {themeMode ?
+              <div className="relative flex rounded-full cursor-pointer mx-3" onClick={changeTheme}>
+                <Moon />
+              </div>
+              :
+              <div className="relative flex rounded-full cursor-pointer mx-3" onClick={changeTheme}>
+                <Sun />
+              </div>
+            }
+
+            {user && (
+              <Button
+                title="Logout"
+                variant="default"
+                onClick={handleSignout}
+                className={defaultButtonClassName}
+                disabled={isLoading}
+              >{isLoading ?
+                <Loader className="animate-spin w-4 h-4" />
+                :
+                <LogOut className="w-4 h-4" />
+                }
+                Logout
+              </Button>
+            )}
+          </div>
         </div>
 
         <p className="text-gray-700 text-sm md:text-base leading-relaxed">

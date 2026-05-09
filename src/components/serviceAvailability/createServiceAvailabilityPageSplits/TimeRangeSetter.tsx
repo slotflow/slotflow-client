@@ -2,6 +2,7 @@ import React from "react";
 import TimeField from "./TimeField";
 import { Goal } from "lucide-react";
 import { Button } from "../../ui/button";
+import { defaultButtonClassName } from "@/shared/utils/constants";
 import { TimeRangeSetterProps } from "@/shared/interface/componentInterface";
 
 const TimeRangeSetter: React.FC<TimeRangeSetterProps> = ({ 
@@ -10,7 +11,7 @@ const TimeRangeSetter: React.FC<TimeRangeSetterProps> = ({
     onGenerateSlots 
 }) => {
     return (
-        <React.Fragment>
+        <>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
                 <TimeField
                     label="Start Time (HH:mm)"
@@ -29,15 +30,15 @@ const TimeRangeSetter: React.FC<TimeRangeSetterProps> = ({
                 <Button
                     title="Generate Slots"
                     type="button"
-                    variant="default"
+                    variant="secondary"
                     disabled={isSubmitting}
                     onClick={onGenerateSlots}
-                    className="w-full md:w-auto cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
+                    className={defaultButtonClassName}
                 >
                     Generate Slots <Goal />
                 </Button>
             </div>
-        </React.Fragment>
+        </>
     );
 };
 

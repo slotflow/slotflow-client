@@ -7,12 +7,12 @@ import SectionFeatures from "@/components/landing/SectionFeatures";
 const LandingPage = () => {
 
   return (
-    <React.Fragment>
+    <>
       <SectionOne />
       <SectionFeatures />
       <SectionPricing />
       <SectionReviews />
-    </React.Fragment>
+    </>
   )
 }
 

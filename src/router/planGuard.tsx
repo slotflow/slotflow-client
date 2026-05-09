@@ -13,7 +13,7 @@ const PlanGuard: React.FC<PlanGuardProps> = ({
   const { authUser } = useSelector((store: RootState) => store.auth);
 
   if (authUser?.role !== Role.PROVIDER) {
-    return <React.Fragment>{children}</React.Fragment>;
+    return <>{children}</>;
   }
 
   const planName = authUser?.providerSubscription || PlanName.NO_SUBSCRIPTION;
@@ -24,7 +24,7 @@ const PlanGuard: React.FC<PlanGuardProps> = ({
     return <Navigate to="/" replace />;
   }
 
-  return <React.Fragment>{children}</React.Fragment>;
+  return <>{children}</>;
 };
 
 export default PlanGuard;

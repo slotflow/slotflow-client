@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "../../ui/button";
 import { Check, Loader } from "lucide-react";
 import { CreateServiceAvailabilityFooterProps } from "@/shared/interface/componentInterface";
+import { defaultButtonClassName } from "@/shared/utils/constants";
 
 const CreateServiceAvailabilityFooter: React.FC<CreateServiceAvailabilityFooterProps> = ({
     selectedTimeSlots,
@@ -19,10 +20,10 @@ const CreateServiceAvailabilityFooter: React.FC<CreateServiceAvailabilityFooterP
                     <Button
                         title="Add this availability (not saved yet)"
                         type="button"
-                        variant="default"
+                        variant="secondary"
                         disabled={isSubmitting}
                         onClick={onAddAvailability}
-                        className="cursor-pointer w-full md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
+                        className={defaultButtonClassName}
                     >
                         Add Availability <Check />
                     </Button>
@@ -35,7 +36,7 @@ const CreateServiceAvailabilityFooter: React.FC<CreateServiceAvailabilityFooterP
                         type="submit"
                         variant="default"
                         disabled={isSubmitting || !isValid || isLoading}
-                        className="cursor-pointer w-full md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
+                        className={defaultButtonClassName}
                     >
                         {isSubmitting ? (
                             <>

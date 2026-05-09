@@ -69,11 +69,11 @@ const Header: React.FC = () => {
           </Button>
           {themeMode ?
             <div className="relative flex rounded-full cursor-pointer mx-3" onClick={changeTheme}>
-              <Sun />
+              <Moon />
             </div>
             :
             <div className="relative flex rounded-full cursor-pointer mx-3" onClick={changeTheme}>
-              <Moon />
+              <Sun />
             </div>
           }
         </div>

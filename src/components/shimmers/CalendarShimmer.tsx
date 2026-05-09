@@ -4,7 +4,7 @@ const CalendarShimmer: React.FC = () => {
     const rowCount: number = 5;
     const coumnCount: number = 7;
     return (
-        <React.Fragment>
+        <>
             <div className="flex rounded-md w-full justify-between">
                 <div className='flex flex-row w-2/12'>
                     <div className="h-8 w-6/12 shimmer rounded-md"></div>
@@ -26,7 +26,7 @@ const CalendarShimmer: React.FC = () => {
                     </div>
                 ))}
             </div>
-        </React.Fragment>
+        </>
     )
 }
 

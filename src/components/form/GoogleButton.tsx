@@ -16,9 +16,11 @@ const GoogleButton: React.FC<GoogleButtonProps> = ({
             className={`${className} my-2
                 relative flex items-center justify-center
                 bg-white dark:bg-[var(--inputBg)]
-                rounded-md border-none
+                hover:bg-gray-100 dark:hover:bg-[var(--inputHover)]
+                hover:border-[var(--mainColor)] dark:hover:border-[var(--mainColor)] hover:border-1 transition-colors
+                rounded-md
                 shadow-sm 
-                text-black dark:text-white hover:text-white
+                text-black dark:text-white
                 transition-colors
                 cursor-pointer`}
         >

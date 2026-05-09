@@ -71,7 +71,7 @@ const AdminServiceProvidersPage = () => {
   }, [isProviderRejectModalOpen]);
 
   return (
-    <React.Fragment>
+    <>
       <CommonTable<AdminFetchAllProvidersResponse>
         fetchApiFunction={fetchServiceProvidersForAdmin}
         queryKey="providers"
@@ -88,7 +88,7 @@ const AdminServiceProvidersPage = () => {
           />
         </div>
       )}
-    </React.Fragment>
+    </>
   );
 
 };

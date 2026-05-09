@@ -94,7 +94,7 @@ const BookingsTableColumn = (
                                 </DropdownMenuItem>
                             )}
                             {role === Role.PROVIDER && handleChangeAppointmentStatus && booking.appointmentStatus === AppointmentStatus.BOOKED && (
-                                <React.Fragment>
+                                <>
                                     <DropdownMenuItem
                                         onClick={() => handleChangeAppointmentStatus({ appointmentId: booking._id, appointmentStatus: AppointmentStatus.CONFIRMED })}
                                         className="flex items-center gap-2"
@@ -109,7 +109,7 @@ const BookingsTableColumn = (
                                         {<X className="w-4 h-4" />}
                                         <span>Reject</span>
                                     </DropdownMenuItem>
-                                </React.Fragment>
+                                </>
                             )}
                             {role === Role.USER && handleUserCancelBooking && booking.appointmentStatus === AppointmentStatus.BOOKED && (
                                 <DropdownMenuItem

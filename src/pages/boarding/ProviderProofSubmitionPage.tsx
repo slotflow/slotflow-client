@@ -2,12 +2,11 @@ import { Loader } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
-import BoardingLayout from "@/layouts/BoardingLayout";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
-import { setIsProofSubmitted } from "@/shared/redux/slices/authSlice";
 import FileUploader from "@/components/form/CommonForms/FileUploader";
-import { onboardingContent, redirectPaths } from "@/shared/utils/constants";
+import { setIsProofSubmitted } from "@/shared/redux/slices/authSlice";
+import { defaultButtonClassName, redirectPaths } from "@/shared/utils/constants";
 import { setProviderIdentityProofs, setProviderServiceProofs } from "@/shared/redux/slices/providerSlice";
 import { providerDeleteIdentityProof, providerDeleteServiceProof, providerFetchProofs, providerUpdateIdentityProof, providerUpdateProofServiceProof } from "@/shared/apis/providerProfile";
 
@@ -54,54 +53,48 @@ const ProviderProofSubmissionPage: React.FC = () => {
   }
 
   return (
-    <BoardingLayout
-      pageNumber={4}
-      heading={onboardingContent.proofs.title}
-      description={onboardingContent.proofs.description}
-    >
-      <div className="md:flex w-full space-y-6 space-x-2">
-        <div className="space-y-4 w-full space-x-2 pt-6">
-          <FileUploader
-            folderName="provider-proof"
-            uploadFunction={providerUpdateIdentityProof}
-            message="Please upload a valid identity document issued in your country. Make sure the document is clear and readable for verification."
-            setStateFunction={setProviderIdentityProofs}
-            deleteFunction={providerDeleteIdentityProof}
-            data={identityProof}
-            title="Identity Proof"
-          />
-          <FileUploader
-            folderName="provider-proof"
-            uploadFunction={providerUpdateProofServiceProof}
-            message="If you are offering a service, upload a valid certification or an experience document that verifies your professional qualifications."
-            setStateFunction={setProviderServiceProofs}
-            deleteFunction={providerDeleteServiceProof}
-            data={serviceProof}
-            title="Service Proof"
-          />
+    <div className="md:flex w-full space-y-6 space-x-2">
+      <div className="space-y-4 w-full space-x-2 pt-6">
+        <FileUploader
+          folderName="provider-proof"
+          uploadFunction={providerUpdateIdentityProof}
+          message="Please upload a valid identity document issued in your country. Make sure the document is clear and readable for verification."
+          setStateFunction={setProviderIdentityProofs}
+          deleteFunction={providerDeleteIdentityProof}
+          data={identityProof}
+          title="Identity Proof"
+        />
+        <FileUploader
+          folderName="provider-proof"
+          uploadFunction={providerUpdateProofServiceProof}
+          message="If you are offering a service, upload a valid certification or an experience document that verifies your professional qualifications."
+          setStateFunction={setProviderServiceProofs}
+          deleteFunction={providerDeleteServiceProof}
+          data={serviceProof}
+          title="Service Proof"
+        />
 
-          <div className="flex justify-end">
-            <Button
-              title="Submit proofs"
-              variant="default"
-              onClick={handleNextutton}
-              className="cursor-pointer w-full md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
-              type="button"
-              disabled={isSubmitting || (!identityProof.file || !serviceProof.file)}
-            >
-              {isSubmitting ? (
-                <>
-                  <Loader className="animate-spin size-4 mr-2" />
-                  {(authUser?.isProofSubmitted && isSubmitting) ? "Updating" : "Submitting"}
-                </>
-              ) : (
-                (authUser?.isProofSubmitted?.identityProof && authUser?.isProofSubmitted?.serviceProof) ? "Update" : "Submit"
-              )}
-            </Button>
-          </div>
+        <div className="flex justify-end">
+          <Button
+            title="Submit proofs"
+            variant="default"
+            onClick={handleNextutton}
+            className={defaultButtonClassName}
+            type="button"
+            disabled={isSubmitting || (!identityProof.file || !serviceProof.file)}
+          >
+            {isSubmitting ? (
+              <>
+                <Loader className="animate-spin size-4 mr-2" />
+                {(authUser?.isProofSubmitted && isSubmitting) ? "Updating" : "Submitting"}
+              </>
+            ) : (
+              (authUser?.isProofSubmitted?.identityProof && authUser?.isProofSubmitted?.serviceProof) ? "Update" : "Submit"
+            )}
+          </Button>
         </div>
       </div>
-    </BoardingLayout>
+    </div>
   );
 }
 

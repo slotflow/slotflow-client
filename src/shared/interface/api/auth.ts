@@ -1,5 +1,5 @@
 import { User } from "../entityInterface/userInterface";
-import { AdminVerificationStatus, PlanName, Role } from "../enums";
+import { AdminVerificationStatus, OnboardingStatus, PlanName, Role } from "../enums";
 
 // request type of the user or provider sign up api
 export type SignupRequest = Pick<User, "username" | "email" | "password">;
@@ -29,8 +29,8 @@ export interface SigninResponse {
         profileImage: string;
         email: string;
         role: Role;
-        hasSelectedRole: boolean;
-        isOnboardingCompleted: boolean;
+        onboardingType: Role | null;
+        onboardingStatus: OnboardingStatus;
         isBlocked: boolean;
         isLoggedIn: boolean;
         isAddressAdded: boolean,

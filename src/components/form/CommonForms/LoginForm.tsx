@@ -5,7 +5,6 @@ import GoogleButton from "../GoogleButton";
 import { useDispatch, } from "react-redux";
 import { signin } from "@/shared/apis/auth";
 import { useNavigate } from "react-router-dom";
-import { Role } from "@/shared/interface/enums";
 import { Button } from "@/components/ui/button";
 import { AppDispatch } from "@/shared/redux/appStore";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,6 +12,7 @@ import { FormButton, FormHeading } from "../FormSplits";
 import { SigninResponse } from "@/shared/interface/api/auth";
 import { appConfig, serviceConfig } from "@/shared/config/env";
 import { redirectPaths } from "../../../shared/utils/constants";
+import { OnboardingStatus, Role } from "@/shared/interface/enums";
 import { setForgotPassword } from "@/shared/redux/slices/appSlice";
 import { LoginFormType, LoginZodSchema } from '@/shared/zod/authZod';
 
@@ -42,33 +42,33 @@ const LoginForm: React.FC = () => {
             return;
         }
 
-        if (!user.hasSelectedRole) {
+        if (user.onboardingStatus === OnboardingStatus.NOT_STARTED) {
             console.log("two")
-            navigate("/onboarding/setup", { replace: true });
+            navigate(redirectPaths.PRE_BOARDING_ROLE, { replace: true });
             return;
         }
 
-        if (!user.isOnboardingCompleted) {
+        if (user.onboardingStatus === OnboardingStatus.IN_PROGRESS && user.onboardingType === Role.PROVIDER) {
             console.log("three")
             // Granular redirect to the correct onboarding step
             if (!user.isAddressAdded && !user.isAddressVerified) {
                 console.log("four")
-                navigate("/onboarding/address", { replace: true });
+                    navigate(redirectPaths.ONBOARDING_ADDRESS, { replace: true });
             } else if (!user.isServiceDetailsAdded && !user.isServiceDetailsVerified) {
                 console.log("five")
-                navigate("/onboarding/service", { replace: true });
+                navigate(redirectPaths.ONBOARDING_SERVICE, { replace: true });
             } else if (!user.isServiceAvailabilityAdded && !user.isAvailabilityVerified) {
                 console.log("six")
-                navigate("/onboarding/availability", { replace: true });
+                navigate(redirectPaths.ONBOARDING_AVAILABILITY, { replace: true });
             } else if (!user.isProofSubmitted && !user.isProofsVerified) {
                 console.log("seven")
-                navigate("/onboarding/proofs", { replace: true });
+                navigate(redirectPaths.ONBOARDING_PROOFS, { replace: true });
             } else if (!user.isAdminVerified) {
                 console.log("eight")
-                navigate("/onboarding/pending", { replace: true });
+                navigate(redirectPaths.ONBOARDING_PENDING, { replace: true });
             } else {
                 console.log("nine")
-                navigate("/onboarding/address", { replace: true }); // fallback
+                navigate(redirectPaths.ONBOARDING_ADDRESS, { replace: true }); // fallback
             }
             console.log("ten")
             return;

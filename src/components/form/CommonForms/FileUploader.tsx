@@ -1,8 +1,8 @@
 import { toast } from 'react-toastify';
-import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import React, { useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { appConfig } from '@/shared/config/env';
 import AlertBox from '@/components/alert/AlertBox';
@@ -15,6 +15,7 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import noImage from '../../../assets/defaultImages/imagePlaceholder.png';
 import { FileUploaderProps } from '@/shared/interface/componentInterface';
 import { ImageFileFormType, imageFileZodeSchema } from '@/shared/zod/providerZod';
+import { defaultButtonClassName } from '@/shared/utils/constants';
 
 const FileUploader: React.FC<FileUploaderProps> = ({
     folderName,
@@ -195,7 +196,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
                     )}
 
                     {data.file && (
-                        <React.Fragment>
+                        <>
                             <h5>Uploaded File</h5>
                             {!data.isLoading ? (
                                 <img
@@ -206,7 +207,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
                             ) : (
                                 <div className='w-full h-48 shimmer'></div>
                             )}
-                        </React.Fragment>
+                        </>
                     )}
 
                     {message && (
@@ -231,9 +232,9 @@ const FileUploader: React.FC<FileUploaderProps> = ({
                     ) : proofFile && (
                         <Button
                             title="Upload"
-                            variant="default"
+                            variant="secondary"
                             disabled={isSubmitting || !isValid}
-                            className="cursor-pointer w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
+                            className={defaultButtonClassName}
                             type="submit"
                         >
                             {isSubmitting ? "Uploading" : "Upload File"}

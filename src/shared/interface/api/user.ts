@@ -11,7 +11,7 @@ export type PreBoardingRequest = {
 }
 
 // response type of the setRole api
-export type PreBoardingResponse = Pick<User, "hasSelectedRole" | "isOnboardingCompleted" | "role"> & {
+export type PreBoardingResponse = Pick<User, "onboardingStatus" | "onboardingType"> & {
     adminVerificationStatus: ProviderProfile["adminVerificationStatus"] | null 
 };
 

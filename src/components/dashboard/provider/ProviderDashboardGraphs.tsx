@@ -44,7 +44,7 @@ const ProviderDashboardGraphs: React.FC<ProviderDashboardGraphsProps> = ({ dateR
     });
 
     return (
-        <React.Fragment>
+        <>
             {isGraphLoading ? (
                 <div className="h-screen flex items-center justify-center">
                     <LoadingFallback />
@@ -52,7 +52,7 @@ const ProviderDashboardGraphs: React.FC<ProviderDashboardGraphsProps> = ({ dateR
             ) : isGraphError ? (
                 <DataFetchingError message={"Failed to load graphs" + graphError} />
             ) : dashboardGraphData ? (
-                <React.Fragment>
+                <>
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                         <AreaGroupedChart
                             title="Appointments Over Time"
@@ -127,9 +127,9 @@ const ProviderDashboardGraphs: React.FC<ProviderDashboardGraphsProps> = ({ dateR
                             minimumPlan={PlanName.ENTERPRISE}
                         />
                     </div>
-                </React.Fragment>
+                </>
             ) : null}
-        </React.Fragment>
+        </>
     )
 }
 

@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { appConfig } from "@/shared/config/env";
-import BoardingLayout from "@/layouts/BoardingLayout";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, CardContent } from "@/components/ui/card";
 import { AuthUser } from "@/shared/interface/sliceInterface";
@@ -80,12 +79,7 @@ const ProviderApprovalPendingPage = () => {
   }
 
   return (
-    <BoardingLayout
-      pageNumber={5}
-      heading={onboardingContent.profileApproval.title}
-      description={onboardingContent.profileApproval.description}
-    >
-
+    <>
       <Card>
         <CardContent className="p-6 flex items-center justify-between">
           <div>
@@ -194,7 +188,7 @@ const ProviderApprovalPendingPage = () => {
           {onboardingContent.profileApproval.description3}
         </div>
       )}
-    </BoardingLayout>
+    </>
   );
 };
 

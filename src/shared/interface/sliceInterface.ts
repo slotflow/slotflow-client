@@ -2,9 +2,9 @@ import { User } from "./entityInterface/userInterface";
 import { ProviderCardsFilters } from "./commonInterface";
 import { Message } from "./entityInterface/message.interface";
 import { UserViewProviderCardProps } from "./componentInterface";
-import { PlanName, ServiceCategory, SubscriptionStatus } from "./enums";
-import { Availability } from "./entityInterface/serviceAvailabilityInterface";
 import { ProviderProfile } from "./entityInterface/providerProfileInterface";
+import { Availability } from "./entityInterface/serviceAvailabilityInterface";
+import { HearAboutUsOptionValue, PlanName, Role, ServiceCategory, SubscriptionStatus } from "./enums";
 
 // Auth slice state
 export type AuthUser = Pick<User, 
@@ -13,8 +13,8 @@ export type AuthUser = Pick<User,
 "phone" | 
 "email" | 
 "role" | 
-"hasSelectedRole" | 
-"isOnboardingCompleted" | 
+"onboardingStatus" | 
+"onboardingType" | 
 "isBlocked" | 
 "googleConnected" | 
 "googleId" | 
@@ -55,6 +55,11 @@ export interface AuthState {
   eventSocketId: string | null;
   eventSocketIsConnected: boolean;
   subscriptionUpdating: boolean;
+  boardingData: {
+    selectedRole: Role | null;
+    hearAboutUsOption: HearAboutUsOptionValue | null;
+    referralCode: string | null;
+  }
 }
 
 // app slice

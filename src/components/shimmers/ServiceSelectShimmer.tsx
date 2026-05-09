@@ -3,7 +3,7 @@ import React from "react"
 const ServiceSelectShimmer: React.FC = () => {
 
     return (
-        <React.Fragment>
+        <>
             {Array.from({ length: 26 }).map((_, index) => (
                 <div
                     key={index}
@@ -11,7 +11,7 @@ const ServiceSelectShimmer: React.FC = () => {
                 >
                 </div>
             ))}
-        </React.Fragment>
+        </>
     )
 }
 

@@ -160,19 +160,19 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center justify-between space-x-2 py-4">
         <div className="text-sm text-muted-foreground">
           {pageCount ? (
-            <React.Fragment>
+            <>
               Page {paginationState.pageIndex + 1} of {pageCount}
               ({table.getFilteredRowModel().rows.length} items)
-            </React.Fragment>
+            </>
           ) : (
-            <React.Fragment>
+            <>
               Showing {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1} to{" "}
               {Math.min(
                 (table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize,
                 table.getFilteredRowModel().rows.length
               )}{" "}
               of {table.getFilteredRowModel().rows.length} entries
-            </React.Fragment>
+            </>
           )}
         </div>
         <div className="flex items-center space-x-2">

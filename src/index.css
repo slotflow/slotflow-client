@@ -41,26 +41,17 @@ html {
 
     --mainColor: #635bff;
     --mainColorHover: #8680ff;
-
-    --mainColorTwo: #e7e6ff
-
+    --mainColorTwo: #e7e6ff;
     --boxBorder: #f2f2f2;
-
     --textOne: #404040;
     --textOneHover: #0d0d0d;
-
     --textTwo: #1a1a1a;
     --textTwoHover: #333333;
-
     --background: #ffffff;
-
     --menuBg: #f2f2f2;
     --menuItemHoverBg: #e6e6e6;
-
     --inputBg: #ffffff;
-
     --error-color: red;
-
     --infoDataLabel: #333333
 
     --chart-1: oklch(0.646 0.222 41.116);
@@ -150,7 +141,7 @@ html {
     --textTwo: #d9d9d9;
     --textTwoHover: #ffffff;
 
-    --background: #000000;
+    --background: #0d0d0d;
 
     --menuBg: #0d0d0d;
     --menuItemHoverBg: #333333;

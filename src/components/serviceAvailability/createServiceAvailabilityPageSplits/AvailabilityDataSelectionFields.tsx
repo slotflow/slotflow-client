@@ -11,7 +11,7 @@ const AvailabilityDataSelectionFields: React.FC<AvailabilityDataSelectionFieldsP
     toggleMode 
 }) => {
     return (
-        <React.Fragment>
+        <>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-6">
                 <SelectField<ProviderServiceAvailabilityFormType, string>
                     label="Select Day"
@@ -48,7 +48,7 @@ const AvailabilityDataSelectionFields: React.FC<AvailabilityDataSelectionFieldsP
                     </div>
                 </div>
             </div>
-        </React.Fragment>
+        </>
     );
 };
 

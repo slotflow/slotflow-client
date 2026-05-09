@@ -31,7 +31,7 @@ export const FormButton: React.FC<AuthFormsButtonProps> = React.memo(({
             variant="default"
             type="submit"
             disabled={disabled}
-            className="border-0 w-full flex items-center justify-center cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
+            className="border-1 w-full flex items-center justify-center cursor-pointer bg-[var(--mainColor)] hover:bg-[var(--mainColorHover)] hover:text-white transition-colors border-[var(--mainColor)] dark:text-white"
         >
             {loading ? (
                 <span className="flex items-center gap-2">

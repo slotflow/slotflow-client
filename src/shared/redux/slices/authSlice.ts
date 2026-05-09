@@ -20,6 +20,11 @@ const initialState: AuthState = {
     eventSocketId: null,
     eventSocketIsConnected: false,
     subscriptionUpdating: false,
+    boardingData: {
+        selectedRole: null,
+        hearAboutUsOption: null,
+        referralCode: null,
+    }
 };
 
 const authSlice = createSlice({
@@ -85,6 +90,9 @@ const authSlice = createSlice({
         },
         setSubscriptionUpdating: (state, action: PayloadAction<boolean>) => {
             state.subscriptionUpdating = action.payload;
+        },
+        setBoardingData: (state, action: PayloadAction<Partial<AuthState["boardingData"]>>) => {
+            state.boardingData = { ...state.boardingData, ...action.payload };
         }
     },
     extraReducers: (builder) => {
@@ -184,6 +192,7 @@ export const {
     setAuthUserName,
     setSubscription,
     setStripeConnect,
+    setBoardingData,
     setGoogleConnect,
     setIsProofSubmitted,
     setSubscriptionUpdating,

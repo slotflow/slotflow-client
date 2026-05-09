@@ -1,6 +1,7 @@
 import React from "react";
 import { Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { destructiveButtonClassName } from "@/shared/utils/constants";
 import { Availability } from "@/shared/interface/entityInterface/serviceAvailabilityInterface";
 
 interface SavedAvailabilitiesProps {
@@ -8,7 +9,7 @@ interface SavedAvailabilitiesProps {
     removeAvailability: (day: string) => void;
 }
 
-const SavedAvailabilities: React.FC<SavedAvailabilitiesProps> = ({
+const   SavedAvailabilities: React.FC<SavedAvailabilitiesProps> = ({
     availabilities,
     removeAvailability
 }) => {
@@ -30,8 +31,8 @@ const SavedAvailabilities: React.FC<SavedAvailabilitiesProps> = ({
                         </li>
                         <Button
                             title="Delete availability"
-                            variant="default"
-                            className="shrink-0 cursor-pointer hover:bg-red-100 border-red-300 hover:text-red-700"
+                            variant="destructive"
+                            className={destructiveButtonClassName}
                             onClick={() => removeAvailability(availability.day)}
                         >
                             <Trash className="size-4" />

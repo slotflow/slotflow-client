@@ -98,7 +98,7 @@ const UserListProvidersCardsPage: React.FC = () => {
           <DataFetchingError message={(error as Error).message || "Something went wrong"} />
         </div>
       ) : providers && providers.length > 0 ? (
-        <React.Fragment>
+        <>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 my-4">
             {providers.map((provider, index) => (
               <UserViewProviderCard key={index} {...provider} />
@@ -115,7 +115,7 @@ const UserListProvidersCardsPage: React.FC = () => {
               </div>
             )}
           </div>
-        </React.Fragment>
+        </>
       ) : (
         <div className="flex-1 flex justify-center items-center">
           <DataFetchingError message="No providers found in the database" />

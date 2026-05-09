@@ -6,9 +6,9 @@ import OnBoardingGuard from "./OnBoardingGuard.tsx";
 import { ProtectedRoute } from "./ProtectedRoutes.tsx";
 import { RouteNames } from "@/shared/utils/constants.ts";
 import { createBrowserRouter, Outlet } from "react-router-dom";
+import BoardingLayoutWrapper from "./BoardingLayoutWrapper.tsx";
 
 const AuthLayout = lazy(() => import("@/layouts/AuthLayout.tsx"));
-const PreBoardingPage = lazy(() => import("@/pages/boarding/PreBoardingPage.tsx"));
 const LoginForm = lazy(() => import("@/components/form/CommonForms/LoginForm.tsx"));
 const SignUpForm = lazy(() => import("@/components/form/CommonForms/SignUpForm.tsx"));
 const ResetPasswordForm = lazy(() => import("@/components/form/CommonForms/ResetPasswordForm.tsx"));
@@ -17,6 +17,7 @@ const EmailVerificationForm = lazy(() => import("@/components/form/CommonForms/E
 
 const ChatPage = lazy(() => import("@/pages/common/ChatPage.tsx"));
 const AboutPage = lazy(() => import("@/pages/common/AboutPage.tsx"));
+const LandingLayout = lazy(() => import("@/layouts/LandingLayout.tsx"));
 const ContactPage = lazy(() => import("@/pages/common/ContactPage.tsx"));
 const ReviewsPage = lazy(() => import("@/pages/common/ReviewsPage.tsx"));
 const AccountPage = lazy(() => import("@/pages/common/AccountPage.tsx"));
@@ -25,11 +26,12 @@ const SettingsPage = lazy(() => import("@/pages/common/SettingsPage.tsx"));
 const Error404Page = lazy(() => import("@/pages/common/Error404Page.tsx"));
 const CalendarPage = lazy(() => import("@/pages/common/CalendarPage.tsx"));
 const VideoCallRoom = lazy(() => import("@/pages/common/VideoCallRoom.tsx"));
-const LandingLayout = lazy(() => import("@/layouts/LandingLayout.tsx"));
 const VideoCallLoby = lazy(() => import("@/pages/common/VideoCallLobby.tsx"));
+const RoleSelectPage = lazy(() => import("@/pages/boarding/RoleSelectPage.tsx"));
 const ListPaymentsPage = lazy(() => import("@/pages/common/ListPaymentsPage.tsx"));
 const ListBookingsPage = lazy(() => import("@/pages/common/ListBookingsPage.tsx"));
 const IntegrationsPage = lazy(() => import("@/pages/common/IntegrationsPage.tsx"));
+const HearAboutUsPage = lazy(() => import("@/pages/boarding/HearAboutUsPage.tsx"));
 const PrivacyPolicyPage = lazy(() => import("@/pages/common/PrivacyPolicyPage.tsx"));
 const BookingDetailPage = lazy(() => import("@/pages/common/BookingDetailPage.tsx"));
 const PaymentDetailViewPage = lazy(() => import("@/pages/common/PaymentDetailViewPage.tsx"));
@@ -109,20 +111,30 @@ export const appRouter = createBrowserRouter([
         ],
     },
     {
-        path: "/onboarding",
         element: (
             <OnBoardingGuard>
-                <Outlet />
+                <BoardingLayoutWrapper />
             </OnBoardingGuard>
         ),
         children: [
-            { path: "setup", element: <PreBoardingPage /> },
-            { path: "address", element: <ProviderAddAddressPage /> },
-            { path: "service", element: <ProviderCreateServiceDetailsPage /> },
-            { path: "availability", element: <ProviderCreateServiceAvailabilityPage /> },
-            { path: "proofs", element: <ProviderProofSubmitionPage /> },
-            { path: "pending", element: <ProviderApprovalPendingPage /> },
-            { path: "*", element: <Error404Page /> },
+            {
+                path: "/preboarding",
+                children: [
+                    { path: "role", element: <RoleSelectPage /> },
+                    { path: "hear-about-us", element: <HearAboutUsPage /> },
+                ]
+            },
+            {
+                path: "/onboarding",
+                children: [
+                    { path: "address", element: <ProviderAddAddressPage /> },
+                    { path: "service", element: <ProviderCreateServiceDetailsPage /> },
+                    { path: "availability", element: <ProviderCreateServiceAvailabilityPage /> },
+                    { path: "proofs", element: <ProviderProofSubmitionPage /> },
+                    { path: "pending", element: <ProviderApprovalPendingPage /> },
+                    { path: "*", element: <Error404Page /> },
+                ]
+            },
         ]
     },
     {
