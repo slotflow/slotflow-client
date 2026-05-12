@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ServiceCategory } from "@/shared/interface/enums";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { pushServiceCategory } from "@/shared/redux/slices/userSlice";
+import { defaultButtonClassName } from "@/shared/utils/constants";
 
 const UserServiceSelectPage: React.FC = () => {
 
@@ -49,10 +50,18 @@ const UserServiceSelectPage: React.FC = () => {
                     })
                 }
             </div>
-            <div className="flex justify-end mt-6">
+            <div className="flex justify-end mt-6 space-x-2">
+                <Button
+                    title="Skip"
+                    variant="secondary"
+                    className={defaultButtonClassName}
+                    onClick={handleSubmitSelectedServices} >
+                    Skip
+                </Button>
                 <Button
                     title="Next"
-                    className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
+                    variant="default"
+                    className={defaultButtonClassName}
                     onClick={handleSubmitSelectedServices} >
                     Next
                 </Button>

@@ -156,6 +156,9 @@ export interface ChatComponentProps<T extends { date: string }> {
   chartConfig: ChartConfig;
   isLocked: boolean;
   minimumPlan: PlanName;
+  footerTextOne?: string;
+  footerTextTwo?: string;
+  chartContainerClassName?: string;
 }
 
 // Chat Common Interface Base Type

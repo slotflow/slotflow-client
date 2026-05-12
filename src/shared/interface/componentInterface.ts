@@ -105,6 +105,9 @@ export type ChartLineMultipleProps = Pick<ChatComponentProps<BaseChartData>, "ti
 // LineChartHorizontal compoenent props type
 export type LineChartHorizontalProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "chartConfig" | "isLocked" | "minimumPlan">;
 
+// ChartLineLinear compoenent props type
+export type ChartLineLinearProps = Pick<ChatComponentProps<BaseChartData>, "chartData" | "dataKeyOne" | "chartConfig"> & Partial<Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "footerTextOne" | "footerTextTwo" | "chartContainerClassName">>;
+
 // PieChartCompletionBreakdown compoenent props type
 interface CompletionBreakdownData {
   status: string;

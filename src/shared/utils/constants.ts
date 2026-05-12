@@ -112,6 +112,7 @@ export enum RouteNames {
   SERVICES = "Services",
   PLANS = "Plans",
   GRAFANA_DASHBOARD = "Grafana Dashboard",
+  CREDITS = "Credits"
 }
 
 // Routes for admin
@@ -137,6 +138,7 @@ export const userRoutes: Route[] = [
   { path: "chat", name: RouteNames.CHAT, icon: MessageSquare },
   { path: "calendar", name: RouteNames.CALENDAR, icon: Calendar1 },
   { path: "reviews", name: RouteNames.REVIEWS, icon: Star },
+  { path: "credits", name: RouteNames.CREDITS, icon: Wallet2Icon },
   { path: "settings", name: RouteNames.SETTINGS, icon: Settings },
 ]
 
@@ -151,6 +153,7 @@ export const providerRoutes: Route[] = [
   { path: "calendar", name: RouteNames.CALENDAR, icon: Calendar1 },
   { path: "chat", name: RouteNames.CHAT, icon: MessageSquare },
   { path: "reviews", name: RouteNames.REVIEWS, icon: Star },
+  { path: "credits", name: RouteNames.CREDITS, icon: Wallet2Icon },
   { path: "settings", name: RouteNames.SETTINGS, icon: Settings },
 ]
 
@@ -826,6 +829,13 @@ export const earningsOverTimeChartConfig = {
   },
 }
 
+// Chart Line Linear Config for credit account page
+export const chartLineLinearConfig: ChartConfig = {
+  credits: {
+    label: "Credits",
+    color: "var(--mainColor)",
+  },
+}
 
 // Admin Dashboard Stats Cards Data
 export const userStatsMapForAdmin: StatsMapForAdminInterface[] = [

@@ -49,7 +49,7 @@ const CommonTable = <
   });
 
   return (
-    <div className={`${parentDivCalssName || "p-4"}`}>
+    <div className={`${parentDivCalssName || ""}`}>
       {isLoading ? (
         <div className="mt-2">
           <TableShimmer columnsCount={columnsCount} />

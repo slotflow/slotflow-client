@@ -20,6 +20,7 @@ export interface User {
     allowPushNotification: boolean;
     whereDidHearAboutUs: HearAboutUsOptionValue;
     referralCode?: string;
+    referredBy?:string;
     createdAt: Date,
     updatedAt: Date
 }

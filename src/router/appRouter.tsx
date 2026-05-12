@@ -7,6 +7,7 @@ import { ProtectedRoute } from "./ProtectedRoutes.tsx";
 import { RouteNames } from "@/shared/utils/constants.ts";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import BoardingLayoutWrapper from "./BoardingLayoutWrapper.tsx";
+import CreditAccountPage from "@/pages/common/CreditAccountPage.tsx";
 
 const AuthLayout = lazy(() => import("@/layouts/AuthLayout.tsx"));
 const LoginForm = lazy(() => import("@/components/form/CommonForms/LoginForm.tsx"));
@@ -173,6 +174,7 @@ export const appRouter = createBrowserRouter([
                     { path: "calendar", element: <CalendarPage /> },
                     { path: "reviews", element: <ReviewsPage /> },
                     { path: "settings", element: <SettingsPage /> },
+                    { path: "credits", element: <CreditAccountPage /> },
                     { path: "booking/confirm", element: <UserBookingConfirmPage /> },
                     { path: "*", element: <Error404Page /> },
                 ],
@@ -271,6 +273,14 @@ export const appRouter = createBrowserRouter([
                                 < CalendarPage />
                             </PlanGuard>
                         )
+                    },
+                    { 
+                        path: "credits", 
+                        element: (
+                        <PlanGuard routeName={RouteNames.SETTINGS}>
+                                <CreditAccountPage /> 
+                            </PlanGuard>
+                    )
                     },
                     {
                         path: "settings",
