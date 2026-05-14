@@ -13,6 +13,7 @@ import {
     setGoogleConnectionLoading,
     // setStripeConnectionLoading
 } from '@/shared/redux/slices/integrationSlice';
+import PageHeader from '@/components/common/PageHeader';
 
 const IntegrationsPage: React.FC = () => {
 
@@ -52,18 +53,11 @@ const IntegrationsPage: React.FC = () => {
     if (!authUser) return;
 
     return (
-        <div className="flex flex-col p-2">
-
-            <div className='mb-2'>
-                <div className='flex justify-between items-center'>
-                    <div className='flex space-x-2'>
-                        <h2 className="text-2xl font-bold tracking-tighter">Integrations</h2>
-                    </div>
-                </div>
-                <p className='w-8/12 mt-2 text-gray-500 text-sm'>List of all integrations, you can use based on your subscription</p>
-            </div>
-
-            <Separator className='shadow-sm' />
+         <div className="container p-4 space-y-6">
+            <PageHeader
+                title="Integrations"
+                description="Manage integrations and make your easy."
+            />
 
             <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
 

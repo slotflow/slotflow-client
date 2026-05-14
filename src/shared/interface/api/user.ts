@@ -16,7 +16,7 @@ export type PreBoardingResponse = Pick<User, "onboardingStatus" | "onboardingTyp
 };
 
 // response type of the user profile details fetching api
-export type UserFetchUserProfileDetailsResponse = Pick<User, "username" | "email" | "isBlocked" | "phone" | "createdAt" | "updatedAt">;
+export type UserFetchUserProfileDetailsResponse = Pick<User, "username" | "email" | "isBlocked" | "phone" | "createdAt" | "updatedAt" | "referralCode">;
 
 // request type of the user profile image updating api
 export interface UserUpdateProfileImageRequest {
@@ -71,3 +71,9 @@ export type AdminFetchUserProfileDetailsResponse = Pick<User, "username" | "phon
 
 // return type for the provider fetch users for the chat side bar
 export type FetchUsersForChatSidebarResponse = Array<Pick<User, "_id" | "username" | "profileImage">>
+
+// request type of user update password
+export interface UpdatePasswordRequest {
+    currentPassword: string;
+    newPassword: string;
+}

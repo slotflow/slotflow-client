@@ -1,5 +1,5 @@
 import z from "zod";
-import { addressLineRegex, cityRegex, countryRegex, districtRegex, landMarkRegex, phoneRegex, pincodeRegex, placeRegex, stateRegex } from "./regex";
+import { addressLineRegex, cityRegex, countryRegex, districtRegex, landMarkRegex, phoneRegex, pincodeRegex, placeRegex, stateRegex, strongPasswordRegex } from "./regex";
 
 // Address Zod Schema (Final)
 export const createAddressZodSchema = z.object({
@@ -67,13 +67,13 @@ export const createAddressZodSchema = z.object({
     .min(2, "Country must be at least 2 characters")
     .max(50, "Country cannot exceed 50 characters")
     .regex(countryRegex, "Country must only contain letters and spaces"),
-    
+
   countryCode: z
     .string()
     .min(2, "Country code must be at least 2 characters")
     .max(10, "Country code cannot exceed 50 characters"),
 
-   location: z.object({
+  location: z.object({
     type: z.literal("Point"),
     coordinates: z
       .tuple([z.number(), z.number()])
@@ -85,8 +85,8 @@ export type CreateAddressFormType = z.infer<typeof createAddressZodSchema>;
 
 
 export const userInfoZodSchema = z.object({
-    username: z.string().min(1, "Username is required"),
-    phone: z.string().min(1, "Phone number is required"),
+  username: z.string().min(1, "Username is required"),
+  phone: z.string().min(1, "Phone number is required"),
 });
 
 export type UserInfoFormType = z.infer<typeof userInfoZodSchema>;
@@ -97,3 +97,23 @@ export const paymentModeZodSchema = z.object({
 });
 
 export type PaymentModeFormType = z.infer<typeof paymentModeZodSchema>;
+
+
+
+export const updatePasswordSchema = z.object({
+  currentPassword: z.string().regex(strongPasswordRegex, "Invalid current Password"),
+  newPassword: z.string()
+    .min(8, "Password must be at least 8 characters")
+    .max(50, "Password cannot exceed 50 characters")
+    .regex(strongPasswordRegex, "Password must contain uppercase, lowercase, number & symbol"),
+  confirmPassword: z
+    .string()
+    .min(8, "Confirm Password must be at least 8 characters")
+    .max(50, "Confirm Password cannot exceed 50 characters")
+    .regex(strongPasswordRegex, "Confirm Password must contain uppercase, lowercase, number & symbol"),
+}).refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });;
+
+export type UpdatePasswordFormType = z.infer<typeof updatePasswordSchema>;

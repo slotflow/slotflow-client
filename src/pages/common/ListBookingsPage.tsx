@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/shared/redux/appStore";
 import { useBooking } from "@/hooks/useUserBooking";
 import { fetchBookings } from "@/shared/apis/booking";
+import PageHeader from "@/components/common/PageHeader";
 import CommonTable from "@/components/table/CommonTable";
 import { useRoleBasedNavigation } from "@/hooks/useRoleBasedNavigation";
 import BookingsTableColumn from "@/components/table/tableColumns/BookingsTableColumn";
@@ -67,14 +68,20 @@ const ListBookingsPage: React.FC = () => {
   // can implement a custom filter and pass as query paramas
 
   return (
-    <CommonTable<FetchBookingsResponse>
-      fetchApiFunction={(params) =>
-        fetchBookings({ ...params })
-      }
-      columnsCount={6}
-      column={columns}
-      queryKey="bookings"
-    />
+    <div className="container p-4 space-y-6">
+      <PageHeader
+        title="Bookings Management"
+        description="Manage your bookings and view history."
+      />
+      <CommonTable<FetchBookingsResponse>
+        fetchApiFunction={(params) =>
+          fetchBookings({ ...params })
+        }
+        columnsCount={6}
+        column={columns}
+        queryKey="bookings"
+      />
+    </div>
   );
 };
 

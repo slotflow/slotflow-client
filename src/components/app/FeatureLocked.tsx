@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
+import { defaultButtonClassName } from "@/shared/utils/constants";
 import { FeatureLockedProps } from "@/shared/interface/componentInterface";
 
 const FeatureLocked: React.FC<FeatureLockedProps> = ({
@@ -7,7 +8,6 @@ const FeatureLocked: React.FC<FeatureLockedProps> = ({
   message,
   buttonText = "Upgrade Subscription",
   onButtonClick,
-  buttonVariant = "outline",
 }) => {
   return (
     <div className="h-full flex flex-col justify-center items-center space-y-3 text-center p-4">
@@ -16,8 +16,8 @@ const FeatureLocked: React.FC<FeatureLockedProps> = ({
       {onButtonClick && (
         <Button
           title={buttonText}
-          className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
-          variant={buttonVariant}
+          className={defaultButtonClassName}
+          variant="secondary"
           onClick={onButtonClick}
         >
           {buttonText}

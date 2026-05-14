@@ -1,7 +1,7 @@
 import { axiosInstance } from "../../lib/axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ApiBaseResponse } from "../interface/commonInterface";
-import { SigninRequest, SigninResponse, SignupRequest, UpdatePasswordRequest, VerifyEmailRequest, VerifyOtpRequest } from "../interface/api/auth";
+import { SigninRequest, SigninResponse, SignupRequest, ResetPasswordRequest, VerifyEmailRequest, VerifyOtpRequest } from "../interface/api/auth";
 
 export const signup = createAsyncThunk<ApiBaseResponse, SignupRequest>('auth/signup',
     async (userData: SignupRequest) => {
@@ -45,8 +45,8 @@ export const verifyEmail = createAsyncThunk<ApiBaseResponse, VerifyEmailRequest>
     }
 )
 
-export const updatePassword = createAsyncThunk<ApiBaseResponse, UpdatePasswordRequest>("auth/updatePassword",
-    async (authData: UpdatePasswordRequest) => {
+export const resetPassword = createAsyncThunk<ApiBaseResponse, ResetPasswordRequest>("auth/updatePassword",
+    async (authData: ResetPasswordRequest) => {
         const response = await axiosInstance.patch("/auth/password", authData);
         return response.data;
     }

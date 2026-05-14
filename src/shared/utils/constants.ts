@@ -20,7 +20,6 @@ import {
   Youtube,
   Twitter,
   Combine,
-  Palette,
   Receipt,
   XCircle,
   Linkedin,
@@ -31,6 +30,7 @@ import {
   Settings,
   Activity,
   BarChart,
+  UserPlus,
   Instagram,
   Calendar1,
   UserCheck,
@@ -56,7 +56,7 @@ import {
   CalendarCheck,
   MessageSquareText,
   PictureInPicture2,
-  UserPlus,
+  LockIcon,
 } from "lucide-react";
 import {
   Route,
@@ -1202,8 +1202,8 @@ export const settingsTabs: CommonTabInterface[] = [
     icon: Mail,
   },
   {
-    value: "security",
-    label: "Account & Security",
+    value: "account",
+    label: "Account",
     icon: Shield,
   },
   {
@@ -1212,9 +1212,9 @@ export const settingsTabs: CommonTabInterface[] = [
     icon: CreditCard,
   },
   {
-    value: "personalization",
-    label: "Personalization",
-    icon: Palette,
+    value: "security",
+    label: "Security",
+    icon: LockIcon,
   },
 ]
 

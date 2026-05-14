@@ -55,9 +55,6 @@ const Sidebar: React.FC<SideBarProps> = ({
                         <span className="text-[var(--mainColor)] text-xl font-black tracking-tight leading-none">
                             SlotFlow
                         </span>
-                        <span className='text-[10px] text-gray-500 font-bold mt-1.5 uppercase tracking-widest'>
-                            {user?.role || 'Dashboard'}
-                        </span>
                     </div>
                 )}
             </div>

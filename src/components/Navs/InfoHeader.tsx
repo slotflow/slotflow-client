@@ -63,7 +63,6 @@ const InfoHeader: React.FC<InfoHeaderProps> = ({
                         <div className={`absolute bottom-0 right-0 size-2.5 rounded-full border-2 border-[var(--menuBg)] ${isOnline ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]' : 'bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.8)]'}`} title={isOnline ? "Online" : "Offline"}></div>
                     </div>
                     <div className="flex flex-col">
-                        <span className="text-[10px] text-gray-500 font-semibold uppercase tracking-widest hidden sm:block">Welcome Back</span>
                         <h4 className="text-sm font-medium tracking-wide">Hi, {username}</h4>
                     </div>
                 </div>

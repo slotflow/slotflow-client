@@ -44,7 +44,7 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
             if ((userLookingProvider || adminLookingProvider || adminLookingUser) && "username" in data && setSelectedUserData) {
                 setSelectedUserData({
                     selectedUserName: data.username,
-                    selectedUserProfileImage: "profileImage" in data ? data.profileImage : null
+                    selectedUserProfileImage: (data as AdminFetchProviderProfileDetailsResponse | AdminFetchUserProfileDetailsResponse | UserFetchProviderProfileDetailsResponse)?.profileImage || null
                 });
             };
         };
@@ -66,7 +66,7 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
 
                     {/* Admin looking provider profile */}
                     {adminLookingProvider && (() => {
-                        const providerProfileData = data as (AdminFetchProviderProfileDetailsResponse);
+                        const providerProfileData = data as (AdminFetchProviderProfileDetailsResponse); 
                         return (
                             <>
                                 <InfoDisplayComponent label="Username" value={providerProfileData.username} />
@@ -93,7 +93,7 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
                                 <InfoDisplayComponent label="Username" value={userProfileData.username} />
                                 <InfoDisplayComponent label="Email" value={userProfileData.email} copyToClipboard={copyToClipboard} />
                                 <InfoDisplayComponent label="Phone Number" value={userProfileData.phone ?? 'Not yet added'} />
-                                <InfoDisplayComponent label="Account Blocked" value={userProfileData.isBlocked} isBoolean={true} isLast />
+                                <InfoDisplayComponent label="Account Blocked" value={userProfileData.isBlocked} isBoolean={true} isLast/>
                             </>
                         )
                     })()}
@@ -109,6 +109,7 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
                                 <InfoDisplayComponent label="Slotflow Trusted" value={providerProfileData.trustedBySlotflow} isBoolean={true} />
                                 <InfoDisplayComponent label="Joined On" value={providerProfileData.createdAt} isDate />
                                 <InfoDisplayComponent label="Address" value={authUser?.isAddressAdded} isBoolean={true} />
+                                <InfoDisplayComponent label="Referral Code" value={authUser?.referralCode}  copyToClipboard={copyToClipboard} />
                                 <InfoDisplayComponent label="Service Details" value={authUser?.isServiceDetailsAdded} isBoolean={true} />
                                 <InfoDisplayComponent label="Availability Details" value={authUser?.isServiceAvailabilityAdded} isBoolean={true} />
                                 <InfoDisplayComponent label="Subscription" value={authUser?.providerSubscription} />
@@ -145,6 +146,7 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
                                 <InfoDisplayComponent label="Email" value={authUser?.email || userProfileData?.email} />
                                 <InfoDisplayComponent label="Phone Number" value={authUser?.phone || userProfileData?.phone} />
                                 <InfoDisplayComponent label="Joined On" value={userProfileData?.createdAt} isDate />
+                                <InfoDisplayComponent label="Referral Code" value={authUser?.referralCode}  copyToClipboard={copyToClipboard} />
                                 <InfoDisplayComponent label="Account Blocked" value={userProfileData?.isBlocked} isBoolean={true} />
                             </>
                         );

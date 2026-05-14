@@ -8,6 +8,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import { CreditCard, Unplug } from "lucide-react";
 import { RootState } from "@/shared/redux/appStore";
 import timeGridPlugin from "@fullcalendar/timegrid";
+import PageHeader from "@/components/common/PageHeader";
 import FeatureLocked from "@/components/app/FeatureLocked";
 import { fetchCalendarEvents } from "@/shared/apis/google";
 import CalendarShimmer from '@/components/shimmers/CalendarShimmer';
@@ -23,7 +24,11 @@ const CalendarPage: React.FC = () => {
     }
 
     const handleMoveToSettings = () => {
-        navigate('/provider/settings');
+        if(authUser?.role === Role.PROVIDER) {
+            navigate('/provider/settings');
+        } else {
+            navigate('/user/settings');
+        }
     }
 
     const canUseCalendar = useMemo(() => {
@@ -43,58 +48,48 @@ const CalendarPage: React.FC = () => {
         staleTime: 60 * 60 * 1000,
         refetchOnWindowFocus: false,
         enabled: Boolean(
-            authUser &&
-            canUseCalendar &&
-            (authUser.role === Role.USER || authUser.googleConnected)
+            authUser?.googleConnected &&
+            canUseCalendar
         ),
     })
 
-    if (isLoading) return <CalendarShimmer />;
-    if (isError && error) {
-        return (
-            <DataFetchingError message={error.message || "Calendar events fetching failed"} />
-        )
-    }
-
-    if (!canUseCalendar) {
-        return (
-            <div className="p-4 h-full">
+    return (
+        <div className="container p-4 space-y-6">
+            <PageHeader
+                title="Calendar"
+                description="Shows your bookings and meetings."
+            />
+            {isLoading ? (
+                <CalendarShimmer />
+            ) : (isError && error) ? (
+                <DataFetchingError message={error.message || "Calendar events fetching failed"} />
+            ) : !canUseCalendar ? (
                 <FeatureLocked
                     message="Sorry, your current subscription does not include the calendar feature."
                     buttonText="Upgrade Subscription"
-                    buttonVariant="outline"
                     onButtonClick={handleUpgradeSubscription}
                     icon={CreditCard}
                 />
-            </div>
-        )
-    };
-
-    if (!authUser?.googleConnected) {
-        return (
-            <FeatureLocked
-                message="You are not connected to Google. You can connect your account to google in settings."
-                buttonText="Settings"
-                buttonVariant="outline"
-                onButtonClick={handleMoveToSettings}
-                icon={Unplug}
-            />
-        )
-    }
-
-    return (
-        <div className="p-4 h-full">
-            <FullCalendar
-                plugins={[dayGridPlugin, timeGridPlugin]}
-                initialView="dayGridMonth"
-                headerToolbar={{
-                    left: "prev,next today",
-                    center: "title",
-                    right: "dayGridMonth,timeGridWeek,timeGridDay",
-                }}
-                events={calendarEvents}
-                height="auto"
-            />
+            ) : !authUser?.googleConnected ? (
+                <FeatureLocked
+                    message="You are not connected to Google. You can connect your account to google in settings."
+                    buttonText="Settings"
+                    onButtonClick={handleMoveToSettings}
+                    icon={Unplug}
+                />
+            ) : (
+                <FullCalendar
+                    plugins={[dayGridPlugin, timeGridPlugin]}
+                    initialView="dayGridMonth"
+                    headerToolbar={{
+                        left: "prev,next today",
+                        center: "title",
+                        right: "dayGridMonth,timeGridWeek,timeGridDay",
+                    }}
+                    events={calendarEvents}
+                    height="auto"
+                />
+            )}
         </div>
     )
 }

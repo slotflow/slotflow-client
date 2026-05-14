@@ -21,7 +21,8 @@ export type AuthUser = Pick<User,
 "stripeAccountId" | 
 "stripeConnected" | 
 "stripeCustomerId" | 
-"allowPushNotification"> & 
+"allowPushNotification" |
+"referralCode"> & 
 Pick<ProviderProfile, 
 "isAddressVerified" | 
 "isAdminVerified" | 

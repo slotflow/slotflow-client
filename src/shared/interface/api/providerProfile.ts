@@ -2,7 +2,7 @@ import { User } from "../entityInterface/userInterface";
 import { ProviderProfile } from "../entityInterface/providerProfileInterface";
 
 // response type of provider fetch self profile details api
-export type ProviderFetchMyProfileDetailsResponse = Pick<ProviderProfile, "isAdminVerified" | "trustedBySlotflow" | "adminVerificationStatus" | "isAddressVerified" | "isAvailabilityVerified" | "isProofsVerified" | "isServiceDetailsVerified"> & Pick<User, "username" | "email" | "isBlocked" | "phone" | "createdAt" | "updatedAt">;
+export type ProviderFetchMyProfileDetailsResponse = Pick<ProviderProfile, "isAdminVerified" | "trustedBySlotflow" | "adminVerificationStatus" | "isAddressVerified" | "isAvailabilityVerified" | "isProofsVerified" | "isServiceDetailsVerified"> & Pick<User, "username" | "email" | "isBlocked" | "phone" | "createdAt" | "updatedAt" | "referralCode">;
 
 // response type of provider submit detials for review api
 export type ProviderSubmitDetailsResponse = Pick<ProviderProfile, "adminVerificationStatus">;

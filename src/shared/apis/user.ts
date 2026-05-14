@@ -1,6 +1,7 @@
 import {
     PreBoardingRequest,
     PreBoardingResponse,
+    UpdatePasswordRequest,
     UserUpdateUserInfoRequest,
     UserUpdateUserInfoResponse,
     AdminfetchAllUsersResponse,
@@ -75,5 +76,11 @@ export const fetchUserProfileDetails = async (userId: string): Promise<ApiBaseRe
 // provider fetching users for chat
 export const fetchUsersForChat = async (): Promise<ApiBaseResponse<FetchUsersForChatSidebarResponse>> => {
     const response = await axiosInstance.get('/users');
+    return response.data;
+}
+
+// user update password
+export const updatePassword = async (data: UpdatePasswordRequest): Promise<ApiBaseResponse> => {
+    const response = await axiosInstance.patch("/users/password", data);
     return response.data;
 }

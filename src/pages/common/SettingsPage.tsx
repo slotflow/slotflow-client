@@ -1,4 +1,3 @@
-
 import {
   Select,
   SelectContent,
@@ -7,12 +6,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import React, { useState } from "react";
-import { Separator } from "@/components/ui/separator";
 import { settingsTabs } from "@/shared/utils/constants";
+import PageHeader from "@/components/common/PageHeader";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import AccountSecurity from "@/components/settings/AccountSecurity";
+import AccountSettings from "@/components/settings/AccountSettings";
+import SecuritySettings from "@/components/settings/SecuritySettings";
 import IntegrationsListing from "@/components/settings/IntegrationsListing";
-import PersonalizationList from "@/components/settings/PersonalizationList";
 import NotificationSettings from "@/components/settings/NotificationSettings";
 
 const SettingsPage: React.FC = () => {
@@ -22,30 +21,23 @@ const SettingsPage: React.FC = () => {
     switch (selectedTab) {
       case "notifications":
         return <NotificationSettings />;
-      case "security":
-        return <AccountSecurity />;
+      case "account":
+        return <AccountSettings />;
       case "integrations":
         return <IntegrationsListing />;
-      case "personalization":
-        return <PersonalizationList />;
+      case "security":
+        return <SecuritySettings />;
       default:
         return null;
     }
   };
 
   return (
-    <div className="p-2">
-      <div className="mb-2">
-        <div className="flex justify-between items-center">
-          <div className="flex space-x-2">
-            <h2 className="text-3xl font-bold tracking-tighter">Settings</h2>
-          </div>
-        </div>
-        <p className="w-8/12 mt-2 text-gray-500 text-sm font-semibold">
-          List of all integrations, you can use based on your subscription
-        </p>
-      </div>
-      <Separator className="shadow-sm" />
+    <div className="container p-4 space-y-6">
+      <PageHeader
+        title="Settings"
+        description="Manage your account, notifications and security."
+      />
 
       <div className="flex flex-col md:flex-row w-full py-4 mt-4 space-x-0 md:space-x-2">
         <div className="hidden md:block w-2/12">

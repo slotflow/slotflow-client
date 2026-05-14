@@ -16,6 +16,7 @@ import ReviewCardsShimmer from "@/components/shimmers/ReviewCardsShimmer";
 import { ReviewsPageProps } from "@/shared/interface/componentInterface";
 import { Review } from "@/shared/interface/entityInterface/reviewInterface";
 import { FetchReviewsResponse, ToggleReviewBlockStatusRequest } from "@/shared/interface/api/review";
+import PageHeader from "@/components/common/PageHeader";
 
 const ReviewsPage: React.FC<ReviewsPageProps> = ({
   isPage = true,
@@ -84,7 +85,11 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
   const reviews = data?.pages.flatMap((page) => (page.items ? page.items : [])) || [];
 
   return (
-    <div className={`h-full ${isPage ? "p-2" : "mt-2 md:mt-0"}`}>
+     <div className={`${isPage ? "container p-4 space-y-6" : "mt-2 md:mt-0"}`}>
+      <PageHeader
+        title="Reviews"
+        description="Manage your reviews."
+      />
 
       {isLoading && (
         <ReviewCardsShimmer />

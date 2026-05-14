@@ -3,7 +3,7 @@ import { ReferralStatus } from "../enums";
 export interface Referral {
     _id: string;
     referrerUserId: string;
-    referredUserId: string;
+    refereeUserId: string;
     referralCode: string;
     status: ReferralStatus;
     rewardGiven: boolean;

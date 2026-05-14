@@ -220,7 +220,6 @@ export interface FeatureLockedProps {
   message: string;
   buttonText?: string;
   onButtonClick?: () => void;
-  buttonVariant?: "default" | "outline" | "ghost" | "destructive";
 }
 
 // Time slot legend component props interface
@@ -436,9 +435,8 @@ export interface TagInputProps {
 }
 
 // user info crud props interface
-export interface UserInfoCRUDProps {
+export interface UpdateUserInfoFormProps {
     onClose: () => void;
-    formRef: React.RefObject<HTMLDivElement | null>;
 }
 
 // integration card props interface

@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { appConfig } from "@/shared/config/env";
-import { updatePassword } from "@/shared/apis/auth";
+import { resetPassword } from "@/shared/apis/auth";
 import { AppDispatch } from "@/shared/redux/appStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormButton, FormHeading } from "../FormSplits";
@@ -34,7 +34,7 @@ const ResetPasswordForm: React.FC = () => {
     const onSubmit = async (data: ResetPasswordFormType) => {
 
         try {
-            const res = await dispatch(updatePassword({
+            const res = await dispatch(resetPassword({
                 password: data.password,
             })).unwrap();
 

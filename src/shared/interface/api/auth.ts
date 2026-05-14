@@ -55,4 +55,4 @@ export interface SigninResponse {
 }
 
 //  request type of update password api
-export type UpdatePasswordRequest = Pick<User, "password">;
+export type ResetPasswordRequest = Pick<User, "password">;

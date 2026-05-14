@@ -117,11 +117,8 @@ const UserListProvidersCardsPage: React.FC = () => {
           </div>
         </>
       ) : (
-        <div className="flex-1 flex justify-center items-center">
-          <DataFetchingError message="No providers found in the database" />
-        </div>
+        <DataFetchingError message="No providers found in the database" />
       )}
-
     </div>
   );
 };
