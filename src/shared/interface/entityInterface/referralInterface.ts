@@ -1,6 +1,6 @@
 import { ReferralStatus } from "../enums";
 
-export interface ReferralProps {
+export interface Referral {
     _id: string;
     referrerUserId: string;
     referredUserId: string;

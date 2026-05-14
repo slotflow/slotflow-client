@@ -56,6 +56,7 @@ import {
   CalendarCheck,
   MessageSquareText,
   PictureInPicture2,
+  UserPlus,
 } from "lucide-react";
 import {
   Route,
@@ -112,7 +113,8 @@ export enum RouteNames {
   SERVICES = "Services",
   PLANS = "Plans",
   GRAFANA_DASHBOARD = "Grafana Dashboard",
-  CREDITS = "Credits"
+  CREDITS = "Credits",
+  REFERRALS = "Referrals"
 }
 
 // Routes for admin
@@ -139,6 +141,7 @@ export const userRoutes: Route[] = [
   { path: "calendar", name: RouteNames.CALENDAR, icon: Calendar1 },
   { path: "reviews", name: RouteNames.REVIEWS, icon: Star },
   { path: "credits", name: RouteNames.CREDITS, icon: Wallet2Icon },
+  { path: "referrals", name: RouteNames.REFERRALS, icon: UserPlus },
   { path: "settings", name: RouteNames.SETTINGS, icon: Settings },
 ]
 
@@ -170,6 +173,8 @@ export const planAccessMap: Record<PlanName, RouteNames[]> = {
     RouteNames.PROFILE,
     RouteNames.BOOKINGS,
     RouteNames.SUBSCRIPTIONS,
+    RouteNames.CREDITS,
+    RouteNames.REFERRALS,
     RouteNames.SETTINGS,
   ],
   [PlanName.STARTER]: [
@@ -179,6 +184,8 @@ export const planAccessMap: Record<PlanName, RouteNames[]> = {
     RouteNames.SUBSCRIPTIONS,
     RouteNames.PAYMENTS,
     RouteNames.INTEGRATIONS,
+    RouteNames.CREDITS,
+    RouteNames.REFERRALS,
     RouteNames.SETTINGS,
   ],
   [PlanName.PROFESSIONAL]: [
@@ -190,6 +197,8 @@ export const planAccessMap: Record<PlanName, RouteNames[]> = {
     RouteNames.INTEGRATIONS,
     RouteNames.CHAT,
     RouteNames.REVIEWS,
+    RouteNames.CREDITS,
+    RouteNames.REFERRALS,
     RouteNames.SETTINGS,
   ],
   [PlanName.ENTERPRISE]: [
@@ -202,6 +211,8 @@ export const planAccessMap: Record<PlanName, RouteNames[]> = {
     RouteNames.CHAT,
     RouteNames.REVIEWS,
     RouteNames.CALENDAR,
+    RouteNames.CREDITS,
+    RouteNames.REFERRALS,
     RouteNames.SETTINGS,
   ],
 };
@@ -830,9 +841,36 @@ export const earningsOverTimeChartConfig = {
 }
 
 // Chart Line Linear Config for credit account page
-export const chartLineLinearConfig: ChartConfig = {
-  credits: {
-    label: "Credits",
+export const creditAccountChartLineLinearConfig: ChartConfig = {
+  totalCredits: {
+    label: "Total Credits",
+    color: "var(--mainColor)",
+  },
+  spentCredits: {
+    label: "Spent Credits",
+    color: "var(--mainColor)",
+  },
+  balanceCredits: {
+    label: "Balance Credits",
+    color: "var(--mainColor)",
+  }
+}
+
+export const referralChartLineLinearConfig: ChartConfig = {
+  totalReferrals: {
+    label: "Total Referrals",
+    color: "var(--mainColor)",
+  },
+  completedReferrals: {
+    label: "Completed Referrals",
+    color: "var(--mainColor)",
+  },
+  pendingReferrals: {
+    label: "Pending Referrals",
+    color: "var(--mainColor)",
+  },
+  rewardedReferrals: {
+    label: "Rewarded Referrals",
     color: "var(--mainColor)",
   },
 }

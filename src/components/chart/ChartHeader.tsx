@@ -12,6 +12,7 @@ const ChartHeader: React.FC<ChartHeaderProps> = ({
     description = "Description",
     onValueChange,
     value,
+    showDatePicker
 }) => {
 
     return (
@@ -24,7 +25,7 @@ const ChartHeader: React.FC<ChartHeaderProps> = ({
                     </CardDescription>
                 )}
             </div>
-            {value && onValueChange && (
+            {value && onValueChange && showDatePicker && (
                 <DateSelect value={value} onValueChange={onValueChange} />
             )}
         </CardHeader>

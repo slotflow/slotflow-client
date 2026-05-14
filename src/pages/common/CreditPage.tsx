@@ -1,24 +1,30 @@
 import React from "react";
+import dayjs from "dayjs";
 import { useQuery } from "@tanstack/react-query";
-import CreditCard from "@/components/credit/CreditCard";
+import StatCard from "@/components/common/StatsCard";
 import PageHeader from "@/components/common/PageHeader";
 import CommonTable from "@/components/table/CommonTable";
 import ChartLineLinear from "@/components/chart/ChartLineLinear";
-import { chartLineLinearConfig } from "@/shared/utils/constants";
 import DataFetchingError from "@/components/error/DataFetchingError";
 import { Wallet, TrendingUp, TrendingDown, Info } from "lucide-react";
+import { creditAccountChartLineLinearConfig } from "@/shared/utils/constants";
+import { FetchCreditTransactionsResponse } from "@/shared/interface/api/credit";
 import { fetchCreditAccountDetails, fetchCreditTransactions } from "@/shared/apis/credit";
 import CreditTransactionTableColumn from "@/components/table/tableColumns/CreditTransactionTableColumn";
-import { FetchCreditTransactionsResponse } from "@/shared/interface/api/credit";
 
-const CreditAccountPage: React.FC = () => {
+const CreditPage: React.FC = () => {
 
     const column = CreditTransactionTableColumn();
+    const endDate = dayjs().toDate();
+    const startDate = dayjs().subtract(1, "month").toDate();
 
     const { data, isLoading, error, isError } = useQuery({
-        queryKey: ["credit-account"],
+        queryKey: ["credit-details"],
         queryFn: async () => {
-            const res = await fetchCreditAccountDetails();
+            const res = await fetchCreditAccountDetails({
+                startDate,
+                endDate
+            });
             return res.data;
         },
         staleTime: 60 * 60 * 1000,
@@ -34,49 +40,62 @@ const CreditAccountPage: React.FC = () => {
 
             <div className="grid gap-2 grid-col-1 md:grid-cols-2">
                 <div className="grid gap-2 grid-cols-2">
-                    <CreditCard
+                    <StatCard
+                        title="Balance Credits"
+                        isLoading={isLoading}
+                        isError={isError}
+                        error={error}
+                        data={data?.balanceCredits?.count ?? 0}
                         Icon={Wallet}
-                        data={data?.balance ?? 0}
-                        error={error}
+                        percentage={data?.balanceCredits?.percentage}
+                        days={data?.balanceCredits?.days}
+                        chartData={data?.balanceCredits?.chartData ?? []}
+                        bgColour="bg-gradient-to-r from-violet-700 to-indigo-600"
+                    />
+                    <StatCard
+                        title="Account Status"
                         isLoading={isLoading}
                         isError={isError}
-                        title={"Balance Credits"}
-                        main
-                        bgColour="bg-[var(--mainColorHover)]"
-                    />
-                    <CreditCard
-                        Icon={Info}
+                        error={error}
                         data={data?.isActive ?? false}
-                        error={error}
+                        Icon={Info}
+                    />
+                    <StatCard
+                        title="Total Credits"
                         isLoading={isLoading}
                         isError={isError}
-                        title={"Account Status"}
-                    />
-                    <CreditCard
+                        error={error}
+                        data={data?.totalCredits?.count ?? 0}
                         Icon={TrendingUp}
-                        data={data?.totalCredits ?? 0}
-                        error={error}
-                        isLoading={isLoading}
-                        isError={isError}
-                        title={"Total Credits"}
+                        percentage={data?.totalCredits?.percentage}
+                        days={data?.totalCredits?.days}
+                        chartData={data?.totalCredits?.chartData ?? []}
                     />
-                    <CreditCard
-                        Icon={TrendingDown}
-                        data={data?.spentCredits ?? 0}
-                        error={error}
+                    <StatCard
+                        title="Spent Credits"
                         isLoading={isLoading}
                         isError={isError}
-                        title={"Spent Credits"}
+                        error={error}
+                        data={data?.spentCredits?.count ?? 0}
+                        Icon={TrendingDown}
+                        percentage={data?.spentCredits?.percentage}
+                        days={data?.spentCredits?.days}
+                        chartData={data?.spentCredits?.chartData ?? []}
+                        bgColour="bg-gradient-to-r from-violet-700 to-indigo-600"
                     />
                 </div>
-                <div className="shadow">
+                <div>
                     {isError && error ? (
                         <DataFetchingError message="Failed to fetch chart Data" />
                     ) : (
                         <ChartLineLinear
+                            title="Credits chart"
+                            description="Detailed chart view of the credits"
                             chartData={data?.chartData ?? []}
-                            chartConfig={chartLineLinearConfig}
-                            dataKeyOne="credits"
+                            chartConfig={creditAccountChartLineLinearConfig}
+                            dataKeyOne="totalCredits"
+                            dataKeyTwo="spentCredits"
+                            dataKeyThree="balanceCredits"
                             chartContainerClassName="h-64"
                         />
                     )}
@@ -98,4 +117,4 @@ const CreditAccountPage: React.FC = () => {
     );
 };
 
-export default CreditAccountPage;
+export default CreditPage;

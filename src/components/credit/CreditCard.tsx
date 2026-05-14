@@ -8,7 +8,7 @@ interface CreditCardPorps {
     isLoading: boolean;
     isError: boolean;
     error: any;
-    data: number | boolean;
+    data: number | boolean | React.ReactNode;
     Icon: LucideIcon
     bgColour?: string;
     main?: boolean;

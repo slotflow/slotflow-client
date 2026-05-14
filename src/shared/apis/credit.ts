@@ -1,10 +1,11 @@
 import { axiosInstance } from "@/lib/axios";
 import { buildQueryParams } from "../helper/buildQueryParams";
 import { ApiBaseResponse, ApiFetchFunction } from "../interface/commonInterface";
-import { FetchCreditAccountDetailsResponse, FetchCreditTransactionsQueryParams, FetchCreditTransactionsResponse } from "../interface/api/credit";
+import { FetchCreditAccountDetailsRequest, FetchCreditAccountDetailsResponse, FetchCreditTransactionsQueryParams, FetchCreditTransactionsResponse } from "../interface/api/credit";
 
-export const fetchCreditAccountDetails = async (): Promise<ApiBaseResponse<FetchCreditAccountDetailsResponse>> => {
-    const response = await axiosInstance.get('/credits/me');
+export const fetchCreditAccountDetails = async (data: FetchCreditAccountDetailsRequest): Promise<ApiBaseResponse<FetchCreditAccountDetailsResponse>> => {
+    const query = buildQueryParams(data);
+    const response = await axiosInstance.get(`/credits/me?${query}`);
     return response.data;
 }
 

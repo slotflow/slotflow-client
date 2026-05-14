@@ -80,6 +80,7 @@ export interface ChartHeaderProps {
   description?: string;
   onValueChange?: (value: TimeRange) => void;
   value?: string;
+  showDatePicker?: boolean;
 }
 
 // AreaGroupChart compoenent props type
@@ -106,7 +107,7 @@ export type ChartLineMultipleProps = Pick<ChatComponentProps<BaseChartData>, "ti
 export type LineChartHorizontalProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "chartConfig" | "isLocked" | "minimumPlan">;
 
 // ChartLineLinear compoenent props type
-export type ChartLineLinearProps = Pick<ChatComponentProps<BaseChartData>, "chartData" | "dataKeyOne" | "chartConfig"> & Partial<Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "footerTextOne" | "footerTextTwo" | "chartContainerClassName">>;
+export type ChartLineLinearProps = Pick<ChatComponentProps<BaseChartData>, "chartData" | "dataKeyOne" | "chartConfig"> & Partial<Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "footerTextOne" | "footerTextTwo" | "chartContainerClassName" | "dataKeyTwo" | "dataKeyThree" | "dataKeyFour">>;
 
 // PieChartCompletionBreakdown compoenent props type
 interface CompletionBreakdownData {

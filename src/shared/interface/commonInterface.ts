@@ -152,6 +152,7 @@ export interface ChatComponentProps<T extends { date: string }> {
   dataKeyOne: string;
   dataKeyTwo: string;
   dataKeyThree: string;
+  dataKeyFour: string;
   nameKey: string;
   chartConfig: ChartConfig;
   isLocked: boolean;

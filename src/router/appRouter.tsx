@@ -7,7 +7,8 @@ import { ProtectedRoute } from "./ProtectedRoutes.tsx";
 import { RouteNames } from "@/shared/utils/constants.ts";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import BoardingLayoutWrapper from "./BoardingLayoutWrapper.tsx";
-import CreditAccountPage from "@/pages/common/CreditAccountPage.tsx";
+import CreditPage from "@/pages/common/CreditPage.tsx";
+import ReferralPage from "@/pages/common/ReferralPage.tsx";
 
 const AuthLayout = lazy(() => import("@/layouts/AuthLayout.tsx"));
 const LoginForm = lazy(() => import("@/components/form/CommonForms/LoginForm.tsx"));
@@ -174,7 +175,8 @@ export const appRouter = createBrowserRouter([
                     { path: "calendar", element: <CalendarPage /> },
                     { path: "reviews", element: <ReviewsPage /> },
                     { path: "settings", element: <SettingsPage /> },
-                    { path: "credits", element: <CreditAccountPage /> },
+                    { path: "credits", element: <CreditPage /> },
+                    { path: "referrals", element: <ReferralPage /> },
                     { path: "booking/confirm", element: <UserBookingConfirmPage /> },
                     { path: "*", element: <Error404Page /> },
                 ],
@@ -274,13 +276,21 @@ export const appRouter = createBrowserRouter([
                             </PlanGuard>
                         )
                     },
-                    { 
-                        path: "credits", 
+                    {
+                        path: "credits",
                         element: (
-                        <PlanGuard routeName={RouteNames.SETTINGS}>
-                                <CreditAccountPage /> 
+                            <PlanGuard routeName={RouteNames.CREDITS}>
+                                <CreditPage />
                             </PlanGuard>
-                    )
+                        )
+                    },
+                    {
+                        path: "referrals",
+                        element: (
+                            <PlanGuard routeName={RouteNames.REFERRALS}>
+                                <ReferralPage />
+                            </PlanGuard>
+                        )
                     },
                     {
                         path: "settings",

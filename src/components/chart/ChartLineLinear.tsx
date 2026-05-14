@@ -22,6 +22,9 @@ const ChartLineLinear: React.FC<ChartLineLinearProps> = ({
   description,
   chartData,
   dataKeyOne,
+  dataKeyTwo,
+  dataKeyThree,
+  dataKeyFour,
   chartConfig,
   footerTextOne,
   footerTextTwo,
@@ -71,6 +74,33 @@ const ChartLineLinear: React.FC<ChartLineLinearProps> = ({
                 strokeWidth={2}
                 dot={false}
               />
+              {dataKeyTwo && (
+                <Line
+                  dataKey={dataKeyTwo}
+                  type="linear"
+                  stroke={chartConfig[dataKeyTwo]?.color}
+                  strokeWidth={2}
+                  dot={false}
+                />
+              )}
+              {dataKeyThree && (
+                <Line
+                  dataKey={dataKeyThree}
+                  type="linear"
+                  stroke={chartConfig[dataKeyThree]?.color}
+                  strokeWidth={2}
+                  dot={false}
+                />
+              )}
+              {dataKeyFour && (
+                <Line
+                  dataKey={dataKeyFour}
+                  type="linear"
+                  stroke={chartConfig[dataKeyFour]?.color}
+                  strokeWidth={2}
+                  dot={false}
+                />
+              )}
             </LineChart>
           )}
         </ChartContainer>
