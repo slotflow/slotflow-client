@@ -27,7 +27,7 @@ const StatsCard: React.FC<DashboardCardOneProps> = ({
     >
       <Card className={cn(
         "h-full overflow-hidden transition-all duration-300 border border-slate-200/60 dark:border-slate-800/60",
-        "bg-white/70 dark:bg-slate-950/70 backdrop-blur-xl shadow-sm hover:shadow-md",
+        "backdrop-blur-xl shadow-sm hover:shadow-md",
         !isShow && "grayscale-[0.5] opacity-90"
       )}>
         <CardContent className="p-6">

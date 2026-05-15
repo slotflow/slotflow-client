@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { ImageUpscale, Minimize2 } from "lucide-react";
 import DataFetchingError from "../error/DataFetchingError";
-import noImage from "../../../assets/defaultImages/imagePlaceholder.png";
+import noImage from "../../assets/defaultImages/imagePlaceholder.png";
+import ProfileDetailsShimmer from "@/components/shimmers/DataFieldShimmer";
 import { ProviderProofsProps } from "@/shared/interface/componentInterface";
-import ProfileDetailsShimmer from "@/components/shimmers/ProfileDetailsShimmer";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 const ProviderProofs: React.FC<ProviderProofsProps> = ({

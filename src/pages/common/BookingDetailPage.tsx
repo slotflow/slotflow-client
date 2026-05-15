@@ -4,9 +4,9 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchBookingDetails } from '@/shared/apis/booking';
 import { formatDateWithTime } from '@/shared/helper/formatter';
 import DataFetchingError from '@/components/error/DataFetchingError';
-import InfoDisplayComponent from '@/components/app/InfoDisplayComponent';
+import DetailField from '@/components/app/DetailField';
 import { Booking } from '@/shared/interface/entityInterface/bookingInterface';
-import ProfileDetailsShimmer from '@/components/shimmers/ProfileDetailsShimmer';
+import ProfileDetailsShimmer from '@/components/shimmers/DataFieldShimmer';
 
 const BookingDetailPage: React.FC = () => {
 
@@ -49,7 +49,7 @@ const BookingDetailPage: React.FC = () => {
           <table className="table-auto border-collapse border  w-full">
             <tbody>
               {dataMap.map((item) => (
-                <InfoDisplayComponent key={item.label} {...item} />
+                <DetailField key={item.label} {...item} />
               ))}
 
               <tr className="border-b">

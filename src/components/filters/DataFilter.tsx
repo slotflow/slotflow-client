@@ -13,7 +13,7 @@ const DataFilter: React.FC<DataFilterProps> = ({
   description = "Filtering data by selected date range",
 }) => {
   return (
-    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 p-4 bg-white/50 dark:bg-slate-950/50 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-sm backdrop-blur-sm">
+    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 p-4 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-sm backdrop-blur-sm">
       <div className="flex items-center gap-2">
         <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg">
           <CalendarIcon className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />

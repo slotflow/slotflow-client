@@ -8,9 +8,9 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
+import { defaultButtonClassName } from "@/shared/utils/constants";
 import { UpdateUserInfoFormProps } from "@/shared/interface/componentInterface";
 import { UserInfoFormType, userInfoZodSchema } from "@/shared/zod/commonZodFields";
-import { defaultButtonClassName } from "@/shared/utils/constants";
 
 const UpdateUserInfoForm: React.FC<UpdateUserInfoFormProps> = ({
     onClose,
@@ -37,6 +37,10 @@ const UpdateUserInfoForm: React.FC<UpdateUserInfoFormProps> = ({
     const onSubmit = async (data: UserInfoFormType) => {
         if (!role) {
             toast.error("User role not found. Please try again.");
+            return;
+        }
+        if(authUser?.username === data.username && authUser?.phone === data.phone) {
+            toast.warning("No changes found");
             return;
         }
         try {

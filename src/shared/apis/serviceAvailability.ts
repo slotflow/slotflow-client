@@ -15,8 +15,9 @@ export const createServiceAvailabilities = createAsyncThunk<ApiBaseResponse, Cre
     }
 );
 
-export const fetchMyServiceAvailability = async ({ date }: { date: Date }): Promise<ApiBaseResponse<FetchServiceAvailabilityResponse>> => {
+export const fetchMyServiceAvailability = async (date: Date): Promise<ApiBaseResponse<FetchServiceAvailabilityResponse>> => {
     const response = await axiosInstance.get(`/service-availabilities/me`, { params: { date: date.toISOString() }});
+    console.log("response : ",response);
     return response.data;
 };
 

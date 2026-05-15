@@ -8,15 +8,15 @@ import { Button } from "@/components/ui/button";
 import { RootState } from "@/shared/redux/appStore";
 import { fetchReviews } from "@/shared/apis/review";
 import ReviewCard from "@/components/review/ReviewCard";
+import PageHeader from "@/components/common/PageHeader";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import DataFetchingError from "@/components/error/DataFetchingError";
 import ConfirmDeleteAlert from "@/components/alert/ConfirmDeleteAlert";
-import { ApiPaginatedResponse } from "@/shared/interface/commonInterface";
-import ReviewCardsShimmer from "@/components/shimmers/ReviewCardsShimmer";
 import { ReviewsPageProps } from "@/shared/interface/componentInterface";
+import ReviewCardsShimmer from "@/components/shimmers/ReviewCardsShimmer";
+import { ApiPaginatedResponse } from "@/shared/interface/commonInterface";
 import { Review } from "@/shared/interface/entityInterface/reviewInterface";
 import { FetchReviewsResponse, ToggleReviewBlockStatusRequest } from "@/shared/interface/api/review";
-import PageHeader from "@/components/common/PageHeader";
 
 const ReviewsPage: React.FC<ReviewsPageProps> = ({
   isPage = true,
@@ -50,12 +50,12 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
 
   const handleChangeReviewBlockStatus = async (e: React.MouseEvent<HTMLButtonElement>, data: ToggleReviewBlockStatusRequest) => {
     e.preventDefault();
-      const res = await toggleBlockStatusHandler(data);
-      if (res.success) {
-        toast.success(res.message);
-      } else {
-        toast.error(res.message);
-      }
+    const res = await toggleBlockStatusHandler(data);
+    if (res.success) {
+      toast.success(res.message);
+    } else {
+      toast.error(res.message);
+    }
   };
 
   const handleReportReview = async (e: React.MouseEvent<HTMLButtonElement>, reviewId: Review["_id"]) => {
@@ -85,11 +85,13 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
   const reviews = data?.pages.flatMap((page) => (page.items ? page.items : [])) || [];
 
   return (
-     <div className={`${isPage ? "container p-4 space-y-6" : "mt-2 md:mt-0"}`}>
-      <PageHeader
-        title="Reviews"
-        description="Manage your reviews."
-      />
+    <div className={`${isPage ? "container p-4 space-y-6" : "mt-2 md:mt-0"}`}>
+      {isPage && (
+        <PageHeader
+          title="Reviews"
+          description="Manage your reviews."
+        />
+      )}
 
       {isLoading && (
         <ReviewCardsShimmer />

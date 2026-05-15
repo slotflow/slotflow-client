@@ -48,11 +48,11 @@ const Sidebar: React.FC<SideBarProps> = ({
 
     return (
         <aside className={`${sidebarOpen ? 'w-[18%]' : 'w-[5%]'} h-full shrink-0 flex flex-col border-r bg-[var(--menuBg)] transition-all duration-300 ease-in-out`}>
-            <div className={`flex items-center py-6 ${sidebarOpen ? 'px-6' : 'px-0 justify-center'} transition-all duration-300`}>
+            <div className={`border border-b flex items-center py-6 ${sidebarOpen ? 'px-6' : 'px-0 justify-center'} transition-all duration-300`}>
                 <img src={logo} className="w-8 h-8 object-contain shrink-0" alt="SlotFlow Logo" />
                 {sidebarOpen && (
                     <div className='flex flex-col ml-3 overflow-hidden'>
-                        <span className="text-[var(--mainColor)] text-xl font-black tracking-tight leading-none">
+                        <span className="text-[var(--mainColor)] text-xl md:text-2xl font-black tracking-tight leading-none">
                             SlotFlow
                         </span>
                     </div>
@@ -110,7 +110,7 @@ const Sidebar: React.FC<SideBarProps> = ({
                         text="Logout"
                         onClick={handleSignout}
                         sidebarOpen={sidebarOpen}
-                        className="text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 hover:text-red-600 dark:hover:text-red-400"
+                        className="text-red-500 hover:bg-red-50 dark:text-red-500 hover:text-red-600 dark:hover:text-red-600"
                     />
                 </div>
             )}

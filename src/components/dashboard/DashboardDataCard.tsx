@@ -19,7 +19,7 @@ const DashboardDataCard: React.FC<DashboardDataCardProps> = ({
   emptyMessage = "No data available"
 }) => {
   return (
-    <Card className={cn("overflow-hidden border-slate-200/60 dark:border-slate-800/60 bg-white/50 dark:bg-slate-950/50 backdrop-blur-xl transition-all duration-300 hover:shadow-md h-full flex flex-col", className)}>
+    <Card className={cn("overflow-hidden border-slate-200/60 dark:border-slate-800/60 backdrop-blur-xl transition-all duration-300 hover:shadow-md h-full flex flex-col", className)}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4 border-b border-slate-100 dark:border-slate-900">
         <div className="flex items-center gap-2">
           <div className="p-2 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg">

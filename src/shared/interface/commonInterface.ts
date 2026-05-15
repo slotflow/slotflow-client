@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import React, { ChangeEvent } from "react";
 import { LucideIcon } from "lucide-react";
 import { RouteNames } from "../utils/constants";
 import { ColumnDef } from "@tanstack/react-table";
@@ -26,18 +26,16 @@ export interface ApiPaginatedResponse<T> {
 }
 
 // InfoDisplay component props interface
-export interface InfoDisplayComponentRowProps {
+export interface DetailFieldProps {
   defaultValue?: string;
   label: string;
-  value: string | boolean | number | string[] | Date | undefined | null;
-  formatDate?: (dateString: string) => string;
-  copyToClipboard?: (text: string) => void;
+  value: string | boolean | number | string[] | Date | React.ReactElement | undefined | null;
+  Icon?: LucideIcon;
+  canCopy?: boolean;
   link?: boolean;
   isBoolean?: boolean;
   isPrice?: boolean;
-  isLast?: boolean;
   isRadioGroup?: boolean;
-  isIframe?: boolean;
   isTime?: boolean;
   isDate?: boolean;
   selectedRadioValue?: string | null;
@@ -387,3 +385,13 @@ export type HearAboutUsOptions = {
     value: HearAboutUsOptionValue
     icon: React.ComponentType<{ className?: string }>
 }
+
+//
+export type StatusPreset = {
+  trueText: string;
+  falseText: string;
+  trueClass: string;
+  falseClass: string;
+  trueIcon?: LucideIcon;
+  falseIcon?: LucideIcon;
+};

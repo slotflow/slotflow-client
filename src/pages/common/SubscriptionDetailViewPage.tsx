@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import { fetchSubscriptionDetails } from '@/shared/apis/subscription';
-import InfoDisplayComponent from '@/components/app/InfoDisplayComponent';
-import ProfileDetailsShimmer from '@/components/shimmers/ProfileDetailsShimmer';
+import DetailField from '@/components/app/DetailField';
+import ProfileDetailsShimmer from '@/components/shimmers/DataFieldShimmer';
 
 const SubscriptionDetailViewPage: React.FC = () => {
 
@@ -44,7 +44,7 @@ const SubscriptionDetailViewPage: React.FC = () => {
                     <table className="table-auto border-collapse border  w-full">
                         <tbody>
                             {dataMap.map((item) => (
-                                <InfoDisplayComponent key={item.label} {...item} />
+                                <DetailField key={item.label} {...item} />
                             ))}
                         </tbody>
                     </table>

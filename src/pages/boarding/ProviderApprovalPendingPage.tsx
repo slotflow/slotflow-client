@@ -61,6 +61,7 @@ const ProviderApprovalPendingPage = () => {
 
   const handleSubmit = async () => {
     try {
+      setIsSubmitting(true);
       const res = await dispatch(providerSubmitDetailsForReview()).unwrap();
       if (!res) {
         throw new Error("Submission failed");
@@ -80,7 +81,7 @@ const ProviderApprovalPendingPage = () => {
 
   return (
     <>
-      <Card>
+      <Card className="mt-2">
         <CardContent className="p-6 flex items-center justify-between">
           <div>
             <p className="text-sm text-muted-foreground">Overall Status</p>
@@ -97,7 +98,7 @@ const ProviderApprovalPendingPage = () => {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="mt-2">
         <CardContent className="p-6 space-y-4">
 
           <h3 className="font-medium">Verification Progress</h3>
@@ -140,7 +141,7 @@ const ProviderApprovalPendingPage = () => {
       </Card>
 
       {adminStatus === AdminVerificationStatus.REJECTED && (
-        <Card className="border-red-200 bg-red-50">
+        <Card className="border-red-200 bg-red-50 mt-2">
           <CardContent className="p-4">
             <p className="text-sm font-medium text-red-600">
               Rejection Reason
@@ -154,7 +155,7 @@ const ProviderApprovalPendingPage = () => {
 
       {(adminStatus === AdminVerificationStatus.NOT_REQUESTED ||
         adminStatus === AdminVerificationStatus.REJECTED) && (
-          <Card>
+          <Card className="mt-2">
             <CardContent className="p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
 
               <p className="text-sm text-muted-foreground max-w-md">
@@ -184,7 +185,7 @@ const ProviderApprovalPendingPage = () => {
         )}
 
       {isBackBlocked && (
-        <div className="text-center text-sm text-muted-foreground">
+        <div className="text-center text-sm text-muted-foreground mt-2">
           {onboardingContent.profileApproval.description3}
         </div>
       )}

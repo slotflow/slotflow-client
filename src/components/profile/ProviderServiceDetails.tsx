@@ -1,10 +1,12 @@
 import React from 'react';
+import DetailField from '../app/DetailField';
+import { Card, CardContent } from '../ui/card';
 import { useQuery } from '@tanstack/react-query';
 import { ServiceMode } from '@/shared/interface/enums';
 import DataFetchingError from '../error/DataFetchingError';
-import InfoDisplayComponent from '../app/InfoDisplayComponent';
-import ProfileDetailsShimmer from '../shimmers/ProfileDetailsShimmer';
+import DataFieldShimmer from '../shimmers/DataFieldShimmer';
 import { ProviderServiceDetailsProps } from '@/shared/interface/componentInterface';
+import { Briefcase, ClipboardList, FileText, Hash, IndianRupee, Layers, LayoutGrid, MonitorSmartphone, Tag, UserPlus, Users, Video } from 'lucide-react';
 
 const ProviderServiceDetails: React.FC<ProviderServiceDetailsProps> = ({
     providerId,
@@ -31,39 +33,41 @@ const ProviderServiceDetails: React.FC<ProviderServiceDetailsProps> = ({
     };
 
     if (isLoading) {
-        return (<ProfileDetailsShimmer row={shimmerRow || 6} className='mt-2' />)
+        return (<DataFieldShimmer row={shimmerRow || 6} />)
     };
 
     return (
-        <div className="border rounded-md overflow-hidden w-full mt-2 md:mt-0">
-            <table className="table-auto w-full">
-                <tbody className="w-1/2">
-                    <InfoDisplayComponent label="Category" value={data?.serviceId?.serviceName} />
-                    <InfoDisplayComponent label="Name" value={data?.serviceName} />
-                    <InfoDisplayComponent label="Description" value={data?.serviceDescription} />
-                    {data?.isGroupService && (
-                        <InfoDisplayComponent label="Group Service" value={data?.isGroupService} isBoolean />
-                    )}
-                    {data?.maxParticipants && (
-                        <InfoDisplayComponent label="Maximum Participants" value={data?.maxParticipants} />
-                    )}
-                    {data?.requirements && (
-                        <InfoDisplayComponent label="Requirements" value={data?.requirements} />
-                    )}
-                    <InfoDisplayComponent label="Mode" value={data?.serviceMode === ServiceMode.BOTH ? "Online & Offline" : data?.serviceMode} />
-                    {data?.serviceType && (
-                        <InfoDisplayComponent label="Type" value={data?.serviceType} />
-                    )}
-                    {data?.videoUrl && (
-                        <InfoDisplayComponent label="Demo" value={data?.videoUrl} link defaultValue="Watch Demo" />
-                    )}
-                    {!isUser && (
-                        <InfoDisplayComponent label="Tags" value={data?.tags} tags />
-                    )}
-                    <InfoDisplayComponent label="Price" value={data?.servicePrice} isPrice={true} />
-                    <InfoDisplayComponent label="Experience" value={data?.serviceExperience} isLast />
-                </tbody>
-            </table>
+        <div className="overflow-hidden w-full mt-2 md:mt-0">
+            <Card>
+                <CardContent className="space-y-2">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                        <DetailField label="Category" value={data?.serviceId?.serviceName} Icon={LayoutGrid} />
+                        <DetailField label="Name" value={data?.serviceName} Icon={Tag} />
+                        <DetailField label="Description" value={data?.serviceDescription} Icon={FileText} />
+                        {data?.isGroupService && (
+                            <DetailField label="Group Service" value={data?.isGroupService} isBoolean Icon={Users} />
+                        )}
+                        {data?.maxParticipants && (
+                            <DetailField label="Maximum Participants" value={data?.maxParticipants} Icon={UserPlus} />
+                        )}
+                        {data?.requirements && (
+                            <DetailField label="Requirements" value={data?.requirements} Icon={ClipboardList} />
+                        )}
+                        <DetailField label="Mode" value={data?.serviceMode === ServiceMode.BOTH ? "Online & Offline" : data?.serviceMode} Icon={MonitorSmartphone} />
+                        {data?.serviceType && (
+                            <DetailField label="Type" value={data?.serviceType} Icon={Layers} />
+                        )}
+                        {data?.videoUrl && (
+                            <DetailField label="Demo" value={data?.videoUrl} link defaultValue="Watch Demo" Icon={Video} />
+                        )}
+                        {!isUser && (
+                            <DetailField label="Tags" value={data?.tags} tags Icon={Hash} />
+                        )}
+                        <DetailField label="Price" value={data?.servicePrice} isPrice={true} Icon={IndianRupee} />
+                        <DetailField label="Experience" value={data?.serviceExperience} Icon={Briefcase} />
+                    </div>
+                </CardContent>
+            </Card>
         </div>
     )
 }

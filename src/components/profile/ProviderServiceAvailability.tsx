@@ -1,14 +1,16 @@
 import { toast } from "react-toastify";
+import DetailField from "../app/DetailField";
+import { Card, CardContent } from "../ui/card";
 import { Role } from "@/shared/interface/enums";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import TimeSlotLegend from "../app/TimeSlotLegend";
-import { Calendar } from "@/components/ui/calendar";
 import React, { useEffect, useState } from "react";
+import { Calendar } from "@/components/ui/calendar";
 import { getEventSocket } from "@/lib/socketService";
 import DataFetchingError from "../error/DataFetchingError";
 import PaymentSelection from "../payment/PaymentSelection";
-import InfoDisplayComponent from "../app/InfoDisplayComponent";
+import { CalendarDays, Clock, Settings2, Timer } from "lucide-react";
 import { fetchEngagedSlots } from "@/shared/apis/serviceAvailability";
 import { Slot } from "@/shared/interface/entityInterface/serviceAvailabilityInterface";
 import { EventSocketEnum, SlotEngageRequest } from "@/shared/interface/socket.interface";
@@ -38,6 +40,8 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityProps> = 
                 const res = await (fetchApiFuntion as UserOrAdminApiFunctionForPSAcomponent)({ date, providerId });
                 return res.data;
             } else if (role === Role.PROVIDER) {
+                console.log("Provider Fetching provider service availability")
+                console.log("Date : ", date);
                 const res = await (fetchApiFuntion as ProviderApiFunctionForPSAComponent)(date);
                 return res.data;
             }
@@ -116,12 +120,12 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityProps> = 
                         mode="single"
                         selected={date}
                         onSelect={setDate}
-                        className={`rounded-md border `}
+                        className={`rounded-lg border `}
                     />
                 </div>
 
                 {isLoading ? (
-                    <ProviderAvailabilityShimmer slotCount={20} />
+                    <ProviderAvailabilityShimmer row={5} slotCount={20} />
                 ) : isError && error ? (
                     <DataFetchingError message={error.message} />
                 ) : !data ? (
@@ -130,81 +134,80 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityProps> = 
                     <div className="w-full flex flex-col">
                         {(
                             <>
-                                <div className=" border rounded-md overflow-hidden w-full">
-                                    <table className="table-auto w-full">
-                                        <tbody className="w-1/2">
-                                            <InfoDisplayComponent label="Day" value={data?.day} />
-                                            <InfoDisplayComponent label="Start Time" value={data?.startTime} />
-                                            <InfoDisplayComponent label="End Time" value={data?.endTime} />
-                                            <InfoDisplayComponent label="Duration" value={data?.duration} isTime />
-                                            <InfoDisplayComponent
+                                <Card>
+                                    <CardContent className="space-y-2">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                                            <DetailField label="Day" value={data?.day} Icon={CalendarDays} />
+                                            <DetailField label="Start Time" value={data?.startTime} Icon={Clock} />
+                                            <DetailField label="End Time" value={data?.endTime} Icon={Clock} />
+                                            <DetailField label="Duration" value={data?.duration} isTime Icon={Timer} />
+                                            <DetailField
                                                 label="Service Modes"
                                                 value={data?.modes}
                                                 isRadioGroup
                                                 selectedRadioValue={selectedMode}
                                                 onRadioChange={(val) => setSelectedMode(val)}
-                                                isLast
                                                 role={role}
+                                                Icon={Settings2}
                                             />
-                                        </tbody>
-                                    </table>
-                                </div>
+                                        </div>
 
-
-                                <div className="mt-2 space-y-4 p-2">
-                                    <TimeSlotLegend
-                                        role={role}
-                                        showAdvanceNotice={Boolean(data && data.slots.length > 0)}
-                                        legendItems={[
-                                            {
-                                                label: "Available Slot",
-                                                className:
-                                                    "bg-[var(--mainColor)/20] border-[var(--mainColor)] hover:bg-[var(--mainColor)] hover:text-white",
-                                            },
-                                            {
-                                                label: "Unavailable Slot",
-                                                className: "border-gray-300 text-gray-500",
-                                            },
-                                            {
-                                                label: "Occupied Slot",
-                                                className: "border-yellow-300 text-yellow-700",
-                                            },
-                                        ]}
-                                    />
-                                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                                        {data?.slots?.length ? (
-                                            data?.slots.map((slot: Slot) => {
-                                                const isOccupied = slot.occupied || engagedSlotIds.has(slot._id);
-                                                const commonClasses = `text-sm font-semibold text-center border-2 rounded-md py-3 px-4 hover:bg-[var(--mainColor)] hover:text-white transition-colors duration-200 
+                                        <div className="mt-2 space-y-4 p-2">
+                                            <TimeSlotLegend
+                                                role={role}
+                                                showAdvanceNotice={Boolean(data && data.slots.length > 0)}
+                                                legendItems={[
+                                                    {
+                                                        label: "Available Slot",
+                                                        className:
+                                                            "bg-[var(--mainColor)/20] border-[var(--mainColor)] hover:bg-[var(--mainColor)] hover:text-white",
+                                                    },
+                                                    {
+                                                        label: "Unavailable Slot",
+                                                        className: "border-gray-300 text-gray-500",
+                                                    },
+                                                    {
+                                                        label: "Occupied Slot",
+                                                        className: "border-yellow-300 text-yellow-700",
+                                                    },
+                                                ]}
+                                            />
+                                            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                                                {data?.slots?.length ? (
+                                                    data?.slots.map((slot: Slot) => {
+                                                        const isOccupied = slot.occupied || engagedSlotIds.has(slot._id);
+                                                        const commonClasses = `text-sm font-semibold text-center border-2 rounded-md py-3 px-4 hover:bg-[var(--mainColor)] hover:text-white transition-colors duration-200 
                                                 ${slot.available && !isOccupied ? 'bg-[var(--mainColor)/20] border-[var(--mainColor)] hover:bg-[var(--mainColor)] hover:text-white'
-                                                        : isOccupied ? 'border-yellow-300 text-yellow-700' : 'border-gray-300 text-gray-500'
-                                                    }`;
+                                                                : isOccupied ? 'border-yellow-300 text-yellow-700' : 'border-gray-300 text-gray-500'
+                                                            }`;
 
-                                                return role === Role.USER ? (
-                                                    <Button
-                                                        title={slot.time}
-                                                        key={slot._id}
-                                                        variant="outline"
-                                                        onClick={(e) => {
-                                                            e.preventDefault();
-                                                            e.stopPropagation();
-                                                            handleBookAnAppoint(slot._id, slot.available && !isOccupied);
-                                                        }}
-                                                        className={`${commonClasses} ${slot.available && !isOccupied ? 'cursor-pointer' : ''}`}
-                                                    >
-                                                        {slot.time}
-                                                    </Button>
+                                                        return role === Role.USER ? (
+                                                            <Button
+                                                                title={slot.time}
+                                                                key={slot._id}
+                                                                variant="outline"
+                                                                onClick={(e) => {
+                                                                    e.preventDefault();
+                                                                    e.stopPropagation();
+                                                                    handleBookAnAppoint(slot._id, slot.available && !isOccupied);
+                                                                }}
+                                                                className={`${commonClasses} ${slot.available && !isOccupied ? 'cursor-pointer' : ''}`}
+                                                            >
+                                                                {slot.time}
+                                                            </Button>
+                                                        ) : (
+                                                            <div key={slot._id} className={commonClasses}>
+                                                                {slot.time}
+                                                            </div>
+                                                        );
+                                                    })
                                                 ) : (
-                                                    <div key={slot._id} className={commonClasses}>
-                                                        {slot.time}
-                                                    </div>
-                                                );
-                                            })
-                                        ) : (
-                                            <p className="col-span-full text-sm text-gray-500 text-center">No slots available</p>
-                                        )}
-                                    </div>
-                                </div>
+                                                    <p className="col-span-full text-sm text-gray-500 text-center">No slots available</p>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </CardContent>
+                                </Card>
                             </>
                         )}
                     </div>

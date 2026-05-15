@@ -4,7 +4,7 @@ import { userFetchMyProfileDetails } from "@/shared/apis/user";
 import ProfileListing from "@/components/profile/ProfileListing";
 import { providerFetchMyProfileDetails } from "@/shared/apis/providerProfile";
 
-const Profile: React.FC = () => {
+const ProfileDetails: React.FC = () => {
 
   const { authUser } = useSelector((state: RootState) => state.auth);
   const isProvider = authUser?.role === "PROVIDER";
@@ -29,4 +29,4 @@ const Profile: React.FC = () => {
   );
 };
 
-export default Profile;
+export default ProfileDetails;

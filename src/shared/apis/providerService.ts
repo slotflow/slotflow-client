@@ -23,7 +23,7 @@ export const providerFetchServiceDetails = async (): Promise<ApiBaseResponse<Fet
 }
 
 export const fetchProviderServiceByProviderId = async (providerId: string): Promise<ApiBaseResponse<FetchProviderServiceResponse>> => {
-    const response = await axiosInstance.get(`/providers/${providerId}/provider-services`);
+    const response = await axiosInstance.get(`/providers/${providerId}/provider-service`);
     return response.data;
 }
 

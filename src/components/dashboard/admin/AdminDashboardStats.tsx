@@ -50,7 +50,7 @@ const AdminDashboardStats: React.FC = () => {
             <div className="mb-6">
                 <div className="md:hidden mb-4">
                     <Select value={selectedTab} onValueChange={setSelectedTab}>
-                        <SelectTrigger className="w-full bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800">
+                        <SelectTrigger className="w-full">
                             <SelectValue placeholder="Select Category" />
                         </SelectTrigger>
                         <SelectContent>
@@ -65,12 +65,12 @@ const AdminDashboardStats: React.FC = () => {
 
                 <div className="hidden md:block">
                     <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-                        <TabsList className="grid grid-cols-5 gap-2 w-full bg-slate-100/50 dark:bg-slate-900/50 p-1 border border-slate-200 dark:border-slate-800 rounded-xl">
+                        <TabsList className="grid grid-cols-5 gap-2 w-full rounded-xl">
                             {adminOverviewTabs.filter(tab => tab.value !== 'today').map((tab) => (
                                 <TabsTrigger
                                     key={tab.value}
                                     value={tab.value}
-                                    className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-950 data-[state=active]:shadow-sm rounded-lg transition-all duration-200"
+                                    className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:shadow-sm rounded-lg transition-all duration-200"
                                 >
                                     {tab.label}
                                 </TabsTrigger>
@@ -81,7 +81,6 @@ const AdminDashboardStats: React.FC = () => {
             </div>
 
             <DataFilter dateRange={dateRange} setDateRange={setDateRange} />
-
 
             <Tabs value={selectedTab} onValueChange={setSelectedTab}>
 

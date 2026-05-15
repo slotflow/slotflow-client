@@ -53,7 +53,7 @@ const AdminServiceProviderDetailPage = () => {
                     ) || tab === 3 && (
                         <ProviderServiceAvailability providerId={providerId} fetchApiFuntion={fetchServiceAvailabilityByProviderId} queryKey="providerServiceAvailability" role={Role.ADMIN} />
                     ) || tab === 4 && (
-                        <ReviewsPage providerId={providerId} />
+                        <ReviewsPage providerId={providerId} isPage={false} />
                     ) || tab === 5 && (
                         <AdminProviderSubscriptions providerId={providerId} />
                     ) || tab === 6 && (

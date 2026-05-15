@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { RootState } from "@/shared/redux/appStore";
-import ProviderPlanList from "@/components/provider/ProviderPlanList";
+import { defaultButtonClassName } from "@/shared/utils/constants";
 import PaymentSelection from "@/components/payment/PaymentSelection";
+import ProviderPlanList from "@/components/provider/ProviderPlanList";
 import ProviderFreeSubscription from "@/components/provider/ProviderFreeSubscription";
 import ProviderSubscriptionHistory from "@/components/provider/ProviderSubscriptionHistory";
 
@@ -17,8 +18,9 @@ const ProviderSubscriptionPage: React.FC = () => {
             <ProviderSubscriptionHistory />
             <div className="p-4">
                 <Button
+                    variant="default"
                     title={showPlans ? "Hide Plans" : "Show Plans"}
-                    className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
+                    className={defaultButtonClassName}
                     onClick={() => setShowPlans(!showPlans)} >{showPlans ? "Hide Plans" : "Show Plans"}</Button>
                 {showPlans && (
                     <ProviderPlanList />

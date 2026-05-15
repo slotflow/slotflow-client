@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Label } from "@/components/ui/label";
+import { Phone, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import DetailField from "@/components/app/DetailField";
 import { motion, AnimatePresence } from "framer-motion";
 import { SelectSeparator } from "@/components/ui/select";
 import { AuthUser } from "@/shared/interface/sliceInterface";
@@ -22,7 +23,7 @@ const UserInfo: React.FC<UserInfoProps> = ({
         <>
             <Card>
                 <CardHeader className="flex justify-between items-center">
-                    <CardTitle className="text-lg">User Info</CardTitle>
+                    <CardTitle className="">User Info</CardTitle>
                     <Button
                         title="Update Password"
                         variant={showForm ? "destructive" : "default"}
@@ -37,14 +38,8 @@ const UserInfo: React.FC<UserInfoProps> = ({
                 <SelectSeparator />
                 <CardContent className="space-y-2">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                        <div className="space-y-1">
-                            <Label htmlFor="username" className="text-gray-400">Username</Label>
-                            <span>{authUser?.username}</span>
-                        </div>
-                        <div className="space-y-1">
-                            <Label htmlFor="phone" className="text-gray-400">Phone</Label>
-                            <span>{authUser?.phone || "No data found"}</span>
-                        </div>
+                        <DetailField label="Username" value={authUser?.username} Icon={User} />
+                        <DetailField label="Phone" value={authUser?.phone} Icon={Phone} />
                     </div>
                 </CardContent>
                 <AnimatePresence initial={false}>

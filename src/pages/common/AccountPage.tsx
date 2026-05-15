@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Role } from '@/shared/interface/enums';
-import Address from '@/components/profile/Address';
-import Profile from '@/components/profile/Profile';
 import { RootState } from '@/shared/redux/appStore';
 import OptionTabs from '@/components/tabs/optionTabs';
 import { profileTabs } from '@/shared/utils/constants';
 import ProfileHead from '@/components/profile/ProfileHead';
+import ProfileDetails from '@/components/profile/ProfileDetails';
+import AddressDetails from '@/components/profile/AddressDetails';
 import ProviderService from '@/components/provider/ProviderService';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import ProviderAvailability from '@/components/provider/ProviderAvailability';
@@ -35,8 +35,8 @@ const AccountPage: React.FC = () => {
                     authUser={authUser}
                 />
 
-                {selectedTab === "tab1" && <Profile />}
-                {selectedTab === "tab2" && <Address />}
+                {selectedTab === "tab1" && <ProfileDetails />}
+                {selectedTab === "tab2" && <AddressDetails />}
                 {isProvider && (
                     <>
                         {selectedTab === "tab3" && <ProviderService />}

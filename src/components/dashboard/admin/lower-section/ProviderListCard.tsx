@@ -25,7 +25,7 @@ const ProviderListCard: React.FC = () => {
     >
       <div className="overflow-x-auto">
         <Table>
-          <TableHeader className="bg-slate-50/50 dark:bg-slate-900/50">
+          <TableHeader>
             <TableRow>
               <TableHead className="w-[60px] text-[10px] uppercase font-bold tracking-wider py-3 px-4">#</TableHead>
               <TableHead className="text-[10px] uppercase font-bold tracking-wider py-3 px-4">Provider</TableHead>

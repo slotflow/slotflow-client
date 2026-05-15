@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPaymentDetails } from "@/shared/apis/payment";
 import DataFetchingError from "@/components/error/DataFetchingError";
-import InfoDisplayComponent from "@/components/app/InfoDisplayComponent";
-import ProfileDetailsShimmer from "@/components/shimmers/ProfileDetailsShimmer";
+import DetailField from "@/components/app/DetailField";
+import ProfileDetailsShimmer from "@/components/shimmers/DataFieldShimmer";
 
 const PaymentDetailViewPage: React.FC = () => {
 
@@ -48,7 +48,7 @@ const PaymentDetailViewPage: React.FC = () => {
                     <table className="table-auto border-collapse border  w-full">
                         <tbody>
                             {dataMap.map((item) => (
-                                <InfoDisplayComponent key={item.label} {...item} />
+                                <DetailField key={item.label} {...item} />
                             ))}
                         </tbody>
                     </table>

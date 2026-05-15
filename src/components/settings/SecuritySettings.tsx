@@ -5,16 +5,24 @@ import { motion, AnimatePresence } from "framer-motion";
 import { defaultButtonClassName } from "@/shared/utils/constants";
 import UpdatePasswordForm from "../form/CommonForms/UpdatePasswordForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "../ui/separator";
 
 const SecuritySettings: React.FC = () => {
 
     const [showForm, setShowForm] = useState<boolean>(false);
 
     return (
-        <div className="space-y-4">
+        <>
+            <div>
+                <h3 className="text-lg font-medium">Security and Privacy</h3>
+                <p className="text-muted-foreground text-sm">
+                    Manage your account details and security and privacy settings
+                </p>
+            </div>
+            <Separator className='my-4 flex-none' />
             <Card>
                 <CardHeader className="flex justify-between items-center">
-                    <CardTitle className="text-lg">Password</CardTitle>
+                    <CardTitle className="">Password</CardTitle>
                     <Button
                         title="Update Password"
                         variant={showForm ? "destructive" : "default"}
@@ -38,7 +46,7 @@ const SecuritySettings: React.FC = () => {
                         >
                             <SelectSeparator />
                             <CardContent className="space-y-2 mt-4">
-                                <UpdatePasswordForm 
+                                <UpdatePasswordForm
                                     onClose={() => setShowForm(false)}
                                 />
                             </CardContent>
@@ -46,7 +54,7 @@ const SecuritySettings: React.FC = () => {
                     )}
                 </AnimatePresence>
             </Card>
-        </div>
+        </>
     )
 }
 

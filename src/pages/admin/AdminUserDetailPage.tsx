@@ -40,7 +40,7 @@ const AdminUserDetailPage: React.FC = () => {
                     ) || tab === 1 && (
                         <AddressListing fetchApiFunction={() => fetchAddressByUserId(userId)} queryKey='' userOrProviderId={userId} />
                     ) || tab === 2 && (
-                        <ReviewsPage userId={userId} />
+                        <ReviewsPage userId={userId} isPage={false} />
                     )}
                 </div>
             </div>

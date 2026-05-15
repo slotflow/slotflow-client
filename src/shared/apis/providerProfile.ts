@@ -102,7 +102,7 @@ export const providerFetchDashboardGraphData = async (subscription?: PlanName, d
 // admin fetch provider profile details
 export const fetchProviderDetailsForAdmin = async (providerId: string): Promise<ApiBaseResponse<AdminFetchProviderProfileDetailsResponse>> => {
     const response = await axiosInstance.get(`/providers/${providerId}`);
-    return response.data.data;
+    return response.data;
 }
 
 // admin fetch service providers
