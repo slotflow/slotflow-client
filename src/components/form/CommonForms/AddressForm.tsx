@@ -62,7 +62,6 @@ const AddressForm: React.FC<AddressFormProps> = ({
     });
 
     const handleLocationSelect = (location: Location) => {
-        console.log("Selected Location: ", location);
         setValue("location", {
             type: "Point",
             coordinates: [location.lon, location.lat],
@@ -111,8 +110,6 @@ const AddressForm: React.FC<AddressFormProps> = ({
                 }
             } else {
                 const res = await dispatch(createAddress(data)).unwrap();
-                console.log("res : ", res);
-                console.log("authUser : ", authUser);
                 if (res.success) {
                     if (authUser?.onboardingStatus !== OnboardingStatus.APPROVED && authUser?.role === Role.PROVIDER) {
                         if (authUser?.adminVerificationStatus === AdminVerificationStatus.NOT_REQUESTED) {

@@ -20,12 +20,11 @@ const DataField: React.FC<DetailFieldProps> = ({
     isDate,
     selectedRadioValue,
     onRadioChange,
-    tags
+    tags,
+    isImage
 }) => {
 
     let displayValue: React.ReactNode;
-
-
 
     if (value === null || value === undefined || (typeof value === "string" && !value.trim())) {
         displayValue = (
@@ -94,6 +93,10 @@ const DataField: React.FC<DetailFieldProps> = ({
         displayValue = (value as string[]).map((tag: string) => (
             tag+", "
         ))
+    } else if (isImage) {
+        displayValue = (
+            <img src={value as string} alt={label} className="rounded-md h-10 w-10 object-cover" />
+        )
     } else {
         displayValue = value as string;
     };

@@ -18,7 +18,6 @@ const UserBookingConfirmPage: React.FC = () => {
   const checkRecentBooking = async () => {
     try {
       const response = await checkBookingConfirmed();
-      console.log("response : ", response);
       if (response.data) {
         toast.success("Your Booking has been confirmed");
       } else {

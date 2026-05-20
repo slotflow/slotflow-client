@@ -41,6 +41,7 @@ export interface DetailFieldProps {
   selectedRadioValue?: string | null;
   onRadioChange?: (value: string) => void;
   tags?: boolean;
+  isImage?: boolean;
 }
 
 // Common button props interface

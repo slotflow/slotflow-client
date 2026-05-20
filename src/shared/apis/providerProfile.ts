@@ -24,7 +24,6 @@ import { ApiBaseResponse, ApiFetchFunction, FetchFunctionBaseQueryParams } from 
 // provider fetching own profile details
 export const providerFetchMyProfileDetails = async (): Promise<ApiBaseResponse<ProviderFetchMyProfileDetailsResponse>> => {
     const response = await axiosInstance.get('/providers/me');
-    console.log("response : ",response);
     return response.data;
 }
 

@@ -74,7 +74,7 @@ const ProviderProfileTopCard: React.FC<ProviderProfileTopCardProps> = ({
                             </div>
                             <p className="text-sm font-medium text-muted-foreground">
                                 {isLoading ? (
-                                        <div className="w-38 h-2 bg-muted rounded shimmer" />
+                                        <span className="w-38 h-2 bg-muted rounded shimmer" />
                                     ) : isError ? (
                                         <p className="text-red-500 text-sm font-normal">Category fetching error</p>
                                     ) : (

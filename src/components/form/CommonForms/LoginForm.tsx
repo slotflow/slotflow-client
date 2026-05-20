@@ -37,40 +37,29 @@ const LoginForm: React.FC = () => {
     const handleNavigation = (data: SigninResponse) => {
         const user = data.user;
         if (user.role === Role.ADMIN) {
-            console.log("one")
             navigate("/admin/dashboard", { replace: true });
             return;
         }
 
         if (user.onboardingStatus === OnboardingStatus.NOT_STARTED) {
-            console.log("two")
             navigate(redirectPaths.PRE_BOARDING_ROLE, { replace: true });
             return;
         }
 
         if (user.onboardingStatus === OnboardingStatus.IN_PROGRESS && user.onboardingType === Role.PROVIDER) {
-            console.log("three")
-            // Granular redirect to the correct onboarding step
             if (!user.isAddressAdded && !user.isAddressVerified) {
-                console.log("four")
-                    navigate(redirectPaths.ONBOARDING_ADDRESS, { replace: true });
+                navigate(redirectPaths.ONBOARDING_ADDRESS, { replace: true });
             } else if (!user.isServiceDetailsAdded && !user.isServiceDetailsVerified) {
-                console.log("five")
                 navigate(redirectPaths.ONBOARDING_SERVICE, { replace: true });
             } else if (!user.isServiceAvailabilityAdded && !user.isAvailabilityVerified) {
-                console.log("six")
                 navigate(redirectPaths.ONBOARDING_AVAILABILITY, { replace: true });
             } else if (!user.isProofSubmitted && !user.isProofsVerified) {
-                console.log("seven")
                 navigate(redirectPaths.ONBOARDING_PROOFS, { replace: true });
             } else if (!user.isAdminVerified) {
-                console.log("eight")
                 navigate(redirectPaths.ONBOARDING_PENDING, { replace: true });
             } else {
-                console.log("nine")
                 navigate(redirectPaths.ONBOARDING_ADDRESS, { replace: true }); // fallback
             }
-            console.log("ten")
             return;
         }
 

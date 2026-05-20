@@ -6,7 +6,6 @@ import { FetchReferralDetailsRequest, FetchReferralDetailsResponse, FetchReferra
 export const fetchReferralDetails = async (data: FetchReferralDetailsRequest): Promise<ApiBaseResponse<FetchReferralDetailsResponse>> => {
     const query = buildQueryParams(data);
     const response = await axiosInstance.get(`/referrals/me?${query}`);
-    console.log("response : ", response);
     return response.data;
 }
 

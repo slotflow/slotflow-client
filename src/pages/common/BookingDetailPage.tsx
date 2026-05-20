@@ -11,7 +11,6 @@ import ProfileDetailsShimmer from '@/components/shimmers/DataFieldShimmer';
 const BookingDetailPage: React.FC = () => {
 
   const { bookingId } = useParams<{ bookingId: Booking["_id"] }>();
-  console.log("bookingId : ", bookingId)
 
   const { data, isLoading, isError, error } = useQuery({
     queryFn: async () => {

@@ -7,7 +7,6 @@ import { UserFetchServiceProvidersRequest, UserFetchServiceProvidersResponse } f
 export const providerCreateServiceDetails = createAsyncThunk<ApiBaseResponse, ProviderCreateServiceDetailsRequest>("/provider/addServiceDetails",
     async (data: ProviderCreateServiceDetailsRequest) => {
         const response = await axiosInstance.post(`/provider-services`, data);
-        console.log("response : ",response);
         return response.data;
     }
 )

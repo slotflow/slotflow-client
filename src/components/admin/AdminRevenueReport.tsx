@@ -46,8 +46,6 @@ const AdminRevenueReport: React.FC = () => {
         refetchOnWindowFocus: false,
     });
 
-    console.log("data : ", data);
-
     const column = AdminRevenueTableColumn();
 
     return (

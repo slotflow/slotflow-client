@@ -1506,6 +1506,10 @@ export const STATUS_PRESETS = {
   },
 };
 
-
-// main actions : default
-// side actions : secondary
+export const cardGradients: string[] = [
+    "bg-gradient-to-r from-violet-200 to-violet-400",
+    "bg-gradient-to-r from-lime-100 to-green-300",
+    "bg-gradient-to-r from-red-100 to-orange-200",
+    "bg-gradient-to-r from-amber-100 to-yellow-200",
+    "bg-gradient-to-r from-sky-100 to-blue-300"
+];

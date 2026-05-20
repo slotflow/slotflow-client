@@ -7,6 +7,7 @@ import {
     Calendar,
     ShieldUser,
     BadgeCheck,
+    Image,
 } from "lucide-react";
 import {
     UserFetchMyProfileDetailsResponse,
@@ -88,6 +89,7 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
         const d = data as AdminFetchProviderProfileDetailsResponse;
 
         fields = [
+            { label: "Profile Image", value: d.profileImage, Icon: Image, isImage:true},
             { label: "Username", value: d.username, Icon: User },
             { label: "Email", value: d.email, canCopy: true, Icon: Mail },
             { label: "Phone Number", value: d.phone, Icon: Phone },
@@ -102,12 +104,13 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
             { label: "Joined On", value: d.createdAt, isDate: true, Icon: Calendar },
         ];
     }
-
+    
     // ADMIN → USER
     if (adminLookingUser) {
         const d = data as AdminFetchUserProfileDetailsResponse;
-
+        
         fields = [
+            { label: "Profile Image", value: d.profileImage, Icon: Image, isImage:true},
             { label: "Username", value: d.username, Icon: User },
             { label: "Email", value: d.email, canCopy: true, Icon: Mail },
             { label: "Phone Number", value: d.phone, Icon: Phone },

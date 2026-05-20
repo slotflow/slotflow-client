@@ -8,7 +8,7 @@ import FileUploader from "@/components/form/CommonForms/FileUploader";
 import { setIsProofSubmitted } from "@/shared/redux/slices/authSlice";
 import { defaultButtonClassName, redirectPaths } from "@/shared/utils/constants";
 import { setProviderIdentityProofs, setProviderServiceProofs } from "@/shared/redux/slices/providerSlice";
-import { providerDeleteIdentityProof, providerDeleteServiceProof, providerFetchProofs, providerUpdateIdentityProof, providerUpdateProofServiceProof } from "@/shared/apis/providerProfile";
+import { providerDeleteIdentityProof, providerDeleteServiceProof, providerFetchMyProofs, providerUpdateIdentityProof, providerUpdateProofServiceProof } from "@/shared/apis/providerProfile";
 
 const ProviderProofSubmissionPage: React.FC = () => {
 
@@ -19,12 +19,9 @@ const ProviderProofSubmissionPage: React.FC = () => {
   const { identityProof, serviceProof } = useSelector((state: RootState) => state.provider);
 
   useEffect(() => {
-    console.log("authUser : ", authUser);
     if (!authUser?.isProofSubmitted?.identityProof && !authUser?.isProofSubmitted?.serviceProof) return;
     async function fetchOldProofs() {
-      console.log("fetching data");
-      const result = await providerFetchProofs();
-      console.log("result : ", result);
+      const result = await providerFetchMyProofs();
       if (result) {
         dispatch(setProviderIdentityProofs({
           file: result.data?.identityProof as string,

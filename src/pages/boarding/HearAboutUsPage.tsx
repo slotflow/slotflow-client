@@ -51,10 +51,8 @@ const HearAboutUsPage: React.FC = () => {
                     dispatch
                 }
                 if (boardingData.selectedRole === Role.PROVIDER) {
-                    console.log("navigate to address page");
                     navigate("/onboarding/address");
                 } else {
-                    console.log("navigate to user dashboard");
                     navigate("/user");
                 }
                 toast.success(res.message);

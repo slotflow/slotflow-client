@@ -1,56 +1,75 @@
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
-import { CardTitle } from "@/components/ui/card";
-import avatar from '../../assets/defaultImages/avatar.png';
+import { ShieldCheck, Star } from "lucide-react";
+import { cardGradients } from "@/shared/utils/constants";
+import { Card, CardContent } from "@/components/ui/card";
+import avatar from "../../assets/defaultImages/avatar.png";
 import { formatNumberToPrice } from "@/shared/helper/formatter";
 import { UserViewProviderCardProps } from "@/shared/interface/componentInterface";
 
 const UserViewProviderCard: React.FC<UserViewProviderCardProps> = ({
-    provider, serviceDetails
+    provider,
+    serviceDetails,
 }) => {
-
     const navigate = useNavigate();
 
+    const gradient =
+        cardGradients[
+        (provider?._id?.charCodeAt(0) || 0) % cardGradients.length
+        ];
+
     return (
-        <div className="w-full max-w-sm rounded-2xl shadow-sm hover:shadow-md transition-all border p-4 cursor-pointer"
-            onClick={(e) => {
-                e.preventDefault();
-                navigate(`/user/providerProfile/${provider?._id}`);
-            }}
+        <Card
+            onClick={() => navigate(`/user/providerProfile/${provider?._id}`)}
+            className={`text-black cursor-pointer transition-all hover:shadow-xl hover:-translate-y-1 ${gradient} border-0`}
         >
-            <div className="flex items-start justify-between">
-                <div className="flex flex-col gap-1">
-                    <CardTitle className="text-base font-semibold">
-                        {provider?.username}
-                    </CardTitle>
-                    <Badge variant="secondary" className="text-xs capitalize w-fit">
-                        {serviceDetails?.service}
-                    </Badge>
+            <CardContent className="p-4 space-y-4">
+                <div className="flex items-center justify-between">
+                    <div>
+                        <h3 className="font-semibold text-lg leading-tight">
+                            {provider?.username}
+                        </h3>
+
+                        <Badge className="mt-1 text-xs capitalize">
+                            {serviceDetails?.service}
+                        </Badge>
+                    </div>
+
+                    <img
+                        src={provider?.profileImage || avatar}
+                        alt={provider?.username}
+                        className="w-16 h-16 rounded-xl object-cover border shadow-sm"
+                    />
                 </div>
 
-                <img
-                    src={provider?.profileImage || avatar}
-                    alt={provider?.username}
-                    className="w-20 h-20 object-cover rounded-xl border"
-                />
-            </div>
+                <div className="space-y-1">
+                    <p className="text-sm font-medium">
+                        {serviceDetails?.serviceName}
+                    </p>
 
-            <div className="my-3 border-t" />
-
-            <div className="space-y-1 text-sm">
-                <p className="font-medium">{serviceDetails?.serviceName}</p>
-
-                <div className="flex justify-between items-center">
-                    <p>{formatNumberToPrice(serviceDetails?.servicePrice)}</p>
-                    {provider?.trustedBySlotflow && (
-                        <span className="text-xs text-green-600 font-medium whitespace-nowrap">
-                            ✅ Trusted by Slotflow
+                    <div className="flex items-center justify-between text-sm">
+                        <span className="font-semibold">
+                            {formatNumberToPrice(serviceDetails?.servicePrice)}
                         </span>
+
+                        <div className="flex items-center gap-1 text-yellow-500 text-xs">
+                            <Star size={14} fill="currentColor" />
+                            <span className="font-semibold">4.5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="flex items-center justify-between text-xs">
+                    {!provider?.trustedBySlotflow && (
+                        <Badge variant="secondary" className="bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 px-2.5 py-0.5 flex items-center gap-1 rounded-full text-xs font-semibold mt-2">
+                            <ShieldCheck className="w-3.5 h-3.5" />
+                            SlotFlow Trusted
+                        </Badge>
                     )}
                 </div>
-            </div>
-        </div>
+            </CardContent>
+        </Card>
     );
-}
+};
 
 export default UserViewProviderCard;

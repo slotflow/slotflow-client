@@ -10,10 +10,7 @@ const OnBoardingGuard: React.FC<OnbooardingGuardProps> = ({ children }) => {
     const location = useLocation();
     const { authUser: user, boardingData } = useSelector((store: RootState) => store.auth);
 
-    console.log("onboarding guard rendered");
-
     if (!user) {
-        console.log("user not found in onboarding guard");
         return (
             <Navigate
                 to="/auth/login"
@@ -24,7 +21,6 @@ const OnBoardingGuard: React.FC<OnbooardingGuardProps> = ({ children }) => {
     }
 
     if (user.role === Role.ADMIN) {
-        console.log("user is admin in onboarding guard");
         return <Navigate to="/admin" replace />;
     }
 
