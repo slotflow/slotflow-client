@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { useReview } from "@/hooks/useReview";
 import { Role } from "@/shared/interface/enums";
 import { Button } from "@/components/ui/button";
+import NoData from "@/components/common/NoData";
 import { RootState } from "@/shared/redux/appStore";
 import { fetchReviews } from "@/shared/apis/review";
 import ReviewCard from "@/components/review/ReviewCard";
@@ -102,7 +103,7 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
       )}
 
       {reviews.length === 0 && (
-        <DataFetchingError message="No Reviews found in database" className="p-4" />
+        <NoData message="No Reviews found in database"  />
       )}
 
       {!isLoading && !isError && reviews.length > 0 && (

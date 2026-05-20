@@ -17,6 +17,7 @@ const initialState: ProviderState = {
     file: null,
     isLoading: false,
   },
+  isShowPreview: false,
 };
 
 const providerSlice = createSlice({
@@ -47,7 +48,7 @@ const providerSlice = createSlice({
     },
     removeAvailability: (state, action: PayloadAction<string>) => {
       const dayToRemove = action.payload;
-      if(!state.availabilities) return;
+      if (!state.availabilities) return;
       state.availabilities = state.availabilities.filter((item) => item.day !== dayToRemove);
     },
     setSubscriptionPlanId: (state, action: PayloadAction<string | null>) => {
@@ -72,11 +73,15 @@ const providerSlice = createSlice({
       if (file !== undefined) state.serviceProof.file = file;
       if (isLoading !== undefined) state.serviceProof.isLoading = isLoading;
     },
+    setIsShowPreview: (state) => {
+      state.isShowPreview = !state.isShowPreview;
+    },
   },
 });
 
 export const {
   addAvailability,
+  setIsShowPreview,
   removeAvailability,
   setSubscriptionPlanId,
   setPaymentSelectionPage,

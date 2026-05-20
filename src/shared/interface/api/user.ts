@@ -12,11 +12,11 @@ export type PreBoardingRequest = {
 
 // response type of the setRole api
 export type PreBoardingResponse = Pick<User, "onboardingStatus" | "onboardingType"> & {
-    adminVerificationStatus: ProviderProfile["adminVerificationStatus"] | null 
+    adminVerificationStatus: ProviderProfile["adminVerificationStatus"] | null
 };
 
 // response type of the user profile details fetching api
-export type UserFetchUserProfileDetailsResponse = Pick<User, "username" | "email" | "isBlocked" | "phone" | "createdAt" | "updatedAt" | "referralCode">;
+export type UserFetchMyProfileDetailsResponse = Pick<User, "username" | "email" | "isBlocked" | "phone" | "createdAt" | "updatedAt" | "referralCode">;
 
 // request type of the user profile image updating api
 export interface UserUpdateProfileImageRequest {

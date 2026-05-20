@@ -1,7 +1,7 @@
 import { ProviderService } from "../entityInterface/providerServiceInterface";
 
 // response type of provider fetch self service details api
-type FetchServiceDetailsResponse = Pick<ProviderService, "serviceName" | "serviceDescription" | "servicePrice" | "serviceExperience" | "serviceType" | "serviceMode" | "requirements" | "maxParticipants" | "isGroupService" | "videoUrl">;
+type FetchServiceDetailsResponse = Pick<ProviderService, "serviceName" | "serviceDescription" | "servicePrice" | "serviceExperience" | "serviceType" | "serviceMode" | "requirements" | "maxParticipants" | "isGroupService" | "videoUrl" | "portfolioUrl">;
 
 // response type of provider fetch self service details api
 export interface FetchProviderServiceResponse extends FetchServiceDetailsResponse {

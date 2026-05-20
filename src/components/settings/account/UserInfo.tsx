@@ -1,29 +1,26 @@
 import React, { useState } from "react";
-import { Phone, User } from "lucide-react";
+import { useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
-import DetailField from "@/components/app/DetailField";
+import DataField from "@/components/app/DataField";
+import { RootState } from "@/shared/redux/appStore";
 import { motion, AnimatePresence } from "framer-motion";
 import { SelectSeparator } from "@/components/ui/select";
-import { AuthUser } from "@/shared/interface/sliceInterface";
-import { defaultButtonClassName } from "@/shared/utils/constants";
+import { Mail, Phone, ShieldUser, User } from "lucide-react";
+import getBooleanStatusComponent from "@/components/app/GetBooleanStatus";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { defaultButtonClassName, STATUS_PRESETS } from "@/shared/utils/constants";
 import UpdateUserInfoForm from "@/components/form/CommonForms/UpdateUserInfoForm";
 
-interface UserInfoProps {
-    authUser: AuthUser;
-}
+const UserInfo: React.FC = () => {
 
-const UserInfo: React.FC<UserInfoProps> = ({
-    authUser
-}) => {
-
+    const authUser = useSelector((store: RootState) => store.auth.authUser);
     const [showForm, setShowForm] = useState<boolean>(false);
 
     return (
         <>
             <Card>
                 <CardHeader className="flex justify-between items-center">
-                    <CardTitle className="">User Info</CardTitle>
+                    <CardTitle className="">Profile Info</CardTitle>
                     <Button
                         title="Update Password"
                         variant={showForm ? "destructive" : "default"}
@@ -37,9 +34,11 @@ const UserInfo: React.FC<UserInfoProps> = ({
                 </CardHeader>
                 <SelectSeparator />
                 <CardContent className="space-y-2">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                        <DetailField label="Username" value={authUser?.username} Icon={User} />
-                        <DetailField label="Phone" value={authUser?.phone} Icon={Phone} />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <DataField label="Username" value={authUser?.username} Icon={User} />
+                        <DataField label="Phone" value={authUser?.phone} Icon={Phone} />
+                        <DataField label="Email" value={authUser?.email} Icon={Mail} />
+                        <DataField label="Account Status" value={getBooleanStatusComponent(authUser?.isBlocked, STATUS_PRESETS.accountStatus)} Icon={ShieldUser} />
                     </div>
                 </CardContent>
                 <AnimatePresence initial={false}>

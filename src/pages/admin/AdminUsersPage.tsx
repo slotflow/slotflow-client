@@ -1,3 +1,4 @@
+import React from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { fetchUsers } from "@/shared/apis/user";
@@ -7,8 +8,9 @@ import { User } from "@/shared/interface/entityInterface/userInterface";
 import { AdminfetchAllUsersResponse } from "@/shared/interface/api/user";
 import { AdminChangeUserStatusRequest } from "@/shared/interface/api/user";
 import AdminUsersTableColumns from "@/components/table/tableColumns/AdminUsersTableColumn";
+import PageHeader from "@/components/common/PageHeader";
 
-const AdminUsersPage = () => {
+const AdminUsersPage: React.FC = () => {
 
   const navigate = useNavigate();
 
@@ -34,12 +36,18 @@ const AdminUsersPage = () => {
   );
 
   return (
-    <CommonTable<AdminfetchAllUsersResponse>
-      fetchApiFunction={fetchUsers}
-      queryKey="users"
-      column={column}
-      columnsCount={6}
-    />
+    <div className="p-4">
+      <PageHeader
+        title="Users"
+        description="Users list"
+      />
+      <CommonTable<AdminfetchAllUsersResponse>
+        fetchApiFunction={fetchUsers}
+        queryKey="users"
+        column={column}
+        columnsCount={6}
+      />
+    </div>
   );
 };
 

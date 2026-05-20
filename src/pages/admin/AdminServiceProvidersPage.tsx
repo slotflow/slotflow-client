@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useRef } from "react";
 import { RootState } from "@/shared/redux/appStore";
+import PageHeader from "@/components/common/PageHeader";
 import CommonTable from "@/components/table/CommonTable";
 import { slideIn } from "@/shared/helper/gsapAnimationSlide";
 import { useAdminProvider } from "@/hooks/adminHooks/useProvider";
@@ -11,7 +12,7 @@ import RejectproviderForm from "@/components/form/AdminForms/RejectproviderForm"
 import AdminProvidersTableColumns from "@/components/table/tableColumns/AdminProvidersTableColumn";
 import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminFetchAllProvidersResponse } from "@/shared/interface/api/providerProfile";
 
-const AdminServiceProvidersPage = () => {
+const AdminServiceProvidersPage: React.FC = () => {
 
   const navigate = useNavigate();
   const { isProviderRejectModalOpen } = useSelector((state: RootState) => state.admin);
@@ -71,7 +72,11 @@ const AdminServiceProvidersPage = () => {
   }, [isProviderRejectModalOpen]);
 
   return (
-    <>
+    <div className="p-4">
+      <PageHeader
+        title="Service Providers"
+        description="Service providers list"
+      />
       <CommonTable<AdminFetchAllProvidersResponse>
         fetchApiFunction={fetchServiceProvidersForAdmin}
         queryKey="providers"
@@ -88,7 +93,7 @@ const AdminServiceProvidersPage = () => {
           />
         </div>
       )}
-    </>
+    </div>
   );
 
 };

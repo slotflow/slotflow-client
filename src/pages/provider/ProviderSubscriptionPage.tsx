@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { Button } from "@/components/ui/button";
 import { RootState } from "@/shared/redux/appStore";
-import { defaultButtonClassName } from "@/shared/utils/constants";
+import PageHeader from "@/components/common/PageHeader";
 import PaymentSelection from "@/components/payment/PaymentSelection";
 import ProviderPlanList from "@/components/provider/ProviderPlanList";
 import ProviderFreeSubscription from "@/components/provider/ProviderFreeSubscription";
@@ -14,18 +13,17 @@ const ProviderSubscriptionPage: React.FC = () => {
     const { planId, planDuration, isTrialPlan, paymentSelectionOpen } = useSelector((store: RootState) => store.provider);
 
     return (
-        <div>
+        <div className="p-4">
+            <PageHeader
+                title="Subscriptions"
+                description="Manage your subscription and view history"
+                actionLabel={showPlans ? "Hide Plans" : "Show Plans"}
+                onActionClick={() => setShowPlans(!showPlans)}
+            />
             <ProviderSubscriptionHistory />
-            <div className="p-4">
-                <Button
-                    variant="default"
-                    title={showPlans ? "Hide Plans" : "Show Plans"}
-                    className={defaultButtonClassName}
-                    onClick={() => setShowPlans(!showPlans)} >{showPlans ? "Hide Plans" : "Show Plans"}</Button>
-                {showPlans && (
-                    <ProviderPlanList />
-                )}
-            </div>
+            {showPlans && (
+                <ProviderPlanList />
+            )}
 
             {paymentSelectionOpen && planId && planDuration && (
                 <PaymentSelection

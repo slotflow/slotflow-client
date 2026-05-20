@@ -1,15 +1,15 @@
 import { toast } from "react-toastify";
-import { useEffect, useRef, useState } from "react";
 import { fetchServices } from "@/shared/apis/service";
-import TableHeader from "@/components/table/TableHeader";
+import PageHeader from "@/components/common/PageHeader";
 import CommonTable from "@/components/table/CommonTable";
+import React, { useEffect, useRef, useState } from "react";
 import { slideIn } from "@/shared/helper/gsapAnimationSlide";
 import { useAdminService } from "@/hooks/adminHooks/useService";
 import CreateServiceForm from "@/components/form/AdminForms/CreateServiceForm";
 import AdminAppServicesTableColumns from "@/components/table/tableColumns/AdminAppServicesTableColumn";
 import { ChangeServiceBlockStatusRequest, FetchServicesResponse } from "@/shared/interface/api/service";
 
-const AdminServicesPage = () => {
+const AdminServicesPage: React.FC = () => {
 
   const [showForm, setShowForm] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
@@ -36,9 +36,10 @@ const AdminServicesPage = () => {
   }, [showForm]);
 
   return (
-    <div className="relative">
-      <TableHeader
+    <div className="p-4">
+      <PageHeader
         title="Services"
+        description="Application services list"
         actionLabel="Create New Service"
         onActionClick={() => setShowForm(true)}
       />

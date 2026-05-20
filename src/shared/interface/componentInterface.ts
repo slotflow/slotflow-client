@@ -6,66 +6,43 @@ import {
   FieldError,
   Control,
 } from "react-hook-form";
-import { PlanName, Role, ServiceMode } from "./enums";
 import { LucideIcon } from "lucide-react";
+import { DateRange } from "react-day-picker";
+import { AppDispatch } from "../redux/appStore";
+import { RouteNames } from "../utils/constants";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { ChartConfig } from "@/components/ui/chart";
-import { User } from "./entityInterface/userInterface";
-import { AdminFetchUserProfileDetailsResponse, UserFetchServiceProvidersResponse, UserFetchUserProfileDetailsResponse } from "./api/user";
-import { FetchProvidersProofsResponse, UpdateFileDataRequest } from "./api/commonApiInterface";
-import { FetchProviderServiceResponse } from "./api/providerService";
-import { Dispatch, ReactElement, ReactNode, SetStateAction } from "react";
-import { FetchServiceAvailabilityResponse } from "./api/serviceAvailability";
-import { FetchPaymentsQueryParams, FetchPaymentsResponse } from "./api/payment";
-import { ApiBaseResponse, ApiPaginatedResponse, BaseChartData, CardProps, ChatComponentProps, FetchFunctionBaseQueryParams, OptionType, ProviderSubscriptionDataProps, Route, statsMapIntrface, TabItem, TimeRange, UserBookinAppointmentDataProps } from "./commonInterface";
-import { DateRange } from "react-day-picker";
 import * as RPNInput from "react-phone-number-input";
-import { AppDispatch } from "../redux/appStore";
-import { Location } from "@/shared/interface/entityInterface/addressInterface";
-import { FetchAddressResponse, FetchMyAddressResponse } from "./api/address";
-import { AdminFetchProviderProfileDetailsResponse, ProviderFetchMyProfileDetailsResponse, UserFetchProviderProfileDetailsResponse } from "./api/providerProfile";
-import { FetchReviewsResponse, ToggleReviewBlockStatusRequest } from "./api/review";
-import { ProviderServiceAvailabilityFormType } from "../zod/providerZod";
-import { Availability } from "./entityInterface/serviceAvailabilityInterface";
-import { Column, ColumnDef, OnChangeFn, PaginationState } from "@tanstack/react-table";
-import { RouteNames } from "../utils/constants";
 import { SetProofDataProps } from "./sliceInterface";
-
-// profile head compoenent props interface
-export interface ProfileHeaderProps {
-  canUpdate: boolean;
-  showDetails?: boolean;
-  isMyProfile?: boolean;
-  selectedUserData?: { selectedUserName: string, selectedUserProfileImage: string | null };
-}
-
-// Provider service availabilit component props interface
-type FetchApiFunctionUserOrAdminRequestPayloadProps = {
-  providerId: User["_id"]
-  date: Date
-}
-
-// Provider service availability component function type
-export type ProviderApiFunctionForPSAComponent = (date: Date) => Promise<ApiBaseResponse<FetchServiceAvailabilityResponse>>;
-
-// User or admin service availability component function type
-export type UserOrAdminApiFunctionForPSAcomponent = (payload: FetchApiFunctionUserOrAdminRequestPayloadProps) => Promise<ApiBaseResponse<FetchServiceAvailabilityResponse>>;
+import { PlanName, Role, ServiceMode } from "./enums";
+import { User } from "./entityInterface/userInterface";
+import { FetchProviderServiceResponse } from "./api/providerService";
+import { ProviderServiceAvailabilityFormType } from "../zod/providerZod";
+import { Dispatch, ReactElement, ReactNode, SetStateAction } from "react";
+import { FetchAddressResponse, FetchMyAddressResponse } from "./api/address";
+import { Availability } from "./entityInterface/serviceAvailabilityInterface";
+import { Location } from "@/shared/interface/entityInterface/addressInterface";
+import { FetchPaymentsQueryParams, FetchPaymentsResponse } from "./api/payment";
+import { FetchReviewsResponse, ToggleReviewBlockStatusRequest } from "./api/review";
+import { Column, ColumnDef, OnChangeFn, PaginationState } from "@tanstack/react-table";
+import { FetchProvidersProofsResponse, UpdateFileDataRequest } from "./api/commonApiInterface";
+import { AdminFetchUserProfileDetailsResponse, UserFetchServiceProvidersResponse, UserFetchMyProfileDetailsResponse } from "./api/user";
+import { AdminFetchProviderProfileDetailsResponse, ProviderFetchMyProfileDetailsResponse, UserFetchProviderProfileDetailsResponse } from "./api/providerProfile";
+import { ApiBaseResponse, ApiPaginatedResponse, BaseChartData, CardProps, ChatComponentProps, FetchFunctionBaseQueryParams, OptionType, ProviderSubscriptionDataProps, Route, statsMapIntrface, TabItem, TimeRange, UserBookinAppointmentDataProps } from "./commonInterface";
 
 // Provider service availability component props interface
 export interface ProviderServiceAvailabilityProps {
+  role: Role;
   providerId?: string
-  fetchApiFuntion: ProviderApiFunctionForPSAComponent | UserOrAdminApiFunctionForPSAcomponent;
-  queryKey: string;
-  role?: Role;
+  canUpdate?: boolean;
 }
 
-// Provider Service details showing component props interface
-export interface ProviderServiceDetailsProps {
+// Provider Service list and details showing component props interface
+export interface ProviderServiceListProps {
   providerId?: User["_id"];
   fetchApiFunction: (providerId?: User["_id"]) => Promise<ApiBaseResponse<FetchProviderServiceResponse>>;
   queryKey: string;
-  isUser?: boolean;
-  shimmerRow?: number;
+  canUpdate?: boolean;
 }
 
 // DateSelect component interface
@@ -226,7 +203,7 @@ export interface FeatureLockedProps {
 export interface TimeSlotLegendProps {
   role?: Role;
   showAdvanceNotice?: boolean;
-  heading?: string;
+  date?: Date;
   legendItems: {
     label: string;
     description?: string;
@@ -436,17 +413,17 @@ export interface TagInputProps {
 
 // user info crud props interface
 export interface UpdateUserInfoFormProps {
-    onClose: () => void;
+  onClose: () => void;
 }
 
 // integration card props interface
 export interface IntegrationCardProps {
-    image: string;
-    heading: string;
-    description: string;
-    connectOnClick: (e: React.MouseEvent<HTMLButtonElement>, dispatch: AppDispatch) => void;
-    isConnected: boolean;
-    connectingLoading: boolean;
+  image: string;
+  heading: string;
+  description: string;
+  connectOnClick: (e: React.MouseEvent<HTMLButtonElement>, dispatch: AppDispatch) => void;
+  isConnected: boolean;
+  connectingLoading: boolean;
 }
 
 // Heading component props interface
@@ -462,8 +439,8 @@ export interface LocationPickerProps {
 
 // map preview props interface
 export interface MapPreviewProps {
-    lat: number;
-    lon: number;
+  lat: number;
+  lon: number;
 }
 
 // Footer component props interface
@@ -473,8 +450,8 @@ export interface FooterProps {
 
 // InfoHeader component props interface
 export interface InfoHeaderProps {
-    profileImage?: string;
-    username: string;
+  profileImage?: string;
+  username: string;
 }
 
 // Nav compoenents interfaces
@@ -485,34 +462,34 @@ export interface SideBarProps {
 
 // SingleTab component props interface
 export interface SingleTabProps {
-    icon: React.ElementType;
-    text: string;
-    sidebarOpen: boolean;
-    onClick?: () => void;
-    className?: string;
-    locked?: boolean;
-    active?: boolean;
+  icon: React.ElementType;
+  text: string;
+  sidebarOpen: boolean;
+  onClick?: () => void;
+  className?: string;
+  locked?: boolean;
+  active?: boolean;
 }
 
 // NotificationCard component props interface
 export interface NotificationCardProps {
-    title: string;
-    body: string;
-    isRead: boolean;
-    createdAt: Date;
+  title: string;
+  body: string;
+  isRead: boolean;
+  createdAt: Date;
 }
 
 // SideBox component props interface
 export interface SideBoxProps {
-    pageNumber: number;
+  pageNumber: number;
 }
 
 // PaymentSelecion component props interface
 export interface PaymentSelecionComponentProps {
-    setOpenPayment?: (data: boolean) => void;
-    data: UserBookinAppointmentDataProps | ProviderSubscriptionDataProps;
-    isAppointmentBooking?: boolean;
-    isProviderSubscription?: boolean;
+  setOpenPayment?: (data: boolean) => void;
+  data: UserBookinAppointmentDataProps | ProviderSubscriptionDataProps;
+  isAppointmentBooking?: boolean;
+  isProviderSubscription?: boolean;
 }
 
 // ProviderPlanCard component props interface
@@ -525,46 +502,48 @@ export interface ProviderPlanCardProps {
 
 // UserOrProviderAddressDetails component props interface
 export interface UserOrProviderAddressDetailsComponentProps {
-    userOrProviderId?: string;
-    fetchApiFunction: (userOrProviderId?: string) => Promise<
-        ApiBaseResponse<FetchMyAddressResponse> | ApiBaseResponse<FetchAddressResponse>
-    >;
-    queryKey: string;
+  userOrProviderId?: string;
+  fetchApiFunction: (userOrProviderId?: string) => Promise<
+    ApiBaseResponse<FetchMyAddressResponse> | ApiBaseResponse<FetchAddressResponse>
+  >;
+  queryKey: string;
+  isUserLookingProvider?: boolean;
+  canUpdate?: boolean;
 }
 
 // ProfileHorizontalTabs component props interface
 export interface ProfileHorizontalTabsComponentProps {
-    isAdmin: boolean;
-    tab: number;
-    setTab: (index: number) => void;
-    tabArray: { tabName: string; admin: boolean; user: boolean }[];
+  isAdmin: boolean;
+  tab: number;
+  setTab: (index: number) => void;
+  tabArray: { tabName: string; admin: boolean; user: boolean }[];
 }
 
 // UserOrProviderProfileDetails component props interface
 export interface UserOrProviderProfileDetailsComponentProps {
-    userOrProviderId?: string;
-    fetchApiFunction: (userOrProviderId?: string) => Promise<ApiBaseResponse<
-        AdminFetchProviderProfileDetailsResponse |
-        ProviderFetchMyProfileDetailsResponse |
-        UserFetchProviderProfileDetailsResponse |
-        UserFetchUserProfileDetailsResponse |
-        AdminFetchUserProfileDetailsResponse>
-    >;
-    queryKey: string;
-    adminLookingProvider?: boolean;
-    adminLookingUser?: boolean;
-    providerSelf?: boolean;
-    userSelf?: boolean;
-    userLookingProvider?: boolean;
-    setProfileImage?: (image: string) => void;
-    shimmerRow: number;
-    setSelectedUserData?: (data: { selectedUserName: string; selectedUserProfileImage: string | null }) => void;
+  userOrProviderId?: string;
+  fetchApiFunction: (userOrProviderId?: string) => Promise<ApiBaseResponse<
+    AdminFetchProviderProfileDetailsResponse |
+    ProviderFetchMyProfileDetailsResponse |
+    UserFetchProviderProfileDetailsResponse |
+    UserFetchMyProfileDetailsResponse |
+    AdminFetchUserProfileDetailsResponse>
+  >;
+  queryKey: string;
+  adminLookingProvider?: boolean;
+  adminLookingUser?: boolean;
+  providerSelf?: boolean;
+  userSelf?: boolean;
+  userLookingProvider?: boolean;
+  setProfileImage?: (image: string) => void;
+  shimmerRow: number;
+  setSelectedUserData?: (data: { selectedUserName: string; selectedUserProfileImage: string | null }) => void;
 }
 
 // ProviderProofs component props interface
 export interface ProviderProofsProps {
-    providerId: User["_id"];
-    fetchApiFunction: (providerId?: string) => Promise<ApiBaseResponse<FetchProvidersProofsResponse>>;
+  providerId?: User["_id"];
+  fetchApiFunction: (providerId?: string) => Promise<ApiBaseResponse<FetchProvidersProofsResponse>>;
 }
 
 // ReviewCard component props interface
@@ -578,58 +557,58 @@ export interface ReviewCardProps {
 
 // ReviewStatus component props interface
 export interface ReviewStatusProps {
-    status: string;
-    icon: LucideIcon;
-    isNot?: boolean;
+  status: string;
+  icon: LucideIcon;
+  isNot?: boolean;
 }
 
 // ReviewUserProfile component props interface
 export interface ReviewUserProfileProps {
-    profileImage: string;
-    username: string;
-    text: string;
+  profileImage: string;
+  username: string;
+  text: string;
 }
 
 // AvailabilityDataSelectionFields component props interface
 export interface AvailabilityDataSelectionFieldsProps {
-    register: UseFormRegister<ProviderServiceAvailabilityFormType>;
-    isModeSelected: (mode: ServiceMode) => boolean;
-    toggleMode: (mode: ServiceMode) => void;
+  register: UseFormRegister<ProviderServiceAvailabilityFormType>;
+  isModeSelected: (mode: ServiceMode) => boolean;
+  toggleMode: (mode: ServiceMode) => void;
 }
 
 // CreateServiceAvailabilityFooter component props interface
 export interface CreateServiceAvailabilityFooterProps {
-    selectedTimeSlots: string[];
-    isSubmitting: boolean;
-    onAddAvailability: (e: React.MouseEvent<HTMLButtonElement>) => void;
-    availabilities: Availability[] | null;
-    isValid: boolean;
-    isUpdating: boolean;
-    isLoading: boolean;
+  selectedTimeSlots: string[];
+  isSubmitting: boolean;
+  onAddAvailability: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  availabilities: Availability[] | null;
+  isValid: boolean;
+  isUpdating: boolean;
+  isLoading: boolean;
 }
 
 // GenerateTimeSlots component props interface
 export interface GenerateTimeSlotsProps {
-    timeSlots: string[];
-    selectedTimeSlots: string[];
-    allSlotsSelected: boolean;
-    handleAllSlots: (push: boolean) => void;
-    toggleSlot: (timeSlot: string) => void;
-    control: Control<ProviderServiceAvailabilityFormType>;
+  timeSlots: string[];
+  selectedTimeSlots: string[];
+  allSlotsSelected: boolean;
+  handleAllSlots: (push: boolean) => void;
+  toggleSlot: (timeSlot: string) => void;
+  control: Control<ProviderServiceAvailabilityFormType>;
 }
 
 // TimeField component props interface
 export interface TimeFieldProps {
-    label: string;
-    name: "startTime" | "endTime";
-    control: any;
+  label: string;
+  name: "startTime" | "endTime";
+  control: any;
 }
 
 // TimeRangeSetter component props interface
 export interface TimeRangeSetterProps {
-    control: Control<ProviderServiceAvailabilityFormType>;
-    isSubmitting: boolean;
-    onGenerateSlots: () => void;
+  control: Control<ProviderServiceAvailabilityFormType>;
+  isSubmitting: boolean;
+  onGenerateSlots: () => void;
 }
 
 // Data table component props interface
@@ -647,13 +626,6 @@ export interface DataTableColumnHeaderProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {
   column: Column<TData, TValue>
   title: string
-}
-
-// Table header component props interface
-export interface TableHeaderProps {
-  title: string;
-  actionLabel?: string;
-  onActionClick?: () => void;
 }
 
 // Option tabs component props interface
@@ -684,7 +656,7 @@ export interface ProtectedRouteProps {
 }
 
 //
-export interface OnbooardingGuardProps { 
-  children: 
-  React.ReactNode 
+export interface OnbooardingGuardProps {
+  children:
+  React.ReactNode
 }

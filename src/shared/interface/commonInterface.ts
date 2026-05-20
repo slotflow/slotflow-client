@@ -40,7 +40,6 @@ export interface DetailFieldProps {
   isDate?: boolean;
   selectedRadioValue?: string | null;
   onRadioChange?: (value: string) => void;
-  role?: Role;
   tags?: boolean;
 }
 

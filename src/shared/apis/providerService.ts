@@ -29,7 +29,7 @@ export const fetchProviderServiceByProviderId = async (providerId: string): Prom
 
 // user fetch service providers
 export const fetchServiceProvidersForUser = async (data: UserFetchServiceProvidersRequest): Promise<ApiBaseResponse<Array<UserFetchServiceProvidersResponse>>> => {
-    const response = await axiosInstance.get(`/provider-service`, {
+    const response = await axiosInstance.get(`/provider-services`, {
         params: { ...data },
     });
     return response.data;

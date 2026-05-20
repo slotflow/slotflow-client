@@ -8,7 +8,7 @@ import {
     AdminChangeUserStatusRequest,
     UserUpdateProfileImageRequest,
     UserUpdateProfileImageResponse,
-    UserFetchUserProfileDetailsResponse,
+    UserFetchMyProfileDetailsResponse,
     AdminFetchUserProfileDetailsResponse,
 } from "../interface/api/user";
 import { axiosInstance } from "@/lib/axios";
@@ -24,7 +24,7 @@ export const postPreBoarding = async (payload: PreBoardingRequest): Promise<ApiB
 }
 
 // user fetch own profile details
-export const userFetchMyProfileDetails = async (): Promise<ApiBaseResponse<UserFetchUserProfileDetailsResponse>> => {
+export const userFetchMyProfileDetails = async (): Promise<ApiBaseResponse<UserFetchMyProfileDetailsResponse>> => {
     const response = await axiosInstance.get('/users/me');
     return response.data;
 }

@@ -12,7 +12,7 @@ const ProviderPlanList: React.FC = () => {
     const { data, isLoading, isError, error } = useQuery({
         queryFn: async () => {
             const res = await providerFetchPlans();
-            return res.data;
+            return res.data?.items;
         },
         queryKey: ["plans"],
         staleTime: 60 * 60 * 1000,

@@ -10,7 +10,7 @@ import { PlanName } from "@/shared/interface/enums";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { slideOut } from "@/shared/helper/gsapAnimationSlide";
-import { adVisibility, planNameOptions } from "@/shared/utils/constants";
+import { adVisibility, defaultButtonClassName, planNameOptions } from "@/shared/utils/constants";
 import { CreatePlanFormProps } from "@/shared/interface/componentInterface";
 import { AdminCreatePlanFormType, adminCreatePlanZodSchema } from "@/shared/zod/adminZod";
 
@@ -145,8 +145,9 @@ const CreatePlanForm: React.FC<CreatePlanFormProps> = ({
                 <Button
                     title="Cancel"
                     variant="destructive"
-                    className="cursor-pointer w-full"
+                    className={defaultButtonClassName}
                     type="button"
+                    disabled={isSubmitting}
                     onClick={handleCloseForm}
                 >
                     Cancel

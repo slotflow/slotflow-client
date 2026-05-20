@@ -51,7 +51,7 @@ const AdminRevenueReport: React.FC = () => {
     const column = AdminRevenueTableColumn();
 
     return (
-        <div className="p-2">
+        <div>
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
                 <Popover>
                     <PopoverTrigger asChild>

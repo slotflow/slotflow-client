@@ -80,7 +80,7 @@ export interface ProviderDashboardGraphResponse {
 export type AdminFetchProviderProfileDetailsResponse = Pick<ProviderProfile, "isAdminVerified" | "trustedBySlotflow" | "adminVerificationStatus" | "isAddressVerified" | "isAvailabilityVerified" | "isProofsVerified" | "isServiceDetailsVerified"> & Pick<User, "_id" | "username" | "email" | "isBlocked" | "phone" | "createdAt" | "profileImage">;
 
 // response type of user fetch provider profile details api
-export type UserFetchProviderProfileDetailsResponse = Pick<ProviderProfile, "trustedBySlotflow"> & Pick<User, "username" | "email" | "phone" | "profileImage">;
+export type UserFetchProviderProfileDetailsResponse = Pick<ProviderProfile, "trustedBySlotflow"> & Pick<User, "username" | "profileImage">;
 
 // response type of admin fetch all providers api
 export type AdminFetchAllProvidersResponse = Pick<ProviderProfile, "isAdminVerified" | "trustedBySlotflow" | "adminVerificationStatus"> & Pick<User, "_id" | "username" | "email" | "isBlocked">;

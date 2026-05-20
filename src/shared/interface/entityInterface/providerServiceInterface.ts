@@ -14,6 +14,7 @@ export interface ProviderService {
     serviceMode: ServiceMode;
     tags?: string[];
     videoUrl?: string;
+    portfolioUrl?: string;
     maxParticipants?: number;
     isGroupService?: boolean;
     createdAt: string;

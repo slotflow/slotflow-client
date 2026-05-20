@@ -1,10 +1,13 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import DataField from '@/components/app/DataField';
+import PageHeader from '@/components/common/PageHeader';
+import { Card, CardContent } from '@/components/ui/card';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import { fetchSubscriptionDetails } from '@/shared/apis/subscription';
-import DetailField from '@/components/app/DetailField';
 import ProfileDetailsShimmer from '@/components/shimmers/DataFieldShimmer';
+import { BadgeCheck, Calendar, CalendarClock, CalendarDays, IndianRupee, ListOrdered, Megaphone, Package } from 'lucide-react';
 
 const SubscriptionDetailViewPage: React.FC = () => {
 
@@ -22,32 +25,37 @@ const SubscriptionDetailViewPage: React.FC = () => {
     });
 
     const dataMap = [
-        { label: "Subscription Status", value: data?.subscriptionStatus },
-        { label: "Subscribed on", value: data?.createdAt, isDate: true },
-        { label: "Subscription started on", value: data?.startDate, isDate: true },
-        { label: "Subscription expires on", value: data?.endDate, isDate: true },
-        { label: "Subscribed Plan Name", value: data?.subscriptionPlanId?.planName },
-        { label: "Subscription Max Bookings", value: data?.subscriptionPlanId?.maxBookingPerMonth },
-        { label: "Subscription Ad Visibility", value: data?.subscriptionPlanId?.adVisibility, isBoolean: true },
-        { label: "Subscription price", value: data?.subscriptionPlanId?.price, isPrice: true },
+        { label: "Subscription Status", value: data?.subscriptionStatus, Icon: BadgeCheck },
+        { label: "Subscribed on", value: data?.createdAt, isDate: true, Icon: Calendar },
+        { label: "Subscription started on", value: data?.startDate, isDate: true, Icon: CalendarClock },
+        { label: "Subscription expires on", value: data?.endDate, isDate: true, Icon: CalendarDays },
+        { label: "Subscribed Plan Name", value: data?.subscriptionPlanId?.planName, Icon: Package },
+        { label: "Subscription Max Bookings", value: data?.subscriptionPlanId?.maxBookingPerMonth, Icon: ListOrdered },
+        { label: "Subscription Ad Visibility", value: data?.subscriptionPlanId?.adVisibility, isBoolean: true, Icon: Megaphone },
+        { label: "Subscription price", value: data?.subscriptionPlanId?.price, isPrice: true, Icon: IndianRupee }
     ];
 
     return (
-        <div className="w-full p-2 mx-auto mt-0 md:flex justify-start flex-grow bg">
+        <div className="p-4">
+            <PageHeader
+                title="Subscription Details"
+                description="Detailed view of subscription"
+            />
             {isError && error ? (
                 <DataFetchingError message={(error as Error).message} />
             ) : isLoading ? (
-                <ProfileDetailsShimmer row={14} />
+                <ProfileDetailsShimmer row={8} />
             ) : data ? (
-                <div className="w-full">
-                    <h2 className="text-2xl font-bold mb-4">Subscription Details</h2>
-                    <table className="table-auto border-collapse border  w-full">
-                        <tbody>
-                            {dataMap.map((item) => (
-                                <DetailField key={item.label} {...item} />
-                            ))}
-                        </tbody>
-                    </table>
+                <div className="">
+                    <Card>
+                        <CardContent className="space-y-2">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                                {dataMap.map((item) => (
+                                    <DataField key={item.label} {...item} />
+                                ))}
+                            </div>
+                        </CardContent>
+                    </Card>
                 </div>
             ) : (
                 <DataFetchingError message="No data found" />

@@ -1,15 +1,15 @@
 import { toast } from 'react-toastify';
-import { useEffect, useRef, useState } from 'react';
+import PageHeader from '@/components/common/PageHeader';
 import { adminFetchAllPlans } from '@/shared/apis/plan';
-import TableHeader from '@/components/table/TableHeader';
 import CommonTable from '@/components/table/CommonTable';
 import { useAdminPlan } from '@/hooks/adminHooks/usePlan';
+import React, { useEffect, useRef, useState } from 'react';
 import { slideIn } from '@/shared/helper/gsapAnimationSlide';
 import CreatePlanForm from '@/components/form/AdminForms/CreatePlanForm';
 import AdminPlansTableColumns from '@/components/table/tableColumns/AdminPlansTableColumn';
 import { AdminFetchAllPlansResponse, ChangePlanBlockStatusRequest } from '@/shared/interface/api/plan';
 
-const AdminPlansPage = () => {
+const AdminPlansPage: React.FC = () => {
 
     const [showForm, setShowForm] = useState(false);
     const formRef = useRef<HTMLDivElement>(null);
@@ -36,9 +36,10 @@ const AdminPlansPage = () => {
     }, [showForm]);
 
     return (
-        <div className="relative">
-            <TableHeader
+        <div className="p-4">
+            <PageHeader 
                 title="Plans"
+                description="Plans for services providers"
                 actionLabel="Create New Plan"
                 onActionClick={() => setShowForm(true)}
             />

@@ -9,6 +9,7 @@ import { createBrowserRouter, Outlet } from "react-router-dom";
 import BoardingLayoutWrapper from "./BoardingLayoutWrapper.tsx";
 import CreditPage from "@/pages/common/CreditPage.tsx";
 import ReferralPage from "@/pages/common/ReferralPage.tsx";
+import UserAccountPage from "@/pages/user/UserAccountPage.tsx";
 
 const AuthLayout = lazy(() => import("@/layouts/AuthLayout.tsx"));
 const LoginForm = lazy(() => import("@/components/form/CommonForms/LoginForm.tsx"));
@@ -22,7 +23,6 @@ const AboutPage = lazy(() => import("@/pages/common/AboutPage.tsx"));
 const LandingLayout = lazy(() => import("@/layouts/LandingLayout.tsx"));
 const ContactPage = lazy(() => import("@/pages/common/ContactPage.tsx"));
 const ReviewsPage = lazy(() => import("@/pages/common/ReviewsPage.tsx"));
-const AccountPage = lazy(() => import("@/pages/common/AccountPage.tsx"));
 const LandingPage = lazy(() => import("@/pages/common/LandingPage.tsx"));
 const SettingsPage = lazy(() => import("@/pages/common/SettingsPage.tsx"));
 const Error404Page = lazy(() => import("@/pages/common/Error404Page.tsx"));
@@ -45,6 +45,7 @@ const UserBookingConfirmPage = lazy(() => import("@/pages/user/UserBookingConfir
 const UserListProvidersCardsPage = lazy(() => import("@/pages/user/UserListProvidersCardsPage.tsx"));
 const UserServiceProviderDetailPage = lazy(() => import("@/pages/user/UserServiceProviderDetailPage.tsx"));
 
+const ProviderAccountPage = lazy(() => import("@/pages/provider/ProviderAccountPage.tsx"));
 const ProviderDashboardPage = lazy(() => import("@/pages/provider/ProviderDashboardPage.tsx"));
 const ProviderAddAddressPage = lazy(() => import("@/pages/boarding/ProviderCreateAddressPage.tsx"));
 const ProviderSubscriptionPage = lazy(() => import("@/pages/provider/ProviderSubscriptionPage.tsx"));
@@ -157,7 +158,7 @@ export const appRouter = createBrowserRouter([
                     { index: true, element: <UserServiceSelectPage /> },
                     { path: "dashboard", element: <UserListProvidersCardsPage /> },
                     { path: "providerProfile/:providerId", element: <UserServiceProviderDetailPage /> },
-                    { path: "profile", element: <AccountPage /> },
+                    { path: "profile", element: <UserAccountPage /> },
                     { path: "bookings", element: <ListBookingsPage /> },
                     { path: "bookings/:bookingId", element: <BookingDetailPage /> },
                     { path: "payments", element: <ListPaymentsPage /> },
@@ -199,7 +200,7 @@ export const appRouter = createBrowserRouter([
                 ),
                 children: [
                     { path: "dashboard", element: <ProviderDashboardPage /> },
-                    { path: "profile", element: <AccountPage /> },
+                    { path: "profile", element: <ProviderAccountPage /> },
                     {
                         path: "reviews",
                         element: (

@@ -60,7 +60,7 @@ export interface AuthState {
     selectedRole: Role | null;
     hearAboutUsOption: HearAboutUsOptionValue | null;
     referralCode: string | null;
-  }
+  };
 }
 
 // app slice
@@ -101,6 +101,7 @@ export interface ProviderState {
   paymentPageOpen: boolean;
   identityProof: SetProofDataProps;
   serviceProof: SetProofDataProps;
+  isShowPreview: boolean;
 }
 
 export interface SetProofDataProps {

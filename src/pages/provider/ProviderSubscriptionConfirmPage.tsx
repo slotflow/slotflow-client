@@ -13,7 +13,7 @@ import { setSubscription, setSubscriptionUpdating } from "@/shared/redux/slices/
 const ProviderSubscriptionConfirmPage: React.FC = () => {
 
   const [searchParams] = useSearchParams();
-  const statusParam =  searchParams.get("status");
+  const statusParam = searchParams.get("status");
   const status = statusParam === "success";
 
   const dispatch = useDispatch<AppDispatch>();
@@ -23,6 +23,8 @@ const ProviderSubscriptionConfirmPage: React.FC = () => {
   );
 
   const isFetched = useRef(false);
+  const maxRetries = 5;
+  let attempts = 0;
 
   const fetchSubscription = async () => {
     try {
@@ -30,7 +32,18 @@ const ProviderSubscriptionConfirmPage: React.FC = () => {
       if (res.success && res.data) {
         dispatch(setSubscription(res.data));
         toast.success("Subscription Activated!");
+        isFetched.current = true;
+        return;
       }
+
+      attempts++;
+
+      if (attempts < maxRetries) {
+        setTimeout(fetchSubscription, 5000);
+      } else {
+        toast.error("Subscription activation delayed");
+      }
+
     } catch (error) {
       toast.error("Subscription activation failed");
     } finally {
@@ -42,15 +55,7 @@ const ProviderSubscriptionConfirmPage: React.FC = () => {
 
   useEffect(() => {
     if (!status || !authUser || isFetched.current) return;
-
-    isFetched.current = true;
-    const timeout = setTimeout(() => {
-      fetchSubscription();
-    }, 5000);
-
-    return () => {
-      clearTimeout(timeout);
-    };
+     setTimeout(fetchSubscription, 5000);
   }, [authUser, status]);
 
   const containerVariants: Variants = {

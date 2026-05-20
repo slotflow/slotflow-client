@@ -14,7 +14,7 @@ import { fetchServicesByCategory } from "@/shared/apis/service";
 import { OptionType } from "@/shared/interface/commonInterface";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { ProviderServiceFormProps } from "@/shared/interface/componentInterface";
-import { AdminVerificationStatus, ServiceCategory, ServiceMode, ServiceType } from "@/shared/interface/enums";
+import { AdminVerificationStatus, OnboardingStatus, ServiceCategory, ServiceMode, ServiceType } from "@/shared/interface/enums";
 import { providerCreateServiceDetailsZodSchema, ProviderCreateServiceDetailsFormType } from "@/shared/zod/providerZod";
 import { serviceCategoryOptions, serviceModeOptions, serviceTypeOptions, groupOptions, redirectPaths, defaultButtonClassName } from "@/shared/utils/constants";
 import { providerCreateServiceDetails, providerFetchServiceDetails, providerUpdateServiceDetails } from "@/shared/apis/providerService";
@@ -119,7 +119,7 @@ const ProviderServiceForm: React.FC<ProviderServiceFormProps> = ({
             if (isUpdating) {
                 const res = await providerUpdateServiceDetails(data);
                 if (res.success) {
-                    if (!authUser?.isOnboardingCompleted) {
+                    if (authUser?.onboardingStatus !== OnboardingStatus.APPROVED) {
                         navigate(redirectPaths.PROVIDER_APPROVAL_PENDING);
                     }
                     toast.success(res.message);

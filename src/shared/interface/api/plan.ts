@@ -13,4 +13,4 @@ export type ChangePlanBlockStatusRequest = {
 }
 
 // response type of provider fetch plans api
-export type ProviderFetchPlansResponse = Array<Pick<Plan, "_id" | "planName" | "price" | "features" | "description">>;
+export type ProviderFetchPlansResponse = Pick<Plan, "_id" | "planName" | "price" | "features" | "description">;

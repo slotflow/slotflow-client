@@ -1,59 +1,71 @@
-import React, { useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import ReviewsPage from "../common/ReviewsPage";
 import { Role } from "@/shared/interface/enums";
-import { providerTabs } from "@/shared/utils/constants";
-import ProfileHead from "@/components/profile/ProfileHead";
+import { useQuery } from "@tanstack/react-query";
 import { fetchAddressByUserId } from "@/shared/apis/address";
 import AddressListing from "@/components/profile/AddressListing";
-import ProfileListing from "@/components/profile/ProfileListing";
+import ProviderProfile from "@/components/provider/ProviderProfile";
 import DataFetchingError from "@/components/error/DataFetchingError";
 import { fetchProviderDetailsForUser } from "@/shared/apis/providerProfile";
-import ProfileHorizontalTabs from "@/components/profile/ProfileHorizontalTabs";
-import ProviderServiceDetails from "@/components/profile/ProviderServiceDetails";
 import { fetchProviderServiceByProviderId } from "@/shared/apis/providerService";
-import { fetchServiceAvailabilityByProviderId } from "@/shared/apis/serviceAvailability";
 import ProviderServiceAvailability from "@/components/profile/ProviderServiceAvailability";
 
 const UserServiceProviderDetailPage: React.FC = () => {
 
     const { providerId } = useParams<string>();
-    const [tab, setTab] = useState<number>(0);
-    const [selectedUserData, setSelectedUserData] = useState<{ selectedUserName: string, selectedUserProfileImage: string | null }>({
-        selectedUserName: "",
-        selectedUserProfileImage: null
-    })
-
     if (!providerId) return <DataFetchingError message={"Provider Profile fetching error"} />
 
+    const { data: profileData, isLoading: profileLoading, isError: profileIsError } = useQuery({
+        queryFn: async () => {
+            const res = await fetchProviderDetailsForUser(providerId);
+            return res.data;
+        },
+        queryKey: ["providerProfile", providerId],
+        staleTime: 60 * 60 * 1000,
+        refetchOnWindowFocus: false,
+    });
+
+    const { data: serviceData, isLoading: serviceLoading, isError: serviceIsError } = useQuery({
+        queryFn: async () => {
+            const res = await fetchProviderServiceByProviderId(providerId);
+            return res.data;
+        },
+        queryKey: ["providerService", providerId],
+        staleTime: 60 * 60 * 1000,
+        refetchOnWindowFocus: false,
+    });
+
     return (
-        <div className="min-h-full p-2 flex flex-col">
-
-            <ProfileHead
-                canUpdate={false}
-                isMyProfile={false}
-                showDetails
-                selectedUserData={selectedUserData}
-            />
-
-            <div className="mt-6 md:flex">
-                <ProfileHorizontalTabs isAdmin={false} setTab={setTab} tab={tab} tabArray={providerTabs} />
-                <div className="flex-grow">
-                    {tab === 0 && (
-                        <ProfileListing fetchApiFunction={() => fetchProviderDetailsForUser(providerId)} queryKey="providerProfile" userOrProviderId={providerId} userLookingProvider shimmerRow={4} setSelectedUserData={setSelectedUserData} />
-                    ) || tab === 1 && (
-                        <AddressListing userOrProviderId={providerId} fetchApiFunction={() => fetchAddressByUserId(providerId)} queryKey="providerAddress" />
-                    ) || tab === 2 && (
-                        <ProviderServiceDetails providerId={providerId} fetchApiFunction={() => fetchProviderServiceByProviderId(providerId)} queryKey="providerService" isUser shimmerRow={5} />
-                    ) || tab === 3 && (
-                        <ProviderServiceAvailability providerId={providerId} fetchApiFuntion={fetchServiceAvailabilityByProviderId} queryKey="providerServiceAvailability" role={Role.USER} />
-                    ) || tab === 4 && (
-                        <ReviewsPage providerId={providerId} />
-                    )}
-                </div>
-
-            </div>
-        </div>
+        <ProviderProfile
+            role={Role.USER}
+            username={profileData?.username || ""}
+            profileImage={profileData?.profileImage || ""}
+            service={{
+                isLoading: serviceLoading,
+                isError: serviceIsError,
+                data: serviceData,
+                isUserLookingProvider:true
+            }}
+            profile={{
+                isLoading: profileLoading,
+                isError: profileIsError,
+                data: profileData,
+            }}
+            reviews={
+                <ReviewsPage
+                    providerId={providerId}
+                    isPage={false}
+                />
+            }
+            address={<AddressListing
+                userOrProviderId={providerId}
+                fetchApiFunction={() => fetchAddressByUserId(providerId)}
+                queryKey="providerAddress"
+                isUserLookingProvider
+            />}
+            availability={<ProviderServiceAvailability role={Role.USER} providerId={providerId} />}
+        />
     )
 }
 

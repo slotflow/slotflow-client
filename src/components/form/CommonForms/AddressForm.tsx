@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CountryDropdown } from '../../ui/country-dropdown';
 import LocationPicker from '@/components/map/LocationPicker';
 import { AppDispatch, RootState } from '@/shared/redux/appStore';
-import { AdminVerificationStatus, Role } from '@/shared/interface/enums';
+import { AdminVerificationStatus, OnboardingStatus, Role } from '@/shared/interface/enums';
 import { AddressFormProps } from '@/shared/interface/componentInterface';
 import { Location } from '@/shared/interface/entityInterface/addressInterface';
 import { createAddress, fetchMyAddress, updateAddress } from '@/shared/apis/address';
@@ -103,7 +103,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
                 const res = await updateAddress(data);
                 if (res.success) {
                     if (authUser?.role === Role.PROVIDER) {
-                        if (!authUser?.isOnboardingCompleted) {
+                        if (authUser?.onboardingStatus !== OnboardingStatus.APPROVED) {
                             navigate(redirectPaths.ONBOARDING_PENDING);
                         }
                     }
@@ -114,7 +114,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
                 console.log("res : ", res);
                 console.log("authUser : ", authUser);
                 if (res.success) {
-                    if (!authUser?.isOnboardingCompleted && authUser?.role === Role.PROVIDER) {
+                    if (authUser?.onboardingStatus !== OnboardingStatus.APPROVED && authUser?.role === Role.PROVIDER) {
                         if (authUser?.adminVerificationStatus === AdminVerificationStatus.NOT_REQUESTED) {
                             navigate(redirectPaths.ONBOARDING_SERVICE);
                         } else if (authUser?.adminVerificationStatus === AdminVerificationStatus.REJECTED) {

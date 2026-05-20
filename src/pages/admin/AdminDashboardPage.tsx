@@ -5,10 +5,10 @@ import AdminDashboardLowerSection from "@/components/dashboard/admin/AdminDashbo
 const AdminDashboardPage: React.FC = () => {
 
     return (
-        <>
+        <div className="p-4">
             <AdminDashboardStats />
             <AdminDashboardLowerSection />
-        </>
+        </div>
     )
 }
 

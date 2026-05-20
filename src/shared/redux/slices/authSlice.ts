@@ -24,7 +24,7 @@ const initialState: AuthState = {
         selectedRole: null,
         hearAboutUsOption: null,
         referralCode: null,
-    }
+    },
 };
 
 const authSlice = createSlice({
@@ -93,7 +93,7 @@ const authSlice = createSlice({
         },
         setBoardingData: (state, action: PayloadAction<Partial<AuthState["boardingData"]>>) => {
             state.boardingData = { ...state.boardingData, ...action.payload };
-        }
+        },
     },
     extraReducers: (builder) => {
 

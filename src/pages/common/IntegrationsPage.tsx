@@ -1,7 +1,6 @@
 import { toast } from 'react-toastify';
 import React, { useEffect } from 'react';
 import { RootState } from '@/shared/redux/appStore';
-import { Separator } from '@/components/ui/separator';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from 'recharts/types/state/store';
 import stripeLogo from '../../assets/iconImages/Stripe.jpeg';
@@ -14,6 +13,7 @@ import {
     // setStripeConnectionLoading
 } from '@/shared/redux/slices/integrationSlice';
 import PageHeader from '@/components/common/PageHeader';
+import { Role } from '@/shared/interface/enums';
 
 const IntegrationsPage: React.FC = () => {
 
@@ -53,7 +53,7 @@ const IntegrationsPage: React.FC = () => {
     if (!authUser) return;
 
     return (
-         <div className="container p-4 space-y-6">
+        <div className="container p-4 space-y-6">
             <PageHeader
                 title="Integrations"
                 description="Manage integrations and make your easy."
@@ -69,15 +69,16 @@ const IntegrationsPage: React.FC = () => {
                     heading='Google Calendar'
                     isConnected={authUser.googleConnected ?? false}
                 />
-
-                <IntegrationCard
-                    image={stripeLogo}
-                    connectOnClick={handleStripeConnect}
-                    connectingLoading={stripeConnectionLoading}
-                    description='Connect your Stripe account to securely manage payments, payouts, and transaction tracking.'
-                    heading='Stripe'
-                    isConnected={authUser.stripeConnected ?? false}
-                />
+                {authUser.role !== Role.USER && (
+                    <IntegrationCard
+                        image={stripeLogo}
+                        connectOnClick={handleStripeConnect}
+                        connectingLoading={stripeConnectionLoading}
+                        description='Connect your Stripe account to securely manage payments, payouts, and transaction tracking.'
+                        heading='Stripe'
+                        isConnected={authUser.stripeConnected ?? false}
+                    />
+                )}
 
             </div>
         </div>

@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
-import DetailField from "../app/DetailField";
-import { Card, CardContent } from "../ui/card";
+import DataField from "../app/DataField";
+import { SelectSeparator } from "../ui/select";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Role } from "@/shared/interface/enums";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
@@ -11,19 +12,23 @@ import { getEventSocket } from "@/lib/socketService";
 import DataFetchingError from "../error/DataFetchingError";
 import PaymentSelection from "../payment/PaymentSelection";
 import { CalendarDays, Clock, Settings2, Timer } from "lucide-react";
-import { fetchEngagedSlots } from "@/shared/apis/serviceAvailability";
+import AvailablityFetchingError from "../error/AvailabilityFetchingError";
 import { Slot } from "@/shared/interface/entityInterface/serviceAvailabilityInterface";
 import { EventSocketEnum, SlotEngageRequest } from "@/shared/interface/socket.interface";
+import { ProviderServiceAvailabilityProps } from "@/shared/interface/componentInterface";
 import ProviderAvailabilityShimmer from "@/components/shimmers/ProviderAvailabilityShimmer";
-import { ProviderApiFunctionForPSAComponent, ProviderServiceAvailabilityProps, UserOrAdminApiFunctionForPSAcomponent } from "@/shared/interface/componentInterface";
+import { fetchEngagedSlots, fetchMyServiceAvailability, fetchServiceAvailabilityByProviderId } from "@/shared/apis/serviceAvailability";
+import { defaultButtonClassName } from "@/shared/utils/constants";
+import { AnimatePresence, motion } from "framer-motion";
+import ProviderServiceAvailabilityForm from "../form/provider/ProviderSerivceAvailabilityForm";
 
 const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityProps> = ({
     providerId,
-    fetchApiFuntion,
-    queryKey,
-    role
+    role,
+    canUpdate = false,
 }) => {
 
+    const [showForm, setShowForm] = useState<boolean>(false);
     const [date, setDate] = useState<Date | undefined>(new Date());
     const [openPayment, setOpenPayment] = useState<boolean>(false);
     const [selectedMode, setSelectedMode] = useState<string | null>(null);
@@ -37,16 +42,14 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityProps> = 
             if (!date) throw new Error("Missing date");
             if (role === Role.USER || role === Role.ADMIN) {
                 if (!providerId) throw new Error("Missing provider Id");
-                const res = await (fetchApiFuntion as UserOrAdminApiFunctionForPSAcomponent)({ date, providerId });
+                const res = await fetchServiceAvailabilityByProviderId({ date, providerId });
                 return res.data;
             } else if (role === Role.PROVIDER) {
-                console.log("Provider Fetching provider service availability")
-                console.log("Date : ", date);
-                const res = await (fetchApiFuntion as ProviderApiFunctionForPSAComponent)(date);
+                const res = await fetchMyServiceAvailability(date);
                 return res.data;
             }
         },
-        queryKey: [queryKey, date, providerId],
+        queryKey: ["providerServiceAvailability", date, providerId],
         staleTime: 1 * 60 * 1000,
         refetchOnWindowFocus: false,
         enabled: !!date,
@@ -114,48 +117,68 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityProps> = 
 
     return (
         <>
-            <div className="flex w-full space-x-1">
-                <div className="">
-                    <Calendar
-                        mode="single"
-                        selected={date}
-                        onSelect={setDate}
-                        className={`rounded-lg border `}
-                    />
-                </div>
-
-                {isLoading ? (
-                    <ProviderAvailabilityShimmer row={5} slotCount={20} />
-                ) : isError && error ? (
-                    <DataFetchingError message={error.message} />
-                ) : !data ? (
-                    <DataFetchingError message="Data not found" />
-                ) : (
-                    <div className="w-full flex flex-col">
-                        {(
-                            <>
-                                <Card>
-                                    <CardContent className="space-y-2">
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                                            <DetailField label="Day" value={data?.day} Icon={CalendarDays} />
-                                            <DetailField label="Start Time" value={data?.startTime} Icon={Clock} />
-                                            <DetailField label="End Time" value={data?.endTime} Icon={Clock} />
-                                            <DetailField label="Duration" value={data?.duration} isTime Icon={Timer} />
-                                            <DetailField
-                                                label="Service Modes"
+            <div className="w-full flex flex-col">
+                {(
+                    <>
+                        <Card>
+                            <CardHeader className="flex items-center justify-between">
+                                <div>
+                                    <CardTitle className="text-lg font-semibold flex items-center gap-2">
+                                        <CalendarDays className="w-5 h-5 text-primary" />
+                                        Availability
+                                    </CardTitle>
+                                    <CardDescription>Select an available date and time slot below</CardDescription>
+                                </div>
+                                {canUpdate && (
+                                    <Button
+                                        title="Update Password"
+                                        variant={showForm ? "destructive" : "default"}
+                                        className={defaultButtonClassName}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            setShowForm(!showForm);
+                                        }}
+                                    >{showForm ? "Cancel" : "Update"}
+                                    </Button>
+                                )}
+                            </CardHeader>
+                            <SelectSeparator />
+                            <CardContent className="grid grid-cols-1 md:grid-cols-12 space-x-2">
+                                <div className="md:col-span-4">
+                                    <Calendar
+                                        mode="single"
+                                        selected={date}
+                                        onSelect={setDate}
+                                        className={`rounded-lg border `}
+                                    />
+                                </div>
+                                {isError && error ? (
+                                    <AvailablityFetchingError message={"Availabulity fetching error"} />
+                                ) : isLoading ? (
+                                    <ProviderAvailabilityShimmer row={5} slotCount={20} />
+                                ) : !data ? (
+                                    <DataFetchingError message="Data not found" />
+                                ) : (
+                                    <div className="md:col-span-8 space-y-6">
+                                        <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-4`}>
+                                            <DataField label="Day" value={data?.day} Icon={CalendarDays} />
+                                            <DataField label="Start Time" value={data?.startTime} Icon={Clock} />
+                                            <DataField label="End Time" value={data?.endTime} Icon={Clock} />
+                                            <DataField label="Duration" value={data?.duration} isTime Icon={Timer} />
+                                            <DataField
+                                                label="Select Service Mode"
                                                 value={data?.modes}
                                                 isRadioGroup
                                                 selectedRadioValue={selectedMode}
                                                 onRadioChange={(val) => setSelectedMode(val)}
-                                                role={role}
                                                 Icon={Settings2}
                                             />
                                         </div>
-
                                         <div className="mt-2 space-y-4 p-2">
                                             <TimeSlotLegend
                                                 role={role}
                                                 showAdvanceNotice={Boolean(data && data.slots.length > 0)}
+                                                date={date}
                                                 legendItems={[
                                                     {
                                                         label: "Available Slot",
@@ -172,7 +195,7 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityProps> = 
                                                     },
                                                 ]}
                                             />
-                                            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                                            <div className={`grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4`}>
                                                 {data?.slots?.length ? (
                                                     data?.slots.map((slot: Slot) => {
                                                         const isOccupied = slot.occupied || engagedSlotIds.has(slot._id);
@@ -206,14 +229,33 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityProps> = 
                                                 )}
                                             </div>
                                         </div>
-                                    </CardContent>
-                                </Card>
-                            </>
-                        )}
-                    </div>
+                                    </div>
+                                )}
+                            </CardContent>
+                            <AnimatePresence initial={false}>
+                                {showForm && (
+                                    <motion.div
+                                        key="provider-service-availability-form"
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: "auto", opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                                        style={{ overflow: "hidden" }}
+                                    >
+                                        <SelectSeparator />
+                                        <CardContent className="space-y-2 mt-4">
+                                            <ProviderServiceAvailabilityForm
+                                                isUpdating={true}
+                                                heading="Update Service Availability"
+                                            />
+                                        </CardContent>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </Card>
+                    </>
                 )}
             </div>
-
             {openPayment && selectedSlotId && providerId && selectedMode && (
                 <PaymentSelection
                     setOpenPayment={setOpenPayment}

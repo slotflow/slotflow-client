@@ -159,6 +159,7 @@ export const providerRoutes: Route[] = [
   { path: "chat", name: RouteNames.CHAT, icon: MessageSquare },
   { path: "reviews", name: RouteNames.REVIEWS, icon: Star },
   { path: "credits", name: RouteNames.CREDITS, icon: Wallet2Icon },
+  { path: "referrals", name: RouteNames.REFERRALS, icon: UserPlus },
   { path: "settings", name: RouteNames.SETTINGS, icon: Settings },
 ]
 
@@ -175,8 +176,6 @@ export const planAccessMap: Record<PlanName, RouteNames[]> = {
     RouteNames.PROFILE,
     RouteNames.BOOKINGS,
     RouteNames.SUBSCRIPTIONS,
-    RouteNames.CREDITS,
-    RouteNames.REFERRALS,
     RouteNames.SETTINGS,
   ],
   [PlanName.STARTER]: [
@@ -199,6 +198,7 @@ export const planAccessMap: Record<PlanName, RouteNames[]> = {
     RouteNames.INTEGRATIONS,
     RouteNames.CHAT,
     RouteNames.REVIEWS,
+    RouteNames.CALENDAR,
     RouteNames.CREDITS,
     RouteNames.REFERRALS,
     RouteNames.SETTINGS,
@@ -1187,6 +1187,7 @@ export const profileTabs: CommonTabInterface[] = [
   { value: "tab2", label: "Address", icon: Home, role: [Role.PROVIDER, Role.USER] },
   { value: "tab3", label: "Service", icon: Briefcase, role: [Role.PROVIDER] },
   { value: "tab4", label: "Availability", icon: Clock, role: [Role.PROVIDER] },
+  { value: "tab5", label: "Profile Preview", icon: User, role: [Role.PROVIDER] },
 ];
 
 // Provider dashboard tabs

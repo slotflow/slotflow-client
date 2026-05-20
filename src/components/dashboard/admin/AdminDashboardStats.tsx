@@ -46,7 +46,7 @@ const AdminDashboardStats: React.FC = () => {
     });
 
     return (
-        <div className="p-4 w-full">
+        <div className="w-full">
             <div className="mb-6">
                 <div className="md:hidden mb-4">
                     <Select value={selectedTab} onValueChange={setSelectedTab}>
@@ -70,7 +70,7 @@ const AdminDashboardStats: React.FC = () => {
                                 <TabsTrigger
                                     key={tab.value}
                                     value={tab.value}
-                                    className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:shadow-sm rounded-lg transition-all duration-200"
+                                    className="data-[state=active]:bg-white dark:data-[state=active]:bg-indigo-500 data-[state=active]:shadow-sm rounded-lg transition-all duration-200"
                                 >
                                     {tab.label}
                                 </TabsTrigger>

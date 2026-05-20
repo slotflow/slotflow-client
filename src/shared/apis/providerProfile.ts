@@ -24,6 +24,7 @@ import { ApiBaseResponse, ApiFetchFunction, FetchFunctionBaseQueryParams } from 
 // provider fetching own profile details
 export const providerFetchMyProfileDetails = async (): Promise<ApiBaseResponse<ProviderFetchMyProfileDetailsResponse>> => {
     const response = await axiosInstance.get('/providers/me');
+    console.log("response : ",response);
     return response.data;
 }
 
@@ -40,7 +41,7 @@ export const providerUpdateProofServiceProof = async (data: UpdateFileDataReques
 }
 
 // provider fetching own proofs
-export const providerFetchProofs = async (): Promise<ApiBaseResponse<FetchProvidersProofsResponse>> => {
+export const providerFetchMyProofs = async (): Promise<ApiBaseResponse<FetchProvidersProofsResponse>> => {
     const response = await axiosInstance.get(`/providers/me/proofs`);
     return response.data;
 }

@@ -1,10 +1,13 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import DataField from "@/components/app/DataField";
+import PageHeader from "@/components/common/PageHeader";
+import { Card, CardContent } from "@/components/ui/card";
 import { fetchPaymentDetails } from "@/shared/apis/payment";
 import DataFetchingError from "@/components/error/DataFetchingError";
-import DetailField from "@/components/app/DetailField";
 import ProfileDetailsShimmer from "@/components/shimmers/DataFieldShimmer";
+import { BadgeCheck, Calendar, CreditCard, FileText, Hash, IndianRupee, Landmark, Layers, Link, Mail, Receipt } from "lucide-react";
 
 const PaymentDetailViewPage: React.FC = () => {
 
@@ -22,36 +25,41 @@ const PaymentDetailViewPage: React.FC = () => {
     });
 
     const dataMap = [
-        { label: "Transaction ID", value: data?.transactionId },
-        { label: "Payment Status", value: data?.paymentStatus },
-        { label: "Payment Method", value: data?.paymentMethod },
-        { label: "Payment Gateway", value: data?.paymentGateway },
-        { label: "Payment Category", value: data?.paymentFor },
-        { label: "Initial Amount", value: data?.initialAmount, isPrice: true },
-        { label: "Discount Amount", value: data?.discountAmount, isPrice: true },
-        { label: "Total Amount", value: data?.totalAmount, isPrice: true },
-        { label: "Receipt URL", value: data?.receiptUrl },
-        { label: "Customer Email", value: data?.customerEmail },
-        { label: "Description", value: data?.description },
-        { label: "Created At", value: data?.createdAt, isDate: true },
+        { label: "Transaction ID", value: data?.transactionId, canCopy: true, Icon: Hash },
+        { label: "Payment Status", value: data?.paymentStatus, Icon: BadgeCheck },
+        { label: "Payment Method", value: data?.paymentMethod, Icon: CreditCard },
+        { label: "Payment Gateway", value: data?.paymentGateway, Icon: Landmark },
+        { label: "Payment Category", value: data?.paymentFor, Icon: Layers },
+        { label: "Initial Amount", value: data?.initialAmount, isPrice: true, Icon: IndianRupee },
+        { label: "Discount Amount", value: data?.discountAmount, isPrice: true, Icon: IndianRupee },
+        { label: "Total Amount", value: data?.totalAmount, isPrice: true, Icon: Receipt },
+        { label: "Receipt URL", value: data?.receiptUrl, link: true, Icon: Link },
+        { label: "Customer Email", value: data?.customerEmail, Icon: Mail },
+        { label: "Description", value: data?.description, Icon: FileText },
+        { label: "Created At", value: data?.createdAt, isDate: true, Icon: Calendar },
     ];
 
     return (
-        <div className="w-full p-2 mx-auto mt-0 md:flex justify-start flex-grow bg">
+        <div className="p-4">
             {isError && error ? (
                 <DataFetchingError message={(error as Error).message} />
             ) : isLoading ? (
-                <ProfileDetailsShimmer row={14} />
+                <ProfileDetailsShimmer row={12} />
             ) : data ? (
-                <div className="w-full">
-                    <h2 className="text-2xl font-bold mb-4">Payment Details</h2>
-                    <table className="table-auto border-collapse border  w-full">
-                        <tbody>
-                            {dataMap.map((item) => (
-                                <DetailField key={item.label} {...item} />
-                            ))}
-                        </tbody>
-                    </table>
+                <div className="">
+                    <PageHeader
+                        title="Payment Details"
+                        description="Detailed view of payment"
+                    />
+                    <Card>
+                        <CardContent className="space-y-2">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                                {dataMap.map((item) => (
+                                    <DataField key={item.label} {...item} />
+                                ))}
+                            </div>
+                        </CardContent>
+                    </Card>
                 </div>
             ) : (
                 <DataFetchingError message="No data found" />
