@@ -13,17 +13,35 @@ export const useAddAvailability = ({
             const vals = getValues();
 
             if (!vals.day) return { success: false, message: "Please select a day" };
-            if (!vals.duration) return { success: false, message: "Please select a duration" };
-            if (!vals.startTime) return { success: false, message: "Please select a startTime" };
-            if (!vals.endTime) return { success: false, message: "Please select an endTime" };
-            if (!vals.modes || vals.modes.length === 0) return { success: false, message: "Please select a service mode" };
-            if (!vals.selectedTimeSlots || vals.selectedTimeSlots.length === 0) return { success: false, message: "Please select time slots" };
+            if(vals.isAvailable) {
+                if (!vals.duration) return { success: false, message: "Please select a duration" };
+                if (!vals.startTime) return { success: false, message: "Please select a startTime" };
+                if (!vals.endTime) return { success: false, message: "Please select an endTime" };
+                if (!vals.modes || vals.modes.length === 0) return { success: false, message: "Please select a service mode" };
+                if (!vals.selectedTimeSlots || vals.selectedTimeSlots.length === 0) return { success: false, message: "Please select time slots" };
+            }
 
-            const start = format(vals.startTime, "hh:mm a");
-            const end = format(vals.endTime, "hh:mm a");
+            if (vals.isAvailable) {
+                if (!vals.startTime || !vals.endTime) {
+                    return {
+                        success: false,
+                        message: "Start time and end time are required when the day is marked as available",
+                    };
+                }
+            }
+
+            let start: string | undefined;
+            let end: string | undefined;
+            if (vals.startTime) {
+                start = format(vals.startTime, "hh:mm a");
+            }
+            if (vals.endTime) {
+                end = format(vals.endTime, "hh:mm a");
+            }
 
             const data = {
                 day: vals.day,
+                isAvailable: vals.isAvailable,
                 duration: vals.duration,
                 startTime: start,
                 endTime: end,

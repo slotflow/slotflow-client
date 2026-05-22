@@ -41,6 +41,7 @@ const ProviderServiceAvailabilityForm: React.FC<ProviderServiceAvailabilityFormP
     mode: 'onChange',
     defaultValues: {
       day: '',
+      isAvailable: false,
       duration: 0,
       startTime: new Date(),
       endTime: new Date(),
@@ -100,6 +101,10 @@ const ProviderServiceAvailabilityForm: React.FC<ProviderServiceAvailabilityFormP
     const start = getValues('startTime');
     const end = getValues('endTime');
     const duration = getValues('duration');
+    if (!start || !end || !duration) {
+      toast.error("Please fill all the fields");
+      return;
+    }
     const res = generateTimeSlots(start, end, duration);
     if (!res.success) {
       toast.warning(res.message);
@@ -110,7 +115,7 @@ const ProviderServiceAvailabilityForm: React.FC<ProviderServiceAvailabilityFormP
 
   // Check if all slots are selected
   const allSlotsSelected = useMemo(() => {
-    return (timeSlots && timeSlots.length > 0) && (selectedTimeSlots.length === timeSlots.length);
+    return (timeSlots && timeSlots.length > 0) && (selectedTimeSlots?.length === timeSlots.length);
   }, [timeSlots, selectedTimeSlots]);
 
   // Submit availabilities
@@ -126,11 +131,7 @@ const ProviderServiceAvailabilityForm: React.FC<ProviderServiceAvailabilityFormP
         const res = await dispatch(createServiceAvailabilities({ data: availabilities })).unwrap();
         if (res.success) {
           toast.success(res.message);
-          if (authUser?.isOnboardingCompleted) {
-
-          } else {
-            navigate(redirectPaths.ONBOARDING_PENDING);
-          }
+          navigate(redirectPaths.ONBOARDING_PENDING);
         }
       } else {
         const res = await dispatch(createServiceAvailabilities({ data: availabilities })).unwrap();
@@ -153,7 +154,6 @@ const ProviderServiceAvailabilityForm: React.FC<ProviderServiceAvailabilityFormP
     toast.success("Availability removed");
   }
 
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {heading && (
@@ -167,13 +167,16 @@ const ProviderServiceAvailabilityForm: React.FC<ProviderServiceAvailabilityFormP
             register={register}
             isModeSelected={isModeSelected}
             toggleMode={toggleMode}
+            isAvailable={watched.isAvailable}
           />
 
-          <TimeRangeSetter
-            control={control}
-            isSubmitting={isSubmitting}
-            onGenerateSlots={onGenerateSlots}
-          />
+          {watched.isAvailable && (
+            <TimeRangeSetter
+              control={control}
+              isSubmitting={isSubmitting}
+              onGenerateSlots={onGenerateSlots}
+            />
+          )}
 
           <GenerateTimeSlots
             timeSlots={timeSlots}
@@ -182,6 +185,7 @@ const ProviderServiceAvailabilityForm: React.FC<ProviderServiceAvailabilityFormP
             handleAllSlots={handleAllSlots}
             toggleSlot={toggleSlot}
             control={control}
+            isAvailable={watched.isAvailable}
           />
 
           <SavedAvailabilities
@@ -190,7 +194,6 @@ const ProviderServiceAvailabilityForm: React.FC<ProviderServiceAvailabilityFormP
           />
         </div>
       </div>
-
       <CreateServiceAvailabilityFooter
         selectedTimeSlots={selectedTimeSlots}
         isSubmitting={isSubmitting}
@@ -199,6 +202,7 @@ const ProviderServiceAvailabilityForm: React.FC<ProviderServiceAvailabilityFormP
         isValid={isValid}
         isUpdating={isUpdating}
         isLoading={isLoading}
+        isAvailable={watched.isAvailable}
       />
     </form>
   )

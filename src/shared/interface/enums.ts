@@ -30,7 +30,6 @@ export enum AppointmentStatus {
   EXPIRED = "EXPIRED",
 };
 
-
 export enum Role {
     ADMIN = "ADMIN",
     USER = "USER",

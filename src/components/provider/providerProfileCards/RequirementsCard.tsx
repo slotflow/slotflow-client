@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 interface RequirementsCardProps {
     isLoading?: boolean;
     isError?: boolean;
-    data?: string;
+    data?: string[];
 }
 
 const RequirementsCard: React.FC<RequirementsCardProps> = ({
@@ -35,10 +35,12 @@ const RequirementsCard: React.FC<RequirementsCardProps> = ({
                 ) : (
                     <div className="p-4 border rounded-lg bg-muted/20 space-y-3">
                         <ul className="space-y-2">
-                            <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
+                            {data.map((req, i) => (
+                                <li key={i} className="flex items-start gap-2.5 text-sm text-muted-foreground">
                                 <CheckCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                                {data}
+                                {req}
                             </li>
+                            ))}
                         </ul>
                     </div>
                 )}

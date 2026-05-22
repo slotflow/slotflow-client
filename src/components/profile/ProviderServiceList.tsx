@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import DataField from '../app/DataField';
+import { SelectSeparator } from '../ui/select';
 import { useQuery } from '@tanstack/react-query';
 import { ServiceMode } from '@/shared/interface/enums';
 import DataFetchingError from '../error/DataFetchingError';
 import DataFieldShimmer from '../shimmers/DataFieldShimmer';
 import { ProviderServiceListProps } from '@/shared/interface/componentInterface';
-import { Briefcase, ClipboardList, FileText, Hash, IndianRupee, Layers, LayoutGrid, MonitorSmartphone, Tag, UserPlus, Users, Video } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { SelectSeparator } from '../ui/select';
+import { Briefcase, ClipboardList, FileText, Hash, IndianRupee, Layers, LayoutGrid, MonitorSmartphone, Notebook, Tag, UserPlus, Users, Video } from 'lucide-react';
 import { Button } from '../ui/button';
 import { defaultButtonClassName } from '@/shared/utils/constants';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -72,12 +72,16 @@ const ProviderServiceList: React.FC<ProviderServiceListProps> = ({
                     <DataField label="Description" value={data?.serviceDescription} Icon={FileText} />
                     <DataField label="Group Service" value={data?.isGroupService} isBoolean Icon={Users} />
                     <DataField label="Maximum Participants" value={data?.maxParticipants} Icon={UserPlus} />
-                    <DataField label="Requirements" value={data?.requirements} Icon={ClipboardList} />
+                    {data?.requirements?.map((req,i) => (
+                        <DataField key={i} label={`Requirement ${i+1}`} value={req} Icon={ClipboardList} />
+                    ))}
                     <DataField label="Mode" value={data?.serviceMode === ServiceMode.BOTH ? "Online & Offline" : data?.serviceMode} Icon={MonitorSmartphone} />
                     <DataField label="Type" value={data?.serviceType} Icon={Layers} />
-                    <DataField label="Demo" value={data?.videoUrl} link Icon={Video} />
+                    <DataField label="Demo Video Url" value={data?.videoUrl} link Icon={Video} />
+                    <DataField label="Portfolio Url" value={data?.portfolioUrl} link Icon={Notebook} />
                     <DataField label="Tags" value={data?.tags} tags Icon={Hash} />
                     <DataField label="Price" value={data?.servicePrice} isPrice={true} Icon={IndianRupee} />
+                    <DataField label="Experience in Years" value={data?.serviceExperienceYears} Icon={Briefcase} />
                     <DataField label="Experience" value={data?.serviceExperience} Icon={Briefcase} />
                 </div>
             </CardContent>

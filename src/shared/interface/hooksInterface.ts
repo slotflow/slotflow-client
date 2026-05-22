@@ -97,21 +97,23 @@ export interface useRoleBasedNavigationReturn {
 export interface UseAddAvailabilityParams {
     getValues: UseFormGetValues<{
         day: string;
-        duration: number;
-        startTime: Date;
-        endTime: Date;
-        modes: string[];
-        selectedTimeSlots: string[];
-        timeSlots: string[];
+        isAvailable: boolean;
+        duration?: number;
+        startTime?: Date;
+        endTime?: Date;
+        modes?: string[];
+        selectedTimeSlots?: string[];
+        timeSlots?: string[];
     }>,
     setValue: UseFormSetValue<{
-        selectedTimeSlots: string[];
+        selectedTimeSlots?: string[];
         day: string;
-        duration: number;
-        startTime: Date;
-        endTime: Date;
-        modes: string[];
-        timeSlots: string[];
+        isAvailable: boolean;
+        duration?: number;
+        startTime?: Date;
+        endTime?: Date;
+        modes?: string[];
+        timeSlots?: string[];
     }>,
 }
 

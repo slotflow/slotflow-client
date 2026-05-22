@@ -1,11 +1,13 @@
-import { Loader } from "lucide-react";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { appConfig } from "@/shared/config/env";
 import TagInput from "@/components/form/TagInput";
 import React, { useEffect, useState } from "react";
+import { Loader, Plus, Trash2 } from "lucide-react";
 import FormField from "@/components/form/FormField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,10 +16,10 @@ import { fetchServicesByCategory } from "@/shared/apis/service";
 import { OptionType } from "@/shared/interface/commonInterface";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { ProviderServiceFormProps } from "@/shared/interface/componentInterface";
-import { AdminVerificationStatus, OnboardingStatus, ServiceCategory, ServiceMode, ServiceType } from "@/shared/interface/enums";
 import { providerCreateServiceDetailsZodSchema, ProviderCreateServiceDetailsFormType } from "@/shared/zod/providerZod";
-import { serviceCategoryOptions, serviceModeOptions, serviceTypeOptions, groupOptions, redirectPaths, defaultButtonClassName } from "@/shared/utils/constants";
+import { AdminVerificationStatus, OnboardingStatus, ServiceCategory, ServiceMode, ServiceType } from "@/shared/interface/enums";
 import { providerCreateServiceDetails, providerFetchServiceDetails, providerUpdateServiceDetails } from "@/shared/apis/providerService";
+import { serviceCategoryOptions, serviceModeOptions, serviceTypeOptions, groupOptions, redirectPaths, defaultButtonClassName } from "@/shared/utils/constants";
 
 const ProviderServiceForm: React.FC<ProviderServiceFormProps> = ({
     isUpdating = false,
@@ -44,14 +46,16 @@ const ProviderServiceForm: React.FC<ProviderServiceFormProps> = ({
             serviceCategory: undefined,
             serviceId: "",
             serviceName: "",
+            serviceExperienceYears: 0,
             serviceDescription: "",
             servicePrice: 0,
             serviceExperience: "",
-            requirements: "",
+            requirements: [],
             serviceType: undefined,
             serviceMode: undefined,
             tags: [],
             videoUrl: "",
+            portfolioUrl: "",
             maxParticipants: 1,
             isGroupService: false
         }
@@ -59,6 +63,34 @@ const ProviderServiceForm: React.FC<ProviderServiceFormProps> = ({
 
     const tags = watch("tags");
     const serviceCategory = watch("serviceCategory");
+    const requirements = watch("requirements") || [];
+    const displayRequirements = requirements.length === 0 ? [""] : requirements;
+
+    const handleAddRequirement = () => {
+        if (displayRequirements.length < 10) {
+            setValue("requirements", [...displayRequirements, ""], {
+                shouldValidate: true,
+                shouldDirty: true
+            });
+        }
+    };
+
+    const handleRemoveRequirement = (index: number) => {
+        const updated = displayRequirements.filter((_, i) => i !== index);
+        setValue("requirements", updated, {
+            shouldValidate: true,
+            shouldDirty: true
+        });
+    };
+
+    const handleRequirementChange = (index: number, value: string) => {
+        const updated = [...displayRequirements];
+        updated[index] = value;
+        setValue("requirements", updated, {
+            shouldValidate: true,
+            shouldDirty: true
+        });
+    };
 
     useEffect(() => {
         if (!serviceCategory || serviceCategory.length === 0) {
@@ -101,12 +133,14 @@ const ProviderServiceForm: React.FC<ProviderServiceFormProps> = ({
                 maxParticipants: result.maxParticipants,
                 requirements: result.requirements,
                 serviceDescription: result.serviceDescription,
+                serviceExperienceYears: result.serviceExperienceYears,
                 serviceExperience: result.serviceExperience,
                 serviceMode: result.serviceMode,
                 serviceName: result.serviceName,
                 servicePrice: result.servicePrice,
                 serviceType: result.serviceType,
                 videoUrl: result.videoUrl,
+                portfolioUrl: result.portfolioUrl,
                 tags: result.tags,
             })
         }
@@ -116,8 +150,13 @@ const ProviderServiceForm: React.FC<ProviderServiceFormProps> = ({
 
     const onSubmit = async (data: ProviderCreateServiceDetailsFormType) => {
         try {
+            const filteredRequirements = data.requirements?.filter(req => req.trim() !== "") || [];
+            const payload = {
+                ...data,
+                requirements: filteredRequirements
+            };
             if (isUpdating) {
-                const res = await providerUpdateServiceDetails(data);
+                const res = await providerUpdateServiceDetails(payload);
                 if (res.success) {
                     if (authUser?.onboardingStatus !== OnboardingStatus.APPROVED) {
                         navigate(redirectPaths.PROVIDER_APPROVAL_PENDING);
@@ -125,7 +164,7 @@ const ProviderServiceForm: React.FC<ProviderServiceFormProps> = ({
                     toast.success(res.message);
                 }
             } else {
-                const res = await dispatch(providerCreateServiceDetails(data)).unwrap();
+                const res = await dispatch(providerCreateServiceDetails(payload)).unwrap();
                 if (res.success) {
                     navigate(redirectPaths.ONBOARDING_AVAILABILITY);
                     toast.success(res.message);
@@ -197,6 +236,16 @@ const ProviderServiceForm: React.FC<ProviderServiceFormProps> = ({
                     />
 
                     <FormField<ProviderCreateServiceDetailsFormType>
+                        label="Service Experience in Years"
+                        id="serviceExperienceYears"
+                        placeholder="Enter experience years"
+                        type="number"
+                        register={register}
+                        error={errors.serviceExperienceYears?.message}
+                        required
+                    />
+
+                    <FormField<ProviderCreateServiceDetailsFormType>
                         label="Service Experience (descriptive)"
                         id="serviceExperience"
                         placeholder="Enter experience"
@@ -204,15 +253,6 @@ const ProviderServiceForm: React.FC<ProviderServiceFormProps> = ({
                         register={register}
                         error={errors.serviceExperience?.message}
                         required
-                    />
-
-                    <FormField<ProviderCreateServiceDetailsFormType>
-                        label="Requirements"
-                        id="requirements"
-                        placeholder="What do users need?"
-                        type="text"
-                        register={register}
-                        error={errors.requirements?.message}
                     />
 
                     <SelectField<ProviderCreateServiceDetailsFormType, ServiceType>
@@ -235,6 +275,68 @@ const ProviderServiceForm: React.FC<ProviderServiceFormProps> = ({
                 </div>
                 <div className="space-y-4 w-full space-x-2 md:pt-6">
 
+                    <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                            <Label className="text-xs md:text-sm font-medium">Requirements</Label>
+                        </div>
+
+                        <div className="space-y-2 overflow-y-auto pr-1">
+                            {displayRequirements.map((req, index) => {
+                                const fieldError = Array.isArray(errors.requirements) 
+                                    ? errors.requirements[index]?.message 
+                                    : undefined;
+                                return (
+                                    <div key={index} className="space-y-1">
+                                        <div className="flex items-center gap-2 group animate-in fade-in slide-in-from-top-1 duration-200">
+                                            <div className="relative flex-1">
+                                                <Input
+                                                    type="text"
+                                                    placeholder="Enter requirement"
+                                                    value={req}
+                                                    onChange={(e) => handleRequirementChange(index, e.target.value)}
+                                                    className={`pr-10 focus:border-[var(--mainColor)] focus-visible:ring-0 ${fieldError ? "border-destructive focus:border-destructive" : ""}`}
+                                                    maxLength={200}
+                                                />
+                                            </div>
+                                            {displayRequirements.length > 1 && (
+                                                <Button
+                                                    type="button"
+                                                    variant="ghost"
+                                                    size="icon"
+                                                    onClick={() => handleRemoveRequirement(index)}
+                                                    className="h-9 w-9 text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
+                                                >
+                                                    <Trash2 className="size-4" />
+                                                </Button>
+                                            )}
+                                            {index === displayRequirements.length - 1 && displayRequirements.length < 10 && (
+                                                <Button
+                                                    type="button"
+                                                    variant="outline"
+                                                    size="icon"
+                                                    onClick={handleAddRequirement}
+                                                    className="h-9 w-9 border-dashed text-primary hover:bg-primary/10 transition-colors"
+                                                >
+                                                    <Plus className="size-4" />
+                                                </Button>
+                                            )}
+                                        </div>
+                                        {fieldError && (
+                                            <p className="text-[var(--error-color)] text-xs px-2">
+                                                {fieldError}
+                                            </p>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        {errors.requirements && !Array.isArray(errors.requirements) && errors.requirements.message && (
+                            <p className="text-[var(--error-color)] text-xs px-2">
+                                {errors.requirements.message}
+                            </p>
+                        )}
+                    </div>
+
                     <FormField<ProviderCreateServiceDetailsFormType>
                         label="Max Participants"
                         id="maxParticipants"
@@ -255,12 +357,21 @@ const ProviderServiceForm: React.FC<ProviderServiceFormProps> = ({
                     />
 
                     <FormField<ProviderCreateServiceDetailsFormType>
-                        label="Intro Video URL"
+                        label="Demo Video Url"
                         id="videoUrl"
                         placeholder="https://"
                         type="text"
                         register={register}
                         error={errors.videoUrl?.message}
+                    />
+
+                    <FormField<ProviderCreateServiceDetailsFormType>
+                        label="Portfolio Url"
+                        id="portfolioUrl"
+                        placeholder="https://"
+                        type="text"
+                        register={register}
+                        error={errors.portfolioUrl?.message}
                     />
 
                     <TagInput

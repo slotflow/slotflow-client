@@ -112,7 +112,7 @@ const ProviderProfile: React.FC<ProviderProfileProps> = ({
                         isLoading={service.isLoading}
                         isError={service.isError}
                         data={{
-                            experienceYears: 10,
+                            experienceYears: service.data?.serviceExperienceYears,
                             description: service.data?.serviceExperience
                         }}
                     />

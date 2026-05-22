@@ -9,11 +9,12 @@ const GenerateTimeSlots: React.FC<GenerateTimeSlotsProps> = ({
     allSlotsSelected,
     handleAllSlots,
     toggleSlot,
-    control
+    control,
+    isAvailable
 }) => {
     return (
         <div className="w-10/12 md:w-full space-y-6 mx-auto">
-            {timeSlots && timeSlots.length > 0 && (
+            {timeSlots && timeSlots.length > 0 && isAvailable && (
                 <div className="mt-6">
                     <div className='flex items-center mb-4 justify-between md:justify-start'>
                         <h3 className="text-sm font-semibold">Select your time slots</h3>
@@ -36,7 +37,7 @@ const GenerateTimeSlots: React.FC<GenerateTimeSlotsProps> = ({
                     </div>
                     <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
                         {timeSlots.map((timeSlot) => {
-                            const isSelected = selectedTimeSlots.includes(timeSlot);
+                            const isSelected = selectedTimeSlots?.includes(timeSlot);
                             return (
                                 <div
                                     key={timeSlot}

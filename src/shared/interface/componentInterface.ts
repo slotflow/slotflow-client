@@ -574,27 +574,30 @@ export interface AvailabilityDataSelectionFieldsProps {
   register: UseFormRegister<ProviderServiceAvailabilityFormType>;
   isModeSelected: (mode: ServiceMode) => boolean;
   toggleMode: (mode: ServiceMode) => void;
+  isAvailable: boolean;
 }
 
 // CreateServiceAvailabilityFooter component props interface
 export interface CreateServiceAvailabilityFooterProps {
-  selectedTimeSlots: string[];
+  selectedTimeSlots?: string[];
   isSubmitting: boolean;
   onAddAvailability: (e: React.MouseEvent<HTMLButtonElement>) => void;
   availabilities: Availability[] | null;
   isValid: boolean;
   isUpdating: boolean;
   isLoading: boolean;
+  isAvailable: boolean;
 }
 
 // GenerateTimeSlots component props interface
 export interface GenerateTimeSlotsProps {
-  timeSlots: string[];
-  selectedTimeSlots: string[];
-  allSlotsSelected: boolean;
+  timeSlots?: string[];
+  selectedTimeSlots?: string[];
+  allSlotsSelected?: boolean;
   handleAllSlots: (push: boolean) => void;
   toggleSlot: (timeSlot: string) => void;
   control: Control<ProviderServiceAvailabilityFormType>;
+  isAvailable: boolean;
 }
 
 // TimeField component props interface

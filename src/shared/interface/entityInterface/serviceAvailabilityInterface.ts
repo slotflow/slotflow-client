@@ -3,11 +3,12 @@
 // 1. Provider service availability interface used in the AdminProviderServiceAvailability compoenent
 export interface Availability {
     day: string;
-    duration: number; // changed from string to number
-    startTime: string;
-    endTime: string;
-    modes: string[];
-    slots: string[];
+    isAvailable: boolean;
+    duration?: number; // changed from string to number
+    startTime?: string;
+    endTime?: string;
+    modes?: string[];
+    slots?: string[];
 }
 
 // Provider service availability slot interface that is coming from the server with updation, used in AdminProviderServiceAvailability component

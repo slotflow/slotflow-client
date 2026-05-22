@@ -39,6 +39,8 @@ export const providerCreateServiceDetailsZodSchema = z.object({
       .max(1_000_000, "Service price cannot exceed 1,000,000")
   ),
 
+  serviceExperienceYears: z.number().min(0).max(80),
+
   serviceExperience: z
     .string()
     .min(1, "Experience must be at least 1 character")
@@ -67,12 +69,19 @@ export const providerCreateServiceDetailsZodSchema = z.object({
   isGroupService: z.boolean().optional(),
 
    requirements: z
-    .string()
-    .max(500, "Requirements cannot exceed 500 characters")
+    .array(
+      z.string().max(200, "Each requirement cannot exceed 200 characters")
+    )
+    .max(10, "You can add at most 10 requirements")
     .optional(),
 
   videoUrl: z.union([
     z.string().url("Invalid video URL"),
+    z.literal(""),
+  ]).optional(),
+
+  portfolioUrl: z.union([
+    z.string().url("Invalid portfolio URL"),
     z.literal(""),
   ]).optional(),
 });
@@ -81,13 +90,14 @@ export type ProviderCreateServiceDetailsFormType = z.infer<  typeof providerCrea
 
 
 export const providerServiceAvailabilityZodSchema = z.object({
-  day: z.string(),
-  duration: z.number().min(1, "Duration is required"),
-  startTime: z.date(),
-  endTime: z.date(),
-  modes: z.array(z.string()),
-  timeSlots: z.array(z.string()),
-  selectedTimeSlots: z.array(z.string().min(1).max(30).regex(/^(0[1-9]|1[0-2]):[0-5][0-9] (AM|PM)$/)),
+  day: z.string().min(1, "Day is required"),
+  isAvailable: z.boolean(),
+  duration: z.number().optional(),
+  startTime: z.date().optional(),
+  endTime: z.date().optional(),
+  modes: z.array(z.string()).optional(),
+  timeSlots: z.array(z.string()).optional(),
+  selectedTimeSlots: z.array(z.string().min(1).max(30).regex(/^(0[1-9]|1[0-2]):[0-5][0-9] (AM|PM)$/)).optional(),
 });
 
 export type ProviderServiceAvailabilityFormType = z.infer<typeof providerServiceAvailabilityZodSchema>;

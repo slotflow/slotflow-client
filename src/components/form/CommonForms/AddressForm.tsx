@@ -111,10 +111,13 @@ const AddressForm: React.FC<AddressFormProps> = ({
             } else {
                 const res = await dispatch(createAddress(data)).unwrap();
                 if (res.success) {
+                    console.log("authUser : ",authUser);
                     if (authUser?.onboardingStatus !== OnboardingStatus.APPROVED && authUser?.role === Role.PROVIDER) {
                         if (authUser?.adminVerificationStatus === AdminVerificationStatus.NOT_REQUESTED) {
+                            console.log("navigating to service")
                             navigate(redirectPaths.ONBOARDING_SERVICE);
                         } else if (authUser?.adminVerificationStatus === AdminVerificationStatus.REJECTED) {
+                            console.log("navigating to pending")
                             navigate(redirectPaths.ONBOARDING_PENDING);
                         }
                     }

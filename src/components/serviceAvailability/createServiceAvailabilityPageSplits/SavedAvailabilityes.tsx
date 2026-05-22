@@ -26,9 +26,15 @@ const   SavedAvailabilities: React.FC<SavedAvailabilitiesProps> = ({
             <ul className="space-y-1">
                 {availabilities.map((availability) => (
                     <div className="flex items-center justify-between gap-2 w-full md:w-1/2" key={availability.day}>
-                        <li className="flex-1 p-2 border border-gray-300 rounded-md text-sm truncate">
-                            {availability.day} - {availability.startTime} to {availability.endTime}
-                        </li>
+                        {availability.isAvailable ? (
+                            <li className="flex-1 p-2 border border-gray-300 rounded-md text-sm truncate">
+                                {availability.day} - {availability.startTime} to {availability.endTime}
+                            </li>
+                        ) : (
+                            <li className="flex-1 p-2 border border-gray-300 rounded-md text-sm truncate">
+                                {availability.day} - Not Available
+                            </li>
+                        )}
                         <Button
                             title="Delete availability"
                             variant="destructive"

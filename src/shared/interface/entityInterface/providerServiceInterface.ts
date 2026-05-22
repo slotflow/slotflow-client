@@ -8,8 +8,9 @@ export interface ProviderService {
     serviceName: string;
     serviceDescription: string;
     servicePrice: number;
+    serviceExperienceYears: number,
     serviceExperience: string;
-    requirements?: string;
+    requirements?: string[],
     serviceType?: ServiceType;
     serviceMode: ServiceMode;
     tags?: string[];

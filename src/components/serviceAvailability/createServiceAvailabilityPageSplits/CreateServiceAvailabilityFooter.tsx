@@ -11,24 +11,25 @@ const CreateServiceAvailabilityFooter: React.FC<CreateServiceAvailabilityFooterP
     availabilities,
     isValid,
     isUpdating,
-    isLoading
+    isLoading,
+    isAvailable
 }) => {
     return (
         <div className="flex flex-col gap-4">
-            {selectedTimeSlots && selectedTimeSlots.length > 0 && (
-                <div className="flex justify-center md:justify-end">
-                    <Button
-                        title="Add this availability (not saved yet)"
-                        type="button"
-                        variant="secondary"
-                        disabled={isSubmitting}
-                        onClick={onAddAvailability}
-                        className={defaultButtonClassName}
-                    >
-                        Add Availability <Check />
-                    </Button>
-                </div>
-            )}
+            {((isAvailable && selectedTimeSlots && selectedTimeSlots.length > 0) || !isAvailable) && (
+  <div className="flex justify-center md:justify-end">
+    <Button
+      title="Add this availability (not saved yet)"
+      type="button"
+      variant="secondary"
+      disabled={isSubmitting}
+      onClick={onAddAvailability}
+      className={defaultButtonClassName}
+    >
+      Add Availability <Check />
+    </Button>
+  </div>
+)}
             {availabilities && (
                 <div className="flex justify-center md:justify-end">
                     <Button

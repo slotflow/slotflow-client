@@ -32,11 +32,10 @@ const TagInput: React.FC<TagInputProps> = ({ value, onChange }) => {
         <Button
           title="Create Tag"
           type="button"
-          variant="default"
+          variant="outline"
           onClick={addTag}
           className={defaultButtonClassName}
         >
-          Create
           <Plus className="w-4 h-4" />
         </Button>
       </div>

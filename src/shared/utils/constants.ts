@@ -31,6 +31,7 @@ import {
   Activity,
   BarChart,
   UserPlus,
+  LockIcon,
   Instagram,
   Calendar1,
   UserCheck,
@@ -56,9 +57,6 @@ import {
   CalendarCheck,
   MessageSquareText,
   PictureInPicture2,
-  LockIcon,
-  ShieldBan,
-  BookCheck,
 } from "lucide-react";
 import {
   Route,
@@ -1258,6 +1256,12 @@ export const daysOfWeekOptions: OptionType<string>[] = [
   { label: "Saturday", value: "Saturday" }
 ];
 
+// isAvailable for the day options
+export const isAvailableOptions: OptionType<boolean>[] = [
+  { label: "Available", value: true },
+  { label: "Not Available", value: false }
+];
+
 // Service Duration Options
 export const serviceDurationsOptions: OptionType<number>[] = [
   { label: "10 minutes", value: 10 },
@@ -1471,38 +1475,36 @@ export const destructiveButtonClassName = "cursor-pointer transition-colors dura
 
 
 //
-export const STATUS_PRESETS = {
+export const STATUS_PRESETS: Record<string, { trueText: string, falseText: string, trueClass: string, falseClass: string }> = {
   accountStatus: {
     trueText: "Blocked",
     falseText: "Active",
     trueClass: "text-red-500",
     falseClass: "text-green-500",
-    trueIcon: ShieldBan,
-    falseIcon: ShieldCheck,
   },
   trustStatus: {
     trueText: "Trusted",
     falseText: "Not Trusted",
     trueClass: "text-green-500",
     falseClass: "text-gray-400",
-    trueIcon: BookCheck,
-    falseIcon: BadgeCheck,
   },
   verificationStatus: {
     trueText: "Verified",
     falseText: "Not Verified",
     trueClass: "text-green-500",
     falseClass: "text-red-500",
-    trueIcon: BadgeCheck,
-    falseIcon: ShieldBan,
   },
   addressStatus: {
     trueText: "Verified",
     falseText: "Not Verified",
     trueClass: "text-green-500",
     falseClass: "text-red-500",
-    trueIcon: MapPin,
-    falseIcon: MapPin,
+  },
+  availabilityStatus: {
+    trueText: "Available",
+    falseText: "Not Available",
+    trueClass: "text-green-500",
+    falseClass: "text-red-500",
   },
 };
 

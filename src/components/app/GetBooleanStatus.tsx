@@ -12,7 +12,6 @@ const getBooleanStatusComponent = (
     <IconText
       text={value ? preset.trueText : preset.falseText}
       className={value ? preset.trueClass : preset.falseClass}
-      icon={value ? preset.trueIcon : preset.falseIcon}
     />
   );
 };

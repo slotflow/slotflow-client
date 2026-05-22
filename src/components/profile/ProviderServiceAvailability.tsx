@@ -18,9 +18,10 @@ import { EventSocketEnum, SlotEngageRequest } from "@/shared/interface/socket.in
 import { ProviderServiceAvailabilityProps } from "@/shared/interface/componentInterface";
 import ProviderAvailabilityShimmer from "@/components/shimmers/ProviderAvailabilityShimmer";
 import { fetchEngagedSlots, fetchMyServiceAvailability, fetchServiceAvailabilityByProviderId } from "@/shared/apis/serviceAvailability";
-import { defaultButtonClassName } from "@/shared/utils/constants";
+import { defaultButtonClassName, STATUS_PRESETS } from "@/shared/utils/constants";
 import { AnimatePresence, motion } from "framer-motion";
 import ProviderServiceAvailabilityForm from "../form/provider/ProviderSerivceAvailabilityForm";
+import getBooleanStatusComponent from "../app/GetBooleanStatus";
 
 const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityProps> = ({
     providerId,
@@ -153,15 +154,18 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityProps> = 
                                     />
                                 </div>
                                 {isError && error ? (
-                                    <AvailablityFetchingError message={"Availabulity fetching error"} />
+                                    <AvailablityFetchingError isAvailable={true} />
                                 ) : isLoading ? (
                                     <ProviderAvailabilityShimmer row={5} slotCount={20} />
                                 ) : !data ? (
                                     <DataFetchingError message="Data not found" />
+                                ) : !data.isAvailable ? (
+                                    <AvailablityFetchingError isAvailable={data.isAvailable} />
                                 ) : (
                                     <div className="md:col-span-8 space-y-6">
                                         <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-4`}>
                                             <DataField label="Day" value={data?.day} Icon={CalendarDays} />
+                                            <DataField label="Availability Status" value={getBooleanStatusComponent(data?.isAvailable, STATUS_PRESETS.availabilityStatus)} Icon={CalendarDays} />
                                             <DataField label="Start Time" value={data?.startTime} Icon={Clock} />
                                             <DataField label="End Time" value={data?.endTime} Icon={Clock} />
                                             <DataField label="Duration" value={data?.duration} isTime Icon={Timer} />
