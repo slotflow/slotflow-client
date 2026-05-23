@@ -1,4 +1,4 @@
-import { Loader } from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
@@ -82,7 +82,7 @@ const ProviderProofSubmissionPage: React.FC = () => {
           >
             {isSubmitting ? (
               <>
-                <Loader className="animate-spin size-4 mr-2" />
+                <LoaderCircle className="animate-spin size-4 mr-2" />
                 {(authUser?.isProofSubmitted && isSubmitting) ? "Updating" : "Submitting"}
               </>
             ) : (

@@ -6,7 +6,7 @@ import { appConfig } from "@/shared/config/env";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, CardContent } from "@/components/ui/card";
 import { AuthUser } from "@/shared/interface/sliceInterface";
-import { Check, Loader, TriangleAlert, X } from "lucide-react";
+import { Check, LoaderCircle, TriangleAlert, X } from "lucide-react";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { AdminVerificationStatus } from "@/shared/interface/enums";
 import { providerSubmitDetailsForReview } from "@/shared/apis/providerProfile";
@@ -113,7 +113,7 @@ const ProviderApprovalPendingPage = () => {
                   {row.verified ? (
                     <Check className="text-green-500 size-4" />
                   ) : (
-                    <Loader className="animate-spin text-yellow-500 size-4" />
+                    <LoaderCircle className="animate-spin text-yellow-500 size-4" />
                   )}
 
                   <span className="text-sm">{row.label}</span>
@@ -169,7 +169,7 @@ const ProviderApprovalPendingPage = () => {
               >
                 {isSubmitting ? (
                   <>
-                    <Loader className="animate-spin size-4 mr-2" />
+                    <LoaderCircle className="animate-spin size-4 mr-2" />
                     {adminStatus === AdminVerificationStatus.REJECTED
                       ? "Resubmitting..."
                       : "Submitting..."}

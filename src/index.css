@@ -330,6 +330,11 @@ html {
   }
 }
 
+.text-shimmer {
+  background-size: 300% auto;
+  animation: shimmer 2s linear infinite;
+}
+
 body {
   background-color: black;
   scrollbar-width: 0;

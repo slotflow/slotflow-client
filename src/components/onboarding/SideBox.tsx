@@ -9,7 +9,7 @@ import choose from '../../assets/svgs/choose.svg';
 import address from '../../assets/svgs/address.svg';
 import working from '../../assets/svgs/working.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { Loader, LogOut, Moon, Sun } from 'lucide-react';
+import { LoaderCircle, LogOut, Moon, Sun } from 'lucide-react';
 import fileUpload from '../../assets/svgs/fileUpload.svg';
 import service from '../../assets/svgs/serviceDetails.svg';
 import { useSignout } from '@/hooks/systemHooks/useSignout';
@@ -95,7 +95,7 @@ const SideBox: React.FC<SideBoxProps> = ({ pageNumber }) => {
                 className={defaultButtonClassName}
                 disabled={isLoading}
               >{isLoading ?
-                <Loader className="animate-spin w-4 h-4" />
+                <LoaderCircle className="animate-spin w-4 h-4" />
                 :
                 <LogOut className="w-4 h-4" />
                 }

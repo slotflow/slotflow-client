@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { appConfig } from "@/shared/config/env";
 import TagInput from "@/components/form/TagInput";
 import React, { useEffect, useState } from "react";
-import { Loader, Plus, Trash2 } from "lucide-react";
+import { LoaderCircle, Plus, Trash2 } from "lucide-react";
 import FormField from "@/components/form/FormField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
@@ -390,7 +390,7 @@ const ProviderServiceForm: React.FC<ProviderServiceFormProps> = ({
                 >
                     {isSubmitting ? (
                         <>
-                            <Loader className="animate-spin size-4 mr-2" />
+                            <LoaderCircle className="animate-spin size-4 mr-2" />
                             {(isUpdating && isSubmitting) ? "Updating" : "Submitting"}
                         </>
                     ) : (

@@ -1,16 +1,22 @@
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 import { Button } from "@/components/ui/button";
+import { appConfig } from "@/shared/config/env";
+import { AppDispatch } from "@/shared/redux/appStore";
 import { checkBookingConfirmed } from "@/shared/apis/booking";
 import { Calendar, CheckCircle2, XCircle } from "lucide-react";
-import { useNavigate, useSearchParams,  } from "react-router-dom";
+import { PaymentProcessStatus } from "@/shared/interface/enums";
+import { useNavigate, useSearchParams, } from "react-router-dom";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { setBookingPyamentData, setPaymentProcessStatus } from "@/shared/redux/slices/paymentSlice";
 
 const UserBookingConfirmPage: React.FC = () => {
 
+  const dispatch = useDispatch<AppDispatch>();
   const [searchParams] = useSearchParams();
-  const statusParam =  searchParams.get("status");
+  const statusParam = searchParams.get("status");
   const status = statusParam === "success";
 
   const navigate = useNavigate();
@@ -20,11 +26,15 @@ const UserBookingConfirmPage: React.FC = () => {
       const response = await checkBookingConfirmed();
       if (response.data) {
         toast.success("Your Booking has been confirmed");
+        dispatch(setPaymentProcessStatus(PaymentProcessStatus.SUCCESS));
+        dispatch(setBookingPyamentData(null))
       } else {
         toast.error("Booking failed");
       }
-    } catch {
-      toast.error("Booking failed");
+    } catch (error) {
+      if (appConfig.isDevelopment) {
+        console.log(error, "checkBookingConfirmed api failed");
+      }
     }
   };
 

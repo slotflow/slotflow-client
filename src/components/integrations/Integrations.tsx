@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '../ui/button';
 import { useDispatch } from 'react-redux';
-import { Check, Loader2 } from 'lucide-react';
+import { Check, LoaderCircle } from 'lucide-react';
 import { AppDispatch } from 'recharts/types/state/store';
 import { IntegrationCardProps } from '@/shared/interface/componentInterface';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -41,7 +41,7 @@ const IntegrationCard: React.FC<IntegrationCardProps> = ({
                 ) : connectingLoading ? (
                     <span className="p-1 flex items-center justify-center rounded-md w-full">
                         <span className="text-sm font-semibold">Connecting</span>
-                        <Loader2 className="animate-spin mr-2 w-4 h-4 ml-2" />
+                        <LoaderCircle className="animate-spin mr-2 w-4 h-4 ml-2" />
                     </span>
                 ) : (
                     <Button

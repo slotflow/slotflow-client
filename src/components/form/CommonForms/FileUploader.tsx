@@ -10,7 +10,7 @@ import { AppDispatch } from '@/shared/redux/appStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { getUploadUrl, uploadToS3 } from '@/shared/apis/s3';
-import { ArrowUp, Check, Info, Loader, X } from 'lucide-react';
+import { ArrowUp, Check, Info, LoaderCircle, X } from 'lucide-react';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import noImage from '../../../assets/defaultImages/imagePlaceholder.png';
 import { FileUploaderProps } from '@/shared/interface/componentInterface';
@@ -181,7 +181,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
                                     <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-background/60 backdrop-blur-sm">
 
                                         {data.file ? (
-                                            <Loader className="animate-spin size-5 text-muted-foreground" />
+                                            <LoaderCircle className="animate-spin size-5 text-muted-foreground" />
                                         ) : (
                                             <ArrowUp className="animate-bounce size-5 text-muted-foreground" />
                                         )}

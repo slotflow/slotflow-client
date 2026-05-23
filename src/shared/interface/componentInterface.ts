@@ -28,7 +28,7 @@ import { Column, ColumnDef, OnChangeFn, PaginationState } from "@tanstack/react-
 import { FetchProvidersProofsResponse, UpdateFileDataRequest } from "./api/commonApiInterface";
 import { AdminFetchUserProfileDetailsResponse, UserFetchServiceProvidersResponse, UserFetchMyProfileDetailsResponse } from "./api/user";
 import { AdminFetchProviderProfileDetailsResponse, ProviderFetchMyProfileDetailsResponse, UserFetchProviderProfileDetailsResponse } from "./api/providerProfile";
-import { ApiBaseResponse, ApiPaginatedResponse, BaseChartData, CardProps, ChatComponentProps, FetchFunctionBaseQueryParams, OptionType, ProviderSubscriptionDataProps, Route, statsMapIntrface, TabItem, TimeRange, UserBookinAppointmentDataProps } from "./commonInterface";
+import { ApiBaseResponse, ApiPaginatedResponse, BaseChartData, CardProps, ChatComponentProps, FetchFunctionBaseQueryParams, OptionType, Route, statsMapIntrface, TabItem, TimeRange } from "./commonInterface";
 
 // Provider service availability component props interface
 export interface ProviderServiceAvailabilityProps {
@@ -482,14 +482,6 @@ export interface NotificationCardProps {
 // SideBox component props interface
 export interface SideBoxProps {
   pageNumber: number;
-}
-
-// PaymentSelecion component props interface
-export interface PaymentSelecionComponentProps {
-  setOpenPayment?: (data: boolean) => void;
-  data: UserBookinAppointmentDataProps | ProviderSubscriptionDataProps;
-  isAppointmentBooking?: boolean;
-  isProviderSubscription?: boolean;
 }
 
 // ProviderPlanCard component props interface

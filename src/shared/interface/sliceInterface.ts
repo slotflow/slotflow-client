@@ -4,7 +4,7 @@ import { Message } from "./entityInterface/message.interface";
 import { UserViewProviderCardProps } from "./componentInterface";
 import { ProviderProfile } from "./entityInterface/providerProfileInterface";
 import { Availability } from "./entityInterface/serviceAvailabilityInterface";
-import { HearAboutUsOptionValue, PlanName, Role, ServiceCategory, SubscriptionStatus } from "./enums";
+import { HearAboutUsOptionValue, PaymentProcessStatus, PaymentProcessType, PlanName, Role, ServiceCategory, SubscriptionStatus } from "./enums";
 
 // Auth slice state
 export type AuthUser = Pick<User, 
@@ -94,11 +94,6 @@ export interface SetProofDataProps {
 // provider slice
 export interface ProviderState {
   availabilities: Availability[] | null;
-  planId: string | null;
-  planDuration: number | null;
-  paymentSelectionOpen: boolean;
-  isTrialPlan: boolean;
-  paymentPageOpen: boolean;
   identityProof: SetProofDataProps;
   serviceProof: SetProofDataProps;
   isShowPreview: boolean;
@@ -140,4 +135,25 @@ export interface chatSliceInitalState {
   isConnected: boolean;
   messages: Message[] | null;
   isMessagesLoading: boolean;
+}
+
+// payment slice initial state
+export interface PaymentSlice {
+  type: PaymentProcessType,
+  isOpen: boolean;
+  bookingData: {
+    providerId: string;
+    slotId: string;
+    slot: string;
+    date: Date;
+    selectedServiceMode: string;
+  } | null,
+
+  subscriptionData: {
+    planId: string;
+    planDuration: number;
+    isTrialPlan: boolean;
+  } | null,
+
+  status: PaymentProcessStatus
 }

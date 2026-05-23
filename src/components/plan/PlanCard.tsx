@@ -12,7 +12,7 @@ import { PlanName, SubscriptionValidity } from "@/shared/interface/enums";
 import { ProviderPlanCardProps } from "@/shared/interface/componentInterface";
 import { PlanDurationFormType, planDurationZodSchema } from "@/shared/zod/providerZod";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
-import { setSubscriptionPlanId, setPaymentSelectionPage, setSubscriptionIsTrailPlan, setSubscriptionPlanDuration } from "@/shared/redux/slices/providerSlice";
+import { setPaymentSelectionOpen, setSubscriptionPaymentData } from "@/shared/redux/slices/paymentSlice";
 
 const PlanCard: React.FC<ProviderPlanCardProps> = ({
   plan,
@@ -39,10 +39,12 @@ const PlanCard: React.FC<ProviderPlanCardProps> = ({
       return;
     };
 
-    dispatch(setSubscriptionIsTrailPlan(Boolean(isTrial)));
-    dispatch(setSubscriptionPlanId(plan._id));
-    dispatch(setPaymentSelectionPage(true));
-    dispatch(setSubscriptionPlanDuration(data.planDuration));
+    dispatch(setSubscriptionPaymentData({
+      isTrialPlan: Boolean(isTrial),
+      planDuration: data.planDuration,
+      planId: plan._id,
+    }))
+    dispatch(setPaymentSelectionOpen(true));
   });
 
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "../ui/button";
-import { Loader } from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 import logo from '../../assets/logos/logo-transparent.png';
 import { CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { AuthFormsButtonProps, AuthFormsHeadingProps } from "@/shared/interface/componentInterface";
@@ -35,7 +35,7 @@ export const FormButton: React.FC<AuthFormsButtonProps> = React.memo(({
         >
             {loading ? (
                 <span className="flex items-center gap-2">
-                    <Loader className="animate-spin size-4" />
+                    <LoaderCircle className="animate-spin size-4" />
                     <span>{text}</span>
                 </span>
             ) : (

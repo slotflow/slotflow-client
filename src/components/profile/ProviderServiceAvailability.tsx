@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import DataField from "../app/DataField";
+import { useDispatch } from "react-redux";
 import { SelectSeparator } from "../ui/select";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Role } from "@/shared/interface/enums";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
@@ -9,19 +9,21 @@ import TimeSlotLegend from "../app/TimeSlotLegend";
 import React, { useEffect, useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { getEventSocket } from "@/lib/socketService";
+import { AppDispatch } from "@/shared/redux/appStore";
+import { AnimatePresence, motion } from "framer-motion";
 import DataFetchingError from "../error/DataFetchingError";
-import PaymentSelection from "../payment/PaymentSelection";
+import getBooleanStatusComponent from "../app/GetBooleanStatus";
 import { CalendarDays, Clock, Settings2, Timer } from "lucide-react";
 import AvailablityFetchingError from "../error/AvailabilityFetchingError";
+import { setBookingPyamentData } from "@/shared/redux/slices/paymentSlice";
+import { defaultButtonClassName, STATUS_PRESETS } from "@/shared/utils/constants";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Slot } from "@/shared/interface/entityInterface/serviceAvailabilityInterface";
 import { EventSocketEnum, SlotEngageRequest } from "@/shared/interface/socket.interface";
 import { ProviderServiceAvailabilityProps } from "@/shared/interface/componentInterface";
 import ProviderAvailabilityShimmer from "@/components/shimmers/ProviderAvailabilityShimmer";
-import { fetchEngagedSlots, fetchMyServiceAvailability, fetchServiceAvailabilityByProviderId } from "@/shared/apis/serviceAvailability";
-import { defaultButtonClassName, STATUS_PRESETS } from "@/shared/utils/constants";
-import { AnimatePresence, motion } from "framer-motion";
 import ProviderServiceAvailabilityForm from "../form/provider/ProviderSerivceAvailabilityForm";
-import getBooleanStatusComponent from "../app/GetBooleanStatus";
+import { fetchEngagedSlots, fetchMyServiceAvailability, fetchServiceAvailabilityByProviderId } from "@/shared/apis/serviceAvailability";
 
 const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityProps> = ({
     providerId,
@@ -29,11 +31,10 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityProps> = 
     canUpdate = false,
 }) => {
 
+    const dispatch = useDispatch<AppDispatch>();
     const [showForm, setShowForm] = useState<boolean>(false);
     const [date, setDate] = useState<Date | undefined>(new Date());
-    const [openPayment, setOpenPayment] = useState<boolean>(false);
     const [selectedMode, setSelectedMode] = useState<string | null>(null);
-    const [selectedSlotId, setSelectedSlotId] = useState<string | null>(null);
     const [engagedSlotIds, setEngagedSlotIds] = useState<Set<string>>(new Set());
 
     const eventSocket = getEventSocket();
@@ -107,17 +108,26 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityProps> = 
         }
     }, [eventSocket, providerId, date])
 
-    const handleBookAnAppoint = (slotId: string, availability: boolean) => {
+    const handleBookAnAppoint = (slotId: string, slot: string, availability: boolean) => {
         if (!availability) {
             toast.info("Slot is unavailable.");
             return;
         }
-        setSelectedSlotId(slotId);
-        setOpenPayment(true);
+        if (!providerId || !slotId || !date || !selectedMode) {
+            toast.error("Something went wrong. Please try again.")
+            return;
+        }
+
+        dispatch(setBookingPyamentData({
+            providerId,
+            slotId,
+            slot,
+            date,
+            selectedServiceMode: selectedMode
+        }))
     };
 
     return (
-        <>
             <div className="w-full flex flex-col">
                 {(
                     <>
@@ -216,7 +226,7 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityProps> = 
                                                                 onClick={(e) => {
                                                                     e.preventDefault();
                                                                     e.stopPropagation();
-                                                                    handleBookAnAppoint(slot._id, slot.available && !isOccupied);
+                                                                    handleBookAnAppoint(slot._id, slot.time, slot.available && !isOccupied);
                                                                 }}
                                                                 className={`${commonClasses} ${slot.available && !isOccupied ? 'cursor-pointer' : ''}`}
                                                             >
@@ -260,20 +270,6 @@ const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityProps> = 
                     </>
                 )}
             </div>
-            {openPayment && selectedSlotId && providerId && selectedMode && (
-                <PaymentSelection
-                    setOpenPayment={setOpenPayment}
-                    data={{
-                        providerId,
-                        slotId: selectedSlotId,
-                        date: date || new Date(),
-                        selectedServiceMode: selectedMode
-                    }}
-                    isAppointmentBooking
-                />
-            )}
-
-        </>
     )
 }
 

@@ -11,7 +11,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import LoadingFallback from "./pages/common/LoadingFallback";
 import { onMessageListener } from "./shared/helper/onMessageListener";
 
-const AppContent = () => {
+const AppContent: React.FC = () => {
 
   const themeMode = useSelector((store: RootState) => store.app?.lightTheme);
 

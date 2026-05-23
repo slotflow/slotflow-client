@@ -1,24 +1,24 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { X, Loader, Coins } from "lucide-react";
+import { X, LoaderCircle, Coins } from "lucide-react";
 import { RootState } from "@/shared/redux/appStore";
 import { useQueryClient } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { setSubscription } from "@/shared/redux/slices/authSlice";
 import { subscribeToTrialPlan } from "@/shared/apis/subscription";
 import { PlanName, SubscriptionStatus } from "@/shared/interface/enums";
-import { setPaymentSelectionPage, setSubscriptionIsTrailPlan } from "@/shared/redux/slices/providerSlice";
+import { setPaymentSelectionOpen, setSubscriptionPaymentData } from "@/shared/redux/slices/paymentSlice";
 
 const ProviderFreeSubscription: React.FC = () => {
 
     const dispatch = useDispatch();
     const queryClient = useQueryClient();
     const [paymentLoading, setPaymentLoading] = useState(false);
-    const { paymentSelectionOpen } = useSelector((store: RootState) => store.provider);
+    const { isOpen } = useSelector((store: RootState) => store.payment);
 
     const handlePaymentSelectionClose = () => {
-        dispatch(setPaymentSelectionPage(false));
-        dispatch(setSubscriptionIsTrailPlan(false));
+        dispatch(setPaymentSelectionOpen(false));
+        dispatch(setSubscriptionPaymentData(null));
         dispatch(setSubscription({
             subscribedPlan: PlanName.TRIAL,
             providerId: "",
@@ -42,7 +42,7 @@ const ProviderFreeSubscription: React.FC = () => {
         }
     }
 
-    return paymentSelectionOpen && (
+    return isOpen && (
         <div className="fixed inset-0 flex justify-center items-center bg-black/70 z-50">
             {!paymentLoading ? (
                 <div className="w-3/12 rounded-lg shadow-lg border p-4 bg-[var(--background)]" >
@@ -55,7 +55,7 @@ const ProviderFreeSubscription: React.FC = () => {
                     </div>
                 </div>
             ) : (
-                <Loader className="w-10 h-10 animate-spin" />
+                <LoaderCircle className="w-10 h-10 animate-spin" />
             )}
         </div>
     );

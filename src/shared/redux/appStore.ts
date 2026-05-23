@@ -4,6 +4,7 @@ import chatReducer from './slices/chatSlice';
 import userReducer from './slices/userSlice';
 import adminReducer from './slices/adminSlice';
 import videoReducer from './slices/videoSlice';
+import paymentReducer from './slices/paymentSlice';
 import { storeConstants } from '../utils/constants';
 import localStorage from 'redux-persist/lib/storage';
 import providerReducer from './slices/providerSlice';
@@ -26,6 +27,7 @@ const rootReducers = {
     chat: chatReducer,
     video: videoReducer,
     integration: integrationReducer,
+    payment: paymentReducer
 };
 
 const rootReducer = combineReducers(rootReducers);

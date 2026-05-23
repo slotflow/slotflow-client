@@ -1,10 +1,13 @@
+import { useCallback } from 'react';
 import { toast } from 'react-toastify';
-import { Loader, X } from 'lucide-react';
-import { useDispatch } from 'react-redux';
-import { useCallback, useState } from 'react';
+import { motion } from "framer-motion";
+import { LoaderCircle, X } from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
 import { stripeConfig } from '@/shared/config/env';
+import { RootState } from '@/shared/redux/appStore';
 import { getEventSocket } from '@/lib/socketService';
+import { useDispatch, useSelector } from 'react-redux';
+import { Card, CardContent } from "@/components/ui/card";
 import { bookAnAppointment } from '@/shared/apis/booking';
 import paypalLogo from '../../assets/iconImages/Paypal.png';
 import stripeLogo from '../../assets/iconImages/Stripe.jpeg';
@@ -12,21 +15,14 @@ import razorpayLogo from '../../assets/iconImages/Razorpay.png';
 import { EventSocketEnum } from '@/shared/interface/socket.interface';
 import { checkoutForSubscribePlan } from '@/shared/apis/subscription';
 import { setSubscriptionUpdating } from '@/shared/redux/slices/authSlice';
-import { PaymentSelecionComponentProps } from '@/shared/interface/componentInterface';
-import { ProviderSubscriptionDataProps, UserBookinAppointmentDataProps } from '@/shared/interface/commonInterface';
-import { setPaymentSelectionPage, setSubscriptionIsTrailPlan, setSubscriptionPlanDuration, setSubscriptionPlanId } from '@/shared/redux/slices/providerSlice';
+import { PaymentProcessStatus, PaymentProcessType } from '@/shared/interface/enums';
+import { setPaymentProcessStatus, setPaymentSelectionOpen } from '@/shared/redux/slices/paymentSlice';
 
-const PaymentSelection: React.FC<PaymentSelecionComponentProps> = ({
-    setOpenPayment,
-    data,
-    isAppointmentBooking,
-    isProviderSubscription,
-}) => {
-
+const PaymentSelection: React.FC = () => {
 
     const dispatch = useDispatch();
     const eventSocket = getEventSocket();
-    const [paymentLoading, setPaymentLoading] = useState<boolean>(false);
+    const { bookingData, subscriptionData, status, type } = useSelector((state: RootState) => state.payment)
 
     const makeStripePayment = useCallback(async () => {
         const stripePublishKey = stripeConfig.stripePublishableKey;
@@ -44,55 +40,40 @@ const PaymentSelection: React.FC<PaymentSelecionComponentProps> = ({
         }
 
         try {
-            setPaymentLoading(true);
+            if (type === PaymentProcessType.BOOKING) {
 
-            if (isAppointmentBooking) {
-
-                const infoData = data as UserBookinAppointmentDataProps;
-
-                if (!infoData.slotId || !infoData.providerId || !infoData.selectedServiceMode || !infoData.date) {
+                if (!bookingData?.slotId || !bookingData?.providerId || !bookingData?.selectedServiceMode || !bookingData?.date) {
                     toast.error("Incomplete booking details.");
                     return;
                 }
 
                 eventSocket.emit(EventSocketEnum.slotEngageRequest, {
-                    providerId: infoData.providerId,
-                    date: infoData.date,
-                    slotId: infoData.slotId,
+                    providerId: bookingData.providerId,
+                    date: bookingData.date,
+                    slotId: bookingData.slotId,
                 });
 
                 eventSocket.once(EventSocketEnum.slotEngageApproved, async () => {
                     try {
-
-                        const response = await bookAnAppointment(infoData);
+                        const response = await bookAnAppointment(bookingData);
                         const sessionId = response.data;
 
                         if (!sessionId) {
                             toast.error("Failed to create checkout session.");
+                            dispatch(setPaymentProcessStatus(PaymentProcessStatus.FAILED));
                             return;
                         }
 
-                        dispatch(setPaymentSelectionPage(false));
-
-                        const result = await stripe.redirectToCheckout({ sessionId });
-
-                        if (result?.error) {
-                            toast.error(result.error.message);
-
-                            eventSocket.emit(EventSocketEnum.slotUnlockRequest, {
-                                providerId: infoData.providerId,
-                                date: infoData.date,
-                                slotId: infoData.slotId,
-                            });
-                        }
+                        dispatch(setPaymentProcessStatus(PaymentProcessStatus.PROCESSING));
+                        stripe.redirectToCheckout({ sessionId });
 
                     } catch {
                         toast.error("Booking payment failed");
-
+                        dispatch(setPaymentProcessStatus(PaymentProcessStatus.FAILED));
                         eventSocket.emit(EventSocketEnum.slotUnlockRequest, {
-                            providerId: infoData.providerId,
-                            date: infoData.date,
-                            slotId: infoData.slotId,
+                            providerId: bookingData.providerId,
+                            date: bookingData.date,
+                            slotId: bookingData.slotId,
                         });
                     }
                 });
@@ -104,46 +85,40 @@ const PaymentSelection: React.FC<PaymentSelecionComponentProps> = ({
                 return;
             }
 
-            if (isProviderSubscription) {
-
-                const infoData = data as ProviderSubscriptionDataProps;
-
-                if (!infoData.planId || !infoData.planDuration) {
+            if (type === PaymentProcessType.SUBSCRIPTION) {
+                if (!subscriptionData?.planId || !subscriptionData?.planDuration) {
                     toast.error("Subscription details missing");
+                    dispatch(setPaymentProcessStatus(PaymentProcessStatus.FAILED));
                     return;
                 }
+                try {
+                    const response = await checkoutForSubscribePlan(subscriptionData);
+                    const sessionId = response.data;
 
-                const response = await checkoutForSubscribePlan(infoData);
-                const sessionId = response.data;
+                    if (!sessionId) {
+                        toast.error("Failed to create checkout session.");
+                        dispatch(setPaymentProcessStatus(PaymentProcessStatus.FAILED));
+                        return;
+                    }
 
-                if (!sessionId) {
-                    toast.error("Failed to create checkout session.");
-                    return;
-                }
+                    dispatch(setSubscriptionUpdating(true));
+                    dispatch(setPaymentProcessStatus(PaymentProcessStatus.PROCESSING));
+                    stripe.redirectToCheckout({ sessionId });
 
-                dispatch(setPaymentSelectionPage(false));
-                dispatch(setSubscriptionUpdating(true));
-
-                const result = await stripe.redirectToCheckout({ sessionId });
-
-                if (result?.error) {
-                    toast.error(result.error.message);
+                } catch {
+                    toast.error("Subscription payment failed.");
+                    dispatch(setPaymentProcessStatus(PaymentProcessStatus.FAILED));
                 }
             }
 
         } catch {
             toast.error("Something went wrong during payment.");
+            dispatch(setPaymentProcessStatus(PaymentProcessStatus.FAILED));
         } finally {
-
-            setPaymentLoading(false);
-
-            dispatch(setSubscriptionPlanId(null));
-            dispatch(setSubscriptionPlanDuration(null));
-            dispatch(setSubscriptionIsTrailPlan(false));
+            dispatch(setPaymentSelectionOpen(false))
         }
 
-    }, [data, isAppointmentBooking, isProviderSubscription, dispatch]);
-
+    }, [bookingData, subscriptionData, type, dispatch]);
 
     const paymentGateways = [
         {
@@ -174,33 +149,61 @@ const PaymentSelection: React.FC<PaymentSelecionComponentProps> = ({
 
 
     return (
-        <div className="fixed inset-0 flex justify-center items-center bg-black/70 z-50">
-            {!paymentLoading ? (
-                <div className="w-full max-w-sm rounded-lg shadow-lg border p-4 bg-[var(--background)]">
-                    <X
-                        className="cursor-pointer ml-auto"
-                        onClick={() => {
-                            dispatch(setPaymentSelectionPage(false));
-                            if (setOpenPayment)
-                                setOpenPayment(false);
-                        }}
-                    />
-                    <div className="py-6 space-y-4">
-                        <h2 className="text-lg font-bold mb-4 text-center">Choose Payment Gateway</h2>
-                        {paymentGateways.map((gateway, index) => (
-                            <button
-                                key={index}
-                                onClick={gateway.onClick}
-                                className="w-full flex items-center justify-center space-x-4 p-3 rounded-md shadow cursor-pointer bg-[var(--menuBg)] hover:bg-[var(--menuItemHoverBg)]"
-                            >
-                                <img src={gateway.img} alt={gateway.name} className="w-8 h-8" />
-                                {gateway.text}
-                            </button>
-                        ))}
-                    </div>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+            {status === PaymentProcessStatus.PROCESSING && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                    <motion.div
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        className="flex flex-col items-center gap-3"
+                    >
+                        <LoaderCircle className="w-10 h-10 animate-spin text-white" />
+                        <p className="text-white text-sm">Redirecting to payment...</p>
+                    </motion.div>
                 </div>
-            ) : (
-                <Loader className="w-10 h-10 animate-spin text-white" />
+            )}
+            {status !== PaymentProcessStatus.PROCESSING && (
+                <motion.div
+                    initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.25 }}
+                    className="w-full max-w-md"
+                >
+                    <Card className="rounded-2xl shadow-xl border bg-[var(--background)]">
+                        <div className="flex justify-between items-center p-4 border-b">
+                            <h2 className="text-lg font-semibold">Complete Payment</h2>
+                            <X
+                                className="cursor-pointer opacity-70 hover:opacity-100"
+                                onClick={() => dispatch(setPaymentSelectionOpen(false))}
+                            />
+                        </div>
+                        <CardContent className="p-5 space-y-5">
+                            <div className="space-y-3">
+                                {paymentGateways.map((gateway, index) => (
+                                    <motion.button
+                                        key={index}
+                                        whileHover={{ scale: 1.02 }}
+                                        whileTap={{ scale: 0.97 }}
+                                        onClick={gateway.onClick}
+                                        className="w-full flex items-center gap-4 p-4 rounded-xl border bg-[var(--menuBg)] hover:bg-[var(--menuItemHoverBg)] transition-all"
+                                    >
+                                        <img
+                                            src={gateway.img}
+                                            alt={gateway.name}
+                                            className="w-10 h-10 rounded-md object-cover"
+                                        />
+                                        <div className="flex flex-col items-start">
+                                            {gateway.text}
+                                            <span className="text-xs text-muted-foreground">
+                                                Secure payment via {gateway.name}
+                                            </span>
+                                        </div>
+                                    </motion.button>
+                                ))}
+                            </div>
+                        </CardContent>
+                    </Card>
+                </motion.div>
             )}
         </div>
     )

@@ -3,12 +3,14 @@ import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { PaymentProcessStatus } from "@/shared/interface/enums";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { fetchMySubscription } from "@/shared/apis/subscription";
 import { motion, AnimatePresence, Variants } from "framer-motion";
-import { Loader2, CheckCircle2, LayoutDashboard, XCircle } from "lucide-react";
+import { LoaderCircle, CheckCircle2, LayoutDashboard, XCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { setSubscription, setSubscriptionUpdating } from "@/shared/redux/slices/authSlice";
+import { setPaymentProcessStatus, setSubscriptionPaymentData } from "@/shared/redux/slices/paymentSlice";
 
 const ProviderSubscriptionConfirmPage: React.FC = () => {
 
@@ -32,6 +34,8 @@ const ProviderSubscriptionConfirmPage: React.FC = () => {
       if (res.success && res.data) {
         dispatch(setSubscription(res.data));
         toast.success("Subscription Activated!");
+        dispatch(setPaymentProcessStatus(PaymentProcessStatus.SUCCESS));
+        dispatch(setSubscriptionPaymentData(null))
         isFetched.current = true;
         return;
       }
@@ -92,7 +96,7 @@ const ProviderSubscriptionConfirmPage: React.FC = () => {
                   exit={{ opacity: 0, scale: 0.9 }}
                   className="flex flex-col items-center space-y-6 text-center"
                 >
-                  <Loader2 className="h-16 w-16 animate-spin text-[var(--mainColor)]" />
+                  <LoaderCircle className="h-16 w-16 animate-spin text-[var(--mainColor)]" />
                   <h3 className="text-lg font-semibold">
                     Activating Subscription
                   </h3>

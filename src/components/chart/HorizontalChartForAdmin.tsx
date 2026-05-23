@@ -20,7 +20,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { Loader2, TrendingUp } from "lucide-react";
+import { LoaderCircle, TrendingUp } from "lucide-react";
 import { chartConfig } from "@/shared/utils/constants";
 import { HorizontalChartForAdminReactProps } from "@/shared/interface/componentInterface";
 
@@ -37,7 +37,7 @@ const HorizontalChartForAdminReact: React.FC<HorizontalChartForAdminReactProps> 
       <CardContent>
         {isLOading ? (
           <div className="h-full flex justify-center items-center">
-            <span><Loader2 className="animate-spin" /></span>
+            <span><LoaderCircle className="animate-spin" /></span>
           </div>
         ) : (
         <ChartContainer config={chartConfig}>

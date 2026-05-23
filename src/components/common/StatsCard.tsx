@@ -6,7 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  Loader2,
+  LoaderCircle,
   Info,
   LucideIcon,
   CheckCircle2,
@@ -73,8 +73,8 @@ const StatCard: React.FC<StatCardProps> = ({
         <div className="flex flex-col gap-2">
           {isLoading ? (
             <div className="flex items-center gap-2">
-              <Loader2 className="w-5 h-5 animate-spin" />
-              <span>Loading...</span>
+              <LoaderCircle className="w-5 h-5 animate-spin" />
+              <span className="shimmer h-2 w-10"></span>
             </div>
           ) : (isError && error) ? (
             <div className="flex items-center gap-2">

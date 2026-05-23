@@ -1,5 +1,5 @@
 import React from "react";
-import { Bell, Loader2 } from "lucide-react";
+import { Bell, LoaderCircle } from "lucide-react";
 import NotificationCard from "./NotificationCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -87,7 +87,7 @@ const NotificationsContainer: React.FC = () => {
 
                     {isFetchingNextPage && (
                         <div className="flex justify-center py-4">
-                            <Loader2 className="w-6 h-6 animate-spin text-gray-400 opacity-70" />
+                            <LoaderCircle className="w-6 h-6 animate-spin text-gray-400 opacity-70" />
                         </div>
                     )}
 

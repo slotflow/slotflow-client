@@ -1,6 +1,5 @@
 import { User } from "../entityInterface/userInterface";
 import { Booking } from "../entityInterface/bookingInterface";
-import { Availability } from "../entityInterface/serviceAvailabilityInterface";
 
 // request type of the fetch bookings api
 export interface FetchBookingsQueryParams {
@@ -42,7 +41,9 @@ export interface JoinRoomCallbackRequest {
 }
 
 // response interface of the join room callback api
-export type JoinRoomCallbackResponse = Pick<Availability, "duration">;
+export interface JoinRoomCallbackResponse {
+  duration: number;
+}
 
 // request type of the provider change booking appointment status api
 export interface changeAppointmentStatusRequest {

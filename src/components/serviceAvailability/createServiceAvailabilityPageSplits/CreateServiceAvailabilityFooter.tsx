@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "../../ui/button";
-import { Check, Loader } from "lucide-react";
+import { Check, LoaderCircle } from "lucide-react";
 import { CreateServiceAvailabilityFooterProps } from "@/shared/interface/componentInterface";
 import { defaultButtonClassName } from "@/shared/utils/constants";
 
@@ -41,7 +41,7 @@ const CreateServiceAvailabilityFooter: React.FC<CreateServiceAvailabilityFooterP
                     >
                         {isSubmitting ? (
                             <>
-                                <Loader className="animate-spin size-4 mr-2" />
+                                <LoaderCircle className="animate-spin size-4 mr-2" />
                                 {(isUpdating && isSubmitting) ? "Updating" : "Submitting"}
                             </>
                         ) : (

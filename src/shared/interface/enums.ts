@@ -258,3 +258,16 @@ export enum CreditTransactionStatus {
   SUCCESS = "SUCCESS",
   FAILED = "FAILED"
 }
+
+export enum PaymentProcessStatus {
+  IDLE = "idle",
+  PROCESSING = "processing",
+  SUCCESS = "success",
+  FAILED = "failed"
+}
+
+export enum PaymentProcessType {
+  BOOKING = "BOOKING",
+  SUBSCRIPTION = "SUBSCRIPTION",
+  NULL = "NULL"
+}

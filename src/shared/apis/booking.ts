@@ -22,7 +22,7 @@ export const fetchBookings: ApiFetchFunction<
 
 // fetch a single booking details
 export const fetchBookingDetails = async (bookingId: Booking["_id"]): Promise<ApiBaseResponse<FetchBookingDetailsResponse>> => {
-    const response = await axiosInstance.get(`/bookings/${bookingId}`);
+    const response = await axiosInstance.get(`/bookings/${bookingId}/details`);
     return response.data;
 }
 
@@ -40,7 +40,7 @@ export const checkBookingConfirmed = async (): Promise<ApiBaseResponse<boolean>>
 
 // cancel booking
 export const cancelBooking = async (bookingId: Booking["_id"]): Promise<ApiBaseResponse> => {
-    const response = await axiosInstance.patch(`/bookings/${bookingId}`);
+    const response = await axiosInstance.patch(`/bookings/${bookingId}/cancel`);
     return response.data;
 }
 

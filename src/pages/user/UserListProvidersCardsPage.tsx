@@ -1,4 +1,4 @@
-import { Loader } from 'lucide-react';
+import { LoaderCircle } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import React, { useEffect, useRef } from 'react';
@@ -91,7 +91,7 @@ const UserListProvidersCardsPage: React.FC = () => {
 
       {isLoading ? (
         <div className="flex-1 flex justify-center items-center z-50">
-          <Loader className="w-10 h-10 animate-spin" />
+          <LoaderCircle className="w-10 h-10 animate-spin" />
         </div>
       ) : isError && error ? (
         <div className="flex-1 flex justify-center items-center">
@@ -111,7 +111,7 @@ const UserListProvidersCardsPage: React.FC = () => {
             {isFetchingNextPage && (
               <div className="flex w-full justify-center gap-2">
                 <p>Fetching more providers...</p>
-                <Loader className="w-6 h-6 animate-spin" />
+                <LoaderCircle className="w-6 h-6 animate-spin" />
               </div>
             )}
           </div>

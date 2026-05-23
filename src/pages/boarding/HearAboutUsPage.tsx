@@ -7,7 +7,7 @@ import { appConfig } from "@/shared/config/env";
 import { Button } from "@/components/ui/button";
 import { RootState } from "@/shared/redux/appStore";
 import { postPreBoarding } from "@/shared/apis/user";
-import { ChevronLeft, Loader, X } from "lucide-react";
+import { ChevronLeft, LoaderCircle, X } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "recharts/types/state/store";
 import { setAuthUser, setBoardingData } from "@/shared/redux/slices/authSlice";
@@ -137,7 +137,7 @@ const HearAboutUsPage: React.FC = () => {
                 >
                     {isSubmitting ? (
                         <>
-                            <Loader className="animate-spin size-4 mr-2" /> Submitting
+                            <LoaderCircle className="animate-spin size-4 mr-2" /> Submitting
                         </>
                     ) : (
                         "Submit"

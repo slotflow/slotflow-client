@@ -1,6 +1,6 @@
 import React from "react";
 import { Badge } from "../ui/badge";
-import { Loader2, Info, LucideIcon, CheckCircle2, XCircle } from "lucide-react";
+import { LoaderCircle, Info, LucideIcon, CheckCircle2, XCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface CreditCardPorps {
@@ -37,10 +37,8 @@ const CreditCard: React.FC<CreditCardPorps> = ({
             <CardContent>
                 {isLoading ? (
                     <div className="flex items-center gap-2">
-                        <Loader2 className="w-5 h-5 animate-spin" />
-                        <span className="text-md ml-2">
-                            Loading...
-                        </span>
+                        <LoaderCircle className="w-5 h-5 animate-spin" />
+                        <span className="shimmer h-2 w-10"></span>
                     </div>
                 ) : isError && error ? (
                     <div className="flex items-center gap-2">

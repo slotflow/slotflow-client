@@ -4,11 +4,6 @@ import { Availability } from "@/shared/interface/entityInterface/serviceAvailabi
 
 const initialState: ProviderState = {
   availabilities: [],
-  planId: null,
-  planDuration: null,
-  paymentSelectionOpen: false,
-  isTrialPlan: false,
-  paymentPageOpen: false,
   identityProof: {
     file: null,
     isLoading: false,
@@ -51,18 +46,6 @@ const providerSlice = createSlice({
       if (!state.availabilities) return;
       state.availabilities = state.availabilities.filter((item) => item.day !== dayToRemove);
     },
-    setSubscriptionPlanId: (state, action: PayloadAction<string | null>) => {
-      state.planId = action.payload;
-    },
-    setSubscriptionPlanDuration: (state, action: PayloadAction<number | null>) => {
-      state.planDuration = action.payload;
-    },
-    setSubscriptionIsTrailPlan: (state, action: PayloadAction<boolean>) => {
-      state.isTrialPlan = action.payload;
-    },
-    setPaymentSelectionPage: (state, action: PayloadAction<boolean>) => {
-      state.paymentSelectionOpen = action.payload;
-    },
     setProviderIdentityProofs: (state, action: PayloadAction<Partial<SetProofDataProps>>) => {
       const { file, isLoading } = action.payload;
       if (file !== undefined) state.identityProof.file = file;
@@ -83,12 +66,8 @@ export const {
   addAvailability,
   setIsShowPreview,
   removeAvailability,
-  setSubscriptionPlanId,
-  setPaymentSelectionPage,
   setProviderServiceProofs,
   setProviderIdentityProofs,
-  setSubscriptionIsTrailPlan,
-  setSubscriptionPlanDuration,
 } = providerSlice.actions;
 
 export default providerSlice.reducer;

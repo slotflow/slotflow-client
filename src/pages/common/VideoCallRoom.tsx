@@ -11,7 +11,7 @@ import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { toggleMediaTrack } from "@/shared/helper/toggleMediaTrack";
 import { JoinRoomCallbackRequest } from "@/shared/interface/api/booking";
 import { disconnectVideoSocket } from "@/shared/socket/videoSocketThunk";
-import { Mic, MicOff, Video, VideoOff, PhoneOff, Loader } from "lucide-react";
+import { Mic, MicOff, Video, VideoOff, PhoneOff, LoaderCircle } from "lucide-react";
 import { MediaTrackKind, PeerValues, Role, VideoCallSocket } from "@/shared/interface/enums";
 import { setCamera, setMic, stopVideoCallTimer, updateVideoCallTimer } from "@/shared/redux/slices/videoSlice";
 
@@ -286,7 +286,7 @@ const RoomPage = () => {
           </div>
         ) : (
           <div className="flex justify-center items-center border rounded-2xl w-full h-[300px] md:h-[400px]">
-            <Loader className="animate-spin w-6 h-6 text-gray-500" />
+            <LoaderCircle className="animate-spin w-6 h-6 text-gray-500" />
           </div>
         )}
       </div>

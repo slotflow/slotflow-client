@@ -31,7 +31,7 @@ const MapPreview: React.FC<MapPreviewProps> = ({ lat, lon }) => {
     const googleMapsUrl = `https://www.google.com/maps?q=${lat},${lon}`;
 
     return (
-        <div className="p-2">
+        <div className="p-2 z-40">
                 <div
                     ref={mapRef}
                     className="rounded-xl overflow-hidden shadow-sm"
