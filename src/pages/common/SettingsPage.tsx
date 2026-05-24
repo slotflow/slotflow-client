@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Select,
   SelectContent,
@@ -5,32 +6,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { settingsTabs } from "@/shared/utils/constants";
 import PageHeader from "@/components/common/PageHeader";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import AccountSettings from "@/components/settings/AccountSettings";
-import SecuritySettings from "@/components/settings/SecuritySettings";
-import IntegrationsListing from "@/components/settings/IntegrationsListing";
-import NotificationSettings from "@/components/settings/NotificationSettings";
 
 const SettingsPage: React.FC = () => {
-  const [selectedTab, setSelectedTab] = useState<string>("notifications");
 
-  const renderContent = () => {
-    switch (selectedTab) {
-      case "notifications":
-        return <NotificationSettings />;
-      case "account":
-        return <AccountSettings />;
-      case "integrations":
-        return <IntegrationsListing />;
-      case "security":
-        return <SecuritySettings />;
-      default:
-        return null;
-    }
-  };
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const currentTab = location.pathname.split("/")[2] || "notifications";
 
   return (
     <div className="container p-4 space-y-6">
@@ -46,9 +33,9 @@ const SettingsPage: React.FC = () => {
               {settingsTabs.map(({ value, label, icon: Icon }) => (
                 <button
                   key={value}
-                  onClick={() => setSelectedTab(value)}
+                  onClick={() => navigate(value)}
                   className={`flex items-center gap-2 w-full justify-start px-3 py-2 rounded-md text-sm font-medium transition-colors
-                    ${selectedTab === value
+                    ${currentTab === value
                       ? "bg-accent text-accent-foreground"
                       : "hover:bg-muted"
                     }`}
@@ -62,7 +49,10 @@ const SettingsPage: React.FC = () => {
         </div>
 
         <div className="md:hidden mb-4">
-          <Select value={selectedTab} onValueChange={setSelectedTab}>
+          <Select
+            value={currentTab}
+            onValueChange={(value) => navigate(value)}
+          >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Select a tab" />
             </SelectTrigger>
@@ -76,7 +66,9 @@ const SettingsPage: React.FC = () => {
           </Select>
         </div>
 
-        <div className="flex-1 w-full md:w-10/12">{renderContent()}</div>
+        <div className="flex-1 w-full md:w-10/12">
+          <Outlet />
+        </div>
       </div>
     </div>
   );

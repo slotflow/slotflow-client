@@ -8,7 +8,6 @@ import {
 } from "react-hook-form";
 import { LucideIcon } from "lucide-react";
 import { DateRange } from "react-day-picker";
-import { AppDispatch } from "../redux/appStore";
 import { RouteNames } from "../utils/constants";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { ChartConfig } from "@/components/ui/chart";
@@ -421,9 +420,12 @@ export interface IntegrationCardProps {
   image: string;
   heading: string;
   description: string;
-  connectOnClick: (e: React.MouseEvent<HTMLButtonElement>, dispatch: AppDispatch) => void;
-  isConnected: boolean;
-  connectingLoading: boolean;
+  action: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  title: string;
+  text: string;
+  show: boolean;
+  connectionStatus: boolean;
+  isLoading: boolean;
 }
 
 // Heading component props interface

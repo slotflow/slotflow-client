@@ -30,7 +30,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({
     rightSidebar,
 }) => {
 
-    console.log("Main Layout")
     const { sidebarOpen } = useSelector((store: RootState) => store.app);
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
@@ -90,9 +89,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
     useNotificationPermissionGate();
 
     useEffect(() => {
-        console.log("authUser : ", authUser);
         if (authUser) {
-            console.log("Connecting event Socket");
             dispatch(connectEventSocket());
         }
     }, [authUser, dispatch]);

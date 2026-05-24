@@ -5,11 +5,8 @@ import { Role } from "@/shared/interface/enums.ts";
 import OnBoardingGuard from "./OnBoardingGuard.tsx";
 import { ProtectedRoute } from "./ProtectedRoutes.tsx";
 import { RouteNames } from "@/shared/utils/constants.ts";
-import { createBrowserRouter, Outlet } from "react-router-dom";
+import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
 import BoardingLayoutWrapper from "./BoardingLayoutWrapper.tsx";
-import CreditPage from "@/pages/common/CreditPage.tsx";
-import ReferralPage from "@/pages/common/ReferralPage.tsx";
-import UserAccountPage from "@/pages/user/UserAccountPage.tsx";
 
 const AuthLayout = lazy(() => import("@/layouts/AuthLayout.tsx"));
 const LoginForm = lazy(() => import("@/components/form/CommonForms/LoginForm.tsx"));
@@ -20,6 +17,7 @@ const EmailVerificationForm = lazy(() => import("@/components/form/CommonForms/E
 
 const ChatPage = lazy(() => import("@/pages/common/ChatPage.tsx"));
 const AboutPage = lazy(() => import("@/pages/common/AboutPage.tsx"));
+const CreditPage = lazy(() => import("@/pages/common/CreditPage.tsx"));
 const LandingLayout = lazy(() => import("@/layouts/LandingLayout.tsx"));
 const ContactPage = lazy(() => import("@/pages/common/ContactPage.tsx"));
 const ReviewsPage = lazy(() => import("@/pages/common/ReviewsPage.tsx"));
@@ -27,17 +25,22 @@ const LandingPage = lazy(() => import("@/pages/common/LandingPage.tsx"));
 const SettingsPage = lazy(() => import("@/pages/common/SettingsPage.tsx"));
 const Error404Page = lazy(() => import("@/pages/common/Error404Page.tsx"));
 const CalendarPage = lazy(() => import("@/pages/common/CalendarPage.tsx"));
+const ReferralPage = lazy(() => import("@/pages/common/ReferralPage.tsx"));
 const VideoCallRoom = lazy(() => import("@/pages/common/VideoCallRoom.tsx"));
 const VideoCallLoby = lazy(() => import("@/pages/common/VideoCallLobby.tsx"));
+const UserAccountPage = lazy(() => import("@/pages/user/UserAccountPage.tsx"));
 const RoleSelectPage = lazy(() => import("@/pages/boarding/RoleSelectPage.tsx"));
 const ListPaymentsPage = lazy(() => import("@/pages/common/ListPaymentsPage.tsx"));
 const ListBookingsPage = lazy(() => import("@/pages/common/ListBookingsPage.tsx"));
-const IntegrationsPage = lazy(() => import("@/pages/common/IntegrationsPage.tsx"));
 const HearAboutUsPage = lazy(() => import("@/pages/boarding/HearAboutUsPage.tsx"));
 const PrivacyPolicyPage = lazy(() => import("@/pages/common/PrivacyPolicyPage.tsx"));
 const BookingDetailPage = lazy(() => import("@/pages/common/BookingDetailPage.tsx"));
+const AccountSettings = lazy(() => import("@/components/settings/AccountSettings.tsx"));
+const SecuritySettings = lazy(() => import("@/components/settings/SecuritySettings.tsx"));
 const PaymentDetailViewPage = lazy(() => import("@/pages/common/PaymentDetailViewPage.tsx"));
 const TermsAndConditionsPage = lazy(() => import("@/pages/common/TermsAndConditionsPage.tsx"));
+const IntegrationsListing = lazy(() => import("@/components/settings/IntegrationsListing.tsx"));
+const NotificationSettings = lazy(() => import("@/components/settings/NotificationSettings.tsx"));
 const SubscriptionDetailViewPage = lazy(() => import("@/pages/common/SubscriptionDetailViewPage.tsx"));
 
 const UserServiceSelectPage = lazy(() => import("@/pages/user/UserServiceSelectPage.tsx"));
@@ -163,7 +166,6 @@ export const appRouter = createBrowserRouter([
                     { path: "bookings/:bookingId", element: <BookingDetailPage /> },
                     { path: "payments", element: <ListPaymentsPage /> },
                     { path: "payments/:paymentId", element: <PaymentDetailViewPage /> },
-                    { path: "integrations", element: <IntegrationsPage /> },
                     { path: "chat", element: <ChatPage /> },
                     {
                         path: "video-call-lobby/:roomId",
@@ -175,7 +177,17 @@ export const appRouter = createBrowserRouter([
                     },
                     { path: "calendar", element: <CalendarPage /> },
                     { path: "reviews", element: <ReviewsPage /> },
-                    { path: "settings", element: <SettingsPage /> },
+                    {
+                        path: "settings",
+                        element: <SettingsPage />,
+                        children: [
+                            { index: true, element: <Navigate to="notifications" replace /> },
+                            { path: "notifications", element: <NotificationSettings /> },
+                            { path: "account", element: <AccountSettings /> },
+                            { path: "integrations", element: <IntegrationsListing /> },
+                            { path: "security", element: <SecuritySettings /> },
+                        ]
+                    },
                     { path: "credits", element: <CreditPage /> },
                     { path: "referrals", element: <ReferralPage /> },
                     { path: "booking/confirm", element: <UserBookingConfirmPage /> },
@@ -246,14 +258,6 @@ export const appRouter = createBrowserRouter([
                         element: <PaymentDetailViewPage />
                     },
                     {
-                        path: "integrations",
-                        element: (
-                            <PlanGuard routeName={RouteNames.INTEGRATIONS}>
-                                <IntegrationsPage />
-                            </PlanGuard>
-                        )
-                    },
-                    {
                         path: "chat",
                         element: (
                             <PlanGuard routeName={RouteNames.CHAT}>
@@ -299,7 +303,14 @@ export const appRouter = createBrowserRouter([
                             <PlanGuard routeName={RouteNames.SETTINGS}>
                                 <SettingsPage />
                             </PlanGuard>
-                        )
+                        ),
+                        children: [
+                            { index: true, element: <Navigate to="notifications" replace /> },
+                            { path: "notifications", element: <NotificationSettings /> },
+                            { path: "account", element: <AccountSettings /> },
+                            { path: "integrations", element: <IntegrationsListing /> },
+                            { path: "security", element: <SecuritySettings /> },
+                        ]
                     },
                     { path: "subscription/confirm", element: <ProviderSubscriptionConfirmPage /> },
                     { path: "*", element: <Error404Page /> },
