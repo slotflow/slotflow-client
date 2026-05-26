@@ -1,7 +1,7 @@
 export enum PermissionStatus {
-    GRANTED = "granted",
-    DENIED = "denied",
-    DEFAULT = "default",
+  GRANTED = "granted",
+  DENIED = "denied",
+  DEFAULT = "default",
 };
 
 export enum Platform {
@@ -31,39 +31,39 @@ export enum AppointmentStatus {
 };
 
 export enum Role {
-    ADMIN = "ADMIN",
-    USER = "USER",
-    PROVIDER = "PROVIDER",
+  ADMIN = "ADMIN",
+  USER = "USER",
+  PROVIDER = "PROVIDER",
 };
 
 export enum Boolean {
-    TRUE = "true",
-    FALSE = "false"
+  TRUE = "true",
+  FALSE = "false"
 };
 
 export enum FileType {
-    PNG="image/png",
-    JPEG="image/jpeg",
-    JPG="image/jpg"
+  PNG = "image/png",
+  JPEG = "image/jpeg",
+  JPG = "image/jpg"
 };
 
 export enum Day {
-    SUNDAY = "Sunday",
-    MONDAY = "Monday",
-    TUESDAY = "Tuesday",
-    WEDNESDAY = "Wednesday",
-    THURSDAY = "Thursday",
-    FRIDAY = "Friday",
-    SATURDAY = "Saturday",
+  SUNDAY = "Sunday",
+  MONDAY = "Monday",
+  TUESDAY = "Tuesday",
+  WEDNESDAY = "Wednesday",
+  THURSDAY = "Thursday",
+  FRIDAY = "Friday",
+  SATURDAY = "Saturday",
 };
 
 export enum AppConnect {
-    GOOGLE = "GOOGLE",
-    STRIPE = "STRIPE",
-    NOTION = "NOTION",
-    WHATSAPP = "WHATSAPP",
-    RAZORPAY = "RAZORPAY",
-    PAYPAL = "PAYPAL",
+  GOOGLE = "GOOGLE",
+  STRIPE = "STRIPE",
+  NOTION = "NOTION",
+  WHATSAPP = "WHATSAPP",
+  RAZORPAY = "RAZORPAY",
+  PAYPAL = "PAYPAL",
 };
 
 export enum OtpPurpose {
@@ -72,31 +72,31 @@ export enum OtpPurpose {
 };
 
 export enum PaymentFor {
-    PROVIDER_SUBSCRIPTION = "PROVIDER_SUBSCRIPTION",
-    APPOINTMENT_BOOKING = "APPOINTMENT_BOOKING",
-    PROVIDER_PAYOUT = "PROVIDER_PAYOUT",
-    CANCEL_BOOKING = "CANCEL_BOOKING",
-    CANCEL_SUBSCRIPTION = "CANCEL_SUBSCRIPTION",
+  PROVIDER_SUBSCRIPTION = "PROVIDER_SUBSCRIPTION",
+  APPOINTMENT_BOOKING = "APPOINTMENT_BOOKING",
+  PROVIDER_PAYOUT = "PROVIDER_PAYOUT",
+  CANCEL_BOOKING = "CANCEL_BOOKING",
+  CANCEL_SUBSCRIPTION = "CANCEL_SUBSCRIPTION",
 };
 
 export enum PaymentGateway {
-    STRIPE = "STRIPE",
-    RAZORPAY = "RAZORPAY",
-    PAYPAL = "PAYPAL"
+  STRIPE = "STRIPE",
+  RAZORPAY = "RAZORPAY",
+  PAYPAL = "PAYPAL"
 };
 
 export enum PaymentStatus {
-    PENDING = "PENDING",
-    PAID = "PAID",
-    FAILED = "FAILED",
-    CANCELLED = "CANCELLED",
-    REFUNDED = "REFUNDED",
+  PENDING = "PENDING",
+  PAID = "PAID",
+  FAILED = "FAILED",
+  CANCELLED = "CANCELLED",
+  REFUNDED = "REFUNDED",
 };
 
 export enum PaymentMethod {
-    CARD = "card",
-    UPI = "upi",
-    NETBANKING = "netbanking"
+  CARD = "card",
+  UPI = "upi",
+  NETBANKING = "netbanking"
 }
 
 export enum PlanName {
@@ -108,69 +108,69 @@ export enum PlanName {
 };
 
 export enum ServiceCategory {
-    HEALTHCARE_AND_WELLNESS = "Healthcare & Wellness",
-    PROFESSIONAL_SERVICES = "Professional Services",
-    EDUCATION_AND_TRAINING = "Education & Training",
-    HOME_AND_MAINTENANCE = "Home & Maintenance",
-    BEAUTY_AND_PERSONAL_CARE = "Beauty & Personal Care",
-    FITNESS_AND_LIFESTYLE = "Fitness & Lifestyle",
-    AUTOMOTIVE_SERVICES = "Automotive Services",
-    EVENTS_AND_CREATIVE_SERVICES = "Events & Creative Services",
-    TECHNOLOGY_SERVICES = "Technology Services",
-    REAL_ESTATE_AND_PROPERTY = "Real Estate & Property",
+  HEALTHCARE_AND_WELLNESS = "Healthcare & Wellness",
+  PROFESSIONAL_SERVICES = "Professional Services",
+  EDUCATION_AND_TRAINING = "Education & Training",
+  HOME_AND_MAINTENANCE = "Home & Maintenance",
+  BEAUTY_AND_PERSONAL_CARE = "Beauty & Personal Care",
+  FITNESS_AND_LIFESTYLE = "Fitness & Lifestyle",
+  AUTOMOTIVE_SERVICES = "Automotive Services",
+  EVENTS_AND_CREATIVE_SERVICES = "Events & Creative Services",
+  TECHNOLOGY_SERVICES = "Technology Services",
+  REAL_ESTATE_AND_PROPERTY = "Real Estate & Property",
 };
 
 export enum ServiceMode {
-    ONLINE = "ONLINE",
-    OFFLINE = "OFFLINE",
-    BOTH = "BOTH",
+  ONLINE = "ONLINE",
+  OFFLINE = "OFFLINE",
+  BOTH = "BOTH",
 };
 
 export enum ServiceType {
-    ONE_TIME = "ONE_TIME",
-    RECURRING = "RECURRING",
+  ONE_TIME = "ONE_TIME",
+  RECURRING = "RECURRING",
 };
 
 export enum SubscriptionStatus {
-   ACTIVE = "ACTIVE",
-    EXPIRED = "EXPIRED",
-    CANCELLED = "CANCELLED",
-    PENDING = "PENDING",
-    PAST_DUE = "PAST_DUE",
-    FAILED = "FAILED",
+  ACTIVE = "ACTIVE",
+  EXPIRED = "EXPIRED",
+  CANCELLED = "CANCELLED",
+  PENDING = "PENDING",
+  PAST_DUE = "PAST_DUE",
+  FAILED = "FAILED",
 };
 
 export enum SubscriptionValidity {
-    SEVEN_DAYS = 7,
-    ONE_MONTH = 30,
-    THREE_MONTHS = 90,
-    SIX_MONTHS = 180,
-    TWELVE_MONTHS = 360,
+  SEVEN_DAYS = 7,
+  ONE_MONTH = 30,
+  THREE_MONTHS = 90,
+  SIX_MONTHS = 180,
+  TWELVE_MONTHS = 360,
 };
 
 export enum NotificationType {
-    BOOKING_CONFIRMED = "BOOKING_CONFIRMED",
-    BOOKING_CANCELLED = "BOOKING_CANCELLED",
-    BOOKING_RESCHEDULED = "BOOKING_RESCHEDULED",
-    BOOKING_REJECTED = "BOOKING_REJECTED",
-    BOOKING_NOT_ATTENDED = "BOOKING_NOT_ATTENDED",
-    BOOKING_APPROVED = "BOOKING_APPROVED",
+  BOOKING_CONFIRMED = "BOOKING_CONFIRMED",
+  BOOKING_CANCELLED = "BOOKING_CANCELLED",
+  BOOKING_RESCHEDULED = "BOOKING_RESCHEDULED",
+  BOOKING_REJECTED = "BOOKING_REJECTED",
+  BOOKING_NOT_ATTENDED = "BOOKING_NOT_ATTENDED",
+  BOOKING_APPROVED = "BOOKING_APPROVED",
 
-    APPOINTMENT_CREATED = "APPOINTMENT_CREATED",
-    APPOINTMENT_CANCELLED = "APPOINTMENT_CANCELLED",
-    APPOINTMENT_RESCHEDULED = "APPOINTMENT_RESCHEDULED",
-    APPOINTMENT_NOT_ATTENDED = "APPOINTMENT_NOT_ATTENDED",
+  APPOINTMENT_CREATED = "APPOINTMENT_CREATED",
+  APPOINTMENT_CANCELLED = "APPOINTMENT_CANCELLED",
+  APPOINTMENT_RESCHEDULED = "APPOINTMENT_RESCHEDULED",
+  APPOINTMENT_NOT_ATTENDED = "APPOINTMENT_NOT_ATTENDED",
 
-    PAYMENT_SUCCESS = "PAYMENT_SUCCESS",
-    PAYMENT_FAILED = "PAYMENT_FAILED",
+  PAYMENT_SUCCESS = "PAYMENT_SUCCESS",
+  PAYMENT_FAILED = "PAYMENT_FAILED",
 
-    SUBSCRIPTION_EXPIRING = "SUBSCRIPTION_EXPIRING",
-    SUBSCRIPTION_EXPIRED = "SUBSCRIPTION_EXPIRED",
+  SUBSCRIPTION_EXPIRING = "SUBSCRIPTION_EXPIRING",
+  SUBSCRIPTION_EXPIRED = "SUBSCRIPTION_EXPIRED",
 
-    BOOKING = "BOOKING",
-    APPOINTMENT = "APPOINTMENT",
+  BOOKING = "BOOKING",
+  APPOINTMENT = "APPOINTMENT",
 
-    SYSTEM = "SYSTEM",
+  SYSTEM = "SYSTEM",
 };
 
 export enum VideoCallSocket {
@@ -187,9 +187,9 @@ export enum VideoCallSocket {
 }
 
 export enum PeerValues {
-    TRACK = "track",
-    STABLE = "stable",
-    NEGOTIATION_NEEDED = "negotiationneeded"
+  TRACK = "track",
+  STABLE = "stable",
+  NEGOTIATION_NEEDED = "negotiationneeded"
 }
 
 export enum MediaTrackKind {
@@ -198,20 +198,20 @@ export enum MediaTrackKind {
 }
 
 export enum RefundStatus {
-    PENDING = "PENDING",
-    SUCCESS = "SUCCEEDED",
-    FAILED = "FAILED",
+  PENDING = "PENDING",
+  SUCCESS = "SUCCEEDED",
+  FAILED = "FAILED",
 }
 
 export enum RefundReason {
-    DUPLICATE = "duplicate",
-    FRAUDUKENT = "fraudulent",
-    REQUESTED_BY_CUSTOMER = "requested_by_customer"
+  DUPLICATE = "duplicate",
+  FRAUDUKENT = "fraudulent",
+  REQUESTED_BY_CUSTOMER = "requested_by_customer"
 }
 
 export enum RefundFor {
-    CANCEL_BOOKING = "CANCEL_BOOKING",
-    CANCEL_SUBSCRIPTION = "CANCEL_SUBSCRIPTION",
+  CANCEL_BOOKING = "CANCEL_BOOKING",
+  CANCEL_SUBSCRIPTION = "CANCEL_SUBSCRIPTION",
 }
 
 export enum HearAboutUsOptionValue {
@@ -270,4 +270,10 @@ export enum PaymentProcessType {
   BOOKING = "BOOKING",
   SUBSCRIPTION = "SUBSCRIPTION",
   NULL = "NULL"
+}
+
+export enum StripeAccountStatus {
+  PENDING = "pending",
+  ACTIVE = "active",
+  RESTRICTED = "restricted",
 }

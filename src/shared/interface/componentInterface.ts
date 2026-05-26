@@ -425,6 +425,7 @@ export interface IntegrationCardProps {
   text: string;
   show: boolean;
   connectionStatus: boolean;
+  connectionText: string;
   isLoading: boolean;
 }
 

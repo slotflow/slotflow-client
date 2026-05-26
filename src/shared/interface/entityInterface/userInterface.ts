@@ -1,4 +1,4 @@
-import { HearAboutUsOptionValue, OnboardingStatus, Role } from "../enums";
+import { HearAboutUsOptionValue, OnboardingStatus, Role, StripeAccountStatus } from "../enums";
 
 export interface User {
     _id: string
@@ -14,7 +14,7 @@ export interface User {
     addressId?: string;
     googleConnected: boolean;
     googleId?: string;
-    stripeConnected: boolean;
+    stripeAccountStatus: StripeAccountStatus | null;
     stripeAccountId?: string;
     stripeCustomerId?: string;
     allowPushNotification: boolean;

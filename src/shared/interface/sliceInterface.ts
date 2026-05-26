@@ -19,7 +19,7 @@ export type AuthUser = Pick<User,
 "googleConnected" | 
 "googleId" | 
 "stripeAccountId" | 
-"stripeConnected" | 
+"stripeAccountStatus" | 
 "stripeCustomerId" | 
 "allowPushNotification" |
 "referralCode"> & 

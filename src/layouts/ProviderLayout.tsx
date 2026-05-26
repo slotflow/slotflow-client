@@ -7,6 +7,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import PaymentSelection from "@/components/payment/PaymentSelection";
 import { planAccessMap, providerRoutes } from "@/shared/utils/constants";
 import ProviderFreeSubscription from "@/components/provider/ProviderFreeSubscription";
+import NotificationsContainer from "@/components/notification/NotificationsContainer";
 
 const ProviderLayout: React.FC = () => {
 
@@ -67,6 +68,7 @@ const ProviderLayout: React.FC = () => {
       <Outlet />
       {isOpen && authUser?.role === Role.USER && <PaymentSelection />}
       {subscriptionData?.isTrialPlan && <ProviderFreeSubscription />}
+      <NotificationsContainer />
     </MainLayout>
   )
 }

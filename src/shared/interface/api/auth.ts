@@ -1,5 +1,5 @@
 import { User } from "../entityInterface/userInterface";
-import { AdminVerificationStatus, OnboardingStatus, PlanName, Role } from "../enums";
+import { AdminVerificationStatus, OnboardingStatus, PlanName, Role, StripeAccountStatus } from "../enums";
 
 // request type of the user or provider sign up api
 export type SignupRequest = Pick<User, "username" | "email" | "password">;
@@ -49,7 +49,7 @@ export interface SigninResponse {
         allowPushNotification: boolean;
         googleId?: string;
         stripeAccountId?: string;
-        stripeConnected: boolean;
+        stripeAccountStatus: StripeAccountStatus;
         stripeCustomerId?: string;
     }
 }

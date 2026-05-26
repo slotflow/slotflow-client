@@ -2,7 +2,7 @@ import { axiosInstance } from "@/lib/axios";
 import { buildQueryParams } from "../helper/buildQueryParams";
 import { Payment } from "../interface/entityInterface/paymentInterface";
 import { ApiBaseResponse, ApiFetchFunction } from "../interface/commonInterface";
-import { AdminFetchRevenueReportResponse, AdmminFetchRevenueReportRequest, ConnexctStripeAccountResponse, FetchPaymentDetailsResponse, FetchPaymentsQueryParams, FetchPaymentsResponse } from "../interface/api/payment";
+import { AdminFetchRevenueReportResponse, AdmminFetchRevenueReportRequest, CheckStripeAccountStatusRequest, CheckStripeAccountStatusResponse, ConnectStripeAccountRequest, ConnexctStripeAccountResponse, FetchPaymentDetailsResponse, FetchPaymentsQueryParams, FetchPaymentsResponse } from "../interface/api/payment";
 
 // fetch a single payment details
 export const fetchPaymentDetails = async (paymentId: Payment["_id"]): Promise<ApiBaseResponse<FetchPaymentDetailsResponse>> => {
@@ -28,7 +28,13 @@ export const fetchRevenueReportForAdmin = async (payload: AdmminFetchRevenueRepo
 }
 
 // create stripe account
-export const connectStripeAccount = async (): Promise<ApiBaseResponse<ConnexctStripeAccountResponse>> => {
-    const response = await axiosInstance.post("/payments/stripe/account-link");
+export const connectStripeAccount = async (data: ConnectStripeAccountRequest): Promise<ApiBaseResponse<ConnexctStripeAccountResponse>> => {
+    const response = await axiosInstance.post("/payments/stripe/account-link", data);
+    return response.data;
+};
+
+// check stripe account status after success onboarding
+export const checkStripeAccountStatus = async (data: CheckStripeAccountStatusRequest): Promise<ApiBaseResponse<CheckStripeAccountStatusResponse>> => {
+    const response = await axiosInstance.post("/payments/stripe/check-account-status", data);
     return response.data;
 };

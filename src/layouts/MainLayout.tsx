@@ -73,7 +73,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
                 googleId: rawUser.googleId,
                 googleConnected: rawUser.googleConnected,
 
-                stripeConnected: rawUser.stripeConnected,
+                stripeAccountStatus: rawUser.stripeAccountStatus,
                 stripeAccountId: rawUser.stripeAccountId,
                 stripeCustomerId: rawUser.stripeCustomerId,
 

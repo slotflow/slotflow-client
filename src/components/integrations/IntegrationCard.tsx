@@ -20,6 +20,7 @@ const IntegrationCard: React.FC<IntegrationCardProps> = ({
     text,
     show,
     connectionStatus,
+    connectionText,
     isLoading
 }) => {
     return (
@@ -44,7 +45,7 @@ const IntegrationCard: React.FC<IntegrationCardProps> = ({
                 {connectionStatus && (
                     <div className="flex items-center gap-1 text-xs font-medium border rounded-md px-2 py-1">
                         <Check className="w-3.5 h-3.5" />
-                        Connected
+                        {connectionText}
                     </div>
                 )}
             </CardHeader>
@@ -53,7 +54,7 @@ const IntegrationCard: React.FC<IntegrationCardProps> = ({
                 {description}
             </CardContent>
 
-            <CardFooter className="flex justify-end pt-0">
+            <CardFooter className="flex justify-end pt-0 mt-auto">
                 {connectionStatus ? null : isLoading ? (
                     <div className="flex items-center gap-2 text-sm">
                         <LoaderCircle className="animate-spin w-4 h-4" />
