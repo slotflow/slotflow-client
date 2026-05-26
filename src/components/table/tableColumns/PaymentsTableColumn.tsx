@@ -1,20 +1,23 @@
-import { format } from "date-fns";
+import { MoreHorizontal } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import { formatNumberToPrice } from "@/utils/helper/formatter";
+import { PaymentFor } from "@/shared/interface/enums";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
-import { FetchPaymentsResponse } from "@/utils/interface/api/commonApiInterface";
-import { PaymentFor, PaymentGateway } from "@/utils/interface/enums";
+import { formateDate, formatNumberToPrice } from "@/shared/helper/formatter";
+import { Payment } from "@/shared/interface/entityInterface/paymentInterface";
+import { FetchPaymentsResponse } from "@/shared/interface/api/payment";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 // for admin side, provider side and user side view of payments table
-export const PaymentsTableColumn = (
-
+const PaymentsTableColumn = (
+  handleGetPaymentDetailsPage: (paymentId: Payment["_id"]) => void
 ): ColumnDef<FetchPaymentsResponse>[] => [
     {
       accessorKey: "createdAt",
       header: ({ column }) => (<DataTableColumnHeader column={column} title="Paid on" />),
       cell: ({ row }) => {
-        const createdAt = row.getValue("createdAt");
-        const formattedDate = createdAt ? format(new Date(createdAt as Date), "dd MMM yyyy") : "N/A";
+        const createdAt = row.getValue("createdAt") as Date;
+        const formattedDate = formateDate(createdAt);
         return <span>{formattedDate}</span>;
       }
     },
@@ -56,25 +59,6 @@ export const PaymentsTableColumn = (
       }
     },
     {
-      accessorKey: "paymentGateway",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Gateway" />
-      ),
-      cell: ({ row }) => {
-        const paymentGateway = row.original.paymentGateway;
-        switch (paymentGateway) {
-          case PaymentGateway.STRIPE:
-            return <span className="text-indigo-500 font-semibold">Stripe</span>;
-          case PaymentGateway.RAZORPAY:
-            return <span className="text-blue-800 font-semibold">Razorpay</span>;
-          case PaymentGateway.PAYPAL:
-            return <span className="text-blue-400 font-semibold">Paypal</span>;
-          default:
-            return <span>{paymentGateway}</span>;
-        }
-      }
-    },
-    {
       accessorKey: "paymentMethod",
       header: ({ column }) => (<DataTableColumnHeader column={column} title="Method" />)
     },
@@ -82,4 +66,31 @@ export const PaymentsTableColumn = (
       accessorKey: "paymentStatus",
       header: ({ column }) => (<DataTableColumnHeader column={column} title="Status" />)
     },
+    {
+      accessorKey: "actions",
+      header: "Actions",
+      id: "actions",
+      cell: ({ row }) => {
+        const payment = row.original;
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button title="Open Menu" variant="ghost" className="h-8 w-8 p-0 cursor-pointer">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => handleGetPaymentDetailsPage(payment._id)}>
+                Details
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )
+      },
+    }
   ]
+
+  export default PaymentsTableColumn;

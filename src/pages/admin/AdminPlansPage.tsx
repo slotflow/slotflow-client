@@ -1,21 +1,33 @@
-import { useEffect, useRef, useState } from 'react';
-import TableHeader from '@/components/table/TableHeader';
-import CommonTable from '@/components/common/CommonTable';
-import { slideIn } from '@/utils/helper/gsapAnimationSlide';
-import { adminFetchAllPlans } from '@/utils/apis/adminPlan.api';
+import { toast } from 'react-toastify';
+import PageHeader from '@/components/common/PageHeader';
+import { adminFetchAllPlans } from '@/shared/apis/plan';
+import CommonTable from '@/components/table/CommonTable';
+import { useAdminPlan } from '@/hooks/adminHooks/usePlan';
+import React, { useEffect, useRef, useState } from 'react';
+import { slideIn } from '@/shared/helper/gsapAnimationSlide';
 import CreatePlanForm from '@/components/form/AdminForms/CreatePlanForm';
-import { useAdminPlanActions } from '@/hooks/adminHooks/useAdminPlanActions';
-import { AdminFetchAllPlansResponse } from '@/utils/interface/api/adminPlanApiInterface';
-import { AdminPlansTableColumns } from '@/components/table/tableColumns/AdminPlansTableColumn';
+import AdminPlansTableColumns from '@/components/table/tableColumns/AdminPlansTableColumn';
+import { AdminFetchAllPlansResponse, ChangePlanBlockStatusRequest } from '@/shared/interface/api/plan';
 
-const AdminPlansPage = () => {
-
-    const { handleAdminChangePlanStatus } = useAdminPlanActions();
-
-    const column = AdminPlansTableColumns(handleAdminChangePlanStatus);
+const AdminPlansPage: React.FC = () => {
 
     const [showForm, setShowForm] = useState(false);
     const formRef = useRef<HTMLDivElement>(null);
+
+    const { changePlanStatus } = useAdminPlan();
+
+    const handleAdminChangePlanStatus = async (data: ChangePlanBlockStatusRequest) => {
+        const res = await changePlanStatus(data);
+        if (res.success) {
+            toast.success(res.message);
+        } else {
+            toast.error(res.message);
+        }
+    }
+
+    const column = AdminPlansTableColumns(
+        handleAdminChangePlanStatus
+    );
 
     useEffect(() => {
         if (showForm && formRef.current) {
@@ -24,9 +36,10 @@ const AdminPlansPage = () => {
     }, [showForm]);
 
     return (
-        <div className="relative">
-            <TableHeader
+        <div className="p-4">
+            <PageHeader 
                 title="Plans"
+                description="Plans for services providers"
                 actionLabel="Create New Plan"
                 onActionClick={() => setShowForm(true)}
             />

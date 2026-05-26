@@ -1,28 +1,30 @@
 import { memo } from "react";
-import CommonTable from "../common/CommonTable";
-import { useCommonHook } from "@/hooks/commonHooks/useCommonActions";
-import { adminFetchProviderSubscriptions } from "@/utils/apis/adminProvider.api";
-import { FetchProviderSubscriptionsResponse } from "@/utils/interface/api/commonApiInterface";
-import { ProvidersSubscriptionsTableColumns } from "../table/tableColumns/ProviderSubscriptionsTableColumn";
-import { AdminFetchProviderSubscriptionsComponentProps } from "@/utils/interface/componentInterface/adminComponentInterface";
+import CommonTable from "../table/CommonTable";
+import { fetchSubscriptions } from "@/shared/apis/subscription";
+import { useRoleBasedNavigation } from "@/hooks/useRoleBasedNavigation";
+import { AdminFetchProviderSubscriptionsProps } from "@/shared/interface/componentInterface";
+import ProvidersSubscriptionsTableColumns from "../table/tableColumns/ProviderSubscriptionsTableColumn";
+import { FetchProviderSubscriptionsResponse, FetchSubscriptionsQueryParams } from "@/shared/interface/api/subscription";
 
-const AdminProviderSubscriptions: React.FC<AdminFetchProviderSubscriptionsComponentProps> = memo(({ providerId }) => {
+const AdminProviderSubscriptions: React.FC<AdminFetchProviderSubscriptionsProps> = memo(({
+    providerId
+}) => {
 
     const {
         handleAdminGetProviderDetailPage
-    } = useCommonHook();
+    } = useRoleBasedNavigation();
 
     const column = ProvidersSubscriptionsTableColumns(
         handleAdminGetProviderDetailPage
     );
 
     return (
-        <CommonTable<FetchProviderSubscriptionsResponse>
-            fetchApiFunction={() => adminFetchProviderSubscriptions({ id: providerId, pagination: { page: 1, limit: 10 } })}
+        <CommonTable<FetchProviderSubscriptionsResponse, FetchSubscriptionsQueryParams>
+            fetchApiFunction={fetchSubscriptions}
             queryKey="providerSubscription"
             column={column}
             columnsCount={7}
-            id={providerId}
+            queryParams={{ providerId }}
             parentDivCalssName="p-0"
         />
     )

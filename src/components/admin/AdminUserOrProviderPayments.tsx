@@ -1,22 +1,24 @@
-import CommonTable from "../common/CommonTable";
-import { PaymentsTableColumn } from "../table/tableColumns/PaymentsTableColumn";
-import { FetchPaymentsResponse } from "@/utils/interface/api/commonApiInterface";
-import { AdminFetchProviderPaymentsComponentProps } from "@/utils/interface/componentInterface/adminComponentInterface";
+import CommonTable from "../table/CommonTable";
+import { useRoleBasedNavigation } from "@/hooks/useRoleBasedNavigation";
+import PaymentsTableColumn from "../table/tableColumns/PaymentsTableColumn";
+import { AdminUserOrProviderPaymentsProps } from "@/shared/interface/componentInterface";
+import { FetchPaymentsQueryParams, FetchPaymentsResponse } from "@/shared/interface/api/payment";
 
-const AdminUserOrProviderPayments: React.FC<AdminFetchProviderPaymentsComponentProps> = ({
-    id,
-    fethFunction
+const AdminUserOrProviderPayments: React.FC<AdminUserOrProviderPaymentsProps> = ({
+    providerId,
+    fetchFunction
 }) => {
 
-    const column = PaymentsTableColumn();
+    const { handleGetPaymentDetailsPage } = useRoleBasedNavigation();
+    const column = PaymentsTableColumn(handleGetPaymentDetailsPage);
 
     return (
-        <CommonTable<FetchPaymentsResponse>
-            fetchApiFunction={() => fethFunction({ id, pagination: { page: 1, limit: 10 } })}
-            queryKey="providerPayments"
+        <CommonTable<FetchPaymentsResponse, FetchPaymentsQueryParams>
+            fetchApiFunction={(queryParams) => fetchFunction({ providerId, ...queryParams })}
+            queryKey={`payments-${providerId}`}
             column={column}
             columnsCount={7}
-            id={id}
+            queryParams={{ providerId }}
             parentDivCalssName="p-0"
         />
     )

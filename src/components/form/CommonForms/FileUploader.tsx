@@ -1,32 +1,33 @@
 import { toast } from 'react-toastify';
-import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Check, Info } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import React, { useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { AppDispatch } from '@/utils/redux/appStore';
+import { appConfig } from '@/shared/config/env';
+import AlertBox from '@/components/alert/AlertBox';
+import { AppDispatch } from '@/shared/redux/appStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { getUploadUrl, uploadToS3 } from '@/utils/apis/s3.api';
-import NotificationBox from '@/components/common/NotificationBox';
+import { getUploadUrl, uploadToS3 } from '@/shared/apis/s3';
+import { ArrowUp, Check, Info, LoaderCircle, X } from 'lucide-react';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
-import { ImageFileFormType, imageFileZodeSchema } from '@/utils/zod/providerZod';
-import { FileUploaderProps } from '@/utils/interface/componentInterface/commonComponentInterface';
-import { appConfig } from '@/utils/env';
+import noImage from '../../../assets/defaultImages/imagePlaceholder.png';
+import { FileUploaderProps } from '@/shared/interface/componentInterface';
+import { ImageFileFormType, imageFileZodeSchema } from '@/shared/zod/providerZod';
+import { defaultButtonClassName } from '@/shared/utils/constants';
 
 const FileUploader: React.FC<FileUploaderProps> = ({
     folderName,
     uploadFunction,
     message,
     setStateFunction,
-    setLoadingFunction,
-    fileUploaded,
     deleteFunction,
-    loading,
     data,
+    title
 }) => {
     const dispatch = useDispatch<AppDispatch>();
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
     const {
@@ -34,6 +35,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
         formState: { errors, isSubmitting, isValid },
         setValue,
         watch,
+        reset
     } = useForm<ImageFileFormType>({
         resolver: zodResolver(imageFileZodeSchema),
         defaultValues: {
@@ -43,6 +45,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
 
     const proofFile = watch("file");
 
+    // handle file input change
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
@@ -51,41 +54,67 @@ const FileUploader: React.FC<FileUploaderProps> = ({
         }
     };
 
+    // handle submit
     const onSubmit: SubmitHandler<ImageFileFormType> = async (data) => {
         const file = data.file;
         if (!file) return;
 
         try {
-            dispatch(setLoadingFunction(true));
-            const { uploadUrl, key } = await getUploadUrl({ file: file, folder: folderName });
+            dispatch(setStateFunction({
+                file: null,
+                isLoading: true,
+            }));
+            const uploadRes = await getUploadUrl({ file: file, folder: folderName });
+            if (!uploadRes.data) {
+                throw new Error("Failed to get upload URL");
+            }
+            const { uploadUrl, key } = uploadRes.data;
             await uploadToS3(file, uploadUrl);
             const res = await uploadFunction({ field: "identityProof", s3FileKey: key });
+            if (!res.data) {
+                throw new Error("Failed to update proof with uploaded file");
+            }
             if (res.success) {
                 toast.success("Proofs uploaded successfully!");
-                dispatch(setStateFunction(res.data));
+                dispatch(setStateFunction({
+                    file: res.data,
+                    isLoading: false,
+                }));
+                setSelectedImage(null);
             }
         } catch (error) {
-            if (appConfig.dev) console.error("Upload error:", error);
+            if (appConfig.isDevelopment) {
+                console.error("Upload error:", error);
+            }
             toast.error("Upload failed! Please try again.");
-        } finally {
-            dispatch(setLoadingFunction(false));
         }
     };
 
+    // handle delete file
     const handleDeleteFile = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         try {
-            dispatch(setLoadingFunction(true));
+            dispatch(setStateFunction({
+                isLoading: true,
+            }));
             const res = await deleteFunction();
             if (res.success) {
                 toast.success("File deleted successfully!");
-                dispatch(setStateFunction(null));
+                dispatch(setStateFunction({
+                    file: null,
+                    isLoading: false,
+                }));
+                setSelectedImage(null);
+                reset();
+                if (fileInputRef.current) {
+                    fileInputRef.current.value = "";
+                }
             }
         } catch (error) {
-            if (appConfig.dev) console.error("Deletion error:", error);
+            if (appConfig.isDevelopment) {
+                console.error("Deletion error:", error);
+            }
             toast.error("Deletion failed! Please try again.");
-        } finally {
-            dispatch(setLoadingFunction(false));
         }
     }
 
@@ -93,11 +122,12 @@ const FileUploader: React.FC<FileUploaderProps> = ({
         <form onSubmit={handleSubmit(onSubmit)}>
             <Card className="rounded-2xl shadow-md">
                 <CardContent className="p-6 space-y-4">
-                    <Label className="font-medium">
-                        Identity Proof <span className="text-red-500">*</span>
+                    <Label className="text-sm font-medium">
+                        {title} <span className="text-red-500">*</span>
                     </Label>
-                    {!fileUploaded ? (
+                    {!data.file ? (
                         <Input
+                            ref={fileInputRef}
                             type="file"
                             id="file"
                             accept="image/png, image/jpeg"
@@ -113,66 +143,104 @@ const FileUploader: React.FC<FileUploaderProps> = ({
                         </p>
                     )}
 
-                    {(selectedImage) && (
-                        <>
-                            <h5>Selected File</h5>
-                            {!loading ? (
-                                <img
-                                    src={selectedImage}
-                                    alt="Proof Preview"
-                                    className="w-full h-48 object-contain rounded-xl border"
-                                />
-                            ) : (
-                                <div className='w-full h-48 shimmer'></div>
-                            )
-                            }
-                        </>
+                    {selectedImage && (
+                        <div className="space-y-3">
+
+                            <div className="flex items-center justify-between">
+                                <h4 className="text-sm font-medium text-muted-foreground">
+                                    Selected File
+                                </h4>
+
+                                <Button
+                                    title="Remove file"
+                                    variant="ghost"
+                                    size="icon"
+                                    className="text-red-500 hover:bg-red-100 hover:text-red-600"
+                                    disabled={data.isLoading}
+                                    onClick={() => {
+                                        setSelectedImage(null);
+                                        reset();
+                                        if (fileInputRef.current) {
+                                            fileInputRef.current.value = "";
+                                        }
+                                    }}
+                                >
+                                    <X className="size-4" />
+                                </Button>
+                            </div>
+
+                            <div className="relative w-full h-48 rounded-xl border overflow-hidden bg-muted">
+
+                                {!data.isLoading ? (
+                                    <img
+                                        src={selectedImage ?? noImage}
+                                        alt="Proof Preview"
+                                        className="w-full h-full object-contain transition-opacity duration-300"
+                                    />
+                                ) : (
+                                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-background/60 backdrop-blur-sm">
+
+                                        {data.file ? (
+                                            <LoaderCircle className="animate-spin size-5 text-muted-foreground" />
+                                        ) : (
+                                            <ArrowUp className="animate-bounce size-5 text-muted-foreground" />
+                                        )}
+
+                                        <p className="text-sm text-muted-foreground">
+                                            {data.file ? "Deleting file..." : "Processing file..."}
+                                        </p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                     )}
 
-                    {data && (
+                    {data.file && (
                         <>
                             <h5>Uploaded File</h5>
-                            {!loading ? (
+                            {!data.isLoading ? (
                                 <img
-                                    src={data}
+                                    src={data.file ?? noImage}
                                     alt="Proof Preview"
                                     className="w-full h-48 object-contain rounded-xl border"
                                 />
                             ) : (
                                 <div className='w-full h-48 shimmer'></div>
-                            )
-                            }
-                            <Button
-                                type="button"
-                                variant="destructive"
-                                className='cursor-pointer'
-                                onClick={handleDeleteFile}
-                            >
-                                Delete File
-                            </Button>
+                            )}
                         </>
                     )}
 
                     {message && (
-                        <NotificationBox
+                        <AlertBox
                             icon={Info}
                             heading={"Important"}
                             message={message}
                         />
                     )}
                 </CardContent>
-                {(!fileUploaded && proofFile) && (
-                    <CardFooter className='flex justify-end'>
+                <CardFooter className='flex justify-end'>
+                    {data.file ? (
                         <Button
-                            variant="default"
+                            title="Delete File"
+                            type="button"
+                            variant="destructive"
+                            className='cursor-pointer'
+                            onClick={handleDeleteFile}
+                        >
+                            Delete File
+                        </Button>
+                    ) : proofFile && (
+                        <Button
+                            title="Upload"
+                            variant="secondary"
                             disabled={isSubmitting || !isValid}
-                            className="cursor-pointer w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
+                            className={defaultButtonClassName}
                             type="submit"
                         >
-                            {isSubmitting ? "Uploading" : "Upload"}
+                            {isSubmitting ? "Uploading" : "Upload File"}
                         </Button>
-                    </CardFooter>
-                )}
+                    )}
+                </CardFooter>
             </Card>
         </form>
     );

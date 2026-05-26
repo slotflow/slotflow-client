@@ -2,11 +2,11 @@ import { Button } from "../../ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
-import { AdminChangeUserStatusRequest, AdminfetchAllUsersResponse } from "@/utils/interface/api/adminUserApiInterface";
+import { User } from "@/shared/interface/entityInterface/userInterface";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
-import { User } from "@/utils/interface/entityInterface/userInterface";
+import { AdminChangeUserStatusRequest, AdminfetchAllUsersResponse } from "@/shared/interface/api/user";
 
-export const AdminUsersTableColumns = (
+const AdminUsersTableColumns = (
     handleAdminChangeUserBlockStatus: (data: AdminChangeUserStatusRequest) => void,
     handleGetUserDetailPage: (e: React.MouseEvent<HTMLDivElement>, userId: User["_id"]) => void,
 ): ColumnDef<AdminfetchAllUsersResponse>[] => [
@@ -31,18 +31,6 @@ export const AdminUsersTableColumns = (
             },
         },
         {
-            accessorKey: "isVerified",
-            header: "Email Verication",
-            cell: ({ row }) => {
-                const isVerified = row.original.isEmailVerified;
-                if (isVerified) {
-                    return <span className="text-green-500 font-semibold">Verified</span>
-                } else {
-                    return <span className="text-red-500 font-semibold">Pending</span>
-                }
-            }
-        },
-        {
             accessorKey: "actions",
             header: "Actions",
             id: "actions",
@@ -51,7 +39,7 @@ export const AdminUsersTableColumns = (
                 return (
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="h-8 w-8 p-0 cursor-pointer">
+                            <Button title="Open Menu" variant="ghost" className="h-8 w-8 p-0 cursor-pointer">
                                 <span className="sr-only">Open menu</span>
                                 <MoreHorizontal className="h-4 w-4" />
                             </Button>
@@ -70,3 +58,5 @@ export const AdminUsersTableColumns = (
             },
         }
     ]
+
+    export default AdminUsersTableColumns;

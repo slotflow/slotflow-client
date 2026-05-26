@@ -1,30 +1,32 @@
 import FormField from "../FormField";
 import { toast } from "react-toastify";
+import SelectField from "../SelectField";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
 import { FormButton } from "../FormSplits";
-import { SelectField } from "../SelectField";
 import { Button } from "@/components/ui/button";
-import { RootState } from "@/utils/redux/appStore";
+import { appConfig } from "@/shared/config/env";
+import { RootState } from "@/shared/redux/appStore";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { verificationOptions } from "@/utils/constants";
-import { slideOut } from "@/utils/helper/gsapAnimationSlide";
-import { handleFormError } from "@/utils/helper/formErrorCatcher";
-import { useAdminProviderActions } from "@/hooks/adminHooks/useAdminProviderActions";
-import { AdminRejectProviderFormType, adminRejectProviderZodSchema } from "@/utils/zod/adminZod";
-import { appConfig } from "@/utils/env";
-
-interface RejectproviderFormProps {
-  onClose: () => void;
-  formRef: React.RefObject<HTMLDivElement | null>;
-}
+import { useDispatch, useSelector } from "react-redux";
+import { useQueryClient } from "@tanstack/react-query";
+import { AppDispatch } from "recharts/types/state/store";
+import { slideOut } from "@/shared/helper/gsapAnimationSlide";
+import { verificationOptions } from "@/shared/utils/constants";
+import { handleFormError } from "@/shared/helper/formErrorCatcher";
+import { AdminVerificationStatus } from "@/shared/interface/enums";
+import { adminRejectProvider } from "@/shared/apis/providerProfile";
+import { setAdminVerificationState } from "@/shared/redux/slices/authSlice";
+import { RejectproviderFormProps } from "@/shared/interface/componentInterface";
+import { AdminRejectProviderFormType, adminRejectProviderZodSchema } from "@/shared/zod/adminZod";
 
 const RejectproviderForm: React.FC<RejectproviderFormProps> = ({
   onClose,
   formRef,
 }) => {
 
-  const { handleAdminRejectProvider } = useAdminProviderActions();
+  const dispatch = useDispatch<AppDispatch>();
+  const queryClient = useQueryClient();
+
   const { rejectProviderId } = useSelector((state: RootState) => state.admin);
 
   const handleCloseForm = () => {
@@ -53,15 +55,23 @@ const RejectproviderForm: React.FC<RejectproviderFormProps> = ({
 
   const onSubmit = async (data: AdminRejectProviderFormType) => {
     try {
-        if(!rejectProviderId) {
-            toast.error("Provider is not selected");
-            return;
-        }
-      await handleAdminRejectProvider({ providerId: rejectProviderId, ...data });
-      reset();
-      handleCloseForm();
+      if (!rejectProviderId) {
+        toast.error("Provider is not selected");
+        return;
+      }
+
+      const res = await adminRejectProvider({ providerId: rejectProviderId, ...data });
+      if (res.success) {
+        toast.success(res.message);
+        reset();
+        handleCloseForm();
+        dispatch(setAdminVerificationState(AdminVerificationStatus.REJECTED));
+        queryClient.invalidateQueries({ queryKey: ["providers"] });
+      } else {
+        toast.error(res.message);
+      }
     } catch (error) {
-      if (appConfig.dev) {
+      if (appConfig.isDevelopment) {
         console.log("Error while rejecting provider : ", error);
       }
     }
@@ -78,7 +88,7 @@ const RejectproviderForm: React.FC<RejectproviderFormProps> = ({
         className="space-y-6"
       >
 
-        <SelectField<AdminRejectProviderFormType,boolean>
+        <SelectField<AdminRejectProviderFormType, boolean>
           id="isAddressVerified"
           label="Address Verification"
           options={verificationOptions}
@@ -122,11 +132,18 @@ const RejectproviderForm: React.FC<RejectproviderFormProps> = ({
 
         <div className="space-y-2">
           <FormButton
-            text="Confirm"
+            text={isSubmitting ? "Rejecting..." : "Reject Provider"}
             loading={isSubmitting}
             disabled={isSubmitting || !isValid}
+            title="Reject Provider"
           />
-          <Button variant="destructive" className="cursor-pointer w-full" type="button" onClick={handleCloseForm}>
+          <Button
+            title="Cancel"
+            variant="destructive"
+            className="cursor-pointer w-full"
+            type="button"
+            onClick={handleCloseForm}
+          >
             Cancel
           </Button>
         </div>

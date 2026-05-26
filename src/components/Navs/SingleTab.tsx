@@ -1,16 +1,7 @@
 import { Lock } from "lucide-react";
+import { SingleTabProps } from "@/shared/interface/componentInterface";
 
-interface SingleTabProps {
-    icon: React.ElementType;
-    text: string;
-    sidebarOpen: boolean;
-    onClick?: () => void;
-    className?: string;
-    locked?: boolean;
-    active?: boolean;
-}
-
-export const SingleTab: React.FC<SingleTabProps> = ({
+const SingleTab: React.FC<SingleTabProps> = ({
     icon: Icon,
     text,
     sidebarOpen,
@@ -21,27 +12,37 @@ export const SingleTab: React.FC<SingleTabProps> = ({
 }) => {
     return (
         <li
-            title={!locked ? text : text + " locked"}
-            onClick={onClick}
+            title={!locked ? text : text + " (Locked)"}
+            onClick={!locked ? onClick : undefined}
             className={`
-                px-2 py-1.5 my-2 font-semibold rounded-md transition-colors
-                ${!sidebarOpen ? 'flex justify-center' : 'flex items-center'}
+                relative flex items-center px-3 py-2.5 my-1 rounded-lg transition-all duration-200
+                ${!sidebarOpen ? 'justify-center mx-1' : 'justify-start'}
                 ${className}
-                ${locked ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
-                ${active
-                    ? 'bg-[var(--menuItemHoverBg)] text-[var(--textOneHover)]'
-                    : 'text-[var(--textOne)] hover:bg-[var(--menuItemHoverBg)] hover:text-[var(--textOneHover)]'
+                ${locked 
+                    ? 'opacity-50 cursor-not-allowed text-gray-400 dark:text-gray-500 bg-transparent' 
+                    : active 
+                        ? 'bg-[var(--mainColor)]/10 text-[var(--mainColor)] font-semibold' 
+                        : 'text-gray-600 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-gray-100 cursor-pointer font-medium'
                 }
             `}
         >
-            {sidebarOpen ? (
-                <div className='flex cursor-pointer'>
-                    <Icon className='size-6 dark:text-gray-300' />
-                    <span className='ml-3 text-[16px]'>{text}</span>
-                    {locked && <Lock className="mx-auto size-3 my-auto" />}
+            <Icon className={`shrink-0 ${sidebarOpen ? 'w-5 h-5' : 'w-6 h-6'} ${active && !locked ? 'text-[var(--mainColor)]' : ''}`} />
+            
+            {sidebarOpen && (
+                <span className='ml-3 text-[14px] truncate flex-1'>{text}</span>
+            )}
+            
+            {sidebarOpen && locked && (
+                <Lock className="w-4 h-4 ml-auto text-gray-400" />
+            )}
+            
+            {!sidebarOpen && locked && (
+                <div className="absolute top-1 right-1">
+                     <Lock className="w-3 h-3 text-gray-400" />
                 </div>
-            ) : (
-                <Icon className='text-2xl font-bold cursor-pointer text-[var(--textOne)] hover:text-[var(--textOneHover)]' />)}
+            )}
         </li>
     );
 };
+
+export default SingleTab;

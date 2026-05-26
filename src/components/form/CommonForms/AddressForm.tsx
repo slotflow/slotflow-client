@@ -1,32 +1,35 @@
 import FormField from '../FormField';
+import { toast } from 'react-toastify';
 import { Button } from '../../ui/button';
 import React, { useEffect } from "react";
-import { useSelector } from 'react-redux';
 import { PhoneInput } from '../phone-input';
+import { Info, LoaderCircle } from 'lucide-react';
 import { countries } from 'country-data-list';
-import { ChevronRight, Info } from 'lucide-react';
-import { RootState } from '@/utils/redux/appStore';
+import { Label } from '@/components/ui/label';
+import { useNavigate } from 'react-router-dom';
+import { appConfig } from '@/shared/config/env';
+import AlertBox from '@/components/alert/AlertBox';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from "react-hook-form";
-import NotificationBox from '../../common/NotificationBox';
+import { useDispatch, useSelector } from 'react-redux';
 import { CountryDropdown } from '../../ui/country-dropdown';
-import LocationPicker from '@/components/common/LocationPicker';
-import { Location } from '@/utils/interface/entityInterface/addressInterface';
-import { CreateAddressFormType, createAddressZodSchema } from '@/utils/zod/commonZodFields';
-import { AddressFormProps } from '@/utils/interface/componentInterface/commonComponentInterface';
-import { addAddressGoogleMapLinkInfo, addAddressGoogleMapLinkInfoHeading } from '@/utils/constants';
+import LocationPicker from '@/components/map/LocationPicker';
+import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import { AdminVerificationStatus, OnboardingStatus, Role } from '@/shared/interface/enums';
+import { AddressFormProps } from '@/shared/interface/componentInterface';
+import { Location } from '@/shared/interface/entityInterface/addressInterface';
+import { createAddress, fetchMyAddress, updateAddress } from '@/shared/apis/address';
+import { CreateAddressFormType, createAddressZodSchema } from '@/shared/zod/commonZodFields';
+import { addAddressGoogleMapLinkInfo, addAddressGoogleMapLinkInfoHeading, redirectPaths } from '@/shared/utils/constants';
 
 const AddressForm: React.FC<AddressFormProps> = ({
-    formClassNames,
-    heading,
-    headingSize,
-    buttonText,
-    onSubmit,
-    setData
+    isUpdating = false,
+    heading
 }) => {
 
-    // const queryClient = useQueryClient();
-    const { dataUpdating } = useSelector((store: RootState) => store.auth);
+    const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
+    const { authUser } = useSelector((state: RootState) => state.auth);
 
     const {
         register,
@@ -35,7 +38,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
         reset,
         setValue,
         watch,
-        formState: { errors, isSubmitting, isValid }
+        formState: { errors, isSubmitting, isValid, isLoading }
     } = useForm<CreateAddressFormType>({
         resolver: zodResolver(createAddressZodSchema),
         mode: "onChange",
@@ -77,19 +80,64 @@ const AddressForm: React.FC<AddressFormProps> = ({
     };
 
     useEffect(() => {
-        reset(setData)
-    },[setData, reset])
+        if (!authUser) return;
+        const shouldFetchAddress = isUpdating && authUser.adminVerificationStatus !== AdminVerificationStatus.NOT_REQUESTED;
 
-    const submitHandler = (data: CreateAddressFormType) => {
-        onSubmit(data);
+        if (!shouldFetchAddress) return;
+
+        async function fetchOldAddress() {
+            const result = await fetchMyAddress();
+            reset({
+                ...result.data,
+                countryCode: "IN"
+            });
+        };
+
+        fetchOldAddress();
+    }, [isUpdating, authUser]);
+
+    const submitHandler = async (data: CreateAddressFormType) => {
+        try {
+            if (isUpdating) {
+                const res = await updateAddress(data);
+                if (res.success) {
+                    if (authUser?.role === Role.PROVIDER) {
+                        if (authUser?.onboardingStatus !== OnboardingStatus.APPROVED) {
+                            navigate(redirectPaths.ONBOARDING_PENDING);
+                        }
+                    }
+                    toast.success(res.message);
+                }
+            } else {
+                const res = await dispatch(createAddress(data)).unwrap();
+                if (res.success) {
+                    if (authUser?.onboardingStatus !== OnboardingStatus.APPROVED && authUser?.role === Role.PROVIDER) {
+                        if (authUser?.adminVerificationStatus === AdminVerificationStatus.NOT_REQUESTED) {
+                            navigate(redirectPaths.ONBOARDING_SERVICE);
+                        } else if (authUser?.adminVerificationStatus === AdminVerificationStatus.REJECTED) {
+                            navigate(redirectPaths.ONBOARDING_PENDING);
+                        }
+                    }
+                    toast.success(res.message);
+                }
+            }
+        } catch (error) {
+            if (appConfig.isDevelopment) {
+                console.log("Failed to Save Address : ", error);
+            }
+            toast.error("Please try again");
+        }
     };
 
     return (
-        <form onSubmit={handleSubmit(submitHandler)} className={`${formClassNames} py-6`}>
-            <h4 className={`${headingSize} font-semibold text-start px-6`}>{heading}</h4>
-            <div className="flex flex-col lg:flex-row gap-4 md:gap-6 w-full">
-
-                <div className="flex-1 space-y-4 md:space-y-6 px-6 pt-6 md:p-6">
+        <form onSubmit={handleSubmit(submitHandler)} >
+            {heading && (
+                <h4 className="text-xl lg:text-2xl font-semibold text-start">
+                    {heading}
+                </h4>
+            )}
+            <div className="md:flex w-full space-y-6 space-x-2">
+                <div className="space-y-4 w-full space-x-2 pt-6">
                     <FormField<CreateAddressFormType>
                         label="Address Line"
                         id="addressLine"
@@ -209,28 +257,37 @@ const AddressForm: React.FC<AddressFormProps> = ({
                     />
                 </div>
 
-                <div className="flex-1 space-y-4 md:space-y-6 px-6 md:px-0 md:p-6">
-                    <label className="text-sm font-medium">
-                        Select Location{<span className="mx-1 text-red-500">*</span>}
-                    </label>
-                    <LocationPicker onLocationSelect={handleLocationSelect} />
-                    <NotificationBox
-                        icon={Info}
-                        heading={addAddressGoogleMapLinkInfoHeading}
-                        message={addAddressGoogleMapLinkInfo}
-                    />
+                <div className="space-y-4 w-full space-x-2 md:pt-6">
+                    <div className="flex-1 space-y-4 px-6 md:px-0">
+                        <Label className="text-xs md:text-sm" htmlFor="location">
+                            Select Location{<span className="mx-1 text-red-500">*</span>}
+                        </Label>
+                        <LocationPicker onLocationSelect={handleLocationSelect} />
+                        <AlertBox
+                            icon={Info}
+                            heading={addAddressGoogleMapLinkInfoHeading}
+                            message={addAddressGoogleMapLinkInfo}
+                        />
+                    </div>
                 </div>
-
             </div>
 
             <div className="flex justify-center md:justify-end mt-4 md:mt-6">
                 <Button
+                    title={isUpdating ? "Update" : "Submit"}
                     type="submit"
                     variant="default"
                     className="cursor-pointer w-10/12 md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
-                    disabled={!isValid || isSubmitting || dataUpdating}
+                    disabled={!isValid || isSubmitting || isLoading}
                 >
-                    {dataUpdating ? "Loading" : buttonText} <ChevronRight />
+                    {isSubmitting ? (
+                        <>
+                            <LoaderCircle className="animate-spin size-4 mr-2" />
+                            {(isUpdating && isSubmitting) ? "Updating" : "Submitting"}
+                        </>
+                    ) : (
+                        isUpdating ? "Update" : "Submit"
+                    )}
                 </Button>
             </div>
         </form>

@@ -3,14 +3,12 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import FormField from "../form/FormField";
 import { Button } from "@/components/ui/button";
+import { createReview } from "@/shared/apis/review";
 import { useDispatch, useSelector } from "react-redux";
-import { userCreateReview } from "@/utils/apis/user.api";
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { toggleReviewCreateForm } from "@/utils/redux/slices/userSlice";
-import { Review } from "@/utils/interface/entityInterface/reviewInterface";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
+import { ReviewFormValues } from "@/shared/interface/commonInterface";
+import { toggleReviewCreateForm } from "@/shared/redux/slices/userSlice";
 import { useModalAnimation } from "@/hooks/systemHooks/useModalAnimation";
-
-type ReviewFormValues = Pick<Review, "reviewText" | "rating">;
 
 const ReviewForm: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -18,8 +16,10 @@ const ReviewForm: React.FC = () => {
         (state: RootState) => state.user
     );
 
-    const { closeModal, modalRef } = useModalAnimation(() => {
-        dispatch(toggleReviewCreateForm({ id: null, isOpen: false, providerId: null }));
+    const { closeModal, modalRef } = useModalAnimation({
+        onClose: () => {
+            dispatch(toggleReviewCreateForm({ id: null, isOpen: false, providerId: null }));
+        }
     });
 
     const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -45,7 +45,7 @@ const ReviewForm: React.FC = () => {
         }
 
         try {
-            const res = await userCreateReview({
+            const res = await createReview({
                 bookingId: selectedBookingId,
                 reviewText,
                 rating,
@@ -55,7 +55,7 @@ const ReviewForm: React.FC = () => {
             if (res.success) {
                 toast.success(res.message);
                 dispatch(toggleReviewCreateForm({ id: null, isOpen: false, providerId: null }));
-            } 
+            }
         } catch {
             toast.error("Review creating failed");
         }
@@ -102,6 +102,7 @@ const ReviewForm: React.FC = () => {
 
                     <div className="flex gap-3 justify-end">
                         <Button
+                            title="Cancel"
                             type="button"
                             variant="destructive"
                             className="cursor-pointer"
@@ -109,7 +110,7 @@ const ReviewForm: React.FC = () => {
                         >
                             Cancel
                         </Button>
-                        <Button type="submit" className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]">
+                        <Button title="Submit" type="submit" className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]">
                             Submit
                         </Button>
                     </div>

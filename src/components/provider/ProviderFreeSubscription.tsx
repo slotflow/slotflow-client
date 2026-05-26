@@ -1,31 +1,37 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { X, Loader, Coins } from "lucide-react";
-import { RootState } from "@/utils/redux/appStore";
-import { PlanName } from "@/utils/interface/enums";
+import { X, LoaderCircle, Coins } from "lucide-react";
+import { RootState } from "@/shared/redux/appStore";
 import { useQueryClient } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
-import { setProviderSubscription } from "@/utils/redux/slices/authSlice";
-import { providerSubscribeToTrialPlan } from "@/utils/apis/provider.api";
-import { setPaymentSelectionPage, setSubscriptionIsTrailPlan } from "@/utils/redux/slices/providerSlice";
+import { setSubscription } from "@/shared/redux/slices/authSlice";
+import { subscribeToTrialPlan } from "@/shared/apis/subscription";
+import { PlanName, SubscriptionStatus } from "@/shared/interface/enums";
+import { setPaymentSelectionOpen, setSubscriptionPaymentData } from "@/shared/redux/slices/paymentSlice";
 
-const ProviderFreeSubscription = () => {
+const ProviderFreeSubscription: React.FC = () => {
 
     const dispatch = useDispatch();
     const queryClient = useQueryClient();
     const [paymentLoading, setPaymentLoading] = useState(false);
-    const { paymentSelectionOpen } = useSelector((store: RootState) => store.provider);
+    const { isOpen } = useSelector((store: RootState) => store.payment);
 
     const handlePaymentSelectionClose = () => {
-        dispatch(setPaymentSelectionPage(false));
-        dispatch(setSubscriptionIsTrailPlan(false));
-        dispatch(setProviderSubscription(PlanName.TRIAL));
+        dispatch(setPaymentSelectionOpen(false));
+        dispatch(setSubscriptionPaymentData(null));
+        dispatch(setSubscription({
+            subscribedPlan: PlanName.TRIAL,
+            providerId: "",
+            startDate: new Date(),
+            endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+            subscriptionStatus: SubscriptionStatus.ACTIVE
+        }));
     };
 
     const makeTrialubscription = async () => {
         setPaymentLoading(true);
         try {
-            const res = await providerSubscribeToTrialPlan();
+            const res = await subscribeToTrialPlan();
             toast.success(res.message);
             handlePaymentSelectionClose();
             queryClient.invalidateQueries({ queryKey: ["subscriptions"] });
@@ -36,7 +42,7 @@ const ProviderFreeSubscription = () => {
         }
     }
 
-    return paymentSelectionOpen && (
+    return isOpen && (
         <div className="fixed inset-0 flex justify-center items-center bg-black/70 z-50">
             {!paymentLoading ? (
                 <div className="w-3/12 rounded-lg shadow-lg border p-4 bg-[var(--background)]" >
@@ -49,7 +55,7 @@ const ProviderFreeSubscription = () => {
                     </div>
                 </div>
             ) : (
-                <Loader className="w-10 h-10 animate-spin" />
+                <LoaderCircle className="w-10 h-10 animate-spin" />
             )}
         </div>
     );

@@ -1,66 +1,79 @@
-import React from 'react';
-import { Card } from '@/components/ui/card';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import DashboardStats from '@/components/common/dashboard/DashboardStats';
-import { providerFetchDashboardStatsData } from '@/utils/apis/provider.api';
-import { providerDashboardTabs, statsMapForProvider } from '@/utils/constants';
-import ProviderDashboardGraphs from '@/components/provider/ProviderDashboardGraphs';
-import { ProviderFetchDashboardStatsDataResponse } from '@/utils/interface/api/providerApiInterface';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
+import React, { useState } from 'react';
+import { DateRange } from 'react-day-picker';
+import DataFilter from '@/components/filters/DataFilter';
+import { providerDashboardTabs } from '@/shared/utils/constants';
+import ProviderDashboardStats from '@/components/dashboard/provider/ProviderDashboardStats';
+import ProviderDashboardGraphs from '@/components/dashboard/provider/ProviderDashboardGraphs';
 
 const ProviderDashboardPage: React.FC = () => {
-  const [activeTab, setActiveTab] = React.useState<string>('stats')
+  const [selectedTab, setSelectedTab] = useState(providerDashboardTabs[0].value);
+  const [dateRange, setDateRange] = useState<DateRange | undefined>({
+    from: new Date(),
+    to: new Date(),
+  });
 
   return (
-    <div className="pb-4 space-y-4">
-      <div className="md:hidden">
-        <Select value={activeTab} onValueChange={setActiveTab}>
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select section" />
-          </SelectTrigger>
-          <SelectContent>
-            {providerDashboardTabs.map(({ value, label, icon: Icon }) => (
-              <SelectItem key={value} value={value}>
-                <div className="flex items-center gap-2">
-                  {Icon && <Icon className="w-4 h-4" />}
-                  {label}
-                </div>
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+    <div className="p-4 w-full">
+      <div className="mb-6">
+        <div className="md:hidden mb-4">
+          <Select value={selectedTab} onValueChange={setSelectedTab}>
+            <SelectTrigger className="w-full bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800">
+              <SelectValue placeholder="Select Tab" />
+            </SelectTrigger>
+            <SelectContent>
+              {providerDashboardTabs.map((tab) => (
+                <SelectItem key={tab.value} value={tab.value}>
+                  <div className="flex items-center gap-2">
+                    {tab.icon && <tab.icon className="w-4 h-4" />}
+                    {tab.label}
+                  </div>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
 
-      <div className="hidden md:block">
-        <ScrollArea className="w-full">
-          <div className="flex gap-2 w-full md:w-1/2">
-            {providerDashboardTabs.map(({ value, label, icon: Icon }) => (
-              <button
-                key={value}
-                onClick={() => setActiveTab(value)}
-                className={`flex items-center gap-2 px-3 py-2 w-full justify-center rounded-md border text-sm font-medium transition-colors
-                  ${activeTab === value ? 'bg-[var(--menuItemHoverBg)]' : 'hover:bg-[var(--menuItemHoverBg)]'}`}
-              >
-                {Icon && <Icon className="w-4 h-4" />}
-                {label}
-              </button>
-            ))}
+        <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
+          <div className="hidden md:block mb-6">
+            <TabsList className="grid grid-cols-2 gap-2 w-full md:w-1/2 bg-slate-100/50 dark:bg-slate-900/50 p-1 border border-slate-200 dark:border-slate-800 rounded-xl">
+              {providerDashboardTabs.map((tab) => (
+                <TabsTrigger
+                  key={tab.value}
+                  value={tab.value}
+                  className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-950 data-[state=active]:shadow-sm rounded-lg transition-all duration-200"
+                >
+                  <div className="flex items-center gap-2">
+                    {tab.icon && <tab.icon className="w-4 h-4" />}
+                    {tab.label}
+                  </div>
+                </TabsTrigger>
+              ))}
+            </TabsList>
           </div>
-        </ScrollArea>
-      </div>
 
-      <Card className="p-4">
-        {activeTab === 'stats' && (
-          <DashboardStats<ProviderFetchDashboardStatsDataResponse>
-            queryFunction={providerFetchDashboardStatsData}
-            queryKey="dashboardStats"
-            statsMap={statsMapForProvider}
-            shimmerCount={11}
-            role="PROVIDER"
-          />
-        )}
-        {activeTab === 'graphs' && <ProviderDashboardGraphs />}
-      </Card>
+          <DataFilter dateRange={dateRange} setDateRange={setDateRange} />
+
+          <TabsContent value="stats" className="mt-0 border-none p-0">
+            <ProviderDashboardStats dateRange={dateRange as DateRange} />
+          </TabsContent>
+          <TabsContent value="graphs" className="mt-0 border-none p-0">
+            <ProviderDashboardGraphs dateRange={dateRange as DateRange} />
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   )
 }

@@ -1,24 +1,23 @@
 import React from 'react';
-import { formatDate } from '@/utils/helper';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import DataFetchingError from '@/components/common/DataFetchingError';
-import InfoDisplayComponent from '@/components/common/InfoDisplayComponent';
-import ProfileDetailsShimmer from '@/components/shimmers/ProfileDetailsShimmer';
-import { FetchSubscriptionDetailsResponse } from '@/utils/interface/api/commonApiInterface';
+import DataField from '@/components/app/DataField';
+import PageHeader from '@/components/common/PageHeader';
+import { Card, CardContent } from '@/components/ui/card';
+import DataFetchingError from '@/components/error/DataFetchingError';
+import { fetchSubscriptionDetails } from '@/shared/apis/subscription';
+import ProfileDetailsShimmer from '@/components/shimmers/DataFieldShimmer';
+import { BadgeCheck, Calendar, CalendarClock, CalendarDays, IndianRupee, ListOrdered, Megaphone, Package } from 'lucide-react';
 
-interface SubscriptionDetailViewPageProps {
-    queryFunction: (subscriptionId: string) => Promise<FetchSubscriptionDetailsResponse>;
-}
-
-const SubscriptionDetailViewPage: React.FC<SubscriptionDetailViewPageProps> = ({
-    queryFunction
-}) => {
+const SubscriptionDetailViewPage: React.FC = () => {
 
     const { subscriptionId } = useParams<{ subscriptionId: string }>();
 
     const { data, isLoading, isError, error } = useQuery({
-        queryFn: () => queryFunction(subscriptionId!),
+        queryFn: async () => {
+            const res = await fetchSubscriptionDetails(subscriptionId!);
+            return res.data;
+        },
         queryKey: ["subcription", subscriptionId],
         staleTime: 60 * 60 * 1000,
         refetchOnWindowFocus: false,
@@ -26,45 +25,43 @@ const SubscriptionDetailViewPage: React.FC<SubscriptionDetailViewPageProps> = ({
     });
 
     const dataMap = [
-        { label: "Subscription Status", value: data?.subscriptionStatus },
-        { label: "Subscribed on", value: data?.createdAt, formatDate },
-        { label: "Subscription started on", value: data?.startDate, formatDate },
-        { label: "Subscription expires on", value: data?.endDate, formatDate },
-        { label: "Subscribed Plan Name", value: data?.subscriptionPlanId?.planName },
-        { label: "Subscription Max Bookings", value: data?.subscriptionPlanId?.maxBookingPerMonth },
-        { label: "Subscription Ad Visibility", value: data?.subscriptionPlanId?.adVisibility, isBoolean: true },
-        { label: "Payment Gateway", value: data?.paymentId?.paymentGateway },
-        { label: "Payment Transaction Id", value: data?.paymentId?.transactionId },
-        { label: "Payment For", value: data?.paymentId?.paymentFor },
-        { label: "Payment Status", value: data?.paymentId?.paymentStatus },
-        { label: "Payment Method", value: data?.paymentId?.paymentMethod },
-        { label: "Payment Base Amount", value: data?.paymentId?.initialAmount, isPrice: true },
-        { label: "Payment Discount Amount", value: data?.paymentId?.discountAmount, isPrice: true },
-        { label: "Payment Total Amount", value: data?.paymentId?.totalAmount, isPrice: true },
+        { label: "Subscription Status", value: data?.subscriptionStatus, Icon: BadgeCheck },
+        { label: "Subscribed on", value: data?.createdAt, isDate: true, Icon: Calendar },
+        { label: "Subscription started on", value: data?.startDate, isDate: true, Icon: CalendarClock },
+        { label: "Subscription expires on", value: data?.endDate, isDate: true, Icon: CalendarDays },
+        { label: "Subscribed Plan Name", value: data?.subscriptionPlanId?.planName, Icon: Package },
+        { label: "Subscription Max Bookings", value: data?.subscriptionPlanId?.maxBookingPerMonth, Icon: ListOrdered },
+        { label: "Subscription Ad Visibility", value: data?.subscriptionPlanId?.adVisibility, isBoolean: true, Icon: Megaphone },
+        { label: "Subscription price", value: data?.subscriptionPlanId?.price, isPrice: true, Icon: IndianRupee }
     ];
 
-  return (
-    <div className="w-full p-2 mx-auto mt-0 md:flex justify-start flex-grow bg">
+    return (
+        <div className="p-4">
+            <PageHeader
+                title="Subscription Details"
+                description="Detailed view of subscription"
+            />
             {isError && error ? (
                 <DataFetchingError message={(error as Error).message} />
             ) : isLoading ? (
-                <ProfileDetailsShimmer row={14} />
+                <ProfileDetailsShimmer row={8} />
             ) : data ? (
-                <div className="w-full">
-                    <h2 className="text-2xl font-bold mb-4">Subscription Details</h2>
-                    <table className="table-auto border-collapse border  w-full">
-                        <tbody>
-                            {dataMap.map((item) => (
-                                <InfoDisplayComponent key={item.label} {...item} />
-                            ))}
-                        </tbody>
-                    </table>
+                <div className="">
+                    <Card>
+                        <CardContent className="space-y-2">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                                {dataMap.map((item) => (
+                                    <DataField key={item.label} {...item} />
+                                ))}
+                            </div>
+                        </CardContent>
+                    </Card>
                 </div>
             ) : (
                 <DataFetchingError message="No data found" />
             )}
         </div>
-  )
+    )
 }
 
-export default SubscriptionDetailViewPage
+export default SubscriptionDetailViewPage;

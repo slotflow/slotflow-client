@@ -1,8 +1,9 @@
-import * as React from "react"
+import React from "react"
+import { useIsMobileReturn } from "@/shared/interface/hooksInterface"
 
-const MOBILE_BREAKPOINT = 768
+export const useIsMobile = (): useIsMobileReturn => {
 
-export function useIsMobile() {
+  const MOBILE_BREAKPOINT = 768
   const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
 
   React.useEffect(() => {
@@ -15,5 +16,5 @@ export function useIsMobile() {
     return () => mql.removeEventListener("change", onChange)
   }, [])
 
-  return !!isMobile
+  return { isMobile: !!isMobile }
 }

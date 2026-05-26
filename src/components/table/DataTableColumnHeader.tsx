@@ -1,14 +1,8 @@
 import { cn } from "@/lib/utils"
-import { Column } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
 import { ArrowDown, ArrowUp, ChevronsUpDown, EyeOff } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-
-interface DataTableColumnHeaderProps<TData, TValue>
-  extends React.HTMLAttributes<HTMLDivElement> {
-  column: Column<TData, TValue>
-  title: string
-}
+import { DataTableColumnHeaderProps } from "@/shared/interface/componentInterface"
 
 export function DataTableColumnHeader<TData, TValue>({
   column,
@@ -24,6 +18,7 @@ export function DataTableColumnHeader<TData, TValue>({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
+            title={title}
             variant="ghost"
             size="sm"
             className="-ml-3 h-8 data-[state=open]:bg-accent"

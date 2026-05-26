@@ -1,13 +1,13 @@
 import { Button } from "../../ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { Check, MoreHorizontal, X } from "lucide-react";
-import { formatNumberToPrice } from "@/utils/helper/formatter";
+import { formatNumberToPrice } from "@/shared/helper/formatter";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
-import { AdminChangePlanBlockStatusRequest, AdminFetchAllPlansResponse } from "@/utils/interface/api/adminPlanApiInterface";
+import { ChangePlanBlockStatusRequest, AdminFetchAllPlansResponse } from "@/shared/interface/api/plan";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 
-export const AdminPlansTableColumns = (
-  handleAdminChangePlanStatus: (data: AdminChangePlanBlockStatusRequest) => void,
+const AdminPlansTableColumns = (
+  handleAdminChangePlanStatus: (data: ChangePlanBlockStatusRequest) => void,
 ): ColumnDef<AdminFetchAllPlansResponse>[] => [
     {
       accessorKey: "_id",
@@ -66,7 +66,7 @@ export const AdminPlansTableColumns = (
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0 cursor-pointer">
+              <Button title="Open Menu" variant="ghost" className="h-8 w-8 p-0 cursor-pointer">
                 <span className="sr-only">Open menu</span>
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
@@ -86,4 +86,4 @@ export const AdminPlansTableColumns = (
     }
   ]
 
-
+export default AdminPlansTableColumns;

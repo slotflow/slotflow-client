@@ -3,20 +3,19 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import GoogleButton from "../GoogleButton";
-import { signup } from "@/utils/apis/auth.api";
-import { AppDispatch } from "@/utils/redux/appStore";
+import { signup } from "@/shared/apis/auth";
+import { useNavigate } from "react-router-dom";
+import { AppDispatch } from "@/shared/redux/appStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormButton, FormHeading } from "../FormSplits";
-import { handleGoogleLogin } from "@/utils/helper/googleLogin";
-import { SignupFormType, signupZodSchema } from "@/utils/zod/authZod";
-import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
-import { RedirectTo, signUpFormProps } from "@/utils/interface/commonInterface";
-import { appConfig } from "@/utils/env";
+import { redirectPaths } from "@/shared/utils/constants";
+import { appConfig, serviceConfig } from "@/shared/config/env";
+import { SignupFormType, signupZodSchema } from "@/shared/zod/authZod";
 
-const SignUpForm: React.FC<signUpFormProps> = ({ role }) => {
+const SignUpForm: React.FC = () => {
 
+    const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const { goToAuthPage } = useAuthNavigation();
 
     const {
         register,
@@ -34,15 +33,30 @@ const SignUpForm: React.FC<signUpFormProps> = ({ role }) => {
         },
     });
 
+
+    const handleGoogleLogin = ({ e }: { e: React.MouseEvent<HTMLButtonElement, MouseEvent> }) => {
+        try {
+            e.preventDefault();;
+            window.location.href = `${serviceConfig.apiGatewayUrl + appConfig.version}/auth/google`;
+        } catch (error) {
+            if (appConfig.isDevelopment) {
+                console.error("Google login error:", error);
+            }
+            toast.error("Failed to initiate Google login");
+        }
+    }
+
     const onSubmit = async (data: SignupFormType) => {
         try {
-            const res = await dispatch(signup({ ...data, role })).unwrap();
-            if(res.success) {
+            const res = await dispatch(signup({ ...data })).unwrap();
+            if (res.success) {
+                navigate(redirectPaths.VERIFY_OTP);
                 toast.success(res.message);
-                goToAuthPage(role, RedirectTo.VERIFY_OTP);
             }
         } catch (error) {
-            if(appConfig.dev)console.log("An error occurred while sign up ",error);
+            if (appConfig.isDevelopment) {
+                console.log("An error occurred while sign up ", error);
+            }
         }
     };
 
@@ -100,7 +114,12 @@ const SignUpForm: React.FC<signUpFormProps> = ({ role }) => {
                                     }
                                     required={true}
                                 />
-                                <FormButton text={"Sign Up"} loading={isSubmitting} disabled={isSubmitting || !isValid} />
+                                <FormButton
+                                    text={isSubmitting ? "Signing up" : "Sign up"}
+                                    loading={isSubmitting}
+                                    disabled={isSubmitting || !isValid}
+                                    title="Sign up"
+                                />
                             </fieldset>
                         </form>
 
@@ -111,7 +130,7 @@ const SignUpForm: React.FC<signUpFormProps> = ({ role }) => {
                         </div>
 
                         <GoogleButton
-                            onClick={(e) => handleGoogleLogin({ e, role })}
+                            onClick={(e) => handleGoogleLogin({ e })}
                             text={"Sign in with Google"}
                         />
 
@@ -119,7 +138,7 @@ const SignUpForm: React.FC<signUpFormProps> = ({ role }) => {
                             Already a Slotflow member?
                             <span
                                 className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
-                                onClick={() => goToAuthPage(role, RedirectTo.LOGIN)}
+                                onClick={() => navigate(redirectPaths.LOGIN)}
                             >
                                 {" "}Sign In
                             </span>

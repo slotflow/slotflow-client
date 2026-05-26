@@ -2,17 +2,18 @@ import { Button } from "../../ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
-import { Provider } from "@/utils/interface/entityInterface/providerInterface";
+import { AdminVerificationStatus } from "@/shared/interface/enums";
+import { User } from "@/shared/interface/entityInterface/userInterface";
+import { AdminRejectProviderModalState } from "@/shared/interface/commonInterface";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
-import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminFetchAllProvidersResponse } from "@/utils/interface/api/adminProviderApiInterface";
-import { AdminVerificationStatus } from "@/utils/interface/enums";
+import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminFetchAllProvidersResponse } from "@/shared/interface/api/providerProfile";
 
-export const AdminProvidersTableColumns = (
-    handleAdminApproveProvider: (providerId: Provider["_id"]) => void,
-    handleOpenProviderRejectModal: (providerId: Provider["_id"]) => void,
+const AdminProvidersTableColumns = (
+    handleAdminApproveProvider: (providerId: User["_id"]) => void,
+    handleProviderRejectModal: (data: AdminRejectProviderModalState) => void,
     hanldeAdminChangeProviderBlockStatus: (data: AdminChangeProviderBlockStatusRequest) => void,
-    handleGetProviderDetailPage: (providerId: Provider["_id"]) => void,
-    hanldeAdminChangeProviderSlotflowTrustTag: (data: AdminChangeProviderTrustTagRequest) => void,
+    handleGetProviderDetailPage: (providerId: User["_id"]) => void,
+    handleAdminChangeProviderSlotflowTrustTag: (data: AdminChangeProviderTrustTagRequest) => void,
 ): ColumnDef<AdminFetchAllProvidersResponse>[] => [
         {
             accessorKey: "username",
@@ -70,18 +71,6 @@ export const AdminProvidersTableColumns = (
             },
         },
         {
-            accessorKey: "isEmailVerified",
-            header: "Email Verication",
-            cell: ({ row }) => {
-                const isEmailVerified = row.original.isEmailVerified;
-                if (isEmailVerified) {
-                    return <span className="text-green-500 font-semibold">Verified</span>
-                } else {
-                    return <span className="text-red-500 font-semibold">Pending</span>
-                }
-            },
-        },
-        {
             accessorKey: "trustedBySlotflow",
             header: ({ column }) => (<DataTableColumnHeader column={column} title="Slotflow Trusted" />),
             cell: ({ row }) => {
@@ -102,7 +91,7 @@ export const AdminProvidersTableColumns = (
                 return (
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="h-8 w-8 p-0 cursor-pointer">
+                            <Button title="Open Menu" variant="ghost" className="h-8 w-8 p-0 cursor-pointer">
                                 <span className="sr-only">Open menu</span>
                                 <MoreHorizontal className="h-4 w-4" />
                             </Button>
@@ -113,22 +102,22 @@ export const AdminProvidersTableColumns = (
                             <DropdownMenuItem onClick={() => handleGetProviderDetailPage(provider._id)}>
                                 Details
                             </DropdownMenuItem>
-                            {(!provider.isAdminVerified && 
-                            (provider.adminVerificationStatus === AdminVerificationStatus.REQUESTED || provider.adminVerificationStatus === AdminVerificationStatus.RESUBMITTED || provider.adminVerificationStatus === AdminVerificationStatus.UNDER_REVIEW)) && (
-                                <DropdownMenuItem onClick={() => handleAdminApproveProvider(provider._id)}>
-                                    Approve
-                                </DropdownMenuItem>
-                            )}
                             {(!provider.isAdminVerified &&
                                 (provider.adminVerificationStatus === AdminVerificationStatus.REQUESTED || provider.adminVerificationStatus === AdminVerificationStatus.RESUBMITTED || provider.adminVerificationStatus === AdminVerificationStatus.UNDER_REVIEW)) && (
-                                <DropdownMenuItem onClick={() => handleOpenProviderRejectModal(provider._id)}>
-                                    Reject
-                                </DropdownMenuItem>
-                            )}
+                                    <DropdownMenuItem onClick={() => handleAdminApproveProvider(provider._id)}>
+                                        Approve
+                                    </DropdownMenuItem>
+                                )}
+                            {(!provider.isAdminVerified &&
+                                (provider.adminVerificationStatus === AdminVerificationStatus.REQUESTED || provider.adminVerificationStatus === AdminVerificationStatus.RESUBMITTED || provider.adminVerificationStatus === AdminVerificationStatus.UNDER_REVIEW)) && (
+                                    <DropdownMenuItem onClick={() => handleProviderRejectModal({ modalState: true, providerId: provider._id })}>
+                                        Reject
+                                    </DropdownMenuItem>
+                                )}
                             <DropdownMenuItem onClick={() => hanldeAdminChangeProviderBlockStatus({ isBlocked: provider.isBlocked, providerId: provider._id })}>
                                 {provider.isBlocked ? "Unblock" : "Block"}
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => hanldeAdminChangeProviderSlotflowTrustTag({ providerId: provider._id, trustedBySlotflow: provider.trustedBySlotflow })}>
+                            <DropdownMenuItem onClick={() => handleAdminChangeProviderSlotflowTrustTag({ providerId: provider._id, trustedBySlotflow: provider.trustedBySlotflow })}>
                                 {provider.trustedBySlotflow ? "Remove Tag" : "Give Tag"}
                             </DropdownMenuItem>
                         </DropdownMenuContent>
@@ -137,3 +126,5 @@ export const AdminProvidersTableColumns = (
             }
         },
     ]
+
+    export default AdminProvidersTableColumns;

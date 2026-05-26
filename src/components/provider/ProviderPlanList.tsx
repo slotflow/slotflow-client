@@ -1,8 +1,8 @@
 import React from 'react';
-import PlanCard from '../common/PlanCard';
+import PlanCard from '../plan/PlanCard';
 import { useQuery } from '@tanstack/react-query';
-import DataFetchingError from '../common/DataFetchingError';
-import { providerFetchPlans } from '@/utils/apis/provider.api';
+import { providerFetchPlans } from '@/shared/apis/plan';
+import DataFetchingError from '../error/DataFetchingError';
 import ProviderPlanCardShimmer from '../shimmers/ProviderPlanCardShimmer';
 
 const ShimmerCount = Array.from({ length: 3 });
@@ -10,7 +10,10 @@ const ShimmerCount = Array.from({ length: 3 });
 const ProviderPlanList: React.FC = () => {
 
     const { data, isLoading, isError, error } = useQuery({
-        queryFn: providerFetchPlans,
+        queryFn: async () => {
+            const res = await providerFetchPlans();
+            return res.data?.items;
+        },
         queryKey: ["plans"],
         staleTime: 60 * 60 * 1000,
         refetchOnWindowFocus: false,

@@ -1,4 +1,4 @@
-
+import React from "react";
 import {
   Select,
   SelectContent,
@@ -6,46 +6,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import React, { useState } from "react";
-import { settingsTabs } from "@/utils/constants";
-import { Separator } from "@/components/ui/separator";
+import { useLocation } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import { settingsTabs } from "@/shared/utils/constants";
+import PageHeader from "@/components/common/PageHeader";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import AccountSecurity from "@/components/common/AccountSecurity";
-import IntegrationsListing from "@/components/common/IntegrationsListing";
-import PersonalizationList from "@/components/common/PersonalizationList";
-import NotificationSettings from "@/components/common/NotificationSettings";
 
 const SettingsPage: React.FC = () => {
-  const [selectedTab, setSelectedTab] = useState<string>("notifications");
 
-  const renderContent = () => {
-    switch (selectedTab) {
-      case "notifications":
-        return <NotificationSettings />;
-      case "security":
-        return <AccountSecurity />;
-      case "integrations":
-        return <IntegrationsListing />;
-      case "personalization":
-        return <PersonalizationList />;
-      default:
-        return null;
-    }
-  };
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const currentTab = location.pathname.split("/")[2] || "notifications";
 
   return (
-    <div className="p-2">
-      <div className="mb-2">
-        <div className="flex justify-between items-center">
-          <div className="flex space-x-2">
-            <h2 className="text-3xl font-bold tracking-tighter">Settings</h2>
-          </div>
-        </div>
-        <p className="w-8/12 mt-2 text-gray-500 text-sm font-semibold">
-          List of all integrations, you can use based on your subscription
-        </p>
-      </div>
-      <Separator className="shadow-sm" />
+    <div className="container p-4 space-y-6">
+      <PageHeader
+        title="Settings"
+        description="Manage your account, notifications and security."
+      />
 
       <div className="flex flex-col md:flex-row w-full py-4 mt-4 space-x-0 md:space-x-2">
         <div className="hidden md:block w-2/12">
@@ -54,12 +33,11 @@ const SettingsPage: React.FC = () => {
               {settingsTabs.map(({ value, label, icon: Icon }) => (
                 <button
                   key={value}
-                  onClick={() => setSelectedTab(value)}
+                  onClick={() => navigate(value)}
                   className={`flex items-center gap-2 w-full justify-start px-3 py-2 rounded-md text-sm font-medium transition-colors
-                    ${
-                      selectedTab === value
-                        ? "bg-accent text-accent-foreground"
-                        : "hover:bg-muted"
+                    ${currentTab === value
+                      ? "bg-accent text-accent-foreground"
+                      : "hover:bg-muted"
                     }`}
                 >
                   {Icon && <Icon className="w-4 h-4" />}
@@ -71,7 +49,10 @@ const SettingsPage: React.FC = () => {
         </div>
 
         <div className="md:hidden mb-4">
-          <Select value={selectedTab} onValueChange={setSelectedTab}>
+          <Select
+            value={currentTab}
+            onValueChange={(value) => navigate(value)}
+          >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Select a tab" />
             </SelectTrigger>
@@ -85,7 +66,9 @@ const SettingsPage: React.FC = () => {
           </Select>
         </div>
 
-        <div className="flex-1 w-full md:w-10/12">{renderContent()}</div>
+        <div className="flex-1 w-full md:w-10/12">
+          <Outlet />
+        </div>
       </div>
     </div>
   );

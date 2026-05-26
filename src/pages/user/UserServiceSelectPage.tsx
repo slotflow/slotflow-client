@@ -1,36 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-// import { useQuery } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
-import { ServiceCategory } from "@/utils/interface/enums";
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { pushServiceCategory } from "@/utils/redux/slices/userSlice";
-// import DataFetchingError from "@/components/common/DataFetchingError";
-// import ServiceSelectShimmer from "@/components/shimmers/ServiceSelectShimmer";
-// import { userFetchAllServicesForServiceSelectPage } from "@/utils/apis/user.api";
-// import { UserFetchAllAppServicesResponse } from "@/utils/interface/api/userApiInterface";
+import { ServiceCategory } from "@/shared/interface/enums";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
+import { pushServiceCategory } from "@/shared/redux/slices/userSlice";
+import { defaultButtonClassName } from "@/shared/utils/constants";
 
-const UserServiceSelectPage = () => {
+const UserServiceSelectPage: React.FC = () => {
 
     const dispatch = useDispatch<AppDispatch>();
     const { selectedCategories } = useSelector((store: RootState) => store.user);
     const navigate = useNavigate();
-
-    // const { data, isLoading, isError, error } = useQuery({
-    //     queryFn: userFetchAllServicesForServiceSelectPage,
-    //     queryKey: ["services"],
-    //     staleTime: 5 * 60 * 1000,
-    //     refetchOnWindowFocus: false,
-    // });
-
-    // const handleServiceToggle = (serviceId: string) => {
-    //     const currentServices = selectedServices ?? [];
-    //     if (currentServices.includes(serviceId)) {
-    //         dispatch(pushService(currentServices.filter((id) => id !== serviceId)));
-    //     } else {
-    //         dispatch(pushService([...currentServices, serviceId]));
-    //     }
-    // };
 
     const handleCategoryToggle = (category: ServiceCategory) => {
         const currentCategories = selectedCategories ?? [];
@@ -55,7 +35,7 @@ const UserServiceSelectPage = () => {
                         return (
                             <div
                                 key={category}
-                             className={`p-3 rounded-md border cursor-pointer text-center ${isSelected
+                                className={`p-3 rounded-md border cursor-pointer text-center ${isSelected
                                     ? "border-[var(--mainColor)]"
                                     : "border-gray-300"
                                     }`}
@@ -70,10 +50,21 @@ const UserServiceSelectPage = () => {
                     })
                 }
             </div>
-            <div className="flex justify-end mt-6">
+            <div className="flex justify-end mt-6 space-x-2">
                 <Button
-                    className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
-                    onClick={handleSubmitSelectedServices} >Next</Button>
+                    title="Skip"
+                    variant="secondary"
+                    className={defaultButtonClassName}
+                    onClick={handleSubmitSelectedServices} >
+                    Skip
+                </Button>
+                <Button
+                    title="Next"
+                    variant="default"
+                    className={defaultButtonClassName}
+                    onClick={handleSubmitSelectedServices} >
+                    Next
+                </Button>
             </div>
 
         </div>

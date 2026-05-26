@@ -1,17 +1,19 @@
 import { toast } from "react-toastify";
-import peer from "@/utils/service/peer";
-import { formatTime } from "@/utils/helper";
+import peer from "@/shared/service/peer";
 import { Button } from "@/components/ui/button";
 import { videoSocket } from "@/lib/socketService";
+import { joinOrLeft } from "@/shared/apis/booking";
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { formatTime } from "@/shared/helper/formatter";
 import { useNavigate, useParams } from "react-router-dom";
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { userJoinOrLeftRoomCallBack } from "@/utils/apis/user.api";
-import { providerJoinOrLeftRoomCallBack } from "@/utils/apis/provider.api";
-import { Mic, MicOff, Video, VideoOff, PhoneOff, Loader } from "lucide-react";
-import { JoinRoomCallbackRequest } from "@/utils/interface/api/commonApiInterface";
-import { setCamera, setMic, stopVideoCallTimer, updateVideoCallTimer } from "@/utils/redux/slices/videoSlice";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
+import { toggleMediaTrack } from "@/shared/helper/toggleMediaTrack";
+import { JoinRoomCallbackRequest } from "@/shared/interface/api/booking";
+import { disconnectVideoSocket } from "@/shared/socket/videoSocketThunk";
+import { Mic, MicOff, Video, VideoOff, PhoneOff, LoaderCircle } from "lucide-react";
+import { MediaTrackKind, PeerValues, Role, VideoCallSocket } from "@/shared/interface/enums";
+import { setCamera, setMic, stopVideoCallTimer, updateVideoCallTimer } from "@/shared/redux/slices/videoSlice";
 
 const RoomPage = () => {
 
@@ -23,7 +25,10 @@ const RoomPage = () => {
   const myVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
 
+  const myStreamRef = useRef<MediaStream | null>(null);
   const [myStream, setMyStream] = useState<MediaStream | null>(null);
+
+  const [remoteUserName, setRemoteUsername] = useState<string | null>(null);
   const [remoteSocketId, setRemoteSocketId] = useState<string | null>(null);
   const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
 
@@ -32,8 +37,16 @@ const RoomPage = () => {
   const { isVideoCallTimerRunning, videoCallRemainingTime } = useSelector((state: RootState) => state.video);
 
   useEffect(() => {
+    let isMounted = true;
+
     const initStream = async () => {
+      peer.initPeer();
       const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+
+      if (!isMounted) {
+        stream.getTracks().forEach((t) => t.stop());
+        return;
+      }
 
       const videoTrack = stream.getVideoTracks()[0];
       const audioTrack = stream.getAudioTracks()[0];
@@ -41,11 +54,45 @@ const RoomPage = () => {
       dispatch(setCamera(videoTrack?.enabled ?? false));
       dispatch(setMic(audioTrack?.enabled ?? false));
 
+      myStreamRef.current = stream;
       setMyStream(stream);
-      stream.getTracks().forEach((track) => peer.peer.addTrack(track, stream));
+      if (peer.peer && peer.peer.signalingState !== "closed") {
+        stream.getTracks().forEach((track) => peer.peer.addTrack(track, stream));
+      }
     };
+
     initStream();
+
+    return () => {
+      isMounted = false;
+      if (myStreamRef.current) {
+        myStreamRef.current.getTracks().forEach((t) => t.stop());
+      }
+    };
+
   }, [dispatch]);
+
+  useEffect(() => {
+    const handleTrack = (ev: RTCTrackEvent) => {
+      setRemoteStream(ev.streams[0]);
+    };
+    peer.peer.addEventListener(PeerValues.TRACK, handleTrack);
+
+    const handleNegoNeeded = async () => {
+      if (!remoteSocketId) return;
+      if (peer.peer.signalingState !== PeerValues.STABLE) return;
+      const offer = await peer.getOffer();
+      if (offer) {
+        videoSocket?.emit(VideoCallSocket.peerNegotiation, { offer, to: remoteSocketId });
+      }
+    };
+    peer.peer.addEventListener(PeerValues.NEGOTIATION_NEEDED, handleNegoNeeded);
+
+    return () => {
+      peer.peer.removeEventListener(PeerValues.TRACK, handleTrack);
+      peer.peer.removeEventListener(PeerValues.NEGOTIATION_NEEDED, handleNegoNeeded);
+    };
+  }, [remoteSocketId]);
 
   useEffect(() => {
     if (myVideoRef.current && myStream) myVideoRef.current.srcObject = myStream;
@@ -56,74 +103,69 @@ const RoomPage = () => {
   }, [remoteStream]);
 
   useEffect(() => {
-    peer.peer.addEventListener("track", (ev) => {
-      setRemoteStream(ev.streams[0]);
-    });
+    videoSocket?.emit(VideoCallSocket.roomJoin, { roomId, user: { id: user?.uid, name: user?.username } });
 
-    peer.peer.addEventListener("negotiationneeded", async () => {
-      if (!remoteSocketId) return;
-      if (peer.peer.signalingState !== "stable") return;
-      const offer = await peer.getOffer();
-      videoSocket?.emit("peer:nego:needed", { offer, to: remoteSocketId });
-    });
-  }, [remoteSocketId]);
-
-  useEffect(() => {
-    videoSocket?.emit("room:join", { roomId, user: { email: "user@example.com" } });
-
-    videoSocket?.on("user:joined", async ({ id }) => {
+    videoSocket?.on(VideoCallSocket.userJoined, async ({ id, user: joinedUser }) => {
       setRemoteSocketId(id);
+      setRemoteUsername(joinedUser?.name);
       const offer = await peer.getOffer();
-      videoSocket?.emit("user:call", { to: id, offer });
+      if (joinedUser?.id !== user?.uid) {
+        toast.success(`${joinedUser?.name} joined the call`);
+      }
+      videoSocket?.emit(VideoCallSocket.userCall, { to: id, offer, user: { name: user?.username } });
     });
 
-    videoSocket?.on("incomming:call", async ({ from, offer }) => {
+    videoSocket?.on(VideoCallSocket.incomingCall, async ({ from, offer, user: caller }) => {
       setRemoteSocketId(from);
+      setRemoteUsername(caller?.name);
       const ans = await peer.getAnswer(offer);
-      videoSocket?.emit("call:accepted", { to: from, ans });
+      videoSocket?.emit(VideoCallSocket.callAccepted, { to: from, ans });
     });
 
-    videoSocket?.on("call:accepted", async ({ ans }) => {
+    videoSocket?.on(VideoCallSocket.callAccepted, async ({ ans }) => {
       await peer.setLocalDescription(ans);
     });
 
-    videoSocket?.on("peer:nego:needed", async ({ from, offer }) => {
+    videoSocket?.on(VideoCallSocket.peerNegotiation, async ({ from, offer }) => {
       const ans = await peer.getAnswer(offer);
-      videoSocket?.emit("peer:nego:done", { to: from, ans });
+      videoSocket?.emit(VideoCallSocket.peerNegotiationDone, { to: from, ans });
     });
 
-    videoSocket?.on("peer:nego:final", async ({ ans }) => {
+    videoSocket?.on(VideoCallSocket.peerNegotiationFinal, async ({ ans }) => {
       await peer.setLocalDescription(ans);
     });
 
-    videoSocket?.on("user:left", () => {
+    videoSocket?.on(VideoCallSocket.userLeft, () => {
       setRemoteStream(null);
     });
 
     return () => {
-      videoSocket?.emit("room:leave", { roomId });
-      videoSocket?.off();
+      peer.close();
+      videoSocket?.emit(VideoCallSocket.roomLeave, { roomId });
+      dispatch(disconnectVideoSocket());
     };
-  }, [roomId]);
+  }, [roomId, user?.email]);
 
+  const toggleCamera = () =>
+    toggleMediaTrack({
+      kind: MediaTrackKind.VIDEO,
+      stream: myStream,
+      setStream: setMyStream,
+      isOn: isCameraOn,
+      setIsOn: (v) => dispatch(setCamera(v)),
+      videoRef: myVideoRef,
+      peerConnection: peer.peer,
+    });
 
-  const toggleCamera = () => {
-    if (!myStream) return;
-    const videoTrack = myStream.getVideoTracks()[0];
-    if (videoTrack) {
-      videoTrack.enabled = !videoTrack.enabled;
-      dispatch(setCamera(videoTrack.enabled));
-    }
-  };
-
-  const toggleMic = () => {
-    if (!myStream) return;
-    const audioTrack = myStream.getAudioTracks()[0];
-    if (audioTrack) {
-      audioTrack.enabled = !audioTrack.enabled;
-      dispatch(setMic(audioTrack.enabled));
-    }
-  };
+  const toggleMic = () =>
+    toggleMediaTrack({
+      kind: MediaTrackKind.AUDIO,
+      stream: myStream,
+      setStream: setMyStream,
+      isOn: isMicOn,
+      setIsOn: (v) => dispatch(setMic(v)),
+      peerConnection: peer.peer,
+    });
 
   useEffect(() => {
     if (isVideoCallTimerRunning) {
@@ -136,7 +178,7 @@ const RoomPage = () => {
 
   const handleEndCall = async () => {
     if (!user || !roomId) {
-      toast.error("Something went wrong, please truy again");
+      toast.error("Something went wrong, please try again");
       return;
     }
 
@@ -144,40 +186,36 @@ const RoomPage = () => {
 
     const data: JoinRoomCallbackRequest = {
       joined: true,
-      role: user.role,
       leftCallTime: currentTime,
       videoCallRoomId: roomId,
     }
 
     try {
-      const joinCallback = data.role === "USER"
-        ? userJoinOrLeftRoomCallBack
-        : providerJoinOrLeftRoomCallBack;
 
-      const res = await joinCallback(data);
+      const res = await joinOrLeft(data);
 
       if (res.success) {
-        toast.success("You leaved meet successfully");
+        toast.success("You left meet successfully");
         myStream?.getTracks().forEach((t) => t.stop());
         peer.peer.close();
         videoSocket?.emit("room:leave", { roomId });
+        dispatch(disconnectVideoSocket());
+
         if (myStream) {
           const audioTrack = myStream.getAudioTracks()[0];
           if (audioTrack) {
-            audioTrack.enabled = !audioTrack.enabled;
+            audioTrack.enabled = false;
             dispatch(setMic(false));
           }
-        }
 
-        if (myStream) {
           const videoTrack = myStream.getVideoTracks()[0];
           if (videoTrack) {
-            videoTrack.enabled = !videoTrack.enabled;
+            videoTrack.enabled = false;
             dispatch(setCamera(false));
           }
         }
 
-        if(videoCallRemainingTime > 0) {
+        if (videoCallRemainingTime > 0) {
           dispatch(stopVideoCallTimer({
             remainingTime: videoCallRemainingTime,
             roomId
@@ -188,12 +226,13 @@ const RoomPage = () => {
             roomId: null
           }));
         }
-        
-        navigate(`/${user?.role === "PROVIDER" ? "provider" : "user"}/video-call`, { replace: true });
+
+        navigate(`/${user?.role === Role.PROVIDER ? "provider/bookings" : "user/bookings"}`, { replace: true });
       } else {
         toast.error(res.message || "Unable to join, please try again");
       }
-    } catch {
+    } catch (error) {
+      console.log("error : ", error)
       toast.error("Please try again");
     }
   };
@@ -201,7 +240,6 @@ const RoomPage = () => {
   return (
     <div className="flex flex-col items-center justify-center h-full relative">
 
-      {/* Timer in top-right */}
       <div className="absolute top-2 right-4">
         {isVideoCallTimerRunning ? (
           <span className="text-xs md:text-sm text-black font-semibold bg-amber-300 px-3 py-1 rounded-md shadow">
@@ -242,22 +280,25 @@ const RoomPage = () => {
               playsInline
               className="w-full h-full object-cover rounded-2xl scale-x-[-1]"
             />
+            <div className="absolute bottom-3 left-3 text-white bg-black/50 px-3 py-1 rounded-lg text-sm">
+              {remoteUserName}
+            </div>
           </div>
         ) : (
           <div className="flex justify-center items-center border rounded-2xl w-full h-[300px] md:h-[400px]">
-            <Loader className="animate-spin w-6 h-6 text-gray-500" />
+            <LoaderCircle className="animate-spin w-6 h-6 text-gray-500" />
           </div>
         )}
       </div>
 
       <div className="flex gap-4 mt-6 bg-[var(--menuItemHoverBg)] p-4 rounded-xl shadow">
-        <Button onClick={toggleCamera} variant={isCameraOn ? "default" : "destructive"} className="cursor-pointer" >
+        <Button title={isCameraOn ? "Video On" : "Video Off"} onClick={toggleCamera} variant={isCameraOn ? "default" : "destructive"} className="cursor-pointer" >
           {isCameraOn ? <Video /> : <VideoOff />}
         </Button>
-        <Button onClick={toggleMic} variant={isMicOn ? "default" : "destructive"} className="cursor-pointer" >
+        <Button title={isMicOn ? "Mic On" : "Mic Off"} onClick={toggleMic} variant={isMicOn ? "default" : "destructive"} className="cursor-pointer" >
           {isMicOn ? <Mic /> : <MicOff />}
         </Button>
-        <Button onClick={handleEndCall} variant="destructive" className="cursor-pointer" >
+        <Button title="End Call" onClick={handleEndCall} variant="destructive" className="cursor-pointer" >
           <PhoneOff />
         </Button>
       </div>

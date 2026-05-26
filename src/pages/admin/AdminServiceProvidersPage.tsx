@@ -1,34 +1,66 @@
-import { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import CommonTable from "@/components/common/CommonTable";
-import { slideIn } from "@/utils/helper/gsapAnimationSlide";
-import { AppDispatch, RootState } from "@/utils/redux/appStore";
-import { adminFetchAllProviders } from "@/utils/apis/adminProvider.api";
-import { setProviderRejectModal } from "@/utils/redux/slices/adminSlice";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import React, { useEffect, useRef } from "react";
+import { RootState } from "@/shared/redux/appStore";
+import PageHeader from "@/components/common/PageHeader";
+import CommonTable from "@/components/table/CommonTable";
+import { slideIn } from "@/shared/helper/gsapAnimationSlide";
+import { useAdminProvider } from "@/hooks/adminHooks/useProvider";
+import { fetchServiceProvidersForAdmin } from "@/shared/apis/providerProfile";
 import RejectproviderForm from "@/components/form/AdminForms/RejectproviderForm";
-import { useAdminProviderActions } from "@/hooks/adminHooks/useAdminProviderActions";
-import { AdminFetchAllProvidersResponse } from "@/utils/interface/api/adminProviderApiInterface";
-import { AdminProvidersTableColumns } from "@/components/table/tableColumns/AdminProvidersTableColumn";
+import AdminProvidersTableColumns from "@/components/table/tableColumns/AdminProvidersTableColumn";
+import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminFetchAllProvidersResponse } from "@/shared/interface/api/providerProfile";
 
-const AdminServiceProvidersPage = () => {
+const AdminServiceProvidersPage: React.FC = () => {
 
-  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const { isProviderRejectModalOpen } = useSelector((state: RootState) => state.admin);
 
   const {
-    handleAdminApproveProvider,
-    handleOpenProviderRejectModal,
-    hanldeAdminChangeProviderBlockStatus,
-    handleGetProviderDetailPage,
-    hanldeAdminChangeProviderSlotflowTrustTag
-  } = useAdminProviderActions();
+    approveProviderHandler,
+    handleProviderRejectModal,
+    changeProviderBlockStatusHandler,
+    changeProviderSlotflowTrustTag
+  } = useAdminProvider();
+
+  const handleAdminApproveProvider = async (providerId: string) => {
+    const res = await approveProviderHandler(providerId);
+    if (res.success) {
+      toast.success(res.message);
+    } else {
+      toast.error(res.message);
+    }
+  }
+
+  const handleAdminChangeProviderBlockStatus = async (data: AdminChangeProviderBlockStatusRequest) => {
+    const res = await changeProviderBlockStatusHandler(data);
+    if (res.success) {
+      toast.success(res.message);
+    } else {
+      toast.error(res.message);
+    }
+  }
+
+  const handleAdminChangeProviderSlotflowTrustTag = async (data: AdminChangeProviderTrustTagRequest) => {
+    const res = await changeProviderSlotflowTrustTag(data);
+    if (res.success) {
+      toast.success(res.message);
+    } else {
+      toast.error(res.message);
+    }
+  }
+
+  const handleGetProviderDetailPage = (providerId: string) => {
+    navigate(`/admin/service-providers/${providerId}`)
+  };
 
   const columns = AdminProvidersTableColumns(
     handleAdminApproveProvider,
-    handleOpenProviderRejectModal,
-    hanldeAdminChangeProviderBlockStatus,
+    handleProviderRejectModal,
+    handleAdminChangeProviderBlockStatus,
     handleGetProviderDetailPage,
-    hanldeAdminChangeProviderSlotflowTrustTag
+    handleAdminChangeProviderSlotflowTrustTag
   )
 
   const formRef = useRef<HTMLDivElement>(null);
@@ -40,9 +72,13 @@ const AdminServiceProvidersPage = () => {
   }, [isProviderRejectModalOpen]);
 
   return (
-    <>
+    <div className="p-4">
+      <PageHeader
+        title="Service Providers"
+        description="Service providers list"
+      />
       <CommonTable<AdminFetchAllProvidersResponse>
-        fetchApiFunction={adminFetchAllProviders}
+        fetchApiFunction={fetchServiceProvidersForAdmin}
         queryKey="providers"
         column={columns}
         columnsCount={6}
@@ -50,12 +86,14 @@ const AdminServiceProvidersPage = () => {
       {isProviderRejectModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
           <RejectproviderForm
-            onClose={() => dispatch(setProviderRejectModal({ modalState: false, providerId: null }))}
+            onClose={() => {
+              handleProviderRejectModal({ modalState: false, providerId: null })
+            }}
             formRef={formRef}
           />
         </div>
       )}
-    </>
+    </div>
   );
 
 };

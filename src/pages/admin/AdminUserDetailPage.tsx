@@ -1,47 +1,32 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { userTabs } from '@/utils/constants';
 import ReviewsPage from '../common/ReviewsPage';
-import ProfileHead from '@/components/common/profile/ProfileHead';
-import { adminFetchAllReviews } from '@/utils/apis/adminReview.api';
-import DataFetchingError from '@/components/common/DataFetchingError';
-import ProfileListing from '@/components/common/profile/ProfileListing';
-import AddressListing from '@/components/common/profile/AddressListing';
-import ProfileHorizontalTabs from '@/components/common/ProfileHorizontalTabs';
-import { adminFetchUserAddress, adminFetchUserProfileDetails } from '@/utils/apis/adminUser.api';
-import { Role } from '@/utils/interface/enums';
+import { userTabs } from '@/shared/utils/constants';
+import { fetchAddressByUserId } from '@/shared/apis/address';
+import { fetchUserProfileDetails } from '@/shared/apis/user';
+import ProfileListing from '@/components/profile/ProfileListing';
+import AddressListing from '@/components/profile/AddressListing';
+import DataFetchingError from '@/components/error/DataFetchingError';
+import ProfileHorizontalTabs from '@/components/profile/ProfileHorizontalTabs';
 
 const AdminUserDetailPage: React.FC = () => {
 
     const { userId } = useParams();
     const [tab, setTab] = useState<number>(0);
-    const [selectedUserData, setSelectedUserData] = useState<{ selectedUserName: string, selectedUserProfileImage: string | null }>({
-        selectedUserName: "",
-        selectedUserProfileImage: null
-    });
 
     if (!userId) return <DataFetchingError message={"User Profile fetching error"} />
 
     return (
         <div className="min-h-full p-2 flex flex-col">
-
-            <ProfileHead
-                updation={false}
-                isMyProfile={false}
-                showDetails
-                selectedUserData={selectedUserData}
-            />
-
             <div className="mt-6 md:flex">
                 <ProfileHorizontalTabs isAdmin={true} setTab={setTab} tab={tab} tabArray={userTabs} />
-
                 <div className={`flex-grow`}>
                     {tab === 0 && (
-                        <ProfileListing fetchApiFunction={() => adminFetchUserProfileDetails(userId)} queryKey="userProfile" userOrProviderId={userId} adminLookingUser shimmerRow={8} setSelectedUserData={setSelectedUserData} />
+                        <ProfileListing fetchApiFunction={() => fetchUserProfileDetails(userId)} queryKey="userProfile" userOrProviderId={userId} adminLookingUser shimmerRow={8} />
                     ) || tab === 1 && (
-                        <AddressListing fetchApiFunction={() => adminFetchUserAddress(userId)} queryKey='' userOrProviderId={userId} />
+                        <AddressListing fetchApiFunction={() => fetchAddressByUserId(userId)} queryKey='' userOrProviderId={userId} />
                     ) || tab === 2 && (
-                        <ReviewsPage isAdmin fetchFun={adminFetchAllReviews} id={userId} role={Role.USER} className='mt-2 md:mt-0' />
+                        <ReviewsPage userId={userId} isPage={false} />
                     )}
                 </div>
             </div>

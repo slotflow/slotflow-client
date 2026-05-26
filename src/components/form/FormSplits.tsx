@@ -1,9 +1,9 @@
 import React from "react";
 import { Button } from "../ui/button";
-import { Loader } from "lucide-react";
+import { LoaderCircle } from "lucide-react";
 import logo from '../../assets/logos/logo-transparent.png';
 import { CardDescription, CardHeader, CardTitle } from "../ui/card";
-import { AuthFormsButtonProps, AuthFormsHeadingProps } from "@/utils/interface/commonInterface";
+import { AuthFormsButtonProps, AuthFormsHeadingProps } from "@/shared/interface/componentInterface";
 
 export const FormHeading: React.FC<AuthFormsHeadingProps> = React.memo(({ title, description }) => {
     return (
@@ -19,18 +19,24 @@ export const FormHeading: React.FC<AuthFormsHeadingProps> = React.memo(({ title,
     )
 });
 
-export const FormButton: React.FC<AuthFormsButtonProps> = React.memo(({ text, loading = false, disabled }) => {
+export const FormButton: React.FC<AuthFormsButtonProps> = React.memo(({ 
+    text, 
+    loading = false,
+    disabled ,
+    title
+}) => {
     return (
         <Button
+            title={title}
             variant="default"
             type="submit"
             disabled={disabled}
-            className="border-0 w-full flex items-center justify-center cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
+            className="border-1 w-full flex items-center justify-center cursor-pointer bg-[var(--mainColor)] hover:bg-[var(--mainColorHover)] hover:text-white transition-colors border-[var(--mainColor)] dark:text-white"
         >
             {loading ? (
                 <span className="flex items-center gap-2">
-                    <Loader className="animate-spin size-4" />
-                    <span>Loading</span>
+                    <LoaderCircle className="animate-spin size-4" />
+                    <span>{text}</span>
                 </span>
             ) : (
                 text

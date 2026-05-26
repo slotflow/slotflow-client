@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { Input } from "../ui/input";
+import { Plus } from "lucide-react";
 import { Button } from "../ui/button";
-
-interface TagInputProps {
-  value: string[];
-  onChange: (tags: string[]) => void;
-}
+import { defaultButtonClassName } from "@/shared/utils/constants";
+import { TagInputProps } from "@/shared/interface/componentInterface";
 
 const TagInput: React.FC<TagInputProps> = ({ value, onChange }) => {
   const [input, setInput] = useState("");
@@ -23,8 +21,7 @@ const TagInput: React.FC<TagInputProps> = ({ value, onChange }) => {
   return (
     <div className="w-full">
       <label className="text-sm font-medium">Tags</label>
-
-      <div className="flex gap-2 mt-2">
+      <div className="flex gap-2 mt-1">
         <Input
           type="text"
           value={input}
@@ -33,12 +30,13 @@ const TagInput: React.FC<TagInputProps> = ({ value, onChange }) => {
           className="border rounded-md px-3 py-2 w-full text-sm"
         />
         <Button
+          title="Create Tag"
           type="button"
-          variant="default"
+          variant="outline"
           onClick={addTag}
-          className="cursor-pointer w-10/12 md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
+          className={defaultButtonClassName}
         >
-          Add
+          <Plus className="w-4 h-4" />
         </Button>
       </div>
 
@@ -50,6 +48,7 @@ const TagInput: React.FC<TagInputProps> = ({ value, onChange }) => {
           >
             {tag}
             <Button
+              title="Remove"
               type="button"
               variant="ghost"
               onClick={() => removeTag(tag)}

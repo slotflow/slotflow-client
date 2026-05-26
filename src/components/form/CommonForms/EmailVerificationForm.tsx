@@ -2,18 +2,19 @@ import FormField from "../FormField";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { resendOtp } from "@/utils/apis/auth.api";
+import { useNavigate } from "react-router-dom";
+import { appConfig } from "@/shared/config/env";
+import { verifyEmail } from "@/shared/apis/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AppDispatch } from "@/utils/redux/appStore";
+import { AppDispatch } from "@/shared/redux/appStore";
 import { FormButton, FormHeading } from "../FormSplits";
-import { VerifyEmailFormType, verifyEmailZodSchema } from "@/utils/zod/authZod";
-import { RedirectTo, EmailVerificationFormProps } from "@/utils/interface/commonInterface";
-import { appConfig } from "@/utils/env";
-import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
+import { redirectPaths } from "@/shared/utils/constants";
+import { VerifyEmailFormType, verifyEmailZodSchema } from "@/shared/zod/authZod";
 
-const EmailVerificationForm: React.FC<EmailVerificationFormProps> = ({ role }) => {
+const EmailVerificationForm: React.FC = () => {
+
+    const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const { goToAuthPage } = useAuthNavigation();
 
     const {
         register,
@@ -28,19 +29,21 @@ const EmailVerificationForm: React.FC<EmailVerificationFormProps> = ({ role }) =
     });
 
     const onSubmit = async (data: VerifyEmailFormType) => {
-        if (!role) {
-            toast.info("Select your account type.");
-            return;
-        }
-
         try {
-            const res = await dispatch(resendOtp({ role, email: data.email })).unwrap();
+            const res = await dispatch(verifyEmail({ email: data.email })).unwrap();
             if (res.success) {
+                // Navigate immediately for instant UX
+                navigate("verify/otp");
+                // Show toast after navigation (toast uses portal so still visible)
                 toast.success(res.message);
-                goToAuthPage(role, RedirectTo.VERIFY_OTP);
+            } else {
+                toast.error(res.message);
             }
         } catch (error) {
-            if(appConfig.dev)console.log("An error occurred during email verification ",error);
+            if (appConfig.isDevelopment) {
+                console.log("An error occurred during email verification ", error);
+            }
+            toast.error("An error occurred during email verification");
         }
     };
 
@@ -60,13 +63,18 @@ const EmailVerificationForm: React.FC<EmailVerificationFormProps> = ({ role }) =
                                 error={errors.email?.message}
                                 required={true}
                             />
-                            <FormButton text="Submit" loading={isSubmitting} disabled={isSubmitting || !isValid} />
+                            <FormButton
+                                text={isSubmitting ? "Verifying" : "Verify"}
+                                loading={isSubmitting}
+                                disabled={isSubmitting || !isValid}
+                                title="Verify Email"
+                            />
                         </form>
 
                         <p className="mt-6 flex justify-between text-xs md:text-sm/6 text-[var(--textTwo)] px-2">
                             <span
                                 className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
-                                onClick={() => goToAuthPage(role, RedirectTo.LOGIN)}
+                                onClick={() => navigate(redirectPaths.LOGIN)}
                             >
                                 Cancel
                             </span>

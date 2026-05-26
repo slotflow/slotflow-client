@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "@/utils/env";
+import { firebaseConfig } from "@/shared/config/env";
 import { getMessaging } from "firebase/messaging";
 
 

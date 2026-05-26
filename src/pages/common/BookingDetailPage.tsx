@@ -1,25 +1,22 @@
 import React from 'react';
-import { formatDate } from '@/utils/helper';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import DataFetchingError from '@/components/common/DataFetchingError';
-import InfoDisplayComponent from '@/components/common/InfoDisplayComponent';
-import { Booking } from '@/utils/interface/entityInterface/bookingInterface';
-import ProfileDetailsShimmer from '@/components/shimmers/ProfileDetailsShimmer';
-import { FetchBookingDetailsResponse } from '@/utils/interface/api/commonApiInterface';
+import { fetchBookingDetails } from '@/shared/apis/booking';
+import { formatDateWithTime } from '@/shared/helper/formatter';
+import DataFetchingError from '@/components/error/DataFetchingError';
+import DataField from '@/components/app/DataField';
+import { Booking } from '@/shared/interface/entityInterface/bookingInterface';
+import ProfileDetailsShimmer from '@/components/shimmers/DataFieldShimmer';
 
-interface BookingDetailPageProps {
-  queryFunction: (bookingId: Booking["_id"]) => Promise<FetchBookingDetailsResponse>;
-}
-
-const BookingDetailPage: React.FC<BookingDetailPageProps> = ({
-  queryFunction
-}) => {
+const BookingDetailPage: React.FC = () => {
 
   const { bookingId } = useParams<{ bookingId: Booking["_id"] }>();
 
   const { data, isLoading, isError, error } = useQuery({
-    queryFn: () => queryFunction(bookingId!),
+    queryFn: async () => {
+      const res = await fetchBookingDetails(bookingId!);
+      return res.data;
+    },
     queryKey: ["booking", bookingId],
     staleTime: 60 * 60 * 1000,
     refetchOnWindowFocus: false,
@@ -27,8 +24,8 @@ const BookingDetailPage: React.FC<BookingDetailPageProps> = ({
   });
 
   const dataMap = [
-    { label: "Booked On", value: data?.appointmentDate },
-    { label: "Booking At", value: data?.createdAt, formatDate },
+    { label: "Booked On", value: data?.appointmentDate, isDate: true },
+    { label: "Booking At", value: data?.createdAt, isDate: true },
     { label: "Service Mode", value: data?.appointmentMode },
     { label: "Booking Status", value: data?.appointmentStatus },
     { label: "Slot Time", value: data?.appointmentTime },
@@ -51,7 +48,7 @@ const BookingDetailPage: React.FC<BookingDetailPageProps> = ({
           <table className="table-auto border-collapse border  w-full">
             <tbody>
               {dataMap.map((item) => (
-                <InfoDisplayComponent key={item.label} {...item} />
+                <DataField key={item.label} {...item} />
               ))}
 
               <tr className="border-b">
@@ -76,7 +73,7 @@ const BookingDetailPage: React.FC<BookingDetailPageProps> = ({
                 <td className="p-4 w-8/12">
                   {data?.onlineTrack?.user
                     ? data.onlineTrack.user.joinedTime
-                      ? formatDate(data.onlineTrack.user.joinedTime)
+                      ? formatDateWithTime(data.onlineTrack.user.joinedTime)
                       : "No data found"
                     : "No data found"}
                 </td>
@@ -87,7 +84,7 @@ const BookingDetailPage: React.FC<BookingDetailPageProps> = ({
                 <td className="p-4 w-8/12">
                   {data?.onlineTrack?.user
                     ? data.onlineTrack.user.leftCallTime
-                      ? formatDate(data.onlineTrack.user.leftCallTime)
+                      ? formatDateWithTime(data.onlineTrack.user.leftCallTime)
                       : "No data found"
                     : "No data found"}
                 </td>
@@ -108,7 +105,7 @@ const BookingDetailPage: React.FC<BookingDetailPageProps> = ({
                 <td className="p-4 w-8/12">
                   {data?.onlineTrack?.provider
                     ? data.onlineTrack.provider.joinedTime
-                      ? formatDate(data.onlineTrack.provider.joinedTime)
+                      ? formatDateWithTime(data.onlineTrack.provider.joinedTime)
                       : "No data found"
                     : "No data found"}
                 </td>
@@ -119,7 +116,7 @@ const BookingDetailPage: React.FC<BookingDetailPageProps> = ({
                 <td className="p-4 w-8/12">
                   {data?.onlineTrack?.provider
                     ? data.onlineTrack.provider.leftCallTime
-                      ? formatDate(data.onlineTrack.provider.leftCallTime)
+                      ? formatDateWithTime(data.onlineTrack.provider.leftCallTime)
                       : "No data found"
                     : "No data found"}
                 </td>
@@ -141,7 +138,7 @@ const BookingDetailPage: React.FC<BookingDetailPageProps> = ({
                         {track.appointmentStatus}
                       </td>
                       <td className="p-4 w-8/12">
-                        {track.time ? formatDate(track.time) : "No time recorded"}
+                        {track.time ? formatDateWithTime(track.time) : "No time recorded"}
                       </td>
                     </tr>
                   );

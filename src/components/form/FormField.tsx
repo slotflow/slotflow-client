@@ -4,8 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, Info } from "lucide-react";
 import { type FieldValues } from "react-hook-form";
-import { CustomValidator } from "@/utils/validator";
-import { FormFieldProps } from "@/utils/interface/componentInterface/commonComponentInterface";
+import { CustomValidator } from "@/shared/utils/validator";
+import { FormFieldProps } from "@/shared/interface/componentInterface";
 
 const FormField = <T extends FieldValues>({
   id,
@@ -32,9 +32,7 @@ const FormField = <T extends FieldValues>({
 
   const handlePasswordStrength = (val: string) => {
     if (type === "password" && val) {
-      console.log("val : ", val);
       const result = CustomValidator.validator("password", val);
-      console.log("result : ", result);
       setPasswordStrength(result?.point ?? null);
     } else {
       setPasswordStrength(null);
@@ -104,20 +102,20 @@ const FormField = <T extends FieldValues>({
               },
             })}
             className={`
-            ${error && "border-destructive"}
+            ${type === "password" && error && "border-destructive"}
             ${passwordStrength !== null
                 ? passwordStrength <= 25
-                  ? "focus:outline-red-500"
+                  ? "focus:border-red-500 border-red-500"
                   : passwordStrength <= 50
-                    ? "focus:outline-orange-500"
+                    ? "focus:border-orange-500 border-orange-500"
                     : passwordStrength <= 75
-                      ? "focus:outline-yellow-500"
+                      ? "focus:border-yellow-500 border-yellow-500"
                       : passwordStrength === 100
-                        ? "focus:outline-green-500"
-                        : "focus:outline-[var(--mainColor)]"
+                        ? "focus:border-green-500 border-green-500"
+                        : "focus:border-[var(--mainColor)]"
                 : error
-                  ? "focus:outline-red-500"
-                  : "focus:outline-[var(--mainColor)]"
+                  ? "focus:border-destructive border-destructive"
+                  : "focus:border-[var(--mainColor)]"
               }
             `}
           />
@@ -127,7 +125,7 @@ const FormField = <T extends FieldValues>({
               onClick={() => setShow(!show)}
               className="absolute inset-y-0 right-0 pr-3 flex items-center text-muted-foreground"
             >
-              {show ? <EyeOff /> : <Eye />}
+              {show ? <Eye /> : <EyeOff />}
             </button>
           )}
         </div>

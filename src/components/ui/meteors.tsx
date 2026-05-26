@@ -39,17 +39,17 @@ export const Meteors = ({
   // }, [number, minDelay, maxDelay, minDuration, maxDuration, angle])
 
   useEffect(() => {
-  const styles = [...new Array(number)].map(() => ({
-    "--angle": -angle + "deg",
-    top: `${Math.random() * 100}%`, // 👈 random anywhere vertically
-    left: `${Math.random() * 100}%`, // 👈 random anywhere horizontally
-    animationDelay: Math.random() * (maxDelay - minDelay) + minDelay + "s",
-    animationDuration:
-      Math.floor(Math.random() * (maxDuration - minDuration) + minDuration) +
-      "s",
-  }))
-  setMeteorStyles(styles)
-}, [number, minDelay, maxDelay, minDuration, maxDuration, angle])
+    const styles = [...new Array(number)].map(() => ({
+      "--angle": -angle + "deg",
+      top: `${Math.random() * 100}%`, // 👈 random anywhere vertically
+      left: `${Math.random() * 100}%`, // 👈 random anywhere horizontally
+      animationDelay: Math.random() * (maxDelay - minDelay) + minDelay + "s",
+      animationDuration:
+        Math.floor(Math.random() * (maxDuration - minDuration) + minDuration) +
+        "s",
+    }))
+    setMeteorStyles(styles)
+  }, [number, minDelay, maxDelay, minDuration, maxDuration, angle])
 
   return (
     <>

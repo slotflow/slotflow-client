@@ -2,12 +2,12 @@ import { Button } from "../../ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
-import { AdminChangeServiceBlockStatusRequest, AdminFetchAllServicesResponse } from "@/utils/interface/api/adminServiceApiInterface";
+import { ChangeServiceBlockStatusRequest, FetchServicesResponse } from "@/shared/interface/api/service";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../ui/dropdown-menu";
 
-export const AdminAppServicesTableColumns = (
-    handleAdminChangeServiceStatus: (data: AdminChangeServiceBlockStatusRequest) => void,
-): ColumnDef<AdminFetchAllServicesResponse>[] => [
+const AdminAppServicesTableColumns = (
+    handleAdminChangeServiceStatus: (data: ChangeServiceBlockStatusRequest) => void,
+): ColumnDef<FetchServicesResponse>[] => [
         {
             accessorKey: "_id",
             header: "id",
@@ -45,7 +45,7 @@ export const AdminAppServicesTableColumns = (
                 return (
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="h-8 w-8 p-0 cursor-pointer">
+                            <Button title="Open Menu" variant="ghost" className="h-8 w-8 p-0 cursor-pointer">
                                 <span className="sr-only">Open menu</span>
                                 <MoreHorizontal className="h-4 w-4" />
                             </Button>
@@ -63,3 +63,5 @@ export const AdminAppServicesTableColumns = (
             },
         }
     ]
+
+    export default AdminAppServicesTableColumns;

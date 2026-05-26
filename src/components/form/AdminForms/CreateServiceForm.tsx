@@ -1,27 +1,25 @@
 import FormField from "../FormField";
+import { toast } from "react-toastify";
+import SelectField from "../SelectField";
 import { useForm } from "react-hook-form";
 import { FormButton } from "../FormSplits";
-import { SelectField } from "../SelectField";
 import { Button } from "@/components/ui/button";
+import { appConfig } from "@/shared/config/env";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { serviceCategoryOptions } from "@/utils/constants";
-import { slideOut } from "@/utils/helper/gsapAnimationSlide";
-import { handleFormError } from "@/utils/helper/formErrorCatcher";
-import { useAdminServiceActions } from "@/hooks/adminHooks/useAdminServiceActions";
-import { AdminCreateServiceFormType, adminCreateServiceZodSchema } from "@/utils/zod/adminZod";
-import { ServiceCategory } from "@/utils/interface/enums";
-import { appConfig } from "@/utils/env";
-
-interface CreateServiceFormProps {
-  onClose: () => void;
-  formRef: React.RefObject<HTMLDivElement | null>;
-}
+import { createService } from "@/shared/apis/service";
+import { useQueryClient } from "@tanstack/react-query";
+import { ServiceCategory } from "@/shared/interface/enums";
+import { slideOut } from "@/shared/helper/gsapAnimationSlide";
+import { serviceCategoryOptions } from "@/shared/utils/constants";
+import { handleFormError } from "@/shared/helper/formErrorCatcher";
+import { CreateServiceFormProps } from "@/shared/interface/componentInterface";
+import { AdminCreateServiceFormType, adminCreateServiceZodSchema } from "@/shared/zod/adminZod";
 
 const CreateServiceForm: React.FC<CreateServiceFormProps> = ({
   onClose,
   formRef,
 }) => {
-  const { handleAdminServiceCreating } = useAdminServiceActions();
+  const queryClient = useQueryClient();
 
   const handleCloseForm = () => {
     slideOut(formRef.current, {
@@ -46,13 +44,20 @@ const CreateServiceForm: React.FC<CreateServiceFormProps> = ({
 
   const onSubmit = async (data: AdminCreateServiceFormType) => {
     try {
-      await handleAdminServiceCreating(data);
-      reset();
-      handleCloseForm();
+      const res = await createService(data);
+      if (res.success) {
+        toast.success(res.message);
+        reset();
+        handleCloseForm();
+        queryClient.invalidateQueries({ queryKey: ["appServices"] });
+      } else {
+        toast.error(res.message);
+      }
     } catch (error) {
-      if (appConfig.dev) {
+      if (appConfig.isDevelopment) {
         console.log("Error while saving service:", error);
       }
+      toast.error("Something went wrong while creating service")
     }
   };
 
@@ -66,6 +71,15 @@ const CreateServiceForm: React.FC<CreateServiceFormProps> = ({
         onSubmit={handleSubmit(onSubmit, handleFormError(setFocus))}
         className="space-y-6"
       >
+
+        <SelectField<AdminCreateServiceFormType, ServiceCategory>
+          id="serviceCategory"
+          label="Service Category"
+          options={serviceCategoryOptions}
+          register={register}
+          error={errors.serviceCategory}
+        />
+
         <FormField<AdminCreateServiceFormType>
           id="serviceName"
           label="Service Name"
@@ -76,21 +90,20 @@ const CreateServiceForm: React.FC<CreateServiceFormProps> = ({
           required
         />
 
-        <SelectField<AdminCreateServiceFormType, ServiceCategory>
-          id="serviceCategory"
-          label="Service Category"
-          options={serviceCategoryOptions}
-          register={register}
-          error={errors.serviceCategory}
-        />
-
         <div className="space-y-2">
           <FormButton
-            text="Save"
+            text={isSubmitting ? "Saving" : "Save"}
             loading={isSubmitting}
             disabled={isSubmitting || !isValid}
+            title="Save"
           />
-          <Button variant="destructive" className="cursor-pointer w-full" type="button" onClick={handleCloseForm}>
+          <Button
+            title="Cancel"
+            variant="destructive"
+            className="cursor-pointer w-full"
+            type="button"
+            onClick={handleCloseForm}
+          >
             Cancel
           </Button>
         </div>

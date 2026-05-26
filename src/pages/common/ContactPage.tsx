@@ -4,9 +4,9 @@ import { useState, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { contactData } from "@/utils/constants";
+import Heading from "@/components/landing/Heading";
 import { Textarea } from "@/components/ui/textarea";
-import Heading from "@/components/common/landing/Heading";
+import { contactData } from "@/shared/utils/constants";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
 const ContactPage = () => {
@@ -87,6 +87,7 @@ const ContactPage = () => {
                 </Field>
 
                 <Button
+                  title="Send Message"
                   variant="default"
                   type="submit"
                   className="w-full cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"

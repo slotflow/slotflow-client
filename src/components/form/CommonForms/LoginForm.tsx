@@ -3,25 +3,23 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import GoogleButton from "../GoogleButton";
 import { useDispatch, } from "react-redux";
-import { signin } from "@/utils/apis/auth.api";
+import { signin } from "@/shared/apis/auth";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { AppDispatch } from "@/utils/redux/appStore";
+import { AppDispatch } from "@/shared/redux/appStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormButton, FormHeading } from "../FormSplits";
-import { handleGoogleLogin } from "@/utils/helper/googleLogin";
-import { setForgotPassword } from "@/utils/redux/slices/appSlice";
-import { LoginFormType, LoginZodSchema } from '@/utils/zod/authZod';
-import { useAuthNavigation } from "@/hooks/systemHooks/useAuthNavigation";
-import { RedirectTo, LoginFormProps } from "@/utils/interface/commonInterface";
-import { Role } from "@/utils/interface/enums";
-import { appConfig } from "@/utils/env";
+import { SigninResponse } from "@/shared/interface/api/auth";
+import { appConfig, serviceConfig } from "@/shared/config/env";
+import { redirectPaths } from "../../../shared/utils/constants";
+import { OnboardingStatus, Role } from "@/shared/interface/enums";
+import { setForgotPassword } from "@/shared/redux/slices/appSlice";
+import { LoginFormType, LoginZodSchema } from '@/shared/zod/authZod';
 
-const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
+const LoginForm: React.FC = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const { goToAuthPage } = useAuthNavigation();
 
     const {
         register,
@@ -36,22 +34,65 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
         }
     });
 
-    const handleNavigation = (userRole: Role) => {
-        console.log("navigating role : ",userRole);
-        if (userRole === Role.ADMIN) navigate("/admin/overview", { replace: true });
-        else if (userRole === Role.USER) navigate("/user", { replace: true });
-        else if (userRole === Role.PROVIDER) navigate("/provider", { replace: true });
+    const handleNavigation = (data: SigninResponse) => {
+        const user = data.user;
+        if (user.role === Role.ADMIN) {
+            navigate("/admin/dashboard", { replace: true });
+            return;
+        }
+
+        if (user.onboardingStatus === OnboardingStatus.NOT_STARTED) {
+            navigate(redirectPaths.PRE_BOARDING_ROLE, { replace: true });
+            return;
+        }
+
+        if (user.onboardingStatus === OnboardingStatus.IN_PROGRESS && user.onboardingType === Role.PROVIDER) {
+            if (!user.isAddressAdded && !user.isAddressVerified) {
+                navigate(redirectPaths.ONBOARDING_ADDRESS, { replace: true });
+            } else if (!user.isServiceDetailsAdded && !user.isServiceDetailsVerified) {
+                navigate(redirectPaths.ONBOARDING_SERVICE, { replace: true });
+            } else if (!user.isServiceAvailabilityAdded && !user.isAvailabilityVerified) {
+                navigate(redirectPaths.ONBOARDING_AVAILABILITY, { replace: true });
+            } else if (!user.isProofSubmitted && !user.isProofsVerified) {
+                navigate(redirectPaths.ONBOARDING_PROOFS, { replace: true });
+            } else if (!user.isAdminVerified) {
+                navigate(redirectPaths.ONBOARDING_PENDING, { replace: true });
+            } else {
+                navigate(redirectPaths.ONBOARDING_ADDRESS, { replace: true }); // fallback
+            }
+            return;
+        }
+
+        if (user.role === Role.USER) {
+            navigate("/user", { replace: true });
+        } else if (user.role === Role.PROVIDER) {
+            navigate("/provider", { replace: true });
+        }
     };
+
+    const handleGoogleLogin = ({ e }: { e: React.MouseEvent<HTMLButtonElement, MouseEvent> }) => {
+        try {
+            e.preventDefault();;
+            window.location.href = `${serviceConfig.apiGatewayUrl + appConfig.version}/auth/google`;
+        } catch (error) {
+            if (appConfig.isDevelopment) {
+                console.error("Google login error:", error);
+            }
+            toast.error("Failed to initiate Google login");
+        }
+    }
 
     const onSubmit = async (data: LoginFormType) => {
         try {
-            const res = await dispatch(signin({ ...data, role })).unwrap();
+            const res = await dispatch(signin({ ...data })).unwrap();
             if (res.success) {
+                handleNavigation(res.data as SigninResponse);
                 toast.success(res.message);
-                handleNavigation(res.data.role);
             } else toast.error(res.message);
         } catch (error) {
-            if (appConfig.dev) console.log("An error occurred during login ", error);
+            if (appConfig.isDevelopment) {
+                console.log("An error occurred during login ", error);
+            }
         }
     };
 
@@ -85,17 +126,23 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
                                 />
 
                                 <Button
+                                    title="Forgot Password"
                                     variant="link"
                                     className="px-0 block text-xs md:text-sm font-medium text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
                                     onClick={() => {
                                         dispatch(setForgotPassword(true));
-                                        goToAuthPage(role, RedirectTo.VERIFY_EMAIL)
+                                        navigate(redirectPaths.VERIFY_EMAIL);
                                     }}
                                 >
                                     Forgot Password ?
                                 </Button>
 
-                                <FormButton text="Sign In" loading={isSubmitting} disabled={isSubmitting || !isValid} />
+                                <FormButton
+                                    text={isSubmitting ? "Signing In" : "Sign In"}
+                                    loading={isSubmitting}
+                                    disabled={isSubmitting || !isValid}
+                                    title="Sign In"
+                                />
                             </fieldset>
                         </form>
 
@@ -106,21 +153,20 @@ const LoginForm: React.FC<LoginFormProps> = ({ isAdmin, role }) => {
                         </div>
 
                         <GoogleButton
-                            onClick={(e) => handleGoogleLogin({ e, role })}
+                            onClick={(e) => handleGoogleLogin({ e })}
                             text="Sign up with Google"
                         />
 
-                        {!isAdmin && (
-                            <p className="mt-10 text-center text-sm text-[var(--textOne)] hover:text-[var(--textOneHover)]">
-                                New to Slotflow ?
-                                <span
-                                    className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
-                                    onClick={() => goToAuthPage(role, RedirectTo.REGISTER)}
-                                >
-                                    {" "} Sign Up
-                                </span>
-                            </p>
-                        )}
+                        <p className="mt-10 text-center text-sm text-[var(--textOne)] hover:text-[var(--textOneHover)]">
+                            New to Slotflow ?
+                            <span
+                                className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
+                                onClick={() => navigate(redirectPaths.REGISTER)}
+                            >
+                                {" "} Sign Up
+                            </span>
+                        </p>
+
                     </div>
                 </div>
             </div>

@@ -1,19 +1,17 @@
+import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { Role } from "@/utils/interface/enums";
-import { RootState } from "@/utils/redux/appStore";
+import { Role } from "@/shared/interface/enums";
+import { RootState } from "@/shared/redux/appStore";
+import { ProtectedRouteProps } from "@/shared/interface/componentInterface";
 
-interface ProtectedRouteProps {
-  allowedRoles: (Role)[];
-  children: React.ReactNode;
-}
-
-export const ProtectedRoute = ({ allowedRoles, children }: ProtectedRouteProps) => {
+export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ 
+  allowedRoles, 
+  children 
+}) => {
+  
   const user = useSelector((store: RootState) => store.auth.authUser);
-  
-  console.log("user : ",user);
-  console.log("allowedRoles : ",allowedRoles);
-  
+
   if (!user || !user.role) {
     return <Navigate to="/" replace />;
   }

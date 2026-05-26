@@ -1,19 +1,33 @@
-import { useEffect, useRef, useState } from "react";
-import TableHeader from "@/components/table/TableHeader";
-import CommonTable from "@/components/common/CommonTable";
-import { slideIn } from "@/utils/helper/gsapAnimationSlide";
-import { adminFetchAllServices } from "@/utils/apis/adminService.api";
+import { toast } from "react-toastify";
+import { fetchServices } from "@/shared/apis/service";
+import PageHeader from "@/components/common/PageHeader";
+import CommonTable from "@/components/table/CommonTable";
+import React, { useEffect, useRef, useState } from "react";
+import { slideIn } from "@/shared/helper/gsapAnimationSlide";
+import { useAdminService } from "@/hooks/adminHooks/useService";
 import CreateServiceForm from "@/components/form/AdminForms/CreateServiceForm";
-import { useAdminServiceActions } from "@/hooks/adminHooks/useAdminServiceActions";
-import { AdminFetchAllServicesResponse } from "@/utils/interface/api/adminServiceApiInterface";
-import { AdminAppServicesTableColumns } from "@/components/table/tableColumns/AdminAppServicesTableColumn";
+import AdminAppServicesTableColumns from "@/components/table/tableColumns/AdminAppServicesTableColumn";
+import { ChangeServiceBlockStatusRequest, FetchServicesResponse } from "@/shared/interface/api/service";
 
-const AdminServicesPage = () => {
-  const { handleAdminChangeServiceStatus } = useAdminServiceActions();
-  const column = AdminAppServicesTableColumns(handleAdminChangeServiceStatus);
+const AdminServicesPage: React.FC = () => {
 
   const [showForm, setShowForm] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
+
+  const { changeServiceStatus } = useAdminService();
+
+  const handleAdminChangeServiceStatus = async (data: ChangeServiceBlockStatusRequest) => {
+    const res = await changeServiceStatus(data);
+    if (res.success) {
+      toast.success(res.message);
+    } else {
+      toast.error(res.message);
+    }
+  }
+
+  const column = AdminAppServicesTableColumns(
+    handleAdminChangeServiceStatus
+  );
 
   useEffect(() => {
     if (showForm && formRef.current) {
@@ -22,15 +36,16 @@ const AdminServicesPage = () => {
   }, [showForm]);
 
   return (
-    <div className="relative">
-      <TableHeader
+    <div className="p-4">
+      <PageHeader
         title="Services"
+        description="Application services list"
         actionLabel="Create New Service"
         onActionClick={() => setShowForm(true)}
       />
 
-      <CommonTable<AdminFetchAllServicesResponse>
-        fetchApiFunction={adminFetchAllServices}
+      <CommonTable<FetchServicesResponse>
+        fetchApiFunction={fetchServices}
         queryKey="appServices"
         column={column}
         columnsCount={5}

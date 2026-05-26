@@ -1,26 +1,34 @@
-import CommonTable from '@/components/common/CommonTable';
-import { useCommonHook } from '@/hooks/commonHooks/useCommonActions';
-import { adminFetchAllSubscriptions } from '@/utils/apis/adminSubscription.api';
-import { FetchProviderSubscriptionsResponse } from '@/utils/interface/api/commonApiInterface';
-import { ProvidersSubscriptionsTableColumns } from '@/components/table/tableColumns/ProviderSubscriptionsTableColumn';
+import React from 'react';
+import PageHeader from '@/components/common/PageHeader';
+import CommonTable from '@/components/table/CommonTable';
+import { fetchSubscriptions } from '@/shared/apis/subscription';
+import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
+import { FetchProviderSubscriptionsResponse } from '@/shared/interface/api/subscription';
+import ProvidersSubscriptionsTableColumns from '@/components/table/tableColumns/ProviderSubscriptionsTableColumn';
 
-const AdminSubscriptionsPage = () => {
+const AdminSubscriptionsPage: React.FC = () => {
 
     const {
         handleAdminGetProviderDetailPage
-    } = useCommonHook();
+    } = useRoleBasedNavigation();
 
     const column = ProvidersSubscriptionsTableColumns(
         handleAdminGetProviderDetailPage
     );
 
     return (
-        <CommonTable<FetchProviderSubscriptionsResponse>
-            fetchApiFunction={adminFetchAllSubscriptions}
-            queryKey="subscriptions"
-            column={column}
-            columnsCount={6}
-        />
+        <div className="p-4">
+            <PageHeader
+                title="Subscriptions"
+                description="Subscriptions subscribed by service providers"
+            />
+            <CommonTable<FetchProviderSubscriptionsResponse>
+                fetchApiFunction={fetchSubscriptions}
+                queryKey="subscriptions"
+                column={column}
+                columnsCount={6}
+            />
+        </div>
     )
 }
 

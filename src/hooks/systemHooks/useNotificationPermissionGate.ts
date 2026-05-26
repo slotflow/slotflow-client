@@ -1,16 +1,17 @@
-import { RootState } from "@/utils/redux/appStore";
-import { getFcmToken } from "@/utils/helper/getToken";
+import { appConfig } from "@/shared/config/env";
+import { RootState } from "@/shared/redux/appStore";
+import { getFcmToken } from "@/shared/helper/getToken";
 import { useDispatch, useSelector } from "react-redux";
 import { useCallback, useEffect, useMemo } from "react";
-import { getDeviceId } from "@/utils/helper/getDeviceId";
-import { registerDevice } from "@/utils/apis/notification.api";
-import { userSetPushNotification } from "@/utils/apis/user.api";
-import { providerSetPushNotification } from "@/utils/apis/provider.api";
-import { PermissionStatus, Platform, Role } from "@/utils/interface/enums";
-import { updateNotificationPreference } from "@/utils/redux/slices/authSlice";
-import { requestNotificationPermission } from "@/utils/helper/requestNotificationPermission";
+import { getDeviceId } from "@/shared/helper/getDeviceId";
+import { registerDevice } from "@/shared/apis/notification";
+import { userSetPushNotification } from "@/shared/apis/user";
+import { PermissionStatus, Platform } from "@/shared/interface/enums";
+import { updateNotificationPreference } from "@/shared/redux/slices/authSlice";
+import { useNotificationPermissionGateReturn } from "@/shared/interface/hooksInterface";
+import { requestNotificationPermission } from "@/shared/helper/requestNotificationPermission";
 
-export const useNotificationPermissionGate = () => {
+export const useNotificationPermissionGate = (): useNotificationPermissionGateReturn => {
   const dispatch = useDispatch();
   const authUser = useSelector((state: RootState) => state.auth.authUser);
 
@@ -21,7 +22,7 @@ export const useNotificationPermissionGate = () => {
     return (
       Notification.permission === PermissionStatus.DEFAULT &&
       authUser?.isLoggedIn === true &&
-      authUser.allowPushNotification == null
+      authUser?.allowPushNotification == null
     );
   }, [authUser]);
 
@@ -33,14 +34,16 @@ export const useNotificationPermissionGate = () => {
     if (Notification.permission === PermissionStatus.DENIED) {
       const updateServer = async () => {
         try {
-          if (authUser.role === Role.USER) {
-            await userSetPushNotification(false);
-          } else if (authUser.role === Role.PROVIDER) {
-            await providerSetPushNotification(false);
+          const res = await userSetPushNotification(false);
+          if(res.success) {
+            dispatch(updateNotificationPreference(true));
+          } else {
+            dispatch(updateNotificationPreference(false));
           }
-          dispatch(updateNotificationPreference(false));
-        } catch (err) {
-          console.error("Failed to update push notification preference", err);
+        } catch (error) {
+          if(appConfig.isDevelopment) {
+            console.error("Failed to update push notification preference", error);
+          }
         }
       };
 
@@ -55,7 +58,13 @@ export const useNotificationPermissionGate = () => {
 
     if (permission === PermissionStatus.GRANTED) {
       const deviceId = getDeviceId();
+      if(appConfig.isDevelopment) {
+        console.log("deviceId : ", deviceId);
+      }
       const fcmToken = await getFcmToken();
+      if(appConfig.isDevelopment) {
+        console.log("fcmToken : ", fcmToken);
+      }
 
       if (!deviceId || !fcmToken) return;
 
@@ -65,13 +74,12 @@ export const useNotificationPermissionGate = () => {
         platform: Platform.WEB,
       });
 
-      if (authUser?.role === Role.USER) {
-        await userSetPushNotification(true);
-      } else if (authUser?.role === Role.PROVIDER) {
-        await providerSetPushNotification(true);
-      }
-
-      dispatch(updateNotificationPreference(true));
+        const res = await userSetPushNotification(true);
+        if(res.success) {
+          dispatch(updateNotificationPreference(true));
+        } else {
+          dispatch(updateNotificationPreference(false));
+        }
       return;
     }
 

@@ -1,5 +1,4 @@
 import {
-  ColumnDef,
   ColumnFiltersState,
   SortingState,
   VisibilityState,
@@ -11,8 +10,7 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table"
-
+} from "@tanstack/react-table";
 import {
   Table,
   TableBody,
@@ -20,29 +18,18 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../ui/table"
-
-import { Button } from "../ui/button"
-
-import * as React from "react"
-
-import { Input } from "../ui/input"
-
+} from "../ui/table";
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu"
-
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
-  filterAccessorKeys?: string[];
-  pageCount?: number;
-  onPaginationChange?: OnChangeFn<PaginationState>;
-  pagination?: PaginationState;
-}
+  DropdownMenuCheckboxItem,
+} from "../ui/dropdown-menu";
+import * as React from "react";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { DataTableProps } from "@/shared/interface/componentInterface";
+import { defaultButtonClassName } from "@/shared/utils/constants";
 
 export function DataTable<TData, TValue>({
   columns,
@@ -55,14 +42,14 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [globalFilter, setGlobalFilter] = React.useState("");
-  
+
   const [internalPagination, setInternalPagination] = React.useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
   });
-  
+
   const paginationState = controlledPagination || internalPagination;
-  
+
   const handlePaginationChange: OnChangeFn<PaginationState> = React.useCallback((updaterOrValue) => {
     if (onPaginationChange) {
       onPaginationChange(updaterOrValue);
@@ -105,7 +92,7 @@ export function DataTable<TData, TValue>({
         <DropdownMenu>
           <div className="ml-auto">
             <DropdownMenuTrigger asChild>
-              <Button variant="default" className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]">Columns</Button>
+              <Button title="Columns" variant="secondary" className={defaultButtonClassName}>Columns</Button>
             </DropdownMenuTrigger>
           </div>
           <DropdownMenuContent align="end">
@@ -127,7 +114,7 @@ export function DataTable<TData, TValue>({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      
+
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -175,7 +162,7 @@ export function DataTable<TData, TValue>({
         <div className="text-sm text-muted-foreground">
           {pageCount ? (
             <>
-              Page {paginationState.pageIndex + 1} of {pageCount} 
+              Page {paginationState.pageIndex + 1} of {pageCount}
               ({table.getFilteredRowModel().rows.length} items)
             </>
           ) : (
@@ -191,8 +178,9 @@ export function DataTable<TData, TValue>({
         </div>
         <div className="flex items-center space-x-2">
           <Button
-            variant="default"
-            className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
+            title="Previous"
+            variant="secondary"
+            className={defaultButtonClassName}
             size="sm"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
@@ -200,8 +188,9 @@ export function DataTable<TData, TValue>({
             Previous
           </Button>
           <Button
-            variant="default"
-            className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
+            title="Next"
+             variant="secondary"
+            className={defaultButtonClassName}
             size="sm"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}

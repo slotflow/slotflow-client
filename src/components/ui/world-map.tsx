@@ -2,7 +2,7 @@ import { useRef } from "react";
 import DottedMap from "dotted-map";
 import { motion } from "motion/react";
 import { useSelector } from "react-redux";
-import { RootState } from "@/utils/redux/appStore";
+import { RootState } from "@/shared/redux/appStore";
 
 interface MapProps {
   dots?: Array<{
