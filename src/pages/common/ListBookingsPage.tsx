@@ -6,6 +6,7 @@ import { useBooking } from "@/hooks/useUserBooking";
 import { fetchBookings } from "@/shared/apis/booking";
 import PageHeader from "@/components/common/PageHeader";
 import CommonTable from "@/components/table/CommonTable";
+import ConfirmAlert from "@/components/alert/ConfirmAlert";
 import { useRoleBasedNavigation } from "@/hooks/useRoleBasedNavigation";
 import BookingsTableColumn from "@/components/table/tableColumns/BookingsTableColumn";
 import { changeAppointmentStatusRequest, FetchBookingsResponse, ValidateRoomId } from "@/shared/interface/api/booking";
@@ -38,12 +39,18 @@ const ListBookingsPage: React.FC = () => {
   // function to handle user cancel booking
   const handleUserCancelBooking = async (bookingId: string) => {
     // need to add the confirm alert
-    const res = await cancelBookingHandler(bookingId);
-    if (res.success) {
-      toast.success(res.message);
-    } else {
-      toast.error(res.message);
-    }
+     toast(({ closeToast }) => (
+          <ConfirmAlert
+            message="Are you sure you want to cancel this booking?"
+            entityId={bookingId}
+            deleteHandler={cancelBookingHandler}
+            closeToast={closeToast}
+            errorMessage="Booking canceling failed"
+            successMessage="Review deleted successfully"
+            btnTitle="Cancel booking button"
+            btnText="Cancel"
+          />
+        ), { autoClose: false });
   }
 
   // 
@@ -68,7 +75,7 @@ const ListBookingsPage: React.FC = () => {
   // can implement a custom filter and pass as query paramas
 
   return (
-    <div className="container p-4 space-y-6">
+    <div className="p-4">
       <PageHeader
         title="Bookings Management"
         description="Manage your bookings and view history."

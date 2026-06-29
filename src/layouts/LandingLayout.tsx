@@ -1,7 +1,8 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import Header from "@/components/navs/Header";
-import FooterBar from "@/components/navs/FooterBar";
+import Footer from "@/components/navs/FooterBar";
+// import FooterBar from "@/components/navs/FooterBar";
 
 const LandingLayout: React.FC = () => {
 
@@ -11,7 +12,7 @@ const LandingLayout: React.FC = () => {
     <>
       <Header />
       <Outlet />
-      <FooterBar />
+      <Footer />
     </>
   )
 }

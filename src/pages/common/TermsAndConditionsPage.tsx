@@ -1,5 +1,5 @@
 import React from 'react';
-import Heading from '@/components/landing/Heading';
+import Heading from '@/components/landing/SectionHeading';
 import { termsAndConditionsContent } from '@/shared/utils/constants';
 
 const TermsAndConditionsPage: React.FC = () => {

@@ -17,8 +17,6 @@ export type AuthUser = Pick<User,
 "onboardingType" | 
 "isBlocked" | 
 "googleConnected" | 
-"googleId" | 
-"stripeAccountId" | 
 "stripeAccountStatus" | 
 "stripeCustomerId" | 
 "allowPushNotification" |

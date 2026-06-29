@@ -93,7 +93,7 @@ const AdminDashboardStats: React.FC = () => {
                         queryKey="dashboardUsersStats"
                         statsMap={userStatsMapForAdmin}
                         dependencies={dateRange}
-                        shimmerCount={3}
+                        shimmerCount={2}
                         heading=""
                         role="ADMIN"
                     />

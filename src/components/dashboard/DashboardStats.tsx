@@ -39,6 +39,8 @@ const DashboardStats = <T extends Record<string, number>>({
 
     const dashboardStatsData = dashboardStats?.data;
 
+    console.log("dashboardStats : ",dashboardStats)
+
     return (
         <div>
             <h4 className='text-lg font-bold'>{heading}</h4>

@@ -2,9 +2,10 @@ import { toast } from "react-toastify";
 import { RootState } from "../redux/appStore";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { EventSocketEnum } from "../interface/socket.interface";
-import { destroyEventSocket, getEventSocket } from "@/lib/socketService";
-import { setEventSocketConnected, setEventSocketDisconnected, setSubscription } from "../redux/slices/authSlice";
 import { SubscriptionActivated } from "../interface/api/subscription";
+import { destroyEventSocket, getEventSocket } from "@/lib/socketService";
+import { StripeAccountStatusUpdatedPayload } from "../interface/api/user";
+import { setEventSocketConnected, setEventSocketDisconnected, setStripeAccountStatus, setSubscription } from "../redux/slices/authSlice";
 
 export const connectEventSocket = createAsyncThunk<
     void,
@@ -36,7 +37,7 @@ export const connectEventSocket = createAsyncThunk<
     socket.on(EventSocketEnum.subscriptionActivated, (payload: SubscriptionActivated) => {
         console.log("Subscription activated:", payload);
 
-        const isOwner = payload.providerId === authUser.uid;
+        const isOwner = payload.userId === authUser.uid;
         const isExpired = new Date(payload.endDate) < new Date();
 
         if (isOwner && isExpired) {
@@ -47,6 +48,21 @@ export const connectEventSocket = createAsyncThunk<
 
         dispatch(setSubscription(payload));
     });
+
+    socket.on(EventSocketEnum.stripeAccountStatusUpdated, (payload: StripeAccountStatusUpdatedPayload) => {
+        console.log("Stripe account status updated:", payload);
+
+        const isOwner = payload.userId === authUser.uid;
+
+        if (isOwner) {
+            if(authUser.stripeAccountStatus !== payload.stripeAccountStatus) {
+                toast.success("Stripe account status updated!");
+                dispatch(setStripeAccountStatus(payload.stripeAccountStatus))
+            } else {
+                toast.info("Stripe account status updated!");
+            }
+        }
+    })
 
 });
 

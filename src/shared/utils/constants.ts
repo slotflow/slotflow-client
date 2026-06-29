@@ -56,6 +56,7 @@ import {
   CalendarCheck,
   MessageSquareText,
   PictureInPicture2,
+  Github,
 } from "lucide-react";
 import {
   Route,
@@ -224,7 +225,7 @@ export const gsapBigSvgYDirectionAnimation: gsapBigSvgYDirectionAnimationInterfa
 export const navigation: HeaderCompoenentNavsProps[] = [
   { name: 'Home', href: '/', current: true },
   { name: 'Features', href: '/#features', current: false },
-  { name: 'Pricing', href: '/#pricing', current: false },
+  { name: 'Pricing', href: '/pricing', current: false },
   { name: 'Reviews', href: '/#reviews', current: false },
   { name: 'About', href: '/about', current: false },
   { name: 'Contact', href: '/contact', current: false },
@@ -539,44 +540,52 @@ export const planFeatures: PlanFeatureInterface[] = [
 
 
 // FooterBar Data
-export const footerColumnData: FooterColumnDataInterface[] = [
-  {
-    title: "Plans For your service",
-    links: [
-      { text: "Free", href: "" },
-      { text: "Standard", href: "" },
-      { text: "Enterprise", href: "" },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { text: "About", href: "" },
-      { text: "Careers", href: "" },
-      { text: "Blog", href: "" },
-      { text: "Privacy Policy", href: "/privacy-policy" },
-      { text: "Terms of Service", href: "/terms-and-conditions" },
-    ],
-  },
-  {
-    title: "Connect",
-    links: [
-      { text: "Email", href: "mailto:slotflow.booking@gmail.com" },
-      { text: "Facebook", href: "https://github.com/slotflow" },
-      { text: "Instagram", href: "https://github.com/slotflow" },
-      { text: "LinkedIn", href: "https://www.linkedin.com/in/midhunkpaniker" },
-      { text: "Github", href: "https://github.com/slotflow" },
-      { text: "Github", href: "https://github.com/slotflow" },
-    ],
-  },
-]
-export const copyright: string = " slotflow All rights reserved"
-export const policies: FooterLinkInterface[] = [
-  { text: "Privacy Policy", href: "/privacy-policy" },
-  { text: "Terms of Service", href: "/terms-and-conditions" },
-]
-export const about: string = "Simplifying appointment scheduling for individuals and professionals. Stay organized, save time, and make every slot count.";
-
+export const footerLinks = {
+  pages: [
+    "About",
+    "Contact",
+    "Features",
+    "Pricing",
+    "Blog",
+  ],
+  socials: [
+    {
+      name: "Facebook",
+      icon: Facebook,
+      href: "https://github.com/slotflow"
+    },
+    {
+      name: "Instagram",
+      icon: Instagram,
+      href: "https://github.com/slotflow"
+    },
+    {
+      name: "Twitter",
+      icon: Twitter,
+      href: "https://github.com/slotflow"
+    },
+    {
+      name: "LinkedIn",
+      icon: Linkedin,
+      href: "https://www.linkedin.com/in/midhunkpaniker"
+    },
+    {
+      name: "Github",
+      icon: Github,
+      href: "https://github.com/slotflow"
+    },
+  ],
+  legal: [
+    "Privacy Policy",
+    "Terms of Service",
+    "Cookie Policy",
+  ],
+  account: [
+    "Sign Up",
+    "Login",
+    "Forgot Password",
+  ],
+};
 
 // Approval Pending Page data
 export const approvalMessages: ProviderApprovalMessageInterface = {
@@ -606,7 +615,7 @@ export const featureContent: FeatureContentInterface[] = [
     islogo: false,
   },
   {
-    title: "HD Video Calls",
+    title: "Video Calls",
     description:
       "Host secure, high-quality video meetings directly from the platform. Connect with clients or teammates, discuss plans, and collaborate face-to-face from anywhere.",
     image: videoCallImage,
@@ -877,11 +886,6 @@ export const userStatsMapForAdmin: StatsMapForAdminInterface[] = [
     icon: Users,
   },
   {
-    title: "Email Verified Users",
-    key: "emailVerifiedUsers",
-    icon: UserCheck,
-  },
-  {
     title: "Blocked Users",
     key: "blockedUsers",
     icon: UserX,
@@ -893,11 +897,6 @@ export const providerStatsMapForAdmin: StatsMapForAdminInterface[] = [
     title: "Total Providers",
     key: "totalProviders",
     icon: Users,
-  },
-  {
-    title: "Email Verified Providers",
-    key: "emailVerifiedProviders",
-    icon: UserCheck,
   },
   {
     title: "Admin Verified Providers",
@@ -1208,7 +1207,7 @@ export const settingsTabs: CommonTabInterface[] = [
   },
   {
     value: "security",
-    label: "Security & Privacy",
+    label: "Security",
     icon: LockIcon,
   },
 ]

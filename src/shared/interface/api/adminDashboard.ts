@@ -1,14 +1,12 @@
 // response type of admin fetch dashboard user stats data
 export interface AdminFetchDashboardUserStatsDataResponse extends Record<string, number> {
     totalUsers: number;
-    emailVerifiedUsers: number;
     blockedUsers: number;
 }
 
 // response type of the admin fetch dashboard provider stats data
 export interface AdminFetchDashboardProviderStatsDataResponse extends Record<string, number> {
     totalProviders: number;
-    emailVerifiedProviders: number;
     adminVerifiedProviders: number;
     blockedProviders: number;
     addressAddedProviders: number;

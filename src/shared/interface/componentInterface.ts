@@ -169,13 +169,15 @@ export interface AlertProps {
 }
 
 // confirm delete alert component props
-export interface ConfirmDeleteAlertProps {
+export interface ConfirmDeleteProps {
   message: string;
-  reviewId: string;
-  deleteReviewHandler: (reviewId: string) => Promise<any>;
+  entityId: string;
+  deleteHandler: (entityId: string) => Promise<any>;
   closeToast: () => void;
   errorMessage: string;
   successMessage: string;
+  btnTitle: string;
+  btnText: string;
 }
 
 // Animated heading section props interface
@@ -430,7 +432,7 @@ export interface IntegrationCardProps {
 }
 
 // Heading component props interface
-export interface HeadingProps {
+export interface SectionHeadingProps {
   heading: string;
   headingDescription: string;
 }

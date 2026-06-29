@@ -12,7 +12,7 @@ import ReviewCard from "@/components/review/ReviewCard";
 import PageHeader from "@/components/common/PageHeader";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import DataFetchingError from "@/components/error/DataFetchingError";
-import ConfirmDeleteAlert from "@/components/alert/ConfirmDeleteAlert";
+import ConfirmAlert from "@/components/alert/ConfirmAlert";
 import { ReviewsPageProps } from "@/shared/interface/componentInterface";
 import ReviewCardsShimmer from "@/components/shimmers/ReviewCardsShimmer";
 import { ApiPaginatedResponse } from "@/shared/interface/commonInterface";
@@ -72,13 +72,15 @@ const ReviewsPage: React.FC<ReviewsPageProps> = ({
   const handleDeleteReview = (e: React.MouseEvent<HTMLButtonElement>, reviewId: Review["_id"]) => {
     e.preventDefault();
     toast(({ closeToast }) => (
-      <ConfirmDeleteAlert
+      <ConfirmAlert
         message="Are you sure you want to delete this review?"
-        reviewId={reviewId}
-        deleteReviewHandler={deleteReviewHandler}
+        entityId={reviewId}
+        deleteHandler={deleteReviewHandler}
         closeToast={closeToast}
         errorMessage="Review deleting failed"
         successMessage="Review deleted successfully"
+        btnTitle="Delete review button"
+        btnText="Delete"
       />
     ), { autoClose: false });
   };

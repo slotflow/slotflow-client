@@ -5,8 +5,8 @@ import { Role } from "@/shared/interface/enums.ts";
 import OnBoardingGuard from "./OnBoardingGuard.tsx";
 import { ProtectedRoute } from "./ProtectedRoutes.tsx";
 import { RouteNames } from "@/shared/utils/constants.ts";
-import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
 import BoardingLayoutWrapper from "./BoardingLayoutWrapper.tsx";
+import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
 
 const AuthLayout = lazy(() => import("@/layouts/AuthLayout.tsx"));
 const LoginForm = lazy(() => import("@/components/form/CommonForms/LoginForm.tsx"));
@@ -19,6 +19,7 @@ const ChatPage = lazy(() => import("@/pages/common/ChatPage.tsx"));
 const AboutPage = lazy(() => import("@/pages/common/AboutPage.tsx"));
 const CreditPage = lazy(() => import("@/pages/common/CreditPage.tsx"));
 const LandingLayout = lazy(() => import("@/layouts/LandingLayout.tsx"));
+const PricingPage = lazy(() => import("@/pages/common/PricingPage.tsx"));
 const ContactPage = lazy(() => import("@/pages/common/ContactPage.tsx"));
 const ReviewsPage = lazy(() => import("@/pages/common/ReviewsPage.tsx"));
 const LandingPage = lazy(() => import("@/pages/common/LandingPage.tsx"));
@@ -77,6 +78,7 @@ export const appRouter = createBrowserRouter([
             { path: "/", element: <LandingPage /> },
             { path: "/about", element: <AboutPage /> },
             { path: "/contact", element: <ContactPage /> },
+            { path: "/pricing", element: <PricingPage /> },
             { path: "/privacy-policy", element: <PrivacyPolicyPage /> },
             { path: "/terms-and-conditions", element: <TermsAndConditionsPage /> },
         ]

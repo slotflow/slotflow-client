@@ -1,4 +1,4 @@
-import { HearAboutUsOptionValue, Role } from "../enums";
+import { HearAboutUsOptionValue, Role, StripeAccountStatus } from "../enums";
 import { User } from "../entityInterface/userInterface";
 import { ProviderCardsFilters } from "../commonInterface";
 import { ProviderProfile } from "../entityInterface/providerProfileInterface";
@@ -76,4 +76,15 @@ export type FetchUsersForChatSidebarResponse = Array<Pick<User, "_id" | "usernam
 export interface UpdatePasswordRequest {
     currentPassword: string;
     newPassword: string;
+}
+
+// stripe account status updated
+export interface StripeAccountStatusUpdatedPayload {
+    userId: string;
+    stripeAccountStatus: StripeAccountStatus;
+}
+
+// response type of check stripe account status api
+export type CheckStripeAccountStatusResponse = {
+  accountStatus: StripeAccountStatus;
 }

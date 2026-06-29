@@ -1,17 +1,16 @@
-import React from "react";
-import SectionOne from "@/components/landing/SectionOne";
-import SectionPricing from "@/components/landing/SectionPricing";
-import SectionReviews from "@/components/landing/SectionReviews";
-import SectionFeatures from "@/components/landing/SectionFeatures";
+import HeroSection from "@/components/landing/HeroSection";
+import FeatureSection from "@/components/landing/FeatureSection";
+import ReviewsSection from "@/components/landing/ReviewsSection";
+import WorkflowSection from "@/components/landing/WorkflowSection";
 
 const LandingPage = () => {
 
   return (
     <>
-      <SectionOne />
-      <SectionFeatures />
-      <SectionPricing />
-      <SectionReviews />
+      <HeroSection />
+      <WorkflowSection />
+      <FeatureSection />
+      <ReviewsSection />
     </>
   )
 }
