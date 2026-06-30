@@ -1,6 +1,7 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef, useEffect, useState } from "react";
+import MeteorsCard from "../cards/MeteorsCard";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -32,7 +33,6 @@ const WorkflowSection = () => {
       const img = new Image();
 
       img.src = `/frames/ezgif-frame-${String(i).padStart(3, "0")}.jpg`;
-      //   console.log("img.src : ",img.src)
 
       frameImages.push(img);
     }
@@ -86,8 +86,10 @@ const WorkflowSection = () => {
     if (textRef.current) {
       gsap.to(textRef.current, {
         y: () => {
-          const totalHeight = textRef.current!.scrollHeight;
-          return -(totalHeight - window.innerHeight);
+          const text = textRef.current!;
+          const container = text.parentElement!;
+
+          return -(text.scrollHeight - container.clientHeight);
         },
         ease: "none",
         scrollTrigger: {
@@ -95,7 +97,7 @@ const WorkflowSection = () => {
           start: "top top",
           end: `+=${VIDEO_SCROLL_DISTANCE}`,
           scrub: true,
-          
+
         },
       });
     }
@@ -141,19 +143,19 @@ const WorkflowSection = () => {
     >
       <section
         ref={sectionRef}
-        className="relative z-10 flex h-screen w-full items-center justify-between overflow-hidden text-white"
+        className="max-w-7xl mx-auto relative z-10 flex h-screen w-full items-center justify-between overflow-hidden text-white"
       >
         <div className="w-1/2 h-screen overflow-hidden flex items-start p-4">
-          <div ref={textRef} className="pt-[15vh]">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <div
+          <div
+            ref={textRef}
+            className="pt-[15vh] pb-[20vh] space-y-20"
+          >
+            {Array.from({ length: 4 }).map((_, i) => (
+              <MeteorsCard
                 key={i}
-                className={`flex ${i % 2 === 0 ? "justify-start" : "justify-end"}`}
-              >
-                <p className="max-w-[40%] rounded-[2px] bg-black p-8 text-[1.25rem] leading-8 text-white">
-                  {`Paragraph ${i}: Lorem ipsum (/ˌlɔː.rəm ˈɪp.səm/ LOR-əm IP-səm) is a dummy or placeholder text commonly used in graphic design, publishing, and web development. It is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin.[not in body] The first two words are the truncation of dolorem ipsum ("pain itself"). Lorem ipsum's purpose is to permit a page layout to be designed, independently of the copy that will subsequently populate it, or to demonstrate various fonts of a typeface without meaningful text that could be distracting.`}
-                </p>
-              </div>
+                title="Find your Service Provider"
+                content={`Paragraph ${i}: Lorem ipsum (/ˌlɔː.rəm ˈɪp.səm/ LOR-əm IP-səm) is a dummy or placeholder text commonly used in graphic design, publishing, and web development. It is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC text by .`}
+              />
             ))}
           </div>
         </div>
