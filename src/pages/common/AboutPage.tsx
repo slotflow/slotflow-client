@@ -13,17 +13,17 @@ const AboutPage: React.FC = () => {
                     headingDescription="Know more about us"
                 />
 
-                <div className="max-w-4xl mx-auto text-justify space-y-4 mb-10" data-aos="fade-up">
+                <div className="max-w-4xl mx-auto text-justify space-y-4 mb-10">
                     {aboutIntro.map((para, index) => (
-                        <p key={index} className="text-base md:text-lg" data-aos="fade-up">
+                        <p key={index} className="text-base md:text-lg">
                             {para}
                         </p>
                     ))}
                 </div>
 
-                <div className="max-w-4xl mx-auto text-justify space-y-4 mb-10" data-aos="fade-up">
+                <div className="max-w-4xl mx-auto text-justify space-y-4 mb-10">
                     {aboutFeatures.map((para, index) => (
-                        <p key={index} className="text-base md:text-lg" data-aos="fade-up">
+                        <p key={index} className="text-base md:text-lg">
                             {para}
                         </p>
                     ))}
@@ -31,14 +31,12 @@ const AboutPage: React.FC = () => {
 
                 <div
                     className="max-w-3xl mx-auto text-center mt-12 cursor-pointer"
-                    data-aos="fade-up"
                     onClick={() => window.open(devWebPortfoilio, "_blank")}
                 >
                     <img
                         src={ceoImage}
                         alt="CEO"
                         className="w-28 h-28 rounded-full mx-auto mb-4 shadow-lg object-cover"
-                        data-aos="fade-up"
                     />
                     <h3 className="text-xl font-semibold">Midhun K Paniker</h3>
                     <p className="text-sm text-gray-400">Founder & CEO, Slotflow</p>

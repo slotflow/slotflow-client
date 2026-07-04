@@ -20,18 +20,16 @@ const Header: React.FC = () => {
   }
 
   return (
-    <nav className={`w-full bg-[var(--background)] fixed transition-colors duration-300 ease-in-out z-50`}>
+    <nav className={`w-full bg-[var(--background)] transition-colors duration-300 ease-in-out z-50`}>
       <div className={`max-w-7xl mx-auto flex h-16 items-center justify-between`}>
 
-        <div className='w-3/12 flex items-center' onClick={() => navigate('/')} >
+        <div className='w-1/2 flex items-center' onClick={() => navigate('/')} >
           <div className='flex items-center justify-center hidden md:block'>
             <img src={logo} className='size-8' />
           </div>
           <h4 className="ml-2 text-[var(--mainColor)] text-3xl font-bold italic px-2 rounded-lg cursor-pointer">Slotflow</h4>
-        </div>
 
-        <div className='w-6/12'>
-          <div className="flex flex-1 items-center justify-center">
+          <div className="flex items-center justify-start">
             <div className="hidden sm:ml-6 md:block">
               <div className="flex space-x-4">
                 {navigation.map((item) => (
@@ -49,7 +47,7 @@ const Header: React.FC = () => {
           </div>
         </div>
 
-        <div className='w-3/12 flex justify-end items-center'>
+        <div className='w-1/2 flex justify-end items-center'>
           <Button
             title="Login"
             variant={"ghost"}

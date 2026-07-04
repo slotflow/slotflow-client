@@ -353,16 +353,16 @@ export interface MapDotLitLocationsCoordinates {
 
 // User booking appointment data props interface
 export interface UserBookinAppointmentDataProps {
-    providerId: User["_id"]
-    slotId: string;
-    date: Date;
-    selectedServiceMode: string;
+  providerId: User["_id"]
+  slotId: string;
+  date: Date;
+  selectedServiceMode: string;
 }
 
 // Provider subscription data props interface
 export interface ProviderSubscriptionDataProps {
-    planId: string;
-    planDuration: SubscriptionValidity;
+  planId: string;
+  planDuration: SubscriptionValidity;
 }
 
 // Card props interface
@@ -381,9 +381,9 @@ export type ReviewFormValues = Pick<Review, "reviewText" | "rating">;
 
 // Hear about us options interface
 export type HearAboutUsOptions = {
-    label: string
-    value: HearAboutUsOptionValue
-    icon: React.ComponentType<{ className?: string }>
+  label: string
+  value: HearAboutUsOptionValue
+  icon: React.ComponentType<{ className?: string }>
 }
 
 //
@@ -395,3 +395,88 @@ export type StatusPreset = {
   trueIcon?: LucideIcon;
   falseIcon?: LucideIcon;
 };
+
+export interface BlogCategoryFields {
+  name: string;
+  slug?: string;
+  color?: string;
+}
+
+export interface BlogAuthorFields {
+  author: string;
+  proffession: string;
+  profileImage: string;
+}
+
+export interface ContentfulReference {
+  sys: {
+    id: string;
+    linkType: "Entry";
+    type: "Link";
+  };
+}
+
+export interface ContentfulEntry<TFields> {
+  sys: {
+    id: string;
+  };
+  fields: TFields;
+}
+
+export interface ContentfulResponse<TItemFields, TIncludeFields = never> {
+  items: ContentfulEntry<TItemFields>[];
+  includes?: {
+    Entry?: ContentfulEntry<TIncludeFields>[];
+  };
+}
+
+export interface ContentfulBlogArticleFields {
+  id: number;
+  category?: ContentfulReference | null;
+  heroBackground?: string;
+  heroTitle?: string;
+  heroDescription?: string;
+  author?: ContentfulReference | null;
+  createdAt?: string;
+  readTime?: string;
+  articleTitle: string;
+  articleImage?: string;
+  articleImageDescription?: string;
+  introduction?: string;
+  protip?: string;
+  paraOneTitle?: string;
+  paraOneContent?: string;
+  paraTwoTitle?: string;
+  paraTwoContent?: string;
+  listTitle?: string;
+  listContent?: string[];
+  quote?: string;
+  conclusion?: string;
+}
+
+export interface BlogArticle {
+  id: number;
+  category: string | null;
+  heroBackground: string;
+  heroTitle: string;
+  heroDescription: string;
+  author: BlogAuthorFields | null;
+  createdAt: string;
+  readTime: string;
+  articleTitle: string;
+  articleImage: string;
+  articleImageDescription: string;
+  introduction: string;
+  protip: string;
+  paraOneTitle: string;
+  paraOneContent: string;
+  paraTwoTitle: string;
+  paraTwoContent: string;
+  listTitle: string;
+  listContent: string[];
+  quote: string;
+  conclusion: string;
+}
+
+export type AuthorFields = BlogAuthorFields;
+export type CategoryFields = BlogCategoryFields;

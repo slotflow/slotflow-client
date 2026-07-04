@@ -12,9 +12,9 @@ const TermsAndConditionsPage: React.FC = () => {
                     headingDescription="Understand the rules and guidelines for using Slotflow"
                 />
 
-                <div className="max-w-4xl mx-auto text-justify space-y-4" data-aos="fade-up">
+                <div className="max-w-4xl mx-auto text-justify space-y-4">
                     {termsAndConditionsContent.map((para, index) => (
-                        <p key={index} className="text-base md:text-lg" data-aos="fade-up">
+                        <p key={index} className="text-base md:text-lg">
                             {para}
                         </p>
                     ))}

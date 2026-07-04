@@ -3,7 +3,7 @@ import logo from '../../assets/logos/logo-transparent.png';
 
 const Footer = () => {
   return (
-    <footer className="overflow-hidden text-white  bg-[var(--background)]">
+    <footer className="overflow-hidden bg-[var(--background)]">
 
       <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
         <div className="grid gap-16 lg:grid-cols-[1.6fr_1fr_1fr_1fr_1fr]">
@@ -112,7 +112,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="pointer-events-none inset-x-0 bottom-0 flex justify-center max-w-7xl m-auto overflow-hidden">
-        <h1 className="select-none text-[20rem] font-extrabold tracking-tight text-white/[0.1] leading-none">
+        <h1 className="select-none text-[20rem] font-extrabold tracking-tight dark:text-white/[0.1] text-black/[0.1] leading-none">
           Slotflow
         </h1>
       </div>

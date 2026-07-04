@@ -7,6 +7,7 @@ import { ProtectedRoute } from "./ProtectedRoutes.tsx";
 import { RouteNames } from "@/shared/utils/constants.ts";
 import BoardingLayoutWrapper from "./BoardingLayoutWrapper.tsx";
 import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
+import BlogDetailsPage from "@/pages/common/BlogDetailsPage.tsx";
 
 const AuthLayout = lazy(() => import("@/layouts/AuthLayout.tsx"));
 const LoginForm = lazy(() => import("@/components/form/CommonForms/LoginForm.tsx"));
@@ -15,6 +16,7 @@ const ResetPasswordForm = lazy(() => import("@/components/form/CommonForms/Reset
 const OtpVerificatioForm = lazy(() => import("@/components/form/CommonForms/OtpVerificatioForm.tsx"));
 const EmailVerificationForm = lazy(() => import("@/components/form/CommonForms/EmailVerificationForm.tsx"));
 
+const BlogPage = lazy(() => import("@/pages/common/BlogPage.tsx")); 
 const ChatPage = lazy(() => import("@/pages/common/ChatPage.tsx"));
 const AboutPage = lazy(() => import("@/pages/common/AboutPage.tsx"));
 const CreditPage = lazy(() => import("@/pages/common/CreditPage.tsx"));
@@ -79,6 +81,8 @@ export const appRouter = createBrowserRouter([
             { path: "/about", element: <AboutPage /> },
             { path: "/contact", element: <ContactPage /> },
             { path: "/pricing", element: <PricingPage /> },
+            { path: "/blog", element: <BlogPage/> },
+            { path: "/blog/:blogId", element: <BlogDetailsPage/> },
             { path: "/privacy-policy", element: <PrivacyPolicyPage /> },
             { path: "/terms-and-conditions", element: <TermsAndConditionsPage /> },
         ]

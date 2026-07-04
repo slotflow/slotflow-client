@@ -1,6 +1,7 @@
 import { appState } from "@/shared/interface/sliceInterface";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { resendOtp, signup, verifyEmail, verifyOtp } from "@/shared/apis/auth";
+import { BlogArticle } from "@/shared/interface/commonInterface";
 
 const initialState: appState = {
     lightTheme: true,
@@ -10,6 +11,8 @@ const initialState: appState = {
     forgotPassword: false,
     otpTimerIsRunning: false,
     otpExpiresAt: null,
+    articles: [],
+    articleCategories: []
 }
 
 const stateSlice = createSlice({
@@ -31,6 +34,12 @@ const stateSlice = createSlice({
         setForgotPassword: (state, action: PayloadAction<boolean>) => {
             state.forgotPassword = action.payload;
         },
+        setArticles: (state, action: PayloadAction<BlogArticle[]>) => {
+            state.articles = action.payload;
+        },
+        setArticleCategories: (state, action: PayloadAction<string[]>) => {
+            state.articleCategories = action.payload;
+        }
     },
     extraReducers(builder) {
         builder.addCase(signup.pending, (state) => {
@@ -75,10 +84,12 @@ const stateSlice = createSlice({
 });
 
 export const {
+    setArticles,
     toggleTheme,
     toggleSidebar,
     setForgotPassword,
     toggleFilterSideBar,
+    setArticleCategories,
     toggleNotificationContainer
 } = stateSlice.actions;
 

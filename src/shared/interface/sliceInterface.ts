@@ -1,5 +1,5 @@
 import { User } from "./entityInterface/userInterface";
-import { ProviderCardsFilters } from "./commonInterface";
+import { BlogArticle, ProviderCardsFilters } from "./commonInterface";
 import { Message } from "./entityInterface/message.interface";
 import { UserViewProviderCardProps } from "./componentInterface";
 import { ProviderProfile } from "./entityInterface/providerProfileInterface";
@@ -70,6 +70,8 @@ export interface appState {
   otpExpiresAt: number | null;
   otpTimerIsRunning: boolean;
   isNotificationsOpen: boolean;
+  articles: BlogArticle[];
+  articleCategories: string[];
 }
 
 // admin slice

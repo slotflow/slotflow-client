@@ -11,7 +11,6 @@ const HeroSection: React.FC = () => {
                 />
                 <h1
                     className="text-[var(--mainColor)] text-7xl md:text-9xl font-bold italic"
-                    data-aos="fade-up"
                 >
                     SLOTFLOW
                 </h1>

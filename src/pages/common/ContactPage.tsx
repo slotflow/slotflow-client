@@ -33,7 +33,7 @@ const ContactPage = () => {
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 overflow-hidden py-16">
-          <Card className="h-full" data-aos="fade-right">
+          <Card className="h-full">
             <CardHeader>
               <CardTitle>Contact Information</CardTitle>
               <CardDescription>We’d love to hear from you.</CardDescription>
@@ -54,7 +54,7 @@ const ContactPage = () => {
             </CardContent>
           </Card>
 
-          <Card className="h-full" data-aos="fade-left">
+          <Card className="h-full">
             <CardHeader>
               <CardTitle>Send us a message</CardTitle>
               <CardDescription>We typically respond within one business day.</CardDescription>

@@ -39,7 +39,7 @@ const ReviewsSection: React.FC = () => {
     return (
         <section id="reviews" className="bg-[var(--background)]">
             <Heading heading='Reviews' headingDescription='See what our customers are saying about us.' />
-            <div data-aos="fade-up">
+            <div>
                 <div className="w-full overflow-hidden leading-[0] bg-[var(--menuItemHoverBg)]" >
                     <svg
                         className="relative block rotate-y-180"

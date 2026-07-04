@@ -12,9 +12,9 @@ const PrivacyPolicyPage: React.FC = () => {
                     headingDescription="How we protect and manage your data"
                 />
 
-                <div className="max-w-4xl mx-auto text-justify space-y-4" data-aos="fade-up">
+                <div className="max-w-4xl mx-auto text-justify space-y-4">
                     {privacyPolicyContent.map((para, index) => (
-                        <p key={index} className="text-base md:text-lg" data-aos="fade-up">
+                        <p key={index} className="text-base md:text-lg">
                             {para}
                         </p>
                     ))}

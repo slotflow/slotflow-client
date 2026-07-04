@@ -187,11 +187,6 @@ export interface AnimatedHeadingSectionProps {
   description: string;
 }
 
-// Aos animation props interface
-export interface AosAnimationProps {
-  children: ReactNode | ReactElement;
-}
-
 // Feature locked component props interface
 export interface FeatureLockedProps {
   icon?: LucideIcon;
