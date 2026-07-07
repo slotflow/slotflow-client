@@ -10,9 +10,11 @@ const LandingLayout: React.FC = () => {
 
   return (
     <ReactLenis root>
-      <Header />
-      <Outlet />
-      <Footer />
+      <div className="bg-[var(--background)] transition-colors duration-300">
+        <Header />
+        <Outlet />
+        <Footer />
+      </div>
     </ReactLenis>
   )
 }

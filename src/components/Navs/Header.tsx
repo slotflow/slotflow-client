@@ -20,7 +20,7 @@ const Header: React.FC = () => {
   }
 
   return (
-    <nav className={`w-full bg-[var(--background)] transition-colors duration-300 ease-in-out z-50`}>
+    <nav className={`w-full transition-colors duration-300 ease-in-out z-50`}>
       <div className={`max-w-7xl mx-auto flex h-16 items-center justify-between`}>
 
         <div className='w-1/2 flex items-center' onClick={() => navigate('/')} >

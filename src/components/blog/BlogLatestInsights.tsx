@@ -17,7 +17,7 @@ const BlogLatestInsights: React.FC<BlogLatestInsightsProps> = ({
     const [showFull, setShowFull] = useState<boolean>(false);
 
     return (
-        <section className="container mx-auto max-w-7xl px-6 py-24">
+        <section className="mx-auto max-w-7xl px-6 py-24">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
                 <div>
                     <Badge variant="outline">

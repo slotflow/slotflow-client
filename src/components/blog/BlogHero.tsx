@@ -35,9 +35,7 @@ const BlogHero: React.FC<BlogHeroProps> = ({
 
     return (
         <section className="relative overflow-hidden border-b">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-background" />
-            <div className="absolute -top-24 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
-            <div className="container relative mx-auto px-6 py-24 max-w-7xl mx-auto">
+            <div className="relative px-6 py-24 max-w-7xl mx-auto">
                 <div className="grid gap-16 lg:grid-cols-2 items-center">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { RootState } from "@/shared/redux/appStore";
 import MoveUpward from "@/components/animation/MoveUpward";
-import BlogNewsletter from "@/components/blog/BlogNewsLetter";
+import BlogNewsletter from "@/components/blog/BlogNewsletter";
 import { BlogArticle } from "@/shared/interface/commonInterface";
 import ReadingProgress from "@/components/scroll/ReadingProgress";
 import BlogDetailHero from "@/components/blog/details/BlogDetailHero";

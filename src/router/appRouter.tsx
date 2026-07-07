@@ -41,7 +41,7 @@ const BookingDetailPage = lazy(() => import("@/pages/common/BookingDetailPage.ts
 const AccountSettings = lazy(() => import("@/components/settings/AccountSettings.tsx"));
 const SecuritySettings = lazy(() => import("@/components/settings/SecuritySettings.tsx"));
 const PaymentDetailViewPage = lazy(() => import("@/pages/common/PaymentDetailViewPage.tsx"));
-const TermsAndConditionsPage = lazy(() => import("@/pages/common/TermsAndConditionsPage.tsx"));
+const TermsOfServicePage = lazy(() => import("@/pages/common/TermsOfServicePage.tsx"));
 const IntegrationsListing = lazy(() => import("@/components/settings/IntegrationsListing.tsx"));
 const NotificationSettings = lazy(() => import("@/components/settings/NotificationSettings.tsx"));
 const SubscriptionDetailViewPage = lazy(() => import("@/pages/common/SubscriptionDetailViewPage.tsx"));
@@ -84,7 +84,7 @@ export const appRouter = createBrowserRouter([
             { path: "/blog", element: <BlogPage/> },
             { path: "/blog/:blogId", element: <BlogDetailsPage/> },
             { path: "/privacy-policy", element: <PrivacyPolicyPage /> },
-            { path: "/terms-and-conditions", element: <TermsAndConditionsPage /> },
+            { path: "/terms-of-service", element: <TermsOfServicePage /> },
         ]
     },
     {

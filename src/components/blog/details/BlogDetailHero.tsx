@@ -33,7 +33,7 @@ const BlogDetailHero: React.FC<BlogDetailHeroProps> = ({
                 className="absolute inset-0 h-full w-full object-cover"
             />
             <div className=" absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
-            <div className="container relative mx-auto flex h-full items-end px-6 pb-16 max-w-7xl mx-auto">
+            <div className="relative mx-auto flex h-full items-end px-6 pb-16 max-w-7xl mx-auto">
                 <motion.div
                     initial={{ opacity: 0, y: 25 }}
                     animate={{ opacity: 1, y: 0 }}

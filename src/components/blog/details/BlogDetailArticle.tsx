@@ -11,11 +11,10 @@ const BlogDetailArticle: React.FC<BlogDetailArticleProps> = ({
 }) => {
 
     return (
-        <section className="container mx-auto px-6 py-20">
+        <section className="max-w-7xl mx-auto px-6 py-20">
             <div className="grid gap-20 lg:grid-cols-[minmax(0,1fr)_220px]">
                 <article className="mx-auto max-w-4xl">
                     <section id="article-title">
-
                         <p className="text-2xl leading-10 text-foreground font-medium">
                             {article.articleTitle}
                         </p>
@@ -123,35 +122,43 @@ const BlogDetailArticle: React.FC<BlogDetailArticleProps> = ({
                     headings={[
                         {
                             id: "article-title",
-                            title: "Title"
+                            title: "Title",
+                            depth: 0
                         },
                         {
                             id: "article-introduction",
                             title: "Introduction",
+                            depth: 0
                         },
                         {
                             id: "article-protip",
                             title: "Pro Tip",
+                            depth: 0
                         },
                         {
                             id: "article-para-1",
                             title: article.paraOneTitle,
+                            depth: 0
                         },
                         {
                             id: "article-para-2",
                             title: article.paraTwoTitle,
+                            depth: 0
                         },
                         {
                             id: "article-list",
-                            title: article.listTitle
+                            title: article.listTitle,
+                            depth: 0
                         },
                         {
                             id: "article-quote",
-                            title: "quote"
+                            title: "quote",
+                            depth: 0
                         },
                         {
                             id: "article-conclusion",
                             title: "Conclusion",
+                            depth: 0
                         },
                     ]}
                 />

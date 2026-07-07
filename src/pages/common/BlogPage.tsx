@@ -12,7 +12,7 @@ import BlogHero from "@/components/blog/BlogHero";
 import { contentfulAxiosInstance } from "@/lib/axios";
 import { useDispatch, useSelector } from "react-redux";
 import MoveUpward from "@/components/animation/MoveUpward";
-import BlogNewsletter from "@/components/blog/BlogNewsLetter";
+import BlogNewsletter from "@/components/blog/BlogNewsletter";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import ReadingProgress from "@/components/scroll/ReadingProgress";
 import BlogEditorsPicks from "@/components/blog/BlogEditorsPicks";

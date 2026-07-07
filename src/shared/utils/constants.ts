@@ -540,48 +540,84 @@ export const planFeatures: PlanFeatureInterface[] = [
 // FooterBar Data
 export const footerLinks = {
   pages: [
-    "About",
-    "Contact",
-    "Features",
-    "Pricing",
-    "Blog",
+    {
+      name: "About",
+      href: "/about",
+    },
+    {
+      name: "Contact",
+      href: "/contact",
+    },
+    {
+      name: "Features",
+      href: "/features",
+    },
+    {
+      name: "Pricing",
+      href: "/pricing",
+    },
+    {
+      name: "Blog",
+      href: "/blog",
+    },
   ],
+
   socials: [
     {
       name: "Facebook",
       icon: Facebook,
-      href: "https://github.com/slotflow"
+      href: "https://facebook.com/slotflow",
     },
     {
       name: "Instagram",
       icon: Instagram,
-      href: "https://github.com/slotflow"
+      href: "https://instagram.com/slotflow",
     },
     {
       name: "Twitter",
       icon: Twitter,
-      href: "https://github.com/slotflow"
+      href: "https://twitter.com/slotflow",
     },
     {
       name: "LinkedIn",
       icon: Linkedin,
-      href: "https://www.linkedin.com/in/midhunkpaniker"
+      href: "https://www.linkedin.com/in/midhunkpaniker",
     },
     {
       name: "Github",
       icon: Github,
-      href: "https://github.com/slotflow"
+      href: "https://github.com/slotflow",
     },
   ],
+
   legal: [
-    "Privacy Policy",
-    "Terms of Service",
-    "Cookie Policy",
+    {
+      name: "Privacy Policy",
+      href: "/privacy-policy",
+    },
+    {
+      name: "Terms of Service",
+      href: "/terms-of-service",
+    },
+    {
+      name: "Cookie Policy",
+      href: "/cookie-policy",
+    },
   ],
+
   account: [
-    "Sign Up",
-    "Login",
-    "Forgot Password",
+    {
+      name: "Sign Up",
+      href: "/signup",
+    },
+    {
+      name: "Login",
+      href: "/login",
+    },
+    {
+      name: "Forgot Password",
+      href: "/forgot-password",
+    },
   ],
 };
 

@@ -33,12 +33,12 @@ const Footer = () => {
 
             <ul className="space-y-4">
               {footerLinks.pages.map((item) => (
-                <li key={item}>
+                <li key={item.name}>
                   <a
-                    href="#"
+                    href={item.href}
                     className="text-zinc-400 transition hover:text-white"
                   >
-                    {item}
+                    {item.name}
                   </a>
                 </li>
               ))}
@@ -79,12 +79,12 @@ const Footer = () => {
 
             <ul className="space-y-4">
               {footerLinks.legal.map((item) => (
-                <li key={item}>
+                <li key={item.name}>
                   <a
-                    href="#"
+                    href={item.href}
                     className="text-zinc-400 transition hover:text-white"
                   >
-                    {item}
+                    {item.name}
                   </a>
                 </li>
               ))}
@@ -98,12 +98,12 @@ const Footer = () => {
 
             <ul className="space-y-4">
               {footerLinks.account.map((item) => (
-                <li key={item}>
+                <li key={item.name}>
                   <a
-                    href="#"
+                    href={item.href}
                     className="text-zinc-400 transition hover:text-white"
                   >
-                    {item}
+                    {item.name}
                   </a>
                 </li>
               ))}

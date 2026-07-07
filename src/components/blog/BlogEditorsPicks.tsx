@@ -16,7 +16,7 @@ const BlogEditorsPicks: React.FC<BlogEditorsPicksProps> = ({
     const navigate = useNavigate();
 
     return (
-        <section className="container mx-auto px-6 py-24 max-w-7xl mx-auto">
+        <section className="mx-auto px-6 py-24 max-w-7xl mx-auto">
             <div className="flex items-center justify-between">
                 <div>
                     <Badge variant="outline">

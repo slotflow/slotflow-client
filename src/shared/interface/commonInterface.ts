@@ -480,3 +480,10 @@ export interface BlogArticle {
 
 export type AuthorFields = BlogAuthorFields;
 export type CategoryFields = BlogCategoryFields;
+
+export interface TOCHeadingProps {
+  title: string;
+  id: string;
+  depth: number;
+  children?: TOCHeadingProps[];
+}
