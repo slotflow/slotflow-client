@@ -396,6 +396,15 @@ export type StatusPreset = {
   falseIcon?: LucideIcon;
 };
 
+export interface ReviewFields {
+  id: number;
+  text: string;
+  customerName: string;
+  customerProfile: string;
+  customerOccupation: string;
+  rating: number;
+}
+
 export interface BlogCategoryFields {
   name: string;
   slug?: string;

@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import Heading from "@/components/landing/SectionHeading";
+import Heading from "@/components/common/SectionHeading";
 import { Textarea } from "@/components/ui/textarea";
 import { contactData } from "@/shared/utils/constants";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";

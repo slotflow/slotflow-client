@@ -1,44 +1,69 @@
-import React from 'react';
-import Heading from './SectionHeading';
+import { appConfig } from '@/shared/config/env';
+import ReviewHeader from './review/reviewHeader';
+import { contentfulAxiosInstance } from '@/lib/axios';
+import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useRef, useState } from 'react';
+import { setReviews } from '@/shared/redux/slices/appSlice';
+import { AppDispatch, RootState } from '@/shared/redux/appStore';
 import { InfiniteMovingCards } from '@/components/ui/infinite-moving-cards';
-
-const testimonials = [
-    {
-        quote:
-            "It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair.",
-        name: "Charles Dickens",
-        title: "A Tale of Two Cities",
-    },
-    {
-        quote:
-            "To be, or not to be, that is the question: Whether 'tis nobler in the mind to suffer The slings and arrows of outrageous fortune, Or to take Arms against a Sea of troubles, And by opposing end them: to die, to sleep.",
-        name: "William Shakespeare",
-        title: "Hamlet",
-    },
-    {
-        quote: "All that we see or seem is but a dream within a dream.",
-        name: "Edgar Allan Poe",
-        title: "A Dream Within a Dream",
-    },
-    {
-        quote:
-            "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.",
-        name: "Jane Austen",
-        title: "Pride and Prejudice",
-    },
-    {
-        quote:
-            "Call me Ishmael. Some years ago—never mind how long precisely—having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world.",
-        name: "Herman Melville",
-        title: "Moby-Dick",
-    },
-];
-
+import { ReviewFields, ContentfulResponse } from '@/shared/interface/commonInterface';
 
 const ReviewsSection: React.FC = () => {
+
+    const dispatch = useDispatch<AppDispatch>();
+    const reviews = useSelector((state: RootState) => state.app.reviews);
+    const [reviewsLoading, setReviewsLoading] = useState<boolean>(false);
+    const hasFetchedReviews = useRef(false);
+
+    const getReviews = async (): Promise<ReviewFields[]> => {
+        const { data } = await contentfulAxiosInstance.get<ContentfulResponse<ReviewFields>>("/entries", {
+            params: {
+                content_type: "review",
+            },
+        });
+
+        return data.items.map((review) => review.fields);
+    };
+
+    useEffect(() => {
+        if (reviews.length >= 10 || hasFetchedReviews.current || reviewsLoading) {
+            return;
+        }
+
+        hasFetchedReviews.current = true;
+        let isMounted = true;
+
+        const fetchReviews = async () => {
+            try {
+                setReviewsLoading(true);
+                const fetchedReviews = await getReviews();
+                if (isMounted) {
+                    dispatch(setReviews(fetchedReviews));
+                }
+            } catch (error) {
+                if (appConfig.isDevelopment) {
+                    console.error("Failed to fetch reviews:", error);
+                }
+            } finally {
+                if (isMounted) {
+                    setReviewsLoading(false);
+                }
+            }
+        };
+
+        fetchReviews();
+
+        return () => {
+            isMounted = false;
+        };
+    }, [dispatch, reviews.length, reviewsLoading]);
+
+    const firstRowReviews = reviews.slice(0, 5);
+    const secondRowReviews = reviews.slice(5, 10);
+
     return (
         <section id="reviews" className="bg-[var(--background)]">
-            <Heading heading='Reviews' headingDescription='See what our customers are saying about us.' />
+            <ReviewHeader />
             <div>
                 <div className="w-full overflow-hidden leading-[0] bg-[var(--menuItemHoverBg)]" >
                     <svg
@@ -52,17 +77,47 @@ const ReviewsSection: React.FC = () => {
                     </svg>
                 </div>
                 <div className="flex flex-col justify-center items-center bg-[var(--menuItemHoverBg)]">
-                    <InfiniteMovingCards
-                        items={testimonials}
-                        direction="right"
-                        speed="normal"
-                    />
-                    <InfiniteMovingCards
-                        items={testimonials}
-                        direction="left"
-                        speed="normal"
-                        className='hidden md:block'
-                    />
+                    {reviewsLoading ? (
+                        <div className="w-full px-4 py-6">
+                            <div className="flex flex-col md:flex-row gap-4">
+                                {[...Array(2)].map((_, index) => (
+                                    <div
+                                        key={index}
+                                        className="w-full md:w-[45%] rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-700 dark:bg-[linear-gradient(180deg,#27272a,#18181b)]"
+                                    >
+                                        <div className="space-y-3">
+                                            <div className="shimmer h-4 w-full rounded" />
+                                            <div className="shimmer h-4 w-3/4 rounded" />
+                                            <div className="shimmer h-4 w-1/2 rounded" />
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ) : (
+                        <>
+                            {firstRowReviews.length > 0 && (
+                                <InfiniteMovingCards
+                                    items={firstRowReviews}
+                                    direction="right"
+                                    speed="normal"
+                                />
+                            )}
+                            {secondRowReviews.length > 0 && (
+                                <InfiniteMovingCards
+                                    items={secondRowReviews}
+                                    direction="left"
+                                    speed="normal"
+                                    className='hidden md:block'
+                                />
+                            )}
+                            {reviews.length === 0 && !reviewsLoading && (
+                                <p className="px-4 py-6 text-sm text-neutral-500 dark:text-neutral-400">
+                                    No reviews available yet.
+                                </p>
+                            )}
+                        </>
+                    )}
                 </div>
                 <div className="w-full overflow-hidden leading-[0] rotate-180 bg-[var(--menuItemHoverBg)]" >
                     <svg

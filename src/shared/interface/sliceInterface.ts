@@ -1,5 +1,5 @@
 import { User } from "./entityInterface/userInterface";
-import { BlogArticle, ProviderCardsFilters } from "./commonInterface";
+import { BlogArticle, ProviderCardsFilters, ReviewFields } from "./commonInterface";
 import { Message } from "./entityInterface/message.interface";
 import { UserViewProviderCardProps } from "./componentInterface";
 import { ProviderProfile } from "./entityInterface/providerProfileInterface";
@@ -72,6 +72,7 @@ export interface appState {
   isNotificationsOpen: boolean;
   articles: BlogArticle[];
   articleCategories: string[];
+  reviews: ReviewFields[];
 }
 
 // admin slice

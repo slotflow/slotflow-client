@@ -1,10 +1,14 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef, useEffect, useState } from "react";
-import MeteorsCard from "../cards/MeteorsCard";
+import WorkflowHeader from "./workflow/WorkflowHeader";
+import { bookingSteps } from "@/shared/utils/constants";
+import WorkflowTimeline from "./workflow/WorkflowTimeline";
+import WorkflowBackground from "./workflow/WorkflowBackground";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const EXTRA_HEIGHT = 100;
 const TOTAL_FRAMES = 288;
 const VIDEO_SCROLL_DISTANCE = 5000;
 
@@ -14,10 +18,11 @@ const WorkflowSection = () => {
   const textRef = useRef<HTMLDivElement | null>(null);
   const [images, setImages] = useState<HTMLImageElement[]>([]);
   const [containerHeight, setContainerHeight] = useState(0);
+  const [activeStep, setActiveStep] = useState(0);
 
   useEffect(() => {
     const updateHeight = () => {
-      setContainerHeight(window.innerHeight + VIDEO_SCROLL_DISTANCE);
+      setContainerHeight(window.innerHeight + VIDEO_SCROLL_DISTANCE + EXTRA_HEIGHT);
     };
 
     updateHeight();
@@ -97,7 +102,6 @@ const WorkflowSection = () => {
           start: "top top",
           end: `+=${VIDEO_SCROLL_DISTANCE}`,
           scrub: true,
-
         },
       });
     }
@@ -115,7 +119,20 @@ const WorkflowSection = () => {
         pinSpacing: false,
         anticipatePin: 1,
       },
-      onUpdate: render,
+      // onUpdate: render,
+      onUpdate: () => {
+        render();
+
+        const progress =
+          frameState.frame / (TOTAL_FRAMES - 1);
+
+        const step = Math.min(
+          bookingSteps.length - 1,
+          Math.floor(progress * bookingSteps.length)
+        );
+
+        setActiveStep(step);
+      },
     });
 
     ScrollTrigger.refresh();
@@ -137,32 +154,36 @@ const WorkflowSection = () => {
   }, [images]);
 
   return (
-    <div
-      className="relative w-full overflow-hidden bg-[var(--background)]"
-      style={{ height: containerHeight ? `${containerHeight}px` : "100vh" }}
-    >
-      <section
-        ref={sectionRef}
-        className="max-w-7xl mx-auto relative z-10 flex h-screen w-full items-center justify-between overflow-hidden text-white"
+    <div className="relative">
+      <WorkflowBackground />
+      <WorkflowHeader />
+      <div
+        className="w-full"
+        style={{ height: containerHeight ? `${containerHeight}px` : "120vh" }}
       >
-        <div className="w-1/2 h-screen overflow-hidden flex items-start p-4">
-          <div
-            ref={textRef}
-            className="pt-[15vh] pb-[20vh] space-y-20"
-          >
-            {Array.from({ length: 4 }).map((_, i) => (
-              <MeteorsCard
-                key={i}
-                title="Find your Service Provider"
-                content={`Paragraph ${i}: Lorem ipsum (/ˌlɔː.rəm ˈɪp.səm/ LOR-əm IP-səm) is a dummy or placeholder text commonly used in graphic design, publishing, and web development. It is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC text by .`}
+        <section
+          ref={sectionRef}
+          className="gap-12 max-w-7xl mx-auto relative z-10 flex min-h-screen w-full items-center justify-between"
+        >
+          <div className="flex w-full lg:w-[62%] items-center px-4 lg:px-8">
+            <div className="relative overflow-hidden rounded-[32px] border border-border/50 bg-background/70 backdrop-blur-xl shadow-[0_40px_120px_rgba(0,0,0,0.15)]">
+              <div className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-primary/15 blur-[120px]" />
+              <div className="absolute -bottom-20 -left-20 h-56 w-56 rounded-full bg-primary/10 blur-[100px]" />
+              <canvas
+                ref={canvasRef}
+                className="relative z-10 h-auto w-full shadow-[0_60px_120px_rgba(0,0,0,0.18)]"
               />
-            ))}
+            </div>
           </div>
-        </div>
-        <div className="flex w-1/2 items-center p-4">
-          <canvas ref={canvasRef} className="z-[1] h-auto w-full rounded-md" />
-        </div>
-      </section>
+          <div className="hidden lg:flex w-[38%] h-screen px-6">
+            <div
+              ref={textRef}
+              className="pt-[20vh] pb-[30vh] w-full">
+              <WorkflowTimeline activeStep={activeStep} />
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
   );
 };

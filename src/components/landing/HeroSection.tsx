@@ -1,22 +1,17 @@
-import world from '../../assets/svgs/world2.svg';
+import React from "react";
+import LandingHeroContent from "./hero/LandingHeroContent";
+import LandingHeroBookingDashboard from "./hero/LandingHeroBookingDashboard";
 
 const HeroSection: React.FC = () => {
 
-    return (
-        <section id="hero" className="w-full bg-[var(--background)] space-x-2 transition-colors duration-300 ease-in-out">
-            <div className="mx-auto flex flex-col justify-center items-center max-w-7xl px-4 lg:px-0 h-screen text-center">
-                <img
-                    src={world}
-                    className="absolute opacity-30 h-[80%]"
-                />
-                <h1
-                    className="text-[var(--mainColor)] text-7xl md:text-9xl font-bold italic"
-                >
-                    SLOTFLOW
-                </h1>
-            </div>
-        </section>
-    );
-};
+  return (
+    <section className="max-w-7xl mx-auto">
+      <div className="grid lg:grid-cols-2 items-center gap-20">
+        <LandingHeroContent />
+        <LandingHeroBookingDashboard />
+      </div>
+    </section>
+  );
+}
 
 export default HeroSection;

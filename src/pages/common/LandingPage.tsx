@@ -1,7 +1,8 @@
+import FAQSection from "@/components/landing/FAQSection";
 import HeroSection from "@/components/landing/HeroSection";
-import FeatureSection from "@/components/landing/FeatureSection";
 import ReviewsSection from "@/components/landing/ReviewsSection";
 import WorkflowSection from "@/components/landing/WorkflowSection";
+import FeaturesSection from "@/components/landing/FeaturesSection";
 
 const LandingPage = () => {
 
@@ -9,8 +10,9 @@ const LandingPage = () => {
     <>
       <HeroSection />
       <WorkflowSection />
-      <FeatureSection />
+      <FeaturesSection />
       <ReviewsSection />
+      <FAQSection />
     </>
   )
 }

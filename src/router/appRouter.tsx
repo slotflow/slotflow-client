@@ -8,6 +8,7 @@ import { RouteNames } from "@/shared/utils/constants.ts";
 import BoardingLayoutWrapper from "./BoardingLayoutWrapper.tsx";
 import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
 import BlogDetailsPage from "@/pages/common/BlogDetailsPage.tsx";
+import LegalHomePage from "@/pages/common/legal/LegalHomePage.tsx";
 
 const AuthLayout = lazy(() => import("@/layouts/AuthLayout.tsx"));
 const LoginForm = lazy(() => import("@/components/form/CommonForms/LoginForm.tsx"));
@@ -36,12 +37,12 @@ const RoleSelectPage = lazy(() => import("@/pages/boarding/RoleSelectPage.tsx"))
 const ListPaymentsPage = lazy(() => import("@/pages/common/ListPaymentsPage.tsx"));
 const ListBookingsPage = lazy(() => import("@/pages/common/ListBookingsPage.tsx"));
 const HearAboutUsPage = lazy(() => import("@/pages/boarding/HearAboutUsPage.tsx"));
-const PrivacyPolicyPage = lazy(() => import("@/pages/common/PrivacyPolicyPage.tsx"));
+const PrivacyPolicyPage = lazy(() => import("@/pages/common/legal/PrivacyPolicyPage.tsx"));
 const BookingDetailPage = lazy(() => import("@/pages/common/BookingDetailPage.tsx"));
 const AccountSettings = lazy(() => import("@/components/settings/AccountSettings.tsx"));
 const SecuritySettings = lazy(() => import("@/components/settings/SecuritySettings.tsx"));
 const PaymentDetailViewPage = lazy(() => import("@/pages/common/PaymentDetailViewPage.tsx"));
-const TermsOfServicePage = lazy(() => import("@/pages/common/TermsOfServicePage.tsx"));
+const TermsOfServicePage = lazy(() => import("@/pages/common/legal/TermsOfServicePage.tsx"));
 const IntegrationsListing = lazy(() => import("@/components/settings/IntegrationsListing.tsx"));
 const NotificationSettings = lazy(() => import("@/components/settings/NotificationSettings.tsx"));
 const SubscriptionDetailViewPage = lazy(() => import("@/pages/common/SubscriptionDetailViewPage.tsx"));
@@ -83,8 +84,32 @@ export const appRouter = createBrowserRouter([
             { path: "/pricing", element: <PricingPage /> },
             { path: "/blog", element: <BlogPage/> },
             { path: "/blog/:blogId", element: <BlogDetailsPage/> },
-            { path: "/privacy-policy", element: <PrivacyPolicyPage /> },
-            { path: "/terms-of-service", element: <TermsOfServicePage /> },
+            {
+                path: "/legal",
+                  element: <Outlet />,
+    children: [
+        {
+            index: true,
+            element: <LegalHomePage />,
+        },
+        {
+            path: "privacy-policy",
+            element: <PrivacyPolicyPage />,
+        },
+        {
+            path: "terms-of-service",
+            element: <TermsOfServicePage />,
+        },
+        {
+            path: "refund-policy",
+            element: <LegalHomePage />,
+        },
+        {
+            path: "cancellation-policy",
+            element: <LegalHomePage />,
+        },
+    ],
+            }
         ]
     },
     {

@@ -57,6 +57,9 @@ import {
   MessageSquareText,
   PictureInPicture2,
   Github,
+  FileText,
+  Cookie,
+  CircleCheckBig,
 } from "lucide-react";
 import {
   Route,
@@ -77,13 +80,13 @@ import {
   gsapBigSvgYDirectionAnimationInterface,
 } from "../interface/commonInterface";
 import { ChartConfig } from "@/components/ui/chart";
-import chatImage from '../../assets/heroImages/chat.jpg';
+import chatImage from '@/assets/LandingPageImages/chat.jpg';
 import { OptionType } from '../interface/commonInterface';
 import { ContactItem } from "../interface/commonInterface";
 import gCalendar from '../../assets/iconImages/gCalendar.png';
-import calendarImage from '../../assets/heroImages/calendar2.png';
-import videoCallImage from '../../assets/heroImages/videoCall.jpg';
-import bookingImage from '../../assets/heroImages/heroSectionOneImg2.png';
+import calendarImage from '../../assets/LandingPageImages/calendar2.png';
+import videoCallImage from '../../assets/LandingPageImages/videoCall.jpg';
+import bookingImage from '../../assets/LandingPageImages/heroSectionOneImg2.png';
 import { ProviderFetchDashboardStatsDataResponse } from "../interface/api/providerProfile";
 import { AdminVerificationStatus, HearAboutUsOptionValue, PlanName, Role, ServiceCategory, ServiceMode, ServiceType } from "../interface/enums";
 
@@ -593,15 +596,38 @@ export const footerLinks = {
   legal: [
     {
       name: "Privacy Policy",
-      href: "/privacy-policy",
+      href: "/legal/privacy-policy",
+      description:
+      "Learn how we collect, use, protect, and process your personal information.",
+      icon: Shield,
     },
     {
       name: "Terms of Service",
-      href: "/terms-of-service",
+      href: "/legal/terms-of-service",
+      description:
+      "Read the terms and conditions governing the use of SlotFlow.",
+      icon: FileText,
+    },
+      {
+        name: "Cookie Policy",
+        href: "/legal",
+        description:
+        "Read the cookie policy",
+        icon: Cookie
+      },
+    {
+        name: "Refund Policy",
+        href: "/legal",
+        description:
+            "Understand refunds, eligibility, processing timelines, and exceptions.",
+        icon: RotateCcw,
     },
     {
-      name: "Cookie Policy",
-      href: "/cookie-policy",
+        name: "Cancellation Policy",
+        href: "/legal",
+        description:
+            "Learn about booking cancellations, provider cancellations, and applicable charges.",
+        icon: Ban,
     },
   ],
 
@@ -1178,14 +1204,7 @@ export const contactData: ContactItem[] = [
 ];
 
 
-// Privacy Policy
-export const privacyPolicyContent: string[] = [
-  "At Slotflow, we value your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, and safeguard your information when you interact with our platform.",
-  "We collect information such as your name, email, contact details, and booking data to deliver a seamless scheduling experience. Your data helps us confirm appointments, send reminders, and improve our services.",
-  "Slotflow does not sell, rent, or trade your information to third parties. We only share data with trusted service providers (like payment processors or communication tools) when necessary to operate our platform.",
-  "You can update or delete your data anytime by contacting our support team. We implement industry-standard security practices to protect your information from unauthorized access or misuse.",
-  "By using Slotflow, you consent to the terms outlined in this Privacy Policy. Updates to this policy will be communicated through our website or email."
-];
+
 
 
 // Terms and Conditions
@@ -1541,4 +1560,43 @@ export const cardGradients: string[] = [
     "bg-gradient-to-r from-red-100 to-orange-200",
     "bg-gradient-to-r from-amber-100 to-yellow-200",
     "bg-gradient-to-r from-sky-100 to-blue-300"
+];
+
+export const bookingSteps = [
+  {
+    title: "Create an Account",
+    description:
+      "Sign up to access trusted services and manage your bookings.",
+    icon: UserPlus,
+  },
+  {
+    title: "Find a Service",
+    description:
+      "Search for the service you need by category or location.",
+    icon: Search,
+  },
+  {
+    title: "Choose a Provider",
+    description:
+      "Compare verified providers and select the right one.",
+    icon: BadgeCheck,
+  },
+  {
+    title: "Select a Time",
+    description:
+      "Pick an available date and time that works for you.",
+    icon: CalendarClock,
+  },
+  {
+    title: "Pay Securely",
+    description:
+      "Complete your booking using our secure payment process.",
+    icon: CreditCard,
+  },
+  {
+    title: "Booking Confirmed",
+    description:
+      "Receive instant confirmation and you're ready to go.",
+    icon: CircleCheckBig,
+  },
 ];

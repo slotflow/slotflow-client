@@ -1,5 +1,5 @@
 import React from 'react';
-import Heading from '@/components/landing/SectionHeading';
+import Heading from '@/components/common/SectionHeading';
 import ceoImage from '../../assets/defaultImages/ceo.jpg';
 import { aboutFeatures, aboutIntro, devWebPortfoilio } from '@/shared/utils/constants';
 

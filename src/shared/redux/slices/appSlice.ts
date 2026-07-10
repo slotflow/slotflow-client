@@ -1,7 +1,7 @@
 import { appState } from "@/shared/interface/sliceInterface";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { resendOtp, signup, verifyEmail, verifyOtp } from "@/shared/apis/auth";
-import { BlogArticle } from "@/shared/interface/commonInterface";
+import { BlogArticle, ReviewFields } from "@/shared/interface/commonInterface";
 
 const initialState: appState = {
     lightTheme: true,
@@ -12,7 +12,8 @@ const initialState: appState = {
     otpTimerIsRunning: false,
     otpExpiresAt: null,
     articles: [],
-    articleCategories: []
+    articleCategories: [],
+    reviews: [],
 }
 
 const stateSlice = createSlice({
@@ -39,6 +40,9 @@ const stateSlice = createSlice({
         },
         setArticleCategories: (state, action: PayloadAction<string[]>) => {
             state.articleCategories = action.payload;
+        },
+        setReviews: (state, action: PayloadAction<ReviewFields[]>) => {
+            state.reviews = action.payload;
         }
     },
     extraReducers(builder) {
@@ -84,6 +88,7 @@ const stateSlice = createSlice({
 });
 
 export const {
+    setReviews,
     setArticles,
     toggleTheme,
     toggleSidebar,
