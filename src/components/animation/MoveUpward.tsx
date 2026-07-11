@@ -19,7 +19,7 @@ const MoveUpward: React.FC<MoveUpwardProps> = ({
                 y: 0,
             }}
             viewport={{
-                once: true,
+                once: false,
                 amount: 0.2,
             }}
             transition={{

@@ -1,7 +1,7 @@
 import { appState } from "@/shared/interface/sliceInterface";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { resendOtp, signup, verifyEmail, verifyOtp } from "@/shared/apis/auth";
-import { BlogArticle, ReviewFields } from "@/shared/interface/commonInterface";
+import { BlogArticle, FaqFields, ReviewFields } from "@/shared/interface/commonInterface";
 
 const initialState: appState = {
     lightTheme: true,
@@ -14,6 +14,7 @@ const initialState: appState = {
     articles: [],
     articleCategories: [],
     reviews: [],
+    faqs: [],
 }
 
 const stateSlice = createSlice({
@@ -43,6 +44,9 @@ const stateSlice = createSlice({
         },
         setReviews: (state, action: PayloadAction<ReviewFields[]>) => {
             state.reviews = action.payload;
+        },
+        setFaqs: (state, action: PayloadAction<FaqFields[]>) => {
+            state.faqs = action.payload;
         }
     },
     extraReducers(builder) {
@@ -88,6 +92,7 @@ const stateSlice = createSlice({
 });
 
 export const {
+    setFaqs,
     setReviews,
     setArticles,
     toggleTheme,

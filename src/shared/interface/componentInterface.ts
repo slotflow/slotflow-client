@@ -180,13 +180,6 @@ export interface ConfirmDeleteProps {
   btnText: string;
 }
 
-// Animated heading section props interface
-export interface AnimatedHeadingSectionProps {
-  title: string;
-  animatedWord: string;
-  description: string;
-}
-
 // Feature locked component props interface
 export interface FeatureLockedProps {
   icon?: LucideIcon;

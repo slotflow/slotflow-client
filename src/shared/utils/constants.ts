@@ -90,6 +90,13 @@ import bookingImage from '../../assets/LandingPageImages/heroSectionOneImg2.png'
 import { ProviderFetchDashboardStatsDataResponse } from "../interface/api/providerProfile";
 import { AdminVerificationStatus, HearAboutUsOptionValue, PlanName, Role, ServiceCategory, ServiceMode, ServiceType } from "../interface/enums";
 
+import zoomLogo from "@/assets/iconImages/zoom.png";
+import gmailLogo from "@/assets/iconImages/gmail.png";
+import stripeLogo from "@/assets/iconImages/stripe.jpeg";
+import whatsappLogo from "@/assets/iconImages/whatsapp.png";
+import googleMapsLogo from "@/assets/iconImages/googleMap.png";
+import googleCalendarLogo from "@/assets/iconImages/gCalendar.png";
+
 // Plan Tiers 
 export const PLAN_TIERS = ["free", "starter", "professional", "enterprise"] as const;
 
@@ -1599,4 +1606,88 @@ export const bookingSteps = [
       "Receive instant confirmation and you're ready to go.",
     icon: CircleCheckBig,
   },
+];
+
+export const heroPeople = [
+  {
+    id: 1,
+    name: "Rahul Sharma",
+    designation: "Software Engineer",
+    image:
+      "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3387&q=80",
+  },
+  {
+    id: 2,
+    name: "Neeraj Gupta",
+    designation: "Product Manager",
+    image:
+      "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+  },
+  {
+    id: 3,
+    name: "Neha Kapoor",
+    designation: "Data Scientist",
+    image:
+      "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+  },
+  {
+    id: 4,
+    name: "Isha Gupta",
+    designation: "UX Designer",
+    image:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+  },
+  {
+    id: 5,
+    name: "Devansh Agarwal",
+    designation: "Soap Developer",
+    image:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3540&q=80",
+  },
+  {
+    id: 6,
+    name: "Kritika Desai",
+    designation: "Architecht",
+    image:
+      "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3534&q=80",
+  },
+];
+
+export const integrations = [
+    {
+        title: "Google Calendar",
+        description: "Two-way appointment synchronization.",
+        logo: googleCalendarLogo,
+        isActive: true,
+    },
+    {
+        title: "Stripe",
+        description: "Secure online payments.",
+        logo: stripeLogo,
+        isActive: true,
+    },
+    {
+        title: "Google Maps",
+        description: "Location and navigation.",
+        logo: googleMapsLogo,
+        isActive: true,
+    },
+    {
+        title: "Gmail",
+        description: "Booking confirmations.",
+        logo: gmailLogo,
+        isActive: true,
+    },
+    {
+        title: "WhatsApp",
+        description: "Instant booking notifications.",
+        logo: whatsappLogo,
+        isActive: false,
+    },
+    {
+        title: "Zoom",
+        description: "Online consultations.",
+        logo: zoomLogo,
+        isActive: false,
+    },
 ];

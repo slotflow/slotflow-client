@@ -24,7 +24,7 @@ const Header: React.FC = () => {
       <div className={`max-w-7xl mx-auto flex h-16 items-center justify-between`}>
 
         <div className='w-1/2 flex items-center' onClick={() => navigate('/')} >
-          <div className='flex items-center justify-center hidden md:block'>
+          <div className='flex items-center justify-start md:block'>
             <img src={logo} className='size-8' />
           </div>
           <h4 className="ml-2 text-[var(--mainColor)] text-3xl font-bold italic px-2 rounded-lg cursor-pointer">Slotflow</h4>

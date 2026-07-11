@@ -10,6 +10,7 @@ interface AnimatedCounterProps {
     decimals?: number;
     separator?: boolean;
     className?: string;
+    text: string;
 }
 
 const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
@@ -21,43 +22,57 @@ const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
     decimals = 0,
     separator = true,
     className = "",
+    text = "",
 }) => {
+    const containerRef = useRef<HTMLDivElement>(null);
     const counterRef = useRef<HTMLSpanElement>(null);
 
     useEffect(() => {
-    if (!counterRef.current) return;
+        if (!containerRef.current || !counterRef.current) return;
 
-    const value = { count: from };
+        const observer = new IntersectionObserver(
+            ([entry], observer) => {
+                if (!entry.isIntersecting) return;
 
-    const tween = gsap.to(value, {
-        count: to,
-        duration,
-        ease: "power3.out",
-        onUpdate: () => {
-            let formatted = value.count.toFixed(decimals);
+                const value = { count: from };
 
-            if (separator) {
-                formatted = Number(formatted).toLocaleString(undefined, {
-                    minimumFractionDigits: decimals,
-                    maximumFractionDigits: decimals,
+                gsap.to(value, {
+                    count: to,
+                    duration,
+                    ease: "power3.out",
+                    onUpdate: () => {
+                        let formatted = value.count.toFixed(decimals);
+
+                        if (separator) {
+                            formatted = Number(formatted).toLocaleString(undefined, {
+                                minimumFractionDigits: decimals,
+                                maximumFractionDigits: decimals,
+                            });
+                        }
+
+                        counterRef.current!.textContent =
+                            `${prefix}${formatted}${suffix}`;
+                    },
                 });
+                observer.disconnect();
+            },
+            {
+                threshold: 0.3,
             }
+        );
 
-            counterRef.current!.textContent =
-                `${prefix}${formatted}${suffix}`;
-        },
-    });
+        observer.observe(containerRef.current);
 
-    return () => {
-        tween.kill();
-    };
-}, [from, to, duration, prefix, suffix, decimals, separator]);
+        return () => observer.disconnect();
+    }, [from, to, duration, prefix, suffix, decimals, separator]);
 
     return (
-        <span
-            ref={counterRef}
-            className={className}
-        />
+        <div ref={containerRef}>
+            <span ref={counterRef} className={className} />
+            <p className="mt-2 text-sm text-muted-foreground">
+                {text}
+            </p>
+        </div>
     );
 };
 

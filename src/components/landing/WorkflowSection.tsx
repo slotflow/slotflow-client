@@ -5,6 +5,7 @@ import WorkflowHeader from "./workflow/WorkflowHeader";
 import { bookingSteps } from "@/shared/utils/constants";
 import WorkflowTimeline from "./workflow/WorkflowTimeline";
 import WorkflowBackground from "./workflow/WorkflowBackground";
+import MoveUpward from "../animation/MoveUpward";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -154,9 +155,11 @@ const WorkflowSection = () => {
   }, [images]);
 
   return (
-    <div className="relative">
+    <div className="relative hidden lg:block">
       <WorkflowBackground />
-      <WorkflowHeader />
+      <MoveUpward>
+        <WorkflowHeader />
+      </MoveUpward>
       <div
         className="w-full"
         style={{ height: containerHeight ? `${containerHeight}px` : "120vh" }}

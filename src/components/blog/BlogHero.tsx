@@ -75,29 +75,23 @@ const BlogHero: React.FC<BlogHeroProps> = ({
                                 <AnimatedCounter
                                     to={articlesCount}
                                     className="text-3xl font-bold"
+                                    text="Articles"
                                 />
-                                <p className="text-muted-foreground">
-                                    Articles
-                                </p>
                             </div>
                             <div>
                                 <AnimatedCounter
                                     to={categoriesCount}
                                     className="text-3xl font-bold"
+                                    text="Categories"
                                 />
-                                <p className="text-muted-foreground">
-                                    Categories
-                                </p>
                             </div>
                             <div>
                                 <AnimatedCounter
                                     to={10000}
                                     suffix="+"
                                     className="text-3xl font-bold"
+                                    text="Monthly Readers"
                                 />
-                                <p className="text-muted-foreground">
-                                    Monthly Readers
-                                </p>
                             </div>
                         </div>
                     </motion.div>

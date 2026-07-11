@@ -405,6 +405,13 @@ export interface ReviewFields {
   rating: number;
 }
 
+export interface FaqFields {
+  id: number;
+  value: string;
+  question: string;
+  answer: string;
+}
+
 export interface BlogCategoryFields {
   name: string;
   slug?: string;

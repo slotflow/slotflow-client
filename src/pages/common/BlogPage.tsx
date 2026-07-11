@@ -8,6 +8,7 @@ import {
 } from "@/shared/interface/commonInterface";
 import { useEffect, useState } from "react";
 import BlogCTA from "@/components/blog/BlogCTA";
+import LoadingFallback from "./LoadingFallback";
 import BlogHero from "@/components/blog/BlogHero";
 import { contentfulAxiosInstance } from "@/lib/axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,7 +20,6 @@ import BlogEditorsPicks from "@/components/blog/BlogEditorsPicks";
 import BlogLatestInsights from "@/components/blog/BlogLatestInsights";
 import BlogFeaturedArticles from "@/components/blog/BlogFeaturedArticles";
 import { setArticleCategories, setArticles } from "@/shared/redux/slices/appSlice";
-import LoadingFallback from "./LoadingFallback";
 
 const BlogPage = () => {
 

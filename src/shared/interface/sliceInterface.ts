@@ -1,5 +1,5 @@
 import { User } from "./entityInterface/userInterface";
-import { BlogArticle, ProviderCardsFilters, ReviewFields } from "./commonInterface";
+import { BlogArticle, FaqFields, ProviderCardsFilters, ReviewFields } from "./commonInterface";
 import { Message } from "./entityInterface/message.interface";
 import { UserViewProviderCardProps } from "./componentInterface";
 import { ProviderProfile } from "./entityInterface/providerProfileInterface";
@@ -73,6 +73,7 @@ export interface appState {
   articles: BlogArticle[];
   articleCategories: string[];
   reviews: ReviewFields[];
+  faqs: FaqFields[];
 }
 
 // admin slice

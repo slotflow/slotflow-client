@@ -5,7 +5,7 @@ import { Card, CardContent } from '../ui/card';
 import { RootState } from "@/shared/redux/appStore";
 import { AppDispatch } from "@/shared/redux/appStore";
 import { useDispatch, useSelector } from 'react-redux';
-import stripeLogo from '../../assets/iconImages/Stripe.jpeg';
+import stripeLogo from '../../assets/iconImages/stripe.jpeg';
 import { connectStripeAccount } from "@/shared/apis/payment";
 import IntegrationCard from '../integrations/IntegrationCard';
 import { checkStripeAccountStatus } from "@/shared/apis/user";

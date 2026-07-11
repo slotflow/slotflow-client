@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Card, CardContent } from "@/components/ui/card";
 import { bookAnAppointment } from '@/shared/apis/booking';
 import paypalLogo from '../../assets/iconImages/Paypal.png';
-import stripeLogo from '../../assets/iconImages/Stripe.jpeg';
+import stripeLogo from '../../assets/iconImages/stripe.jpeg';
 import razorpayLogo from '../../assets/iconImages/Razorpay.png';
 import { EventSocketEnum } from '@/shared/interface/socket.interface';
 import { checkoutForSubscribePlan } from '@/shared/apis/subscription';

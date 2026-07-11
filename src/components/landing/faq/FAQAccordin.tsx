@@ -1,57 +1,81 @@
+import { appConfig } from "@/shared/config/env";
+import { useEffect, useRef, useState } from "react";
+import { contentfulAxiosInstance } from "@/lib/axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setFaqs } from "@/shared/redux/slices/appSlice";
+import FAQShimmer from "@/components/shimmers/FAQShimmer";
+import { AppDispatch, RootState } from "@/shared/redux/appStore";
+import { ContentfulResponse, FaqFields } from "@/shared/interface/commonInterface";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Loader } from "lucide-react";
-
-const faqs = [
-    {
-        value: "item-1",
-        question: "How do I book a service through SlotFlow?",
-        answer:
-            "Search for a provider, compare availability, choose a suitable time slot, and confirm your booking in just a few clicks.",
-    },
-    {
-        value: "item-2",
-        question: "Are all providers verified?",
-        answer:
-            "Yes. Every provider goes through a verification process before being listed, helping maintain quality and trust across the platform.",
-    },
-    {
-        value: "item-3",
-        question: "Can I reschedule or cancel my booking?",
-        answer:
-            "Absolutely. Depending on the provider's cancellation policy, you can reschedule or cancel appointments directly from your booking dashboard.",
-    },
-    {
-        value: "item-4",
-        question: "Which payment methods are supported?",
-        answer:
-            "SlotFlow supports secure online payments through popular payment gateways, making transactions quick and protected.",
-    },
-    {
-        value: "item-5",
-        question: "How can I become a service provider?",
-        answer:
-            "Create a provider account, complete the verification process, add your services, and start accepting bookings from customers.",
-    },
-    {
-        value: "item-6",
-        question: "Will I receive booking reminders?",
-        answer:
-            "Yes. Customers receive booking confirmations and timely reminders to ensure appointments are never missed.",
-    },
-];
+import MoveUpward from "@/components/animation/MoveUpward";
 
 const FAQAccordion = () => {
-    return (
+
+    const dispatch = useDispatch<AppDispatch>();
+    const faqs = useSelector((state: RootState) => state.app.faqs);
+    const [faqsLoading, setFaqsLoading] = useState<boolean>(false);
+    const hasFetchedFaqs = useRef(false);
+
+    const getFaqs = async (): Promise<FaqFields[]> => {
+        const { data } = await contentfulAxiosInstance.get<ContentfulResponse<FaqFields>>("/entries", {
+            params: {
+                content_type: "faq",
+            },
+        });
+
+        return data.items.map((faq) => faq.fields);
+    };
+
+    useEffect(() => {
+        if (faqs.length >= 5 || hasFetchedFaqs.current) {
+            return;
+        }
+
+        hasFetchedFaqs.current = true;
+        let isMounted = true;
+
+        const fetchReviews = async () => {
+            try {
+                setFaqsLoading(true);
+                const fetchedFaqs = await getFaqs();
+                if (isMounted) {
+                    dispatch(setFaqs(fetchedFaqs));
+                }
+            } catch (error) {
+                if (appConfig.isDevelopment) {
+                    console.error("Failed to fetch faqs:", error);
+                }
+            } finally {
+                if (isMounted) {
+                    setFaqsLoading(false);
+                }
+            }
+        };
+
+        void fetchReviews();
+
+        return () => {
+            isMounted = false;
+        };
+    }, [dispatch, faqs.length]);
+
+    return faqsLoading ? (
+        <FAQShimmer rows={6} />
+    ) : (
         <Accordion
             type="multiple"
             className="mx-auto mt-20 flex max-w-5xl flex-col gap-6"
         >
-            {faqs.map((item) => (
-                <AccordionItem key={item.value} value={item.value}>
-                    <AccordionTrigger>{item.question}</AccordionTrigger>
-                    <AccordionContent>{item.answer}</AccordionContent>
-                </AccordionItem>
-            ))}
+            {
+                faqs.map((item) => (
+                    <MoveUpward key={item.value}>
+                        <AccordionItem value={item.value}>
+                            <AccordionTrigger>{item.question}</AccordionTrigger>
+                            <AccordionContent>{item.answer}</AccordionContent>
+                        </AccordionItem>
+                    </MoveUpward>
+                ))
+            }
         </Accordion>
     );
 };
