@@ -1,4 +1,3 @@
-import React from "react";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,18 +6,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { defaultButtonClassName } from "@/shared/utils/constants";
 import { setPaymentSelectionOpen } from "@/shared/redux/slices/paymentSlice";
+import { BookAppointmentCardProps } from "@/shared/interface/componentInterface";
 
-interface BookAppointmentCardProps {
-    isLoading?: boolean;
-    isError?: boolean;
-    data?: number;
-}
-
-const BookAppointmentCard: React.FC<BookAppointmentCardProps> = ({
+const BookAppointmentCard = ({
     isLoading,
     isError,
     data
-}) => {
+}: BookAppointmentCardProps) => {
 
     const dispatch = useDispatch<AppDispatch>();
     const bookingData = useSelector((state: RootState) => state.payment?.bookingData);

@@ -1,4 +1,3 @@
-import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -11,18 +10,9 @@ import { getInitials } from "@/shared/helper/getInitials";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { setIsShowPreview } from "@/shared/redux/slices/providerSlice";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ProviderProfileTopCardProps } from "@/shared/interface/componentInterface";
 
-interface ProviderProfileTopCardProps {
-    isLoading?: boolean;
-    isError?: boolean;
-    name: string;
-    image: string;
-    categoryName: string;
-    trusted: boolean;
-    role: Role;
-}
-
-const ProviderProfileTopCard: React.FC<ProviderProfileTopCardProps> = ({
+const ProviderProfileTopCard = ({
     isLoading,
     isError,
     name,
@@ -30,7 +20,7 @@ const ProviderProfileTopCard: React.FC<ProviderProfileTopCardProps> = ({
     categoryName,
     trusted,
     role,
-}) => {
+}: ProviderProfileTopCardProps) => {
 
     const dispatch = useDispatch<AppDispatch>();
     const isShowPreview = useSelector((state: RootState) => state.provider.isShowPreview);

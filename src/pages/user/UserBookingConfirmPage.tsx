@@ -12,7 +12,7 @@ import { motion, AnimatePresence, Variants } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { setBookingPyamentData, setPaymentProcessStatus } from "@/shared/redux/slices/paymentSlice";
 
-const UserBookingConfirmPage: React.FC = () => {
+const UserBookingConfirmPage = () => {
 
   const dispatch = useDispatch<AppDispatch>();
   const [searchParams] = useSearchParams();

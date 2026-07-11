@@ -1,16 +1,11 @@
 import { cn } from "@/lib/utils";
-
-interface IntegrationCardProps {
-  title: string;
-  description: string;
-  logo: string;
-}
+import { IntegrationSectionCardProps } from "@/shared/interface/componentInterface";
 
 const IntegrationCard = ({
   title,
   description,
   logo,
-}: IntegrationCardProps) => {
+}: IntegrationSectionCardProps) => {
   return (
     <div
       className={cn(

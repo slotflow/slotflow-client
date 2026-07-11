@@ -1,9 +1,5 @@
 import { motion } from "framer-motion";
-
-interface FloatingProps {
-    children: React.ReactNode;
-    className: string;
-}
+import { FloatingProps } from "@/shared/interface/componentInterface";
 
 const Floating = ({
     children,

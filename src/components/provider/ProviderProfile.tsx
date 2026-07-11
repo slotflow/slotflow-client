@@ -8,33 +8,11 @@ import AttachmentCard from "./providerProfileCards/AttachmentCard";
 import RequirementsCard from "./providerProfileCards/RequirementsCard";
 import CustomizationCard from "./providerProfileCards/CustomizationCard";
 import BookAppointmentCard from "./providerProfileCards/BookAppointmentCard";
-import { FetchProviderServiceResponse } from "@/shared/interface/api/providerService";
+import { ProviderProfileProps } from "@/shared/interface/componentInterface";
 import ProviderProfileTopCardProps from "./providerProfileCards/ProviderProfileTopCard";
-import { ProviderFetchMyProfileDetailsResponse, UserFetchProviderProfileDetailsResponse } from "@/shared/interface/api/providerProfile";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
-interface ProviderProfileProps {
-    username: string;
-    profileImage: string;
-    role: Role;
-    availability: React.ReactNode;
-    reviews?: React.ReactNode;
-    address?: React.ReactNode;
-    proofs?: React.ReactNode;
-    service: {
-        isLoading?: boolean;
-        isError?: boolean;
-        data?: FetchProviderServiceResponse;
-        isUserLookingProvider?: boolean;
-    },
-    profile: {
-        isLoading?: boolean;
-        isError?: boolean;
-        data?: ProviderFetchMyProfileDetailsResponse | UserFetchProviderProfileDetailsResponse
-    },
-}
-
-const ProviderProfile: React.FC<ProviderProfileProps> = ({
+const ProviderProfile = ({
     username,
     profileImage,
     role,
@@ -44,7 +22,7 @@ const ProviderProfile: React.FC<ProviderProfileProps> = ({
     proofs,
     service,
     profile,
-}) => {
+}: ProviderProfileProps) => {
 
     const isShowPreview = useSelector((state: RootState) => state.provider.isShowPreview);
 

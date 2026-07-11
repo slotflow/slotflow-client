@@ -14,7 +14,7 @@ import { resendOtp, verifyOtp } from "@/shared/apis/auth";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { VerifyOtpFormType, verifyOtpZodSchema } from "@/shared/zod/authZod";
 
-const OtpVerificatioForm: React.FC = () => {
+const OtpVerificatioForm = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();

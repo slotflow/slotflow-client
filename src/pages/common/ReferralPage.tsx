@@ -1,5 +1,4 @@
 import dayjs from "dayjs";
-import React from "react";
 import { Users } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import StatCard from "@/components/common/StatsCard";
@@ -11,7 +10,7 @@ import { referralChartLineLinearConfig } from "@/shared/utils/constants";
 import { fetchReferralDetails, fetchReferrals } from "@/shared/apis/referral";
 import ReferralTableColumn from "@/components/table/tableColumns/ReferralTableColumn";
 
-const ReferralPage: React.FC = () => {
+const ReferralPage = () => {
 
     const column = ReferralTableColumn();
     const endDate = dayjs().toDate();

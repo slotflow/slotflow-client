@@ -9,7 +9,7 @@ import { AppDispatch, RootState } from '@/shared/redux/appStore';
 import { InfiniteMovingCards } from '@/components/ui/infinite-moving-cards';
 import { ReviewFields, ContentfulResponse } from '@/shared/interface/commonInterface';
 
-const ReviewsSection: React.FC = () => {
+const ReviewsSection = () => {
 
     const dispatch = useDispatch<AppDispatch>();
     const reviews = useSelector((state: RootState) => state.app.reviews);

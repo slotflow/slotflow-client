@@ -1,12 +1,5 @@
+import { ProviderCardProps } from "@/shared/interface/componentInterface";
 import { Clock3, MapPin, Star } from "lucide-react";
-
-interface ProviderCardProps {
-  name: string;
-  category: string;
-  rating: string;
-  location: string;
-  time: string;
-}
 
 const HeroProviderCard = ({
   name,

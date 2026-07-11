@@ -18,10 +18,10 @@ import SavedAvailabilities from '@/components/serviceAvailability/createServiceA
 import AvailabilityDataSelectionFields from '@/components/serviceAvailability/createServiceAvailabilityPageSplits/AvailabilityDataSelectionFields';
 import CreateServiceAvailabilityFooter from '@/components/serviceAvailability/createServiceAvailabilityPageSplits/CreateServiceAvailabilityFooter';
 
-const ProviderServiceAvailabilityForm: React.FC<ProviderServiceAvailabilityFormProps> = ({
+const ProviderServiceAvailabilityForm = ({
   isUpdating = false,
   heading
-}) => {
+}: ProviderServiceAvailabilityFormProps) => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();

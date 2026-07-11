@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { Button } from '../ui/button';
 import DataField from '../app/DataField';
 import { SelectSeparator } from '../ui/select';
 import { useQuery } from '@tanstack/react-query';
 import { ServiceMode } from '@/shared/interface/enums';
+import { AnimatePresence, motion } from 'framer-motion';
 import DataFetchingError from '../error/DataFetchingError';
 import DataFieldShimmer from '../shimmers/DataFieldShimmer';
+import { defaultButtonClassName } from '@/shared/utils/constants';
+import ProviderServiceForm from '../form/provider/ProviderServiceForm';
 import { ProviderServiceListProps } from '@/shared/interface/componentInterface';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Briefcase, ClipboardList, FileText, Hash, IndianRupee, Layers, LayoutGrid, MonitorSmartphone, Notebook, Tag, UserPlus, Users, Video } from 'lucide-react';
-import { Button } from '../ui/button';
-import { defaultButtonClassName } from '@/shared/utils/constants';
-import { AnimatePresence, motion } from 'framer-motion';
-import ProviderServiceForm from '../form/provider/ProviderServiceForm';
 
-const ProviderServiceList: React.FC<ProviderServiceListProps> = ({
+const ProviderServiceList = ({
     providerId,
     fetchApiFunction,
     queryKey,
     canUpdate = false
-}) => {
+}: ProviderServiceListProps) => {
 
     const [showForm, setShowForm] = useState<boolean>(false);
     const { data, isLoading, isError, error } = useQuery({

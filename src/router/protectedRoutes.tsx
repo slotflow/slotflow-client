@@ -1,14 +1,13 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { Role } from "@/shared/interface/enums";
 import { RootState } from "@/shared/redux/appStore";
 import { ProtectedRouteProps } from "@/shared/interface/componentInterface";
 
-export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ 
+export const ProtectedRoute = ({ 
   allowedRoles, 
   children 
-}) => {
+}: ProtectedRouteProps) => {
   
   const user = useSelector((store: RootState) => store.auth.authUser);
 

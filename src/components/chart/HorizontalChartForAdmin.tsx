@@ -6,7 +6,6 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-
 import {
   Card,
   CardContent,
@@ -24,10 +23,10 @@ import { LoaderCircle, TrendingUp } from "lucide-react";
 import { chartConfig } from "@/shared/utils/constants";
 import { HorizontalChartForAdminReactProps } from "@/shared/interface/componentInterface";
 
-const HorizontalChartForAdminReact: React.FC<HorizontalChartForAdminReactProps> = ({
+const HorizontalChartForAdminReact = ({
   chartData,
   isLOading
-}) => {
+}: HorizontalChartForAdminReactProps) => {
   return (
     <Card>
       <CardHeader>

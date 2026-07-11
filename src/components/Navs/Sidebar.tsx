@@ -3,7 +3,6 @@ import {
     Sun,
     Moon,
 } from 'lucide-react';
-import React from 'react';
 import SingleTab from './SingleTab';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,10 +15,10 @@ import { toggleTheme } from '@/shared/redux/slices/appSlice';
 import { AppDispatch, RootState } from '@/shared/redux/appStore';
 import { SideBarProps } from '@/shared/interface/componentInterface';
 
-const Sidebar: React.FC<SideBarProps> = ({
+const Sidebar = ({
     routes,
     filteredRoutes
-}) => {
+}: SideBarProps) => {
 
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();

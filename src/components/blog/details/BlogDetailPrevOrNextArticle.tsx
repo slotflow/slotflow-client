@@ -1,16 +1,11 @@
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "../../ui/card";
-import { BlogArticle } from "@/shared/interface/commonInterface";
+import { BlogDetailPrevOrNextArticleProps } from "@/shared/interface/componentInterface";
 
-interface BlogDetailPrevOrNextArticleProps {
-    prevArticle: BlogArticle | null;
-    nextArticle: BlogArticle | null;
-}
-
-const BlogDetailPrevOrNextArticle: React.FC<BlogDetailPrevOrNextArticleProps> = ({
+const BlogDetailPrevOrNextArticle = ({
     nextArticle,
     prevArticle
-}) => {
+}: BlogDetailPrevOrNextArticleProps) => {
     console.log("prevArticleId : ",prevArticle?.id)
     console.log("nextArticleId : ",nextArticle?.id)
     return (

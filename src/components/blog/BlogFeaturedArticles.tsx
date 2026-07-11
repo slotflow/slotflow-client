@@ -1,17 +1,12 @@
+import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { BlogArticle } from "@/shared/interface/commonInterface";
-import React from "react";
 import { formateDate } from "@/shared/helper/formatter";
-import { Link } from "react-router-dom";
+import { BlogFeaturedArticlesProps } from "@/shared/interface/componentInterface";
 
-interface BlogFeaturedArticlesProps {
-    featuredArticles: BlogArticle[];
-}
-
-const BlogFeaturedArticles: React.FC<BlogFeaturedArticlesProps> = ({
+const BlogFeaturedArticles = ({
     featuredArticles
-}) => {
+}: BlogFeaturedArticlesProps) => {
 
     return (
         <section className="relative px-6 py-24 max-w-7xl mx-auto">

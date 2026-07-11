@@ -1,11 +1,11 @@
+import { useState } from "react";
 import { Button } from "../ui/button";
 import { toast } from "react-toastify";
-import React, { useState } from "react";
 import { LoaderCircle } from "lucide-react";
 import { appConfig } from "@/shared/config/env";
 import { ConfirmDeleteProps } from "@/shared/interface/componentInterface";
 
-const ConfirmAlert: React.FC<ConfirmDeleteProps> = ({
+const ConfirmAlert = ({
     message,
     entityId,
     deleteHandler,
@@ -14,7 +14,7 @@ const ConfirmAlert: React.FC<ConfirmDeleteProps> = ({
     successMessage,
     btnTitle,
     btnText
-}) => {
+}: ConfirmDeleteProps) => {
     const [loading, setLoading] = useState<boolean>(false);
 
     const handleDelete = async () => {

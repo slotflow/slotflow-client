@@ -1,22 +1,13 @@
-import React from "react";
 import { Briefcase } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import DataFetchingError from "@/components/error/DataFetchingError";
+import { ExperienceCardProps } from "@/shared/interface/componentInterface";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-interface ExperienceCardProps {
-    isLoading?: boolean;
-    isError?: boolean;
-    data?: {
-        experienceYears?: number;
-        description?: string;
-    };
-}
-
-const ExperienceCard: React.FC<ExperienceCardProps> = ({
+const ExperienceCard = ({
     isLoading,
     isError,
     data,
-}) => {
+}: ExperienceCardProps) => {
     return (
         <Card className="border shadow-sm rounded-xl">
             <CardHeader>

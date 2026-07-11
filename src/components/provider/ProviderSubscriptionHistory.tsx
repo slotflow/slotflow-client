@@ -4,7 +4,7 @@ import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
 import ProvidersSubscriptionsTableColumns from '../table/tableColumns/ProviderSubscriptionsTableColumn';
 import { FetchProviderSubscriptionsResponse, FetchSubscriptionsQueryParams } from '@/shared/interface/api/subscription';
 
-const ProviderSubscriptionHistory: React.FC = () => {
+const ProviderSubscriptionHistory = () => {
 
     const {
         handleAdminGetProviderDetailPage

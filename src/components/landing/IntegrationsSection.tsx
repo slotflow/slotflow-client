@@ -1,9 +1,9 @@
 import { Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { integrations } from "@/shared/utils/constants";
+import MoveUpward from "../animation/MoveUpward";
 import SplitTextReveal from "../animation/SplitTextReveal";
 import IntegrationCard from "./integration/IntegrationCard";
-import MoveUpward from "../animation/MoveUpward";
+import { landingPageIntegrations } from "@/shared/utils/constants";
 
 const IntegrationsSection = () => {
     return (
@@ -47,7 +47,7 @@ const IntegrationsSection = () => {
                 <MoveUpward>
                     <div className="relative mt-20 rounded-[2rem] border bg-background/60 p-8 backdrop-blur-xl md:p-12">
                         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                            {integrations
+                            {landingPageIntegrations
                                 .filter((integration) => integration.isActive)
                                 .map((integration) => (
                                     <IntegrationCard

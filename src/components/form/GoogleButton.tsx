@@ -2,11 +2,11 @@ import React from 'react';
 import { Button } from '../ui/button';
 import { GoogleButtonProps } from '@/shared/interface/componentInterface';
 
-const GoogleButton: React.FC<GoogleButtonProps> = ({
+const GoogleButton = ({
     onClick,
     text,
     className="w-full"
-}) => {
+}: GoogleButtonProps) => {
     return (
         <Button
             title={text}

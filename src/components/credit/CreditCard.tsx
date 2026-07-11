@@ -1,20 +1,9 @@
-import React from "react";
 import { Badge } from "../ui/badge";
-import { LoaderCircle, Info, LucideIcon, CheckCircle2, XCircle } from "lucide-react";
+import { CreditCardPorps } from "@/shared/interface/componentInterface";
+import { LoaderCircle, Info, CheckCircle2, XCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-interface CreditCardPorps {
-    title: string;
-    isLoading: boolean;
-    isError: boolean;
-    error: any;
-    data: number | boolean | React.ReactNode;
-    Icon: LucideIcon
-    bgColour?: string;
-    main?: boolean;
-}
-
-const CreditCard: React.FC<CreditCardPorps> = ({
+const CreditCard = ({
     title,
     isLoading,
     isError,
@@ -23,7 +12,7 @@ const CreditCard: React.FC<CreditCardPorps> = ({
     Icon,
     bgColour,
     main
-}) => {
+}: CreditCardPorps) => {
     return (
         <Card className={`${bgColour ? bgColour : ""} ${bgColour ? "text-white" : ""}`}>
             <CardHeader>

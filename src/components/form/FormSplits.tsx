@@ -5,7 +5,10 @@ import logo from '../../assets/logos/logo-transparent.png';
 import { CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { AuthFormsButtonProps, AuthFormsHeadingProps } from "@/shared/interface/componentInterface";
 
-export const FormHeading: React.FC<AuthFormsHeadingProps> = React.memo(({ title, description }) => {
+export const FormHeading = React.memo(({ 
+    title, 
+    description
+ }: AuthFormsHeadingProps) => {
     return (
         <CardHeader>
             <div className='flex items-center justify-center'>
@@ -19,12 +22,12 @@ export const FormHeading: React.FC<AuthFormsHeadingProps> = React.memo(({ title,
     )
 });
 
-export const FormButton: React.FC<AuthFormsButtonProps> = React.memo(({ 
+export const FormButton = React.memo(({ 
     text, 
     loading = false,
     disabled ,
     title
-}) => {
+}: AuthFormsButtonProps) => {
     return (
         <Button
             title={title}

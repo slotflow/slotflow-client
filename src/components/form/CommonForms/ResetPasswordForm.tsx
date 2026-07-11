@@ -12,7 +12,7 @@ import { redirectPaths } from "@/shared/utils/constants";
 import { setForgotPassword } from "@/shared/redux/slices/appSlice";
 import { ResetPasswordFormType, resetPasswordZodSchema } from "@/shared/zod/authZod";
 
-const ResetPasswordForm: React.FC = () => {
+const ResetPasswordForm = () => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>();

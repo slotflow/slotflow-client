@@ -11,14 +11,14 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { DateRange } from 'react-day-picker';
 import DataFilter from '@/components/filters/DataFilter';
 import { providerDashboardTabs } from '@/shared/utils/constants';
 import ProviderDashboardStats from '@/components/dashboard/provider/ProviderDashboardStats';
 import ProviderDashboardGraphs from '@/components/dashboard/provider/ProviderDashboardGraphs';
 
-const ProviderDashboardPage: React.FC = () => {
+const ProviderDashboardPage = () => {
   const [selectedTab, setSelectedTab] = useState(providerDashboardTabs[0].value);
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
     from: new Date(),

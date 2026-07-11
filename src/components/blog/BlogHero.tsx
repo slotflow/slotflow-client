@@ -3,7 +3,6 @@ import {
     ArrowRight,
     CalendarDays,
 } from "lucide-react";
-import React from "react";
 import { Card } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
@@ -11,22 +10,15 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { formateDate } from "@/shared/helper/formatter";
 import SplitTextReveal from "../animation/SplitTextReveal";
-import { BlogArticle } from "@/shared/interface/commonInterface";
 import AnimatedCounter from "../animation/AnimatedCounter";
+import { BlogHeroProps } from "@/shared/interface/componentInterface";
 
-interface BlogHeroProps {
-    categories: string[];
-    articlesCount: number;
-    categoriesCount: number;
-    featuredArticle?: BlogArticle | null;
-}
-
-const BlogHero: React.FC<BlogHeroProps> = ({
+const BlogHero = ({
     articlesCount,
     categories,
     categoriesCount,
     featuredArticle
-}) => {
+}: BlogHeroProps) => {
     const navigate = useNavigate();
     const featuredTitle = featuredArticle?.heroTitle ?? "Explore our latest insights";
     const featuredDescription = featuredArticle?.heroDescription ?? "Fresh articles and practical strategies for growing your business.";

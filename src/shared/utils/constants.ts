@@ -16,7 +16,9 @@ import {
   MapPin,
   Shield,
   AtSign,
+  Cookie,
   Search,
+  Github,
   Youtube,
   Twitter,
   Receipt,
@@ -28,6 +30,7 @@ import {
   BookLock,
   Settings,
   Activity,
+  FileText,
   BarChart,
   UserPlus,
   LockIcon,
@@ -54,35 +57,34 @@ import {
   MessageSquare,
   WalletMinimal,
   CalendarCheck,
+  CircleCheckBig,
   MessageSquareText,
   PictureInPicture2,
-  Github,
-  FileText,
-  Cookie,
-  CircleCheckBig,
 } from "lucide-react";
 import {
   Route,
+  BookingSteps,
   PlanListType,
   DayMapInterface,
   statsMapIntrface,
   CommonTabInterface,
   HearAboutUsOptions,
-  FooterLinkInterface,
   PlanFeatureInterface,
+  BookingStepsHeroPeople,
+  LandingPageIntegrations,
   FeatureContentInterface,
   HeaderCompoenentNavsProps,
-  FooterColumnDataInterface,
   StatsMapForAdminInterface,
   dataSelectListItemInterface,
   MapDotLitLocationsCoordinates,
   ProviderApprovalMessageInterface,
   gsapBigSvgYDirectionAnimationInterface,
+  BlogCTAItems,
 } from "../interface/commonInterface";
 import { ChartConfig } from "@/components/ui/chart";
-import chatImage from '@/assets/LandingPageImages/chat.jpg';
 import { OptionType } from '../interface/commonInterface';
 import { ContactItem } from "../interface/commonInterface";
+import chatImage from '@/assets/LandingPageImages/chat.jpg';
 import gCalendar from '../../assets/iconImages/gCalendar.png';
 import calendarImage from '../../assets/LandingPageImages/calendar2.png';
 import videoCallImage from '../../assets/LandingPageImages/videoCall.jpg';
@@ -106,6 +108,7 @@ export const blockBackStatuses = [AdminVerificationStatus.REQUESTED, AdminVerifi
 // Updatable Statuses
 export const updatableStatuses = [AdminVerificationStatus.NOT_REQUESTED, AdminVerificationStatus.REJECTED] as const;
 
+// Route names record
 export enum RouteNames {
   DASHBOARD = "Dashboard",
   PROFILE = "Profile",
@@ -291,7 +294,6 @@ export const dateSelectList: dataSelectListItemInterface[] = [
   { value: "180d", content: "Last 6 months" },
   { value: "365d", content: "Last year" },
 ]
-
 
 // Pricing Setion Data
 export const PlanList: PlanListType = [
@@ -605,36 +607,36 @@ export const footerLinks = {
       name: "Privacy Policy",
       href: "/legal/privacy-policy",
       description:
-      "Learn how we collect, use, protect, and process your personal information.",
+        "Learn how we collect, use, protect, and process your personal information.",
       icon: Shield,
     },
     {
       name: "Terms of Service",
       href: "/legal/terms-of-service",
       description:
-      "Read the terms and conditions governing the use of SlotFlow.",
+        "Read the terms and conditions governing the use of SlotFlow.",
       icon: FileText,
     },
-      {
-        name: "Cookie Policy",
-        href: "/legal",
-        description:
-        "Read the cookie policy",
-        icon: Cookie
-      },
     {
-        name: "Refund Policy",
-        href: "/legal",
-        description:
-            "Understand refunds, eligibility, processing timelines, and exceptions.",
-        icon: RotateCcw,
+      name: "Cookie Policy",
+      href: "/legal",
+      description:
+        "Read the cookie policy",
+      icon: Cookie
     },
     {
-        name: "Cancellation Policy",
-        href: "/legal",
-        description:
-            "Learn about booking cancellations, provider cancellations, and applicable charges.",
-        icon: Ban,
+      name: "Refund Policy",
+      href: "/legal",
+      description:
+        "Understand refunds, eligibility, processing timelines, and exceptions.",
+      icon: RotateCcw,
+    },
+    {
+      name: "Cancellation Policy",
+      href: "/legal",
+      description:
+        "Learn about booking cancellations, provider cancellations, and applicable charges.",
+      icon: Ban,
     },
   ],
 
@@ -661,7 +663,6 @@ export const approvalMessages: ProviderApprovalMessageInterface = {
   message2: "We will notify you via email.",
   footerNote: "If you have any queries, please contact us.",
 };
-
 
 // Features Section Content
 export const featureContent: FeatureContentInterface[] = [
@@ -698,7 +699,6 @@ export const featureContent: FeatureContentInterface[] = [
     islogo: true,
   },
 ];
-
 
 // Provider Dashboard Stats Cards Data
 export const statsMapForProvider: Array<statsMapIntrface<ProviderFetchDashboardStatsDataResponse>> = [
@@ -740,8 +740,7 @@ export const statsMapForProvider: Array<statsMapIntrface<ProviderFetchDashboardS
   },
 ];
 
-
-
+// Revenue status map for provider
 export const revenueStatsMapForProvider = [
   {
     title: "Subscription Payments",
@@ -813,12 +812,16 @@ export const appointmentsOverTimeChartConfig = {
     color: "#ef4444",
   },
 }
+
+// Peak booking hours chart config
 export const peakBookingHoursChartConfig = {
   bookings: {
     label: "Bookings",
     color: "#22c55e",
   },
 }
+
+// Appointment mode chart config
 export const appointmentModeChartConfig = {
   online: {
     label: "Online",
@@ -829,6 +832,8 @@ export const appointmentModeChartConfig = {
     color: "#10b981",
   },
 };
+
+// Completion breakdown chart config
 export const completionBreakdownChartConfig = {
   completed: {
     label: "completed",
@@ -855,6 +860,8 @@ export const completionBreakdownChartConfig = {
     color: "#eab308",
   },
 };
+
+// New vs retuning users chart config
 export const newVsReturningUsersChartConfig = {
   newUsers: {
     label: "New Users",
@@ -865,6 +872,8 @@ export const newVsReturningUsersChartConfig = {
     color: "#10b981",
   },
 }
+
+// Top bookings day chart config
 export const topBookingDaysChartConfig = {
   Monday: {
     label: "Monday",
@@ -895,6 +904,8 @@ export const topBookingDaysChartConfig = {
     color: "#EC4899",
   },
 };
+
+// Earnings time chart config
 export const earningsOverTimeChartConfig = {
   stripe: {
     label: "Stripe",
@@ -926,6 +937,7 @@ export const creditAccountChartLineLinearConfig: ChartConfig = {
   }
 }
 
+// Referral chat config
 export const referralChartLineLinearConfig: ChartConfig = {
   totalReferrals: {
     label: "Total Referrals",
@@ -959,6 +971,7 @@ export const userStatsMapForAdmin: StatsMapForAdminInterface[] = [
   },
 ]
 
+// Provider status map for admin
 export const providerStatsMapForAdmin: StatsMapForAdminInterface[] = [
   {
     title: "Total Providers",
@@ -997,6 +1010,7 @@ export const providerStatsMapForAdmin: StatsMapForAdminInterface[] = [
   },
 ]
 
+// Subscription status map for admin
 export const subscriptionStatsMapForAdmin: StatsMapForAdminInterface[] = [
   {
     title: "Active Subscriptions",
@@ -1030,7 +1044,8 @@ export const subscriptionStatsMapForAdmin: StatsMapForAdminInterface[] = [
   },
 ]
 
-export const revenueAnAndPaymentsStatsMapForAdmin: StatsMapForAdminInterface[] = [
+// Revenue and payment status map for admin
+export const revenueAndPaymentsStatsMapForAdmin: StatsMapForAdminInterface[] = [
   {
     title: "Total Revenue",
     key: "totalRevenue",
@@ -1087,6 +1102,7 @@ export const revenueAnAndPaymentsStatsMapForAdmin: StatsMapForAdminInterface[] =
   },
 ]
 
+// Appointment status map for admin
 export const AppointmentsStatsMapForAdmin: StatsMapForAdminInterface[] = [
   {
     title: "Total Appointments",
@@ -1115,7 +1131,6 @@ export const AppointmentsStatsMapForAdmin: StatsMapForAdminInterface[] = [
   },
 ];
 
-
 // Address creating, service details creating and service availability creating page side box data
 export const progressBars: { [key: number]: boolean[] } = {
   0: [true, false, false, false, false],
@@ -1126,6 +1141,7 @@ export const progressBars: { [key: number]: boolean[] } = {
   5: [true, true, true, true, true],
 };
 
+// Onboarding sidebar headings
 const sidebarHeadings: string[] = [
   'Setup',
   'Address',
@@ -1135,6 +1151,7 @@ const sidebarHeadings: string[] = [
   "Approval"
 ];
 
+// Onboarding page labels
 export const pageLabels: { [key: number]: string[] } = {
   0: sidebarHeadings,
   1: sidebarHeadings,
@@ -1144,6 +1161,7 @@ export const pageLabels: { [key: number]: string[] } = {
   5: sidebarHeadings
 };
 
+// Onboarding pages descriptions
 export const pageDescriptions: { [key: number]: string } = {
   0: "Welcome to Slotflow! We're excited to have you on board. Let’s get you set up what would you like to do?.",
   1: "Provide your service address accurately to ensure seamless customer bookings.",
@@ -1153,13 +1171,14 @@ export const pageDescriptions: { [key: number]: string } = {
   5: "Our team is reviewing your service registration request. You will be notified via email once your request is approved. Thank you for your patience.",
 };
 
+// Address page google map title
 export const addAddressGoogleMapLinkInfoHeading: string = "Select Your Exact Location";
 
+// Address page google map info
 export const addAddressGoogleMapLinkInfo: string = `Use the map to select your exact location.  
 Click on the map to drop a marker at your address.  
 This helps us provide accurate location based services and ensures more precise search results.  
 Your selected location will also be used to automatically fill address details wherever possible.`;
-
 
 // Hero section
 export const heroSectionButtons: { text: string, href: string }[] = [
@@ -1172,22 +1191,6 @@ export const heroSectionButtons: { text: string, href: string }[] = [
     href: "/auth/login"
   },
 ]
-
-
-// About Page
-export const aboutIntro: string[] = [
-  "Slotflow is more than just a booking tool, it is your complete scheduling companion for the digital age. We empower businesses, professionals, and teams to manage appointments, streamline operations, and provide a frictionless experience to their customers. Whether you are a solo entrepreneur or an enterprise level service provider, Slotflow adapts to your needs and scales with your growth.",
-  "Built with modern technology and designed with a human first approach, Slotflow integrates real time booking, instant notifications, and smooth Google Calendar sync so you never miss an appointment. Features like in app chat and video calls allow you to connect with clients instantly, while our intuitive interface ensures both providers and customers enjoy a clean and effortless experience.",
-  "Our mission is to create a platform that removes the chaos from scheduling, saves time for businesses, and delivers a polished, professional experience every step of the way. With continuous improvements, innovative integrations, and an obsession for user experience, Slotflow is the future of appointment management."
-];
-
-export const aboutFeatures: string[] = [
-  "From smart scheduling to automated workflows, Slotflow takes care of the details so you can focus on what matters most, your clients. Our platform supports role based dashboards for users, providers, and admins, ensuring each stakeholder gets the tools they need. Flexible subscription tiers let you start for free and upgrade as your business grows, while automation handles confirmations, reminders, and updates without requiring constant manual effort.",
-  "Real time synchronization keeps everyone aligned, preventing double bookings and miscommunication. We prioritize scalability and security so your data is safe and performance stays smooth as demand increases. Detailed analytics provide insights into revenue and customer trends, helping you make smarter business decisions. And because we are future focused, Slotflow evolves continuously with new features, integrations, and optimizations driven by user feedback."
-];
-
-export const devWebPortfoilio: string = "https://midhunkpaniker.vercel.app/";
-
 
 // Contact Page
 export const contactData: ContactItem[] = [
@@ -1209,10 +1212,6 @@ export const contactData: ContactItem[] = [
     value: "Kerala, India",
   },
 ];
-
-
-
-
 
 // Terms and Conditions
 export const termsAndConditionsContent: string[] = [
@@ -1247,7 +1246,6 @@ export const providerDashboardTabs: CommonTabInterface[] = [
   { value: "graphs", label: "Graphs", icon: BarChart },
 ];
 
-
 // Settings Page Tabs
 export const settingsTabs: CommonTabInterface[] = [
   {
@@ -1278,25 +1276,24 @@ export const adVisibilityOptions: OptionType<boolean>[] = [
   { label: "No Ad Visibility", value: false },
 ];
 
-// 
+// Service type options
 export const serviceTypeOptions: OptionType<ServiceType>[] = [
   { label: "One Time", value: ServiceType.ONE_TIME },
   { label: "Recurring", value: ServiceType.RECURRING },
 ];
 
-//
+// Service mode options
 export const serviceModeOptions: OptionType<ServiceMode>[] = [
   { label: "Online", value: ServiceMode.ONLINE },
   { label: "Offline", value: ServiceMode.OFFLINE },
   { label: "Both", value: ServiceMode.BOTH },
 ];
 
-//
+// Group options
 export const groupOptions: OptionType<boolean>[] = [
   { label: "Group", value: true },
   { label: "Individual", value: false },
 ];
-
 
 // Days of Week Options
 export const daysOfWeekOptions: OptionType<string>[] = [
@@ -1378,7 +1375,6 @@ export const serviceCategoryOptions: OptionType<ServiceCategory>[] = [
   },
 ];
 
-
 // Planduration options
 export const planDurations: OptionType<number>[] = [
   { label: "1 Month", value: 30 },
@@ -1393,13 +1389,11 @@ export const adVisibility: OptionType<boolean>[] = [
   { label: "Ad Not Visible", value: false },
 ];
 
-
 // admin provider verification boolean options
 export const verificationOptions: OptionType<boolean>[] = [
   { label: "Verified", value: true },
   { label: "Rejected", value: false }
 ];
-
 
 // Status text mapper
 export const verificationStatusTextMap: Record<AdminVerificationStatus, string> = {
@@ -1411,6 +1405,7 @@ export const verificationStatusTextMap: Record<AdminVerificationStatus, string> 
   [AdminVerificationStatus.NOT_REQUESTED]: "Not submitted",
 };
 
+// Plan options
 export const planNameOptions: OptionType<PlanName>[] = [
   { label: "Trial", value: PlanName.TRIAL },
   { label: "Starter", value: PlanName.STARTER },
@@ -1419,11 +1414,13 @@ export const planNameOptions: OptionType<PlanName>[] = [
   { label: "No Subscription", value: PlanName.NO_SUBSCRIPTION },
 ];
 
+// Redux store constant
 export const storeConstants: Record<string, string> = {
   storeKey: "slotflow",
   resetState: "RESET_STATE"
 };
 
+// Redirect paths
 export const redirectPaths: Record<string, string> = {
   LOGIN: "/auth/login",
   REGISTER: "/auth/register",
@@ -1442,6 +1439,7 @@ export const redirectPaths: Record<string, string> = {
   ADMIN_DASHBOARD: "/admin/dashboard",
 };
 
+// Base paths
 export const basePaths: Record<string, string> = {
   user: "/user",
   provider: "/provider",
@@ -1449,6 +1447,7 @@ export const basePaths: Record<string, string> = {
   login: "/login"
 };
 
+// Chart config
 export const chartConfig = {
   value: {
     label: "Value",
@@ -1459,6 +1458,7 @@ export const chartConfig = {
   },
 } satisfies ChartConfig;
 
+// World map points
 export const mapDotLitLocationsCoordinates: MapDotLitLocationsCoordinates[] = [
   { start: { lat: 64.2008, lng: -149.4937 }, end: { lat: 34.0522, lng: -118.2437 } },
   { start: { lat: 64.2008, lng: -149.4937 }, end: { lat: -15.7975, lng: -47.8919 } },
@@ -1469,6 +1469,7 @@ export const mapDotLitLocationsCoordinates: MapDotLitLocationsCoordinates[] = [
   { start: { lat: 22.5726, lng: 88.3639 }, end: { lat: 28.6139, lng: 77.209 } }
 ]
 
+// Hear about us options
 export const hearAboutUsOptions: HearAboutUsOptions[] = [
   { label: "Google Search", value: HearAboutUsOptionValue.GOOGLE, icon: Search },
   { label: "Friend / Referral", value: HearAboutUsOptionValue.REFERRAL, icon: Users },
@@ -1482,14 +1483,19 @@ export const hearAboutUsOptions: HearAboutUsOptions[] = [
   { label: "Other", value: HearAboutUsOptionValue.OTHER, icon: HelpCircle },
 ]
 
-//
+// Preboarding titles
 export const preBoardingTitles: string[] = [
   "Choose your account type",
   "Where did you hear about us?"
 ]
 
-// onboarding titles
-export const onboardingContent = {
+// Onboarding titles
+export const onboardingContent: Record<string, {
+  title: string;
+  description: string;
+  description2?: string;
+  description3?: string;
+}> = {
   setupRole: {
     title: "Select Your Account Type",
     description: "Choose how you will use the platform.",
@@ -1522,12 +1528,13 @@ export const onboardingContent = {
   },
 };
 
-export const defaultButtonClassName = "cursor-pointer transition-colors duration-300 hover:text-white hover:bg-[var(--mainColor)]";
+// Default button className
+export const defaultButtonClassName: string = "cursor-pointer transition-colors duration-300 hover:text-white hover:bg-[var(--mainColor)]";
 
-export const destructiveButtonClassName = "cursor-pointer transition-colors duration-300 hover:text-white hover:bg-red-500";
+// Destructive button className
+export const destructiveButtonClassName: string = "cursor-pointer transition-colors duration-300 hover:text-white hover:bg-red-500";
 
-
-//
+// Status preset data for the data cards
 export const STATUS_PRESETS: Record<string, { trueText: string, falseText: string, trueClass: string, falseClass: string }> = {
   accountStatus: {
     trueText: "Blocked",
@@ -1561,15 +1568,17 @@ export const STATUS_PRESETS: Record<string, { trueText: string, falseText: strin
   },
 };
 
+// User dashboard providers list card gradients
 export const cardGradients: string[] = [
-    "bg-gradient-to-r from-violet-200 to-violet-400",
-    "bg-gradient-to-r from-lime-100 to-green-300",
-    "bg-gradient-to-r from-red-100 to-orange-200",
-    "bg-gradient-to-r from-amber-100 to-yellow-200",
-    "bg-gradient-to-r from-sky-100 to-blue-300"
+  "bg-gradient-to-r from-violet-200 to-violet-400",
+  "bg-gradient-to-r from-lime-100 to-green-300",
+  "bg-gradient-to-r from-red-100 to-orange-200",
+  "bg-gradient-to-r from-amber-100 to-yellow-200",
+  "bg-gradient-to-r from-sky-100 to-blue-300"
 ];
 
-export const bookingSteps = [
+// Landing page workflow booking steps
+export const bookingSteps: BookingSteps[] = [
   {
     title: "Create an Account",
     description:
@@ -1608,7 +1617,8 @@ export const bookingSteps = [
   },
 ];
 
-export const heroPeople = [
+// Landing page hero section people list
+export const heroPeople: BookingStepsHeroPeople[] = [
   {
     id: 1,
     name: "Rahul Sharma",
@@ -1653,41 +1663,62 @@ export const heroPeople = [
   },
 ];
 
-export const integrations = [
-    {
-        title: "Google Calendar",
-        description: "Two-way appointment synchronization.",
-        logo: googleCalendarLogo,
-        isActive: true,
-    },
-    {
-        title: "Stripe",
-        description: "Secure online payments.",
-        logo: stripeLogo,
-        isActive: true,
-    },
-    {
-        title: "Google Maps",
-        description: "Location and navigation.",
-        logo: googleMapsLogo,
-        isActive: true,
-    },
-    {
-        title: "Gmail",
-        description: "Booking confirmations.",
-        logo: gmailLogo,
-        isActive: true,
-    },
-    {
-        title: "WhatsApp",
-        description: "Instant booking notifications.",
-        logo: whatsappLogo,
-        isActive: false,
-    },
-    {
-        title: "Zoom",
-        description: "Online consultations.",
-        logo: zoomLogo,
-        isActive: false,
-    },
+// Landing page integrations section data
+export const landingPageIntegrations: LandingPageIntegrations[] = [
+  {
+    title: "Google Calendar",
+    description: "Two-way appointment synchronization.",
+    logo: googleCalendarLogo,
+    isActive: true,
+  },
+  {
+    title: "Stripe",
+    description: "Secure online payments.",
+    logo: stripeLogo,
+    isActive: true,
+  },
+  {
+    title: "Google Maps",
+    description: "Location and navigation.",
+    logo: googleMapsLogo,
+    isActive: true,
+  },
+  {
+    title: "Gmail",
+    description: "Booking confirmations.",
+    logo: gmailLogo,
+    isActive: true,
+  },
+  {
+    title: "WhatsApp",
+    description: "Instant booking notifications.",
+    logo: whatsappLogo,
+    isActive: false,
+  },
+  {
+    title: "Zoom",
+    description: "Online consultations.",
+    logo: zoomLogo,
+    isActive: false,
+  },
+];
+
+// blogCTA items
+export const blogCTAItems: BlogCTAItems[] = [
+  {
+    title: "25k+",
+    subTitle: "Appointments Managed",
+  },
+  {
+    title: "98%",
+    subTitle: "Customer Satisfaction",
+  },
+  {
+    title: "24/7",
+    subTitle: "Online Booking",
+  },
+  {
+    title: "AI",
+    subTitle: "Smart Scheduling",
+  },
 ];

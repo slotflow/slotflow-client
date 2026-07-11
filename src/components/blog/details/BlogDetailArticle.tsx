@@ -1,14 +1,9 @@
-import React from "react";
 import TOC from "@/components/scroll/TOC";
-import { BlogArticle } from "@/shared/interface/commonInterface";
+import { BlogDetailArticleProps } from "@/shared/interface/componentInterface";
 
-interface BlogDetailArticleProps {
-    article: BlogArticle;
-}
-
-const BlogDetailArticle: React.FC<BlogDetailArticleProps> = ({
+const BlogDetailArticle = ({
     article
-}) => {
+}: BlogDetailArticleProps) => {
 
     return (
         <section className="max-w-7xl mx-auto px-6 py-20">

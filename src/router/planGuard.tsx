@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { RootState } from "@/shared/redux/appStore";
@@ -6,10 +5,10 @@ import { PlanName, Role } from "@/shared/interface/enums";
 import { planAccessMap } from "@/shared/utils/constants";
 import { PlanGuardProps } from '@/shared/interface/componentInterface';
 
-const PlanGuard: React.FC<PlanGuardProps> = ({ 
+const PlanGuard = ({ 
   routeName, 
   children 
-}) => {
+}: PlanGuardProps) => {
   const { authUser } = useSelector((store: RootState) => store.auth);
 
   if (authUser?.role !== Role.PROVIDER) {

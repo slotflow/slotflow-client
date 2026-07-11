@@ -1,8 +1,7 @@
-import React from 'react';
 import PageHeader from '@/components/common/PageHeader';
 import AdminRevenueReport from '@/components/admin/AdminRevenueReport';
 
-const AdminReportPage: React.FC = () => {
+const AdminReportPage = () => {
 
   return (
     <div className="p-4">

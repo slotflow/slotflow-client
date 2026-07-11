@@ -18,7 +18,7 @@ import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 import { filterChartDataHelper } from '@/shared/helper/dateFilter';
 import { LineChartHorizontalProps } from '@/shared/interface/componentInterface';
 
-const LineChartHorizontal: React.FC<LineChartHorizontalProps> = ({
+const LineChartHorizontal = ({
   title,
   description,
   chartData,
@@ -26,7 +26,7 @@ const LineChartHorizontal: React.FC<LineChartHorizontalProps> = ({
   dataKeyTwo,
   chartConfig,
   isLocked
-}) => {
+}: LineChartHorizontalProps) => {
 
   const [timeRange, setTimeRange] = React.useState<TimeRange>("7d");
   const filteredData = filterChartDataHelper(chartData, timeRange);

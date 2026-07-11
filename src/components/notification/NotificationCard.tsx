@@ -1,5 +1,4 @@
 import dayjs from "dayjs"
-import React from "react";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { formateDate } from "@/shared/helper/formatter";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -7,12 +6,12 @@ import { NotificationCardProps } from "@/shared/interface/componentInterface";
 
 dayjs.extend(relativeTime)
 
-const NotificationCard: React.FC<NotificationCardProps> = ({ 
+const NotificationCard = ({ 
     title, 
     body, 
     isRead, 
     createdAt 
-}) => {
+}: NotificationCardProps) => {
 
     return (
         <Alert className={`transition-colors shadow-sm ${isRead ? 'bg-black/5 dark:bg-white/5 opacity-70 border-transparent' : 'bg-blue-50/50 dark:bg-blue-900/10 border-blue-200/50 dark:border-blue-800/50'}`}>

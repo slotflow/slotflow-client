@@ -1,10 +1,9 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { grafanaConfig } from '@/shared/config/env';
 import { RootState } from '@/shared/redux/appStore';
 import PageHeader from '@/components/common/PageHeader';
 
-const AdminGrafanaDashboard: React.FC = () => {
+const AdminGrafanaDashboard= () => {
 
     const { lightTheme } = useSelector((state: RootState) => state.app);
     const { grafanaUrl, grafanaDashboardId, grafanaDashboardName, grafanaUrlQuery } = grafanaConfig;

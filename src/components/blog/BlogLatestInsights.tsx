@@ -4,15 +4,11 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { formateDate } from "@/shared/helper/formatter";
-import { BlogArticle } from "@/shared/interface/commonInterface";
+import { BlogLatestInsightsProps } from "@/shared/interface/componentInterface";
 
-interface BlogLatestInsightsProps {
-    articles: BlogArticle[];
-}
-
-const BlogLatestInsights: React.FC<BlogLatestInsightsProps> = ({
+const BlogLatestInsights = ({
     articles,
-}) => {
+}: BlogLatestInsightsProps) => {
 
     const [showFull, setShowFull] = useState<boolean>(false);
 

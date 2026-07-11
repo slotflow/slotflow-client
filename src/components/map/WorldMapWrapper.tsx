@@ -1,7 +1,7 @@
 import WorldMap from "@/components/ui/world-map";
 import { mapDotLitLocationsCoordinates } from "@/shared/utils/constants";
 
-const WorldMapWrapper: React.FC = () => {
+const WorldMapWrapper = () => {
   return (
     <div className="py-40 w-full h-full">
       <WorldMap

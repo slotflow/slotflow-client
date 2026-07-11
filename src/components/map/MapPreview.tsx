@@ -4,7 +4,10 @@ import { Button } from "@/components/ui/button";
 import googleMap from '../../assets/iconImages/googleMap.png';
 import { MapPreviewProps } from "@/shared/interface/componentInterface";
 
-const MapPreview: React.FC<MapPreviewProps> = ({ lat, lon }) => {
+const MapPreview = ({ 
+    lat, 
+    lon 
+}: MapPreviewProps) => {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<L.Map | null>(null);
 

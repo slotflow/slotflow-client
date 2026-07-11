@@ -1,18 +1,12 @@
-import React from "react";
 import { Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { destructiveButtonClassName } from "@/shared/utils/constants";
-import { Availability } from "@/shared/interface/entityInterface/serviceAvailabilityInterface";
+import { SavedAvailabilitiesProps } from "@/shared/interface/componentInterface";
 
-interface SavedAvailabilitiesProps {
-    availabilities: Availability[] | null;
-    removeAvailability: (day: string) => void;
-}
-
-const   SavedAvailabilities: React.FC<SavedAvailabilitiesProps> = ({
+const   SavedAvailabilities = ({
     availabilities,
     removeAvailability
-}) => {
+}: SavedAvailabilitiesProps) => {
 
     if (!availabilities || availabilities.length === 0) {
         return null;

@@ -31,7 +31,7 @@ import DataFieldShimmer from "@/components/shimmers/DataFieldShimmer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { UserOrProviderProfileDetailsComponentProps } from "@/shared/interface/componentInterface";
 
-const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
+const ProfileListing = ({
     userOrProviderId,
     fetchApiFunction,
     queryKey,
@@ -43,7 +43,7 @@ const ProfileListing: React.FC<UserOrProviderProfileDetailsComponentProps> = ({
     setProfileImage,
     shimmerRow,
     setSelectedUserData
-}) => {
+}: UserOrProviderProfileDetailsComponentProps) => {
 
     const { authUser } = useSelector((state: RootState) => state.auth);
 

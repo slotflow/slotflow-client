@@ -5,7 +5,10 @@ import { Button } from "../ui/button";
 import { defaultButtonClassName } from "@/shared/utils/constants";
 import { TagInputProps } from "@/shared/interface/componentInterface";
 
-const TagInput: React.FC<TagInputProps> = ({ value, onChange }) => {
+const TagInput = ({ 
+  value, 
+  onChange 
+}: TagInputProps) => {
   const [input, setInput] = useState("");
 
   const addTag = () => {

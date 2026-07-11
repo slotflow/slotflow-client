@@ -1,11 +1,11 @@
 import gsap from "gsap";
+import MoveUpward from "../animation/MoveUpward";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef, useEffect, useState } from "react";
 import WorkflowHeader from "./workflow/WorkflowHeader";
 import { bookingSteps } from "@/shared/utils/constants";
 import WorkflowTimeline from "./workflow/WorkflowTimeline";
 import WorkflowBackground from "./workflow/WorkflowBackground";
-import MoveUpward from "../animation/MoveUpward";
 
 gsap.registerPlugin(ScrollTrigger);
 

@@ -19,7 +19,7 @@ import { filterChartDataHelper } from '@/shared/helper/dateFilter';
 import { BarChartHorizontalProps } from '@/shared/interface/componentInterface';
 
 
-const BarChartHorizontal: React.FC<BarChartHorizontalProps> = ({
+const BarChartHorizontal = ({
     title,
     description,
     chartData,
@@ -28,7 +28,7 @@ const BarChartHorizontal: React.FC<BarChartHorizontalProps> = ({
     dataKeyThree,
     chartConfig,
     isLocked
-}) => {
+}: BarChartHorizontalProps) => {
 
     const [timeRange, setTimeRange] = React.useState<TimeRange>("7d");
     const filteredData = filterChartDataHelper(chartData, timeRange);

@@ -1,9 +1,8 @@
-import React from 'react';
 import UserListCard from './lower-section/UserListCard';
 import PaymentListCard from './lower-section/PaymentListCard';
 import ProviderListCard from './lower-section/ProviderListCard';
 
-const AdminDashboardLowerSection: React.FC = () => {
+const AdminDashboardLowerSection = () => {
   return (
     <div className="w-full space-y-8 mt-12 mb-16">
       <div className="flex flex-col gap-1 px-4">

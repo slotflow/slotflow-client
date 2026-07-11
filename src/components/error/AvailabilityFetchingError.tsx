@@ -1,14 +1,10 @@
-import React from "react";
 import fetchError from "../../assets/svgs/fetch-error.svg";
 import noAvailability from "../../assets/svgs/availability.svg";
+import { AvailablityFetchingErrorProps } from "@/shared/interface/componentInterface";
 
-interface AvailablityFetchingErrorProps {
-    isAvailable: boolean;
-}
-
-const AvailablityFetchingError:React.FC<AvailablityFetchingErrorProps> = ({
+const AvailablityFetchingError = ({
     isAvailable
-}) => {
+}: AvailablityFetchingErrorProps) => {
     return (
         <div className="md:col-span-8 flex flex-col items-center">
                 <img 

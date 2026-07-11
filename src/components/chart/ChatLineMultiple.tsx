@@ -18,7 +18,7 @@ import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 import { filterChartDataHelper } from '@/shared/helper/dateFilter';
 import { ChartLineMultipleProps } from '@/shared/interface/componentInterface';
 
-const ChartLineMultiple: React.FC<ChartLineMultipleProps> = ({
+const ChartLineMultiple = ({
   title,
   description,
   chartData,
@@ -26,7 +26,7 @@ const ChartLineMultiple: React.FC<ChartLineMultipleProps> = ({
   dataKeyTwo,
   chartConfig,
   isLocked
-}) => {
+}: ChartLineMultipleProps) => {
 
   const [timeRange, setTimeRange] = React.useState<TimeRange>("7d");
   const filteredData = filterChartDataHelper(chartData, timeRange);

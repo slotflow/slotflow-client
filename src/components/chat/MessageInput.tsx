@@ -7,11 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { MessageInputProps } from "@/shared/interface/componentInterface";
 
-const MessageInput: React.FC<MessageInputProps> = ({
+const MessageInput = ({
     setIsTyping,
     isTyping,
     setMessageSenderId
-}) => {
+}:MessageInputProps) => {
 
     const dispatch = useDispatch<AppDispatch>();
     const [text, setText] = useState<string>("");
@@ -21,7 +21,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
     const { authUser } = useSelector((store: RootState) => store.auth);
 
     const [file, setFile] = useState<File | null>(null);
-    const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const typingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];

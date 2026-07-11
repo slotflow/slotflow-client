@@ -1,4 +1,3 @@
-import React from "react";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { RootState } from "@/shared/redux/appStore";
@@ -11,7 +10,7 @@ import { useRoleBasedNavigation } from "@/hooks/useRoleBasedNavigation";
 import BookingsTableColumn from "@/components/table/tableColumns/BookingsTableColumn";
 import { changeAppointmentStatusRequest, FetchBookingsResponse, ValidateRoomId } from "@/shared/interface/api/booking";
 
-const ListBookingsPage: React.FC = () => {
+const ListBookingsPage = () => {
 
   const authUser = useSelector((state: RootState) => state.auth.authUser);
 

@@ -1,9 +1,8 @@
-import React from "react";
 import { Checkbox } from "../../ui/checkbox";
 import { Controller } from "react-hook-form";
 import { GenerateTimeSlotsProps } from "@/shared/interface/componentInterface";
 
-const GenerateTimeSlots: React.FC<GenerateTimeSlotsProps> = ({
+const GenerateTimeSlots = ({
     timeSlots,
     selectedTimeSlots,
     allSlotsSelected,
@@ -11,7 +10,7 @@ const GenerateTimeSlots: React.FC<GenerateTimeSlotsProps> = ({
     toggleSlot,
     control,
     isAvailable
-}) => {
+}: GenerateTimeSlotsProps) => {
     return (
         <div className="w-10/12 md:w-full space-y-6 mx-auto">
             {timeSlots && timeSlots.length > 0 && isAvailable && (

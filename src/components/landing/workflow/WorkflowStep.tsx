@@ -1,12 +1,5 @@
 import { cn } from "@/lib/utils";
-
-interface WorkflowStepProps {
-  number: number;
-  title: string;
-  description: string;
-  icon: React.ElementType;
-  active?: boolean;
-}
+import { WorkflowStepProps } from "@/shared/interface/componentInterface";
 
 const WorkflowStep = ({
   number,

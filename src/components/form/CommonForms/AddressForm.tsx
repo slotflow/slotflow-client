@@ -1,13 +1,13 @@
 import FormField from '../FormField';
 import { toast } from 'react-toastify';
 import { Button } from '../../ui/button';
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { PhoneInput } from '../phone-input';
-import { Info, LoaderCircle } from 'lucide-react';
 import { countries } from 'country-data-list';
 import { Label } from '@/components/ui/label';
 import { useNavigate } from 'react-router-dom';
 import { appConfig } from '@/shared/config/env';
+import { Info, LoaderCircle } from 'lucide-react';
 import AlertBox from '@/components/alert/AlertBox';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from "react-hook-form";
@@ -15,17 +15,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CountryDropdown } from '../../ui/country-dropdown';
 import LocationPicker from '@/components/map/LocationPicker';
 import { AppDispatch, RootState } from '@/shared/redux/appStore';
-import { AdminVerificationStatus, OnboardingStatus, Role } from '@/shared/interface/enums';
 import { AddressFormProps } from '@/shared/interface/componentInterface';
 import { Location } from '@/shared/interface/entityInterface/addressInterface';
 import { createAddress, fetchMyAddress, updateAddress } from '@/shared/apis/address';
+import { AdminVerificationStatus, OnboardingStatus, Role } from '@/shared/interface/enums';
 import { CreateAddressFormType, createAddressZodSchema } from '@/shared/zod/commonZodFields';
 import { addAddressGoogleMapLinkInfo, addAddressGoogleMapLinkInfoHeading, redirectPaths } from '@/shared/utils/constants';
 
-const AddressForm: React.FC<AddressFormProps> = ({
+const AddressForm = ({
     isUpdating = false,
     heading
-}) => {
+}: AddressFormProps) => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();

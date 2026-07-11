@@ -1,10 +1,10 @@
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 import BoardingLayout from "@/layouts/BoardingLayout";
 import { useOnboardingMetadata } from "@/hooks/useOnboardingMetadata";
 import BoardingLoadingFallback from "@/pages/boarding/BoardingLoadingFallback";
 
-const BoardingLayoutWrapper: React.FC = () => {
+const BoardingLayoutWrapper = () => {
     const metadata = useOnboardingMetadata();
 
     if (!metadata) {

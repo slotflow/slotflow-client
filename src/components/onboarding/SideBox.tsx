@@ -9,17 +9,19 @@ import choose from '../../assets/svgs/choose.svg';
 import address from '../../assets/svgs/address.svg';
 import working from '../../assets/svgs/working.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { LoaderCircle, LogOut, Moon, Sun } from 'lucide-react';
 import fileUpload from '../../assets/svgs/fileUpload.svg';
 import service from '../../assets/svgs/serviceDetails.svg';
 import { useSignout } from '@/hooks/systemHooks/useSignout';
-import availability from '../../assets/svgs/availability.svg';
 import { toggleTheme } from '@/shared/redux/slices/appSlice';
+import availability from '../../assets/svgs/availability.svg';
+import { LoaderCircle, LogOut, Moon, Sun } from 'lucide-react';
 import { AppDispatch, RootState } from '@/shared/redux/appStore';
 import { SideBoxProps } from '@/shared/interface/componentInterface';
 import { pageLabels, pageDescriptions, redirectPaths, defaultButtonClassName } from '@/shared/utils/constants';
 
-const SideBox: React.FC<SideBoxProps> = ({ pageNumber }) => {
+const SideBox = ({ 
+  pageNumber 
+}: SideBoxProps) => {
 
   const navigate = useNavigate();
   const { signoutHandler } = useSignout();

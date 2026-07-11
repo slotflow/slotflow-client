@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
 import { PlanName } from '@/shared/interface/enums';
@@ -18,7 +18,9 @@ import { ProviderDashboardGraphsProps } from '@/shared/interface/componentInterf
 import { ProviderDashboardGraphResponse } from '@/shared/interface/api/providerProfile';
 import { appointmentModeChartConfig, appointmentsOverTimeChartConfig, completionBreakdownChartConfig, newVsReturningUsersChartConfig, peakBookingHoursChartConfig, topBookingDaysChartConfig } from '@/shared/utils/constants';
 
-const ProviderDashboardGraphs: React.FC<ProviderDashboardGraphsProps> = ({ dateRange }) => {
+const ProviderDashboardGraphs = ({ 
+    dateRange
+ } : ProviderDashboardGraphsProps) => {
 
     const user = useSelector((store: RootState) => store.auth.authUser);
 

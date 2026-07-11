@@ -1,8 +1,3 @@
-import React from 'react';
-import { Button } from '../ui/button';
-import { Check, LoaderCircle } from 'lucide-react';
-import { defaultButtonClassName } from '@/shared/utils/constants';
-import { IntegrationCardProps } from '@/shared/interface/componentInterface';
 import {
     Card,
     CardContent,
@@ -10,8 +5,12 @@ import {
     CardHeader,
     CardTitle
 } from '@/components/ui/card';
+import { Button } from '../ui/button';
+import { Check, LoaderCircle } from 'lucide-react';
+import { defaultButtonClassName } from '@/shared/utils/constants';
+import { IntegrationCardProps } from '@/shared/interface/componentInterface';
 
-const IntegrationCard: React.FC<IntegrationCardProps> = ({
+const IntegrationCard = ({
     image,
     heading,
     description,
@@ -22,7 +21,7 @@ const IntegrationCard: React.FC<IntegrationCardProps> = ({
     connectionStatus,
     connectionText,
     isLoading
-}) => {
+}: IntegrationCardProps) => {
     return (
         <Card
             className={`w-full mt-4 border shadow-sm transition-all hover:shadow-md ${show ? 'flex flex-col' : 'hidden'

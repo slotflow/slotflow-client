@@ -1,21 +1,15 @@
-import React from "react";
 import NoData from "@/components/common/NoData";
 import { Info, CheckCircle } from "lucide-react";
 import DataFetchingError from "@/components/error/DataFetchingError";
 import DataFieldShimmer from "@/components/shimmers/DataFieldShimmer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { RequirementsCardProps } from "@/shared/interface/componentInterface";
 
-interface RequirementsCardProps {
-    isLoading?: boolean;
-    isError?: boolean;
-    data?: string[];
-}
-
-const RequirementsCard: React.FC<RequirementsCardProps> = ({
+const RequirementsCard = ({
     isLoading,
     isError,
     data
-}) => {
+}: RequirementsCardProps) => {
     return (
         <Card className="border shadow-sm rounded-xl">
             <CardHeader>

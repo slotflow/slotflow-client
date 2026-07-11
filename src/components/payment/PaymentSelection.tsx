@@ -18,7 +18,7 @@ import { setSubscriptionUpdating } from '@/shared/redux/slices/authSlice';
 import { PaymentProcessStatus, PaymentProcessType } from '@/shared/interface/enums';
 import { setPaymentProcessStatus, setPaymentSelectionOpen } from '@/shared/redux/slices/paymentSlice';
 
-const PaymentSelection: React.FC = () => {
+const PaymentSelection = () => {
 
     const dispatch = useDispatch();
     const eventSocket = getEventSocket();

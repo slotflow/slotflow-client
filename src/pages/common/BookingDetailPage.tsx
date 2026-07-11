@@ -11,7 +11,6 @@ import {
   Calendar,
   CheckCircle,
 } from "lucide-react";
-import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import DataField from '@/components/app/DataField';
@@ -23,7 +22,7 @@ import DataFetchingError from '@/components/error/DataFetchingError';
 import ProfileDetailsShimmer from '@/components/shimmers/DataFieldShimmer';
 import { Booking } from '@/shared/interface/entityInterface/bookingInterface';
 
-const BookingDetailPage: React.FC = () => {
+const BookingDetailPage = () => {
 
   const { bookingId } = useParams<{ bookingId: Booking["_id"] }>();
 

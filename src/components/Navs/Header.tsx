@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button } from '../ui/button';
 import { Moon, Sun } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -8,7 +7,7 @@ import { toggleTheme } from '@/shared/redux/slices/appSlice';
 import { navigation, redirectPaths } from '@/shared/utils/constants';
 import { AppDispatch, RootState } from '../../shared/redux/appStore';
 
-const Header: React.FC = () => {
+const Header = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();

@@ -1,6 +1,4 @@
-interface FAQSectionProps {
-    rows: number;
-}
+import { FAQSectionProps } from "@/shared/interface/componentInterface";
 
 const FAQShimmer = ({
 rows

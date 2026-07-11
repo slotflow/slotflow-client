@@ -1,10 +1,6 @@
 import { cn } from "@/lib/utils";
-import React, { useEffect, useState } from "react";
-import { TOCHeadingProps } from "@/shared/interface/commonInterface";
-
-interface TOCProps {
-    headings: TOCHeadingProps[];
-}
+import { useEffect, useState } from "react";
+import { TOCHeadingProps, TOCProps } from "@/shared/interface/componentInterface";
 
 const flattenHeadings = (
     items: TOCHeadingProps[]
@@ -27,7 +23,9 @@ const containsActiveHeading = (
     );
 };
 
-const TOC: React.FC<TOCProps> = ({ headings }) => {
+const TOC = ({ 
+    headings 
+}: TOCProps) => {
     const [activeId, setActiveId] = useState("");
 
     useEffect(() => {

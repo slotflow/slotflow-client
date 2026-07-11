@@ -1,16 +1,15 @@
-import React from "react";
 import SelectField from "../../form/SelectField";
 import { ServiceMode } from "@/shared/interface/enums";
 import { ProviderServiceAvailabilityFormType } from "@/shared/zod/providerZod";
 import { AvailabilityDataSelectionFieldsProps } from "@/shared/interface/componentInterface";
 import { daysOfWeekOptions, isAvailableOptions, serviceDurationsOptions } from "@/shared/utils/constants";
 
-const AvailabilityDataSelectionFields: React.FC<AvailabilityDataSelectionFieldsProps> = ({
+const AvailabilityDataSelectionFields = ({
     register,
     isModeSelected,
     toggleMode,
     isAvailable
-}) => {
+}: AvailabilityDataSelectionFieldsProps) => {
     return (
         <>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-6">

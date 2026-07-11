@@ -1,6 +1,4 @@
-import React from "react"
-
-const ServiceSelectShimmer: React.FC = () => {
+const ServiceSelectShimmer = () => {
 
     return (
         <>

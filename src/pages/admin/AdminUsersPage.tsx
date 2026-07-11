@@ -2,15 +2,15 @@ import React from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { fetchUsers } from "@/shared/apis/user";
+import PageHeader from "@/components/common/PageHeader";
 import CommonTable from "@/components/table/CommonTable";
 import { useAdminUser } from "@/hooks/adminHooks/useUser";
 import { User } from "@/shared/interface/entityInterface/userInterface";
 import { AdminfetchAllUsersResponse } from "@/shared/interface/api/user";
 import { AdminChangeUserStatusRequest } from "@/shared/interface/api/user";
 import AdminUsersTableColumns from "@/components/table/tableColumns/AdminUsersTableColumn";
-import PageHeader from "@/components/common/PageHeader";
 
-const AdminUsersPage: React.FC = () => {
+const AdminUsersPage = () => {
 
   const navigate = useNavigate();
 

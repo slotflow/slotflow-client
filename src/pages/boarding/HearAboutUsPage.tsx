@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { toast } from "react-toastify";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 import { appConfig } from "@/shared/config/env";
@@ -14,7 +14,7 @@ import { setAuthUser, setBoardingData } from "@/shared/redux/slices/authSlice";
 import { AdminVerificationStatus, HearAboutUsOptionValue, Role } from "@/shared/interface/enums";
 import { defaultButtonClassName, hearAboutUsOptions, redirectPaths } from "@/shared/utils/constants";
 
-const HearAboutUsPage: React.FC = () => {
+const HearAboutUsPage = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ReviewsPage from '../common/ReviewsPage';
 import { userTabs } from '@/shared/utils/constants';
@@ -9,7 +9,7 @@ import AddressListing from '@/components/profile/AddressListing';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import ProfileHorizontalTabs from '@/components/profile/ProfileHorizontalTabs';
 
-const AdminUserDetailPage: React.FC = () => {
+const AdminUserDetailPage = () => {
 
     const { userId } = useParams();
     const [tab, setTab] = useState<number>(0);

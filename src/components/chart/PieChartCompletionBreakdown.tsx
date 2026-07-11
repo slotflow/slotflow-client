@@ -15,7 +15,7 @@ import { Pie, PieChart, Cell } from "recharts";
 import ChartDataNotAvailable from "./ChartDataNotAvailable";
 import { CompletionChartProps } from "@/shared/interface/componentInterface";
 
-const PieChartCompletionBreakdown: React.FC<CompletionChartProps> = ({
+const PieChartCompletionBreakdown = ({
   title,
   description,
   chartData,
@@ -24,7 +24,7 @@ const PieChartCompletionBreakdown: React.FC<CompletionChartProps> = ({
   nameKey,
   isLocked,
   minimumPlan
-}) => {
+}: CompletionChartProps) => {
   return (
     <Card className="relative overflow-hidden">
       {isLocked && (<ChartOverlay stringOne={minimumPlan} chartTitle={title} />)}

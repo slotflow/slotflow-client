@@ -1,12 +1,11 @@
-import React from "react";
 import noProfile from "../../assets/defaultImages/avatar.png";
 import { ReviewUserProfileProps } from "@/shared/interface/componentInterface";
 
-const ReviewUserProfile: React.FC<ReviewUserProfileProps> = ({
+const ReviewUserProfile = ({
     profileImage,
     username,
     text
-}) => {
+}: ReviewUserProfileProps) => {
     return (
         <div className="flex items-center gap-3 border-t pt-3 mt-3">
             <img

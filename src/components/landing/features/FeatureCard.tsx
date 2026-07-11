@@ -1,11 +1,5 @@
 import { cn } from "@/lib/utils";
-
-interface FeatureCardProps {
-  title: string;
-  description: string;
-  className?: string;
-  children?: React.ReactNode;
-}
+import { FeatureCardProps } from "@/shared/interface/componentInterface";
 
 const FeatureCard = ({
   title,

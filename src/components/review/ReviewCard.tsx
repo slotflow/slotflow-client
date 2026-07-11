@@ -8,13 +8,13 @@ import noProfile from '../../assets/defaultImages/avatar.png';
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { ReviewCardProps } from "@/shared/interface/componentInterface";
 
-const ReviewCard: React.FC<ReviewCardProps> = ({
+const ReviewCard = ({
   review,
   role,
   handleDeleteReview,
   handleReportReview,
   handleChangeReviewBlockStatus
-}) => {
+}: ReviewCardProps) => {
   return (
     <Card
       className="border rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-200"

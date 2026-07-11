@@ -1,4 +1,3 @@
-import React from "react";
 import { fetchPayments } from "@/shared/apis/payment";
 import PageHeader from "@/components/common/PageHeader";
 import CommonTable from "@/components/table/CommonTable";
@@ -6,7 +5,7 @@ import { FetchPaymentsResponse } from "@/shared/interface/api/payment";
 import { useRoleBasedNavigation } from "@/hooks/useRoleBasedNavigation";
 import PaymentsTableColumn from "@/components/table/tableColumns/PaymentsTableColumn";
 
-const ListPaymentsPage: React.FC = () => {
+const ListPaymentsPage = () => {
 
   const { handleGetPaymentDetailsPage } = useRoleBasedNavigation();
   const column = PaymentsTableColumn(handleGetPaymentDetailsPage);

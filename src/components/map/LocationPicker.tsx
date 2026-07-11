@@ -1,11 +1,11 @@
 import L from "leaflet";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { locationIqConfig } from "@/shared/config/env";
 import { LocationPickerProps } from "@/shared/interface/componentInterface";
 
-const LocationPicker: React.FC<LocationPickerProps> = ({ 
+const LocationPicker = ({ 
   onLocationSelect 
-}) => {
+}: LocationPickerProps) => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstance = useRef<L.Map | null>(null);
   const markerRef = useRef<L.Marker | null>(null);

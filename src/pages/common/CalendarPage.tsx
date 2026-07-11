@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import FullCalendar from '@fullcalendar/react';
 import { useNavigate } from "react-router-dom";
@@ -14,7 +14,7 @@ import { fetchCalendarEvents } from "@/shared/apis/google";
 import CalendarShimmer from '@/components/shimmers/CalendarShimmer';
 import DataFetchingError from '@/components/error/DataFetchingError';
 
-const CalendarPage: React.FC = () => {
+const CalendarPage = () => {
 
     const navigate = useNavigate();
     const { authUser } = useSelector((state: RootState) => state.auth);

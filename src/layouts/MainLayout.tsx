@@ -1,34 +1,27 @@
+import { Suspense, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "@/components/navs/Sidebar";
 import { Role } from "@/shared/interface/enums";
-import React, { Suspense, useEffect } from "react";
 import InfoHeader from "@/components/navs/InfoHeader";
 import { useDispatch, useSelector } from "react-redux";
-import { Route } from "@/shared/interface/commonInterface";
 import { AuthUser } from "@/shared/interface/sliceInterface";
 import { setAuthUser } from "@/shared/redux/slices/authSlice";
 import LoadingFallback from "../pages/common/LoadingFallback";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { connectEventSocket } from "@/shared/socket/eventSocketThunk";
+import { MainLayoutProps } from "@/shared/interface/componentInterface";
 import { useNotificationPermissionGate } from "@/hooks/systemHooks/useNotificationPermissionGate";
 
-export interface MainLayoutProps {
-    routes: Route[];
-    filteredRoutes?: Route[];
-    profileImage?: string;
-    username?: string;
-    children: React.ReactNode;
-    rightSidebar?: React.ReactNode;
-}
+// TODO to fix the error
 
-const MainLayout: React.FC<MainLayoutProps> = ({
+const MainLayout = ({
     routes,
     filteredRoutes,
     profileImage,
     username,
     children,
     rightSidebar,
-}) => {
+}: MainLayoutProps) => {
 
     const { sidebarOpen } = useSelector((store: RootState) => store.app);
     const navigate = useNavigate();

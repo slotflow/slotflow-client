@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import NoData from "@/components/common/NoData";
 import DataField from "@/components/app/DataField";
@@ -6,23 +5,16 @@ import { RootState } from "@/shared/redux/appStore";
 import { ServiceMode } from "@/shared/interface/enums";
 import DataFetchingError from "@/components/error/DataFetchingError";
 import DataFieldShimmer from "@/components/shimmers/DataFieldShimmer";
+import { ServiceCardProps } from "@/shared/interface/componentInterface";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FetchProviderServiceResponse } from "@/shared/interface/api/providerService";
 import { Briefcase, Hash, Layers, MonitorSmartphone, UserPlus, Users } from "lucide-react";
 
-interface ServiceCardProps {
-    isLoading?: boolean;
-    isError?: boolean;
-    data?: FetchProviderServiceResponse;
-    isUserLookingProvider?: boolean;
-}
-
-const ServiceCard: React.FC<ServiceCardProps> = ({
+const ServiceCard = ({
     isLoading,
     isError,
     data,
     isUserLookingProvider=false,
-}) => {
+}: ServiceCardProps) => {
 
     const isShowPreview = useSelector((state: RootState) => state.provider.isShowPreview);
 

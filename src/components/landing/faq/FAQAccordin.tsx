@@ -4,10 +4,10 @@ import { contentfulAxiosInstance } from "@/lib/axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setFaqs } from "@/shared/redux/slices/appSlice";
 import FAQShimmer from "@/components/shimmers/FAQShimmer";
+import MoveUpward from "@/components/animation/MoveUpward";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { ContentfulResponse, FaqFields } from "@/shared/interface/commonInterface";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import MoveUpward from "@/components/animation/MoveUpward";
 
 const FAQAccordion = () => {
 

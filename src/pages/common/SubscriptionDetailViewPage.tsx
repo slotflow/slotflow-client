@@ -1,4 +1,3 @@
-import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import DataField from '@/components/app/DataField';
@@ -9,7 +8,7 @@ import { fetchSubscriptionDetails } from '@/shared/apis/subscription';
 import ProfileDetailsShimmer from '@/components/shimmers/DataFieldShimmer';
 import { BadgeCheck, Calendar, CalendarClock, CalendarDays, IndianRupee, ListOrdered, Megaphone, Package } from 'lucide-react';
 
-const SubscriptionDetailViewPage: React.FC = () => {
+const SubscriptionDetailViewPage = () => {
 
     const { subscriptionId } = useParams<{ subscriptionId: string }>();
 

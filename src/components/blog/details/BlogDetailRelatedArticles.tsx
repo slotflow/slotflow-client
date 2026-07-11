@@ -1,16 +1,10 @@
-import { BlogArticle } from "@/shared/interface/commonInterface";
 import { Badge } from "../../ui/badge";
-import { Button } from "../../ui/button";
 import { Card, CardContent } from "../../ui/card";
-import React from "react";
+import { BlogDetailRelatedArticlesProps } from "@/shared/interface/componentInterface";
 
-interface BlogDetailRelatedArticlesProps {
-    relatedArticles: BlogArticle[];
-}
-
-const BlogDetailRelatedArticles: React.FC<BlogDetailRelatedArticlesProps> = ({
+const BlogDetailRelatedArticles = ({
     relatedArticles
-}) => {
+}: BlogDetailRelatedArticlesProps) => {
     return (
          <section className="mt-32 max-w-7xl mx-auto">
                 <div className="flex items-end justify-between">

@@ -1,9 +1,6 @@
-import React from "react";
 import { Meteors } from "../ui/meteors";
 
-const MeteorsCard: React.FC = ({
-
-}) => {
+const MeteorsCard = () => {
   return (
     <div className="relative w-full">
       {/* <div className="absolute inset-0 h-full w-full scale-[0.80] transform rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 blur-xl" /> */}

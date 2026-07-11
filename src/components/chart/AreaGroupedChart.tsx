@@ -18,7 +18,7 @@ import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 import { filterChartDataHelper } from "@/shared/helper/dateFilter";
 import { AreaGroupChartProps } from "@/shared/interface/componentInterface";
 
-const AreaGroupedChart: React.FC<AreaGroupChartProps> = ({
+const AreaGroupedChart = ({
   title,
   description,
   chartData,
@@ -28,7 +28,7 @@ const AreaGroupedChart: React.FC<AreaGroupChartProps> = ({
   chartConfig,
   isLocked,
   minimumPlan
-}) => {
+}: AreaGroupChartProps) => {
   const [timeRange, setTimeRange] = React.useState<TimeRange>("7d");
   const filteredData = filterChartDataHelper(chartData ?? [], timeRange);
 

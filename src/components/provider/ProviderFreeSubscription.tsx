@@ -9,7 +9,7 @@ import { subscribeToTrialPlan } from "@/shared/apis/subscription";
 import { PlanName, SubscriptionStatus } from "@/shared/interface/enums";
 import { setPaymentSelectionOpen, setSubscriptionPaymentData } from "@/shared/redux/slices/paymentSlice";
 
-const ProviderFreeSubscription: React.FC = () => {
+const ProviderFreeSubscription = () => {
 
     const dispatch = useDispatch();
     const queryClient = useQueryClient();
@@ -21,7 +21,6 @@ const ProviderFreeSubscription: React.FC = () => {
         dispatch(setSubscriptionPaymentData(null));
         dispatch(setSubscription({
             subscribedPlan: PlanName.TRIAL,
-            providerId: "",
             startDate: new Date(),
             endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
             subscriptionStatus: SubscriptionStatus.ACTIVE

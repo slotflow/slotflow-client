@@ -1,13 +1,9 @@
-import React from "react";
 import { motion } from "framer-motion";
+import { MoveUpwardProps } from "@/shared/interface/componentInterface";
 
-interface MoveUpwardProps {
-    children: React.ReactNode;
-}
-
-const MoveUpward: React.FC<MoveUpwardProps> = ({
+const MoveUpward = ({
     children
-}) => {
+}: MoveUpwardProps) => {
     return (
         <motion.section
             initial={{

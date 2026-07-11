@@ -12,7 +12,7 @@ import { redirectPaths } from "@/shared/utils/constants";
 import { appConfig, serviceConfig } from "@/shared/config/env";
 import { SignupFormType, signupZodSchema } from "@/shared/zod/authZod";
 
-const SignUpForm: React.FC = () => {
+const SignUpForm= () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();

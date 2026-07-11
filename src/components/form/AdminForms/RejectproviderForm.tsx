@@ -19,10 +19,10 @@ import { setAdminVerificationState } from "@/shared/redux/slices/authSlice";
 import { RejectproviderFormProps } from "@/shared/interface/componentInterface";
 import { AdminRejectProviderFormType, adminRejectProviderZodSchema } from "@/shared/zod/adminZod";
 
-const RejectproviderForm: React.FC<RejectproviderFormProps> = ({
+const RejectproviderForm = ({
   onClose,
   formRef,
-}) => {
+}: RejectproviderFormProps) => {
 
   const dispatch = useDispatch<AppDispatch>();
   const queryClient = useQueryClient();

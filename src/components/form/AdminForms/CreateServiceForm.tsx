@@ -15,10 +15,10 @@ import { handleFormError } from "@/shared/helper/formErrorCatcher";
 import { CreateServiceFormProps } from "@/shared/interface/componentInterface";
 import { AdminCreateServiceFormType, adminCreateServiceZodSchema } from "@/shared/zod/adminZod";
 
-const CreateServiceForm: React.FC<CreateServiceFormProps> = ({
+const CreateServiceForm = ({
   onClose,
   formRef,
-}) => {
+}: CreateServiceFormProps) => {
   const queryClient = useQueryClient();
 
   const handleCloseForm = () => {

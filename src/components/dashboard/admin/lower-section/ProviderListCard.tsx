@@ -1,11 +1,10 @@
-import React from 'react';
 import { Briefcase } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import DashboardDataCard from '../../DashboardDataCard';
 import { fetchServiceProvidersForAdmin } from '@/shared/apis/providerProfile';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
-const ProviderListCard: React.FC = () => {
+const ProviderListCard = () => {
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ['admin-latest-providers'],
     queryFn: () => fetchServiceProvidersForAdmin({ limit: 5, sortBy: 'createdAt', sortOrder: 'desc' }),

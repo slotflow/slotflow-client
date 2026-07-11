@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import DataField from "@/components/app/DataField";
@@ -9,7 +8,7 @@ import DataFetchingError from "@/components/error/DataFetchingError";
 import ProfileDetailsShimmer from "@/components/shimmers/DataFieldShimmer";
 import { BadgeCheck, Calendar, CreditCard, FileText, Hash, IndianRupee, Landmark, Layers, Link, Mail, Receipt } from "lucide-react";
 
-const PaymentDetailViewPage: React.FC = () => {
+const PaymentDetailViewPage = () => {
 
     const { paymentId } = useParams<{ paymentId: string }>();
 

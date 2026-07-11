@@ -1,4 +1,3 @@
-import React from 'react';
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
 import TOC from "@/components/scroll/TOC";
@@ -8,7 +7,7 @@ import markdown from "@/md/legal/privacy-policy/common.md?raw";
 import ReadingProgress from '@/components/scroll/ReadingProgress';
 import { extractHeadings } from '@/shared/helper/extractTocHeadings';
 
-const PrivacyPolicyPage: React.FC = () => {
+const PrivacyPolicyPage = () => {
 
     const headings = extractHeadings(markdown);
 

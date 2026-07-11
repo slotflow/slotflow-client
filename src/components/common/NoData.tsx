@@ -1,10 +1,8 @@
-import React from "react";
+import { NoDataProps } from "@/shared/interface/componentInterface";
 
-interface NoDataProps {
-    message: string;
-}
-
-const NoData: React.FC<NoDataProps> = ({ message }) => {
+const NoData = ({ 
+    message
+ }: NoDataProps) => {
     return (
         <div className={`flex flex-col flex-grow min-h-full`}>
             <div className="w-full flex flex-col justify-center items-center flex-grow">

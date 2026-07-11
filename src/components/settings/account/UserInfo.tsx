@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import DataField from "@/components/app/DataField";
@@ -11,7 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { defaultButtonClassName, STATUS_PRESETS } from "@/shared/utils/constants";
 import UpdateUserInfoForm from "@/components/form/CommonForms/UpdateUserInfoForm";
 
-const UserInfo: React.FC = () => {
+const UserInfo = () => {
 
     const authUser = useSelector((store: RootState) => store.auth.authUser);
     const [showForm, setShowForm] = useState<boolean>(false);

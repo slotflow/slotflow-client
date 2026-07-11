@@ -1,17 +1,12 @@
-import React from "react";
 import { Card } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { Link, useNavigate } from "react-router-dom";
-import { BlogArticle } from "@/shared/interface/commonInterface";
+import { BlogEditorsPicksProps } from "@/shared/interface/componentInterface";
 
-interface BlogEditorsPicksProps {
-    handPickedArticles: BlogArticle[];
-}
-
-const BlogEditorsPicks: React.FC<BlogEditorsPicksProps> = ({
+const BlogEditorsPicks = ({
     handPickedArticles
-}) => {
+}: BlogEditorsPicksProps) => {
 
     const navigate = useNavigate();
 

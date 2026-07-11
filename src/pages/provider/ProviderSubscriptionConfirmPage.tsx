@@ -12,7 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { setSubscription, setSubscriptionUpdating } from "@/shared/redux/slices/authSlice";
 import { setPaymentProcessStatus, setSubscriptionPaymentData } from "@/shared/redux/slices/paymentSlice";
 
-const ProviderSubscriptionConfirmPage: React.FC = () => {
+const ProviderSubscriptionConfirmPage = () => {
 
   const [searchParams] = useSearchParams();
   const statusParam = searchParams.get("status");

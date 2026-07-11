@@ -10,7 +10,7 @@ import { ReviewFormValues } from "@/shared/interface/commonInterface";
 import { toggleReviewCreateForm } from "@/shared/redux/slices/userSlice";
 import { useModalAnimation } from "@/hooks/systemHooks/useModalAnimation";
 
-const ReviewForm: React.FC = () => {
+const ReviewForm = () => {
     const dispatch = useDispatch<AppDispatch>();
     const { selectedBookingId, selectedBookingProviderId } = useSelector(
         (state: RootState) => state.user

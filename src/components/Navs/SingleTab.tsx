@@ -1,7 +1,7 @@
 import { Lock } from "lucide-react";
 import { SingleTabProps } from "@/shared/interface/componentInterface";
 
-const SingleTab: React.FC<SingleTabProps> = ({
+const SingleTab = ({
     icon: Icon,
     text,
     sidebarOpen,
@@ -9,7 +9,7 @@ const SingleTab: React.FC<SingleTabProps> = ({
     className = '',
     locked = false,
     active
-}) => {
+}: SingleTabProps) => {
     return (
         <li
             title={!locked ? text : text + " (Locked)"}

@@ -2,9 +2,9 @@ import ChatHeader from "./ChatHeader";
 import { Ellipsis } from "lucide-react";
 import MessageInput from "./MessageInput";
 import { socket } from "@/lib/socketService";
+import { useEffect, useRef, useState } from "react";
 import { getMessages } from "@/shared/apis/message";
 import { useDispatch, useSelector } from "react-redux";
-import React, { useEffect, useRef, useState } from "react";
 import ChatBubbleProfileImage from "./ChatBubbleProfileImage";
 import { formatTo24HourTime } from "@/shared/helper/formatter";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
@@ -12,7 +12,7 @@ import { SocketDataInterface } from "@/shared/interface/commonInterface";
 import NoChatSelectedSShimmer from "@/components/shimmers/NoChatSelectedSShimmer";
 import { connectChatSocket, disconnectChatSocket } from "@/shared/socket/chatSocketThunk";
 
-const ChatContainer: React.FC = () => {
+const ChatContainer = () => {
 
     const dispatch = useDispatch<AppDispatch>();
     const [isTyping, setIsTyping] = useState<boolean>(false);

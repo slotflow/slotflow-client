@@ -14,12 +14,12 @@ import { PlanDurationFormType, planDurationZodSchema } from "@/shared/zod/provid
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
 import { setPaymentSelectionOpen, setSubscriptionPaymentData } from "@/shared/redux/slices/paymentSlice";
 
-const PlanCard: React.FC<ProviderPlanCardProps> = ({
+const PlanCard = ({
   plan,
   isTrial,
   dummy,
   popular,
-}) => {
+}: ProviderPlanCardProps) => {
   const dispatch = useDispatch();
 
   const {

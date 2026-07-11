@@ -16,7 +16,7 @@ import { OnboardingStatus, Role } from "@/shared/interface/enums";
 import { setForgotPassword } from "@/shared/redux/slices/appSlice";
 import { LoginFormType, LoginZodSchema } from '@/shared/zod/authZod';
 
-const LoginForm: React.FC = () => {
+const LoginForm = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();

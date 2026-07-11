@@ -4,19 +4,9 @@ import { Separator } from "../../ui/separator";
 import { CalendarDays, Clock3 } from "lucide-react";
 import { formateDate } from "@/shared/helper/formatter";
 import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
-import { BlogAuthorFields } from "@/shared/interface/commonInterface";
+import { BlogDetailHeroProps } from "@/shared/interface/componentInterface";
 
-interface BlogDetailHeroProps {
-    heroBackground: string;
-    category: string | null;
-    title: string;
-    description: string;
-    author: BlogAuthorFields | null;
-    createdAt: string;
-    readTime: string;
-}
-
-const BlogDetailHero: React.FC<BlogDetailHeroProps> = ({
+const BlogDetailHero = ({
     author,
     category,
     createdAt,
@@ -24,7 +14,7 @@ const BlogDetailHero: React.FC<BlogDetailHeroProps> = ({
     heroBackground,
     readTime,
     title
-}) => {
+}: BlogDetailHeroProps) => {
     return (
         <section className="relative h-[70vh] min-h-[600px] overflow-hidden">
             <img

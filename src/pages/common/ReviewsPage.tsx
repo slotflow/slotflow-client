@@ -19,11 +19,11 @@ import { ApiPaginatedResponse } from "@/shared/interface/commonInterface";
 import { Review } from "@/shared/interface/entityInterface/reviewInterface";
 import { FetchReviewsResponse, ToggleReviewBlockStatusRequest } from "@/shared/interface/api/review";
 
-const ReviewsPage: React.FC<ReviewsPageProps> = ({
+const ReviewsPage = ({
   isPage = true,
   providerId,
   userId
-}) => {
+}: ReviewsPageProps) => {
 
   const limit = 10;
   const { authUser } = useSelector((state: RootState) => state.auth);

@@ -1,23 +1,11 @@
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
+import { SplitTextRevealProps } from "@/shared/interface/componentInterface";
 
 gsap.registerPlugin(SplitText);
 
-interface SplitTextRevealProps {
-    children: React.ReactNode;
-    as?: React.ElementType;
-    className?: string;
-    split?: "lines" | "words" | "chars" | "chars,words,lines";
-    duration?: number;
-    stagger?: number;
-    delay?: number;
-    rotationX?: number;
-    y?: number;
-    once?: boolean;
-}
-
-const SplitTextReveal: React.FC<SplitTextRevealProps> = ({
+const SplitTextReveal = ({
     children,
     as: Component = "div",
     className = "",
@@ -28,7 +16,7 @@ const SplitTextReveal: React.FC<SplitTextRevealProps> = ({
     rotationX = -100,
     y = 0,
     once = true,
-}) => {
+}: SplitTextRevealProps) => {
 
     const ref = useRef<HTMLElement>(null);
 

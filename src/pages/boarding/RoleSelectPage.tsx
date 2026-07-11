@@ -1,5 +1,5 @@
+import { useState } from "react";
 import { toast } from "react-toastify";
-import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +12,7 @@ import { setBoardingData } from "@/shared/redux/slices/authSlice";
 import RoleSelectCard from "../../components/cards/RoleSelectCard";
 import { defaultButtonClassName, redirectPaths } from "@/shared/utils/constants";
 
-const RoleSelectPage: React.FC = () => {
+const RoleSelectPage = () => {
 
     const [selectedRole, setSelectedRole] = useState<Role | null>(null);
 

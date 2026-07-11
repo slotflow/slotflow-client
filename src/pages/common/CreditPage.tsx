@@ -1,4 +1,3 @@
-import React from "react";
 import dayjs from "dayjs";
 import { useQuery } from "@tanstack/react-query";
 import StatCard from "@/components/common/StatsCard";
@@ -12,7 +11,7 @@ import { FetchCreditTransactionsResponse } from "@/shared/interface/api/credit";
 import { fetchCreditAccountDetails, fetchCreditTransactions } from "@/shared/apis/credit";
 import CreditTransactionTableColumn from "@/components/table/tableColumns/CreditTransactionTableColumn";
 
-const CreditPage: React.FC = () => {
+const CreditPage = () => {
 
     const column = CreditTransactionTableColumn();
     const endDate = dayjs().toDate();

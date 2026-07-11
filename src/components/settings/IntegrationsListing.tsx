@@ -15,7 +15,7 @@ import { Role, StripeAccountStatus } from "@/shared/interface/enums";
 import { setGoogleConnect, setStripeAccountStatus } from '@/shared/redux/slices/authSlice';
 import { setGoogleConnectionLoading, setStripeConnectionLoading } from "@/shared/redux/slices/integrationSlice";
 
-const IntegrationsListing: React.FC = () => {
+const IntegrationsListing = () => {
 
     const dispatch = useDispatch<AppDispatch>();
     const authUser = useSelector((state: RootState) => state.auth.authUser);

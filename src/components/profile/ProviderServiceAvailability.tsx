@@ -6,7 +6,7 @@ import { Role } from "@/shared/interface/enums";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import TimeSlotLegend from "../app/TimeSlotLegend";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { getEventSocket } from "@/lib/socketService";
 import { AppDispatch } from "@/shared/redux/appStore";
@@ -25,11 +25,11 @@ import ProviderAvailabilityShimmer from "@/components/shimmers/ProviderAvailabil
 import ProviderServiceAvailabilityForm from "../form/provider/ProviderSerivceAvailabilityForm";
 import { fetchEngagedSlots, fetchMyServiceAvailability, fetchServiceAvailabilityByProviderId } from "@/shared/apis/serviceAvailability";
 
-const ProviderServiceAvailability: React.FC<ProviderServiceAvailabilityProps> = ({
+const ProviderServiceAvailability = ({
     providerId,
     role,
     canUpdate = false,
-}) => {
+}: ProviderServiceAvailabilityProps) => {
 
     const dispatch = useDispatch<AppDispatch>();
     const [showForm, setShowForm] = useState<boolean>(false);

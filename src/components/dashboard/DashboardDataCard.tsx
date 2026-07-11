@@ -1,4 +1,3 @@
-import React from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -7,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { DashboardDataCardProps } from '@/shared/interface/componentInterface';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-const DashboardDataCard: React.FC<DashboardDataCardProps> = ({
+const DashboardDataCard = ({
   title,
   icon: Icon,
   isLoading,
@@ -17,7 +16,7 @@ const DashboardDataCard: React.FC<DashboardDataCardProps> = ({
   className,
   empty,
   emptyMessage = "No data available"
-}) => {
+}: DashboardDataCardProps) => {
   return (
     <Card className={cn("overflow-hidden border-slate-200/60 dark:border-slate-800/60 backdrop-blur-xl transition-all duration-300 hover:shadow-md h-full flex flex-col", className)}>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4 border-b border-slate-100 dark:border-slate-900">

@@ -1,21 +1,12 @@
-import React from "react";
-import { Role } from "@/shared/interface/enums";
 import UserProfileTopCard from "./userProfileCards/UserProfileTopCard";
+import { UserProfileProps } from "@/shared/interface/componentInterface";
 
-interface UserProfileProps {
-    username: string;
-    profileImage: string;
-    role: Role;
-    address?: React.ReactNode;
-    profile?: React.ReactNode;
-}
-
-const UserProfile: React.FC<UserProfileProps> = ({
+const UserProfile = ({
     username,
     profileImage,
     address,
     profile
-}) => {
+}: UserProfileProps) => {
     return (
         <div className="w-full p-4">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

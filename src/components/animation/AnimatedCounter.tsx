@@ -1,19 +1,8 @@
 import gsap from "gsap";
 import { useEffect, useRef } from "react";
+import { AnimatedCounterProps } from "@/shared/interface/componentInterface";
 
-interface AnimatedCounterProps {
-    from?: number;
-    to: number;
-    duration?: number;
-    prefix?: string;
-    suffix?: string;
-    decimals?: number;
-    separator?: boolean;
-    className?: string;
-    text: string;
-}
-
-const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
+const AnimatedCounter = ({
     from = 0,
     to,
     duration = 2,
@@ -23,7 +12,7 @@ const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
     separator = true,
     className = "",
     text = "",
-}) => {
+}: AnimatedCounterProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const counterRef = useRef<HTMLSpanElement>(null);
 

@@ -4,7 +4,6 @@ import { Role } from "@/shared/interface/enums";
 import { RootState } from "@/shared/redux/appStore";
 import { Outlet, useNavigate } from "react-router-dom";
 import WorldMapWrapper from "@/components/map/WorldMapWrapper";
-// import AnimatedBeamIntegrations from "@/components/animation/AnimatedCircleWithBeam";
 
 const AuthLayout: React.FC = () => {
 
@@ -31,11 +30,6 @@ const AuthLayout: React.FC = () => {
       </div>
 
       <div className="w-0 md:w-6/12 lg:w-8/12 relative flex h-full items-center justify-center overflow-hidden bg-background">
-        {/* <div className={`absolute w-full flex h-full ${active === "beam" ? "block" : "hidden"
-            }`}
-        >
-          <AnimatedBeamIntegrations />
-        </div> */}
         <div className={`absolute w-full flex h-full`}
         >
           <WorldMapWrapper />

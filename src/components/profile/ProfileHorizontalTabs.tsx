@@ -9,12 +9,12 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ProfileHorizontalTabsComponentProps } from "@/shared/interface/componentInterface";
 
-const ProfileHorizontalTabs: React.FC<ProfileHorizontalTabsComponentProps> = ({
+const ProfileHorizontalTabs = ({
     isAdmin,
     tab,
     setTab,
     tabArray,
-}) => {
+}: ProfileHorizontalTabsComponentProps) => {
     const tabs = useMemo(() => {
         return tabArray.reduce((acc: string[], tabItem) => {
             if (isAdmin && tabItem.admin) {

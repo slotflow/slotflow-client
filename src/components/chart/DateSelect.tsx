@@ -1,4 +1,3 @@
-import React from 'react';
 import {
     Select,
     SelectItem,
@@ -9,10 +8,10 @@ import {
 import { dateSelectList } from '@/shared/utils/constants';
 import { DateSelectProps } from '@/shared/interface/componentInterface';
 
-const DateSelect: React.FC<DateSelectProps> = ({
+const DateSelect = ({
     onValueChange,
     value
-}) => {
+}: DateSelectProps) => {
 
     return (
         <Select value={value} onValueChange={onValueChange}>

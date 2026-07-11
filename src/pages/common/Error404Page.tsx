@@ -1,11 +1,11 @@
 import gsap from 'gsap';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import error404 from '../../assets/svgs/error404.svg';
 import { gsapBigSvgYDirectionAnimation } from '@/shared/utils/constants';
 
-const Error404Page: React.FC = () => {
+const Error404Page = () => {
 
   const errorRef = useRef(null);
   const navigate = useNavigate();

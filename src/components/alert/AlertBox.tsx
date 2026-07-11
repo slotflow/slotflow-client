@@ -1,11 +1,11 @@
 import React from "react";
 import { AlertProps } from "@/shared/interface/componentInterface";
 
-const AlertBox: React.FC<AlertProps> = ({
+const AlertBox = ({
   icon: Icon,
   heading,
   message,
-}) => {
+}: AlertProps) => {
   return (
     <div className="items-start gap-3 bg-yellow-50 border border-yellow-200 text-yellow-800 rounded-xl p-4 shadow-sm mb-4">
       <div className="flex">

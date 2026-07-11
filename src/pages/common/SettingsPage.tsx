@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Select,
   SelectContent,
@@ -12,7 +11,7 @@ import { settingsTabs } from "@/shared/utils/constants";
 import PageHeader from "@/components/common/PageHeader";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-const SettingsPage: React.FC = () => {
+const SettingsPage = () => {
 
   const navigate = useNavigate();
   const location = useLocation();

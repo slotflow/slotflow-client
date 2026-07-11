@@ -1,15 +1,14 @@
-import React from "react";
 import { Role } from "@/shared/interface/enums";
 import { Button } from "@/components/ui/button";
 import { formateDate } from "@/shared/helper/formatter";
 import { TimeSlotLegendProps } from "@/shared/interface/componentInterface";
 
-const TimeSlotLegend: React.FC<TimeSlotLegendProps> = ({
+const TimeSlotLegend = ({
   role,
   showAdvanceNotice = false,
   date,
   legendItems,
-}) => {
+}: TimeSlotLegendProps) => {
   return (
     <div className="space-y-2">
       <h3 className="font-bold text-lg">Slots Indicators </h3>

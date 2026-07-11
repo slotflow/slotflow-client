@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { LoaderCircle, Pen } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { appConfig } from "@/shared/config/env";
+import { LoaderCircle, Pen } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import avatar from '@/assets/defaultImages/avatar.png';
 import { getUploadUrl, uploadToS3 } from "@/shared/apis/s3";
@@ -13,7 +13,7 @@ import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { ApiBaseResponse } from "@/shared/interface/commonInterface";
 import { UserUpdateProfileImageResponse } from "@/shared/interface/api/user";
 
-const ProfileHead: React.FC = () => {
+const ProfileHead = () => {
 
     const dispatch = useDispatch<AppDispatch>();
     const { authUser, profileImageUpdating }: AuthState = useSelector((store: RootState) => store.auth);

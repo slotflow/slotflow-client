@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import PageHeader from "@/components/common/PageHeader";
 import ProviderPlanList from "@/components/provider/ProviderPlanList";
 import ProviderSubscriptionHistory from "@/components/provider/ProviderSubscriptionHistory";
 
-const ProviderSubscriptionPage: React.FC = () => {
+const ProviderSubscriptionPage = () => {
 
     const [showPlans, setShowPlans] = useState<boolean>(false);
 

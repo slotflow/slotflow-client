@@ -1,31 +1,12 @@
-import { useNavigate } from "react-router-dom";
+import { Card } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
-import { Card } from "../ui/card";
-import { redirectPaths } from "@/shared/utils/constants";
+import { useNavigate } from "react-router-dom";
+import { blogCTAItems, redirectPaths } from "@/shared/utils/constants";
 
 const BlogCTA = () => {
 
     const navigate = useNavigate();
-
-    const items = [
-        {
-            title: "25k+",
-            subtitle: "Appointments Managed",
-        },
-        {
-            title: "98%",
-            subtitle: "Customer Satisfaction",
-        },
-        {
-            title: "24/7",
-            subtitle: "Online Booking",
-        },
-        {
-            title: "AI",
-            subtitle: "Smart Scheduling",
-        },
-    ];
 
     return (
         <section className="mx-auto px-6 pb-24 max-w-7xl">
@@ -52,7 +33,7 @@ const BlogCTA = () => {
                         </div>
                     </div>
                     <div className="grid grid-cols-2 gap-5">
-                        {items.map((item) => (
+                        {blogCTAItems.map((item) => (
                             <Card
                                 key={item.title}
                                 className="rounded-3xl p-8 text-center transition hover:shadow-lg"
@@ -61,7 +42,7 @@ const BlogCTA = () => {
                                     {item.title}
                                 </h2>
                                 <p className="mt-3 text-muted-foreground">
-                                    {item.subtitle}
+                                    {item.subTitle}
                                 </p>
                             </Card>
                         ))}

@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
     import { Badge } from "@/components/ui/badge";
     import { Button } from "@/components/ui/button";
-    import SplitTextReveal from "../animation/SplitTextReveal";
     import { redirectPaths } from "@/shared/utils/constants";
+    import SplitTextReveal from "../animation/SplitTextReveal";
     import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
 
     const CTASection = () => {

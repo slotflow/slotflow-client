@@ -1,10 +1,9 @@
-import React from "react";
 import { ReactLenis } from "lenis/react"
 import { Outlet } from "react-router-dom";
 import Header from "@/components/navs/Header";
 import Footer from "@/components/navs/FooterBar";
 
-const LandingLayout: React.FC = () => {
+const LandingLayout = () => {
 
   console.log("LandingLayout")
 
