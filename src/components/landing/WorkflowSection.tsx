@@ -38,7 +38,7 @@ const WorkflowSection = () => {
     for (let i = 1; i <= TOTAL_FRAMES; i++) {
       const img = new Image();
 
-      img.src = `/frames/ezgif-frame-${String(i).padStart(3, "0")}.jpg`;
+      img.src = `/src/assets/landing/workflow/frames/ezgif-frame-${String(i).padStart(3, "0")}.jpg`;
 
       frameImages.push(img);
     }

@@ -9,6 +9,7 @@ import { Review } from "./entityInterface/reviewInterface";
 import { Booking } from "./entityInterface/bookingInterface";
 import { Message } from "./entityInterface/message.interface";
 import { HearAboutUsOptionValue, PlanName, Role, ServiceCategory } from "./enums";
+import jsPDF from "jspdf";
 
 // Common Response interface
 export interface ApiBaseResponse<T = null> {
@@ -492,4 +493,9 @@ export interface CompanyValues {
   icon: React.ComponentType<{ className?: string }>;
   title: string;
   description: string;
+}
+
+// PDF Generator doc type
+export interface JsPDFWithAutoTable extends jsPDF {
+    lastAutoTable?: { finalY: number };
 }

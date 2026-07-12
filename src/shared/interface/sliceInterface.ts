@@ -77,6 +77,7 @@ export interface appState {
   faqLoaded: boolean;
   faqLoading: boolean;
   faqTotal: number;
+  isLiveChatBubbleOpen: boolean;
 }
 
 // admin slice

@@ -1,6 +1,6 @@
 import { Github } from 'lucide-react';
 import { footerLinks } from '@/shared/utils/constants';
-import logo from '../../assets/logos/logo-transparent.png';
+import logo from '../../assets/logos/company/slotflowLogoTransparent.png';
 
 const Footer = () => {
   return (

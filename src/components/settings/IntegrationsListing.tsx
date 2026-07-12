@@ -5,13 +5,13 @@ import { Card, CardContent } from '../ui/card';
 import { RootState } from "@/shared/redux/appStore";
 import { AppDispatch } from "@/shared/redux/appStore";
 import { useDispatch, useSelector } from 'react-redux';
-import stripeLogo from '../../assets/iconImages/stripe.jpeg';
 import { connectStripeAccount } from "@/shared/apis/payment";
 import IntegrationCard from '../integrations/IntegrationCard';
 import { checkStripeAccountStatus } from "@/shared/apis/user";
 import { appConfig, serviceConfig } from "@/shared/config/env";
-import googleCalendar from '../../assets/iconImages/gCalendar.png';
+import stripeLogo from '../../assets/logos/external/stripe.jpeg';
 import { Role, StripeAccountStatus } from "@/shared/interface/enums";
+import googleCalendarLogo from '../../assets/logos/external/googleCalendar.png';
 import { setGoogleConnect, setStripeAccountStatus } from '@/shared/redux/slices/authSlice';
 import { setGoogleConnectionLoading, setStripeConnectionLoading } from "@/shared/redux/slices/integrationSlice";
 
@@ -128,7 +128,7 @@ const IntegrationsListing = () => {
 
     const listData = [
         {
-            image: googleCalendar,
+            image: googleCalendarLogo,
             heading: "Google",
             description: 'Connect your Google calendar to enable calendar syncing and manage your appointments automatically avoid overlapping.',
             title: "Connect Google",

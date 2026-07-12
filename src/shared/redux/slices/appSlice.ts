@@ -18,6 +18,7 @@ const initialState: appState = {
     faqLoaded: false,
     faqLoading: false,
     faqTotal: 0,
+    isLiveChatBubbleOpen: false,
 }
 
 const stateSlice = createSlice({
@@ -47,9 +48,6 @@ const stateSlice = createSlice({
         },
         setReviews: (state, action: PayloadAction<ReviewFields[]>) => {
             state.reviews = action.payload;
-        },
-        setFaqs: (state, action: PayloadAction<FaqFields[]>) => {
-            state.faqs = action.payload;
         },
         setFaqLoading: (
             state,
@@ -84,6 +82,9 @@ const stateSlice = createSlice({
             state.faqLoaded = false;
             state.faqTotal = 0;
         },
+        toggleLiveChatBubble: (state) => {
+            state.isLiveChatBubbleOpen = !state.isLiveChatBubbleOpen;
+        }
     },
     extraReducers(builder) {
         builder.addCase(signup.pending, (state) => {
@@ -128,7 +129,6 @@ const stateSlice = createSlice({
 });
 
 export const {
-    setFaqs,
     clearFaqs,
     setReviews,
     appendFaqs,
@@ -140,7 +140,8 @@ export const {
     setForgotPassword,
     toggleFilterSideBar,
     setArticleCategories,
-    toggleNotificationContainer
+    toggleLiveChatBubble,
+    toggleNotificationContainer,
 } = stateSlice.actions;
 
 export default stateSlice.reducer;

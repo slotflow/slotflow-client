@@ -1,8 +1,8 @@
 import React from "react";
 import { Button } from "../ui/button";
 import { LoaderCircle } from "lucide-react";
-import logo from '../../assets/logos/logo-transparent.png';
 import { CardDescription, CardHeader, CardTitle } from "../ui/card";
+import logo from '../../assets/logos/company/slotflowLogoTransparent.png';
 import { AuthFormsButtonProps, AuthFormsHeadingProps } from "@/shared/interface/componentInterface";
 
 export const FormHeading = React.memo(({ 

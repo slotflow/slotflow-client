@@ -2,12 +2,9 @@ import jsPDF from "jspdf";
 import { format } from "date-fns";
 import { toast } from "react-toastify";
 import autoTable from "jspdf-autotable";
-import logo from "../../assets/logos/logo.png";
-import { AdminFetchRevenueReportRow } from "../interface/api/adminReportApiInterface";
-
-interface JsPDFWithAutoTable extends jsPDF {
-    lastAutoTable?: { finalY: number };
-}
+import { JsPDFWithAutoTable } from "../interface/commonInterface";
+import logo from "../../assets/logos/company/slotfloFullLogo.png";
+import { AdminFetchRevenueReportRow } from "../interface/api/payment";
 
 export const exportToPDF = async (
     fileName: string,

@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { Menu, Moon, Sun, X } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
-import logo from "../../assets/logos/logo-transparent.png";
 import { toggleTheme } from "@/shared/redux/slices/appSlice";
 import { navigation, redirectPaths } from "@/shared/utils/constants";
 import { AppDispatch, RootState } from "../../shared/redux/appStore";
+import logo from '../../assets/logos/company/slotflowLogoTransparent.png';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -30,7 +30,6 @@ const Header = () => {
   return (
     <nav className="relative z-50 w-full transition-colors duration-300">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between">
-        {/* Logo */}
         <div
           onClick={() => navigate("/")}
           className="flex flex-1 cursor-pointer items-center"
@@ -41,23 +40,22 @@ const Header = () => {
             Slotflow
           </h4>
 
-          {/* Desktop Navigation */}
-          <div className="ml-8 hidden md:flex items-center space-x-2">
+          <div className="ml-10 hidden items-center gap-8 md:flex">
             {navigation.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
-                className="rounded-lg px-3 py-2 text-sm font-medium text-[var(--textOne)] transition hover:bg-muted hover:text-[var(--textOneHover)]"
+                className="group relative text-sm font-medium text-muted-foreground transition-colors duration-300 hover:text-primary"
               >
-                {item.name}
+                <span className="inline-block transition-transform duration-300 group-hover:-translate-y-0.5">
+                  {item.name}
+                </span>
               </a>
             ))}
           </div>
         </div>
 
-        {/* Right Section */}
         <div className="flex items-center">
-          {/* Desktop Buttons */}
           <Button
             title="Login"
             variant="ghost"
@@ -76,7 +74,6 @@ const Header = () => {
             Sign Up
           </Button>
 
-          {/* Theme */}
           <button
             onClick={changeTheme}
             className="ml-3 rounded-full p-2 transition hover:bg-muted"
@@ -84,7 +81,6 @@ const Header = () => {
             {themeMode ? <Moon size={20} /> : <Sun size={20} />}
           </button>
 
-          {/* Hamburger */}
           <button
             onClick={toggleMobileMenu}
             className="ml-2 rounded-xl p-2 transition hover:bg-muted md:hidden"
@@ -104,7 +100,6 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div

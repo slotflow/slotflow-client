@@ -88,19 +88,18 @@ import { ChartConfig } from "@/components/ui/chart";
 import { OptionType } from '../interface/commonInterface';
 import { ContactItem } from "../interface/commonInterface";
 import chatImage from '@/assets/LandingPageImages/chat.jpg';
-import gCalendar from '../../assets/iconImages/gCalendar.png';
 import calendarImage from '../../assets/LandingPageImages/calendar2.png';
 import videoCallImage from '../../assets/LandingPageImages/videoCall.jpg';
 import bookingImage from '../../assets/LandingPageImages/heroSectionOneImg2.png';
 import { ProviderFetchDashboardStatsDataResponse } from "../interface/api/providerProfile";
 import { AdminVerificationStatus, HearAboutUsOptionValue, PlanName, Role, ServiceCategory, ServiceMode, ServiceType } from "../interface/enums";
 
-import zoomLogo from "@/assets/iconImages/zoom.png";
-import gmailLogo from "@/assets/iconImages/gmail.png";
-import stripeLogo from "@/assets/iconImages/stripe.jpeg";
-import whatsappLogo from "@/assets/iconImages/whatsapp.png";
-import googleMapsLogo from "@/assets/iconImages/googleMap.png";
-import googleCalendarLogo from "@/assets/iconImages/gCalendar.png";
+import zoomLogo from "@/assets/logos/external/zoom.png";
+import gmailLogo from "@/assets/logos/external/gmail.png";
+import whatsappLogo from "@/assets/logos/external/whatsapp.png";
+import stripeLogo from '../../assets/logos/external/stripe.jpeg';
+import googleMapsLogo from "@/assets/logos/external/googleMap.png";
+import googleCalendarLogo from '../../assets/logos/external/googleCalendar.png';
 
 // Plan Tiers 
 export const PLAN_TIERS = ["free", "starter", "professional", "enterprise"] as const;
@@ -703,7 +702,7 @@ export const featureContent: FeatureContentInterface[] = [
     description:
       "Automatically and asynchronously add your bookings and schedules to Google Calendar. Keep your availability up-to-date, avoid double bookings, and manage your appointments effortlessly across all devices.",
     image: calendarImage,
-    logo: gCalendar,
+    logo: googleCalendarLogo,
     islogo: true,
   },
 ];
