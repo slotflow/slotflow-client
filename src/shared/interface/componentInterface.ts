@@ -28,7 +28,7 @@ import { Column, ColumnDef, OnChangeFn, PaginationState } from "@tanstack/react-
 import { FetchProvidersProofsResponse, UpdateFileDataRequest } from "./api/commonApiInterface";
 import { AdminFetchUserProfileDetailsResponse, UserFetchServiceProvidersResponse, UserFetchMyProfileDetailsResponse } from "./api/user";
 import { AdminFetchProviderProfileDetailsResponse, ProviderFetchMyProfileDetailsResponse, UserFetchProviderProfileDetailsResponse } from "./api/providerProfile";
-import { ApiBaseResponse, ApiPaginatedResponse, BaseChartData, BlogArticle, BlogAuthorFields, ChatComponentProps, FetchFunctionBaseQueryParams, OptionType, Route, statsMapIntrface, TabItem, TimeRange } from "./commonInterface";
+import { ApiBaseResponse, ApiPaginatedResponse, BaseChartData, BlogArticle, BlogAuthorFields, ChatComponentProps, FaqFields, FetchFunctionBaseQueryParams, OptionType, Route, statsMapIntrface, TabItem, TimeRange } from "./commonInterface";
 
 // Provider service availability component props interface
 export interface ProviderServiceAvailabilityProps {
@@ -480,10 +480,14 @@ export interface SideBoxProps {
 
 // ProviderPlanCard component props interface
 export interface ProviderPlanCardProps {
-  plan: Pick<Plan, "_id" | "planName" | "description" | "features" | "price">;
+  plan: Pick<Plan, "_id" | "planName" | "description" | "features"> & {
+    monthlyPrice: number;
+    yearlyPrice: number;
+  };
   isTrial?: boolean;
   dummy?: boolean;
   popular?: boolean;
+  billingCycle: "monthly" | "yearly";
 }
 
 // UserOrProviderAddressDetails component props interface
@@ -976,4 +980,16 @@ export interface MainLayoutProps {
     username?: string;
     children: React.ReactNode;
     rightSidebar?: React.ReactNode;
+}
+
+// FAQ Accordion props
+export interface FAQAccordionProps {
+    faqs: FaqFields[];
+    loading?: boolean;
+}
+
+// FAQPage Search props
+export interface FAQPageSearchProps {
+    value: string;
+    onChange: (value: string) => void;
 }

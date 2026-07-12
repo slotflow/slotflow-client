@@ -15,6 +15,9 @@ const initialState: appState = {
     articleCategories: [],
     reviews: [],
     faqs: [],
+    faqLoaded: false,
+    faqLoading: false,
+    faqTotal: 0,
 }
 
 const stateSlice = createSlice({
@@ -47,7 +50,40 @@ const stateSlice = createSlice({
         },
         setFaqs: (state, action: PayloadAction<FaqFields[]>) => {
             state.faqs = action.payload;
-        }
+        },
+        setFaqLoading: (
+            state,
+            action: PayloadAction<boolean>
+        ) => {
+            state.faqLoading = action.payload;
+        },
+        setFaqTotal: (
+            state,
+            action: PayloadAction<number>
+        ) => {
+            state.faqTotal = action.payload;
+        },
+        appendFaqs: (
+            state,
+            action: PayloadAction<FaqFields[]>
+        ) => {
+
+            const existingIds = new Set(
+                state.faqs.map(faq => faq.id)
+            );
+
+            const newFaqs = action.payload.filter(
+                faq => !existingIds.has(faq.id)
+            );
+
+            state.faqs.push(...newFaqs);
+            state.faqLoaded = true;
+        },
+        clearFaqs: (state) => {
+            state.faqs = [];
+            state.faqLoaded = false;
+            state.faqTotal = 0;
+        },
     },
     extraReducers(builder) {
         builder.addCase(signup.pending, (state) => {
@@ -93,9 +129,13 @@ const stateSlice = createSlice({
 
 export const {
     setFaqs,
+    clearFaqs,
     setReviews,
+    appendFaqs,
     setArticles,
+    setFaqTotal,
     toggleTheme,
+    setFaqLoading,
     toggleSidebar,
     setForgotPassword,
     toggleFilterSideBar,

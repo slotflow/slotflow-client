@@ -1,6 +1,7 @@
 import {
   Ban,
   Gem,
+  Zap,
   Star,
   User,
   Home,
@@ -32,6 +33,7 @@ import {
   Activity,
   FileText,
   BarChart,
+  Sparkles,
   UserPlus,
   LockIcon,
   Instagram,
@@ -65,6 +67,8 @@ import {
   Route,
   BookingSteps,
   PlanListType,
+  BlogCTAItems,
+  CompanyValues,
   DayMapInterface,
   statsMapIntrface,
   CommonTabInterface,
@@ -79,7 +83,6 @@ import {
   MapDotLitLocationsCoordinates,
   ProviderApprovalMessageInterface,
   gsapBigSvgYDirectionAnimationInterface,
-  BlogCTAItems,
 } from "../interface/commonInterface";
 import { ChartConfig } from "@/components/ui/chart";
 import { OptionType } from '../interface/commonInterface';
@@ -308,7 +311,8 @@ export const PlanList: PlanListType = [
       "Up to 7 bookings",
       "7 days validity",
     ],
-    price: 0
+    monthlyPrice: 0,
+    yearlyPrice: 0,
   },
   {
     _id: "1",
@@ -322,7 +326,9 @@ export const PlanList: PlanListType = [
       "Email Support",
       "Basic Dashboard"
     ],
-    price: 499
+    monthlyPrice: 499,
+    yearlyPrice: 399,
+
   },
   {
     _id: "2",
@@ -337,7 +343,8 @@ export const PlanList: PlanListType = [
       "24/7 Chat support",
       "Medium analytics dashborad",
     ],
-    price: 1499
+    monthlyPrice: 1499,
+    yearlyPrice: 1199
   },
   {
     _id: "3",
@@ -351,7 +358,8 @@ export const PlanList: PlanListType = [
       "24/7 premium support",
       "Advanced analytics dashboard",
     ],
-    price: 4999
+    monthlyPrice: 4999,
+    yearlyPrice: 3999
   }
 ]
 
@@ -561,16 +569,16 @@ export const footerLinks = {
       href: "/contact",
     },
     {
-      name: "Features",
-      href: "/features",
-    },
-    {
       name: "Pricing",
       href: "/pricing",
     },
     {
       name: "Blog",
       href: "/blog",
+    },
+    {
+      name: "Faq",
+      href: "/Faq",
     },
   ],
 
@@ -1720,5 +1728,33 @@ export const blogCTAItems: BlogCTAItems[] = [
   {
     title: "AI",
     subTitle: "Smart Scheduling",
+  },
+];
+
+// company values
+export const companyValues: CompanyValues[] = [
+  {
+    icon: Zap,
+    title: "Built for Speed",
+    description:
+      "From booking to confirmations, every interaction is optimized to save valuable time.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Reliable & Secure",
+    description:
+      "Your scheduling data and customer information are protected with modern security practices.",
+  },
+  {
+    icon: Sparkles,
+    title: "Simple Experience",
+    description:
+      "A clean interface that makes appointment management effortless for businesses and customers.",
+  },
+  {
+    icon: BadgeCheck,
+    title: "Designed to Scale",
+    description:
+      "Whether you're an individual or an enterprise, Slotflow grows alongside your business.",
   },
 ];

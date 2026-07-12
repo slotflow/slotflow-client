@@ -74,6 +74,9 @@ export interface appState {
   articleCategories: string[];
   reviews: ReviewFields[];
   faqs: FaqFields[];
+  faqLoaded: boolean;
+  faqLoading: boolean;
+  faqTotal: number;
 }
 
 // admin slice

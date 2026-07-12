@@ -4,7 +4,6 @@ import rehypeSlug from "rehype-slug";
 import TOC from "@/components/scroll/TOC";
 import ReactMarkdown from "react-markdown";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import ReadingProgress from "@/components/scroll/ReadingProgress";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import userMarkdown from "@/md/legal/terms-of-service/user.md?raw";
 import { extractHeadings } from "@/shared/helper/extractTocHeadings";
@@ -21,7 +20,6 @@ const TermsOfServicePage = () => {
 
     return (
         <section className="w-full py-20">
-            <ReadingProgress />
             <div className="max-w-7xl mx-auto mb-4">
                 <Tabs
                     value={role}

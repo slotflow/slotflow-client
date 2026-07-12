@@ -1,5 +1,5 @@
-import { ProviderCardProps } from "@/shared/interface/componentInterface";
 import { Clock3, MapPin, Star } from "lucide-react";
+import { ProviderCardProps } from "@/shared/interface/componentInterface";
 
 const HeroProviderCard = ({
   name,

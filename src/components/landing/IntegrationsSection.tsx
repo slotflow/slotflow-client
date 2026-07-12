@@ -45,7 +45,7 @@ const IntegrationsSection = () => {
                     </div>
                 </MoveUpward>
                 <MoveUpward>
-                    <div className="relative mt-20 rounded-[2rem] border bg-background/60 p-8 backdrop-blur-xl md:p-12">
+                    <div className="relative mt-20 rounded-[2rem] border bg-background p-8 backdrop-blur-xl md:p-12">
                         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                             {landingPageIntegrations
                                 .filter((integration) => integration.isActive)

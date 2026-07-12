@@ -5,7 +5,6 @@ import { RootState } from "@/shared/redux/appStore";
 import MoveUpward from "@/components/animation/MoveUpward";
 import BlogNewsletter from "@/components/blog/BlogNewsletter";
 import { BlogArticle } from "@/shared/interface/commonInterface";
-import ReadingProgress from "@/components/scroll/ReadingProgress";
 import BlogDetailHero from "@/components/blog/details/BlogDetailHero";
 import BlogDetailQuote from "@/components/blog/details/BlogDetailQuote";
 import BlogDetailArticle from "@/components/blog/details/BlogDetailArticle";
@@ -39,7 +38,6 @@ const BlogDetailsPage = () => {
 
     return (
         <main className="min-h-screen bg-[var(--background)]">
-            <ReadingProgress />
             <BlogDetailHero
                 author={article?.author}
                 category={article.category}

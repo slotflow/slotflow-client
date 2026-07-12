@@ -1,13 +1,12 @@
 import { appConfig } from '@/shared/config/env';
 import ReviewHeader from './review/reviewHeader';
 import MoveUpward from '../animation/MoveUpward';
-import { contentfulAxiosInstance } from '@/lib/axios';
+import { useEffect, useRef, useState } from 'react';
+import { getReviews } from '@/shared/apis/contentful';
 import { useDispatch, useSelector } from 'react-redux';
-import React, { useEffect, useRef, useState } from 'react';
 import { setReviews } from '@/shared/redux/slices/appSlice';
 import { AppDispatch, RootState } from '@/shared/redux/appStore';
 import { InfiniteMovingCards } from '@/components/ui/infinite-moving-cards';
-import { ReviewFields, ContentfulResponse } from '@/shared/interface/commonInterface';
 
 const ReviewsSection = () => {
 
@@ -15,16 +14,6 @@ const ReviewsSection = () => {
     const reviews = useSelector((state: RootState) => state.app.reviews);
     const [reviewsLoading, setReviewsLoading] = useState<boolean>(false);
     const hasFetchedReviews = useRef(false);
-
-    const getReviews = async (): Promise<ReviewFields[]> => {
-        const { data } = await contentfulAxiosInstance.get<ContentfulResponse<ReviewFields>>("/entries", {
-            params: {
-                content_type: "review",
-            },
-        });
-
-        return data.items.map((review) => review.fields);
-    };
 
     useEffect(() => {
         if (hasFetchedReviews.current || reviews.length >= 10) {

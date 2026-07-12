@@ -4,7 +4,6 @@ import TOC from "@/components/scroll/TOC";
 import ReactMarkdown from "react-markdown";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import markdown from "@/md/legal/privacy-policy/common.md?raw";
-import ReadingProgress from '@/components/scroll/ReadingProgress';
 import { extractHeadings } from '@/shared/helper/extractTocHeadings';
 
 const PrivacyPolicyPage = () => {
@@ -13,7 +12,6 @@ const PrivacyPolicyPage = () => {
 
     return (
        <section className="w-full py-20">
-            <ReadingProgress />
             <div className="mx-auto grid max-w-7xl gap-20 lg:grid-cols-[minmax(0,1fr)_260px]">
                 <article
                     className="

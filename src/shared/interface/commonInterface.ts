@@ -159,7 +159,10 @@ export interface PlanFeatureInterface {
 }
 
 // Plan list type interface
-export type PlanListType = Array<Pick<Plan, "_id" | "planName" | "description" | "features" | "price">>
+export type PlanListType = Array<Pick<Plan, "_id" | "planName" | "description" | "features" > & { 
+  monthlyPrice: number; 
+  yearlyPrice: number; 
+}>
 
 // Provider approval message interface
 export interface ProviderApprovalMessageInterface {
@@ -390,6 +393,9 @@ export interface ContentfulEntry<TFields> {
 
 // Contentfull response interface
 export interface ContentfulResponse<TItemFields, TIncludeFields = never> {
+  total: number;
+  skip: number;
+  limit: number;
   items: ContentfulEntry<TItemFields>[];
   includes?: {
     Entry?: ContentfulEntry<TIncludeFields>[];
@@ -479,4 +485,11 @@ export interface BookingSteps {
 export interface BlogCTAItems {
   title: string;
   subTitle: string;
+}
+
+// Company values data interface
+export interface CompanyValues {
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  description: string;
 }

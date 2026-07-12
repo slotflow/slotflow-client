@@ -7,6 +7,7 @@ import { ProtectedRoute } from "./ProtectedRoutes.tsx";
 import { RouteNames } from "@/shared/utils/constants.ts";
 import BoardingLayoutWrapper from "./BoardingLayoutWrapper.tsx";
 import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
+import FAQPage from "@/pages/common/FAQPage.tsx";
 
 const AuthLayout = lazy(() => import("@/layouts/AuthLayout.tsx"));
 const LoginForm = lazy(() => import("@/components/form/CommonForms/LoginForm.tsx"));
@@ -15,7 +16,7 @@ const ResetPasswordForm = lazy(() => import("@/components/form/CommonForms/Reset
 const OtpVerificatioForm = lazy(() => import("@/components/form/CommonForms/OtpVerificatioForm.tsx"));
 const EmailVerificationForm = lazy(() => import("@/components/form/CommonForms/EmailVerificationForm.tsx"));
 
-const BlogPage = lazy(() => import("@/pages/common/BlogPage.tsx")); 
+const BlogPage = lazy(() => import("@/pages/common/BlogPage.tsx"));
 const ChatPage = lazy(() => import("@/pages/common/ChatPage.tsx"));
 const AboutPage = lazy(() => import("@/pages/common/AboutPage.tsx"));
 const CreditPage = lazy(() => import("@/pages/common/CreditPage.tsx"));
@@ -82,33 +83,34 @@ export const appRouter = createBrowserRouter([
             { path: "/about", element: <AboutPage /> },
             { path: "/contact", element: <ContactPage /> },
             { path: "/pricing", element: <PricingPage /> },
-            { path: "/blog", element: <BlogPage/> },
-            { path: "/blog/:blogId", element: <BlogDetailsPage/> },
+            { path: "/blog", element: <BlogPage /> },
+            { path: "/faq", element: <FAQPage /> },
+            { path: "/blog/:blogId", element: <BlogDetailsPage /> },
             {
                 path: "/legal",
-                  element: <Outlet />,
-    children: [
-        {
-            index: true,
-            element: <LegalHomePage />,
-        },
-        {
-            path: "privacy-policy",
-            element: <PrivacyPolicyPage />,
-        },
-        {
-            path: "terms-of-service",
-            element: <TermsOfServicePage />,
-        },
-        {
-            path: "refund-policy",
-            element: <LegalHomePage />,
-        },
-        {
-            path: "cancellation-policy",
-            element: <LegalHomePage />,
-        },
-    ],
+                element: <Outlet />,
+                children: [
+                    {
+                        index: true,
+                        element: <LegalHomePage />,
+                    },
+                    {
+                        path: "privacy-policy",
+                        element: <PrivacyPolicyPage />,
+                    },
+                    {
+                        path: "terms-of-service",
+                        element: <TermsOfServicePage />,
+                    },
+                    {
+                        path: "refund-policy",
+                        element: <LegalHomePage />,
+                    },
+                    {
+                        path: "cancellation-policy",
+                        element: <LegalHomePage />,
+                    },
+                ],
             }
         ]
     },

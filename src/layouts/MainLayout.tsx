@@ -62,12 +62,9 @@ const MainLayout = ({
                 providerSubscription: rawUser.providerSubscription,
                 verificationRejectionReason: rawUser.verificationRejectionReason,
                 adminVerificationStatus: rawUser.adminVerificationStatus,
-
-                googleId: rawUser.googleId,
                 googleConnected: rawUser.googleConnected,
 
                 stripeAccountStatus: rawUser.stripeAccountStatus,
-                stripeAccountId: rawUser.stripeAccountId,
                 stripeCustomerId: rawUser.stripeCustomerId,
 
                 allowPushNotification: rawUser.allowPushNotification,
