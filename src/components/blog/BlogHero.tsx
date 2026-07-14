@@ -26,7 +26,7 @@ const BlogHero = ({
     const featuredReadTime = featuredArticle?.readTime ?? "";
 
     return (
-        <section className="relative overflow-hidden border-b">
+        <section id="hero" className="relative overflow-hidden w-full">
             <div className="relative px-6 py-24 max-w-7xl mx-auto">
                 <div className="grid gap-16 lg:grid-cols-2 items-center">
                     <motion.div

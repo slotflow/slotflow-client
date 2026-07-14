@@ -16,7 +16,7 @@ const BlogDetailHero = ({
     title
 }: BlogDetailHeroProps) => {
     return (
-        <section className="relative h-[70vh] min-h-[600px] overflow-hidden">
+        <section id="hero" className="relative h-[70vh] min-h-[600px] overflow-hidden w-full">
             <img
                 src={heroBackground}
                 alt="Hero background"

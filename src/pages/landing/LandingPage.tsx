@@ -9,7 +9,7 @@ import IntegrationsSection from "@/components/landing/IntegrationsSection";
 const LandingPage = () => {
 
   return (
-    <>
+    <main className="w-full">
       <HeroSection />
       <WorkflowSection />
       <FeaturesSection />
@@ -17,7 +17,7 @@ const LandingPage = () => {
       <ReviewsSection />
       <FAQSection />
       <CTASection />
-    </>
+    </main>
   )
 }
 

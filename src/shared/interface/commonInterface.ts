@@ -160,9 +160,9 @@ export interface PlanFeatureInterface {
 }
 
 // Plan list type interface
-export type PlanListType = Array<Pick<Plan, "_id" | "planName" | "description" | "features" > & { 
-  monthlyPrice: number; 
-  yearlyPrice: number; 
+export type PlanListType = Array<Pick<Plan, "_id" | "planName" | "description" | "features"> & {
+  monthlyPrice: number;
+  yearlyPrice: number;
 }>
 
 // Provider approval message interface
@@ -497,5 +497,14 @@ export interface CompanyValues {
 
 // PDF Generator doc type
 export interface JsPDFWithAutoTable extends jsPDF {
-    lastAutoTable?: { finalY: number };
+  lastAutoTable?: { finalY: number };
+}
+
+// Constact page support options data interface
+export interface ContactSupportOptions {
+  id: number;
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  button: string;
+  action: string;
 }

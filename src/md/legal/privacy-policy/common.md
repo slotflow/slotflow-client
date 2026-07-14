@@ -2,8 +2,7 @@
 
 Last Updated: 5 july 2026 Effective Date: 10 july 2026
 
-
-### 1. Introduction and Scope
+## 1. Introduction and Scope
 
 Welcome to **SlotFlow**, a platform owned and operated by **SlotFlow Technologies Private Limited** ("**SlotFlow**," "**we**," "**us**," or "**our**"). We are committed to protecting your privacy and handling your personal information responsibly, transparently, and in accordance with applicable data protection laws.
 
@@ -30,13 +29,13 @@ Some features of our platform rely on trusted third-party service providers, suc
 
 This Privacy Policy should be read together with our Terms of Service and any other policies or notices that apply to specific features or services provided through SlotFlow.
 
-### 2. Information We Collect
+## 2. Information We Collect
 
 SlotFlow Technologies Private Limited collects information to provide, operate, maintain, improve, and secure the SlotFlow platform. The information we collect depends on how you interact with our services and whether you use SlotFlow as a **User** seeking services or as a **Provider** offering services.
 
-#### 2.1 Information You Provide Directly
+### 2.1 Information You Provide Directly
 
-##### Information Collected from Users
+#### Information Collected from Users
 
 When you create an account, book appointments, communicate with Providers, or otherwise use the SlotFlow platform, we may collect information that you voluntarily provide, including:
 
@@ -46,7 +45,7 @@ When you create an account, book appointments, communicate with Providers, or ot
 * Payment-related information necessary to complete transactions. Payments are processed securely through our third-party payment processor, **Stripe**. SlotFlow does not store your complete debit card, credit card, or other payment card details.
 * Location information that you choose to provide, such as your address, as well as your approximate location when permission is granted through your browser or device to help identify nearby Providers and improve location-based services.
 
-##### Information Collected from Providers
+#### Information Collected from Providers
 
 When you register as a Provider and complete the onboarding process, we may collect:
 
@@ -58,7 +57,7 @@ When you register as a Provider and complete the onboarding process, we may coll
 * Payment and payout-related information required to process subscription payments or other financial transactions through our payment service providers. SlotFlow does not store complete payment card information.
 * Business location information, including your service address and approximate location where necessary to help Users discover nearby Providers.
 
-#### 2.2 Information Collected Automatically
+### 2.2 Information Collected Automatically
 
 When you access or use the SlotFlow platform, certain technical information is collected automatically, which may include:
 
@@ -69,7 +68,7 @@ When you access or use the SlotFlow platform, certain technical information is c
 * Approximate geographic location derived from your IP address or browser location services, where permission has been granted.
 * Cookies and similar technologies that help authenticate users, remember preferences, improve security, analyze platform performance, and enhance the overall user experience.
 
-#### 2.3 Information Received from Third Parties
+### 2.3 Information Received from Third Parties
 
 We may receive information about you from trusted third-party service providers and partners, including:
 
@@ -80,11 +79,11 @@ We may receive information about you from trusted third-party service providers 
 
 We expect third-party providers that process personal information on our behalf to handle such information in accordance with applicable privacy and security requirements.
 
-### 3. How We Use Your Information
+## 3. How We Use Your Information
 
 SlotFlow Technologies Private Limited processes personal information only for legitimate business purposes, to provide and improve our services, fulfill our contractual obligations, comply with applicable laws, and protect the security and integrity of the SlotFlow platform.
 
-#### 3.1 How We Use Information Collected from Users
+### 3.1 How We Use Information Collected from Users
 
 We may use information collected from Users to:
 
@@ -105,7 +104,7 @@ We may use information collected from Users to:
 * Comply with applicable laws, regulations, legal obligations, court orders, and requests from competent authorities.
 * Send product announcements, feature updates, newsletters, promotional communications, and marketing materials where permitted by law or with your consent. You may opt out of marketing communications at any time.
 
-#### 3.2 How We Use Information Collected from Providers
+### 3.2 How We Use Information Collected from Providers
 
 We may use information collected from Providers to:
 
@@ -127,7 +126,7 @@ We may use information collected from Providers to:
 
 We do not use your personal information for purposes that are incompatible with those described in this Privacy Policy unless we obtain your consent or are otherwise permitted or required by applicable law.
 
-### 4. Legal Bases for Processing (GDPR)
+## 4. Legal Bases for Processing (GDPR)
 
 Although SlotFlow primarily operates within India, we recognize that certain users may be protected by the General Data Protection Regulation (GDPR) or similar data protection laws. Where the GDPR applies, we process personal information only where we have a valid legal basis.
 
@@ -157,23 +156,23 @@ Where we rely on our legitimate interests, we balance those interests against yo
 
 If you are located in a jurisdiction where additional legal bases apply, we will process your personal information in accordance with the applicable data protection laws of that jurisdiction.
 
-### 5. Cookies and Tracking Technologies
+## 5. Cookies and Tracking Technologies
 
 SlotFlow Technologies Private Limited uses cookies and similar tracking technologies to operate, secure, maintain, and improve the SlotFlow platform. These technologies help us provide essential functionality, enhance your experience, understand how our services are used, and improve platform performance.
 
-#### 5.1 Types of Cookies and Tracking Technologies We Use
+### 5.1 Types of Cookies and Tracking Technologies We Use
 
 Depending on how you use SlotFlow, we may use the following categories of cookies and similar technologies:
 
-##### Strictly Necessary Cookies
+#### Strictly Necessary Cookies
 
 These cookies are essential for the operation and security of the SlotFlow platform. They enable core functionality such as user authentication, session management, security protections, and access to authenticated areas of the platform. Without these cookies, certain services may not function properly.
 
-##### Functional Cookies
+#### Functional Cookies
 
 Functional cookies remember your preferences and settings to improve your experience, such as language preferences, interface settings, and other personalization features.
 
-##### Analytics and Performance Cookies
+#### Analytics and Performance Cookies
 
 We use analytics technologies, including **Google Analytics**, to understand how visitors interact with the SlotFlow platform. These technologies help us measure website traffic, identify usage patterns, monitor performance, diagnose technical issues, and improve our services.
 
@@ -189,13 +188,13 @@ Analytics information may include:
 
 This information is generally aggregated and used to improve the functionality and performance of the platform.
 
-#### 5.2 Similar Technologies
+### 5.2 Similar Technologies
 
 In addition to cookies, SlotFlow may use browser storage technologies, including local storage, to improve your experience.
 
 We use local storage only to store limited, non-sensitive information, such as user preferences, application settings, and other information that helps improve the usability and performance of the platform. We do **not** store passwords, authentication tokens, payment card information, or other sensitive personal information in local storage.
 
-#### 5.3 Third-Party Technologies
+### 5.3 Third-Party Technologies
 
 Certain trusted third-party service providers may use cookies or similar technologies while providing services on our behalf, including:
 
@@ -205,7 +204,7 @@ Certain trusted third-party service providers may use cookies or similar technol
 
 These third parties process information in accordance with their own privacy policies and applicable legal requirements.
 
-#### 5.4 Managing Cookies
+### 5.4 Managing Cookies
 
 You may manage or control cookies in several ways:
 
@@ -215,23 +214,23 @@ You may manage or control cookies in several ways:
 
 Please note that disabling or rejecting certain cookies may affect the availability or functionality of some features of the SlotFlow platform. Strictly necessary cookies cannot be disabled because they are required for the secure operation of our services.
 
-#### 5.5 Consent
+### 5.5 Consent
 
 Where required by applicable law, including the General Data Protection Regulation (GDPR), SlotFlow will obtain your consent before placing non-essential cookies or similar tracking technologies on your device. You may update or withdraw your cookie preferences at any time through the available cookie management tools or your browser settings.
 
 By continuing to use the SlotFlow platform after accepting our cookie preferences, you acknowledge the use of cookies and similar technologies as described in this Privacy Policy.
 
-### 6. How We Share Your Information
+## 6. How We Share Your Information
 
 SlotFlow Technologies Private Limited does not sell your personal information. We share personal information only where necessary to provide our services, operate the SlotFlow platform, comply with legal obligations, protect our rights, or with your consent where required.
 
 We require third parties that process personal information on our behalf to implement appropriate security measures and process such information only for authorized purposes.
 
-#### 6.1 Information Shared Between Users and Providers
+### 6.1 Information Shared Between Users and Providers
 
 To facilitate bookings and the delivery of services through the SlotFlow platform, certain information is shared between Users and Providers.
 
-#### Information Shared with Providers
+### Information Shared with Providers
 
 When you book an appointment or request a service, we may share information with the selected Provider that is reasonably necessary to deliver the requested service, including:
 
@@ -241,7 +240,7 @@ When you book an appointment or request a service, we may share information with
 
 Providers are expected to use this information solely for providing services through the SlotFlow platform and in accordance with applicable privacy laws.
 
-#### Information Shared with Users
+### Information Shared with Users
 
 When you browse or book services, we may display information about Providers, including:
 
@@ -252,7 +251,7 @@ When you browse or book services, we may display information about Providers, in
 * Availability and appointment schedules.
 * Other information that Providers choose to make publicly available through their profiles.
 
-#### 6.2 Service Providers and Data Processors
+### 6.2 Service Providers and Data Processors
 
 We engage trusted third-party service providers that process personal information on our behalf to support the operation of the SlotFlow platform. Depending on the services used, these providers may process information necessary to perform their functions.
 
@@ -269,7 +268,7 @@ These service providers include:
 
 These providers are authorized to process personal information only to the extent necessary to perform services on our behalf and are required to protect such information.
 
-#### 6.3 Legal Requirements
+### 6.3 Legal Requirements
 
 We may disclose personal information where we reasonably believe disclosure is necessary to:
 
@@ -279,17 +278,17 @@ We may disclose personal information where we reasonably believe disclosure is n
 * Detect, investigate, prevent, or address fraud, security incidents, abuse, or other unlawful activities.
 * Enforce our Terms of Service or other agreements.
 
-#### 6.4 Business Transfers
+### 6.4 Business Transfers
 
 If SlotFlow is involved in a merger, acquisition, corporate restructuring, financing, sale of assets, or similar business transaction, personal information may be transferred as part of that transaction, subject to applicable legal requirements. We will take reasonable steps to ensure that any successor organization continues to protect your personal information in accordance with this Privacy Policy or provides notice of any material changes.
 
-#### 6.5 Cross-Border Transfers
+### 6.5 Cross-Border Transfers
 
 Although SlotFlow primarily provides services within India, some of our trusted third-party service providers may process or store personal information in countries outside India.
 
 Where personal information is transferred internationally, we take reasonable steps to ensure that appropriate safeguards are implemented, including contractual protections, industry-standard security measures, or other legally recognized transfer mechanisms, where applicable, to protect personal information during such transfers.
 
-#### 6.6 Sale of Personal Information
+### 6.6 Sale of Personal Information
 
 SlotFlow does **not** sell your personal information to third parties.
 
@@ -297,97 +296,97 @@ Where applicable law distinguishes between the "sale" and "sharing" of personal 
 
 If our data sharing practices change in the future, we will update this Privacy Policy and, where required by law, obtain any necessary consent before implementing such changes.
 
-### 7. Data Retention
+## 7. Data Retention
 
 SlotFlow Technologies Private Limited retains personal information only for as long as necessary to fulfill the purposes described in this Privacy Policy, provide our services, comply with applicable legal, regulatory, tax, accounting, and contractual obligations, resolve disputes, enforce our agreements, and protect the security and integrity of the SlotFlow platform.
 
 When personal information is no longer required, we will securely delete, anonymize, or otherwise dispose of it in accordance with applicable laws and our internal data retention practices.
 
-#### 7.1 User Account Information
+### 7.1 User Account Information
 
 We retain User account information for as long as the account remains active or as otherwise necessary to provide our services.
 
 If you request deletion of your account, we will verify your request and deactivate your account. Once any outstanding legal, contractual, security, fraud prevention, accounting, or operational obligations have been satisfied, we will delete or anonymize your personal information unless we are required or permitted by law to retain certain information for a longer period.
 
-#### 7.2 Provider Account Information
+### 7.2 Provider Account Information
 
 We retain Provider account information for as long as the Provider account remains active and the Provider continues to use the SlotFlow platform.
 
 If a Provider requests account deletion, we will verify the identity of the Provider and confirm the deletion request before proceeding. Following verification, the account will be deactivated. Personal information will be deleted or anonymized after any outstanding legal, financial, contractual, operational, or dispute resolution obligations have been completed, unless a longer retention period is required or permitted by applicable law.
 
-#### 7.3 Provider Verification Information
+### 7.3 Provider Verification Information
 
 Identity verification documents and other verification information submitted during the Provider onboarding process are retained for as long as the Provider account remains active.
 
 Where required by law or necessary to establish, exercise, or defend legal claims, certain verification records may be retained for an additional period before being securely deleted or anonymized.
 
-#### 7.4 Appointment and Transaction Records
+### 7.4 Appointment and Transaction Records
 
 Appointment history, booking information, payment records, invoices, and related transaction information may be retained for up to **seven (7) years**, or for such longer period as required by applicable law, taxation, accounting, auditing, dispute resolution, or regulatory obligations.
 
 Payment card information is processed by our payment service providers and is not stored by SlotFlow.
 
-#### 7.5 Communications
+### 7.5 Communications
 
 Customer support requests, platform communications, and related correspondence may be retained for up to **two (2) years** after the matter has been resolved, unless a longer retention period is required for legal, security, or dispute resolution purposes.
 
-#### 7.6 Analytics and Technical Information
+### 7.6 Analytics and Technical Information
 
 Analytics information, diagnostic information, system logs, and technical data may be retained only for as long as reasonably necessary to monitor platform performance, investigate technical issues, improve our services, maintain security, and comply with applicable legal obligations.
 
 Where Google Analytics or similar services are used, retention periods are managed in accordance with the configuration of those services and applicable legal requirements.
 
-#### 7.7 Artificial Intelligence Interactions
+### 7.7 Artificial Intelligence Interactions
 
 Questions submitted to AI-powered features, together with any appointment context necessary to provide requested assistance, may be retained only for as long as reasonably necessary to provide, improve, secure, and maintain our AI-powered services, resolve technical issues, prevent misuse, and comply with applicable legal obligations.
 
 We seek to minimize the personal information processed through AI-powered features and retain such information only where necessary for the purposes described in this Privacy Policy.
 
-#### 7.8 Backup Copies
+### 7.8 Backup Copies
 
 Personal information may remain in secure backup systems for a limited period after deletion from active systems. Backup copies are protected using appropriate security measures and are automatically overwritten or securely deleted in accordance with our backup retention procedures.
 
-#### 7.9 Legal Retention Requirements
+### 7.9 Legal Retention Requirements
 
 Notwithstanding the retention periods described above, we may retain personal information for a longer period where required or permitted by applicable law, court order, governmental authority, regulatory requirement, insurance obligation, fraud investigation, security incident, or legal proceeding.
 
 Once the applicable retention period expires and the information is no longer required, we will securely delete or anonymize the personal information using appropriate technical and organizational measures.
 
-### 8. Your Privacy Rights and How to Exercise Them
+## 8. Your Privacy Rights and How to Exercise Them
 
 SlotFlow Technologies Private Limited respects your privacy rights and is committed to providing you with reasonable access to your personal information and control over how it is processed, subject to applicable laws.
 
 Depending on your location and the applicable data protection laws, you may have some or all of the following rights.
 
-#### 8.1 Right of Access
+### 8.1 Right of Access
 
 You may request confirmation of whether we process your personal information and, where applicable, request access to the personal information we hold about you.
 
-#### 8.2 Right to Rectification
+### 8.2 Right to Rectification
 
 You may request that we correct or update inaccurate, incomplete, or outdated personal information.
 
-#### 8.3 Right to Erasure (Right to be Forgotten)
+### 8.3 Right to Erasure (Right to be Forgotten)
 
 You may request the deletion of your personal information where applicable, subject to legal, regulatory, contractual, fraud prevention, security, accounting, tax, or dispute resolution obligations that require us to retain certain information.
 
-#### 8.4 Right to Restrict Processing
+### 8.4 Right to Restrict Processing
 
 Where permitted by applicable law, you may request that we temporarily restrict the processing of your personal information while certain requests or objections are being reviewed.
 
-#### 8.5 Right to Data Portability
+### 8.5 Right to Data Portability
 
 Where applicable, you may request a copy of certain personal information that you have provided to us in a structured, commonly used, and machine-readable format, or request that such information be transferred to another service provider where technically feasible.
 
-#### 8.6 Right to Object
+### 8.6 Right to Object
 
 You may object to certain types of processing, including processing based on our legitimate interests, where your rights and freedoms override those interests.
 
-#### 8.7 Right to Withdraw Consent
+### 8.7 Right to Withdraw Consent
 
 Where we rely on your consent to process personal information, you may withdraw that consent at any time. Withdrawal of consent will not affect the lawfulness of processing carried out before the withdrawal.
 
-#### 8.8 Rights Under CCPA and CPRA
+### 8.8 Rights Under CCPA and CPRA
 
 Where applicable under the California Consumer Privacy Act (CCPA), as amended by the California Privacy Rights Act (CPRA), eligible individuals may have additional rights, including:
 
@@ -400,7 +399,7 @@ Where applicable under the California Consumer Privacy Act (CCPA), as amended by
 
 SlotFlow does not sell personal information and does not share personal information for cross-context behavioral advertising purposes.
 
-#### 8.9 How to Exercise Your Rights
+### 8.9 How to Exercise Your Rights
 
 You may exercise your privacy rights by contacting us at:
 
@@ -412,7 +411,7 @@ We will acknowledge and respond to eligible privacy requests within a reasonable
 
 Where we are unable to fulfill your request, we will explain the reasons, subject to any legal restrictions.
 
-### 9. Security Measures
+## 9. Security Measures
 
 SlotFlow Technologies Private Limited takes reasonable technical, organizational, and administrative measures to protect personal information against unauthorized access, disclosure, alteration, loss, misuse, or destruction.
 
@@ -444,29 +443,29 @@ You also play an important role in protecting your personal information. We enco
 Security is a shared responsibility, and we continuously work to improve our technical and organizational safeguards to protect the information entrusted to us.
 
 
-### 10. Children's Privacy
+## 10. Children's Privacy
 
 SlotFlow Technologies Private Limited is committed to protecting the privacy of children and complying with applicable laws relating to children's personal information.
 
-#### 10.1 Users
+### 10.1 Users
 
 Users must be **at least 13 years of age** to create and maintain a SlotFlow account.
 
 Where services are intended for a child under the age of 13, a parent or legal guardian must create and manage the booking and provide any necessary information on behalf of the child. We do not knowingly permit children under the age of 13 to create or operate their own SlotFlow accounts.
 
-#### 10.2 Providers
+### 10.2 Providers
 
 Providers must be **at least 18 years of age** to register, complete onboarding, and offer services through the SlotFlow platform.
 
 Individuals under the age of 18 are not permitted to register or operate as Providers.
 
-#### 10.3 Parental or Guardian Responsibility
+### 10.3 Parental or Guardian Responsibility
 
 Parents and legal guardians may use the SlotFlow platform to schedule, manage, or attend appointments on behalf of their children where applicable.
 
 Parents or legal guardians are responsible for ensuring that any personal information they provide on behalf of a child is accurate and that they have the legal authority to provide such information.
 
-#### 10.4 Unauthorized Children's Accounts
+### 10.4 Unauthorized Children's Accounts
 
 We do not knowingly collect personal information directly from children who are not permitted to create accounts under this Privacy Policy.
 
@@ -474,11 +473,11 @@ If we become aware that an account has been created in violation of our minimum 
 
 If you believe that a child has provided personal information to SlotFlow in violation of this Privacy Policy, please contact us at **[legal@slotflow.in](mailto:legal@slotflow.in)** so that we may investigate and take appropriate action.
 
-#### 10.5 Children's Privacy Laws
+### 10.5 Children's Privacy Laws
 
 Where applicable, including under the United States Children's Online Privacy Protection Act (COPPA) or similar laws, parents or legal guardians may contact us regarding personal information collected from children and request access, correction, or deletion of such information, subject to applicable legal requirements.
 
-### 11. Changes to This Privacy Policy
+## 11. Changes to This Privacy Policy
 
 SlotFlow Technologies Private Limited may update this Privacy Policy from time to time to reflect changes in our services, business practices, legal obligations, technology, or other operational requirements.
 
@@ -495,7 +494,7 @@ We encourage you to review this Privacy Policy periodically to stay informed abo
 
 Your continued access to or use of the SlotFlow platform after the revised Privacy Policy becomes effective constitutes your acknowledgment of the updated Privacy Policy, except where applicable law requires your explicit consent for specific changes.
 
-### 12. Contact Us
+## 12. Contact Us
 
 If you have any questions, concerns, or requests regarding these Terms or your use of the Platform, you may contact SlotFlow using the details below.
 

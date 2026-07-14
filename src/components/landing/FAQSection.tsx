@@ -12,18 +12,19 @@ const FAQSection = () => {
     });
 
     return (
-        <section className="relative mx-auto max-w-7xl overflow-hidden px-4 py-32 md:px-0">
-            <FAQBackground />
+        <section id="faq" className=" px-4 py-32 md:px-0">
+            <div className="relative mx-auto max-w-7xl overflow-hidden">
+                <FAQBackground />
+                <div className="container relative z-10">
+                    <MoveUpward>
+                        <FAQHeader />
+                    </MoveUpward>
 
-            <div className="container relative z-10">
-                <MoveUpward>
-                    <FAQHeader />
-                </MoveUpward>
-
-                <FAQAccordion
-                    loading={faqLoading}
-                    faqs={faqs.slice(0, 5)}
-                />
+                    <FAQAccordion
+                        loading={faqLoading}
+                        faqs={faqs.slice(0, 5)}
+                    />
+                </div>
             </div>
         </section>
     );

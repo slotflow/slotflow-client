@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 const ContactSection = () => {
   return (
-    <section className="py-24">
+    <section id="-form-details" className="py-24">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 lg:grid-cols-[1.2fr_.8fr] lg:px-0">
         <div className="rounded-3xl border bg-background/60 p-8 backdrop-blur-xl lg:p-10">
           <h2 className="text-3xl font-bold">

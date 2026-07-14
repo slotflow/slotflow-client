@@ -1,8 +1,8 @@
+import { Star } from 'lucide-react';
 import { appConfig } from '@/shared/config/env';
-import ReviewHeader from './review/reviewHeader';
-import MoveUpward from '../animation/MoveUpward';
 import { useEffect, useRef, useState } from 'react';
 import { getReviews } from '@/shared/apis/contentful';
+import SectionHeading from '../common/SectionHeading';
 import { useDispatch, useSelector } from 'react-redux';
 import { setReviews } from '@/shared/redux/slices/appSlice';
 import { AppDispatch, RootState } from '@/shared/redux/appStore';
@@ -53,10 +53,20 @@ const ReviewsSection = () => {
     const secondRowReviews = reviews.slice(5, 10);
 
     return (
-        <section id="reviews">
-             <MoveUpward>
-                <ReviewHeader />
-             </MoveUpward>
+        <section className="w-full">
+             <SectionHeading 
+                badge=' Customer Reviews'
+                badgeIcon={Star}
+                title={<>
+                    <span className="text-[#635bff] underline">Trusted</span> by thousands
+        <span className="mt-2 block">
+          for every booking.
+        </span>
+                </>}
+                description='See how customers and service providers are using SlotFlow to
+        simplify appointments, save time, and deliver exceptional booking
+        experiences every day.'
+             />
             <div>
                 <div className="w-full overflow-hidden leading-0 bg-(--menuItemHoverBg)" >
                     <svg

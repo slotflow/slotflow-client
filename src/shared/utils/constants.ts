@@ -36,6 +36,7 @@ import {
   Sparkles,
   UserPlus,
   LockIcon,
+  BookOpen,
   Instagram,
   Calendar1,
   UserCheck,
@@ -44,6 +45,7 @@ import {
   RotateCcw,
   Handshake,
   ScanHeart,
+  CircleHelp,
   HelpCircle,
   ThumbsDown,
   CreditCard,
@@ -83,6 +85,7 @@ import {
   MapDotLitLocationsCoordinates,
   ProviderApprovalMessageInterface,
   gsapBigSvgYDirectionAnimationInterface,
+  ContactSupportOptions,
 } from "../interface/commonInterface";
 import { ChartConfig } from "@/components/ui/chart";
 import { OptionType } from '../interface/commonInterface';
@@ -1757,3 +1760,28 @@ export const companyValues: CompanyValues[] = [
       "Whether you're an individual or an enterprise, Slotflow grows alongside your business.",
   },
 ];
+
+//
+export const contactSupportOptions: ContactSupportOptions[] = [
+  {
+    id: 1,
+    icon: MessageCircle,
+    title: "Live Chat",
+    button: "Start Chat",
+    action: "chat",
+  },
+  {
+    id: 2,
+    icon: BookOpen,
+    title: "Help Center",
+    button: "Browse Docs",
+    action: "help",
+  },
+  {
+    id: 3,
+    icon: CircleHelp,
+    title: "FAQ",
+    button: "View FAQ",
+    action: "faq",
+  },
+] as const;

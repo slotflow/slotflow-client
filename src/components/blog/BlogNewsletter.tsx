@@ -19,8 +19,8 @@ const BlogNewsletter = () => {
         }
     }
     return (
-        <section className="py-32 max-w-7xl mx-auto">
-            <Card className="overflow-hidden rounded-[40px] border bg-gradient-to-br from-primary/10 via-background to-primary/5">
+        <section id="news-letter" className="py-32">
+            <Card className="max-w-7xl mx-auto overflow-hidden rounded-[40px] border bg-gradient-to-br from-primary/10 via-background to-primary/5">
                 <CardContent className="px-10 py-20 text-center">
                     <h2 className="mx-auto mt-6 max-w-3xl text-5xl font-bold leading-tight">
                         Stay Updated with Booking Insights

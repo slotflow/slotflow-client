@@ -1,16 +1,17 @@
 import { useNavigate } from "react-router-dom";
-    import { Badge } from "@/components/ui/badge";
-    import { Button } from "@/components/ui/button";
-    import { redirectPaths } from "@/shared/utils/constants";
-    import SplitTextReveal from "../animation/SplitTextReveal";
-    import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { redirectPaths } from "@/shared/utils/constants";
+import SplitTextReveal from "../animation/SplitTextReveal";
+import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
 
-    const CTASection = () => {
+const CTASection = () => {
 
-        const navigate = useNavigate();
+    const navigate = useNavigate();
 
-        return (
-            <section className="relative overflow-hidden py-32 max-w-7xl mx-auto px-4 md:px-0">
+    return (
+        <section id="cta" className="rpy-32 px-4 md:px-0">
+            <div className="elative overflow-hidden max-w-7xl mx-auto ">
                 <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-[140px]" />
                 <div className="container relative z-10">
                     <div className="mx-auto max-w-5xl overflow-hidden rounded-[2rem] px-8 py-20 text-center backdrop-blur-xl md:px-16">
@@ -28,7 +29,7 @@ import { useNavigate } from "react-router-dom";
                             once={false}
                             split="lines"
                             className="mx-auto mt-8 max-w-3xl text-4xl font-black leading-tight tracking-tight md:text-6xl"
-                            >
+                        >
                             Book your next
                             <span className="block text-primary">
                                 trusted <span className="text-[#635bff]">service</span> today.
@@ -40,7 +41,7 @@ import { useNavigate } from "react-router-dom";
                             once={false}
                             split="words"
                             className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-muted-foreground"
-                            >
+                        >
                             Discover verified professionals, compare availability,
                             schedule appointments instantly, and manage every booking
                             from one beautifully simple platform.
@@ -87,11 +88,11 @@ import { useNavigate } from "react-router-dom";
                                 AI Powered Search
                             </div>
                         </div>
-
                     </div>
                 </div>
-            </section>
-        );
-    };
+            </div>
+        </section>
+    );
+};
 
-    export default CTASection;
+export default CTASection;

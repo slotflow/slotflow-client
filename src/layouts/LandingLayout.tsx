@@ -15,7 +15,7 @@ const LandingLayout = () => {
 
   return (
     <ReactLenis root>
-      <main className="bg-background transition-colors duration-300">
+      <div className="bg-background transition-colors duration-300 w-full">
         <Header />
         <ReadingProgress />
         <Outlet />
@@ -24,7 +24,7 @@ const LandingLayout = () => {
           onClick={() => dispatch(toggleLiveChatBubble())}
         />
         <Footer />
-      </main>
+      </div>
     </ReactLenis>
   )
 }

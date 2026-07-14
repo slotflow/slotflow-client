@@ -9,7 +9,8 @@ const BlogFeaturedArticles = ({
 }: BlogFeaturedArticlesProps) => {
 
     return (
-        <section className="relative px-6 py-24 max-w-7xl mx-auto">
+        <section id="featured-articles" className="relative px-6 py-24">
+            <div className="max-w-7xl mx-auto">
                 <div className="mb-14 flex items-center justify-between">
                     <div>
                         <Badge variant="outline" className="mb-3">
@@ -108,6 +109,7 @@ const BlogFeaturedArticles = ({
                         ))}
                     </div>
                 </div>
+            </div>
         </section>
     )
 }

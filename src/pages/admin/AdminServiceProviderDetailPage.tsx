@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Role } from "@/shared/interface/enums";
-import ReviewsPage from "../common/ReviewsPage";
+import ReviewsPage from "../dashboard/ReviewsPage";
 import { fetchPayments } from "@/shared/apis/payment";
 import { providerTabs } from "@/shared/utils/constants";
 import { fetchAddressByUserId } from "@/shared/apis/address";

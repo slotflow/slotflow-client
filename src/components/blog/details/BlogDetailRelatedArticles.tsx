@@ -6,7 +6,8 @@ const BlogDetailRelatedArticles = ({
     relatedArticles
 }: BlogDetailRelatedArticlesProps) => {
     return (
-         <section className="mt-32 max-w-7xl mx-auto">
+        <section id="related-articles" className="mt-32 w-full">
+            <div className="max-w-7xl mx-auto">
                 <div className="flex items-end justify-between">
                     <div>
                         <Badge variant="outline">
@@ -43,7 +44,8 @@ const BlogDetailRelatedArticles = ({
                         </Card>
                     ))}
                 </div>
-            </section>
+            </div>
+        </section>
     )
 }
 

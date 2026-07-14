@@ -6,8 +6,8 @@ const BlogDetailArticle = ({
 }: BlogDetailArticleProps) => {
 
     return (
-        <section className="max-w-7xl mx-auto px-6 py-20">
-            <div className="grid gap-20 lg:grid-cols-[minmax(0,1fr)_220px]">
+        <section id="details" className="w-full">
+            <div className="max-w-7xl mx-auto px-6 py-20 grid gap-20 lg:grid-cols-[minmax(0,1fr)_220px]">
                 <article className="mx-auto max-w-4xl">
                     <section id="article-title">
                         <p className="text-2xl leading-10 text-foreground font-medium">

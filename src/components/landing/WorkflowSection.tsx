@@ -155,7 +155,7 @@ const WorkflowSection = () => {
   }, [images]);
 
   return (
-    <div className="relative hidden lg:block">
+    <section id="workflow" className="relative hidden lg:block">
       <WorkflowBackground />
       <MoveUpward>
         <WorkflowHeader />
@@ -187,7 +187,7 @@ const WorkflowSection = () => {
           </div>
         </section>
       </div>
-    </div>
+    </section>
   );
 };
 

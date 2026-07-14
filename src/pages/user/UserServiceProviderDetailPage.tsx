@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import ReviewsPage from "../common/ReviewsPage";
+import ReviewsPage from "../dashboard/ReviewsPage";
 import { Role } from "@/shared/interface/enums";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAddressByUserId } from "@/shared/apis/address";

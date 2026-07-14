@@ -10,7 +10,7 @@ import { LucideIcon } from "lucide-react";
 import { DateRange } from "react-day-picker";
 import { RouteNames } from "../utils/constants";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 import { ChartConfig } from "@/components/ui/chart";
 import * as RPNInput from "react-phone-number-input";
 import { SetProofDataProps } from "./sliceInterface";
@@ -422,8 +422,11 @@ export interface IntegrationCardProps {
 
 // Heading component props interface
 export interface SectionHeadingProps {
-  heading: string;
-  headingDescription: string;
+  badge: string;
+  badgeIcon: LucideIcon;
+  title: ReactNode;
+  description: string;
+  children?: ReactNode;
 }
 
 // location picker props interface
@@ -675,40 +678,40 @@ export interface DataFieldProps {
 
 // Animated counter props
 export interface AnimatedCounterProps {
-    from?: number;
-    to: number;
-    duration?: number;
-    prefix?: string;
-    suffix?: string;
-    decimals?: number;
-    separator?: boolean;
-    className?: string;
-    text: string;
+  from?: number;
+  to: number;
+  duration?: number;
+  prefix?: string;
+  suffix?: string;
+  decimals?: number;
+  separator?: boolean;
+  className?: string;
+  text: string;
 }
 
 // Floating ( animating wrapper compoenent ) props
 export interface FloatingProps {
-    children: React.ReactNode;
-    className: string;
+  children: React.ReactNode;
+  className: string;
 }
 
 // MoveUpward ( animating wrapper compoenent ) props
 export interface MoveUpwardProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 // SplitTextReveal component props
 export interface SplitTextRevealProps {
-    children: React.ReactNode;
-    as?: React.ElementType;
-    className?: string;
-    split?: "lines" | "words" | "chars" | "chars,words,lines";
-    duration?: number;
-    stagger?: number;
-    delay?: number;
-    rotationX?: number;
-    y?: number;
-    once?: boolean;
+  children: React.ReactNode;
+  as?: React.ElementType;
+  className?: string;
+  split?: "lines" | "words" | "chars" | "chars,words,lines";
+  duration?: number;
+  stagger?: number;
+  delay?: number;
+  rotationX?: number;
+  y?: number;
+  once?: boolean;
 }
 
 // Icon text props
@@ -719,60 +722,60 @@ export interface IconTextProps {
 
 // Blog detail article props
 export interface BlogDetailArticleProps {
-    article: BlogArticle;
+  article: BlogArticle;
 }
 
 // Blog details hero props
 export interface BlogDetailHeroProps {
-    heroBackground: string;
-    category: string | null;
-    title: string;
-    description: string;
-    author: BlogAuthorFields | null;
-    createdAt: string;
-    readTime: string;
+  heroBackground: string;
+  category: string | null;
+  title: string;
+  description: string;
+  author: BlogAuthorFields | null;
+  createdAt: string;
+  readTime: string;
 }
 
 // Blog detail prev or next article props
 export interface BlogDetailPrevOrNextArticleProps {
-    prevArticle: BlogArticle | null;
-    nextArticle: BlogArticle | null;
+  prevArticle: BlogArticle | null;
+  nextArticle: BlogArticle | null;
 }
 
 // Blog detail related article props
 export interface BlogDetailRelatedArticlesProps {
-    relatedArticles: BlogArticle[];
+  relatedArticles: BlogArticle[];
 }
 
 // Blog editors pic props
 export interface BlogEditorsPicksProps {
-    handPickedArticles: BlogArticle[];
+  handPickedArticles: BlogArticle[];
 }
 
 // Blog featured articles props
 export interface BlogFeaturedArticlesProps {
-    featuredArticles: BlogArticle[];
+  featuredArticles: BlogArticle[];
 }
 
 // Blog hero props
 export interface BlogHeroProps {
-    categories: string[];
-    articlesCount: number;
-    categoriesCount: number;
-    featuredArticle?: BlogArticle | null;
+  categories: string[];
+  articlesCount: number;
+  categoriesCount: number;
+  featuredArticle?: BlogArticle | null;
 }
 
 // Blog latest insights props
 export interface BlogLatestInsightsProps {
-    articles: BlogArticle[];
+  articles: BlogArticle[];
 }
 
 // Page header props
 export interface PageHeaderProps {
-    title: string;
-    description?: string;
-    actionLabel?: string;
-    onActionClick?: () => void;
+  title: string;
+  description?: string;
+  actionLabel?: string;
+  onActionClick?: () => void;
 }
 
 // Stats card props
@@ -786,42 +789,42 @@ export interface StatCardProps {
   percentage?: number;
   days?: number;
   chartData?: {
-  date: string;
-  value: number;
-}[];
+    date: string;
+    value: number;
+  }[];
   bgColour?: string;
   main?: boolean;
 }
 
 // Credit card props
 export interface CreditCardPorps {
-    title: string;
-    isLoading: boolean;
-    isError: boolean;
-    error: any;
-    data: number | boolean | React.ReactNode;
-    Icon: LucideIcon
-    bgColour?: string;
-    main?: boolean;
+  title: string;
+  isLoading: boolean;
+  isError: boolean;
+  error: any;
+  data: number | boolean | React.ReactNode;
+  Icon: LucideIcon
+  bgColour?: string;
+  main?: boolean;
 }
 
 // Update password form props
 export interface UpdatePasswordFormProps {
-    onClose: () => void;
+  onClose: () => void;
 }
 
 // Availability fetching error props
 export interface AvailablityFetchingErrorProps {
-    isAvailable: boolean;
+  isAvailable: boolean;
 }
 
 // No data props
 export interface NoDataProps {
-    message: string
- }
+  message: string
+}
 
- // Feature Card props ( feature section in landing page )
- export interface FeatureCardProps {
+// Feature Card props ( feature section in landing page )
+export interface FeatureCardProps {
   title: string;
   description: string;
   className?: string;
@@ -855,141 +858,141 @@ export interface WorkflowStepProps {
 
 // WorkflowTimeline props
 export interface WorkflowTimelineProps {
-    activeStep: number;
+  activeStep: number;
 }
 
 // Attachment Card props
 export interface AttachmentCardProps {
-    isLoading?: boolean;
-    isError?: boolean;
-    data?: {
-        demoVideoUrl?: string;
-        portfolioUrl?: string;
-    }
+  isLoading?: boolean;
+  isError?: boolean;
+  data?: {
+    demoVideoUrl?: string;
+    portfolioUrl?: string;
+  }
 }
 
 // Book Appointment Card props
 export interface BookAppointmentCardProps {
-    isLoading?: boolean;
-    isError?: boolean;
-    data?: number;
+  isLoading?: boolean;
+  isError?: boolean;
+  data?: number;
 }
 
 // Experience Card props
 export interface ExperienceCardProps {
-    isLoading?: boolean;
-    isError?: boolean;
-    data?: {
-        experienceYears?: number;
-        description?: string;
-    };
+  isLoading?: boolean;
+  isError?: boolean;
+  data?: {
+    experienceYears?: number;
+    description?: string;
+  };
 }
 
 // Provider Profile Top Card props
 export interface ProviderProfileTopCardProps {
-    isLoading?: boolean;
-    isError?: boolean;
-    name: string;
-    image: string;
-    categoryName: string;
-    trusted: boolean;
-    role: Role;
+  isLoading?: boolean;
+  isError?: boolean;
+  name: string;
+  image: string;
+  categoryName: string;
+  trusted: boolean;
+  role: Role;
 }
 
 // Requirements Card props
 export interface RequirementsCardProps {
-    isLoading?: boolean;
-    isError?: boolean;
-    data?: string[];
+  isLoading?: boolean;
+  isError?: boolean;
+  data?: string[];
 }
 
 // Service Card props
 export interface ServiceCardProps {
-    isLoading?: boolean;
-    isError?: boolean;
-    data?: FetchProviderServiceResponse;
-    isUserLookingProvider?: boolean;
+  isLoading?: boolean;
+  isError?: boolean;
+  data?: FetchProviderServiceResponse;
+  isUserLookingProvider?: boolean;
 }
 
 // Provider Profile props
 export interface ProviderProfileProps {
-    username: string;
-    profileImage: string;
-    role: Role;
-    availability: React.ReactNode;
-    reviews?: React.ReactNode;
-    address?: React.ReactNode;
-    proofs?: React.ReactNode;
-    service: {
-        isLoading?: boolean;
-        isError?: boolean;
-        data?: FetchProviderServiceResponse;
-        isUserLookingProvider?: boolean;
-    },
-    profile: {
-        isLoading?: boolean;
-        isError?: boolean;
-        data?: ProviderFetchMyProfileDetailsResponse | UserFetchProviderProfileDetailsResponse
-    },
+  username: string;
+  profileImage: string;
+  role: Role;
+  availability: React.ReactNode;
+  reviews?: React.ReactNode;
+  address?: React.ReactNode;
+  proofs?: React.ReactNode;
+  service: {
+    isLoading?: boolean;
+    isError?: boolean;
+    data?: FetchProviderServiceResponse;
+    isUserLookingProvider?: boolean;
+  },
+  profile: {
+    isLoading?: boolean;
+    isError?: boolean;
+    data?: ProviderFetchMyProfileDetailsResponse | UserFetchProviderProfileDetailsResponse
+  },
 }
 
 // TOC props
 export interface TOCProps {
-    headings: TOCHeadingProps[];
+  headings: TOCHeadingProps[];
 }
 
 // Service Availabilities props
 export interface SavedAvailabilitiesProps {
-    availabilities: Availability[] | null;
-    removeAvailability: (day: string) => void;
+  availabilities: Availability[] | null;
+  removeAvailability: (day: string) => void;
 }
 
 // FAQ Shimmer props
 export interface FAQSectionProps {
-    rows: number;
+  rows: number;
 }
 
 // User Profile Top Card props
 export interface UserProfileTopCardProps {
-    name: string;
-    image: string;
+  name: string;
+  image: string;
 }
 
 // User Profile props
 export interface UserProfileProps {
-    username: string;
-    profileImage: string;
-    role: Role;
-    address?: React.ReactNode;
-    profile?: React.ReactNode;
+  username: string;
+  profileImage: string;
+  role: Role;
+  address?: React.ReactNode;
+  profile?: React.ReactNode;
 }
 
 // Boarding Layout props
 export interface BoardingLayoutProps {
-    children: React.ReactNode;
-    pageNumber: number;
-    heading: string;
-    description: string;
+  children: React.ReactNode;
+  pageNumber: number;
+  heading: string;
+  description: string;
 }
 
 // Main Layout props
 export interface MainLayoutProps {
-    routes: Route[];
-    filteredRoutes?: Route[];
-    profileImage?: string;
-    username?: string;
-    children: React.ReactNode;
-    rightSidebar?: React.ReactNode;
+  routes: Route[];
+  filteredRoutes?: Route[];
+  profileImage?: string;
+  username?: string;
+  children: React.ReactNode;
+  rightSidebar?: React.ReactNode;
 }
 
 // FAQ Accordion props
 export interface FAQAccordionProps {
-    faqs: FaqFields[];
-    loading?: boolean;
+  faqs: FaqFields[];
+  loading?: boolean;
 }
 
 // FAQPage Search props
 export interface FAQPageSearchProps {
-    value: string;
-    onChange: (value: string) => void;
+  value: string;
+  onChange: (value: string) => void;
 }

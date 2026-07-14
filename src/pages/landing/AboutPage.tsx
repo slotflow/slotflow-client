@@ -1,46 +1,30 @@
 import { Building2 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { companyValues } from "@/shared/utils/constants";
 import { CardSpotlight } from "@/components/ui/card-spotlight";
-import SplitTextReveal from "@/components/animation/SplitTextReveal";
+import SectionHeading from "@/components/common/SectionHeading";
 import AnimatedCounter from "@/components/animation/AnimatedCounter";
 
 const AboutPage = () => {
     return (
-        <section id="about" className="w-full">
+        <main className="w-full">
             <CardSpotlight
                 className="border-0 mx-auto transition-colors duration-300 ease-in-out"
                 color="var(--spotlight-color)"
             >
-                <div className="mx-auto max-w-7xl px-4 py-10 lg:py-20 lg:px-0">
-                    <div className="mx-auto max-w-4xl text-center">
-                        <Badge
-                            variant="secondary"
-                            className="rounded-full border px-4 py-1.5 text-sm font-medium hover:border-[#635bff] relative"
-                        >
-                            <Building2 className="mr-2 h-4 w-4 text-primary" />
-                            About
-                        </Badge>
-
-                        <SplitTextReveal
-                            as="h1"
-                            split="lines"
-                            className="text-5xl font-bold tracking-tight md:text-6xl lg:text-7xl"
-                        >
+                <SectionHeading
+                    badge="About"
+                    badgeIcon={Building2}
+                    title={
+                        <>
                             Making scheduling <span className="text-[#635bff]">effortless</span> for every business.
-                        </SplitTextReveal>
-
-                        <SplitTextReveal
-                            as="p"
-                            split="words"
-                            className="mx-auto mt-8 max-w-3xl text-lg text-muted-foreground md:text-xl"
-                        >
-                            Slotflow helps businesses simplify appointment booking, automate
+                        </>
+                    }
+                    description="Slotflow helps businesses simplify appointment booking, automate
                             scheduling, and deliver exceptional customer experiences through an
-                            intuitive and reliable platform.
-                        </SplitTextReveal>
-                    </div>
-                    <div className="mx-auto mt-28 grid max-w-6xl items-center gap-16 lg:grid-cols-2">
+                            intuitive and reliable platform."
+                />
+                <section id="mission" className="w-full">
+                    <div className="mx-auto mt-28 grid max-w-7xl items-center gap-16 lg:grid-cols-2">
                         <div
                             className="dark:text-white"
                         >
@@ -82,7 +66,8 @@ const AboutPage = () => {
                             ))}
                         </div>
                     </div>
-
+                </section>
+                <section id="stats" className="w-full">
                     <div className="grid gap-10 text-center md:grid-cols-3 mt-20 p-10 border relative bg-background">
                         <AnimatedCounter
                             text="Platform Reliability"
@@ -103,10 +88,9 @@ const AboutPage = () => {
                             </p>
                         </div>
                     </div>
-                </div>
+                </section>
             </CardSpotlight>
-
-        </section>
+        </main>
     );
 };
 

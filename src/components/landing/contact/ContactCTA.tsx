@@ -6,7 +6,7 @@ import SplitTextReveal from "@/components/animation/SplitTextReveal";
 const ContactCTA = () => {
     const navigate = useNavigate();
   return (
-    <section className="pb-24 lg:pb-32">
+    <section id="cta" className="pb-24 lg:pb-32">
       <div className="mx-auto max-w-7xl px-4 lg:px-0">
         <div className="relative overflow-hidden rounded-[2rem] border bg-background/60 px-8 py-16 text-center backdrop-blur-xl lg:px-16 lg:py-24">
           <div className="absolute left-1/2 top-1/2 -z-10 h-[450px] w-[450px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-[140px]" />

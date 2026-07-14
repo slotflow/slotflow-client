@@ -1,18 +1,48 @@
-import { SectionHeadingProps } from '@/shared/interface/componentInterface';
+import { Badge } from "@/components/ui/badge";
+import MoveUpward from "../animation/MoveUpward";
+import SplitTextReveal from "../animation/SplitTextReveal";
+import { SectionHeadingProps } from "@/shared/interface/componentInterface";
 
 const SectionHeading = ({
-  heading,
-  headingDescription,
+  badge,
+  badgeIcon: BadgeIcon,
+  title,
+  description,
+  children
 }: SectionHeadingProps) => {
   return (
-    <div className="max-w-2xl mx-auto text-center mb-10 lg:mb-14">
-      <h2 className="text-black dark:text-white scroll-m-20 border-b pb-2 text-xl md:text-2xl lg:text-4xl first:mt-0 font-bold tracking-tight">
-        {heading}
-      </h2>
-      <p className="mt-1 text-muted-foreground text-lg">
-        {headingDescription}
-      </p>
-    </div>
+    <section id="heading" className="relative overflow-hidden w-full">
+      <MoveUpward>
+        <div className="py-10 lg:py-20 max-w-7xl mx-auto px-4 lg:px-0">
+          <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
+            <Badge
+              variant="secondary"
+              className="rounded-full border px-4 py-1.5 text-sm font-medium hover:border-[#635bff]"
+            >
+              <BadgeIcon className="mr-2 h-4 w-4 text-primary" />
+              {badge}
+            </Badge>
+
+            <SplitTextReveal
+              as="h1"
+              split="lines"
+              className="mt-8 text-5xl font-bold tracking-tight md:text-6xl lg:text-7xl"
+            >
+              {title}
+            </SplitTextReveal>
+
+            <SplitTextReveal
+              as="p"
+              split="words"
+              className="mt-8 max-w-3xl text-lg leading-8 text-muted-foreground md:text-xl"
+            >
+              {description}
+            </SplitTextReveal>
+            {children && <div className="w-full">{children}</div>}
+          </div>
+        </div>
+      </MoveUpward>
+    </section>
   )
 }
 

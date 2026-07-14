@@ -1,37 +1,33 @@
-import {
-  ArrowRight,
-  BookOpen,
-  CircleHelp,
-  MessageCircle,
-} from "lucide-react";
-
-const supportOptions = [
-  {
-    icon: MessageCircle,
-    title: "Live Chat",
-    description:
-      "Get instant assistance from our support team during business hours.",
-    button: "Start Chat",
-  },
-  {
-    icon: BookOpen,
-    title: "Help Center",
-    description:
-      "Explore tutorials, guides, and documentation to learn more about Slotflow.",
-    button: "Browse Docs",
-  },
-  {
-    icon: CircleHelp,
-    title: "FAQ",
-    description:
-      "Find quick answers to the questions our customers ask most often.",
-    button: "View FAQ",
-  },
-];
+import { ArrowRight } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { AppDispatch } from "@/shared/redux/appStore";
+import { contactSupportOptions } from "@/shared/utils/constants";
+import { toggleLiveChatBubble } from "@/shared/redux/slices/appSlice";
 
 const ContactSupportSection = () => {
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleAction = (action: string) => {
+    switch (action) {
+      case "chat":
+        dispatch(toggleLiveChatBubble());
+        break;
+
+      case "help":
+        navigate("/help");
+        break;
+
+      case "faq":
+        navigate("/faq");
+        break;
+    }
+  };
+
   return (
-    <section className="py-28">
+    <section id="support" className="py-28">
       <div className="mx-auto max-w-7xl px-4 lg:px-0">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-4xl font-bold tracking-tight">
@@ -45,7 +41,7 @@ const ContactSupportSection = () => {
         </div>
 
         <div className="mt-16 grid gap-8 md:grid-cols-3">
-          {supportOptions.map((item) => (
+          {contactSupportOptions.map((item) => (
             <div
               key={item.title}
               className="group rounded-3xl border bg-background/60 p-8 backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-primary/40"
@@ -58,11 +54,10 @@ const ContactSupportSection = () => {
                 {item.title}
               </h3>
 
-              <p className="mt-4 leading-7 text-muted-foreground">
-                {item.description}
-              </p>
-
-              <button className="mt-10 flex items-center gap-2 font-semibold text-primary transition hover:gap-3">
+              <button
+                className="mt-10 flex items-center gap-2 font-semibold text-primary transition hover:gap-3 cursor-pointer"
+                onClick={() => handleAction(item.action)}
+              >
                 {item.button}
                 <ArrowRight className="h-4 w-4" />
               </button>

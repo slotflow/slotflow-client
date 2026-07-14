@@ -1,5 +1,6 @@
 import {
     ArrowRight,
+    Scale,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -9,14 +10,21 @@ import SectionHeading from "@/components/common/SectionHeading";
 
 const LegalHomePage = () => {
     return (
-        <section className="container max-w-7xl mx-auto py-20">
+        <main>
             <SectionHeading
-                heading="Legal Center"
-                headingDescription="Everything you need to know about using SlotFlow. Browse our
-                    policies, terms, and legal documents."
+                badge="Legal"
+                badgeIcon={Scale}
+                title={<>
+                    <span className="text-[#635bff]">Legal</span> information
+                    <br />
+                    <span className="text-primary">made simple.</span>
+                </>}
+                description=" Access SlotFlow's legal policies, terms, and agreements. Learn how we
+                            collect and protect your data, manage payments, and outline the rights
+                            and responsibilities of everyone using our platform."
             />
 
-            <div className="mt-14 grid gap-6 md:grid-cols-2">
+            <section className="max-w-7xl mx-auto mt-14 grid gap-6 md:grid-cols-2">
                 {footerLinks.legal.map((page) => {
                     const Icon = page.icon;
                     return (
@@ -51,8 +59,8 @@ const LegalHomePage = () => {
                         </Card>
                     );
                 })}
-            </div>
-        </section>
+            </section>
+        </main>
     );
 }
 

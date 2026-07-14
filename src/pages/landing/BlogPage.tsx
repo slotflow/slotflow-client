@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import BlogCTA from "@/components/blog/BlogCTA";
-import LoadingFallback from "./LoadingFallback";
+import LoadingFallback from "../common/LoadingFallback";
 import BlogHero from "@/components/blog/BlogHero";
 import { useDispatch, useSelector } from "react-redux";
 import MoveUpward from "@/components/animation/MoveUpward";
@@ -58,7 +58,7 @@ const BlogPage = () => {
     }
 
     return (
-        <main className="min-h-screen">
+        <main className="min-h-screen w-full">
             <MoveUpward>
                 <BlogHero
                     articlesCount={articles.length}

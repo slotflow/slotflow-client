@@ -15,7 +15,7 @@ const Error404Page = () => {
   }, []);
 
   return (
-    <div className={`h-screen flex flex-col items-center justify-center bg-[var(--background)]`}>
+    <section id="error" className={`h-screen flex flex-col items-center justify-center bg-[var(--background)]`}>
       <img
         src={error404}
         className='h-40 md:h-80'
@@ -27,7 +27,7 @@ const Error404Page = () => {
         }} className="mt-6 cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]" >
         Return To Home
       </Button>
-    </div>
+    </section>
   );
 };
 

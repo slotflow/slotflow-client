@@ -1,10 +1,10 @@
 import { useMemo, useState } from "react";
-import { LoaderCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import useFaqs from "@/hooks/systemHooks/useFaqs";
+import { LoaderCircle, Search } from "lucide-react";
 import MoveUpward from "@/components/animation/MoveUpward";
-import FAQHero from "@/components/landing/faq/FAQPageHeader";
 import FAQAccordion from "@/components/landing/faq/FAQAccordin";
+import SectionHeading from "@/components/common/SectionHeading";
 import FAQPageSearch from "@/components/landing/faq/FAQPageSearch";
 
 const FAQPage = () => {
@@ -34,9 +34,19 @@ const FAQPage = () => {
     }, [faqs, searchText]);
 
     return (
-        <main className="min-h-screen">
+        <main className="min-h-screen w-full">
             <MoveUpward>
-                <FAQHero />
+                <SectionHeading
+                    badge="Frequently Asked Questions"
+                    badgeIcon={Search}
+                    title={<>
+                        <span className="text-[#635bff]">Everything</span> you need
+                        <br />
+                        <span className="text-primary">to know.</span>
+                    </>}
+                    description="Browse answers to the most common questions about bookings,
+            subscriptions, payments, providers, and using Slotflow."
+                />
             </MoveUpward>
             <MoveUpward>
                 <FAQPageSearch

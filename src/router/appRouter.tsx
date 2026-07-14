@@ -7,7 +7,8 @@ import { ProtectedRoute } from "./ProtectedRoutes.tsx";
 import { RouteNames } from "@/shared/utils/constants.ts";
 import BoardingLayoutWrapper from "./BoardingLayoutWrapper.tsx";
 import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
-import FAQPage from "@/pages/common/FAQPage.tsx";
+import FAQPage from "@/pages/landing/FAQPage.tsx";
+import HelpPage from "@/pages/landing/HelpPage.tsx";
 
 const AuthLayout = lazy(() => import("@/layouts/AuthLayout.tsx"));
 const LoginForm = lazy(() => import("@/components/form/CommonForms/LoginForm.tsx"));
@@ -16,37 +17,37 @@ const ResetPasswordForm = lazy(() => import("@/components/form/CommonForms/Reset
 const OtpVerificatioForm = lazy(() => import("@/components/form/CommonForms/OtpVerificatioForm.tsx"));
 const EmailVerificationForm = lazy(() => import("@/components/form/CommonForms/EmailVerificationForm.tsx"));
 
-const BlogPage = lazy(() => import("@/pages/common/BlogPage.tsx"));
-const ChatPage = lazy(() => import("@/pages/common/ChatPage.tsx"));
-const AboutPage = lazy(() => import("@/pages/common/AboutPage.tsx"));
-const CreditPage = lazy(() => import("@/pages/common/CreditPage.tsx"));
+const BlogPage = lazy(() => import("@/pages/landing/BlogPage.tsx"));
+const ChatPage = lazy(() => import("@/pages/dashboard/ChatPage.tsx"));
+const AboutPage = lazy(() => import("@/pages/landing/AboutPage.tsx"));
+const CreditPage = lazy(() => import("@/pages/dashboard/CreditPage.tsx"));
 const LandingLayout = lazy(() => import("@/layouts/LandingLayout.tsx"));
-const PricingPage = lazy(() => import("@/pages/common/PricingPage.tsx"));
-const ContactPage = lazy(() => import("@/pages/common/ContactPage.tsx"));
-const ReviewsPage = lazy(() => import("@/pages/common/ReviewsPage.tsx"));
-const LandingPage = lazy(() => import("@/pages/common/LandingPage.tsx"));
-const SettingsPage = lazy(() => import("@/pages/common/SettingsPage.tsx"));
+const PricingPage = lazy(() => import("@/pages/landing/PricingPage.tsx"));
+const ContactPage = lazy(() => import("@/pages/landing/ContactPage.tsx"));
+const ReviewsPage = lazy(() => import("@/pages/dashboard/ReviewsPage.tsx"));
+const LandingPage = lazy(() => import("@/pages/landing/LandingPage.tsx"));
+const SettingsPage = lazy(() => import("@/pages/dashboard/SettingsPage.tsx"));
 const Error404Page = lazy(() => import("@/pages/common/Error404Page.tsx"));
-const CalendarPage = lazy(() => import("@/pages/common/CalendarPage.tsx"));
-const ReferralPage = lazy(() => import("@/pages/common/ReferralPage.tsx"));
-const VideoCallRoom = lazy(() => import("@/pages/common/VideoCallRoom.tsx"));
-const VideoCallLoby = lazy(() => import("@/pages/common/VideoCallLobby.tsx"));
+const CalendarPage = lazy(() => import("@/pages/dashboard/CalendarPage.tsx"));
+const ReferralPage = lazy(() => import("@/pages/dashboard/ReferralPage.tsx"));
+const VideoCallRoom = lazy(() => import("@/pages/dashboard/VideoCallRoom.tsx"));
+const VideoCallLoby = lazy(() => import("@/pages/dashboard/VideoCallLobby.tsx"));
 const UserAccountPage = lazy(() => import("@/pages/user/UserAccountPage.tsx"));
 const RoleSelectPage = lazy(() => import("@/pages/boarding/RoleSelectPage.tsx"));
-const BlogDetailsPage = lazy(() => import("@/pages/common/BlogDetailsPage.tsx"));
-const ListPaymentsPage = lazy(() => import("@/pages/common/ListPaymentsPage.tsx"));
-const ListBookingsPage = lazy(() => import("@/pages/common/ListBookingsPage.tsx"));
-const LegalHomePage = lazy(() => import("@/pages/common/legal/LegalHomePage.tsx"));
+const BlogDetailsPage = lazy(() => import("@/pages/landing/BlogDetailsPage.tsx"));
+const ListPaymentsPage = lazy(() => import("@/pages/dashboard/ListPaymentsPage.tsx"));
+const ListBookingsPage = lazy(() => import("@/pages/dashboard/ListBookingsPage.tsx"));
+const LegalHomePage = lazy(() => import("@/pages/landing/legal/LegalHomePage.tsx"));
 const HearAboutUsPage = lazy(() => import("@/pages/boarding/HearAboutUsPage.tsx"));
-const BookingDetailPage = lazy(() => import("@/pages/common/BookingDetailPage.tsx"));
+const BookingDetailPage = lazy(() => import("@/pages/dashboard/BookingDetailPage.tsx"));
 const AccountSettings = lazy(() => import("@/components/settings/AccountSettings.tsx"));
 const SecuritySettings = lazy(() => import("@/components/settings/SecuritySettings.tsx"));
-const PrivacyPolicyPage = lazy(() => import("@/pages/common/legal/PrivacyPolicyPage.tsx"));
-const PaymentDetailViewPage = lazy(() => import("@/pages/common/PaymentDetailViewPage.tsx"));
-const TermsOfServicePage = lazy(() => import("@/pages/common/legal/TermsOfServicePage.tsx"));
+const PrivacyPolicyPage = lazy(() => import("@/pages/landing/legal/PrivacyPolicyPage.tsx"));
+const PaymentDetailViewPage = lazy(() => import("@/pages/dashboard/PaymentDetailViewPage.tsx"));
+const TermsOfServicePage = lazy(() => import("@/pages/landing/legal/TermsOfServicePage.tsx"));
 const IntegrationsListing = lazy(() => import("@/components/settings/IntegrationsListing.tsx"));
 const NotificationSettings = lazy(() => import("@/components/settings/NotificationSettings.tsx"));
-const SubscriptionDetailViewPage = lazy(() => import("@/pages/common/SubscriptionDetailViewPage.tsx"));
+const SubscriptionDetailViewPage = lazy(() => import("@/pages/dashboard/SubscriptionDetailViewPage.tsx"));
 
 const UserServiceSelectPage = lazy(() => import("@/pages/user/UserServiceSelectPage.tsx"));
 const UserBookingConfirmPage = lazy(() => import("@/pages/user/UserBookingConfirmPage.tsx"));
@@ -85,6 +86,7 @@ export const appRouter = createBrowserRouter([
             { path: "/pricing", element: <PricingPage /> },
             { path: "/blog", element: <BlogPage /> },
             { path: "/faq", element: <FAQPage /> },
+            { path: "/help", element: <HelpPage /> },
             { path: "/blog/:blogId", element: <BlogDetailsPage /> },
             {
                 path: "/legal",

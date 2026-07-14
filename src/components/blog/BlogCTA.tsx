@@ -9,8 +9,8 @@ const BlogCTA = () => {
     const navigate = useNavigate();
 
     return (
-        <section className="mx-auto px-6 pb-24 max-w-7xl">
-            <div className="relative overflow-hidden rounded-[40px] border bg-gradient-to-br from-primary/10 via-background to-primary/5">
+        <section id="cta" className="px-6 pb-24">
+            <div className="mx-auto max-w-7xl relative overflow-hidden rounded-[40px] border bg-gradient-to-br from-primary/10 via-background to-primary/5">
                 <div className="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
                 <div className="absolute -left-16 bottom-0 h-72 w-72 rounded-full bg-primary/5 blur-3xl" />
                 <div className="relative grid gap-16 px-10 py-16 lg:grid-cols-2 lg:px-16">

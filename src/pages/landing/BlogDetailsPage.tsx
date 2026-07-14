@@ -37,7 +37,7 @@ const BlogDetailsPage = () => {
     }, [blogId, articles]);
 
     return (
-        <main className="min-h-screen bg-[var(--background)]">
+        <main className="min-h-screen w-full">
             <BlogDetailHero
                 author={article?.author}
                 category={article.category}
