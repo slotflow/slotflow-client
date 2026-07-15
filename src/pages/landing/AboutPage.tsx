@@ -16,7 +16,7 @@ const AboutPage = () => {
                     badgeIcon={Building2}
                     title={
                         <>
-                            Making scheduling <span className="text-[#635bff]">effortless</span> for every business.
+                            Making scheduling <span className="bg-gradient-to-r from-violet-400 to-indigo-500 bg-clip-text text-transparent">effortless</span> for every business.
                         </>
                     }
                     description="Slotflow helps businesses simplify appointment booking, automate

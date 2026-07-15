@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CalendarDays } from "lucide-react";
+import { redirectPaths } from "@/shared/utils/constants";
 import SplitTextReveal from "@/components/animation/SplitTextReveal";
 
 const ContactCTA = () => {
@@ -38,10 +39,10 @@ const ContactCTA = () => {
 
             <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Button 
-                className="group h-8 lg:h-12 rounded-xl px-8"
-                onClick={() => {}}
+                className="h-8 lg:h-12 rounded-xl px-8"
+                onClick={() => navigate(redirectPaths.LOGIN)}
                 >
-                Book a Demo
+                Login
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
               <Button

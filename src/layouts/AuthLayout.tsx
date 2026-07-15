@@ -1,41 +1,62 @@
+import { Sparkle } from "lucide-react";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Role } from "@/shared/interface/enums";
 import { RootState } from "@/shared/redux/appStore";
 import { Outlet, useNavigate } from "react-router-dom";
-import WorldMapWrapper from "@/components/map/WorldMapWrapper";
+import AuthContent from "@/components/auth/AuthContent";
+import SectionHeading from "@/components/common/SectionHeading";
+import FloatingCards from "@/components/auth/AuthRightSide/FloatingCards";
+
 
 const AuthLayout: React.FC = () => {
 
   const navigate = useNavigate();
   const authUser = useSelector((state: RootState) => state.auth.authUser);
-  const lightTheme: boolean = useSelector((state: RootState) => state.app.lightTheme);
 
   useEffect(() => {
-      if (authUser?.isLoggedIn) {
-        if (authUser.role === Role.ADMIN) {
-          navigate("/admin/dashboard");
-        } else if (authUser.role === Role.USER) {
-          navigate("/user/dashboard");
-        } else if (authUser.role === Role.PROVIDER) {
-          navigate("/provider/dashboard");
-        }
+    if (authUser?.isLoggedIn) {
+      if (authUser.role === Role.ADMIN) {
+        navigate("/admin/dashboard");
+      } else if (authUser.role === Role.USER) {
+        navigate("/user/dashboard");
+      } else if (authUser.role === Role.PROVIDER) {
+        navigate("/provider/dashboard");
       }
-    }, [authUser, navigate]);
+    }
+  }, [authUser, navigate]);
 
   return (
-    <div className="h-screen flex">
-      <div className={`w-full md:w-6/12 lg:w-4/12 flex justify-center items-center ${lightTheme ? "bg-[#f5f5f5]" : "bg-[#171717]"}`}>
-        <Outlet />
-      </div>
+    <main className="relative min-h-screen overflow-hidden bg-background">
+      <div className="flex h-screen">
+        <section className="flex w-full items-center justify-center lg:w-5/12">
+          <AuthContent
+          >
+            <Outlet />
+          </AuthContent>
+        </section>
+        <section className="bg-black relative hidden lg:flex lg:w-7/12 items-center justify-center overflow-hidden px-12">
+          <div className="flex max-w-3xl flex-col items-center">
+            <SectionHeading
+              badge="Smart Appointment Booking Platform"
+              badgeIcon={Sparkle}
+              title={
+                <>
+                  Book <span className="bg-gradient-to-r from-violet-400 to-indigo-500 bg-clip-text text-transparent">Appointments</span>
+                  <br />
 
-      <div className="w-0 md:w-6/12 lg:w-8/12 relative flex h-full items-center justify-center overflow-hidden bg-background">
-        <div className={`absolute w-full flex h-full`}
-        >
-          <WorldMapWrapper />
-        </div>
+                  <span className="text-primary">
+                    without the hassle.
+                  </span>
+                </>
+              }
+              isAuth={true}
+            />
+            <FloatingCards />
+          </div>
+        </section>
       </div>
-    </div>
+    </main>
   );
 };
 

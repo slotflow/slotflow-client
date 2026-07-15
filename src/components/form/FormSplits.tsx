@@ -14,7 +14,7 @@ export const FormHeading = React.memo(({
             <div className='flex items-center justify-center'>
                 <img src={logo} className='size-16' />
             </div>
-            <CardTitle className="text-center">{title}</CardTitle>
+            <CardTitle className="text-center text-xl">{title}</CardTitle>
             <CardDescription className="text-center">
                 {description}
             </CardDescription>

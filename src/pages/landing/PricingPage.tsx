@@ -17,9 +17,9 @@ const PricingPage = () => {
         badge="Pricing"
         badgeIcon={IndianRupee}
         title={<>
-          Simple <span className="text-[#635bff]">pricing</span> that scales
+          Simple <span className="bg-gradient-to-r from-violet-400 to-indigo-500 bg-clip-text text-transparent">pricing</span> that scales
           <br />
-          with your <span className="text-[#635bff]">business.</span>
+          with your <span className="bg-gradient-to-r from-violet-400 to-indigo-500 bg-clip-text text-transparent">business.</span>
         </>}
         description="Whether you're just getting started or managing thousands of
                 bookings every month, choose a plan that grows with you."

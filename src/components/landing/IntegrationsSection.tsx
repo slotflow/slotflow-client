@@ -26,7 +26,7 @@ const IntegrationsSection = () => {
                                 split="lines"
                                 className="mt-8 text-4xl font-black leading-tight tracking-tight sm:text-5xl lg:text-6xl"
                             >
-                                <span className="text-[#635bff] underline">
+                                <span className="bg-gradient-to-r from-violet-400 to-indigo-500 bg-clip-text text-transparent underline">
                                     Connect
                                 </span>
                                 {" "}with the

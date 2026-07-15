@@ -40,7 +40,7 @@ const FAQPage = () => {
                     badge="Frequently Asked Questions"
                     badgeIcon={Search}
                     title={<>
-                        <span className="text-[#635bff]">Everything</span> you need
+                        <span className="bg-gradient-to-r from-violet-400 to-indigo-500 bg-clip-text text-transparent">Everything</span> you need
                         <br />
                         <span className="text-primary">to know.</span>
                     </>}

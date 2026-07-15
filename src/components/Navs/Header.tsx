@@ -1,27 +1,15 @@
 import { useState } from "react";
 import { Button } from "../ui/button";
+import { Menu, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { Menu, Moon, Sun, X } from "lucide-react";
-import { useDispatch, useSelector } from "react-redux";
+import ThemeToggle from "../common/ThemeToggle";
 import { AnimatePresence, motion } from "framer-motion";
-import { toggleTheme } from "@/shared/redux/slices/appSlice";
 import { navigation, redirectPaths } from "@/shared/utils/constants";
-import { AppDispatch, RootState } from "../../shared/redux/appStore";
 import logo from '../../assets/logos/company/slotflowLogoTransparent.png';
 
 const Header = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
-
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const themeMode = useSelector(
-    (store: RootState) => store.app.lightTheme
-  );
-
-  const changeTheme = () => {
-    dispatch(toggleTheme());
-  };
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen((prev) => !prev);
@@ -74,12 +62,7 @@ const Header = () => {
             Sign Up
           </Button>
 
-          <button
-            onClick={changeTheme}
-            className="ml-3 rounded-full p-2 transition hover:bg-muted"
-          >
-            {themeMode ? <Moon size={20} /> : <Sun size={20} />}
-          </button>
+          <ThemeToggle />
 
           <button
             onClick={toggleMobileMenu}

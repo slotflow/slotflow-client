@@ -16,7 +16,7 @@ const ContactPage = () => {
           <>
             Let's build something
             <br />
-            <span className="text-[#635bff]">great</span> together.
+            <span className="bg-gradient-to-r from-violet-400 to-indigo-500 bg-clip-text text-transparent">great</span> together.
           </>
         }
         description="Whether you have a question, need support, want to discuss a

@@ -19,7 +19,7 @@ const WorkflowHeader = () => {
             >
                 Book any service
                 <br />
-                in just four simple <span className="text-[#635bff] underline">steps.</span>
+                in just four simple <span className="bg-gradient-to-r from-violet-400 to-indigo-500 bg-clip-text text-transparent underline">steps.</span>
             </SplitTextReveal>
             <SplitTextReveal
                 as="p"

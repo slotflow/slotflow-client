@@ -32,7 +32,7 @@ const CTASection = () => {
                         >
                             Book your next
                             <span className="block text-primary">
-                                trusted <span className="text-[#635bff]">service</span> today.
+                                trusted <span className="bg-gradient-to-r from-violet-400 to-indigo-500 bg-clip-text text-transparent underline">service</span> today.
                             </span>
                         </SplitTextReveal>
 

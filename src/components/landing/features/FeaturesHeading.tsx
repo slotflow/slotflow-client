@@ -20,7 +20,7 @@ const FeaturesHeader = () => {
       >
         Everything you need
         <span className="block text-primary">
-          to <span className="text-[#635bff] underline">book</span> with <span >confidence</span>.
+          to <span className="bg-gradient-to-r from-violet-400 to-indigo-500 bg-clip-text text-transparent underline">book</span> with <span >confidence</span>.
         </span>
       </SplitTextReveal>
       <SplitTextReveal

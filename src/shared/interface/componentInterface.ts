@@ -425,8 +425,9 @@ export interface SectionHeadingProps {
   badge: string;
   badgeIcon: LucideIcon;
   title: ReactNode;
-  description: string;
+  description?: string;
   children?: ReactNode;
+  isAuth?: boolean;
 }
 
 // location picker props interface

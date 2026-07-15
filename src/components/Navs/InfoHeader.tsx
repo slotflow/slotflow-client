@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { Button } from '../ui/button';
-import { Bell, PanelLeft } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { Bell, PanelLeft } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import avatar from '../../assets/defaultImages/avatar.png';
 import { AppDispatch, RootState } from '@/shared/redux/appStore';

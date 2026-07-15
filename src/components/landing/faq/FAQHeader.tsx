@@ -20,7 +20,7 @@ const FAQHeader = () => {
       >
         Questions?
         <span className="mt-2 block">
-          We've got <span className="text-[#635bff] underline">answers.</span>
+          We've got <span className="bg-gradient-to-r from-violet-400 to-indigo-500 bg-clip-text text-transparent underline">answers.</span>
         </span>
       </SplitTextReveal>
       <SplitTextReveal

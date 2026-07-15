@@ -100,7 +100,7 @@ const LoginForm = () => {
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="p-8">
-                    <FormHeading title="Sign In" description="Sign In with your credentials" />
+                    <FormHeading title="Sign in to Slotflow" />
                     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                         <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
                             <fieldset disabled={isSubmitting} className="space-y-3">
@@ -166,7 +166,15 @@ const LoginForm = () => {
                                 {" "} Sign Up
                             </span>
                         </p>
-
+                        <p className="mt-2 text-center text-sm text-[var(--textOne)] hover:text-[var(--textOneHover)]">
+                            Back to
+                            <span
+                                className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
+                                onClick={() => navigate("/")}
+                            >
+                                {" "} Home
+                            </span>
+                        </p>
                     </div>
                 </div>
             </div>

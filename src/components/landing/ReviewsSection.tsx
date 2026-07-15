@@ -58,7 +58,7 @@ const ReviewsSection = () => {
                 badge=' Customer Reviews'
                 badgeIcon={Star}
                 title={<>
-                    <span className="text-[#635bff] underline">Trusted</span> by thousands
+                    <span className="bg-gradient-to-r from-violet-400 to-indigo-500 bg-clip-text text-transparent underline">Trusted</span> by thousands
         <span className="mt-2 block">
           for every booking.
         </span>

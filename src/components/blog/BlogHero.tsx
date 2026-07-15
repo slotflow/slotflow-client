@@ -43,7 +43,7 @@ const BlogHero = ({
                             <br />
                             Grow.
                             <br />
-                            Book Smarter.
+                            <span className="bg-gradient-to-r from-violet-400 to-indigo-500 bg-clip-text text-transparent">Book</span> Smarter.
                         </SplitTextReveal>
                         <p className="mt-8 max-w-xl text-lg text-muted-foreground leading-8">
                             Discover practical guides, growth strategies,
@@ -79,8 +79,8 @@ const BlogHero = ({
                             </div>
                             <div>
                                 <AnimatedCounter
-                                    to={10000}
-                                    suffix="+"
+                                    to={10}
+                                    suffix="k+"
                                     className="text-3xl font-bold"
                                     text="Monthly Readers"
                                 />
