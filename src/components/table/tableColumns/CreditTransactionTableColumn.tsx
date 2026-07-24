@@ -4,9 +4,7 @@ import { DataTableColumnHeader } from "../DataTableColumnHeader";
 import { FetchCreditTransactionsResponse } from "@/shared/interface/api/credit";
 import { CreditTransactionSource, CreditTransactionStatus, CreditTransactionType } from "@/shared/interface/enums";
 
-const CreditTransactionTableColumn = (
-
-): ColumnDef<FetchCreditTransactionsResponse>[] => [
+const CreditTransactionTableColumn = (): ColumnDef<FetchCreditTransactionsResponse>[] => [
     {
       accessorKey: "type",
       header: ({ column }) => (<DataTableColumnHeader column={column} title="Type" />),

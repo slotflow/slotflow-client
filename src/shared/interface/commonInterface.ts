@@ -1,5 +1,5 @@
-import React, { ChangeEvent } from "react";
 import { LucideIcon } from "lucide-react";
+import React, { ChangeEvent } from "react";
 import { RouteNames } from "../utils/constants";
 import { ColumnDef } from "@tanstack/react-table";
 import { ChartConfig } from "@/components/ui/chart";
@@ -8,7 +8,8 @@ import { User } from "./entityInterface/userInterface";
 import { Review } from "./entityInterface/reviewInterface";
 import { Booking } from "./entityInterface/bookingInterface";
 import { Message } from "./entityInterface/message.interface";
-import { HearAboutUsOptionValue, PlanName, Role, ServiceCategory, SubscriptionValidity } from "./enums";
+import { HearAboutUsOptionValue, PlanName, Role, ServiceCategory } from "./enums";
+import jsPDF from "jspdf";
 
 // Common Response interface
 export interface ApiBaseResponse<T = null> {
@@ -23,34 +24,6 @@ export interface ApiPaginatedResponse<T> {
   totalCount?: number;
   currentPage?: number;
   totalPages?: number;
-}
-
-// InfoDisplay component props interface
-export interface DetailFieldProps {
-  defaultValue?: string;
-  label: string;
-  value: string | boolean | number | string[] | Date | React.ReactElement | undefined | null;
-  Icon?: LucideIcon;
-  canCopy?: boolean;
-  link?: boolean;
-  isBoolean?: boolean;
-  isPrice?: boolean;
-  isRadioGroup?: boolean;
-  isTime?: boolean;
-  isDate?: boolean;
-  selectedRadioValue?: string | null;
-  onRadioChange?: (value: string) => void;
-  tags?: boolean;
-  isImage?: boolean;
-}
-
-// Common button props interface
-export interface CommonButtonProps {
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void,
-  text: string,
-  type?: "button" | "submit" | "reset",
-  className?: string;
-  icon?: LucideIcon;
 }
 
 // Routes array interface
@@ -187,19 +160,10 @@ export interface PlanFeatureInterface {
 }
 
 // Plan list type interface
-export type PlanListType = Array<Pick<Plan, "_id" | "planName" | "description" | "features" | "price">>
-
-// Footer link interface
-export interface FooterLinkInterface {
-  text: string;
-  href: string;
-}
-
-// Footer column data interface
-export interface FooterColumnDataInterface {
-  title: string;
-  links: FooterLinkInterface[];
-}
+export type PlanListType = Array<Pick<Plan, "_id" | "planName" | "description" | "features"> & {
+  monthlyPrice: number;
+  yearlyPrice: number;
+}>
 
 // Provider approval message interface
 export interface ProviderApprovalMessageInterface {
@@ -351,23 +315,6 @@ export interface MapDotLitLocationsCoordinates {
   end: { lat: number, lng: number }
 }
 
-// User booking appointment data props interface
-export interface UserBookinAppointmentDataProps {
-    providerId: User["_id"]
-    slotId: string;
-    date: Date;
-    selectedServiceMode: string;
-}
-
-// Provider subscription data props interface
-export interface ProviderSubscriptionDataProps {
-    planId: string;
-    planDuration: SubscriptionValidity;
-}
-
-// Card props interface
-export type CardProps = Pick<Plan, "_id" | "planName" | "description" | "features" | "price">;
-
 // Tab item interface
 export interface TabItem {
   value: string;
@@ -381,12 +328,12 @@ export type ReviewFormValues = Pick<Review, "reviewText" | "rating">;
 
 // Hear about us options interface
 export type HearAboutUsOptions = {
-    label: string
-    value: HearAboutUsOptionValue
-    icon: React.ComponentType<{ className?: string }>
+  label: string
+  value: HearAboutUsOptionValue
+  icon: React.ComponentType<{ className?: string }>
 }
 
-//
+// Status preset interface
 export type StatusPreset = {
   trueText: string;
   falseText: string;
@@ -395,3 +342,169 @@ export type StatusPreset = {
   trueIcon?: LucideIcon;
   falseIcon?: LucideIcon;
 };
+
+// Contentful review data interface
+export interface ReviewFields {
+  id: number;
+  text: string;
+  customerName: string;
+  customerProfile: string;
+  customerOccupation: string;
+  rating: number;
+}
+
+// COntentful Faq data interface
+export interface FaqFields {
+  id: number;
+  value: string;
+  question: string;
+  answer: string;
+}
+
+// Contentful Blog Category data interface
+export interface BlogCategoryFields {
+  name: string;
+  slug?: string;
+  color?: string;
+}
+
+// Contentful Blog Author data interface
+export interface BlogAuthorFields {
+  author: string;
+  proffession: string;
+  profileImage: string;
+}
+
+// Contentful reference data interface
+export interface ContentfulReference {
+  sys: {
+    id: string;
+    linkType: "Entry";
+    type: "Link";
+  };
+}
+
+// Contentfull entry common interface
+export interface ContentfulEntry<TFields> {
+  sys: {
+    id: string;
+  };
+  fields: TFields;
+}
+
+// Contentfull response interface
+export interface ContentfulResponse<TItemFields, TIncludeFields = never> {
+  total: number;
+  skip: number;
+  limit: number;
+  items: ContentfulEntry<TItemFields>[];
+  includes?: {
+    Entry?: ContentfulEntry<TIncludeFields>[];
+  };
+}
+
+// Contentfull Blog Article raw data interface
+export interface ContentfulBlogArticleFields {
+  id: number;
+  category?: ContentfulReference | null;
+  heroBackground?: string;
+  heroTitle?: string;
+  heroDescription?: string;
+  author?: ContentfulReference | null;
+  createdAt?: string;
+  readTime?: string;
+  articleTitle: string;
+  articleImage?: string;
+  articleImageDescription?: string;
+  introduction?: string;
+  protip?: string;
+  paraOneTitle?: string;
+  paraOneContent?: string;
+  paraTwoTitle?: string;
+  paraTwoContent?: string;
+  listTitle?: string;
+  listContent?: string[];
+  quote?: string;
+  conclusion?: string;
+}
+
+// Contentfull Blog Article data interface
+export interface BlogArticle {
+  id: number;
+  category: string | null;
+  heroBackground: string;
+  heroTitle: string;
+  heroDescription: string;
+  author: BlogAuthorFields | null;
+  createdAt: string;
+  readTime: string;
+  articleTitle: string;
+  articleImage: string;
+  articleImageDescription: string;
+  introduction: string;
+  protip: string;
+  paraOneTitle: string;
+  paraOneContent: string;
+  paraTwoTitle: string;
+  paraTwoContent: string;
+  listTitle: string;
+  listContent: string[];
+  quote: string;
+  conclusion: string;
+}
+
+// Contentfull Authors fields data interface
+export type AuthorFields = BlogAuthorFields;
+
+// Contentfull Category fields data interface
+export type CategoryFields = BlogCategoryFields;
+
+// Landing page integrations section data interface
+export interface LandingPageIntegrations {
+  title: string;
+  description: string;
+  logo: string;
+  isActive: boolean;
+}
+
+// Landing page hero section people list data interface
+export interface BookingStepsHeroPeople {
+  id: number;
+  name: string;
+  designation: string;
+  image: string;
+}
+
+// Landing page workflow section booking steps data interface
+export interface BookingSteps {
+  title: string;
+  description: string;
+  icon: React.ComponentType<{ className?: string }>;
+}
+
+// Blog CTA items data interface
+export interface BlogCTAItems {
+  title: string;
+  subTitle: string;
+}
+
+// Company values data interface
+export interface CompanyValues {
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  description: string;
+}
+
+// PDF Generator doc type
+export interface JsPDFWithAutoTable extends jsPDF {
+  lastAutoTable?: { finalY: number };
+}
+
+// Constact page support options data interface
+export interface ContactSupportOptions {
+  id: number;
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  button: string;
+  action: string;
+}

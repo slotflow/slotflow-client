@@ -12,7 +12,7 @@ import { redirectPaths } from "@/shared/utils/constants";
 import { appConfig, serviceConfig } from "@/shared/config/env";
 import { SignupFormType, signupZodSchema } from "@/shared/zod/authZod";
 
-const SignUpForm: React.FC = () => {
+const SignUpForm= () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
@@ -66,7 +66,7 @@ const SignUpForm: React.FC = () => {
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="p-8">
-                    <FormHeading title={"Sign Up"} description="Sign Up with your credentials" />
+                    <FormHeading title={"Sign Up to Slotflow"} />
                     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                         <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
                             <fieldset disabled={isSubmitting} className="space-y-3">
@@ -141,6 +141,15 @@ const SignUpForm: React.FC = () => {
                                 onClick={() => navigate(redirectPaths.LOGIN)}
                             >
                                 {" "}Sign In
+                            </span>
+                        </p>
+                        <p className="mt-2 text-center text-sm text-[var(--textOne)] hover:text-[var(--textOneHover)]">
+                            Back to
+                            <span
+                                className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
+                                onClick={() => navigate("/")}
+                            >
+                                {" "} Home
                             </span>
                         </p>
                     </div>

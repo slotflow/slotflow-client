@@ -3,10 +3,10 @@ import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { ServiceCategory } from "@/shared/interface/enums";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
-import { pushServiceCategory } from "@/shared/redux/slices/userSlice";
 import { defaultButtonClassName } from "@/shared/utils/constants";
+import { pushServiceCategory } from "@/shared/redux/slices/userSlice";
 
-const UserServiceSelectPage: React.FC = () => {
+const UserServiceSelectPage = () => {
 
     const dispatch = useDispatch<AppDispatch>();
     const { selectedCategories } = useSelector((store: RootState) => store.user);

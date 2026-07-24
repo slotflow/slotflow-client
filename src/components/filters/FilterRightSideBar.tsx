@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import LocationPicker from "../map/LocationPicker";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,10 +17,9 @@ import { Location } from "@/shared/interface/entityInterface/addressInterface";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { BookCheck, ChartBarStacked, IndianRupee, Locate, SlidersHorizontal } from "lucide-react";
 
-const FilterRightSideBar: React.FC = () => {
+const FilterRightSideBar = () => {
 
     const dispatch = useDispatch<AppDispatch>();
-
     const { selectedCategories } = useSelector((state: RootState) => state.user);
     const { filterSideBarOpen } = useSelector((state: RootState) => state.app);
 

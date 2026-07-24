@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Card,
   CardContent,
@@ -6,12 +5,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  LoaderCircle,
   Info,
-  LucideIcon,
-  CheckCircle2,
   XCircle,
   TrendingUp,
+  LoaderCircle,
+  CheckCircle2,
   TrendingDown,
 } from "lucide-react";
 import {
@@ -20,29 +18,9 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Badge } from "../ui/badge";
+import { StatCardProps } from "@/shared/interface/componentInterface";
 
-interface ChartData {
-  date: string;
-  value: number;
-}
-
-interface StatCardProps {
-  title: string;
-  isLoading: boolean;
-  isError: boolean;
-  error?: any;
-  data: number | boolean;
-  Icon: LucideIcon;
-
-  percentage?: number;
-  days?: number;
-  chartData?: ChartData[];
-
-  bgColour?: string;
-  main?: boolean;
-}
-
-const StatCard: React.FC<StatCardProps> = ({
+const StatCard = ({
   title,
   isLoading,
   isError,
@@ -54,7 +32,7 @@ const StatCard: React.FC<StatCardProps> = ({
   chartData = [],
   bgColour,
   main,
-}) => {
+}: StatCardProps) => {
   const isPositive = (percentage ?? 0) >= 0;
 
   return (

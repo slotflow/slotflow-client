@@ -14,7 +14,7 @@ import { filterChartDataHelper } from '@/shared/helper/dateFilter';
 import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { BarChartVerticalProps } from '@/shared/interface/componentInterface';
 
-const BarChartVertical: React.FC<BarChartVerticalProps> = ({
+const BarChartVertical = ({
   title,
   description,
   chartData,
@@ -22,7 +22,7 @@ const BarChartVertical: React.FC<BarChartVerticalProps> = ({
   dataKeyTwo,
   chartConfig,
   isLocked
-}) => {
+}: BarChartVerticalProps) => {
 
   const [timeRange, setTimeRange] = React.useState<TimeRange>("7d");
   const filteredData = filterChartDataHelper(chartData, timeRange);

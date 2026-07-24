@@ -1,9 +1,9 @@
 import { ProviderAvailabilityShimmerProps } from "@/shared/interface/shimmerInterface";
 
-const ProviderAvailabilityShimmer: React.FC<ProviderAvailabilityShimmerProps> = ({
+const ProviderAvailabilityShimmer= ({
     row,
     slotCount
-}) => {
+}: ProviderAvailabilityShimmerProps) => {
     return (
         <div className="md:col-span-8">
             <div className="overflow-hidden w-full space-y-6">

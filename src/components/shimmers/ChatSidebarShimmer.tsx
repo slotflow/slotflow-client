@@ -1,6 +1,4 @@
-import React from 'react';
-
-const ChatSidebarShimmer: React.FC = () => {
+const ChatSidebarShimmer = () => {
     return (
         <div className="w-4/12 p-2">
             {[...Array(10)].map((_, index) => (

@@ -5,8 +5,8 @@ import { Role } from "@/shared/interface/enums.ts";
 import OnBoardingGuard from "./OnBoardingGuard.tsx";
 import { ProtectedRoute } from "./ProtectedRoutes.tsx";
 import { RouteNames } from "@/shared/utils/constants.ts";
-import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
 import BoardingLayoutWrapper from "./BoardingLayoutWrapper.tsx";
+import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
 
 const AuthLayout = lazy(() => import("@/layouts/AuthLayout.tsx"));
 const LoginForm = lazy(() => import("@/components/form/CommonForms/LoginForm.tsx"));
@@ -15,33 +15,39 @@ const ResetPasswordForm = lazy(() => import("@/components/form/CommonForms/Reset
 const OtpVerificatioForm = lazy(() => import("@/components/form/CommonForms/OtpVerificatioForm.tsx"));
 const EmailVerificationForm = lazy(() => import("@/components/form/CommonForms/EmailVerificationForm.tsx"));
 
-const ChatPage = lazy(() => import("@/pages/common/ChatPage.tsx"));
-const AboutPage = lazy(() => import("@/pages/common/AboutPage.tsx"));
-const CreditPage = lazy(() => import("@/pages/common/CreditPage.tsx"));
+const FAQPage = lazy(() => import("@/pages/landing/FAQPage.tsx"));
+const BlogPage = lazy(() => import("@/pages/landing/BlogPage.tsx"));
+const HelpPage = lazy(() => import("@/pages/landing/HelpPage.tsx"));
+const ChatPage = lazy(() => import("@/pages/dashboard/ChatPage.tsx"));
+const AboutPage = lazy(() => import("@/pages/landing/AboutPage.tsx"));
 const LandingLayout = lazy(() => import("@/layouts/LandingLayout.tsx"));
-const ContactPage = lazy(() => import("@/pages/common/ContactPage.tsx"));
-const ReviewsPage = lazy(() => import("@/pages/common/ReviewsPage.tsx"));
-const LandingPage = lazy(() => import("@/pages/common/LandingPage.tsx"));
-const SettingsPage = lazy(() => import("@/pages/common/SettingsPage.tsx"));
+const CreditPage = lazy(() => import("@/pages/dashboard/CreditPage.tsx"));
+const PricingPage = lazy(() => import("@/pages/landing/PricingPage.tsx"));
+const ContactPage = lazy(() => import("@/pages/landing/ContactPage.tsx"));
+const LandingPage = lazy(() => import("@/pages/landing/LandingPage.tsx"));
 const Error404Page = lazy(() => import("@/pages/common/Error404Page.tsx"));
-const CalendarPage = lazy(() => import("@/pages/common/CalendarPage.tsx"));
-const ReferralPage = lazy(() => import("@/pages/common/ReferralPage.tsx"));
-const VideoCallRoom = lazy(() => import("@/pages/common/VideoCallRoom.tsx"));
-const VideoCallLoby = lazy(() => import("@/pages/common/VideoCallLobby.tsx"));
+const ReviewsPage = lazy(() => import("@/pages/dashboard/ReviewsPage.tsx"));
+const SettingsPage = lazy(() => import("@/pages/dashboard/SettingsPage.tsx"));
+const CalendarPage = lazy(() => import("@/pages/dashboard/CalendarPage.tsx"));
+const ReferralPage = lazy(() => import("@/pages/dashboard/ReferralPage.tsx"));
 const UserAccountPage = lazy(() => import("@/pages/user/UserAccountPage.tsx"));
+const VideoCallRoom = lazy(() => import("@/pages/dashboard/VideoCallRoom.tsx"));
 const RoleSelectPage = lazy(() => import("@/pages/boarding/RoleSelectPage.tsx"));
-const ListPaymentsPage = lazy(() => import("@/pages/common/ListPaymentsPage.tsx"));
-const ListBookingsPage = lazy(() => import("@/pages/common/ListBookingsPage.tsx"));
+const VideoCallLoby = lazy(() => import("@/pages/dashboard/VideoCallLobby.tsx"));
+const BlogDetailsPage = lazy(() => import("@/pages/landing/BlogDetailsPage.tsx"));
 const HearAboutUsPage = lazy(() => import("@/pages/boarding/HearAboutUsPage.tsx"));
-const PrivacyPolicyPage = lazy(() => import("@/pages/common/PrivacyPolicyPage.tsx"));
-const BookingDetailPage = lazy(() => import("@/pages/common/BookingDetailPage.tsx"));
+const LegalHomePage = lazy(() => import("@/pages/landing/legal/LegalHomePage.tsx"));
+const ListPaymentsPage = lazy(() => import("@/pages/dashboard/ListPaymentsPage.tsx"));
+const ListBookingsPage = lazy(() => import("@/pages/dashboard/ListBookingsPage.tsx"));
+const BookingDetailPage = lazy(() => import("@/pages/dashboard/BookingDetailPage.tsx"));
 const AccountSettings = lazy(() => import("@/components/settings/AccountSettings.tsx"));
 const SecuritySettings = lazy(() => import("@/components/settings/SecuritySettings.tsx"));
-const PaymentDetailViewPage = lazy(() => import("@/pages/common/PaymentDetailViewPage.tsx"));
-const TermsAndConditionsPage = lazy(() => import("@/pages/common/TermsAndConditionsPage.tsx"));
+const PrivacyPolicyPage = lazy(() => import("@/pages/landing/legal/PrivacyPolicyPage.tsx"));
+const TermsOfServicePage = lazy(() => import("@/pages/landing/legal/TermsOfServicePage.tsx"));
 const IntegrationsListing = lazy(() => import("@/components/settings/IntegrationsListing.tsx"));
+const PaymentDetailViewPage = lazy(() => import("@/pages/dashboard/PaymentDetailViewPage.tsx"));
 const NotificationSettings = lazy(() => import("@/components/settings/NotificationSettings.tsx"));
-const SubscriptionDetailViewPage = lazy(() => import("@/pages/common/SubscriptionDetailViewPage.tsx"));
+const SubscriptionDetailViewPage = lazy(() => import("@/pages/dashboard/SubscriptionDetailViewPage.tsx"));
 
 const UserServiceSelectPage = lazy(() => import("@/pages/user/UserServiceSelectPage.tsx"));
 const UserBookingConfirmPage = lazy(() => import("@/pages/user/UserBookingConfirmPage.tsx"));
@@ -77,8 +83,37 @@ export const appRouter = createBrowserRouter([
             { path: "/", element: <LandingPage /> },
             { path: "/about", element: <AboutPage /> },
             { path: "/contact", element: <ContactPage /> },
-            { path: "/privacy-policy", element: <PrivacyPolicyPage /> },
-            { path: "/terms-and-conditions", element: <TermsAndConditionsPage /> },
+            { path: "/pricing", element: <PricingPage /> },
+            { path: "/blog", element: <BlogPage /> },
+            { path: "/faq", element: <FAQPage /> },
+            { path: "/help", element: <HelpPage /> },
+            { path: "/blog/:blogId", element: <BlogDetailsPage /> },
+            {
+                path: "/legal",
+                element: <Outlet />,
+                children: [
+                    {
+                        index: true,
+                        element: <LegalHomePage />,
+                    },
+                    {
+                        path: "privacy-policy",
+                        element: <PrivacyPolicyPage />,
+                    },
+                    {
+                        path: "terms-of-service",
+                        element: <TermsOfServicePage />,
+                    },
+                    {
+                        path: "refund-policy",
+                        element: <LegalHomePage />,
+                    },
+                    {
+                        path: "cancellation-policy",
+                        element: <LegalHomePage />,
+                    },
+                ],
+            }
         ]
     },
     {

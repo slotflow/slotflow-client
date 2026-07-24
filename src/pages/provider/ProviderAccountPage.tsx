@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { Role } from '@/shared/interface/enums';
 import { useQuery } from '@tanstack/react-query';
@@ -12,7 +11,7 @@ import { providerFetchServiceDetails } from '@/shared/apis/providerService';
 import ProviderServiceAvailability from '@/components/profile/ProviderServiceAvailability';
 import { providerFetchMyProfileDetails, providerFetchMyProofs } from '@/shared/apis/providerProfile';
 
-const ProviderAccountPage: React.FC = () => {
+const ProviderAccountPage = () => {
 
     const { authUser } = useSelector((state: RootState) => state.auth);
 

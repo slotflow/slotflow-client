@@ -4,10 +4,10 @@ import { Button } from "../ui/button";
 import { toast } from "react-toastify";
 import { formateDate } from "@/shared/helper/formatter";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { DetailFieldProps } from "@/shared/interface/commonInterface";
+import { DataFieldProps } from "@/shared/interface/componentInterface";
 import { formatBoolean, formatDuration } from "@/shared/helper/formatter";
 
-const DataField: React.FC<DetailFieldProps> = ({
+const DataField = ({
     label,
     value,
     Icon,
@@ -22,7 +22,7 @@ const DataField: React.FC<DetailFieldProps> = ({
     onRadioChange,
     tags,
     isImage
-}) => {
+}: DataFieldProps) => {
 
     let displayValue: React.ReactNode;
 

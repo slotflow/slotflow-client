@@ -1,4 +1,3 @@
-import React from 'react';
 import { cn } from '@/lib/utils';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/shared/redux/appStore';
@@ -8,14 +7,14 @@ import { Activity, LockIcon, TrendingUp } from 'lucide-react';
 import { formatNumberToPrice } from '@/shared/helper/formatter';
 import { DashboardCardOneProps } from '@/shared/interface/componentInterface';
 
-const StatsCard: React.FC<DashboardCardOneProps> = ({
+const StatsCard = ({
   title,
   value,
   icon: Icon,
   price,
   isShow = true,
   trend = "+12% from last month"
-}) => {
+}: DashboardCardOneProps) => {
   const isDark = !useSelector((store: RootState) => store.app.lightTheme);
 
   return (

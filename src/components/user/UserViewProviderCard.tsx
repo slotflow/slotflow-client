@@ -7,10 +7,10 @@ import avatar from "../../assets/defaultImages/avatar.png";
 import { formatNumberToPrice } from "@/shared/helper/formatter";
 import { UserViewProviderCardProps } from "@/shared/interface/componentInterface";
 
-const UserViewProviderCard: React.FC<UserViewProviderCardProps> = ({
+const UserViewProviderCard = ({
     provider,
     serviceDetails,
-}) => {
+}: UserViewProviderCardProps) => {
     const navigate = useNavigate();
 
     const gradient =

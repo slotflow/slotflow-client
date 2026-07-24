@@ -2,9 +2,9 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { DashboardStatsShimmerProps } from '@/shared/interface/shimmerInterface';
 
-const DashboardStatsShimmer: React.FC<DashboardStatsShimmerProps> = ({
+const DashboardStatsShimmer = ({
     count = 4
-}) => {
+}: DashboardStatsShimmerProps) => {
 
     const ShimmerCount = Array.from({ length: count });
 

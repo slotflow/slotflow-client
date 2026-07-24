@@ -1,7 +1,7 @@
 import { LoaderCircle } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { setProviders } from '@/shared/redux/slices/userSlice';
@@ -12,7 +12,7 @@ import UserViewProviderCard from '@/components/user/UserViewProviderCard';
 import { fetchServiceProvidersForUser } from '@/shared/apis/providerService';
 import { UserFetchServiceProvidersResponse } from '@/shared/interface/api/user';
 
-const UserListProvidersCardsPage: React.FC = () => {
+const UserListProvidersCardsPage = () => {
 
   const dispatch = useDispatch<AppDispatch>();
   const loadMoreRef = useRef<HTMLDivElement | null>(null);

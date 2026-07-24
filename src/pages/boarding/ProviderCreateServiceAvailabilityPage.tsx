@@ -1,7 +1,6 @@
-import React from 'react';
 import ProviderServiceAvailabilityForm from '@/components/form/provider/ProviderSerivceAvailabilityForm';
 
-const ProviderCreateServiceAvailabilityPage: React.FC = () => {
+const ProviderCreateServiceAvailabilityPage = () => {
 
   return (
     <ProviderServiceAvailabilityForm />

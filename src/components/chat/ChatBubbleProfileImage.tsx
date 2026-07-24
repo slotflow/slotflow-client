@@ -1,10 +1,9 @@
-import React from 'react';
 import defaultProfileImg from '../../assets/defaultImages/avatar.png';
 import { ChatBubbleProfileImageProps } from '@/shared/interface/componentInterface';
 
-const ChatBubbleProfileImage: React.FC<ChatBubbleProfileImageProps> = ({
+const ChatBubbleProfileImage = ({
     profileImage
-}) => {
+}: ChatBubbleProfileImageProps) => {
     return (
         <div className="chat-image">
             <img

@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/shared/redux/appStore";
 import { fetchMyAddress } from "@/shared/apis/address";
@@ -8,7 +7,7 @@ import AddressListing from "@/components/profile/AddressListing";
 import ProfileListing from "@/components/profile/ProfileListing";
 import DataFetchingError from "@/components/error/DataFetchingError";
 
-const UserAccountPage: React.FC = () => {
+const UserAccountPage = () => {
 
     const { authUser } = useSelector((state: RootState) => state.auth);
 

@@ -8,6 +8,7 @@ import {
     AdminChangeUserStatusRequest,
     UserUpdateProfileImageRequest,
     UserUpdateProfileImageResponse,
+    CheckStripeAccountStatusResponse,
     UserFetchMyProfileDetailsResponse,
     AdminFetchUserProfileDetailsResponse,
 } from "../interface/api/user";
@@ -84,3 +85,9 @@ export const updatePassword = async (data: UpdatePasswordRequest): Promise<ApiBa
     const response = await axiosInstance.patch("/users/password", data);
     return response.data;
 }
+
+// check stripe account status after success onboarding
+export const checkStripeAccountStatus = async (): Promise<ApiBaseResponse<CheckStripeAccountStatusResponse>> => {
+    const response = await axiosInstance.get("/users/me/stripe-account-status");
+    return response.data;
+};

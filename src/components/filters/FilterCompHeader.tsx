@@ -1,14 +1,13 @@
-import React from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { FilterCompHeaderProps } from "@/shared/interface/componentInterface";
 
-const FilterCompHeader: React.FC<FilterCompHeaderProps> = ({
+const FilterCompHeader = ({
   title,
   isOpen,
   onToggle,
   Icon
-}) => {
+}: FilterCompHeaderProps) => {
   return (
     <div className="flex justify-between items-center">
       <h5 className="font-medium flex items-center gap-2"><Icon className="size-4" /> {title}</h5>

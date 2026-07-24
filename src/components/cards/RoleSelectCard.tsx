@@ -1,14 +1,14 @@
 import { motion } from "framer-motion";
 import { RoleSelectCardProps } from "@/shared/interface/componentInterface";
 
-const RoleSelectCard: React.FC<RoleSelectCardProps> = ({ 
+const RoleSelectCard = ({ 
     role, 
     icon, 
     title, 
     description, 
     selectedRole, 
     onSelect 
-}) => {
+}: RoleSelectCardProps) => {
     const isSelected = selectedRole === role;
 
     return (

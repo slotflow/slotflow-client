@@ -4,10 +4,10 @@ import PaymentsTableColumn from "../table/tableColumns/PaymentsTableColumn";
 import { AdminUserOrProviderPaymentsProps } from "@/shared/interface/componentInterface";
 import { FetchPaymentsQueryParams, FetchPaymentsResponse } from "@/shared/interface/api/payment";
 
-const AdminUserOrProviderPayments: React.FC<AdminUserOrProviderPaymentsProps> = ({
+const AdminUserOrProviderPayments = ({
     providerId,
     fetchFunction
-}) => {
+}: AdminUserOrProviderPaymentsProps) => {
 
     const { handleGetPaymentDetailsPage } = useRoleBasedNavigation();
     const column = PaymentsTableColumn(handleGetPaymentDetailsPage);

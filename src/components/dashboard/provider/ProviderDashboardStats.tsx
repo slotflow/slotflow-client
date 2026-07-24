@@ -1,4 +1,3 @@
-import React from "react";
 import DashboardStats from "../DashboardStats";
 import { Role } from "@/shared/interface/enums";
 import { ProviderDashboardStatsProps } from "@/shared/interface/componentInterface";
@@ -6,9 +5,9 @@ import { revenueStatsMapForProvider, statsMapForProvider } from "@/shared/utils/
 import { providerFetchDashboardRevenueStatsData, providerFetchDashboardStatsData } from "@/shared/apis/providerProfile";
 import { ProviderFetchDashboardRevenueStatsDataResponse, ProviderFetchDashboardStatsDataResponse } from "@/shared/interface/api/providerProfile";
 
-const ProviderDashboardStats: React.FC<ProviderDashboardStatsProps> = ({
+const ProviderDashboardStats = ({
     dateRange
-}) => {
+}: ProviderDashboardStatsProps) => {
     return (
         <div className="flex flex-col gap-6">
             <DashboardStats<ProviderFetchDashboardStatsDataResponse>

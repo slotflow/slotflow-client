@@ -1,15 +1,14 @@
-import React from "react";
 import TimeField from "./TimeField";
 import { Goal } from "lucide-react";
 import { Button } from "../../ui/button";
 import { defaultButtonClassName } from "@/shared/utils/constants";
 import { TimeRangeSetterProps } from "@/shared/interface/componentInterface";
 
-const TimeRangeSetter: React.FC<TimeRangeSetterProps> = ({ 
+const TimeRangeSetter = ({ 
     control, 
     isSubmitting, 
     onGenerateSlots 
-}) => {
+}: TimeRangeSetterProps) => {
     return (
         <>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">

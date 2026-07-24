@@ -1,5 +1,5 @@
 import { User } from "./entityInterface/userInterface";
-import { ProviderCardsFilters } from "./commonInterface";
+import { BlogArticle, FaqFields, ProviderCardsFilters, ReviewFields } from "./commonInterface";
 import { Message } from "./entityInterface/message.interface";
 import { UserViewProviderCardProps } from "./componentInterface";
 import { ProviderProfile } from "./entityInterface/providerProfileInterface";
@@ -17,8 +17,6 @@ export type AuthUser = Pick<User,
 "onboardingType" | 
 "isBlocked" | 
 "googleConnected" | 
-"googleId" | 
-"stripeAccountId" | 
 "stripeAccountStatus" | 
 "stripeCustomerId" | 
 "allowPushNotification" |
@@ -72,6 +70,14 @@ export interface appState {
   otpExpiresAt: number | null;
   otpTimerIsRunning: boolean;
   isNotificationsOpen: boolean;
+  articles: BlogArticle[];
+  articleCategories: string[];
+  reviews: ReviewFields[];
+  faqs: FaqFields[];
+  faqLoaded: boolean;
+  faqLoading: boolean;
+  faqTotal: number;
+  isLiveChatBubbleOpen: boolean;
 }
 
 // admin slice

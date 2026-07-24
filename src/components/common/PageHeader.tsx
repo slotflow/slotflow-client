@@ -1,19 +1,12 @@
-import React from "react";
 import { Button } from "../ui/button";
+import { PageHeaderProps } from "@/shared/interface/componentInterface";
 
-interface PageHeaderProps {
-    title: string;
-    description?: string;
-    actionLabel?: string;
-    onActionClick?: () => void;
-}
-
-const PageHeader: React.FC<PageHeaderProps> = ({
+const PageHeader = ({
     title,
     description,
     actionLabel,
     onActionClick
-}) => {
+}: PageHeaderProps) => {
 
     return (
         <div className="flex justify-between mb-4 items-center">

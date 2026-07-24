@@ -1,6 +1,6 @@
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
-const NotificationCardShimmer: React.FC = () => {
+const NotificationCardShimmer = () => {
     return (
         <div className="space-y-3">
             {[...Array(10)].map((_, index) => (

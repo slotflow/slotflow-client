@@ -5,9 +5,7 @@ import { ReferralStatus } from "@/shared/interface/enums";
 import { DataTableColumnHeader } from "../DataTableColumnHeader";
 import { FetchReferralsResponse } from "@/shared/interface/api/referral";
 
-const ReferralTableColumn = (
-
-): ColumnDef<FetchReferralsResponse>[] => [
+const ReferralTableColumn = (): ColumnDef<FetchReferralsResponse>[] => [
         {
             accessorKey: "createdAt",
             header: ({ column }) => (<DataTableColumnHeader column={column} title="Referred on" />),

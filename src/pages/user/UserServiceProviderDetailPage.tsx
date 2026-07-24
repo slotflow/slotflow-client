@@ -1,6 +1,5 @@
-import React from "react";
 import { useParams } from "react-router-dom";
-import ReviewsPage from "../common/ReviewsPage";
+import ReviewsPage from "../dashboard/ReviewsPage";
 import { Role } from "@/shared/interface/enums";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAddressByUserId } from "@/shared/apis/address";
@@ -11,7 +10,7 @@ import { fetchProviderDetailsForUser } from "@/shared/apis/providerProfile";
 import { fetchProviderServiceByProviderId } from "@/shared/apis/providerService";
 import ProviderServiceAvailability from "@/components/profile/ProviderServiceAvailability";
 
-const UserServiceProviderDetailPage: React.FC = () => {
+const UserServiceProviderDetailPage = () => {
 
     const { providerId } = useParams<string>();
     if (!providerId) return <DataFetchingError message={"Provider Profile fetching error"} />

@@ -2,7 +2,6 @@ import { signin, signout } from "@/shared/apis/auth";
 import { createAddress } from "@/shared/apis/address";
 import { SigninResponse } from "@/shared/interface/api/auth";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AdminVerificationStatus, StripeAccountStatus } from "@/shared/interface/enums";
 import { ApiBaseResponse } from "@/shared/interface/commonInterface";
 import { AuthState, AuthUser } from "@/shared/interface/sliceInterface";
 import { userUpdateInfo, userUpdateProfileImage } from "@/shared/apis/user";
@@ -12,6 +11,7 @@ import { providerSubmitDetailsForReview } from "@/shared/apis/providerProfile";
 import { createServiceAvailabilities } from "@/shared/apis/serviceAvailability";
 import { ProviderSubmitDetailsResponse } from "@/shared/interface/api/providerProfile";
 import { UserUpdateProfileImageResponse, UserUpdateUserInfoResponse } from "@/shared/interface/api/user";
+import { AdminVerificationStatus, StripeAccountStatus } from "@/shared/interface/enums";
 
 const initialState: AuthState = {
     authUser: null,
@@ -47,11 +47,6 @@ const authSlice = createSlice({
         setGoogleConnect: (state) => {
             if (state.authUser) {
                 state.authUser.googleConnected = true;
-            };
-        },
-        setStripeAccountId: (state, action: PayloadAction<string>) => {
-            if (state.authUser) {
-                state.authUser.stripeAccountId = action.payload;
             };
         },
         setStripeAccountStatus: (state, action: PayloadAction<StripeAccountStatus>) => {
@@ -198,7 +193,6 @@ export const {
     setSubscription,
     setBoardingData,
     setGoogleConnect,
-    setStripeAccountId,
     setIsProofSubmitted,
     setStripeAccountStatus,
     setSubscriptionUpdating,

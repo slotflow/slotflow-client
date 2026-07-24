@@ -12,9 +12,9 @@ import { defaultButtonClassName } from "@/shared/utils/constants";
 import { UpdateUserInfoFormProps } from "@/shared/interface/componentInterface";
 import { UserInfoFormType, userInfoZodSchema } from "@/shared/zod/commonZodFields";
 
-const UpdateUserInfoForm: React.FC<UpdateUserInfoFormProps> = ({
+const UpdateUserInfoForm = ({
     onClose,
-}) => {
+}: UpdateUserInfoFormProps) => {
 
     const dispatch = useDispatch<AppDispatch>();
     const authUser = useSelector((store: RootState) => store.auth.authUser);

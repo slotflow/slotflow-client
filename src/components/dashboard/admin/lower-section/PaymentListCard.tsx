@@ -1,4 +1,3 @@
-import React from 'react';
 import { format } from 'date-fns';
 import { DollarSign } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
@@ -7,7 +6,7 @@ import DashboardDataCard from '../../DashboardDataCard';
 import { formatNumberToPrice } from '@/shared/helper/formatter';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
-const PaymentListCard: React.FC = () => {
+const PaymentListCard = () => {
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ['admin-latest-payments'],
     queryFn: () => fetchPayments({ limit: 5, sortBy: 'createdAt', sortOrder: 'desc' }),

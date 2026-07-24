@@ -1,4 +1,3 @@
-import React from "react";
 import FormField from "../FormField";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
@@ -8,15 +7,12 @@ import { updatePassword } from "@/shared/apis/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Submitting from "@/components/common/Submitting";
 import { defaultButtonClassName } from "@/shared/utils/constants";
+import { UpdatePasswordFormProps } from "@/shared/interface/componentInterface";
 import { UpdatePasswordFormType, updatePasswordSchema } from "@/shared/zod/commonZodFields";
 
-interface UpdatePasswordFormProps {
-    onClose: () => void;
-}
-
-const UpdatePasswordForm: React.FC<UpdatePasswordFormProps> = ({
+const UpdatePasswordForm = ({
     onClose
-}) => {
+}: UpdatePasswordFormProps) => {
 
     const {
         register,

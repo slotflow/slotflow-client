@@ -11,7 +11,7 @@ import { FormButton, FormHeading } from "../FormSplits";
 import { redirectPaths } from "@/shared/utils/constants";
 import { VerifyEmailFormType, verifyEmailZodSchema } from "@/shared/zod/authZod";
 
-const EmailVerificationForm: React.FC = () => {
+const EmailVerificationForm = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();

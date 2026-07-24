@@ -17,7 +17,7 @@ import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
 import { filterChartDataHelper } from "@/shared/helper/dateFilter"
 import { ChartLineLinearProps } from "@/shared/interface/componentInterface"
 
-const ChartLineLinear: React.FC<ChartLineLinearProps> = ({
+const ChartLineLinear = ({
   title,
   description,
   chartData,
@@ -29,7 +29,7 @@ const ChartLineLinear: React.FC<ChartLineLinearProps> = ({
   footerTextOne,
   footerTextTwo,
   chartContainerClassName
-}) => {
+}: ChartLineLinearProps) => {
 
   const [timeRange, setTimeRange] = React.useState<TimeRange>("365d");
   const filteredData = filterChartDataHelper(chartData, timeRange);

@@ -1,13 +1,10 @@
-import React from 'react';
 import PlanCard from '../plan/PlanCard';
 import { useQuery } from '@tanstack/react-query';
 import { providerFetchPlans } from '@/shared/apis/plan';
 import DataFetchingError from '../error/DataFetchingError';
 import ProviderPlanCardShimmer from '../shimmers/ProviderPlanCardShimmer';
 
-const ShimmerCount = Array.from({ length: 3 });
-
-const ProviderPlanList: React.FC = () => {
+const ProviderPlanList = () => {
 
     const { data, isLoading, isError, error } = useQuery({
         queryFn: async () => {
@@ -22,7 +19,7 @@ const ProviderPlanList: React.FC = () => {
     return (
         <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 py-6`} >
             {isLoading ? (
-                ShimmerCount.map((_, index) => (
+                Array.from({ length: 3 }).map((_, index) => (
                     <ProviderPlanCardShimmer key={index} />
                 ))
             ) : isError && error ? (

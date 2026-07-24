@@ -10,7 +10,7 @@ import NotificationCardShimmer from "../shimmers/NotificationCardShimmer";
 import { toggleNotificationContainer } from "@/shared/redux/slices/appSlice";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 
-const NotificationsContainer: React.FC = () => {
+const NotificationsContainer= () => {
 
     const dispatch = useDispatch<AppDispatch>();
     const { isNotificationsOpen } = useSelector((state: RootState) => state.app);

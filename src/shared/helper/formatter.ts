@@ -21,8 +21,18 @@ export const formatNumberToPrice = (amount: number, decimal = 2): string => {
 };
 
 // Format date for infoDisplayCompoenent
-export const formateDate = (date: Date) : string => {
-    return date ? format(new Date(date), "dd MMM yyyy") : "N/A";
+export const formateDate = (date: Date | string | number | null | undefined): string => {
+    if (!date) {
+        return "N/A";
+    }
+
+    const parsedDate = date instanceof Date ? date : new Date(date);
+
+    if (Number.isNaN(parsedDate.getTime())) {
+        return "N/A";
+    }
+
+    return format(parsedDate, "dd MMM yyyy");
 }
 
 // Time formating function for otp page

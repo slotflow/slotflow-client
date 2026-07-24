@@ -5,16 +5,17 @@ import { Card, CardContent } from '../ui/card';
 import { RootState } from "@/shared/redux/appStore";
 import { AppDispatch } from "@/shared/redux/appStore";
 import { useDispatch, useSelector } from 'react-redux';
-import stripeLogo from '../../assets/iconImages/Stripe.jpeg';
+import { connectStripeAccount } from "@/shared/apis/payment";
 import IntegrationCard from '../integrations/IntegrationCard';
+import { checkStripeAccountStatus } from "@/shared/apis/user";
 import { appConfig, serviceConfig } from "@/shared/config/env";
-import googleCalendar from '../../assets/iconImages/gCalendar.png';
+import stripeLogo from '../../assets/logos/external/stripe.jpeg';
 import { Role, StripeAccountStatus } from "@/shared/interface/enums";
-import { checkStripeAccountStatus, connectStripeAccount } from "@/shared/apis/payment";
-import { setGoogleConnect, setStripeAccountId, setStripeAccountStatus } from '@/shared/redux/slices/authSlice';
+import googleCalendarLogo from '../../assets/logos/external/googleCalendar.png';
+import { setGoogleConnect, setStripeAccountStatus } from '@/shared/redux/slices/authSlice';
 import { setGoogleConnectionLoading, setStripeConnectionLoading } from "@/shared/redux/slices/integrationSlice";
 
-const IntegrationsListing: React.FC = () => {
+const IntegrationsListing = () => {
 
     const dispatch = useDispatch<AppDispatch>();
     const authUser = useSelector((state: RootState) => state.auth.authUser);
@@ -38,7 +39,10 @@ const IntegrationsListing: React.FC = () => {
                 }
                 if (response.stripeOnboardingStatus === 'success') {
                     toast.success("Stripe onboarding completed successfully");
-                    fetchStripeAccountStatus();
+                    dispatch(setStripeAccountStatus(StripeAccountStatus.PENDING));
+    //                 setTimeout(() => {
+    //     fetchStripeAccountStatus();
+    // }, 10000);
                 } else if(response.stripeOnboardingStatus === 'failed') {
                     toast.error("Stripe onboarding failed");
                 }
@@ -53,14 +57,26 @@ const IntegrationsListing: React.FC = () => {
         }
     }, [dispatch]);
 
+    useEffect(() => {
+    if (authUser?.stripeAccountStatus === StripeAccountStatus.PENDING) {
+        console.log("fetching")
+        const interval = setInterval(() => {
+            fetchStripeAccountStatus();
+        }, 15000);
+
+        return () => clearInterval(interval);
+    }
+}, [authUser?.stripeAccountStatus]);
+    
+    // fallback function to check the stripe account status
     const fetchStripeAccountStatus = async () => {
-        if(!authUser.stripeAccountId) {
+        if(authUser.stripeAccountStatus === StripeAccountStatus.ACTIVE) {
             return;
         }
         try {
-            const res = await checkStripeAccountStatus({
-                accountId: authUser?.stripeAccountId
-            });
+            dispatch(setStripeConnectionLoading(true));
+            const res = await checkStripeAccountStatus();
+            console.log("check account status : ",res);
             if(res.success) {
                 dispatch(setStripeAccountStatus(res.data?.accountStatus as StripeAccountStatus));
                 dispatch(setStripeConnectionLoading(false));
@@ -70,6 +86,8 @@ const IntegrationsListing: React.FC = () => {
             }
         } catch(err) {
             toast.error("Failed to fetch stripe account status");
+        } finally {
+            dispatch(setStripeConnectionLoading(false));
         }
     }
 
@@ -93,14 +111,12 @@ const IntegrationsListing: React.FC = () => {
         try {
             dispatch(setStripeConnectionLoading(true));
             const res = await connectStripeAccount({ email: authUser?.email });
-            if(res.data?.onboardingUrl) {
-                window.location.href = res.data.onboardingUrl;
+            console.log("res : ",res);
+            if(res.data?.accountLink) {
+                window.location.href = res.data.accountLink;
             } else {
                 dispatch(setStripeConnectionLoading(false));
                 toast.error("Failed to connect stripe");
-            }
-            if(res.data?.accountId) {
-                dispatch(setStripeAccountId(res.data.accountId));
             }
         } catch {
             dispatch(setStripeConnectionLoading(false));
@@ -112,7 +128,7 @@ const IntegrationsListing: React.FC = () => {
 
     const listData = [
         {
-            image: googleCalendar,
+            image: googleCalendarLogo,
             heading: "Google",
             description: 'Connect your Google calendar to enable calendar syncing and manage your appointments automatically avoid overlapping.',
             title: "Connect Google",

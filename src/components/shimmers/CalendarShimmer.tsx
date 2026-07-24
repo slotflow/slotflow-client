@@ -1,6 +1,4 @@
-import React from 'react';
-
-const CalendarShimmer: React.FC = () => {
+const CalendarShimmer = () => {
     const rowCount: number = 5;
     const coumnCount: number = 7;
     return (

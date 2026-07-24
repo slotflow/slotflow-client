@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { RootState } from "@/shared/redux/appStore";
 import PageHeader from "@/components/common/PageHeader";
 import CommonTable from "@/components/table/CommonTable";
@@ -12,7 +12,7 @@ import RejectproviderForm from "@/components/form/AdminForms/RejectproviderForm"
 import AdminProvidersTableColumns from "@/components/table/tableColumns/AdminProvidersTableColumn";
 import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest, AdminFetchAllProvidersResponse } from "@/shared/interface/api/providerProfile";
 
-const AdminServiceProvidersPage: React.FC = () => {
+const AdminServiceProvidersPage = () => {
 
   const navigate = useNavigate();
   const { isProviderRejectModalOpen } = useSelector((state: RootState) => state.admin);

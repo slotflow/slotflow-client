@@ -1,27 +1,27 @@
+import { useState } from 'react';
+import { Button } from '../ui/button';
 import DataField from '../app/DataField';
 import { useSelector } from 'react-redux';
 import MapPreview from '../map/MapPreview';
 import { SelectSeparator } from '../ui/select';
 import { useQuery } from '@tanstack/react-query';
 import { RootState } from '@/shared/redux/appStore';
+import { AnimatePresence, motion } from 'framer-motion';
+import AddressForm from '../form/CommonForms/AddressForm';
 import DataFetchingError from '../error/DataFetchingError';
+import { defaultButtonClassName } from '@/shared/utils/constants';
 import DataFieldShimmer from '@/components/shimmers/DataFieldShimmer';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { UserOrProviderAddressDetailsComponentProps } from '@/shared/interface/componentInterface';
 import { Building, Globe, Landmark, Mail, Map, MapPin, MapPinned, MapPinPlus, Phone } from 'lucide-react';
-import { Button } from '../ui/button';
-import { useState } from 'react';
-import { defaultButtonClassName } from '@/shared/utils/constants';
-import { AnimatePresence, motion } from 'framer-motion';
-import AddressForm from '../form/CommonForms/AddressForm';
 
-const AddressListing: React.FC<UserOrProviderAddressDetailsComponentProps> = ({
+const AddressListing = ({
     userOrProviderId,
     fetchApiFunction,
     queryKey,
     isUserLookingProvider = false,
     canUpdate = false
-}) => {
+}: UserOrProviderAddressDetailsComponentProps) => {
 
     const [showForm, setShowForm] = useState<boolean>(false);
     const isShowPreview = useSelector((state: RootState) => state.provider.isShowPreview);

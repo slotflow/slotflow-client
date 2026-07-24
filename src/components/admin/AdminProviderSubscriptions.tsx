@@ -6,9 +6,9 @@ import { AdminFetchProviderSubscriptionsProps } from "@/shared/interface/compone
 import ProvidersSubscriptionsTableColumns from "../table/tableColumns/ProviderSubscriptionsTableColumn";
 import { FetchProviderSubscriptionsResponse, FetchSubscriptionsQueryParams } from "@/shared/interface/api/subscription";
 
-const AdminProviderSubscriptions: React.FC<AdminFetchProviderSubscriptionsProps> = memo(({
+const AdminProviderSubscriptions = memo(({
     providerId
-}) => {
+}: AdminFetchProviderSubscriptionsProps) => {
 
     const {
         handleAdminGetProviderDetailPage

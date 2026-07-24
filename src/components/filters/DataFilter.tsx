@@ -1,4 +1,3 @@
-import React from "react";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -6,12 +5,12 @@ import { Calendar } from "@/components/ui/calendar";
 import { DataFilterProps } from "@/shared/interface/componentInterface";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
-const DataFilter: React.FC<DataFilterProps> = ({
+const DataFilter = ({
   dateRange,
   setDateRange,
   title = "Timeframe Analysis",
   description = "Filtering data by selected date range",
-}) => {
+}: DataFilterProps) => {
   return (
     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 p-4 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-sm backdrop-blur-sm">
       <div className="flex items-center gap-2">

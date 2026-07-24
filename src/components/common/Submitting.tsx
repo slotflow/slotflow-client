@@ -1,7 +1,6 @@
-import React from "react";
 import { LoaderCircle } from "lucide-react";
 
-const Submitting: React.FC = () => {
+const Submitting = () => {
     return (
         <div className="flex space-x-4 animate-pulse">
             <LoaderCircle className="animate-spin" />

@@ -1,7 +1,6 @@
-import React from 'react';
 import { AlertCircle } from 'lucide-react';
 
-const ChartDataNotAvailable: React.FC = () => {
+const ChartDataNotAvailable = () => {
     return (
         <div className="flex flex-col items-center justify-center py-10 text-center text-muted-foreground">
             <AlertCircle className="w-8 h-8 mb-3 text-gray-400" />

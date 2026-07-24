@@ -1,4 +1,3 @@
-import React from "react";
 import { Edit } from "lucide-react";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
@@ -8,7 +7,7 @@ import { RootState } from "@/shared/redux/appStore";
 import { defaultButtonClassName } from "@/shared/utils/constants";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
-const CustomizationCard: React.FC = () => {
+const CustomizationCard = () => {
 
     const { authUser } = useSelector((state: RootState) => state.auth);
 

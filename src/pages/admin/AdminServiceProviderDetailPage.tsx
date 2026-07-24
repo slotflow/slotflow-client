@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Role } from "@/shared/interface/enums";
-import ReviewsPage from "../common/ReviewsPage";
+import ReviewsPage from "../dashboard/ReviewsPage";
 import { fetchPayments } from "@/shared/apis/payment";
 import { providerTabs } from "@/shared/utils/constants";
 import { fetchAddressByUserId } from "@/shared/apis/address";
@@ -17,7 +17,7 @@ import AdminUserOrProviderPayments from "@/components/admin/AdminUserOrProviderP
 import ProviderServiceAvailability from "@/components/profile/ProviderServiceAvailability";
 import { adminFetchProviderProofs, fetchProviderDetailsForAdmin } from "@/shared/apis/providerProfile";
 
-const AdminServiceProviderDetailPage: React.FC = () => {
+const AdminServiceProviderDetailPage = () => {
 
     const { providerId } = useParams();
     const [tab, setTab] = useState<number>(0);

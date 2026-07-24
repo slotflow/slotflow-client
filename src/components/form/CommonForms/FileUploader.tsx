@@ -10,14 +10,14 @@ import { AppDispatch } from '@/shared/redux/appStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { getUploadUrl, uploadToS3 } from '@/shared/apis/s3';
+import { defaultButtonClassName } from '@/shared/utils/constants';
 import { ArrowUp, Check, Info, LoaderCircle, X } from 'lucide-react';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import noImage from '../../../assets/defaultImages/imagePlaceholder.png';
 import { FileUploaderProps } from '@/shared/interface/componentInterface';
 import { ImageFileFormType, imageFileZodeSchema } from '@/shared/zod/providerZod';
-import { defaultButtonClassName } from '@/shared/utils/constants';
 
-const FileUploader: React.FC<FileUploaderProps> = ({
+const FileUploader = ({
     folderName,
     uploadFunction,
     message,
@@ -25,7 +25,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
     deleteFunction,
     data,
     title
-}) => {
+}: FileUploaderProps) => {
     const dispatch = useDispatch<AppDispatch>();
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);

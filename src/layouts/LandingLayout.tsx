@@ -1,18 +1,31 @@
-import React from "react";
+import { ReactLenis } from "lenis/react"
 import { Outlet } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import Header from "@/components/navs/Header";
-import FooterBar from "@/components/navs/FooterBar";
+import Footer from "@/components/navs/FooterBar";
+import { AppDispatch } from "@/shared/redux/appStore";
+import ReadingProgress from "@/components/scroll/ReadingProgress";
+import { toggleLiveChatBubble } from "@/shared/redux/slices/appSlice";
+import LiveChatPopup from "@/components/landing/liveChat/LiveChatPopup";
+import LiveChatBubble from "@/components/landing/liveChat/LiveChatBubble";
 
-const LandingLayout: React.FC = () => {
+const LandingLayout = () => {
 
-  console.log("LandingLayout")
+  const dispatch = useDispatch<AppDispatch>();
 
   return (
-    <>
-      <Header />
-      <Outlet />
-      <FooterBar />
-    </>
+    <ReactLenis root>
+      <div className="bg-background transition-colors duration-300 w-full">
+        <Header />
+        <ReadingProgress />
+        <Outlet />
+        <LiveChatPopup />
+        <LiveChatBubble
+          onClick={() => dispatch(toggleLiveChatBubble())}
+        />
+        <Footer />
+      </div>
+    </ReactLenis>
   )
 }
 

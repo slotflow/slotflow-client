@@ -14,7 +14,7 @@ export interface User {
     addressId?: string;
     googleConnected: boolean;
     googleId?: string;
-    stripeAccountStatus: StripeAccountStatus | null;
+    stripeAccountStatus: StripeAccountStatus;
     stripeAccountId?: string;
     stripeCustomerId?: string;
     allowPushNotification: boolean;

@@ -1,10 +1,9 @@
-import React from "react";
 import { Button } from "../../ui/button";
 import { Check, LoaderCircle } from "lucide-react";
-import { CreateServiceAvailabilityFooterProps } from "@/shared/interface/componentInterface";
 import { defaultButtonClassName } from "@/shared/utils/constants";
+import { CreateServiceAvailabilityFooterProps } from "@/shared/interface/componentInterface";
 
-const CreateServiceAvailabilityFooter: React.FC<CreateServiceAvailabilityFooterProps> = ({
+const CreateServiceAvailabilityFooter = ({
     selectedTimeSlots,
     isSubmitting,
     onAddAvailability,
@@ -13,23 +12,23 @@ const CreateServiceAvailabilityFooter: React.FC<CreateServiceAvailabilityFooterP
     isUpdating,
     isLoading,
     isAvailable
-}) => {
+}: CreateServiceAvailabilityFooterProps) => {
     return (
         <div className="flex flex-col gap-4">
             {((isAvailable && selectedTimeSlots && selectedTimeSlots.length > 0) || !isAvailable) && (
-  <div className="flex justify-center md:justify-end">
-    <Button
-      title="Add this availability (not saved yet)"
-      type="button"
-      variant="secondary"
-      disabled={isSubmitting}
-      onClick={onAddAvailability}
-      className={defaultButtonClassName}
-    >
-      Add Availability <Check />
-    </Button>
-  </div>
-)}
+                <div className="flex justify-center md:justify-end">
+                    <Button
+                        title="Add this availability (not saved yet)"
+                        type="button"
+                        variant="secondary"
+                        disabled={isSubmitting}
+                        onClick={onAddAvailability}
+                        className={defaultButtonClassName}
+                    >
+                        Add Availability <Check />
+                    </Button>
+                </div>
+            )}
             {availabilities && (
                 <div className="flex justify-center md:justify-end">
                     <Button

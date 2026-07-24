@@ -1,17 +1,17 @@
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { appConfig } from "@/shared/config/env";
 import TagInput from "@/components/form/TagInput";
-import React, { useEffect, useState } from "react";
-import { LoaderCircle, Plus, Trash2 } from "lucide-react";
 import FormField from "@/components/form/FormField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
 import SelectField from "@/components/form/SelectField";
+import { LoaderCircle, Plus, Trash2 } from "lucide-react";
 import { fetchServicesByCategory } from "@/shared/apis/service";
 import { OptionType } from "@/shared/interface/commonInterface";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
@@ -21,10 +21,10 @@ import { AdminVerificationStatus, OnboardingStatus, ServiceCategory, ServiceMode
 import { providerCreateServiceDetails, providerFetchServiceDetails, providerUpdateServiceDetails } from "@/shared/apis/providerService";
 import { serviceCategoryOptions, serviceModeOptions, serviceTypeOptions, groupOptions, redirectPaths, defaultButtonClassName } from "@/shared/utils/constants";
 
-const ProviderServiceForm: React.FC<ProviderServiceFormProps> = ({
+const ProviderServiceForm = ({
     isUpdating = false,
     heading
-}) => {
+}: ProviderServiceFormProps) => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();

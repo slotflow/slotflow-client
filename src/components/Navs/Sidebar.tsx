@@ -3,23 +3,22 @@ import {
     Sun,
     Moon,
 } from 'lucide-react';
-import React from 'react';
 import SingleTab from './SingleTab';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { redirectPaths } from '@/shared/utils/constants';
-import logo from '../../assets/logos/logo-transparent.png';
 import { useSignout } from '@/hooks/systemHooks/useSignout';
 import { AuthUser } from '@/shared/interface/sliceInterface';
 import { toggleTheme } from '@/shared/redux/slices/appSlice';
 import { AppDispatch, RootState } from '@/shared/redux/appStore';
 import { SideBarProps } from '@/shared/interface/componentInterface';
+import logo from '../../assets/logos/company/slotflowLogoTransparent.png';
 
-const Sidebar: React.FC<SideBarProps> = ({
+const Sidebar = ({
     routes,
     filteredRoutes
-}) => {
+}: SideBarProps) => {
 
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();

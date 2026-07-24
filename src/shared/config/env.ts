@@ -48,3 +48,11 @@ export const grafanaConfig = {
     grafanaDashboardId: import.meta.env.VITE_GRAFANA_DASHBOARD_ID,
     grafanaDashboardName: import.meta.env.VITE_GRAFANA_DASHBOARD_NAME
 };
+
+export const contentfulConfig = {
+    url: import.meta.env.VITE_CONTENTFUL_URL,
+    urlEnd: import.meta.env.VITE_CONTENTFUL_URL_END,
+    apikey: import.meta.env.VITE_CONTENTFUL_API_KEY,
+    environment: import.meta.env.VITE_CONTENTFUL_ENVIRONMENT,
+    spaceId: import.meta.env.VITE_CONTENTFUL_SPACEID,
+}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { ImageUpscale, Minimize2 } from "lucide-react";
@@ -8,10 +8,10 @@ import ProfileDetailsShimmer from "@/components/shimmers/DataFieldShimmer";
 import { ProviderProofsProps } from "@/shared/interface/componentInterface";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
-const ProviderProofs: React.FC<ProviderProofsProps> = ({
+const ProviderProofs = ({
     providerId,
     fetchApiFunction,
-}) => {
+}: ProviderProofsProps) => {
     const { data, isLoading, isError, error } = useQuery({
         queryFn: async () => {
             const res = await fetchApiFunction(providerId);

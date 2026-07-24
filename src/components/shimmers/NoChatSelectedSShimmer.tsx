@@ -1,10 +1,9 @@
-import React from 'react';
 import { shimmerMessages } from '@/shared/utils/constants';
 import { NoChatSelectedSShimmerProps } from '@/shared/interface/shimmerInterface';
 
-const NoChatSelectedSShimmer: React.FC<NoChatSelectedSShimmerProps> = ({
+const NoChatSelectedSShimmer = ({
     className
-}) => {
+}: NoChatSelectedSShimmerProps) => {
     return (
         <div className={`flex-1 overflow-y-auto p-4 no-scrollbar ${className}`}>
             <div className="flex flex-col space-y-1">

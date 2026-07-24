@@ -1,23 +1,24 @@
 import {
+  Control,
   type Path,
+  FieldError,
   type FieldValues,
   type UseFormRegister,
   type RegisterOptions,
-  FieldError,
-  Control,
 } from "react-hook-form";
 import { LucideIcon } from "lucide-react";
 import { DateRange } from "react-day-picker";
 import { RouteNames } from "../utils/constants";
 import { PayloadAction } from "@reduxjs/toolkit";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 import { ChartConfig } from "@/components/ui/chart";
 import * as RPNInput from "react-phone-number-input";
 import { SetProofDataProps } from "./sliceInterface";
 import { PlanName, Role, ServiceMode } from "./enums";
 import { User } from "./entityInterface/userInterface";
+import { Plan } from "./entityInterface/planInterface";
 import { FetchProviderServiceResponse } from "./api/providerService";
 import { ProviderServiceAvailabilityFormType } from "../zod/providerZod";
-import { Dispatch, ReactElement, ReactNode, SetStateAction } from "react";
 import { FetchAddressResponse, FetchMyAddressResponse } from "./api/address";
 import { Availability } from "./entityInterface/serviceAvailabilityInterface";
 import { Location } from "@/shared/interface/entityInterface/addressInterface";
@@ -27,7 +28,7 @@ import { Column, ColumnDef, OnChangeFn, PaginationState } from "@tanstack/react-
 import { FetchProvidersProofsResponse, UpdateFileDataRequest } from "./api/commonApiInterface";
 import { AdminFetchUserProfileDetailsResponse, UserFetchServiceProvidersResponse, UserFetchMyProfileDetailsResponse } from "./api/user";
 import { AdminFetchProviderProfileDetailsResponse, ProviderFetchMyProfileDetailsResponse, UserFetchProviderProfileDetailsResponse } from "./api/providerProfile";
-import { ApiBaseResponse, ApiPaginatedResponse, BaseChartData, CardProps, ChatComponentProps, FetchFunctionBaseQueryParams, OptionType, Route, statsMapIntrface, TabItem, TimeRange } from "./commonInterface";
+import { ApiBaseResponse, ApiPaginatedResponse, BaseChartData, BlogArticle, BlogAuthorFields, ChatComponentProps, FaqFields, FetchFunctionBaseQueryParams, OptionType, Route, statsMapIntrface, TabItem, TimeRange } from "./commonInterface";
 
 // Provider service availability component props interface
 export interface ProviderServiceAvailabilityProps {
@@ -169,25 +170,15 @@ export interface AlertProps {
 }
 
 // confirm delete alert component props
-export interface ConfirmDeleteAlertProps {
+export interface ConfirmDeleteProps {
   message: string;
-  reviewId: string;
-  deleteReviewHandler: (reviewId: string) => Promise<any>;
+  entityId: string;
+  deleteHandler: (entityId: string) => Promise<any>;
   closeToast: () => void;
   errorMessage: string;
   successMessage: string;
-}
-
-// Animated heading section props interface
-export interface AnimatedHeadingSectionProps {
-  title: string;
-  animatedWord: string;
-  description: string;
-}
-
-// Aos animation props interface
-export interface AosAnimationProps {
-  children: ReactNode | ReactElement;
+  btnTitle: string;
+  btnText: string;
 }
 
 // Feature locked component props interface
@@ -430,9 +421,13 @@ export interface IntegrationCardProps {
 }
 
 // Heading component props interface
-export interface HeadingProps {
-  heading: string;
-  headingDescription: string;
+export interface SectionHeadingProps {
+  badge: string;
+  badgeIcon: LucideIcon;
+  title: ReactNode;
+  description?: string;
+  children?: ReactNode;
+  isAuth?: boolean;
 }
 
 // location picker props interface
@@ -489,10 +484,14 @@ export interface SideBoxProps {
 
 // ProviderPlanCard component props interface
 export interface ProviderPlanCardProps {
-  plan: CardProps;
+  plan: Pick<Plan, "_id" | "planName" | "description" | "features"> & {
+    monthlyPrice: number;
+    yearlyPrice: number;
+  };
   isTrial?: boolean;
   dummy?: boolean;
   popular?: boolean;
+  billingCycle: "monthly" | "yearly";
 }
 
 // UserOrProviderAddressDetails component props interface
@@ -626,35 +625,375 @@ export interface DataTableColumnHeaderProps<TData, TValue>
   title: string
 }
 
-// Option tabs component props interface
-export interface OptionTabsProps {
-  selectedTab: string;
-  setSelectedTab: (value: string) => void;
-  profileTabs: TabItem[];
-  authUser: { role?: string };
-}
-
-//
+// ReviewsPage props
 export interface ReviewsPageProps {
   isPage?: boolean;
   providerId?: string;
   userId?: string;
 }
 
-//
+// PlanGuard props
 export interface PlanGuardProps {
   routeName: RouteNames;
   children: React.ReactNode;
 }
 
-//
+// Protected Routes props
 export interface ProtectedRouteProps {
   allowedRoles: (Role)[];
   children: React.ReactNode;
 }
 
-//
+// Onboarding Guard props
 export interface OnbooardingGuardProps {
   children:
   React.ReactNode
+}
+
+// TOC heading props
+export interface TOCHeadingProps {
+  title: string;
+  id: string;
+  depth: number;
+  children?: TOCHeadingProps[];
+}
+
+// DataFields component props interface
+export interface DataFieldProps {
+  defaultValue?: string;
+  label: string;
+  value: string | boolean | number | string[] | Date | React.ReactElement | undefined | null;
+  Icon?: LucideIcon;
+  canCopy?: boolean;
+  link?: boolean;
+  isBoolean?: boolean;
+  isPrice?: boolean;
+  isRadioGroup?: boolean;
+  isTime?: boolean;
+  isDate?: boolean;
+  selectedRadioValue?: string | null;
+  onRadioChange?: (value: string) => void;
+  tags?: boolean;
+  isImage?: boolean;
+}
+
+// Animated counter props
+export interface AnimatedCounterProps {
+  from?: number;
+  to: number;
+  duration?: number;
+  prefix?: string;
+  suffix?: string;
+  decimals?: number;
+  separator?: boolean;
+  className?: string;
+  text: string;
+}
+
+// Floating ( animating wrapper compoenent ) props
+export interface FloatingProps {
+  children: React.ReactNode;
+  className: string;
+}
+
+// MoveUpward ( animating wrapper compoenent ) props
+export interface MoveUpwardProps {
+  children: React.ReactNode;
+}
+
+// SplitTextReveal component props
+export interface SplitTextRevealProps {
+  children: React.ReactNode;
+  as?: React.ElementType;
+  className?: string;
+  split?: "lines" | "words" | "chars" | "chars,words,lines";
+  duration?: number;
+  stagger?: number;
+  delay?: number;
+  rotationX?: number;
+  y?: number;
+  once?: boolean;
+}
+
+// Icon text props
+export interface IconTextProps {
+  text: string;
+  className?: string;
+};
+
+// Blog detail article props
+export interface BlogDetailArticleProps {
+  article: BlogArticle;
+}
+
+// Blog details hero props
+export interface BlogDetailHeroProps {
+  heroBackground: string;
+  category: string | null;
+  title: string;
+  description: string;
+  author: BlogAuthorFields | null;
+  createdAt: string;
+  readTime: string;
+}
+
+// Blog detail prev or next article props
+export interface BlogDetailPrevOrNextArticleProps {
+  prevArticle: BlogArticle | null;
+  nextArticle: BlogArticle | null;
+}
+
+// Blog detail related article props
+export interface BlogDetailRelatedArticlesProps {
+  relatedArticles: BlogArticle[];
+}
+
+// Blog editors pic props
+export interface BlogEditorsPicksProps {
+  handPickedArticles: BlogArticle[];
+}
+
+// Blog featured articles props
+export interface BlogFeaturedArticlesProps {
+  featuredArticles: BlogArticle[];
+}
+
+// Blog hero props
+export interface BlogHeroProps {
+  categories: string[];
+  articlesCount: number;
+  categoriesCount: number;
+  featuredArticle?: BlogArticle | null;
+}
+
+// Blog latest insights props
+export interface BlogLatestInsightsProps {
+  articles: BlogArticle[];
+}
+
+// Page header props
+export interface PageHeaderProps {
+  title: string;
+  description?: string;
+  actionLabel?: string;
+  onActionClick?: () => void;
+}
+
+// Stats card props
+export interface StatCardProps {
+  title: string;
+  isLoading: boolean;
+  isError: boolean;
+  error?: any;
+  data: number | boolean;
+  Icon: LucideIcon;
+  percentage?: number;
+  days?: number;
+  chartData?: {
+    date: string;
+    value: number;
+  }[];
+  bgColour?: string;
+  main?: boolean;
+}
+
+// Credit card props
+export interface CreditCardPorps {
+  title: string;
+  isLoading: boolean;
+  isError: boolean;
+  error: any;
+  data: number | boolean | React.ReactNode;
+  Icon: LucideIcon
+  bgColour?: string;
+  main?: boolean;
+}
+
+// Update password form props
+export interface UpdatePasswordFormProps {
+  onClose: () => void;
+}
+
+// Availability fetching error props
+export interface AvailablityFetchingErrorProps {
+  isAvailable: boolean;
+}
+
+// No data props
+export interface NoDataProps {
+  message: string
+}
+
+// Feature Card props ( feature section in landing page )
+export interface FeatureCardProps {
+  title: string;
+  description: string;
+  className?: string;
+  children?: React.ReactNode;
+}
+
+// Provider Card props ( hero section in landing page )
+export interface ProviderCardProps {
+  name: string;
+  category: string;
+  rating: string;
+  location: string;
+  time: string;
+}
+
+// Integration Card props ( integrations section in landing page )
+export interface IntegrationSectionCardProps {
+  title: string;
+  description: string;
+  logo: string;
+}
+
+// WorkflowStep props
+export interface WorkflowStepProps {
+  number: number;
+  title: string;
+  description: string;
+  icon: React.ElementType;
+  active?: boolean;
+}
+
+// WorkflowTimeline props
+export interface WorkflowTimelineProps {
+  activeStep: number;
+}
+
+// Attachment Card props
+export interface AttachmentCardProps {
+  isLoading?: boolean;
+  isError?: boolean;
+  data?: {
+    demoVideoUrl?: string;
+    portfolioUrl?: string;
+  }
+}
+
+// Book Appointment Card props
+export interface BookAppointmentCardProps {
+  isLoading?: boolean;
+  isError?: boolean;
+  data?: number;
+}
+
+// Experience Card props
+export interface ExperienceCardProps {
+  isLoading?: boolean;
+  isError?: boolean;
+  data?: {
+    experienceYears?: number;
+    description?: string;
+  };
+}
+
+// Provider Profile Top Card props
+export interface ProviderProfileTopCardProps {
+  isLoading?: boolean;
+  isError?: boolean;
+  name: string;
+  image: string;
+  categoryName: string;
+  trusted: boolean;
+  role: Role;
+}
+
+// Requirements Card props
+export interface RequirementsCardProps {
+  isLoading?: boolean;
+  isError?: boolean;
+  data?: string[];
+}
+
+// Service Card props
+export interface ServiceCardProps {
+  isLoading?: boolean;
+  isError?: boolean;
+  data?: FetchProviderServiceResponse;
+  isUserLookingProvider?: boolean;
+}
+
+// Provider Profile props
+export interface ProviderProfileProps {
+  username: string;
+  profileImage: string;
+  role: Role;
+  availability: React.ReactNode;
+  reviews?: React.ReactNode;
+  address?: React.ReactNode;
+  proofs?: React.ReactNode;
+  service: {
+    isLoading?: boolean;
+    isError?: boolean;
+    data?: FetchProviderServiceResponse;
+    isUserLookingProvider?: boolean;
+  },
+  profile: {
+    isLoading?: boolean;
+    isError?: boolean;
+    data?: ProviderFetchMyProfileDetailsResponse | UserFetchProviderProfileDetailsResponse
+  },
+}
+
+// TOC props
+export interface TOCProps {
+  headings: TOCHeadingProps[];
+}
+
+// Service Availabilities props
+export interface SavedAvailabilitiesProps {
+  availabilities: Availability[] | null;
+  removeAvailability: (day: string) => void;
+}
+
+// FAQ Shimmer props
+export interface FAQSectionProps {
+  rows: number;
+}
+
+// User Profile Top Card props
+export interface UserProfileTopCardProps {
+  name: string;
+  image: string;
+}
+
+// User Profile props
+export interface UserProfileProps {
+  username: string;
+  profileImage: string;
+  role: Role;
+  address?: React.ReactNode;
+  profile?: React.ReactNode;
+}
+
+// Boarding Layout props
+export interface BoardingLayoutProps {
+  children: React.ReactNode;
+  pageNumber: number;
+  heading: string;
+  description: string;
+}
+
+// Main Layout props
+export interface MainLayoutProps {
+  routes: Route[];
+  filteredRoutes?: Route[];
+  profileImage?: string;
+  username?: string;
+  children: React.ReactNode;
+  rightSidebar?: React.ReactNode;
+}
+
+// FAQ Accordion props
+export interface FAQAccordionProps {
+  faqs: FaqFields[];
+  loading?: boolean;
+}
+
+// FAQPage Search props
+export interface FAQPageSearchProps {
+  value: string;
+  onChange: (value: string) => void;
 }

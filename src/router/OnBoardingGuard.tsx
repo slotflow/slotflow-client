@@ -1,11 +1,12 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/shared/redux/appStore";
 import { Navigate, useLocation } from "react-router-dom";
 import { OnboardingStatus, Role } from "@/shared/interface/enums";
 import { OnbooardingGuardProps } from "@/shared/interface/componentInterface";
 
-const OnBoardingGuard: React.FC<OnbooardingGuardProps> = ({ children }) => {
+const OnBoardingGuard = ({ 
+    children 
+}: OnbooardingGuardProps) => {
     
     const location = useLocation();
     const { authUser: user, boardingData } = useSelector((store: RootState) => store.auth);

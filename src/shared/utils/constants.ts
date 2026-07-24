@@ -1,6 +1,7 @@
 import {
   Ban,
   Gem,
+  Zap,
   Star,
   User,
   Home,
@@ -16,7 +17,9 @@ import {
   MapPin,
   Shield,
   AtSign,
+  Cookie,
   Search,
+  Github,
   Youtube,
   Twitter,
   Receipt,
@@ -28,9 +31,12 @@ import {
   BookLock,
   Settings,
   Activity,
+  FileText,
   BarChart,
+  Sparkles,
   UserPlus,
   LockIcon,
+  BookOpen,
   Instagram,
   Calendar1,
   UserCheck,
@@ -39,6 +45,7 @@ import {
   RotateCcw,
   Handshake,
   ScanHeart,
+  CircleHelp,
   HelpCircle,
   ThumbsDown,
   CreditCard,
@@ -54,37 +61,48 @@ import {
   MessageSquare,
   WalletMinimal,
   CalendarCheck,
+  CircleCheckBig,
   MessageSquareText,
   PictureInPicture2,
 } from "lucide-react";
 import {
   Route,
+  BookingSteps,
   PlanListType,
+  BlogCTAItems,
+  CompanyValues,
   DayMapInterface,
   statsMapIntrface,
   CommonTabInterface,
   HearAboutUsOptions,
-  FooterLinkInterface,
   PlanFeatureInterface,
+  BookingStepsHeroPeople,
+  LandingPageIntegrations,
   FeatureContentInterface,
   HeaderCompoenentNavsProps,
-  FooterColumnDataInterface,
   StatsMapForAdminInterface,
   dataSelectListItemInterface,
   MapDotLitLocationsCoordinates,
   ProviderApprovalMessageInterface,
   gsapBigSvgYDirectionAnimationInterface,
+  ContactSupportOptions,
 } from "../interface/commonInterface";
 import { ChartConfig } from "@/components/ui/chart";
-import chatImage from '../../assets/heroImages/chat.jpg';
 import { OptionType } from '../interface/commonInterface';
 import { ContactItem } from "../interface/commonInterface";
-import gCalendar from '../../assets/iconImages/gCalendar.png';
-import calendarImage from '../../assets/heroImages/calendar2.png';
-import videoCallImage from '../../assets/heroImages/videoCall.jpg';
-import bookingImage from '../../assets/heroImages/heroSectionOneImg2.png';
+import chatImage from '@/assets/LandingPageImages/chat.jpg';
+import calendarImage from '../../assets/LandingPageImages/calendar2.png';
+import videoCallImage from '../../assets/LandingPageImages/videoCall.jpg';
+import bookingImage from '../../assets/LandingPageImages/heroSectionOneImg2.png';
 import { ProviderFetchDashboardStatsDataResponse } from "../interface/api/providerProfile";
 import { AdminVerificationStatus, HearAboutUsOptionValue, PlanName, Role, ServiceCategory, ServiceMode, ServiceType } from "../interface/enums";
+
+import zoomLogo from "@/assets/logos/external/zoom.png";
+import gmailLogo from "@/assets/logos/external/gmail.png";
+import whatsappLogo from "@/assets/logos/external/whatsapp.png";
+import stripeLogo from '../../assets/logos/external/stripe.jpeg';
+import googleMapsLogo from "@/assets/logos/external/googleMap.png";
+import googleCalendarLogo from '../../assets/logos/external/googleCalendar.png';
 
 // Plan Tiers 
 export const PLAN_TIERS = ["free", "starter", "professional", "enterprise"] as const;
@@ -95,6 +113,7 @@ export const blockBackStatuses = [AdminVerificationStatus.REQUESTED, AdminVerifi
 // Updatable Statuses
 export const updatableStatuses = [AdminVerificationStatus.NOT_REQUESTED, AdminVerificationStatus.REJECTED] as const;
 
+// Route names record
 export enum RouteNames {
   DASHBOARD = "Dashboard",
   PROFILE = "Profile",
@@ -223,10 +242,8 @@ export const gsapBigSvgYDirectionAnimation: gsapBigSvgYDirectionAnimationInterfa
 // Header Navigation Array
 export const navigation: HeaderCompoenentNavsProps[] = [
   { name: 'Home', href: '/', current: true },
-  { name: 'Features', href: '/#features', current: false },
-  { name: 'Pricing', href: '/#pricing', current: false },
-  { name: 'Reviews', href: '/#reviews', current: false },
   { name: 'About', href: '/about', current: false },
+  { name: 'Pricing', href: '/pricing', current: false },
   { name: 'Contact', href: '/contact', current: false },
 ]
 
@@ -283,7 +300,6 @@ export const dateSelectList: dataSelectListItemInterface[] = [
   { value: "365d", content: "Last year" },
 ]
 
-
 // Pricing Setion Data
 export const PlanList: PlanListType = [
   {
@@ -297,7 +313,8 @@ export const PlanList: PlanListType = [
       "Up to 7 bookings",
       "7 days validity",
     ],
-    price: 0
+    monthlyPrice: 0,
+    yearlyPrice: 0,
   },
   {
     _id: "1",
@@ -311,7 +328,9 @@ export const PlanList: PlanListType = [
       "Email Support",
       "Basic Dashboard"
     ],
-    price: 499
+    monthlyPrice: 499,
+    yearlyPrice: 399,
+
   },
   {
     _id: "2",
@@ -326,7 +345,8 @@ export const PlanList: PlanListType = [
       "24/7 Chat support",
       "Medium analytics dashborad",
     ],
-    price: 1499
+    monthlyPrice: 1499,
+    yearlyPrice: 1199
   },
   {
     _id: "3",
@@ -340,7 +360,8 @@ export const PlanList: PlanListType = [
       "24/7 premium support",
       "Advanced analytics dashboard",
     ],
-    price: 4999
+    monthlyPrice: 4999,
+    yearlyPrice: 3999
   }
 ]
 
@@ -539,44 +560,111 @@ export const planFeatures: PlanFeatureInterface[] = [
 
 
 // FooterBar Data
-export const footerColumnData: FooterColumnDataInterface[] = [
-  {
-    title: "Plans For your service",
-    links: [
-      { text: "Free", href: "" },
-      { text: "Standard", href: "" },
-      { text: "Enterprise", href: "" },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { text: "About", href: "" },
-      { text: "Careers", href: "" },
-      { text: "Blog", href: "" },
-      { text: "Privacy Policy", href: "/privacy-policy" },
-      { text: "Terms of Service", href: "/terms-and-conditions" },
-    ],
-  },
-  {
-    title: "Connect",
-    links: [
-      { text: "Email", href: "mailto:slotflow.booking@gmail.com" },
-      { text: "Facebook", href: "https://github.com/slotflow" },
-      { text: "Instagram", href: "https://github.com/slotflow" },
-      { text: "LinkedIn", href: "https://www.linkedin.com/in/midhunkpaniker" },
-      { text: "Github", href: "https://github.com/slotflow" },
-      { text: "Github", href: "https://github.com/slotflow" },
-    ],
-  },
-]
-export const copyright: string = " slotflow All rights reserved"
-export const policies: FooterLinkInterface[] = [
-  { text: "Privacy Policy", href: "/privacy-policy" },
-  { text: "Terms of Service", href: "/terms-and-conditions" },
-]
-export const about: string = "Simplifying appointment scheduling for individuals and professionals. Stay organized, save time, and make every slot count.";
+export const footerLinks = {
+  pages: [
+    {
+      name: "About",
+      href: "/about",
+    },
+    {
+      name: "Contact",
+      href: "/contact",
+    },
+    {
+      name: "Pricing",
+      href: "/pricing",
+    },
+    {
+      name: "Blog",
+      href: "/blog",
+    },
+    {
+      name: "Faq",
+      href: "/Faq",
+    },
+  ],
 
+  socials: [
+    {
+      name: "Facebook",
+      icon: Facebook,
+      href: "https://facebook.com/slotflow",
+    },
+    {
+      name: "Instagram",
+      icon: Instagram,
+      href: "https://instagram.com/slotflow",
+    },
+    {
+      name: "Twitter",
+      icon: Twitter,
+      href: "https://twitter.com/slotflow",
+    },
+    {
+      name: "LinkedIn",
+      icon: Linkedin,
+      href: "https://www.linkedin.com/in/midhunkpaniker",
+    },
+    {
+      name: "Github",
+      icon: Github,
+      href: "https://github.com/slotflow",
+    },
+  ],
+
+  legal: [
+    {
+      name: "Privacy Policy",
+      href: "/legal/privacy-policy",
+      description:
+        "Learn how we collect, use, protect, and process your personal information.",
+      icon: Shield,
+    },
+    {
+      name: "Terms of Service",
+      href: "/legal/terms-of-service",
+      description:
+        "Read the terms and conditions governing the use of SlotFlow.",
+      icon: FileText,
+    },
+    {
+      name: "Cookie Policy",
+      href: "/legal",
+      description:
+        "Read the cookie policy",
+      icon: Cookie
+    },
+    {
+      name: "Refund Policy",
+      href: "/legal",
+      description:
+        "Understand refunds, eligibility, processing timelines, and exceptions.",
+      icon: RotateCcw,
+    },
+    {
+      name: "Cancellation Policy",
+      href: "/legal",
+      description:
+        "Learn about booking cancellations, provider cancellations, and applicable charges.",
+      icon: Ban,
+    },
+  ],
+
+  account: [
+    {
+      name: "Sign Up",
+      href: "/signup",
+    },
+    {
+      name: "Login",
+      href: "/login",
+    },
+    {
+      name: "Forgot Password",
+      href: "/forgot-password",
+    },
+  ],
+};
 
 // Approval Pending Page data
 export const approvalMessages: ProviderApprovalMessageInterface = {
@@ -585,7 +673,6 @@ export const approvalMessages: ProviderApprovalMessageInterface = {
   message2: "We will notify you via email.",
   footerNote: "If you have any queries, please contact us.",
 };
-
 
 // Features Section Content
 export const featureContent: FeatureContentInterface[] = [
@@ -606,7 +693,7 @@ export const featureContent: FeatureContentInterface[] = [
     islogo: false,
   },
   {
-    title: "HD Video Calls",
+    title: "Video Calls",
     description:
       "Host secure, high-quality video meetings directly from the platform. Connect with clients or teammates, discuss plans, and collaborate face-to-face from anywhere.",
     image: videoCallImage,
@@ -618,11 +705,10 @@ export const featureContent: FeatureContentInterface[] = [
     description:
       "Automatically and asynchronously add your bookings and schedules to Google Calendar. Keep your availability up-to-date, avoid double bookings, and manage your appointments effortlessly across all devices.",
     image: calendarImage,
-    logo: gCalendar,
+    logo: googleCalendarLogo,
     islogo: true,
   },
 ];
-
 
 // Provider Dashboard Stats Cards Data
 export const statsMapForProvider: Array<statsMapIntrface<ProviderFetchDashboardStatsDataResponse>> = [
@@ -664,8 +750,7 @@ export const statsMapForProvider: Array<statsMapIntrface<ProviderFetchDashboardS
   },
 ];
 
-
-
+// Revenue status map for provider
 export const revenueStatsMapForProvider = [
   {
     title: "Subscription Payments",
@@ -737,12 +822,16 @@ export const appointmentsOverTimeChartConfig = {
     color: "#ef4444",
   },
 }
+
+// Peak booking hours chart config
 export const peakBookingHoursChartConfig = {
   bookings: {
     label: "Bookings",
     color: "#22c55e",
   },
 }
+
+// Appointment mode chart config
 export const appointmentModeChartConfig = {
   online: {
     label: "Online",
@@ -753,6 +842,8 @@ export const appointmentModeChartConfig = {
     color: "#10b981",
   },
 };
+
+// Completion breakdown chart config
 export const completionBreakdownChartConfig = {
   completed: {
     label: "completed",
@@ -779,6 +870,8 @@ export const completionBreakdownChartConfig = {
     color: "#eab308",
   },
 };
+
+// New vs retuning users chart config
 export const newVsReturningUsersChartConfig = {
   newUsers: {
     label: "New Users",
@@ -789,6 +882,8 @@ export const newVsReturningUsersChartConfig = {
     color: "#10b981",
   },
 }
+
+// Top bookings day chart config
 export const topBookingDaysChartConfig = {
   Monday: {
     label: "Monday",
@@ -819,6 +914,8 @@ export const topBookingDaysChartConfig = {
     color: "#EC4899",
   },
 };
+
+// Earnings time chart config
 export const earningsOverTimeChartConfig = {
   stripe: {
     label: "Stripe",
@@ -850,6 +947,7 @@ export const creditAccountChartLineLinearConfig: ChartConfig = {
   }
 }
 
+// Referral chat config
 export const referralChartLineLinearConfig: ChartConfig = {
   totalReferrals: {
     label: "Total Referrals",
@@ -877,27 +975,18 @@ export const userStatsMapForAdmin: StatsMapForAdminInterface[] = [
     icon: Users,
   },
   {
-    title: "Email Verified Users",
-    key: "emailVerifiedUsers",
-    icon: UserCheck,
-  },
-  {
     title: "Blocked Users",
     key: "blockedUsers",
     icon: UserX,
   },
 ]
 
+// Provider status map for admin
 export const providerStatsMapForAdmin: StatsMapForAdminInterface[] = [
   {
     title: "Total Providers",
     key: "totalProviders",
     icon: Users,
-  },
-  {
-    title: "Email Verified Providers",
-    key: "emailVerifiedProviders",
-    icon: UserCheck,
   },
   {
     title: "Admin Verified Providers",
@@ -931,6 +1020,7 @@ export const providerStatsMapForAdmin: StatsMapForAdminInterface[] = [
   },
 ]
 
+// Subscription status map for admin
 export const subscriptionStatsMapForAdmin: StatsMapForAdminInterface[] = [
   {
     title: "Active Subscriptions",
@@ -964,7 +1054,8 @@ export const subscriptionStatsMapForAdmin: StatsMapForAdminInterface[] = [
   },
 ]
 
-export const revenueAnAndPaymentsStatsMapForAdmin: StatsMapForAdminInterface[] = [
+// Revenue and payment status map for admin
+export const revenueAndPaymentsStatsMapForAdmin: StatsMapForAdminInterface[] = [
   {
     title: "Total Revenue",
     key: "totalRevenue",
@@ -1021,6 +1112,7 @@ export const revenueAnAndPaymentsStatsMapForAdmin: StatsMapForAdminInterface[] =
   },
 ]
 
+// Appointment status map for admin
 export const AppointmentsStatsMapForAdmin: StatsMapForAdminInterface[] = [
   {
     title: "Total Appointments",
@@ -1049,7 +1141,6 @@ export const AppointmentsStatsMapForAdmin: StatsMapForAdminInterface[] = [
   },
 ];
 
-
 // Address creating, service details creating and service availability creating page side box data
 export const progressBars: { [key: number]: boolean[] } = {
   0: [true, false, false, false, false],
@@ -1060,6 +1151,7 @@ export const progressBars: { [key: number]: boolean[] } = {
   5: [true, true, true, true, true],
 };
 
+// Onboarding sidebar headings
 const sidebarHeadings: string[] = [
   'Setup',
   'Address',
@@ -1069,6 +1161,7 @@ const sidebarHeadings: string[] = [
   "Approval"
 ];
 
+// Onboarding page labels
 export const pageLabels: { [key: number]: string[] } = {
   0: sidebarHeadings,
   1: sidebarHeadings,
@@ -1078,6 +1171,7 @@ export const pageLabels: { [key: number]: string[] } = {
   5: sidebarHeadings
 };
 
+// Onboarding pages descriptions
 export const pageDescriptions: { [key: number]: string } = {
   0: "Welcome to Slotflow! We're excited to have you on board. Let’s get you set up what would you like to do?.",
   1: "Provide your service address accurately to ensure seamless customer bookings.",
@@ -1087,13 +1181,14 @@ export const pageDescriptions: { [key: number]: string } = {
   5: "Our team is reviewing your service registration request. You will be notified via email once your request is approved. Thank you for your patience.",
 };
 
+// Address page google map title
 export const addAddressGoogleMapLinkInfoHeading: string = "Select Your Exact Location";
 
+// Address page google map info
 export const addAddressGoogleMapLinkInfo: string = `Use the map to select your exact location.  
 Click on the map to drop a marker at your address.  
 This helps us provide accurate location based services and ensures more precise search results.  
 Your selected location will also be used to automatically fill address details wherever possible.`;
-
 
 // Hero section
 export const heroSectionButtons: { text: string, href: string }[] = [
@@ -1106,22 +1201,6 @@ export const heroSectionButtons: { text: string, href: string }[] = [
     href: "/auth/login"
   },
 ]
-
-
-// About Page
-export const aboutIntro: string[] = [
-  "Slotflow is more than just a booking tool, it is your complete scheduling companion for the digital age. We empower businesses, professionals, and teams to manage appointments, streamline operations, and provide a frictionless experience to their customers. Whether you are a solo entrepreneur or an enterprise level service provider, Slotflow adapts to your needs and scales with your growth.",
-  "Built with modern technology and designed with a human first approach, Slotflow integrates real time booking, instant notifications, and smooth Google Calendar sync so you never miss an appointment. Features like in app chat and video calls allow you to connect with clients instantly, while our intuitive interface ensures both providers and customers enjoy a clean and effortless experience.",
-  "Our mission is to create a platform that removes the chaos from scheduling, saves time for businesses, and delivers a polished, professional experience every step of the way. With continuous improvements, innovative integrations, and an obsession for user experience, Slotflow is the future of appointment management."
-];
-
-export const aboutFeatures: string[] = [
-  "From smart scheduling to automated workflows, Slotflow takes care of the details so you can focus on what matters most, your clients. Our platform supports role based dashboards for users, providers, and admins, ensuring each stakeholder gets the tools they need. Flexible subscription tiers let you start for free and upgrade as your business grows, while automation handles confirmations, reminders, and updates without requiring constant manual effort.",
-  "Real time synchronization keeps everyone aligned, preventing double bookings and miscommunication. We prioritize scalability and security so your data is safe and performance stays smooth as demand increases. Detailed analytics provide insights into revenue and customer trends, helping you make smarter business decisions. And because we are future focused, Slotflow evolves continuously with new features, integrations, and optimizations driven by user feedback."
-];
-
-export const devWebPortfoilio: string = "https://midhunkpaniker.vercel.app/";
-
 
 // Contact Page
 export const contactData: ContactItem[] = [
@@ -1143,17 +1222,6 @@ export const contactData: ContactItem[] = [
     value: "Kerala, India",
   },
 ];
-
-
-// Privacy Policy
-export const privacyPolicyContent: string[] = [
-  "At Slotflow, we value your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, and safeguard your information when you interact with our platform.",
-  "We collect information such as your name, email, contact details, and booking data to deliver a seamless scheduling experience. Your data helps us confirm appointments, send reminders, and improve our services.",
-  "Slotflow does not sell, rent, or trade your information to third parties. We only share data with trusted service providers (like payment processors or communication tools) when necessary to operate our platform.",
-  "You can update or delete your data anytime by contacting our support team. We implement industry-standard security practices to protect your information from unauthorized access or misuse.",
-  "By using Slotflow, you consent to the terms outlined in this Privacy Policy. Updates to this policy will be communicated through our website or email."
-];
-
 
 // Terms and Conditions
 export const termsAndConditionsContent: string[] = [
@@ -1188,7 +1256,6 @@ export const providerDashboardTabs: CommonTabInterface[] = [
   { value: "graphs", label: "Graphs", icon: BarChart },
 ];
 
-
 // Settings Page Tabs
 export const settingsTabs: CommonTabInterface[] = [
   {
@@ -1208,7 +1275,7 @@ export const settingsTabs: CommonTabInterface[] = [
   },
   {
     value: "security",
-    label: "Security & Privacy",
+    label: "Security",
     icon: LockIcon,
   },
 ]
@@ -1219,25 +1286,24 @@ export const adVisibilityOptions: OptionType<boolean>[] = [
   { label: "No Ad Visibility", value: false },
 ];
 
-// 
+// Service type options
 export const serviceTypeOptions: OptionType<ServiceType>[] = [
   { label: "One Time", value: ServiceType.ONE_TIME },
   { label: "Recurring", value: ServiceType.RECURRING },
 ];
 
-//
+// Service mode options
 export const serviceModeOptions: OptionType<ServiceMode>[] = [
   { label: "Online", value: ServiceMode.ONLINE },
   { label: "Offline", value: ServiceMode.OFFLINE },
   { label: "Both", value: ServiceMode.BOTH },
 ];
 
-//
+// Group options
 export const groupOptions: OptionType<boolean>[] = [
   { label: "Group", value: true },
   { label: "Individual", value: false },
 ];
-
 
 // Days of Week Options
 export const daysOfWeekOptions: OptionType<string>[] = [
@@ -1319,7 +1385,6 @@ export const serviceCategoryOptions: OptionType<ServiceCategory>[] = [
   },
 ];
 
-
 // Planduration options
 export const planDurations: OptionType<number>[] = [
   { label: "1 Month", value: 30 },
@@ -1334,13 +1399,11 @@ export const adVisibility: OptionType<boolean>[] = [
   { label: "Ad Not Visible", value: false },
 ];
 
-
 // admin provider verification boolean options
 export const verificationOptions: OptionType<boolean>[] = [
   { label: "Verified", value: true },
   { label: "Rejected", value: false }
 ];
-
 
 // Status text mapper
 export const verificationStatusTextMap: Record<AdminVerificationStatus, string> = {
@@ -1352,6 +1415,7 @@ export const verificationStatusTextMap: Record<AdminVerificationStatus, string> 
   [AdminVerificationStatus.NOT_REQUESTED]: "Not submitted",
 };
 
+// Plan options
 export const planNameOptions: OptionType<PlanName>[] = [
   { label: "Trial", value: PlanName.TRIAL },
   { label: "Starter", value: PlanName.STARTER },
@@ -1360,11 +1424,13 @@ export const planNameOptions: OptionType<PlanName>[] = [
   { label: "No Subscription", value: PlanName.NO_SUBSCRIPTION },
 ];
 
+// Redux store constant
 export const storeConstants: Record<string, string> = {
   storeKey: "slotflow",
   resetState: "RESET_STATE"
 };
 
+// Redirect paths
 export const redirectPaths: Record<string, string> = {
   LOGIN: "/auth/login",
   REGISTER: "/auth/register",
@@ -1383,6 +1449,7 @@ export const redirectPaths: Record<string, string> = {
   ADMIN_DASHBOARD: "/admin/dashboard",
 };
 
+// Base paths
 export const basePaths: Record<string, string> = {
   user: "/user",
   provider: "/provider",
@@ -1390,6 +1457,7 @@ export const basePaths: Record<string, string> = {
   login: "/login"
 };
 
+// Chart config
 export const chartConfig = {
   value: {
     label: "Value",
@@ -1400,6 +1468,7 @@ export const chartConfig = {
   },
 } satisfies ChartConfig;
 
+// World map points
 export const mapDotLitLocationsCoordinates: MapDotLitLocationsCoordinates[] = [
   { start: { lat: 64.2008, lng: -149.4937 }, end: { lat: 34.0522, lng: -118.2437 } },
   { start: { lat: 64.2008, lng: -149.4937 }, end: { lat: -15.7975, lng: -47.8919 } },
@@ -1410,6 +1479,7 @@ export const mapDotLitLocationsCoordinates: MapDotLitLocationsCoordinates[] = [
   { start: { lat: 22.5726, lng: 88.3639 }, end: { lat: 28.6139, lng: 77.209 } }
 ]
 
+// Hear about us options
 export const hearAboutUsOptions: HearAboutUsOptions[] = [
   { label: "Google Search", value: HearAboutUsOptionValue.GOOGLE, icon: Search },
   { label: "Friend / Referral", value: HearAboutUsOptionValue.REFERRAL, icon: Users },
@@ -1423,14 +1493,19 @@ export const hearAboutUsOptions: HearAboutUsOptions[] = [
   { label: "Other", value: HearAboutUsOptionValue.OTHER, icon: HelpCircle },
 ]
 
-//
+// Preboarding titles
 export const preBoardingTitles: string[] = [
   "Choose your account type",
   "Where did you hear about us?"
 ]
 
-// onboarding titles
-export const onboardingContent = {
+// Onboarding titles
+export const onboardingContent: Record<string, {
+  title: string;
+  description: string;
+  description2?: string;
+  description3?: string;
+}> = {
   setupRole: {
     title: "Select Your Account Type",
     description: "Choose how you will use the platform.",
@@ -1463,12 +1538,13 @@ export const onboardingContent = {
   },
 };
 
-export const defaultButtonClassName = "cursor-pointer transition-colors duration-300 hover:text-white hover:bg-[var(--mainColor)]";
+// Default button className
+export const defaultButtonClassName: string = "cursor-pointer transition-colors duration-300 hover:text-white hover:bg-[var(--mainColor)]";
 
-export const destructiveButtonClassName = "cursor-pointer transition-colors duration-300 hover:text-white hover:bg-red-500";
+// Destructive button className
+export const destructiveButtonClassName: string = "cursor-pointer transition-colors duration-300 hover:text-white hover:bg-red-500";
 
-
-//
+// Status preset data for the data cards
 export const STATUS_PRESETS: Record<string, { trueText: string, falseText: string, trueClass: string, falseClass: string }> = {
   accountStatus: {
     trueText: "Blocked",
@@ -1502,10 +1578,210 @@ export const STATUS_PRESETS: Record<string, { trueText: string, falseText: strin
   },
 };
 
+// User dashboard providers list card gradients
 export const cardGradients: string[] = [
-    "bg-gradient-to-r from-violet-200 to-violet-400",
-    "bg-gradient-to-r from-lime-100 to-green-300",
-    "bg-gradient-to-r from-red-100 to-orange-200",
-    "bg-gradient-to-r from-amber-100 to-yellow-200",
-    "bg-gradient-to-r from-sky-100 to-blue-300"
+  "bg-gradient-to-r from-violet-200 to-violet-400",
+  "bg-gradient-to-r from-lime-100 to-green-300",
+  "bg-gradient-to-r from-red-100 to-orange-200",
+  "bg-gradient-to-r from-amber-100 to-yellow-200",
+  "bg-gradient-to-r from-sky-100 to-blue-300"
 ];
+
+// Landing page workflow booking steps
+export const bookingSteps: BookingSteps[] = [
+  {
+    title: "Create an Account",
+    description:
+      "Sign up to access trusted services and manage your bookings.",
+    icon: UserPlus,
+  },
+  {
+    title: "Find a Service",
+    description:
+      "Search for the service you need by category or location.",
+    icon: Search,
+  },
+  {
+    title: "Choose a Provider",
+    description:
+      "Compare verified providers and select the right one.",
+    icon: BadgeCheck,
+  },
+  {
+    title: "Select a Time",
+    description:
+      "Pick an available date and time that works for you.",
+    icon: CalendarClock,
+  },
+  {
+    title: "Pay Securely",
+    description:
+      "Complete your booking using our secure payment process.",
+    icon: CreditCard,
+  },
+  {
+    title: "Booking Confirmed",
+    description:
+      "Receive instant confirmation and you're ready to go.",
+    icon: CircleCheckBig,
+  },
+];
+
+// Landing page hero section people list
+export const heroPeople: BookingStepsHeroPeople[] = [
+  {
+    id: 1,
+    name: "Rahul Sharma",
+    designation: "Software Engineer",
+    image:
+      "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3387&q=80",
+  },
+  {
+    id: 2,
+    name: "Neeraj Gupta",
+    designation: "Product Manager",
+    image:
+      "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+  },
+  {
+    id: 3,
+    name: "Neha Kapoor",
+    designation: "Data Scientist",
+    image:
+      "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+  },
+  {
+    id: 4,
+    name: "Isha Gupta",
+    designation: "UX Designer",
+    image:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+  },
+  {
+    id: 5,
+    name: "Devansh Agarwal",
+    designation: "Soap Developer",
+    image:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3540&q=80",
+  },
+  {
+    id: 6,
+    name: "Kritika Desai",
+    designation: "Architecht",
+    image:
+      "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3534&q=80",
+  },
+];
+
+// Landing page integrations section data
+export const landingPageIntegrations: LandingPageIntegrations[] = [
+  {
+    title: "Google Calendar",
+    description: "Two-way appointment synchronization.",
+    logo: googleCalendarLogo,
+    isActive: true,
+  },
+  {
+    title: "Stripe",
+    description: "Secure online payments.",
+    logo: stripeLogo,
+    isActive: true,
+  },
+  {
+    title: "Google Maps",
+    description: "Location and navigation.",
+    logo: googleMapsLogo,
+    isActive: true,
+  },
+  {
+    title: "Gmail",
+    description: "Booking confirmations.",
+    logo: gmailLogo,
+    isActive: true,
+  },
+  {
+    title: "WhatsApp",
+    description: "Instant booking notifications.",
+    logo: whatsappLogo,
+    isActive: false,
+  },
+  {
+    title: "Zoom",
+    description: "Online consultations.",
+    logo: zoomLogo,
+    isActive: false,
+  },
+];
+
+// blogCTA items
+export const blogCTAItems: BlogCTAItems[] = [
+  {
+    title: "25k+",
+    subTitle: "Appointments Managed",
+  },
+  {
+    title: "98%",
+    subTitle: "Customer Satisfaction",
+  },
+  {
+    title: "24/7",
+    subTitle: "Online Booking",
+  },
+  {
+    title: "AI",
+    subTitle: "Smart Scheduling",
+  },
+];
+
+// company values
+export const companyValues: CompanyValues[] = [
+  {
+    icon: Zap,
+    title: "Built for Speed",
+    description:
+      "From booking to confirmations, every interaction is optimized to save valuable time.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Reliable & Secure",
+    description:
+      "Your scheduling data and customer information are protected with modern security practices.",
+  },
+  {
+    icon: Sparkles,
+    title: "Simple Experience",
+    description:
+      "A clean interface that makes appointment management effortless for businesses and customers.",
+  },
+  {
+    icon: BadgeCheck,
+    title: "Designed to Scale",
+    description:
+      "Whether you're an individual or an enterprise, Slotflow grows alongside your business.",
+  },
+];
+
+//
+export const contactSupportOptions: ContactSupportOptions[] = [
+  {
+    id: 1,
+    icon: MessageCircle,
+    title: "Live Chat",
+    button: "Start Chat",
+    action: "chat",
+  },
+  {
+    id: 2,
+    icon: BookOpen,
+    title: "Help Center",
+    button: "Browse Docs",
+    action: "help",
+  },
+  {
+    id: 3,
+    icon: CircleHelp,
+    title: "FAQ",
+    button: "View FAQ",
+    action: "faq",
+  },
+] as const;

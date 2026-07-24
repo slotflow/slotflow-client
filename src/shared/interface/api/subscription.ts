@@ -23,7 +23,6 @@ export interface FetchSubscriptionDetailsResponse extends SubscriptionProps {
 
 // response of fetch activated subscription
 export interface SubscriptionActivated {
-  providerId: string;
   subscribedPlan: PlanName;
   startDate: Date;
   endDate: Date;

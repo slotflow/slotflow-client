@@ -15,7 +15,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Calendar as CalendarIcon, FileSpreadsheet, NotebookText, RotateCcw } from 'lucide-react';
 import AdminRevenueTableColumn from '@/components/table/tableColumns/AdminRevenueTableColumn';
 
-const AdminRevenueReport: React.FC = () => {
+const AdminRevenueReport = () => {
 
     const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
 

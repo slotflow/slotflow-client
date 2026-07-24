@@ -10,7 +10,7 @@ import { defaultButtonClassName, redirectPaths } from "@/shared/utils/constants"
 import { setProviderIdentityProofs, setProviderServiceProofs } from "@/shared/redux/slices/providerSlice";
 import { providerDeleteIdentityProof, providerDeleteServiceProof, providerFetchMyProofs, providerUpdateIdentityProof, providerUpdateProofServiceProof } from "@/shared/apis/providerProfile";
 
-const ProviderProofSubmissionPage: React.FC = () => {
+const ProviderProofSubmissionPage = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();

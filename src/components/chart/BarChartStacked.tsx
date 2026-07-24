@@ -18,7 +18,7 @@ import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import { filterChartDataHelper } from '@/shared/helper/dateFilter';
 import { BarChartStackedProps } from '@/shared/interface/componentInterface';
 
-const BarChartStacked: React.FC<BarChartStackedProps> = ({
+const BarChartStacked = ({
     title,
     description,
     chartData,
@@ -27,7 +27,7 @@ const BarChartStacked: React.FC<BarChartStackedProps> = ({
     dataKeyThree,
     chartConfig,
     isLocked
-}) => {
+}: BarChartStackedProps) => {
 
     const [timeRange, setTimeRange] = React.useState<TimeRange>("7d");
     const filteredData = filterChartDataHelper(chartData, timeRange);

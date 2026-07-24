@@ -1,13 +1,13 @@
 import { Button } from "../ui/button";
-import React, { useState } from "react";
+import { useState } from "react";
+import { Separator } from "../ui/separator";
 import { SelectSeparator } from "../ui/select";
 import { motion, AnimatePresence } from "framer-motion";
 import { defaultButtonClassName } from "@/shared/utils/constants";
 import UpdatePasswordForm from "../form/CommonForms/UpdatePasswordForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "../ui/separator";
 
-const SecuritySettings: React.FC = () => {
+const SecuritySettings = () => {
 
     const [showForm, setShowForm] = useState<boolean>(false);
 

@@ -1,10 +1,9 @@
-import React from 'react';
 import { Label } from '../ui/label';
 import { Switch } from '../ui/switch';
 import { Separator } from '../ui/separator';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 
-const NotificationSettings: React.FC = () => {
+const NotificationSettings = () => {
     return (
         <>
             <div className='flex-none'>

@@ -1,17 +1,12 @@
-import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { getInitials } from "@/shared/helper/getInitials";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { UserProfileTopCardProps } from "@/shared/interface/componentInterface";
 
-interface UserProfileTopCardProps {
-    name: string;
-    image: string;
-}
-
-const UserProfileTopCard: React.FC<UserProfileTopCardProps> = ({
+const UserProfileTopCard = ({
     name,
     image,
-}) => {
+}: UserProfileTopCardProps) => {
 
     return (
         <Card className="overflow-hidden border shadow-sm rounded-xl">

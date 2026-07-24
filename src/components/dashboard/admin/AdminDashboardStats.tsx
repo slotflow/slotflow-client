@@ -4,7 +4,7 @@ import {
     providerStatsMapForAdmin,
     AppointmentsStatsMapForAdmin,
     subscriptionStatsMapForAdmin,
-    revenueAnAndPaymentsStatsMapForAdmin,
+    revenueAndPaymentsStatsMapForAdmin,
 } from '@/shared/utils/constants';
 import {
     adminFetchDashboardUserStatsData,
@@ -38,7 +38,7 @@ import {
 import DataFilter from '@/components/filters/DataFilter';
 import DashboardStats from '@/components/dashboard/DashboardStats';
 
-const AdminDashboardStats: React.FC = () => {
+const AdminDashboardStats = () => {
     const [selectedTab, setSelectedTab] = useState(adminOverviewTabs[0].value);
     const [dateRange, setDateRange] = useState<DateRange>({
         from: new Date(),
@@ -93,7 +93,7 @@ const AdminDashboardStats: React.FC = () => {
                         queryKey="dashboardUsersStats"
                         statsMap={userStatsMapForAdmin}
                         dependencies={dateRange}
-                        shimmerCount={3}
+                        shimmerCount={2}
                         heading=""
                         role="ADMIN"
                     />
@@ -137,7 +137,7 @@ const AdminDashboardStats: React.FC = () => {
                         })}
                         queryKey="dashboardRevenueStats"
                         dependencies={dateRange}
-                        statsMap={revenueAnAndPaymentsStatsMapForAdmin}
+                        statsMap={revenueAndPaymentsStatsMapForAdmin}
                         shimmerCount={9}
                         heading=""
                         role="ADMIN"

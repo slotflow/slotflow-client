@@ -1,6 +1,5 @@
 import { Payment } from "../entityInterface/paymentInterface";
 import { FetchFunctionBaseQueryParams } from "../commonInterface";
-import { StripeAccountStatus } from "../enums";
 
 // response type of fetch payment details api
 export type FetchPaymentDetailsResponse = Omit<Payment, "_id" | "chargeId" | "receiptEmail" | "receiptNumber" | "updatedAt" | "userId" | "providerId"> | null;
@@ -43,16 +42,6 @@ export interface ConnectStripeAccountRequest {
 
 // response type of connect stripe account api
 export interface ConnexctStripeAccountResponse {
-  onboardingUrl: string;
+  accountLink: string;
   accountId: string;
-}
-
-// request type of check stripe account status api
-export interface CheckStripeAccountStatusRequest {
-  accountId: string;
-}
-
-// response type of check stripe account status api
-export type CheckStripeAccountStatusResponse = {
-  accountStatus: StripeAccountStatus;
 }

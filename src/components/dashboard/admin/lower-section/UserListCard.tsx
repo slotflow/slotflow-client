@@ -1,11 +1,10 @@
-import React from 'react';
 import { fetchUsers } from '@/shared/apis/user';
 import { User as UserIcon } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import DashboardDataCard from '../../DashboardDataCard';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
-const UserListCard: React.FC = () => {
+const UserListCard = () => {
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ['admin-latest-users'],
     queryFn: () => fetchUsers({ limit: 5, sortBy: 'createdAt', sortOrder: 'desc' }),

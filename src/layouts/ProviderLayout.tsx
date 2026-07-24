@@ -9,7 +9,7 @@ import { planAccessMap, providerRoutes } from "@/shared/utils/constants";
 import ProviderFreeSubscription from "@/components/provider/ProviderFreeSubscription";
 import NotificationsContainer from "@/components/notification/NotificationsContainer";
 
-const ProviderLayout: React.FC = () => {
+const ProviderLayout = () => {
 
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
