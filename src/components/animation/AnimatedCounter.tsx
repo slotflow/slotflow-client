@@ -30,6 +30,7 @@ const AnimatedCounter = ({
                     duration,
                     ease: "power3.out",
                     onUpdate: () => {
+                        if (!counterRef.current) return;
                         let formatted = value.count.toFixed(decimals);
 
                         if (separator) {

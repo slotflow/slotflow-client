@@ -508,3 +508,18 @@ export interface ContactSupportOptions {
   button: string;
   action: string;
 }
+
+// borading steps interface
+export interface OnboardingStep {
+    pageNumber: number;
+    heading: string;
+    description: string;
+    path: string;
+}
+
+export interface BoardingStep {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+}

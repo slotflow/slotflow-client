@@ -54,7 +54,7 @@ export interface AuthState {
   eventSocketId: string | null;
   eventSocketIsConnected: boolean;
   subscriptionUpdating: boolean;
-  boardingData: {
+  preboardingData: {
     selectedRole: Role | null;
     hearAboutUsOption: HearAboutUsOptionValue | null;
     referralCode: string | null;
@@ -78,6 +78,7 @@ export interface appState {
   faqLoading: boolean;
   faqTotal: number;
   isLiveChatBubbleOpen: boolean;
+  boardingSteps: number;
 }
 
 // admin slice

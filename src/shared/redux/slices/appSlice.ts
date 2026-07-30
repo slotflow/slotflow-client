@@ -19,6 +19,7 @@ const initialState: appState = {
     faqLoading: false,
     faqTotal: 0,
     isLiveChatBubbleOpen: false,
+    boardingSteps: 2,
 }
 
 const stateSlice = createSlice({
@@ -84,6 +85,9 @@ const stateSlice = createSlice({
         },
         toggleLiveChatBubble: (state) => {
             state.isLiveChatBubbleOpen = !state.isLiveChatBubbleOpen;
+        },
+        updateBoardingStep: (state, action: PayloadAction<number>) => {
+            state.boardingSteps = action.payload;
         }
     },
     extraReducers(builder) {
@@ -138,6 +142,7 @@ export const {
     setFaqLoading,
     toggleSidebar,
     setForgotPassword,
+    updateBoardingStep,
     toggleFilterSideBar,
     setArticleCategories,
     toggleLiveChatBubble,

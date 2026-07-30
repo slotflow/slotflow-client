@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
-import SideBox from "@/components/onboarding/SideBox";
 import { AnimatePresence, motion } from "framer-motion";
+import SideBox from "@/components/boarding/sidebox/SideBox";
 import { BoardingLayoutProps } from "@/shared/interface/componentInterface";
 
 const BoardingLayout = ({
