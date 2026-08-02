@@ -47,7 +47,7 @@ const Sidebar = ({
 
     return (
         <aside className={`${sidebarOpen ? 'w-[18%]' : 'w-[5%]'} h-full shrink-0 flex flex-col border-r bg-[var(--menuBg)] transition-all duration-300 ease-in-out`}>
-            <div className={`border border-b flex items-center py-6 ${sidebarOpen ? 'px-6' : 'px-0 justify-center'} transition-all duration-300`}>
+            <div className={`flex items-center py-6 ${sidebarOpen ? 'px-6' : 'px-0 justify-center'} transition-all duration-300`}>
                 <img src={logo} className="w-8 h-8 object-contain shrink-0" alt="SlotFlow Logo" />
                 {sidebarOpen && (
                     <div className='flex flex-col ml-3 overflow-hidden'>

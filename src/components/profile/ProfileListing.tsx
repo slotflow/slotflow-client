@@ -95,13 +95,13 @@ const ProfileListing = ({
             { label: "Phone Number", value: d.phone, Icon: Phone },
             { label: "Verification Status", value: d.adminVerificationStatus, Icon: BadgeCheck },
             { label: "Slotflow Trusted", value: getBooleanStatusComponent(d.trustedBySlotflow, STATUS_PRESETS.trustStatus), Icon: BadgeCheck },
-            { label: "Account Status", value: getBooleanStatusComponent(d.isBlocked, STATUS_PRESETS.accountStatus), Icon: ShieldUser },
             { label: "Admin Verified", value: getBooleanStatusComponent(d.isAdminVerified, STATUS_PRESETS.verificationStatus), Icon: BadgeCheck },
             { label: "Address Verified", value: getBooleanStatusComponent(d.isAddressVerified, STATUS_PRESETS.verificationStatus), Icon: MapPin },
             { label: "Service Details Verified", value: getBooleanStatusComponent(d.isServiceDetailsVerified, STATUS_PRESETS.verificationStatus), Icon: BadgeCheck },
             { label: "Availability Verified", value: getBooleanStatusComponent(d.isAvailabilityVerified, STATUS_PRESETS.verificationStatus), Icon: BadgeCheck },
             { label: "Proofs Verified", value: getBooleanStatusComponent(d.isProofsVerified, STATUS_PRESETS.verificationStatus), Icon: BadgeCheck },
             { label: "Joined On", value: d.createdAt, isDate: true, Icon: Calendar },
+            { label: "Account Status", value: getBooleanStatusComponent(d.isBlocked, STATUS_PRESETS.accountStatus), Icon: ShieldUser },
         ];
     }
     
@@ -129,7 +129,6 @@ const ProfileListing = ({
             { label: "Slotflow Trusted", value: getBooleanStatusComponent(d.trustedBySlotflow, STATUS_PRESETS.trustStatus), Icon: BadgeCheck },
             { label: "Referral Code", value: d.referralCode, canCopy: true, Icon: Code },
             { label: "Subscription", value: authUser?.providerSubscription, Icon: BadgeCheck },
-            { label: "Account Status", value: getBooleanStatusComponent(authUser?.isBlocked, STATUS_PRESETS.accountStatus), Icon: ShieldUser },
             { label: "Verification Status", value: d.adminVerificationStatus, Icon: BadgeCheck },
             { label: "Admin Verified", value: getBooleanStatusComponent(d.isAdminVerified, STATUS_PRESETS.verificationStatus), Icon: BadgeCheck },
             { label: "Address Verified", value: getBooleanStatusComponent(d.isAddressVerified, STATUS_PRESETS.verificationStatus), Icon: MapPin },
@@ -137,6 +136,7 @@ const ProfileListing = ({
             { label: "Availability Verified", value: getBooleanStatusComponent(d.isAvailabilityVerified, STATUS_PRESETS.verificationStatus), Icon: BadgeCheck },
             { label: "Proofs Verified", value: getBooleanStatusComponent(d.isProofsVerified, STATUS_PRESETS.verificationStatus), Icon: BadgeCheck },
             { label: "Joined On", value: d.createdAt, isDate: true, Icon: Calendar },
+            // { label: "Account Status", value: getBooleanStatusComponent(authUser?.isBlocked, STATUS_PRESETS.accountStatus), Icon: ShieldUser },
         ];
     }
 
@@ -159,7 +159,7 @@ const ProfileListing = ({
             { label: "Phone Number", value: authUser?.phone || d.phone, Icon: Phone },
             { label: "Joined On", value: d.createdAt, isDate: true, Icon: Calendar },
             { label: "Referral Code", value: d.referralCode, canCopy: true, Icon: Code },
-            { label: "Account Status", value: getBooleanStatusComponent(d.isBlocked, STATUS_PRESETS.accountStatus), Icon: ShieldUser },
+            // { label: "Account Status", value: getBooleanStatusComponent(d.isBlocked, STATUS_PRESETS.accountStatus), Icon: ShieldUser },
         ];
     }
 

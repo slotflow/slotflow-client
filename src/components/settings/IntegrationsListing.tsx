@@ -146,7 +146,7 @@ const IntegrationsListing = () => {
             title: "Connect Stripe",
             text: "Connect",
             action: handleStripeConnect,
-            show: authUser?.role === Role.PROVIDER,
+            show: authUser?.role !== Role.PROVIDER,
             connectionStatus: authUser?.stripeAccountStatus === StripeAccountStatus.ACTIVE,
             connectionText: authUser?.stripeAccountStatus === StripeAccountStatus.ACTIVE ? "Connected" : authUser?.stripeAccountStatus === StripeAccountStatus.RESTRICTED ? "Restricted" : authUser?.stripeAccountStatus === StripeAccountStatus.PENDING ? "Pending" : "Not Connected",
             isLoading: stripeConnectionLoading,
@@ -161,7 +161,7 @@ const IntegrationsListing = () => {
             <Separator className='my-4 flex-none' />
             <Card>
                 <CardContent className="space-y-4">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 gap-4">
                         {listData?.map((item, index) => (
                             <IntegrationCard
                                 key={index}

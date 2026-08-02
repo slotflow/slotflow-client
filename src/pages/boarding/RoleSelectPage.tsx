@@ -67,7 +67,7 @@ const RoleSelectPage = () => {
                     transition={{
                         delay: 0.35,
                     }}
-                    className="mt-14 flex flex-col items-center gap-5"
+                    className="mt-14 flex flex-col items-end gap-5"
                 >
                     <p className="text-sm text-gray-500">
                         Your selection helps us personalize your onboarding

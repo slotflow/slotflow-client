@@ -30,7 +30,7 @@ const DataField = ({
         displayValue = (
             <IconText
                 text="No Data Found"
-                className="text-red-500"
+                className="text-primary/50"
             />
         );
     } else if (isRadioGroup && Array.isArray(value)) {
