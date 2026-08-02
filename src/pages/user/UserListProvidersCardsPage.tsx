@@ -1,9 +1,9 @@
-import { LoaderCircle } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { Filter, LoaderCircle, Search } from 'lucide-react';
 import { setProviders } from '@/shared/redux/slices/userSlice';
 import { AppDispatch, RootState } from '@/shared/redux/appStore';
 import { toggleFilterSideBar } from '@/shared/redux/slices/appSlice';
@@ -12,9 +12,14 @@ import UserViewProviderCard from '@/components/user/UserViewProviderCard';
 import { fetchServiceProvidersForUser } from '@/shared/apis/providerService';
 import { UserFetchServiceProvidersResponse } from '@/shared/interface/api/user';
 
+/**
+ * TODO implement the search
+ */
+
 const UserListProvidersCardsPage = () => {
 
   const dispatch = useDispatch<AppDispatch>();
+  const [search, setSearch] = useState<string>("");
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
   const { selectedCategories, providers, providerCardsfFlter } = useSelector((store: RootState) => store.user);
 
@@ -71,21 +76,30 @@ const UserListProvidersCardsPage = () => {
     <div className="p-2 min-h-full flex flex-col">
       <div className="flex justify-between items-center">
         <div className="relative w-full max-w-md flex space-x-2">
-          <Input type="text" placeholder="Search..." className="h-auto" />
+          <div className="relative w-full max-w-xl">
+            <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search for a service..."
+              className="h-10 rounded-2xl border-0 bg-background pl-12 pr-4 ring-1 ring-border transition-all focus-visible:ring-1 focus-visible:ring-[var(--mainColor)]"
+            />
+          </div>
           <Button
             title="Search"
             variant="default"
             className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
             onClick={() => dispatch(toggleFilterSideBar())} >
             Search
+            <Search />
           </Button>
         </div>
         <Button
           title="Filters"
           variant="default"
-          className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
+          className="h-10 cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
           onClick={() => dispatch(toggleFilterSideBar())} >
-          Filters
+           Filters
+          <Filter/>
         </Button>
       </div>
 

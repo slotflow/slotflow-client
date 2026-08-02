@@ -1,18 +1,19 @@
-import { AdminRejectProviderModalState, ApiBaseResponse } from "./commonInterface";
-import { ChangePlanBlockStatusRequest } from "./api/plan";
+import { AuthUser } from "./sliceInterface";
 import { User } from "./entityInterface/userInterface";
-import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest } from "./api/providerProfile";
-import { ChangeServiceBlockStatusRequest } from "./api/service";
-import { AdminChangeUserStatusRequest } from "./api/user";
+import { ChangePlanBlockStatusRequest } from "./api/plan";
 import { Review } from "./entityInterface/reviewInterface";
-import { ToggleReviewBlockStatusRequest } from "./api/review";
 import { Payment } from "./entityInterface/paymentInterface";
-import { changeAppointmentStatusRequest, ValidateRoomId } from "./api/booking";
 import { Booking } from "./entityInterface/bookingInterface";
-import { Subscription } from "./entityInterface/subscriptionInterface";
+import { ToggleReviewBlockStatusRequest } from "./api/review";
+import { ChangeServiceBlockStatusRequest } from "./api/service";
 import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
+import { HearAboutUsOptionValue, Role, ServiceMode } from "./enums";
+import { Subscription } from "./entityInterface/subscriptionInterface";
 import { Availability } from "./entityInterface/serviceAvailabilityInterface";
-import { ServiceMode } from "./enums";
+import { changeAppointmentStatusRequest, ValidateRoomId } from "./api/booking";
+import { AdminChangeUserStatusRequest, PreBoardingResponse } from "./api/user";
+import { AdminRejectProviderModalState, ApiBaseResponse } from "./commonInterface";
+import { AdminChangeProviderBlockStatusRequest, AdminChangeProviderTrustTagRequest } from "./api/providerProfile";
 
 // Admin plan hook return type interface
 export interface UseAdminPlanReturn {
@@ -43,7 +44,7 @@ export interface useIsMobileReturn {
 }
 
 // Modal animation hook parameter type interface
-export interface useModalAnimationParams {
+export interface useModalAnimationProps {
   onClose: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
@@ -94,7 +95,7 @@ export interface useRoleBasedNavigationReturn {
 }
 
 // Add availability hook parameter type interface
-export interface UseAddAvailabilityParams {
+export interface UseAddAvailabilityProps {
     getValues: UseFormGetValues<{
         day: string;
         isAvailable: boolean;
@@ -131,4 +132,17 @@ export interface UseBookingCustomHookReturn {
     handleReviewAddFormToggle: (e: React.MouseEvent<HTMLDivElement>, bookingId: string, providerId: string) => void;
     changeAppointmentStatusHandler: (data: changeAppointmentStatusRequest) => Promise<ApiBaseResponse>;
     cancelBookingHandler: (bookingId: Booking["_id"]) => Promise<ApiBaseResponse>;
+}
+
+// preboarding hook return interface
+export interface UsePreBoardingReturn {
+    submitPreBoardingHandler: (data: SubmitPreBoardingHandlerProps) => Promise<ApiBaseResponse<PreBoardingResponse>>;
+}
+
+// preboarding hook props
+export interface SubmitPreBoardingHandlerProps {
+    authUser: AuthUser | null;
+    selectedRole: Role;
+    selectedOption: HearAboutUsOptionValue;
+    referralCode: string | null;
 }

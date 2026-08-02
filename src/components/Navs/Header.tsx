@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "../ui/button";
 import { Menu, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import ThemeToggle from "../common/ThemeToggle";
+import ThemeToggler from "../common/ThemeToggler";
 import { AnimatePresence, motion } from "framer-motion";
 import { navigation, redirectPaths } from "@/shared/utils/constants";
 import logo from '../../assets/logos/company/slotflowLogoTransparent.png';
@@ -62,7 +62,7 @@ const Header = () => {
             Sign Up
           </Button>
 
-          <ThemeToggle />
+          <ThemeToggler />
 
           <button
             onClick={toggleMobileMenu}

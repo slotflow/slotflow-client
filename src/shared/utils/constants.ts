@@ -86,6 +86,8 @@ import {
   ProviderApprovalMessageInterface,
   gsapBigSvgYDirectionAnimationInterface,
   ContactSupportOptions,
+  OnboardingStep,
+  BoardingStep,
 } from "../interface/commonInterface";
 import { ChartConfig } from "@/components/ui/chart";
 import { OptionType } from '../interface/commonInterface';
@@ -103,6 +105,13 @@ import whatsappLogo from "@/assets/logos/external/whatsapp.png";
 import stripeLogo from '../../assets/logos/external/stripe.jpeg';
 import googleMapsLogo from "@/assets/logos/external/googleMap.png";
 import googleCalendarLogo from '../../assets/logos/external/googleCalendar.png';
+
+import choose from "@/assets/svgs/choose.svg";
+import address from '@/assets/svgs/address.svg';
+import working from '@/assets/svgs/working.svg';
+import fileUpload from '@/assets/svgs/fileUpload.svg';
+import service from '@/assets/svgs/serviceDetails.svg';
+import availability from '@/assets/svgs/availability.svg';
 
 // Plan Tiers 
 export const PLAN_TIERS = ["free", "starter", "professional", "enterprise"] as const;
@@ -1141,47 +1150,61 @@ export const AppointmentsStatsMapForAdmin: StatsMapForAdminInterface[] = [
   },
 ];
 
-// Address creating, service details creating and service availability creating page side box data
-export const progressBars: { [key: number]: boolean[] } = {
-  0: [true, false, false, false, false],
-  1: [true, false, false, false, false],
-  2: [true, true, false, false, false],
-  3: [true, true, true, false, false],
-  4: [true, true, true, true, false],
-  5: [true, true, true, true, true],
-};
-
-// Onboarding sidebar headings
-const sidebarHeadings: string[] = [
-  'Setup',
-  'Address',
-  'Service',
-  'Availability',
-  "Upload Proofs",
-  "Approval"
+// boarding data for the preboarding and onboarding pages
+export const boardingData: BoardingStep[] = [
+  {
+    id: 1,
+    title: "Account Setup",
+    image: choose,
+    description:
+      "Choose how you'd like to use Slotflow. Whether you're booking services or offering them, we'll tailor your experience accordingly.",
+  },
+  {
+    id: 2,
+    title: "How did you hear about us?",
+    image: choose,
+    description:
+      "Help us understand how you discovered Slotflow. Your feedback enables us to improve and reach more users effectively.",
+  },
+  {
+    id: 3,
+    title: "Address",
+    image: address,
+    description:
+      "Provide your business address accurately so customers can discover your services and book appointments with confidence.",
+  },
+  {
+    id: 4,
+    title: "Service Details",
+    image: service,
+    description:
+      "Tell customers about the services you provide, including descriptions, pricing, and any important information they'll need before booking.",
+  },
+  {
+    id: 5,
+    title: "Availability",
+    image: availability,
+    description:
+      "Set your working days and available time slots to ensure customers can book appointments that fit your schedule.",
+  },
+  {
+    id: 6,
+    title: "Upload Proofs",
+    image: fileUpload,
+    description:
+      "Upload the required verification documents. Please ensure they are valid, clearly visible, and meet the specified file requirements.",
+  },
+  {
+    id: 7,
+    title: "Approval",
+    image: working,
+    description:
+      "Your application has been submitted successfully. Our team is reviewing your information, and you'll receive an email once your account has been approved.",
+  },
 ];
 
-// Onboarding page labels
-export const pageLabels: { [key: number]: string[] } = {
-  0: sidebarHeadings,
-  1: sidebarHeadings,
-  2: sidebarHeadings,
-  3: sidebarHeadings,
-  4: sidebarHeadings,
-  5: sidebarHeadings
-};
 
-// Onboarding pages descriptions
-export const pageDescriptions: { [key: number]: string } = {
-  0: "Welcome to Slotflow! We're excited to have you on board. Let’s get you set up what would you like to do?.",
-  1: "Provide your service address accurately to ensure seamless customer bookings.",
-  2: "Provide detailed information about your services for clarity and transparency.",
-  3: "Set your service availability to manage customer appointments efficiently.",
-  4: "Upload your proof of identity. Make sure to upload the current documents within the specified size and format limits.",
-  5: "Our team is reviewing your service registration request. You will be notified via email once your request is approved. Thank you for your patience.",
-};
-
-// Address page google map title
+// Address page google map title  
 export const addAddressGoogleMapLinkInfoHeading: string = "Select Your Exact Location";
 
 // Address page google map info
@@ -1493,11 +1516,6 @@ export const hearAboutUsOptions: HearAboutUsOptions[] = [
   { label: "Other", value: HearAboutUsOptionValue.OTHER, icon: HelpCircle },
 ]
 
-// Preboarding titles
-export const preBoardingTitles: string[] = [
-  "Choose your account type",
-  "Where did you hear about us?"
-]
 
 // Onboarding titles
 export const onboardingContent: Record<string, {
@@ -1536,6 +1554,51 @@ export const onboardingContent: Record<string, {
     description2: "Submit your profile for review. Our team will verify your details within one business day.",
     description3: "Your profile is under review. This may take up to 24 hours."
   },
+};
+
+export const ONBOARDING_CONFIG: Record<string, OnboardingStep> = {
+    "/preboarding/role": {
+        pageNumber: 1,
+        heading: onboardingContent.setupRole.title,
+        description: onboardingContent.setupRole.description,
+        path: "/preboarding/role"
+    },
+    "/preboarding/hear-about-us": {
+        pageNumber: 2,
+        heading: onboardingContent.hearAboutUs.title,
+        description: onboardingContent.hearAboutUs.description,
+        path: "/preboarding/hear-about-us"
+    },
+    "/onboarding/address": {
+        pageNumber: 3,
+        heading: onboardingContent.address.title,
+        description: onboardingContent.address.description,
+        path: "/onboarding/address"
+    },
+    "/onboarding/service": {
+        pageNumber: 4,
+        heading: onboardingContent.serviceDetails.title,
+        description: onboardingContent.serviceDetails.description,
+        path: "/onboarding/service"
+    },
+    "/onboarding/availability": {
+        pageNumber: 5,
+        heading: onboardingContent.availability.title,
+        description: onboardingContent.availability.description,
+        path: "/onboarding/availability"
+    },
+    "/onboarding/proofs": {
+        pageNumber: 6,
+        heading: onboardingContent.proofs.title,
+        description: onboardingContent.proofs.description,
+        path: "/onboarding/proofs"
+    },
+    "/onboarding/pending": {
+        pageNumber: 7,
+        heading: onboardingContent.profileApproval.title,
+        description: onboardingContent.profileApproval.description,
+        path: "/onboarding/pending"
+    }
 };
 
 // Default button className

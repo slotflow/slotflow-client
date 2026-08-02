@@ -20,7 +20,7 @@ const initialState: AuthState = {
     eventSocketId: null,
     eventSocketIsConnected: false,
     subscriptionUpdating: false,
-    boardingData: {
+    preboardingData: {
         selectedRole: null,
         hearAboutUsOption: null,
         referralCode: null,
@@ -91,8 +91,8 @@ const authSlice = createSlice({
         setSubscriptionUpdating: (state, action: PayloadAction<boolean>) => {
             state.subscriptionUpdating = action.payload;
         },
-        setBoardingData: (state, action: PayloadAction<Partial<AuthState["boardingData"]>>) => {
-            state.boardingData = { ...state.boardingData, ...action.payload };
+        setBoardingData: (state, action: PayloadAction<Partial<AuthState["preboardingData"]>>) => {
+            state.preboardingData = { ...state.preboardingData, ...action.payload };
         },
     },
     extraReducers: (builder) => {

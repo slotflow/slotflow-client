@@ -35,20 +35,20 @@ const AuthLayout: React.FC = () => {
             <Outlet />
           </AuthContent>
         </section>
-        <section className="bg-black relative hidden lg:flex lg:w-7/12 items-center justify-center overflow-hidden px-12">
+        <section className=" bg-gradient-to-r from-slate-50 to-gray-300 dark:from-neutral-600 dark:to-neutral-800 relative hidden lg:flex lg:w-7/12 items-center justify-center overflow-hidden px-12">
           <div className="flex max-w-3xl flex-col items-center">
             <SectionHeading
               badge="Smart Appointment Booking Platform"
               badgeIcon={Sparkle}
               title={
-                <>
+                <span className="text-">
                   Book <span className="bg-gradient-to-r from-violet-400 to-indigo-500 bg-clip-text text-transparent">Appointments</span>
                   <br />
 
-                  <span className="text-primary">
+                  <span className="">
                     without the hassle.
                   </span>
-                </>
+                </span>
               }
               isAuth={true}
             />
