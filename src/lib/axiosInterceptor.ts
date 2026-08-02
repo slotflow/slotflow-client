@@ -13,7 +13,7 @@ export const setupAxiosInterceptors = () => {
             const status = error.response?.status;
             const message = error.response?.data?.message || "Unexpected Error";
             if (!error.response) {
-                toast.error("Network error: Please check your internet.");
+                toast.error("Unable to connect to the server. Please try again.");
                 console.log("error : ", error);
                 return Promise.reject(error);
             }
@@ -38,10 +38,16 @@ export const setupAxiosInterceptors = () => {
                     break;
 
                 case 500:
+                    toast.error("Internal server error. Please try again later.");
+                    break;
                 case 502:
+                    toast.error("Bad gateway. Please try again later.");
+                    break;
                 case 503:
+                    toast.error("Service is temporarily unavailable. Please try again later.");
+                    break;
                 case 504:
-                    toast.error("Server error. Please try again later.");
+                    toast.error("The server took too long to respond. Please try again.");
                     break;
 
                 default:
