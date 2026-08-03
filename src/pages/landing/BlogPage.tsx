@@ -49,7 +49,7 @@ const BlogPage = () => {
         };
 
         fetchData();
-    }, []);
+    }, [articleCategories.length, dispatch, articles.length]);
 
     if (loading) {
         return (

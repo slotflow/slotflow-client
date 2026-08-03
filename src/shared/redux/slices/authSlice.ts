@@ -10,8 +10,9 @@ import { providerCreateServiceDetails } from "@/shared/apis/providerService";
 import { providerSubmitDetailsForReview } from "@/shared/apis/providerProfile";
 import { createServiceAvailabilities } from "@/shared/apis/serviceAvailability";
 import { ProviderSubmitDetailsResponse } from "@/shared/interface/api/providerProfile";
-import { UserUpdateProfileImageResponse, UserUpdateUserInfoResponse } from "@/shared/interface/api/user";
 import { AdminVerificationStatus, StripeAccountStatus } from "@/shared/interface/enums";
+import { UserUpdateProfileImageResponse, UserUpdateUserInfoResponse } from "@/shared/interface/api/user";
+import { UserCreateAddressResponse } from "@/shared/interface/api/address";
 
 const initialState: AuthState = {
     authUser: null,
@@ -83,9 +84,9 @@ const authSlice = createSlice({
         setSubscription: (state, action: PayloadAction<SubscriptionActivated>) => {
             if (state.authUser) {
                 state.authUser.providerSubscription = action.payload.subscribedPlan;
-                state.authUser.subscriptionStartDate = action.payload.startDate,
-                    state.authUser.subscriptionEndDate = action.payload.endDate,
-                    state.authUser.subscriptionStatus = action.payload.subscriptionStatus
+                state.authUser.subscriptionStartDate = action.payload.startDate;
+                state.authUser.subscriptionEndDate = action.payload.endDate;
+                state.authUser.subscriptionStatus = action.payload.subscriptionStatus;
             }
         },
         setSubscriptionUpdating: (state, action: PayloadAction<boolean>) => {
@@ -101,7 +102,7 @@ const authSlice = createSlice({
         builder
             .addCase(signin.pending, () => { })
             .addCase(signin.fulfilled, (state, action: PayloadAction<ApiBaseResponse<SigninResponse>>) => {
-                if(action.payload.data) {
+                if (action.payload.data) {
                     state.authUser = action.payload.data.user;
                 }
             })
@@ -136,7 +137,7 @@ const authSlice = createSlice({
                     state.authUser.isAddressAdded = false;
                 }
             })
-            .addCase(createAddress.fulfilled, (state, action: PayloadAction<ApiBaseResponse<any>>) => {
+            .addCase(createAddress.fulfilled, (state, action: PayloadAction<ApiBaseResponse<UserCreateAddressResponse>>) => {
                 if (state.authUser) {
                     state.authUser.isAddressAdded = action.payload.success;
                 }
@@ -148,32 +149,32 @@ const authSlice = createSlice({
             });
 
         builder
-            .addCase(providerCreateServiceDetails.pending, () => {})
+            .addCase(providerCreateServiceDetails.pending, () => { })
             .addCase(providerCreateServiceDetails.fulfilled, (state, action) => {
                 if (state.authUser) {
                     state.authUser.isServiceDetailsAdded = action.payload.success;
                 }
             })
-            .addCase(providerCreateServiceDetails.rejected, () => {});
+            .addCase(providerCreateServiceDetails.rejected, () => { });
 
         builder
-            .addCase(createServiceAvailabilities.pending, () => {})
+            .addCase(createServiceAvailabilities.pending, () => { })
             .addCase(createServiceAvailabilities.fulfilled, (state, action) => {
                 if (state.authUser) {
                     state.authUser.isServiceAvailabilityAdded = action.payload.success;
                 }
             })
-            .addCase(createServiceAvailabilities.rejected, () => {});
+            .addCase(createServiceAvailabilities.rejected, () => { });
 
         builder
-            .addCase(userUpdateInfo.pending, () => {})
+            .addCase(userUpdateInfo.pending, () => { })
             .addCase(userUpdateInfo.fulfilled, (state, action: PayloadAction<ApiBaseResponse<UserUpdateUserInfoResponse>>) => {
                 if (state.authUser && action.payload.data) {
                     state.authUser.username = action.payload.data.username;
                     state.authUser.phone = action.payload.data.phone as string;
                 }
             })
-            .addCase(userUpdateInfo.rejected, () => {});
+            .addCase(userUpdateInfo.rejected, () => { });
 
         builder
             .addCase(providerSubmitDetailsForReview.pending, () => { })

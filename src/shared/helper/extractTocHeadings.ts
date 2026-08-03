@@ -1,6 +1,7 @@
 import { unified } from "unified";
 import remarkParse from "remark-parse";
 import { visit } from "unist-util-visit";
+import type { Heading, Text } from "mdast";
 import { TOCHeadingProps } from "../interface/componentInterface";
 
 const slugify = (text: string) =>
@@ -18,10 +19,10 @@ export function extractHeadings(markdown: string): TOCHeadingProps[] {
     const headings: TOCHeadingProps[] = [];
     const stack: TOCHeadingProps[] = [];
 
-    visit(tree, "heading", (node: any) => {
+    visit(tree, "heading", (node: Heading) => {
         const text = node.children
-            .filter((child: any) => child.type === "text")
-            .map((child: any) => child.value)
+            .filter((child): child is Text => child.type === "text")
+            .map((child) => child.value)
             .join("");
 
         const heading: TOCHeadingProps = {

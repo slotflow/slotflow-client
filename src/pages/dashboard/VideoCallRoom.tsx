@@ -144,7 +144,7 @@ const RoomPage = () => {
       videoSocket?.emit(VideoCallSocket.roomLeave, { roomId });
       dispatch(disconnectVideoSocket());
     };
-  }, [roomId, user?.email]);
+  }, [roomId, user?.email, dispatch, user?.uid, user?.username]);
 
   const toggleCamera = () =>
     toggleMediaTrack({

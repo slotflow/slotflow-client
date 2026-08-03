@@ -1,7 +1,7 @@
+import { useEffect } from "react";
 import FormField from '../FormField';
 import { toast } from 'react-toastify';
 import { Button } from '../../ui/button';
-import { useEffect } from "react";
 import { PhoneInput } from '../phone-input';
 import { countries } from 'country-data-list';
 import { Label } from '@/components/ui/label';
@@ -94,7 +94,7 @@ const AddressForm = ({
         };
 
         fetchOldAddress();
-    }, [isUpdating, authUser]);
+    }, [isUpdating, authUser, reset]);
 
     const submitHandler = async (data: CreateAddressFormType) => {
         try {

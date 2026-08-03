@@ -6,10 +6,8 @@ import DataFetchingError from "../error/DataFetchingError";
 import { OnChangeFn, PaginationState } from "@tanstack/react-table";
 import { CommonTableComponentProps, FetchFunctionBaseQueryParams } from "@/shared/interface/commonInterface";
 
-const CommonTable = <
-  T,
-  Q extends object = {}
->({
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+const CommonTable = <T, Q extends object = {}>({
   parentDivCalssName,
   fetchApiFunction,
   queryKey,

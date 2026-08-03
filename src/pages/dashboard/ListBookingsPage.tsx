@@ -9,6 +9,7 @@ import ConfirmAlert from "@/components/alert/ConfirmAlert";
 import { useRoleBasedNavigation } from "@/hooks/useRoleBasedNavigation";
 import BookingsTableColumn from "@/components/table/tableColumns/BookingsTableColumn";
 import { changeAppointmentStatusRequest, FetchBookingsResponse, ValidateRoomId } from "@/shared/interface/api/booking";
+import DataFetchingError from "@/components/error/DataFetchingError";
 
 const ListBookingsPage = () => {
 
@@ -38,21 +39,20 @@ const ListBookingsPage = () => {
   // function to handle user cancel booking
   const handleUserCancelBooking = async (bookingId: string) => {
     // need to add the confirm alert
-     toast(({ closeToast }) => (
-          <ConfirmAlert
-            message="Are you sure you want to cancel this booking?"
-            entityId={bookingId}
-            deleteHandler={cancelBookingHandler}
-            closeToast={closeToast}
-            errorMessage="Booking canceling failed"
-            successMessage="Review deleted successfully"
-            btnTitle="Cancel booking button"
-            btnText="Cancel"
-          />
-        ), { autoClose: false });
+    toast(({ closeToast }) => (
+      <ConfirmAlert
+        message="Are you sure you want to cancel this booking?"
+        entityId={bookingId}
+        deleteHandler={cancelBookingHandler}
+        closeToast={closeToast}
+        errorMessage="Booking canceling failed"
+        successMessage="Review deleted successfully"
+        btnTitle="Cancel booking button"
+        btnText="Cancel"
+      />
+    ), { autoClose: false });
   }
 
-  // 
   const handleJoinCall = async (data: ValidateRoomId) => {
     const result = await JoinCallHandler(data);
     if (!result.success) {
@@ -62,16 +62,20 @@ const ListBookingsPage = () => {
     }
   }
 
+  if (!authUser) {
+    return <DataFetchingError message="No user found" />;
+  }
+
   const columns = BookingsTableColumn(
     handleJoinCall,
     handleNavigateToBookingsDetailPage,
-    authUser?.role!,
+    authUser.role,
     handleReviewAddFormToggle,
     handleUserCancelBooking,
     handleChangeAppointmentStatus,
   );
 
-  // can implement a custom filter and pass as query paramas
+  // can implement a custom filter and pass as query params
 
   return (
     <div className="p-4">

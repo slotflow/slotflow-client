@@ -118,7 +118,7 @@ const PaymentSelection = () => {
             dispatch(setPaymentSelectionOpen(false))
         }
 
-    }, [bookingData, subscriptionData, type, dispatch]);
+    }, [bookingData, subscriptionData, type, dispatch, eventSocket]);
 
     const paymentGateways = [
         {

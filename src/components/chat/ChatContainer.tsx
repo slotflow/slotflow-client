@@ -61,7 +61,7 @@ const ChatContainer = () => {
             socket?.off("typing");
             socket?.off("stopTyping");
         };
-    }, [socket, selectedUser]);
+    }, [authUser, selectedUser]);
 
     if (!selectedUser) return <NoChatSelectedSShimmer className="w-9/12" />;
 

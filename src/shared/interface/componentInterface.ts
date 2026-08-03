@@ -173,7 +173,7 @@ export interface AlertProps {
 export interface ConfirmDeleteProps {
   message: string;
   entityId: string;
-  deleteHandler: (entityId: string) => Promise<any>;
+  deleteHandler: (entityId: string) => Promise<ApiBaseResponse>;
   closeToast: () => void;
   errorMessage: string;
   successMessage: string;
@@ -595,7 +595,7 @@ export interface GenerateTimeSlotsProps {
 export interface TimeFieldProps {
   label: string;
   name: "startTime" | "endTime";
-  control: any;
+  control: Control<ProviderServiceAvailabilityFormType>;
 }
 
 // TimeRangeSetter component props interface
@@ -781,7 +781,7 @@ export interface StatCardProps {
   title: string;
   isLoading: boolean;
   isError: boolean;
-  error?: any;
+  error?: Error | null;
   data: number | boolean;
   Icon: LucideIcon;
   percentage?: number;
@@ -799,7 +799,7 @@ export interface CreditCardPorps {
   title: string;
   isLoading: boolean;
   isError: boolean;
-  error: any;
+  error: Error | null;
   data: number | boolean | React.ReactNode;
   Icon: LucideIcon
   bgColour?: string;

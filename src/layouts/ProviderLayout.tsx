@@ -56,7 +56,7 @@ const ProviderLayout = () => {
       navigate("/provider/dashboard");
       return;
     }
-  }, [authUser, navigate]);
+  }, [authUser, navigate, pathname]);
 
   return (
     <MainLayout

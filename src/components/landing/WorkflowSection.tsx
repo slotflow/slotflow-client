@@ -61,8 +61,9 @@ const WorkflowSection = () => {
     if (images.length === 0) return;
 
     const canvas = canvasRef.current;
+    const section = sectionRef.current;
 
-    if (!canvas) return;
+    if (!canvas || !section) return;
 
     const context = canvas.getContext("2d");
 
@@ -110,7 +111,7 @@ const WorkflowSection = () => {
         },
         ease: "none",
         scrollTrigger: {
-          trigger: sectionRef.current,
+          trigger: section,
           start: "top top",
           end: `+=${VIDEO_SCROLL_DISTANCE}`,
           scrub: true,
@@ -131,7 +132,6 @@ const WorkflowSection = () => {
         pinSpacing: false,
         anticipatePin: 1,
       },
-      // onUpdate: render,
       onUpdate: () => {
         render();
 
@@ -158,7 +158,7 @@ const WorkflowSection = () => {
     return () => {
       tween.kill();
       ScrollTrigger.getAll().forEach((st) => {
-        if (st.trigger === sectionRef.current) {
+        if (st.trigger === section) {
           st.kill();
         }
       });

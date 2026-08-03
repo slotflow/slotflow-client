@@ -44,10 +44,10 @@ export const useRoleBasedNavigation = (): useRoleBasedNavigationReturn => {
                 return { success: true, message: res.message || "Redirecting to video call..." };
             }
             return { success: false, message: res.message || "Invalid Room ID" };
-        } catch (error: any) {
+        } catch {
             return {
                 success: false,
-                message: error?.response?.data?.message || "Invalid Request, please try again after sometimes."
+                message: "Invalid Request, please try again after sometimes."
             };
         }
     };

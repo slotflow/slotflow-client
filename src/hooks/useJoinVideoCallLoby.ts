@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { appConfig } from "@/shared/config/env";
 import { joinOrLeft } from "@/shared/apis/booking";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MediaTrackKind, Role } from "@/shared/interface/enums";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
@@ -72,7 +72,7 @@ export const useVideoCallLobby = ({
     }
   };
 
-  const getPreview = async () => {
+  const getPreview = useCallback(async () => {
     try {
       const localStream = await navigator.mediaDevices.getUserMedia({
         video: true,
@@ -99,7 +99,7 @@ export const useVideoCallLobby = ({
       dispatch(setCamera(false));
       dispatch(setMic(false));
     }
-  };
+  }, [dispatch]);
 
   const toggleCamera = () =>
     toggleMediaTrack({
@@ -135,7 +135,7 @@ export const useVideoCallLobby = ({
         streamRef.current = null;
       }
     };
-  }, []);
+  }, [getPreview]);
 
   useEffect(() => {
     if (isVideoCallTimerRunning) {

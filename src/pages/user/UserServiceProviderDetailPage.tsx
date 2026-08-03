@@ -12,28 +12,29 @@ import ProviderServiceAvailability from "@/components/profile/ProviderServiceAva
 
 const UserServiceProviderDetailPage = () => {
 
-    const { providerId } = useParams<string>();
-    if (!providerId) return <DataFetchingError message={"Provider Profile fetching error"} />
-
+    const { providerId } = useParams<{ providerId: string }>();
+    
     const { data: profileData, isLoading: profileLoading, isError: profileIsError } = useQuery({
         queryFn: async () => {
-            const res = await fetchProviderDetailsForUser(providerId);
+            const res = await fetchProviderDetailsForUser(providerId!);
             return res.data;
         },
         queryKey: ["providerProfile", providerId],
         staleTime: 60 * 60 * 1000,
         refetchOnWindowFocus: false,
     });
-
+    
     const { data: serviceData, isLoading: serviceLoading, isError: serviceIsError } = useQuery({
         queryFn: async () => {
-            const res = await fetchProviderServiceByProviderId(providerId);
+            const res = await fetchProviderServiceByProviderId(providerId!);
             return res.data;
         },
         queryKey: ["providerService", providerId],
         staleTime: 60 * 60 * 1000,
         refetchOnWindowFocus: false,
     });
+    
+    if (!providerId) return <DataFetchingError message={"Provider Profile fetching error"} />
 
     return (
         <ProviderProfile

@@ -10,7 +10,7 @@ import { onMessageListener } from './shared/helper/onMessageListener';
 function App() {
 
   useEffect(() => {
-    onMessageListener().then((payload: any) => {
+    onMessageListener().then((payload) => {
       if (!payload?.notification) return;
       toast.info(`${payload.notification.title}\n${payload.notification.body}`);
     });

@@ -20,7 +20,7 @@ const TimeField= ({
                     control={control}
                     render={({ field }) => (
                         <TimePicker
-                            value={field.value}
+                            value={field.value as Date}
                             onChange={(newTime: Date) => field.onChange(newTime)}
                         />
                     )}

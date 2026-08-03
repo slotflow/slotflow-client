@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -7,10 +7,11 @@ import { PaymentProcessStatus } from "@/shared/interface/enums";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
 import { fetchMySubscription } from "@/shared/apis/subscription";
 import { motion, AnimatePresence, Variants } from "framer-motion";
-import { LoaderCircle, CheckCircle2, LayoutDashboard, XCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { LoaderCircle, CheckCircle2, LayoutDashboard, XCircle } from "lucide-react";
 import { setSubscription, setSubscriptionUpdating } from "@/shared/redux/slices/authSlice";
 import { setPaymentProcessStatus, setSubscriptionPaymentData } from "@/shared/redux/slices/paymentSlice";
+import { appConfig } from "@/shared/config/env";
 
 const ProviderSubscriptionConfirmPage = () => {
 
@@ -26,9 +27,9 @@ const ProviderSubscriptionConfirmPage = () => {
 
   const isFetched = useRef(false);
   const maxRetries = 5;
-  let attempts = 0;
+  const attempts = useRef(0);
 
-  const fetchSubscription = async () => {
+  const fetchSubscription = useCallback(async () => {
     try {
       const res = await fetchMySubscription();
       if (res.success && res.data) {
@@ -40,27 +41,30 @@ const ProviderSubscriptionConfirmPage = () => {
         return;
       }
 
-      attempts++;
+      attempts.current++;
 
-      if (attempts < maxRetries) {
+      if (attempts.current < maxRetries) {
         setTimeout(fetchSubscription, 5000);
       } else {
         toast.error("Subscription activation delayed");
       }
 
     } catch (error) {
+      if(appConfig.isDevelopment) {
+        console.log("Subscription failed error : ",error)
+      }
       toast.error("Subscription activation failed");
     } finally {
       setTimeout(() => {
         dispatch(setSubscriptionUpdating(false));
       }, 1500);
     }
-  };
+  },[dispatch]);
 
   useEffect(() => {
     if (!status || !authUser || isFetched.current) return;
      setTimeout(fetchSubscription, 5000);
-  }, [authUser, status]);
+  }, [authUser, status, fetchSubscription]);
 
   const containerVariants: Variants = {
     hidden: { opacity: 0, y: 20 },

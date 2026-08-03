@@ -11,7 +11,7 @@ import providerReducer from './slices/providerSlice';
 import integrationReducer from './slices/integrationSlice';
 import { persistReducer, persistStore } from 'redux-persist';
 import { setupAxiosInterceptors } from "@/lib/axiosInterceptor";
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore, type Action } from "@reduxjs/toolkit";
 
 const persistConfig = {
     key: storeConstants.storeKey,
@@ -31,7 +31,13 @@ const rootReducers = {
 };
 
 const rootReducer = combineReducers(rootReducers);
-const baseReducer = (state: any, action: any) => {
+
+type RootReducerState = ReturnType<typeof rootReducer>;
+
+const baseReducer = (
+    state: RootReducerState | undefined,
+    action: Action
+) => {
     if (action.type === storeConstants.resetState) {
         const lightTheme = state?.app?.lightTheme;
                 

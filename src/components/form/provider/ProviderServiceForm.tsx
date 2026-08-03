@@ -146,7 +146,7 @@ const ProviderServiceForm = ({
         }
 
         fetchOldServiceDetails();
-    }, [isUpdating, reset]);
+    }, [isUpdating, reset, authUser]);
 
     const onSubmit = async (data: ProviderCreateServiceDetailsFormType) => {
         try {

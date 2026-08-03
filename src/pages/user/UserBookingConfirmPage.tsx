@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { Button } from "@/components/ui/button";
@@ -21,7 +21,7 @@ const UserBookingConfirmPage = () => {
 
   const navigate = useNavigate();
 
-  const checkRecentBooking = async () => {
+  const checkRecentBooking = useCallback(async () => {
     try {
       const response = await checkBookingConfirmed();
       if (response.data) {
@@ -36,7 +36,7 @@ const UserBookingConfirmPage = () => {
         console.log(error, "checkBookingConfirmed api failed");
       }
     }
-  };
+  },[dispatch]);
 
   useEffect(() => {
     if (!status) return;
@@ -45,7 +45,7 @@ const UserBookingConfirmPage = () => {
     }, 5000);
 
     return (() => clearTimeout(timeout));
-  }, [status]);
+  }, [status, checkRecentBooking]);
 
   const containerVariants: Variants = {
     hidden: { opacity: 0, y: 20 },

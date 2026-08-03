@@ -12,4 +12,5 @@ export interface RegisterDeviceRequest {
 export type FetchNotificationsResponse = Pick<Notification, "_id" | "title" | "body" | "isRead" | "createdAt" >
 
 // request type of fetch notifications api
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface FetchNotificationsQueryParams {}; 

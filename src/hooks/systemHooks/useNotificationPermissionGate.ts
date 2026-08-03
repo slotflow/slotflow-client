@@ -86,7 +86,7 @@ export const useNotificationPermissionGate = (): useNotificationPermissionGateRe
     if (permission === PermissionStatus.DENIED) {
       dispatch(updateNotificationPreference(false));
     }
-  }, [shouldAskPermission, authUser, dispatch]);
+  }, [shouldAskPermission, dispatch]);
 
   useEffect(() => {
     askPermission();

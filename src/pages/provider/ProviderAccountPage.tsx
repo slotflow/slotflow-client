@@ -15,8 +15,6 @@ const ProviderAccountPage = () => {
 
     const { authUser } = useSelector((state: RootState) => state.auth);
 
-    if (!authUser) return <DataFetchingError message="User not found" />;
-
     const { data: providerService, isLoading: providerServiceLoading, isError: providerServiceError } = useQuery({
         queryFn: async () => {
             const res = await providerFetchServiceDetails();
@@ -26,7 +24,7 @@ const ProviderAccountPage = () => {
         staleTime: 1 * 60 * 1000,
         refetchOnWindowFocus: false,
     });
-
+    
     const { data: providerProfile, isLoading: providerProfileLoading, isError: providerProfileError } = useQuery({
         queryFn: async () => {
             const res = await providerFetchMyProfileDetails();
@@ -36,6 +34,8 @@ const ProviderAccountPage = () => {
         staleTime: 1 * 60 * 1000,
         refetchOnWindowFocus: false,
     });
+
+    if (!authUser) return <DataFetchingError message="User not found" />;
 
     return (
         <ProviderProfile

@@ -1,8 +1,8 @@
 import { toast } from "react-toastify";
-import React, { useEffect } from 'react';
 import { Separator } from '../ui/separator';
 import { Card, CardContent } from '../ui/card';
 import { RootState } from "@/shared/redux/appStore";
+import React, { useCallback, useEffect } from 'react';
 import { AppDispatch } from "@/shared/redux/appStore";
 import { useDispatch, useSelector } from 'react-redux';
 import { connectStripeAccount } from "@/shared/apis/payment";
@@ -21,8 +21,6 @@ const IntegrationsListing = () => {
     const authUser = useSelector((state: RootState) => state.auth.authUser);
     const { googleConnectionLoding, stripeConnectionLoading } = useSelector((state: RootState) => state.integration);
 
-    if(!authUser) return null;
-
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         const data = params.get("response");
@@ -40,16 +38,16 @@ const IntegrationsListing = () => {
                 if (response.stripeOnboardingStatus === 'success') {
                     toast.success("Stripe onboarding completed successfully");
                     dispatch(setStripeAccountStatus(StripeAccountStatus.PENDING));
-    //                 setTimeout(() => {
-    //     fetchStripeAccountStatus();
-    // }, 10000);
-                } else if(response.stripeOnboardingStatus === 'failed') {
+                    //                 setTimeout(() => {
+                    //     fetchStripeAccountStatus();
+                    // }, 10000);
+                } else if (response.stripeOnboardingStatus === 'failed') {
                     toast.error("Stripe onboarding failed");
                 }
             }
         } catch (err) {
             toast.error("Connecting failed");
-            console.error("Google connect parse error:", err);
+            console.error("Google connect parse error: ", err);
         } finally {
             const url = new URL(window.location.href);
             url.searchParams.delete("response");
@@ -57,40 +55,42 @@ const IntegrationsListing = () => {
         }
     }, [dispatch]);
 
-    useEffect(() => {
-    if (authUser?.stripeAccountStatus === StripeAccountStatus.PENDING) {
-        console.log("fetching")
-        const interval = setInterval(() => {
-            fetchStripeAccountStatus();
-        }, 15000);
-
-        return () => clearInterval(interval);
-    }
-}, [authUser?.stripeAccountStatus]);
-    
     // fallback function to check the stripe account status
-    const fetchStripeAccountStatus = async () => {
-        if(authUser.stripeAccountStatus === StripeAccountStatus.ACTIVE) {
+    const fetchStripeAccountStatus = useCallback(async () => {
+        if (authUser?.stripeAccountStatus === StripeAccountStatus.ACTIVE) {
             return;
         }
         try {
             dispatch(setStripeConnectionLoading(true));
             const res = await checkStripeAccountStatus();
-            console.log("check account status : ",res);
-            if(res.success) {
+            console.log("check account status : ", res);
+            if (res.success) {
                 dispatch(setStripeAccountStatus(res.data?.accountStatus as StripeAccountStatus));
                 dispatch(setStripeConnectionLoading(false));
-                if(res.data?.accountStatus === StripeAccountStatus.ACTIVE) {
+                if (res.data?.accountStatus === StripeAccountStatus.ACTIVE) {
                     toast.success("Stripe connected successfully");
                 }
             }
-        } catch(err) {
+        } catch (error) {
+            if(appConfig.isDevelopment) {
+                console.error("Fetch stripe account status error : ",error);
+            }
             toast.error("Failed to fetch stripe account status");
         } finally {
             dispatch(setStripeConnectionLoading(false));
         }
-    }
+    }, [authUser?.stripeAccountStatus, dispatch]);
 
+        useEffect(() => {
+        if (authUser?.stripeAccountStatus === StripeAccountStatus.PENDING) {
+            console.log("fetching")
+            const interval = setInterval(() => {
+                fetchStripeAccountStatus();
+            }, 15000);
+
+            return () => clearInterval(interval);
+        }
+    }, [authUser?.stripeAccountStatus, fetchStripeAccountStatus]);
 
     const handleConnectGoogle = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -108,20 +108,29 @@ const IntegrationsListing = () => {
 
     const handleStripeConnect = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
+
+        if(!authUser?.email) {
+            toast.error("Something went wrong, please login again");
+            return;
+        }
+
         try {
             dispatch(setStripeConnectionLoading(true));
             const res = await connectStripeAccount({ email: authUser?.email });
-            console.log("res : ",res);
-            if(res.data?.accountLink) {
+            console.log("res : ", res);
+            if (res.data?.accountLink) {
                 window.location.href = res.data.accountLink;
             } else {
                 dispatch(setStripeConnectionLoading(false));
                 toast.error("Failed to connect stripe");
             }
-        } catch {
+        } catch (error) {
+            if(appConfig.isDevelopment) {
+                console.log("Error while connecting stripe: ",error)
+            }
             dispatch(setStripeConnectionLoading(false));
             toast.error("Failed to connect stripe");
-        }finally {
+        } finally {
             dispatch(setStripeConnectionLoading(false));
         }
     };
@@ -152,6 +161,9 @@ const IntegrationsListing = () => {
             isLoading: stripeConnectionLoading,
         }
     ]
+
+        if (!authUser) return null;
+
     return (
         <>
             <div className='flex-none'>

@@ -58,10 +58,8 @@ export type HandleFeatureChangeFunction = (e: ChangeEvent<HTMLInputElement>, ind
 export type HandleRoleSelectionFunction = (url: string) => void;
 
 // Common Table compoenent
-export interface CommonTableComponentProps<
-  T,
-  Q extends object = {}
-> {
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface CommonTableComponentProps<T, Q extends object = {}> {
   parentDivCalssName?: string;
 
   fetchApiFunction: (
@@ -77,12 +75,8 @@ export interface CommonTableComponentProps<
 }
 
 // Api fetch function interface
-export type ApiFetchFunction<
-  T,
-  Q extends object = {}
-> = (
-  queryParams?: FetchFunctionBaseQueryParams & Q
-) => Promise<ApiPaginatedResponse<T>>;
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export type ApiFetchFunction<T, Q extends object = {}> = (queryParams?: FetchFunctionBaseQueryParams & Q) => Promise<ApiPaginatedResponse<T>>;
 
 // Api common request parameter interface
 export interface FetchFunctionBaseQueryParams {

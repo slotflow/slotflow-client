@@ -45,7 +45,7 @@ const LocationPicker = ({
     return () => {
       mapInstance.current?.remove();
     };
-  }, []);
+  }, [onLocationSelect]);
 
   return (
     <div>

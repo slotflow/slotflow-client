@@ -74,7 +74,7 @@ const MainLayout = ({
             if (authUser.role === Role.USER) navigate('/user');
             else if (authUser.role === Role.PROVIDER) navigate('/provider');
         }
-    }, []);
+    }, [dispatch, navigate]);
 
     useNotificationPermissionGate();
 

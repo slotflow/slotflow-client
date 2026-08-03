@@ -1,14 +1,9 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
-import { getFaqs } from "@/shared/apis/contentful";
 import { appConfig } from "@/shared/config/env";
+import { getFaqs } from "@/shared/apis/contentful";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/shared/redux/appStore";
-import {
-    appendFaqs,
-    setFaqLoading,
-    setFaqTotal,
-} from "@/shared/redux/slices/appSlice";
+import { appendFaqs, setFaqTotal, setFaqLoading } from "@/shared/redux/slices/appSlice";
 
 interface UseFaqsProps {
     limit: number;
@@ -33,11 +28,8 @@ const useFaqs = ({
         }
 
         const fetchFaqs = async () => {
-
             try {
-
                 dispatch(setFaqLoading(true));
-
                 const response = await getFaqs({
                     limit,
                     skip,
@@ -47,22 +39,18 @@ const useFaqs = ({
                 dispatch(setFaqTotal(response.total));
 
             } catch (error) {
-
                 if (appConfig.isDevelopment) {
-                    console.error(error);
+                    console.error("Faqs fetching error : ", error);
                 }
 
             } finally {
-
                 dispatch(setFaqLoading(false));
-
             }
-
         };
 
         void fetchFaqs();
 
-    }, [limit, skip]);
+    }, [limit, skip, dispatch, faqs.length]);
 
     return {
         faqs,

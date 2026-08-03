@@ -2,12 +2,12 @@ import {
     Code,
     User,
     Mail,
+    Image,
     Phone,
     MapPin,
     Calendar,
     ShieldUser,
     BadgeCheck,
-    Image,
 } from "lucide-react";
 import {
     UserFetchMyProfileDetailsResponse,
@@ -69,10 +69,10 @@ const ProfileListing = ({
             setSelectedUserData) {
             setSelectedUserData({
                 selectedUserName: data.username,
-                selectedUserProfileImage: (data as any).profileImage || null
+                selectedUserProfileImage: (data as { profileImage?: string }).profileImage || null
             });
         }
-    }, [data]);
+    }, [data, adminLookingProvider, adminLookingUser, setProfileImage, setSelectedUserData, userLookingProvider]);
 
     if (isError) {
         return <DataFetchingError message={error?.message} />

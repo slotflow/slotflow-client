@@ -72,7 +72,7 @@ const ChatSidebar: React.FC<ChatSideBarProps> = ({
     useEffect(() => {
         socket?.on("getOnlineUsers", handleOnlineUsers);
         return () => { socket?.off("getOnlineUsers", handleOnlineUsers) };
-    }, [socket, handleOnlineUsers]);
+    }, [handleOnlineUsers]);
 
     useEffect(() => {
         const setNewMessage = (message: setLatMessageProps) => {
@@ -80,7 +80,7 @@ const ChatSidebar: React.FC<ChatSideBarProps> = ({
         };
         socket?.on("newMessage", setNewMessage);
         return () => { socket?.off("newMessage", setNewMessage) };
-    }, [socket]);
+    }, []);
 
     if (isLoading) return <ChatSidebarShimmer />;
     if (!data || (isError && error)) return <DataFetchingError message={(error as Error).message} className="min-h-full" />

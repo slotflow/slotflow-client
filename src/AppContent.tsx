@@ -16,7 +16,7 @@ const AppContent: React.FC = () => {
   const themeMode = useSelector((store: RootState) => store.app?.lightTheme);
 
   useEffect(() => {
-    onMessageListener().then((payload: any) => {
+    onMessageListener().then((payload) => {
       if (!payload?.notification) return;
       toast.info(`${payload.notification.title}\n${payload.notification.body}`);
     });

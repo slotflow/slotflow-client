@@ -3,10 +3,12 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { toast } from "react-toastify";
 import { Card, CardContent } from "../ui/card";
+import { appConfig } from "@/shared/config/env";
 
 const BlogNewsletter = () => {
 
     const [email, setEmail] = useState<string>("");
+
     const handleBlogSubscribe = async () => {
         try {
             if (!email) {
@@ -15,6 +17,9 @@ const BlogNewsletter = () => {
             }
             toast.success("Subscribed");
         } catch (error) {
+            if(appConfig.isDevelopment) {
+                console.log("Error while blog subscribing : ",error);
+            }
             toast.error("Something went wrong")
         }
     }
