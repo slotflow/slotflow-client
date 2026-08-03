@@ -160,10 +160,7 @@ export interface PlanFeatureInterface {
 }
 
 // Plan list type interface
-export type PlanListType = Array<Pick<Plan, "_id" | "planName" | "description" | "features"> & {
-  monthlyPrice: number;
-  yearlyPrice: number;
-}>
+export type PlanListType = Array<Pick<Plan, "_id" | "planName" | "price" | "description" | "features">>
 
 // Provider approval message interface
 export interface ProviderApprovalMessageInterface {
@@ -479,7 +476,7 @@ export interface BookingStepsHeroPeople {
 export interface BookingSteps {
   title: string;
   description: string;
-  icon: React.ComponentType<{ className?: string }>;
+  icon: LucideIcon;
 }
 
 // Blog CTA items data interface

@@ -1,7 +1,7 @@
 import { unified } from "unified";
 import remarkParse from "remark-parse";
 import { visit } from "unist-util-visit";
-import { TOCHeadingProps } from "../interface/commonInterface";
+import { TOCHeadingProps } from "../interface/componentInterface";
 
 const slugify = (text: string) =>
     text

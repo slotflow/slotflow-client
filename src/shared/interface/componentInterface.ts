@@ -10,13 +10,13 @@ import { LucideIcon } from "lucide-react";
 import { DateRange } from "react-day-picker";
 import { RouteNames } from "../utils/constants";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { Dispatch, ReactNode, SetStateAction } from "react";
 import { ChartConfig } from "@/components/ui/chart";
 import * as RPNInput from "react-phone-number-input";
 import { SetProofDataProps } from "./sliceInterface";
 import { PlanName, Role, ServiceMode } from "./enums";
 import { User } from "./entityInterface/userInterface";
 import { Plan } from "./entityInterface/planInterface";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 import { FetchProviderServiceResponse } from "./api/providerService";
 import { ProviderServiceAvailabilityFormType } from "../zod/providerZod";
 import { FetchAddressResponse, FetchMyAddressResponse } from "./api/address";
@@ -28,7 +28,7 @@ import { Column, ColumnDef, OnChangeFn, PaginationState } from "@tanstack/react-
 import { FetchProvidersProofsResponse, UpdateFileDataRequest } from "./api/commonApiInterface";
 import { AdminFetchUserProfileDetailsResponse, UserFetchServiceProvidersResponse, UserFetchMyProfileDetailsResponse } from "./api/user";
 import { AdminFetchProviderProfileDetailsResponse, ProviderFetchMyProfileDetailsResponse, UserFetchProviderProfileDetailsResponse } from "./api/providerProfile";
-import { ApiBaseResponse, ApiPaginatedResponse, BaseChartData, BlogArticle, BlogAuthorFields, ChatComponentProps, FaqFields, FetchFunctionBaseQueryParams, OptionType, Route, statsMapIntrface, TabItem, TimeRange } from "./commonInterface";
+import { ApiBaseResponse, ApiPaginatedResponse, BaseChartData, BlogArticle, BlogAuthorFields, ChatComponentProps, FaqFields, FetchFunctionBaseQueryParams, OptionType, Route, statsMapIntrface, TimeRange } from "./commonInterface";
 
 // Provider service availability component props interface
 export interface ProviderServiceAvailabilityProps {
@@ -460,7 +460,7 @@ export interface SideBarProps {
 
 // SingleTab component props interface
 export interface SingleTabProps {
-  icon: React.ElementType;
+  icon: LucideIcon;
   text: string;
   sidebarOpen: boolean;
   onClick?: () => void;
@@ -484,14 +484,11 @@ export interface SideBoxProps {
 
 // ProviderPlanCard component props interface
 export interface ProviderPlanCardProps {
-  plan: Pick<Plan, "_id" | "planName" | "description" | "features"> & {
-    monthlyPrice: number;
-    yearlyPrice: number;
-  };
+  plan: Pick<Plan, "_id" | "planName" | "price" | "description" | "features">;
   isTrial?: boolean;
   dummy?: boolean;
   popular?: boolean;
-  billingCycle: "monthly" | "yearly";
+  billingCycle?: "monthly" | "yearly";
 }
 
 // UserOrProviderAddressDetails component props interface
@@ -704,7 +701,7 @@ export interface MoveUpwardProps {
 // SplitTextReveal component props
 export interface SplitTextRevealProps {
   children: React.ReactNode;
-  as?: React.ElementType;
+  as?: keyof HTMLElementTagNameMap;
   className?: string;
   split?: "lines" | "words" | "chars" | "chars,words,lines";
   duration?: number;
@@ -853,7 +850,7 @@ export interface WorkflowStepProps {
   number: number;
   title: string;
   description: string;
-  icon: React.ElementType;
+  icon: LucideIcon;
   active?: boolean;
 }
 

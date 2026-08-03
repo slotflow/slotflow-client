@@ -1,9 +1,8 @@
 import * as React from "react"
+import { cn } from "../../lib/utils"
 import { LegendPayload } from "recharts";
 import * as RechartsPrimitive from "recharts";
-
-
-import { cn } from "@/lib/utils"
+import { TooltipPayloadEntry } from "recharts/types/state/tooltipSlice";
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: "", dark: ".dark" } as const
@@ -125,6 +124,8 @@ function ChartTooltipContent({
     indicator?: "line" | "dot" | "dashed"
     nameKey?: string
     labelKey?: string
+    label?: string
+    payload?: TooltipPayloadEntry[]
   }) {
   const { config } = useChart()
 
@@ -186,7 +187,7 @@ function ChartTooltipContent({
 
           return (
             <div
-              key={item.dataKey}
+              key={index}
               className={cn(
                 "[&>svg]:text-muted-foreground flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5",
                 indicator === "dot" && "items-center"

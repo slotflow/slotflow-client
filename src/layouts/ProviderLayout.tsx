@@ -1,5 +1,5 @@
+import { useEffect } from "react";
 import MainLayout from "./MainLayout";
-import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/shared/redux/appStore";
 import { PlanName, Role } from "@/shared/interface/enums";

@@ -19,9 +19,14 @@ const PlanCard = ({
   isTrial,
   dummy,
   popular,
-  billingCycle,
+  billingCycle = "monthly"
 }: ProviderPlanCardProps) => {
   const dispatch = useDispatch();
+
+  // yearly pricing is controlled with 11 months and 1 month is free
+  const yearlyPrice = plan.price > 0
+    ? plan.price * 11
+    : plan.price;
 
   const {
     register,
@@ -62,7 +67,7 @@ const PlanCard = ({
         )}
         <CardTitle className="mb-3 text-lg lg:text-xl rounded-4xl p-1 text-center">{plan.planName}</CardTitle>
         <span className="font-bold text-5xl text-center">
-          {billingCycle === "monthly" ? plan.monthlyPrice === 0 ? "FREE" : formatNumberToPrice(plan.monthlyPrice) : plan.yearlyPrice === 0 ? "FREE" : formatNumberToPrice(plan.yearlyPrice)}
+          {billingCycle === "monthly" ? plan.price === 0 ? "FREE" : formatNumberToPrice(plan.price,0) : yearlyPrice === 0 ? "FREE" : formatNumberToPrice(yearlyPrice,0)}
         </span>
       </CardHeader>
 
