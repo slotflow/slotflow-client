@@ -17,14 +17,14 @@ const SearchPreview = () => {
           >
             <div>
               <p className="text-sm font-medium">
-                Bright Electricals
+                Web Developer
               </p>
               <p className="text-xs text-muted-foreground">
                 Available Today
               </p>
             </div>
             <div className="flex items-center gap-1 text-primary">
-              <Star className="h-4 w-4 fill-current" />
+              <Star className="h-4 w-4 fill-current text-yellow-400" />
               <span className="text-sm font-medium">4.9</span>
             </div>
           </div>

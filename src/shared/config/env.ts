@@ -52,7 +52,7 @@ export const grafanaConfig = {
 export const contentfulConfig = {
     url: import.meta.env.VITE_CONTENTFUL_URL,
     urlEnd: import.meta.env.VITE_CONTENTFUL_URL_END,
-    apikey: import.meta.env.VITE_CONTENTFUL_API_KEY,
+    consumeApikey: import.meta.env.VITE_CONTENTFUL_CONSUME_API_KEY,
     environment: import.meta.env.VITE_CONTENTFUL_ENVIRONMENT,
     spaceId: import.meta.env.VITE_CONTENTFUL_SPACEID,
 }

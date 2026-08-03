@@ -33,15 +33,26 @@ const WorkflowSection = () => {
   }, []);
 
   useEffect(() => {
+    const frameModules = import.meta.glob(
+      "@/assets/landing/workflow/frames/*.jpg",
+      {
+        eager: true,
+        import: "default",
+        query: "?url",
+      }
+    );
+
     const frameImages: HTMLImageElement[] = [];
 
-    for (let i = 1; i <= TOTAL_FRAMES; i++) {
+    const frameUrls = Object.entries(frameModules)
+      .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+      .map(([, url]) => url as string);
+
+    frameUrls.forEach((url) => {
       const img = new Image();
-
-      img.src = `/src/assets/landing/workflow/frames/ezgif-frame-${String(i).padStart(3, "0")}.jpg`;
-
+      img.src = url;
       frameImages.push(img);
-    }
+    });
 
     setImages(frameImages);
   }, []);

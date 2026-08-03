@@ -13,7 +13,7 @@ const AvailabilityPreview = () => {
           <span className="text-sm font-medium">
             {slot}
           </span>
-          <span className="rounded-full bg-primary/10 px-3 py-1 text-xs text-primary">
+          <span className="rounded-full bg-primary/10 px-3 py-1 text-xs text-emerald-500">
             Available
           </span>
         </div>

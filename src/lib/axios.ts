@@ -14,6 +14,6 @@ export const chatAxiosInstance = axios.create({
 export const contentfulAxiosInstance = axios.create({
     baseURL: `${contentfulConfig.url}${contentfulConfig.spaceId}${contentfulConfig.urlEnd}${contentfulConfig.environment}`,
     headers: {
-        Authorization: `Bearer ${contentfulConfig.apikey}`,
+        Authorization: `Bearer ${contentfulConfig.consumeApikey}`,
     },
 })

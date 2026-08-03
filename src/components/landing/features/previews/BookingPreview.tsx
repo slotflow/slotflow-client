@@ -22,7 +22,7 @@ const BookingPreview = () => {
               text-xs
               ${
                 index === 5
-                  ? "border-primary bg-primary text-primary-foreground"
+                  ? "border-[#635ffb] bg-[#635ffb] text-primary font-semibold"
                   : "border-border"
               }
             `}

@@ -1,3 +1,5 @@
+import { Check } from "lucide-react";
+
 const HistoryPreview = () => {
   return (
     <div className="space-y-3 rounded-2xl border border-border/60 bg-background/80 p-4">
@@ -13,8 +15,11 @@ const HistoryPreview = () => {
           <span className="text-sm font-medium">
             {item}
           </span>
-          <span className="text-xs text-muted-foreground">
-            Completed
+          <span className="flex items-center gap-1 text-green-500">
+          <span className="text-xs">
+            Completed 
+          </span>
+            <Check className="" />
           </span>
         </div>
       ))}

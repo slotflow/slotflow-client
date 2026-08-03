@@ -4,13 +4,15 @@ const ProviderPreview = () => {
   return (
     <div className="rounded-2xl border border-border/60 bg-background/80 p-4">
       <div className="flex items-center gap-3">
-        <div className="h-12 w-12 rounded-full bg-primary/10" />
+        <div className="h-12 w-12 rounded-full bg-primary/10">
+          <img src="https://i.pravatar.cc/150?img=52" alt="software service profile" className="h-full -wfull rounded-full" />
+        </div>
         <div className="flex-1">
           <div className="flex items-center gap-2">
             <p className="font-medium">
-              John Services
+              Software Services
             </p>
-            <BadgeCheck className="h-4 w-4 text-primary" />
+            <BadgeCheck className="h-4 w-4 text-[#635ffb]" />
           </div>
           <div className="mt-1 flex items-center gap-1">
             <Star className="h-4 w-4 fill-current text-primary" />
