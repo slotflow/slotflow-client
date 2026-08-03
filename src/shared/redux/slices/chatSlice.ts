@@ -46,7 +46,9 @@ const chatSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(sendMessage.fulfilled, (state, action: PayloadAction<ApiBaseResponse<Message>>) => {
-            state.messages?.push(action.payload.data);
+            if(action.payload.data) {
+                state.messages?.push(action.payload.data);
+            }
         })
     }
 });

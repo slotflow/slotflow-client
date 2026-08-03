@@ -322,8 +322,7 @@ export const PlanList: PlanListType = [
       "Up to 7 bookings",
       "7 days validity",
     ],
-    monthlyPrice: 0,
-    yearlyPrice: 0,
+    price: 0,
   },
   {
     _id: "1",
@@ -337,9 +336,7 @@ export const PlanList: PlanListType = [
       "Email Support",
       "Basic Dashboard"
     ],
-    monthlyPrice: 499,
-    yearlyPrice: 399,
-
+    price: 499,
   },
   {
     _id: "2",
@@ -354,8 +351,7 @@ export const PlanList: PlanListType = [
       "24/7 Chat support",
       "Medium analytics dashborad",
     ],
-    monthlyPrice: 1499,
-    yearlyPrice: 1199
+    price: 1499,
   },
   {
     _id: "3",
@@ -369,8 +365,7 @@ export const PlanList: PlanListType = [
       "24/7 premium support",
       "Advanced analytics dashboard",
     ],
-    monthlyPrice: 4999,
-    yearlyPrice: 3999
+    price: 4999,
   }
 ]
 

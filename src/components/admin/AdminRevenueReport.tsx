@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { DateRange } from 'react-day-picker';
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
@@ -17,9 +17,9 @@ import AdminRevenueTableColumn from '@/components/table/tableColumns/AdminRevenu
 
 const AdminRevenueReport = () => {
 
-    const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
+    const [ dateRange, setDateRange ] = useState<DateRange | undefined>(undefined);
 
-    const [pagination, setPagination] = useState<PaginationState>({
+    const [ pagination, setPagination ] = useState<PaginationState>({
         pageIndex: 0,
         pageSize: 10,
     });

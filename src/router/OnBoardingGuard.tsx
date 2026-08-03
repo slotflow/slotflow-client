@@ -9,7 +9,7 @@ const OnBoardingGuard = ({
 }: OnbooardingGuardProps) => {
     
     const location = useLocation();
-    const { authUser: user, boardingData } = useSelector((store: RootState) => store.auth);
+    const { authUser: user, preboardingData } = useSelector((store: RootState) => store.auth);
 
     if (!user) {
         return (
@@ -26,7 +26,7 @@ const OnBoardingGuard = ({
     }
 
     if (user.onboardingStatus === OnboardingStatus.NOT_STARTED) {
-        if (!boardingData.selectedRole) {
+        if (!preboardingData.selectedRole) {
             if (location.pathname !== "/preboarding/role") {
                 return <Navigate to="/preboarding/role" replace />;
             }

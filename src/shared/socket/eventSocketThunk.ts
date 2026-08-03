@@ -37,12 +37,11 @@ export const connectEventSocket = createAsyncThunk<
     socket.on(EventSocketEnum.subscriptionActivated, (payload: SubscriptionActivated) => {
         console.log("Subscription activated:", payload);
 
-        const isOwner = payload.userId === authUser.uid;
         const isExpired = new Date(payload.endDate) < new Date();
 
-        if (isOwner && isExpired) {
+        if (isExpired) {
             toast.error("Your subscription has expired.");
-        } else if (isOwner) {
+        } else {
             toast.success("Subscription Activated!");
         }
 

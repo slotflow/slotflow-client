@@ -82,7 +82,10 @@ const UserListProvidersCardsPage = () => {
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search for a service..."
               className="h-10 rounded-2xl border-0 bg-background pl-12 pr-4 ring-1 ring-border transition-all focus-visible:ring-1 focus-visible:ring-[var(--mainColor)]"
-            />
+              />
+              <div>
+                {search}
+              </div>
           </div>
           <Button
             title="Search"
