@@ -62,7 +62,7 @@ const AboutPage = () => {
           </div>
         </section>
         <section id="stats" className="w-full">
-          <div className="grid gap-10 text-center md:grid-cols-3 mt-20 p-10 border relative bg-background">
+          <div className="grid gap-10 text-center md:grid-cols-3 mt-20 p-10 border relative bg-background max-w-7xl mx-auto">
             <AnimatedCounter
               text="Platform Reliability"
               to={99.9}
