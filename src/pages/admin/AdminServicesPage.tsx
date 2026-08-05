@@ -1,16 +1,18 @@
-import { toast } from "react-toastify";
-import { fetchServices } from "@/shared/apis/service";
-import PageHeader from "@/components/common/PageHeader";
-import CommonTable from "@/components/table/CommonTable";
-import { useEffect, useRef, useState } from "react";
-import { slideIn } from "@/shared/helper/gsapAnimationSlide";
-import { useAdminService } from "@/hooks/adminHooks/useService";
-import CreateServiceForm from "@/components/form/AdminForms/CreateServiceForm";
-import AdminAppServicesTableColumns from "@/components/table/tableColumns/AdminAppServicesTableColumn";
-import { ChangeServiceBlockStatusRequest, FetchServicesResponse } from "@/shared/interface/api/service";
+import { toast } from 'react-toastify';
+import { fetchServices } from '@/shared/apis/service';
+import PageHeader from '@/components/common/PageHeader';
+import CommonTable from '@/components/table/CommonTable';
+import { useEffect, useRef, useState } from 'react';
+import { slideIn } from '@/shared/helper/gsapAnimationSlide';
+import { useAdminService } from '@/hooks/adminHooks/useService';
+import CreateServiceForm from '@/components/form/AdminForms/CreateServiceForm';
+import AdminAppServicesTableColumns from '@/components/table/tableColumns/AdminAppServicesTableColumn';
+import {
+  ChangeServiceBlockStatusRequest,
+  FetchServicesResponse,
+} from '@/shared/interface/api/service';
 
 const AdminServicesPage = () => {
-
   const [showForm, setShowForm] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
 
@@ -23,11 +25,9 @@ const AdminServicesPage = () => {
     } else {
       toast.error(res.message);
     }
-  }
+  };
 
-  const column = AdminAppServicesTableColumns(
-    handleAdminChangeServiceStatus
-  );
+  const column = AdminAppServicesTableColumns(handleAdminChangeServiceStatus);
 
   useEffect(() => {
     if (showForm && formRef.current) {
@@ -53,10 +53,7 @@ const AdminServicesPage = () => {
 
       {showForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <CreateServiceForm
-            onClose={() => setShowForm(false)}
-            formRef={formRef}
-          />
+          <CreateServiceForm onClose={() => setShowForm(false)} formRef={formRef} />
         </div>
       )}
     </div>

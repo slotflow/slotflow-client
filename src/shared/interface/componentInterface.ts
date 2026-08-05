@@ -5,42 +5,65 @@ import {
   type FieldValues,
   type UseFormRegister,
   type RegisterOptions,
-} from "react-hook-form";
-import { LucideIcon } from "lucide-react";
-import { DateRange } from "react-day-picker";
-import { RouteNames } from "../utils/constants";
-import { PayloadAction } from "@reduxjs/toolkit";
-import { ChartConfig } from "@/components/ui/chart";
-import * as RPNInput from "react-phone-number-input";
-import { SetProofDataProps } from "./sliceInterface";
-import { PlanName, Role, ServiceMode } from "./enums";
-import { User } from "./entityInterface/userInterface";
-import { Plan } from "./entityInterface/planInterface";
-import { Dispatch, ReactNode, SetStateAction } from "react";
-import { FetchProviderServiceResponse } from "./api/providerService";
-import { ProviderServiceAvailabilityFormType } from "../zod/providerZod";
-import { FetchAddressResponse, FetchMyAddressResponse } from "./api/address";
-import { Availability } from "./entityInterface/serviceAvailabilityInterface";
-import { Location } from "@/shared/interface/entityInterface/addressInterface";
-import { FetchPaymentsQueryParams, FetchPaymentsResponse } from "./api/payment";
-import { FetchReviewsResponse, ToggleReviewBlockStatusRequest } from "./api/review";
-import { Column, ColumnDef, OnChangeFn, PaginationState } from "@tanstack/react-table";
-import { FetchProvidersProofsResponse, UpdateFileDataRequest } from "./api/commonApiInterface";
-import { AdminFetchUserProfileDetailsResponse, UserFetchServiceProvidersResponse, UserFetchMyProfileDetailsResponse } from "./api/user";
-import { AdminFetchProviderProfileDetailsResponse, ProviderFetchMyProfileDetailsResponse, UserFetchProviderProfileDetailsResponse } from "./api/providerProfile";
-import { ApiBaseResponse, ApiPaginatedResponse, BaseChartData, BlogArticle, BlogAuthorFields, ChatComponentProps, FaqFields, FetchFunctionBaseQueryParams, OptionType, Route, statsMapIntrface, TimeRange } from "./commonInterface";
+} from 'react-hook-form';
+import { LucideIcon } from 'lucide-react';
+import { DateRange } from 'react-day-picker';
+import { RouteNames } from '../utils/constants';
+import { PayloadAction } from '@reduxjs/toolkit';
+import { ChartConfig } from '@/components/ui/chart';
+import * as RPNInput from 'react-phone-number-input';
+import { SetProofDataProps } from './sliceInterface';
+import { PlanName, Role, ServiceMode } from './enums';
+import { User } from './entityInterface/userInterface';
+import { Plan } from './entityInterface/planInterface';
+import { Dispatch, ReactNode, SetStateAction } from 'react';
+import { FetchProviderServiceResponse } from './api/providerService';
+import { ProviderServiceAvailabilityFormType } from '../zod/providerZod';
+import { FetchAddressResponse, FetchMyAddressResponse } from './api/address';
+import { Availability } from './entityInterface/serviceAvailabilityInterface';
+import { Location } from '@/shared/interface/entityInterface/addressInterface';
+import { FetchPaymentsQueryParams, FetchPaymentsResponse } from './api/payment';
+import { FetchReviewsResponse, ToggleReviewBlockStatusRequest } from './api/review';
+import { Column, ColumnDef, OnChangeFn, PaginationState } from '@tanstack/react-table';
+import { FetchProvidersProofsResponse, UpdateFileDataRequest } from './api/commonApiInterface';
+import {
+  AdminFetchUserProfileDetailsResponse,
+  UserFetchServiceProvidersResponse,
+  UserFetchMyProfileDetailsResponse,
+} from './api/user';
+import {
+  AdminFetchProviderProfileDetailsResponse,
+  ProviderFetchMyProfileDetailsResponse,
+  UserFetchProviderProfileDetailsResponse,
+} from './api/providerProfile';
+import {
+  ApiBaseResponse,
+  ApiPaginatedResponse,
+  BaseChartData,
+  BlogArticle,
+  BlogAuthorFields,
+  ChatComponentProps,
+  FaqFields,
+  FetchFunctionBaseQueryParams,
+  OptionType,
+  Route,
+  statsMapIntrface,
+  TimeRange,
+} from './commonInterface';
 
 // Provider service availability component props interface
 export interface ProviderServiceAvailabilityProps {
   role: Role;
-  providerId?: string
+  providerId?: string;
   canUpdate?: boolean;
 }
 
 // Provider Service list and details showing component props interface
 export interface ProviderServiceListProps {
-  providerId?: User["_id"];
-  fetchApiFunction: (providerId?: User["_id"]) => Promise<ApiBaseResponse<FetchProviderServiceResponse>>;
+  providerId?: User['_id'];
+  fetchApiFunction: (
+    providerId?: User['_id'],
+  ) => Promise<ApiBaseResponse<FetchProviderServiceResponse>>;
   queryKey: string;
   canUpdate?: boolean;
 }
@@ -61,30 +84,104 @@ export interface ChartHeaderProps {
 }
 
 // AreaGroupChart compoenent props type
-export type AreaGroupChartProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "dataKeyThree" | "chartConfig" | "isLocked" | "minimumPlan">;
-
+export type AreaGroupChartProps = Pick<
+  ChatComponentProps<BaseChartData>,
+  | 'title'
+  | 'description'
+  | 'chartData'
+  | 'dataKeyOne'
+  | 'dataKeyTwo'
+  | 'dataKeyThree'
+  | 'chartConfig'
+  | 'isLocked'
+  | 'minimumPlan'
+>;
 
 // BarChartHorizontal compoenent props type
-export type BarChartHorizontalProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "dataKeyThree" | "chartConfig" | "isLocked" | "minimumPlan">;
-
+export type BarChartHorizontalProps = Pick<
+  ChatComponentProps<BaseChartData>,
+  | 'title'
+  | 'description'
+  | 'chartData'
+  | 'dataKeyOne'
+  | 'dataKeyTwo'
+  | 'dataKeyThree'
+  | 'chartConfig'
+  | 'isLocked'
+  | 'minimumPlan'
+>;
 
 // BarChartStacked compoenent props type
-export type BarChartStackedProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "dataKeyThree" | "chartConfig" | "isLocked" | "minimumPlan">;
-
+export type BarChartStackedProps = Pick<
+  ChatComponentProps<BaseChartData>,
+  | 'title'
+  | 'description'
+  | 'chartData'
+  | 'dataKeyOne'
+  | 'dataKeyTwo'
+  | 'dataKeyThree'
+  | 'chartConfig'
+  | 'isLocked'
+  | 'minimumPlan'
+>;
 
 // BarChartVertical compoenent props type
-export type BarChartVerticalProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "chartConfig" | "isLocked" | "minimumPlan">;
-
+export type BarChartVerticalProps = Pick<
+  ChatComponentProps<BaseChartData>,
+  | 'title'
+  | 'description'
+  | 'chartData'
+  | 'dataKeyOne'
+  | 'dataKeyTwo'
+  | 'chartConfig'
+  | 'isLocked'
+  | 'minimumPlan'
+>;
 
 // ChartLineMultiple compoenent props type
-export type ChartLineMultipleProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "chartConfig" | "isLocked" | "minimumPlan">;
-
+export type ChartLineMultipleProps = Pick<
+  ChatComponentProps<BaseChartData>,
+  | 'title'
+  | 'description'
+  | 'chartData'
+  | 'dataKeyOne'
+  | 'dataKeyTwo'
+  | 'chartConfig'
+  | 'isLocked'
+  | 'minimumPlan'
+>;
 
 // LineChartHorizontal compoenent props type
-export type LineChartHorizontalProps = Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "chartData" | "dataKeyOne" | "dataKeyTwo" | "chartConfig" | "isLocked" | "minimumPlan">;
+export type LineChartHorizontalProps = Pick<
+  ChatComponentProps<BaseChartData>,
+  | 'title'
+  | 'description'
+  | 'chartData'
+  | 'dataKeyOne'
+  | 'dataKeyTwo'
+  | 'chartConfig'
+  | 'isLocked'
+  | 'minimumPlan'
+>;
 
 // ChartLineLinear compoenent props type
-export type ChartLineLinearProps = Pick<ChatComponentProps<BaseChartData>, "chartData" | "dataKeyOne" | "chartConfig"> & Partial<Pick<ChatComponentProps<BaseChartData>, "title" | "description" | "footerTextOne" | "footerTextTwo" | "chartContainerClassName" | "dataKeyTwo" | "dataKeyThree" | "dataKeyFour">>;
+export type ChartLineLinearProps = Pick<
+  ChatComponentProps<BaseChartData>,
+  'chartData' | 'dataKeyOne' | 'chartConfig'
+> &
+  Partial<
+    Pick<
+      ChatComponentProps<BaseChartData>,
+      | 'title'
+      | 'description'
+      | 'footerTextOne'
+      | 'footerTextTwo'
+      | 'chartContainerClassName'
+      | 'dataKeyTwo'
+      | 'dataKeyThree'
+      | 'dataKeyFour'
+    >
+  >;
 
 // PieChartCompletionBreakdown compoenent props type
 interface CompletionBreakdownData {
@@ -119,12 +216,14 @@ export interface RadialChartInterface<T extends ChartDataItem> {
 // Admin fetch provider payments compoenent props interface
 export interface AdminUserOrProviderPaymentsProps {
   providerId: string;
-  fetchFunction: (params: FetchFunctionBaseQueryParams & FetchPaymentsQueryParams) => Promise<ApiPaginatedResponse<FetchPaymentsResponse>>
+  fetchFunction: (
+    params: FetchFunctionBaseQueryParams & FetchPaymentsQueryParams,
+  ) => Promise<ApiPaginatedResponse<FetchPaymentsResponse>>;
 }
 
 // Admin fetch provider subscriptions component props interface
 export interface AdminFetchProviderSubscriptionsProps {
-  providerId: User["_id"];
+  providerId: User['_id'];
 }
 
 // FormField Component Props Interface
@@ -157,7 +256,7 @@ export interface FileUploaderProps {
   deleteFunction: () => Promise<ApiBaseResponse>;
   data: SetProofDataProps;
   title: string;
-};
+}
 
 // provider cards listing
 export type UserViewProviderCardProps = UserFetchServiceProvidersResponse;
@@ -240,7 +339,7 @@ export interface CompletionChartProps {
 
 // Chat bubble profile image component props interface
 export interface ChatBubbleProfileImageProps {
-  profileImage: User["profileImage"];
+  profileImage: User['profileImage'];
 }
 
 // Message input component props interface
@@ -298,7 +397,7 @@ export interface DashboardCardOneProps {
 // Data fetching error component props interface
 export interface dataFetchingError {
   message: string;
-  className?: string
+  className?: string;
 }
 
 // Data filter component props interface
@@ -375,11 +474,8 @@ export interface GoogleButtonProps {
 }
 
 // phone input props interface
-export type PhoneInputProps = Omit<
-  React.ComponentProps<"input">,
-  "onChange" | "value" | "ref"
-> &
-  Omit<RPNInput.Props<typeof RPNInput.default>, "onChange"> & {
+export type PhoneInputProps = Omit<React.ComponentProps<'input'>, 'onChange' | 'value' | 'ref'> &
+  Omit<RPNInput.Props<typeof RPNInput.default>, 'onChange'> & {
     onChange?: (value: RPNInput.Value) => void;
   };
 
@@ -484,19 +580,19 @@ export interface SideBoxProps {
 
 // ProviderPlanCard component props interface
 export interface ProviderPlanCardProps {
-  plan: Pick<Plan, "_id" | "planName" | "price" | "description" | "features">;
+  plan: Pick<Plan, '_id' | 'planName' | 'price' | 'description' | 'features'>;
   isTrial?: boolean;
   dummy?: boolean;
   popular?: boolean;
-  billingCycle?: "monthly" | "yearly";
+  billingCycle?: 'monthly' | 'yearly';
 }
 
 // UserOrProviderAddressDetails component props interface
 export interface UserOrProviderAddressDetailsComponentProps {
   userOrProviderId?: string;
-  fetchApiFunction: (userOrProviderId?: string) => Promise<
-    ApiBaseResponse<FetchMyAddressResponse> | ApiBaseResponse<FetchAddressResponse>
-  >;
+  fetchApiFunction: (
+    userOrProviderId?: string,
+  ) => Promise<ApiBaseResponse<FetchMyAddressResponse> | ApiBaseResponse<FetchAddressResponse>>;
   queryKey: string;
   isUserLookingProvider?: boolean;
   canUpdate?: boolean;
@@ -513,12 +609,16 @@ export interface ProfileHorizontalTabsComponentProps {
 // UserOrProviderProfileDetails component props interface
 export interface UserOrProviderProfileDetailsComponentProps {
   userOrProviderId?: string;
-  fetchApiFunction: (userOrProviderId?: string) => Promise<ApiBaseResponse<
-    AdminFetchProviderProfileDetailsResponse |
-    ProviderFetchMyProfileDetailsResponse |
-    UserFetchProviderProfileDetailsResponse |
-    UserFetchMyProfileDetailsResponse |
-    AdminFetchUserProfileDetailsResponse>
+  fetchApiFunction: (
+    userOrProviderId?: string,
+  ) => Promise<
+    ApiBaseResponse<
+      | AdminFetchProviderProfileDetailsResponse
+      | ProviderFetchMyProfileDetailsResponse
+      | UserFetchProviderProfileDetailsResponse
+      | UserFetchMyProfileDetailsResponse
+      | AdminFetchUserProfileDetailsResponse
+    >
   >;
   queryKey: string;
   adminLookingProvider?: boolean;
@@ -528,12 +628,15 @@ export interface UserOrProviderProfileDetailsComponentProps {
   userLookingProvider?: boolean;
   setProfileImage?: (image: string) => void;
   shimmerRow: number;
-  setSelectedUserData?: (data: { selectedUserName: string; selectedUserProfileImage: string | null }) => void;
+  setSelectedUserData?: (data: {
+    selectedUserName: string;
+    selectedUserProfileImage: string | null;
+  }) => void;
 }
 
 // ProviderProofs component props interface
 export interface ProviderProofsProps {
-  providerId?: User["_id"];
+  providerId?: User['_id'];
   fetchApiFunction: (providerId?: string) => Promise<ApiBaseResponse<FetchProvidersProofsResponse>>;
 }
 
@@ -543,7 +646,10 @@ export interface ReviewCardProps {
   role: Role;
   handleDeleteReview: (e: React.MouseEvent<HTMLButtonElement>, reviewId: string) => void;
   handleReportReview: (e: React.MouseEvent<HTMLButtonElement>, reviewId: string) => void;
-  handleChangeReviewBlockStatus: (e: React.MouseEvent<HTMLButtonElement>, data: ToggleReviewBlockStatusRequest) => void;
+  handleChangeReviewBlockStatus: (
+    e: React.MouseEvent<HTMLButtonElement>,
+    data: ToggleReviewBlockStatusRequest,
+  ) => void;
 }
 
 // ReviewStatus component props interface
@@ -594,7 +700,7 @@ export interface GenerateTimeSlotsProps {
 // TimeField component props interface
 export interface TimeFieldProps {
   label: string;
-  name: "startTime" | "endTime";
+  name: 'startTime' | 'endTime';
   control: Control<ProviderServiceAvailabilityFormType>;
 }
 
@@ -616,10 +722,12 @@ export interface DataTableProps<TData, TValue> {
 }
 
 // Data table column header props interface
-export interface DataTableColumnHeaderProps<TData, TValue>
-  extends React.HTMLAttributes<HTMLDivElement> {
-  column: Column<TData, TValue>
-  title: string
+export interface DataTableColumnHeaderProps<
+  TData,
+  TValue,
+> extends React.HTMLAttributes<HTMLDivElement> {
+  column: Column<TData, TValue>;
+  title: string;
 }
 
 // ReviewsPage props
@@ -637,14 +745,13 @@ export interface PlanGuardProps {
 
 // Protected Routes props
 export interface ProtectedRouteProps {
-  allowedRoles: (Role)[];
+  allowedRoles: Role[];
   children: React.ReactNode;
 }
 
 // Onboarding Guard props
 export interface OnbooardingGuardProps {
-  children:
-  React.ReactNode
+  children: React.ReactNode;
 }
 
 // TOC heading props
@@ -703,7 +810,7 @@ export interface SplitTextRevealProps {
   children: React.ReactNode;
   as?: keyof HTMLElementTagNameMap;
   className?: string;
-  split?: "lines" | "words" | "chars" | "chars,words,lines";
+  split?: 'lines' | 'words' | 'chars' | 'chars,words,lines';
   duration?: number;
   stagger?: number;
   delay?: number;
@@ -716,7 +823,7 @@ export interface SplitTextRevealProps {
 export interface IconTextProps {
   text: string;
   className?: string;
-};
+}
 
 // Blog detail article props
 export interface BlogDetailArticleProps {
@@ -801,7 +908,7 @@ export interface CreditCardPorps {
   isError: boolean;
   error: Error | null;
   data: number | boolean | React.ReactNode;
-  Icon: LucideIcon
+  Icon: LucideIcon;
   bgColour?: string;
   main?: boolean;
 }
@@ -818,7 +925,7 @@ export interface AvailablityFetchingErrorProps {
 
 // No data props
 export interface NoDataProps {
-  message: string
+  message: string;
 }
 
 // Feature Card props ( feature section in landing page )
@@ -866,7 +973,7 @@ export interface AttachmentCardProps {
   data?: {
     demoVideoUrl?: string;
     portfolioUrl?: string;
-  }
+  };
 }
 
 // Book Appointment Card props
@@ -926,12 +1033,12 @@ export interface ProviderProfileProps {
     isError?: boolean;
     data?: FetchProviderServiceResponse;
     isUserLookingProvider?: boolean;
-  },
+  };
   profile: {
     isLoading?: boolean;
     isError?: boolean;
-    data?: ProviderFetchMyProfileDetailsResponse | UserFetchProviderProfileDetailsResponse
-  },
+    data?: ProviderFetchMyProfileDetailsResponse | UserFetchProviderProfileDetailsResponse;
+  };
 }
 
 // TOC props

@@ -10,10 +10,10 @@ Except as expressly stated in these Terms, SlotFlow makes no representations or 
 
 While SlotFlow strives to provide a reliable and secure Platform, we do not guarantee that:
 
-* The Platform will always be available, uninterrupted, or error-free.
-* All defects or software errors will be corrected immediately.
-* The Platform will always be free from viruses, malware, or other harmful components.
-* Any specific uptime, availability, or response time will be achieved unless expressly agreed in writing.
+- The Platform will always be available, uninterrupted, or error-free.
+- All defects or software errors will be corrected immediately.
+- The Platform will always be free from viruses, malware, or other harmful components.
+- Any specific uptime, availability, or response time will be achieved unless expressly agreed in writing.
 
 ## 10.3 Service Providers and Customers
 
@@ -61,7 +61,6 @@ SlotFlow shall not be liable for any delay, interruption, or failure to perform 
 
 Your use of the Platform and all Services is entirely at your own risk, except to the extent that liability cannot be excluded under applicable law.
 
-
 ## 11. Limitation of Liability
 
 ## 11.1 Limitation of Liability
@@ -72,12 +71,12 @@ To the fullest extent permitted by applicable law, SlotFlow's total aggregate li
 
 To the fullest extent permitted by applicable law, SlotFlow shall not be liable for any indirect, incidental, consequential, special, exemplary, or punitive damages, including but not limited to:
 
-* Loss of profits, revenue, income, or business opportunities.
-* Loss of data or corruption of data.
-* Loss of goodwill or reputation.
-* Business interruption.
-* Loss arising from the use of substitute products or services.
-* Any other indirect or consequential economic loss.
+- Loss of profits, revenue, income, or business opportunities.
+- Loss of data or corruption of data.
+- Loss of goodwill or reputation.
+- Business interruption.
+- Loss arising from the use of substitute products or services.
+- Any other indirect or consequential economic loss.
 
 This limitation applies even if SlotFlow has been advised of the possibility of such damages.
 
@@ -87,11 +86,11 @@ SlotFlow provides a technology platform that enables Customers and Service Provi
 
 Except where required by applicable law, SlotFlow is not liable for:
 
-* Customer conduct or behaviour.
-* Customer decisions or purchasing choices.
-* Appointment cancellations, missed Appointments, scheduling conflicts, or disputes between Platform users.
-* Business losses arising from reduced bookings, customer reviews, search rankings, or Platform recommendations.
-* Professional or commercial outcomes resulting from use of the Platform.
+- Customer conduct or behaviour.
+- Customer decisions or purchasing choices.
+- Appointment cancellations, missed Appointments, scheduling conflicts, or disputes between Platform users.
+- Business losses arising from reduced bookings, customer reviews, search rankings, or Platform recommendations.
+- Professional or commercial outcomes resulting from use of the Platform.
 
 ## 11.4 Third-Party Services
 
@@ -114,7 +113,6 @@ You acknowledge that the limitations of liability contained in these Terms form 
 ## 11.8 Exceptions
 
 Nothing in these Terms excludes or limits any liability that cannot lawfully be excluded or limited under applicable law, including liability arising from fraud, fraudulent misrepresentation, willful misconduct, gross negligence, or any other liability that applicable law prohibits from being excluded.
-
 
 ## 12. Indemnification
 
@@ -164,10 +162,10 @@ Any dispute, controversy, or claim arising out of or relating to these Terms, th
 
 The arbitration shall:
 
-* Be conducted by a single arbitrator appointed in accordance with the Arbitration and Conciliation Act, 1996.
-* Be conducted in the English language.
-* Have its seat and venue in Bengaluru, Karnataka, India.
-* Be final and binding upon both parties.
+- Be conducted by a single arbitrator appointed in accordance with the Arbitration and Conciliation Act, 1996.
+- Be conducted in the English language.
+- Have its seat and venue in Bengaluru, Karnataka, India.
+- Be final and binding upon both parties.
 
 The arbitral award may be enforced by any court having competent jurisdiction.
 
@@ -175,8 +173,8 @@ The arbitral award may be enforced by any court having competent jurisdiction.
 
 Unless otherwise determined by the arbitrator or required by applicable law:
 
-* Each party shall bear its own legal fees and expenses.
-* The costs of the arbitration proceedings shall be allocated by the arbitrator in accordance with the Arbitration and Conciliation Act, 1996.
+- Each party shall bear its own legal fees and expenses.
+- The costs of the arbitration proceedings shall be allocated by the arbitrator in accordance with the Arbitration and Conciliation Act, 1996.
 
 ## 13.5 Consumer Rights
 
@@ -206,12 +204,12 @@ If you believe that any content available through the Platform infringes your co
 
 A copyright complaint should include, where applicable:
 
-* Your full name and contact information.
-* A description of the copyrighted work or other intellectual property you believe has been infringed.
-* A description or link identifying the allegedly infringing content on the Platform.
-* A statement explaining why you believe the use is unauthorized.
-* Any supporting documents or evidence establishing your ownership or authority to act on behalf of the rights holder.
-* A declaration that the information provided is accurate and made in good faith.
+- Your full name and contact information.
+- A description of the copyrighted work or other intellectual property you believe has been infringed.
+- A description or link identifying the allegedly infringing content on the Platform.
+- A statement explaining why you believe the use is unauthorized.
+- Any supporting documents or evidence establishing your ownership or authority to act on behalf of the rights holder.
+- A declaration that the information provided is accurate and made in good faith.
 
 Copyright complaints should be sent to:
 
@@ -221,12 +219,12 @@ Copyright complaints should be sent to:
 
 Upon receiving a complaint, SlotFlow may:
 
-* Acknowledge receipt of the complaint.
-* Review the information provided.
-* Temporarily restrict or remove the reported content while the matter is investigated, where appropriate.
-* Contact the uploader of the content and request additional information or evidence.
-* Restore the content if the complaint is determined to be unfounded or unsupported.
-* Take any additional action considered appropriate under these Terms or applicable law.
+- Acknowledge receipt of the complaint.
+- Review the information provided.
+- Temporarily restrict or remove the reported content while the matter is investigated, where appropriate.
+- Contact the uploader of the content and request additional information or evidence.
+- Restore the content if the complaint is determined to be unfounded or unsupported.
+- Take any additional action considered appropriate under these Terms or applicable law.
 
 SlotFlow will review complaints within a reasonable period, taking into account the complexity of the matter and the information provided by the parties.
 
@@ -236,11 +234,11 @@ If your content has been removed or restricted because of a copyright complaint 
 
 Your counter-notification should include:
 
-* Your name and contact information.
-* Identification of the removed or restricted content.
-* An explanation of why you believe you have the legal right to use the content.
-* Any supporting documentation demonstrating ownership, permission, licence, or other lawful authority.
-* A declaration that the information provided is accurate and made in good faith.
+- Your name and contact information.
+- Identification of the removed or restricted content.
+- An explanation of why you believe you have the legal right to use the content.
+- Any supporting documentation demonstrating ownership, permission, licence, or other lawful authority.
+- A declaration that the information provided is accurate and made in good faith.
 
 SlotFlow may review the counter-notification and, where appropriate, restore the content or maintain the restriction based on the available information and applicable law.
 
@@ -260,12 +258,12 @@ Where appropriate, SlotFlow may reject such complaints, restore removed content,
 
 This policy applies to all content uploaded or made available through the Platform, including but not limited to:
 
-* Profile images.
-* Service images.
-* Portfolio materials.
-* Videos.
-* Documents.
-* Any other content uploaded to or shared through the Platform.
+- Profile images.
+- Service images.
+- Portfolio materials.
+- Videos.
+- Documents.
+- Any other content uploaded to or shared through the Platform.
 
 ## 14.8 Reservation of Rights
 
@@ -289,11 +287,11 @@ SlotFlow implements reasonable administrative, technical, and organizational saf
 
 These safeguards include, where appropriate:
 
-* Encryption of sensitive information.
-* Secure cloud infrastructure.
-* Access control mechanisms.
-* Authentication and authorization controls.
-* Continuous monitoring and security practices intended to protect Platform data.
+- Encryption of sensitive information.
+- Secure cloud infrastructure.
+- Access control mechanisms.
+- Authentication and authorization controls.
+- Continuous monitoring and security practices intended to protect Platform data.
 
 While we strive to maintain a secure Platform, no method of electronic transmission or storage can be guaranteed to be completely secure. Accordingly, SlotFlow cannot guarantee absolute security of any information transmitted to or stored on the Platform.
 
@@ -303,11 +301,11 @@ You are responsible for maintaining the security of your Account.
 
 You agree to:
 
-* Keep your Account credentials confidential.
-* Protect your password and authentication information.
-* Never share one-time passwords (OTPs) or authentication credentials with any other person.
-* Secure the devices used to access your Account.
-* Notify SlotFlow immediately if you become aware of any unauthorized access, suspected compromise, or security incident affecting your Account.
+- Keep your Account credentials confidential.
+- Protect your password and authentication information.
+- Never share one-time passwords (OTPs) or authentication credentials with any other person.
+- Secure the devices used to access your Account.
+- Notify SlotFlow immediately if you become aware of any unauthorized access, suspected compromise, or security incident affecting your Account.
 
 SlotFlow is not responsible for losses arising from your failure to adequately protect your Account credentials or devices.
 
@@ -349,10 +347,10 @@ SlotFlow reserves the right to modify, update, or replace these Terms at any tim
 
 Where practical, SlotFlow will notify Users and Service Providers of material changes to these Terms through one or more of the following methods:
 
-* Email sent to the registered email address associated with the Account.
-* A notice published on the SlotFlow website.
-* An in-app or dashboard notification, where available.
-* Any other reasonable electronic communication method that SlotFlow may introduce in the future.
+- Email sent to the registered email address associated with the Account.
+- A notice published on the SlotFlow website.
+- An in-app or dashboard notification, where available.
+- Any other reasonable electronic communication method that SlotFlow may introduce in the future.
 
 ## 16.3 Effective Date
 
@@ -360,10 +358,10 @@ Material changes to these Terms will generally become effective thirty (30) days
 
 However, changes that are necessary to:
 
-* comply with applicable laws or regulatory requirements;
-* address security vulnerabilities or fraud prevention measures;
-* respond to court orders or governmental directives; or
-* protect the security, integrity, or operation of the Platform,
+- comply with applicable laws or regulatory requirements;
+- address security vulnerabilities or fraud prevention measures;
+- respond to court orders or governmental directives; or
+- protect the security, integrity, or operation of the Platform,
 
 may become effective immediately or on any shorter period required by applicable law.
 
@@ -409,16 +407,16 @@ Any waiver shall be effective only if made in writing by an authorized represent
 
 SlotFlow shall not be liable for any delay, interruption, or failure to perform its obligations under these Terms where such delay or failure results from events beyond our reasonable control, including but not limited to:
 
-* Natural disasters or acts of God.
-* Floods, earthquakes, fires, or severe weather.
-* War, terrorism, civil unrest, or riots.
-* Government actions, regulations, restrictions, or court orders.
-* Pandemics or public health emergencies.
-* Internet, telecommunications, or utility failures.
-* Cloud infrastructure or hosting provider outages.
-* Payment gateway or third-party service interruptions.
-* Cyberattacks or other widespread security incidents.
-* Labour disputes or other unforeseen operational disruptions.
+- Natural disasters or acts of God.
+- Floods, earthquakes, fires, or severe weather.
+- War, terrorism, civil unrest, or riots.
+- Government actions, regulations, restrictions, or court orders.
+- Pandemics or public health emergencies.
+- Internet, telecommunications, or utility failures.
+- Cloud infrastructure or hosting provider outages.
+- Payment gateway or third-party service interruptions.
+- Cyberattacks or other widespread security incidents.
+- Labour disputes or other unforeseen operational disruptions.
 
 Our obligations will resume as soon as reasonably practicable after the affected event has ended.
 
@@ -428,10 +426,10 @@ By creating an Account or using the Platform, you agree to receive communication
 
 Legal notices, policy updates, service announcements, security notifications, invoices, subscription information, and other communications may be provided through:
 
-* Email;
-* Website notices;
-* In-app or dashboard notifications; or
-* Any other reasonable electronic communication method introduced by SlotFlow.
+- Email;
+- Website notices;
+- In-app or dashboard notifications; or
+- Any other reasonable electronic communication method introduced by SlotFlow.
 
 Electronic communications satisfy any legal requirement that such communications be in writing.
 

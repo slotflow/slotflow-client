@@ -1,17 +1,16 @@
-import React from "react";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { fetchUsers } from "@/shared/apis/user";
-import PageHeader from "@/components/common/PageHeader";
-import CommonTable from "@/components/table/CommonTable";
-import { useAdminUser } from "@/hooks/adminHooks/useUser";
-import { User } from "@/shared/interface/entityInterface/userInterface";
-import { AdminfetchAllUsersResponse } from "@/shared/interface/api/user";
-import { AdminChangeUserStatusRequest } from "@/shared/interface/api/user";
-import AdminUsersTableColumns from "@/components/table/tableColumns/AdminUsersTableColumn";
+import React from 'react';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { fetchUsers } from '@/shared/apis/user';
+import PageHeader from '@/components/common/PageHeader';
+import CommonTable from '@/components/table/CommonTable';
+import { useAdminUser } from '@/hooks/adminHooks/useUser';
+import { User } from '@/shared/interface/entityInterface/userInterface';
+import { AdminfetchAllUsersResponse } from '@/shared/interface/api/user';
+import { AdminChangeUserStatusRequest } from '@/shared/interface/api/user';
+import AdminUsersTableColumns from '@/components/table/tableColumns/AdminUsersTableColumn';
 
 const AdminUsersPage = () => {
-
   const navigate = useNavigate();
 
   const { changeUserStatus } = useAdminUser();
@@ -23,24 +22,18 @@ const AdminUsersPage = () => {
     } else {
       toast.error(res.message);
     }
-  }
+  };
 
-  const handleGetUserDetailPage = (e: React.MouseEvent<HTMLDivElement>, userId: User["_id"]) => {
+  const handleGetUserDetailPage = (e: React.MouseEvent<HTMLDivElement>, userId: User['_id']) => {
     e.preventDefault();
-    navigate(`/admin/users/${userId}`)
-  }
+    navigate(`/admin/users/${userId}`);
+  };
 
-  const column = AdminUsersTableColumns(
-    handleAdminChangeUserBlockStatus,
-    handleGetUserDetailPage
-  );
+  const column = AdminUsersTableColumns(handleAdminChangeUserBlockStatus, handleGetUserDetailPage);
 
   return (
     <div className="p-4">
-      <PageHeader
-        title="Users"
-        description="Users list"
-      />
+      <PageHeader title="Users" description="Users list" />
       <CommonTable<AdminfetchAllUsersResponse>
         fetchApiFunction={fetchUsers}
         queryKey="users"
@@ -51,4 +44,4 @@ const AdminUsersPage = () => {
   );
 };
 
-export default AdminUsersPage
+export default AdminUsersPage;

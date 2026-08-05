@@ -1,199 +1,211 @@
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 import { Separator } from '../ui/separator';
 import { Card, CardContent } from '../ui/card';
-import { RootState } from "@/shared/redux/appStore";
+import { RootState } from '@/shared/redux/appStore';
 import React, { useCallback, useEffect } from 'react';
-import { AppDispatch } from "@/shared/redux/appStore";
+import { AppDispatch } from '@/shared/redux/appStore';
 import { useDispatch, useSelector } from 'react-redux';
-import { connectStripeAccount } from "@/shared/apis/payment";
+import { connectStripeAccount } from '@/shared/apis/payment';
 import IntegrationCard from '../integrations/IntegrationCard';
-import { checkStripeAccountStatus } from "@/shared/apis/user";
-import { appConfig, serviceConfig } from "@/shared/config/env";
+import { checkStripeAccountStatus } from '@/shared/apis/user';
+import { appConfig, serviceConfig } from '@/shared/config/env';
 import stripeLogo from '../../assets/logos/external/stripe.jpeg';
-import { Role, StripeAccountStatus } from "@/shared/interface/enums";
+import { Role, StripeAccountStatus } from '@/shared/interface/enums';
 import googleCalendarLogo from '../../assets/logos/external/googleCalendar.png';
 import { setGoogleConnect, setStripeAccountStatus } from '@/shared/redux/slices/authSlice';
-import { setGoogleConnectionLoading, setStripeConnectionLoading } from "@/shared/redux/slices/integrationSlice";
+import {
+  setGoogleConnectionLoading,
+  setStripeConnectionLoading,
+} from '@/shared/redux/slices/integrationSlice';
 
 const IntegrationsListing = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const authUser = useSelector((state: RootState) => state.auth.authUser);
+  const { googleConnectionLoding, stripeConnectionLoading } = useSelector(
+    (state: RootState) => state.integration,
+  );
 
-    const dispatch = useDispatch<AppDispatch>();
-    const authUser = useSelector((state: RootState) => state.auth.authUser);
-    const { googleConnectionLoding, stripeConnectionLoading } = useSelector((state: RootState) => state.integration);
-
-    useEffect(() => {
-        const params = new URLSearchParams(window.location.search);
-        const data = params.get("response");
-        if (!data) return;
-        try {
-            const response = JSON.parse(decodeURIComponent(data));
-            if (!response.success) {
-                toast.error("Connection failed, please try again");
-            } else {
-                if (response.googleConnected) {
-                    dispatch(setGoogleConnect());
-                    dispatch(setGoogleConnectionLoading(false));
-                    toast.success("Google connected successfully");
-                }
-                if (response.stripeOnboardingStatus === 'success') {
-                    toast.success("Stripe onboarding completed successfully");
-                    dispatch(setStripeAccountStatus(StripeAccountStatus.PENDING));
-                    //                 setTimeout(() => {
-                    //     fetchStripeAccountStatus();
-                    // }, 10000);
-                } else if (response.stripeOnboardingStatus === 'failed') {
-                    toast.error("Stripe onboarding failed");
-                }
-            }
-        } catch (err) {
-            toast.error("Connecting failed");
-            console.error("Google connect parse error: ", err);
-        } finally {
-            const url = new URL(window.location.href);
-            url.searchParams.delete("response");
-            window.history.replaceState({}, "", url.toString());
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const data = params.get('response');
+    if (!data) return;
+    try {
+      const response = JSON.parse(decodeURIComponent(data));
+      if (!response.success) {
+        toast.error('Connection failed, please try again');
+      } else {
+        if (response.googleConnected) {
+          dispatch(setGoogleConnect());
+          dispatch(setGoogleConnectionLoading(false));
+          toast.success('Google connected successfully');
         }
-    }, [dispatch]);
-
-    // fallback function to check the stripe account status
-    const fetchStripeAccountStatus = useCallback(async () => {
-        if (authUser?.stripeAccountStatus === StripeAccountStatus.ACTIVE) {
-            return;
+        if (response.stripeOnboardingStatus === 'success') {
+          toast.success('Stripe onboarding completed successfully');
+          dispatch(setStripeAccountStatus(StripeAccountStatus.PENDING));
+          //                 setTimeout(() => {
+          //     fetchStripeAccountStatus();
+          // }, 10000);
+        } else if (response.stripeOnboardingStatus === 'failed') {
+          toast.error('Stripe onboarding failed');
         }
-        try {
-            dispatch(setStripeConnectionLoading(true));
-            const res = await checkStripeAccountStatus();
-            console.log("check account status : ", res);
-            if (res.success) {
-                dispatch(setStripeAccountStatus(res.data?.accountStatus as StripeAccountStatus));
-                dispatch(setStripeConnectionLoading(false));
-                if (res.data?.accountStatus === StripeAccountStatus.ACTIVE) {
-                    toast.success("Stripe connected successfully");
-                }
-            }
-        } catch (error) {
-            if(appConfig.isDevelopment) {
-                console.error("Fetch stripe account status error : ",error);
-            }
-            toast.error("Failed to fetch stripe account status");
-        } finally {
-            dispatch(setStripeConnectionLoading(false));
+      }
+    } catch (err) {
+      toast.error('Connecting failed');
+      console.error('Google connect parse error: ', err);
+    } finally {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('response');
+      window.history.replaceState({}, '', url.toString());
+    }
+  }, [dispatch]);
+
+  // fallback function to check the stripe account status
+  const fetchStripeAccountStatus = useCallback(async () => {
+    if (authUser?.stripeAccountStatus === StripeAccountStatus.ACTIVE) {
+      return;
+    }
+    try {
+      dispatch(setStripeConnectionLoading(true));
+      const res = await checkStripeAccountStatus();
+      console.log('check account status : ', res);
+      if (res.success) {
+        dispatch(setStripeAccountStatus(res.data?.accountStatus as StripeAccountStatus));
+        dispatch(setStripeConnectionLoading(false));
+        if (res.data?.accountStatus === StripeAccountStatus.ACTIVE) {
+          toast.success('Stripe connected successfully');
         }
-    }, [authUser?.stripeAccountStatus, dispatch]);
+      }
+    } catch (error) {
+      if (appConfig.isDevelopment) {
+        console.error('Fetch stripe account status error : ', error);
+      }
+      toast.error('Failed to fetch stripe account status');
+    } finally {
+      dispatch(setStripeConnectionLoading(false));
+    }
+  }, [authUser?.stripeAccountStatus, dispatch]);
 
-        useEffect(() => {
-        if (authUser?.stripeAccountStatus === StripeAccountStatus.PENDING) {
-            console.log("fetching")
-            const interval = setInterval(() => {
-                fetchStripeAccountStatus();
-            }, 15000);
+  useEffect(() => {
+    if (authUser?.stripeAccountStatus === StripeAccountStatus.PENDING) {
+      console.log('fetching');
+      const interval = setInterval(() => {
+        fetchStripeAccountStatus();
+      }, 15000);
 
-            return () => clearInterval(interval);
-        }
-    }, [authUser?.stripeAccountStatus, fetchStripeAccountStatus]);
+      return () => clearInterval(interval);
+    }
+  }, [authUser?.stripeAccountStatus, fetchStripeAccountStatus]);
 
-    const handleConnectGoogle = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        try {
-            dispatch(setGoogleConnectionLoading(true));
-            window.location.href = `${serviceConfig.apiGatewayUrl + appConfig.version}/google/connect`;
-        } catch {
-            dispatch(setGoogleConnectionLoading(false));
-            toast.error("Failed to connect google calendar");
-        } finally {
-            dispatch(setGoogleConnectionLoading(false));
-        }
-    };
+  const handleConnectGoogle = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    try {
+      dispatch(setGoogleConnectionLoading(true));
+      window.location.href = `${serviceConfig.apiGatewayUrl + appConfig.version}/google/connect`;
+    } catch {
+      dispatch(setGoogleConnectionLoading(false));
+      toast.error('Failed to connect google calendar');
+    } finally {
+      dispatch(setGoogleConnectionLoading(false));
+    }
+  };
 
+  const handleStripeConnect = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
 
-    const handleStripeConnect = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
+    if (!authUser?.email) {
+      toast.error('Something went wrong, please login again');
+      return;
+    }
 
-        if(!authUser?.email) {
-            toast.error("Something went wrong, please login again");
-            return;
-        }
+    try {
+      dispatch(setStripeConnectionLoading(true));
+      const res = await connectStripeAccount({ email: authUser?.email });
+      console.log('res : ', res);
+      if (res.data?.accountLink) {
+        window.location.href = res.data.accountLink;
+      } else {
+        dispatch(setStripeConnectionLoading(false));
+        toast.error('Failed to connect stripe');
+      }
+    } catch (error) {
+      if (appConfig.isDevelopment) {
+        console.log('Error while connecting stripe: ', error);
+      }
+      dispatch(setStripeConnectionLoading(false));
+      toast.error('Failed to connect stripe');
+    } finally {
+      dispatch(setStripeConnectionLoading(false));
+    }
+  };
 
-        try {
-            dispatch(setStripeConnectionLoading(true));
-            const res = await connectStripeAccount({ email: authUser?.email });
-            console.log("res : ", res);
-            if (res.data?.accountLink) {
-                window.location.href = res.data.accountLink;
-            } else {
-                dispatch(setStripeConnectionLoading(false));
-                toast.error("Failed to connect stripe");
-            }
-        } catch (error) {
-            if(appConfig.isDevelopment) {
-                console.log("Error while connecting stripe: ",error)
-            }
-            dispatch(setStripeConnectionLoading(false));
-            toast.error("Failed to connect stripe");
-        } finally {
-            dispatch(setStripeConnectionLoading(false));
-        }
-    };
+  const listData = [
+    {
+      image: googleCalendarLogo,
+      heading: 'Google',
+      description:
+        'Connect your Google calendar to enable calendar syncing and manage your appointments automatically avoid overlapping.',
+      title: 'Connect Google',
+      text: 'Connect',
+      action: handleConnectGoogle,
+      show: true,
+      connectionStatus: authUser?.googleConnected ?? false,
+      connectionText: 'Connected',
+      isLoading: googleConnectionLoding,
+    },
+    {
+      image: stripeLogo,
+      heading: 'Stripe',
+      description:
+        'Connect your Stripe account to securely manage payments, payouts, and transaction tracking.',
+      title: 'Connect Stripe',
+      text: 'Connect',
+      action: handleStripeConnect,
+      show: authUser?.role !== Role.PROVIDER,
+      connectionStatus: authUser?.stripeAccountStatus === StripeAccountStatus.ACTIVE,
+      connectionText:
+        authUser?.stripeAccountStatus === StripeAccountStatus.ACTIVE
+          ? 'Connected'
+          : authUser?.stripeAccountStatus === StripeAccountStatus.RESTRICTED
+            ? 'Restricted'
+            : authUser?.stripeAccountStatus === StripeAccountStatus.PENDING
+              ? 'Pending'
+              : 'Not Connected',
+      isLoading: stripeConnectionLoading,
+    },
+  ];
 
-    const listData = [
-        {
-            image: googleCalendarLogo,
-            heading: "Google",
-            description: 'Connect your Google calendar to enable calendar syncing and manage your appointments automatically avoid overlapping.',
-            title: "Connect Google",
-            text: "Connect",
-            action: handleConnectGoogle,
-            show: true,
-            connectionStatus: authUser?.googleConnected ?? false,
-            connectionText: "Connected",
-            isLoading: googleConnectionLoding,
-        },
-        {
-            image: stripeLogo,
-            heading: "Stripe",
-            description: 'Connect your Stripe account to securely manage payments, payouts, and transaction tracking.',
-            title: "Connect Stripe",
-            text: "Connect",
-            action: handleStripeConnect,
-            show: authUser?.role !== Role.PROVIDER,
-            connectionStatus: authUser?.stripeAccountStatus === StripeAccountStatus.ACTIVE,
-            connectionText: authUser?.stripeAccountStatus === StripeAccountStatus.ACTIVE ? "Connected" : authUser?.stripeAccountStatus === StripeAccountStatus.RESTRICTED ? "Restricted" : authUser?.stripeAccountStatus === StripeAccountStatus.PENDING ? "Pending" : "Not Connected",
-            isLoading: stripeConnectionLoading,
-        }
-    ]
+  if (!authUser) return null;
 
-        if (!authUser) return null;
-
-    return (
-        <>
-            <div className='flex-none'>
-                <h3 className='text-lg font-medium'>Integrations</h3>
-                <p className='text-muted-foreground text-sm'>Integrations description</p>
-            </div>
-            <Separator className='my-4 flex-none' />
-            <Card>
-                <CardContent className="space-y-4">
-                    <div className="grid grid-cols-1 gap-4">
-                        {listData?.map((item, index) => (
-                            <IntegrationCard
-                                key={index}
-                                image={item.image}
-                                heading={item.heading}
-                                description={item.description}
-                                title={item.title}
-                                text={item.text}
-                                action={item.action}
-                                show={item.show}
-                                connectionStatus={item.connectionStatus}
-                                connectionText={item.connectionText}
-                                isLoading={item.isLoading}
-                            />
-                        ))}
-                    </div>
-                </CardContent>
-            </Card>
-        </>
-    )
-}
+  return (
+    <>
+      <div className="flex-none">
+        <h3 className="text-lg font-medium">Integrations</h3>
+        <p className="text-muted-foreground text-sm">Integrations description</p>
+      </div>
+      <Separator className="my-4 flex-none" />
+      <Card>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 gap-4">
+            {listData?.map((item, index) => (
+              <IntegrationCard
+                key={index}
+                image={item.image}
+                heading={item.heading}
+                description={item.description}
+                title={item.title}
+                text={item.text}
+                action={item.action}
+                show={item.show}
+                connectionStatus={item.connectionStatus}
+                connectionText={item.connectionText}
+                isLoading={item.isLoading}
+              />
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </>
+  );
+};
 
 export default IntegrationsListing;

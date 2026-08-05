@@ -1,16 +1,11 @@
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Select,
   SelectTrigger,
   SelectValue,
   SelectContent,
   SelectItem,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 import { useState } from 'react';
 import { DateRange } from 'react-day-picker';
 import DataFilter from '@/components/filters/DataFilter';
@@ -75,7 +70,7 @@ const ProviderDashboardPage = () => {
         </Tabs>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProviderDashboardPage
+export default ProviderDashboardPage;

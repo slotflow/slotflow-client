@@ -1,17 +1,10 @@
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
+import { Card, CardContent } from '@/components/ui/card';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import ChartHeader from './ChartHeader';
-import ChartOverlay from "./ChartOverlay";
-import ChartDataNotAvailable from "./ChartDataNotAvailable";
-import { LabelList, RadialBar, RadialBarChart } from "recharts";
-import { ChartDataItem, RadialChartInterface } from "@/shared/interface/componentInterface";
+import ChartOverlay from './ChartOverlay';
+import ChartDataNotAvailable from './ChartDataNotAvailable';
+import { LabelList, RadialBar, RadialBarChart } from 'recharts';
+import { ChartDataItem, RadialChartInterface } from '@/shared/interface/componentInterface';
 
 const RadialChart = <T extends ChartDataItem>({
   title,
@@ -21,13 +14,12 @@ const RadialChart = <T extends ChartDataItem>({
   dataKeyTwo,
   chartConfig,
   isLocked,
-  minimumPlan
+  minimumPlan,
 }: RadialChartInterface<T>) => {
-
   const coloredChartData = chartData.map((item) => {
     const key = item[dataKeyTwo];
     const keyString = String(key);
-    const fill = chartConfig[keyString]?.color || "#8884d8";
+    const fill = chartConfig[keyString]?.color || '#8884d8';
     return {
       ...item,
       fill,
@@ -36,7 +28,7 @@ const RadialChart = <T extends ChartDataItem>({
 
   return (
     <Card className="relative overflow-hidden">
-      {isLocked && (<ChartOverlay stringOne={minimumPlan} chartTitle={title} />)}
+      {isLocked && <ChartOverlay stringOne={minimumPlan} chartTitle={title} />}
       <ChartHeader title={title} description={description} />
       <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
         <ChartContainer config={chartConfig} className="min-h-[200px]">
@@ -54,12 +46,7 @@ const RadialChart = <T extends ChartDataItem>({
                 cursor={false}
                 content={<ChartTooltipContent hideLabel nameKey={String(dataKeyTwo)} />}
               />
-              <RadialBar
-                dataKey={String(dataKeyOne)}
-                background
-                isAnimationActive
-                label
-              >
+              <RadialBar dataKey={String(dataKeyOne)} background isAnimationActive label>
                 <LabelList
                   dataKey={String(dataKeyTwo)}
                   position="insideStart"

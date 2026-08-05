@@ -5,5 +5,4 @@ export const checkJoin = (date: Date | string) => {
   const diff = appointmentDate.getTime() - now.getTime();
   const minutes = Math.floor(diff / 60000);
   return minutes <= 15;
-}
-
+};

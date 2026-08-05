@@ -18,232 +18,233 @@ import { FileUploaderProps } from '@/shared/interface/componentInterface';
 import { ImageFileFormType, imageFileZodeSchema } from '@/shared/zod/providerZod';
 
 const FileUploader = ({
-    folderName,
-    uploadFunction,
-    message,
-    setStateFunction,
-    deleteFunction,
-    data,
-    title
+  folderName,
+  uploadFunction,
+  message,
+  setStateFunction,
+  deleteFunction,
+  data,
+  title,
 }: FileUploaderProps) => {
-    const dispatch = useDispatch<AppDispatch>();
-    const fileInputRef = useRef<HTMLInputElement | null>(null);
-    const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const dispatch = useDispatch<AppDispatch>();
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-    const {
-        handleSubmit,
-        formState: { errors, isSubmitting, isValid },
-        setValue,
-        watch,
-        reset
-    } = useForm<ImageFileFormType>({
-        resolver: zodResolver(imageFileZodeSchema),
-        defaultValues: {
-            file: undefined,
-        },
-    });
+  const {
+    handleSubmit,
+    formState: { errors, isSubmitting, isValid },
+    setValue,
+    watch,
+    reset,
+  } = useForm<ImageFileFormType>({
+    resolver: zodResolver(imageFileZodeSchema),
+    defaultValues: {
+      file: undefined,
+    },
+  });
 
-    const proofFile = watch("file");
+  const proofFile = watch('file');
 
-    // handle file input change
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            setSelectedImage(URL.createObjectURL(file));
-            setValue("file", file, { shouldValidate: true });
-        }
-    };
-
-    // handle submit
-    const onSubmit: SubmitHandler<ImageFileFormType> = async (data) => {
-        const file = data.file;
-        if (!file) return;
-
-        try {
-            dispatch(setStateFunction({
-                file: null,
-                isLoading: true,
-            }));
-            const uploadRes = await getUploadUrl({ file: file, folder: folderName });
-            if (!uploadRes.data) {
-                throw new Error("Failed to get upload URL");
-            }
-            const { uploadUrl, key } = uploadRes.data;
-            await uploadToS3(file, uploadUrl);
-            const res = await uploadFunction({ field: "identityProof", s3FileKey: key });
-            if (!res.data) {
-                throw new Error("Failed to update proof with uploaded file");
-            }
-            if (res.success) {
-                toast.success("Proofs uploaded successfully!");
-                dispatch(setStateFunction({
-                    file: res.data,
-                    isLoading: false,
-                }));
-                setSelectedImage(null);
-            }
-        } catch (error) {
-            if (appConfig.isDevelopment) {
-                console.error("Upload error:", error);
-            }
-            toast.error("Upload failed! Please try again.");
-        }
-    };
-
-    // handle delete file
-    const handleDeleteFile = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        try {
-            dispatch(setStateFunction({
-                isLoading: true,
-            }));
-            const res = await deleteFunction();
-            if (res.success) {
-                toast.success("File deleted successfully!");
-                dispatch(setStateFunction({
-                    file: null,
-                    isLoading: false,
-                }));
-                setSelectedImage(null);
-                reset();
-                if (fileInputRef.current) {
-                    fileInputRef.current.value = "";
-                }
-            }
-        } catch (error) {
-            if (appConfig.isDevelopment) {
-                console.error("Deletion error:", error);
-            }
-            toast.error("Deletion failed! Please try again.");
-        }
+  // handle file input change
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectedImage(URL.createObjectURL(file));
+      setValue('file', file, { shouldValidate: true });
     }
+  };
 
-    return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <Card className="rounded-2xl shadow-md">
-                <CardContent className="p-6 space-y-4">
-                    <Label className="text-sm font-medium">
-                        {title} <span className="text-red-500">*</span>
-                    </Label>
-                    {!data.file ? (
-                        <Input
-                            ref={fileInputRef}
-                            type="file"
-                            id="file"
-                            accept="image/png, image/jpeg"
-                            onChange={handleFileChange}
-                        />
-                    ) : (
-                        <h6 className='flex justify-center'><Check className="mx-2" /> File Uploaded </h6>
-                    )}
+  // handle submit
+  const onSubmit: SubmitHandler<ImageFileFormType> = async (data) => {
+    const file = data.file;
+    if (!file) return;
 
-                    {errors.file && (
-                        <p className="text-red-500 text-sm">
-                            {errors.file.message || "Identity proof is required."}
-                        </p>
-                    )}
+    try {
+      dispatch(
+        setStateFunction({
+          file: null,
+          isLoading: true,
+        }),
+      );
+      const uploadRes = await getUploadUrl({ file: file, folder: folderName });
+      if (!uploadRes.data) {
+        throw new Error('Failed to get upload URL');
+      }
+      const { uploadUrl, key } = uploadRes.data;
+      await uploadToS3(file, uploadUrl);
+      const res = await uploadFunction({ field: 'identityProof', s3FileKey: key });
+      if (!res.data) {
+        throw new Error('Failed to update proof with uploaded file');
+      }
+      if (res.success) {
+        toast.success('Proofs uploaded successfully!');
+        dispatch(
+          setStateFunction({
+            file: res.data,
+            isLoading: false,
+          }),
+        );
+        setSelectedImage(null);
+      }
+    } catch (error) {
+      if (appConfig.isDevelopment) {
+        console.error('Upload error:', error);
+      }
+      toast.error('Upload failed! Please try again.');
+    }
+  };
 
-                    {selectedImage && (
-                        <div className="space-y-3">
+  // handle delete file
+  const handleDeleteFile = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    try {
+      dispatch(
+        setStateFunction({
+          isLoading: true,
+        }),
+      );
+      const res = await deleteFunction();
+      if (res.success) {
+        toast.success('File deleted successfully!');
+        dispatch(
+          setStateFunction({
+            file: null,
+            isLoading: false,
+          }),
+        );
+        setSelectedImage(null);
+        reset();
+        if (fileInputRef.current) {
+          fileInputRef.current.value = '';
+        }
+      }
+    } catch (error) {
+      if (appConfig.isDevelopment) {
+        console.error('Deletion error:', error);
+      }
+      toast.error('Deletion failed! Please try again.');
+    }
+  };
 
-                            <div className="flex items-center justify-between">
-                                <h4 className="text-sm font-medium text-muted-foreground">
-                                    Selected File
-                                </h4>
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Card className="rounded-2xl shadow-md">
+        <CardContent className="p-6 space-y-4">
+          <Label className="text-sm font-medium">
+            {title} <span className="text-red-500">*</span>
+          </Label>
+          {!data.file ? (
+            <Input
+              ref={fileInputRef}
+              type="file"
+              id="file"
+              accept="image/png, image/jpeg"
+              onChange={handleFileChange}
+            />
+          ) : (
+            <h6 className="flex justify-center">
+              <Check className="mx-2" /> File Uploaded{' '}
+            </h6>
+          )}
 
-                                <Button
-                                    title="Remove file"
-                                    variant="ghost"
-                                    size="icon"
-                                    className="text-red-500 hover:bg-red-100 hover:text-red-600"
-                                    disabled={data.isLoading}
-                                    onClick={() => {
-                                        setSelectedImage(null);
-                                        reset();
-                                        if (fileInputRef.current) {
-                                            fileInputRef.current.value = "";
-                                        }
-                                    }}
-                                >
-                                    <X className="size-4" />
-                                </Button>
-                            </div>
+          {errors.file && (
+            <p className="text-red-500 text-sm">
+              {errors.file.message || 'Identity proof is required.'}
+            </p>
+          )}
 
-                            <div className="relative w-full h-48 rounded-xl border overflow-hidden bg-muted">
+          {selectedImage && (
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <h4 className="text-sm font-medium text-muted-foreground">Selected File</h4>
 
-                                {!data.isLoading ? (
-                                    <img
-                                        src={selectedImage ?? noImage}
-                                        alt="Proof Preview"
-                                        className="w-full h-full object-contain transition-opacity duration-300"
-                                    />
-                                ) : (
-                                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-background/60 backdrop-blur-sm">
+                <Button
+                  title="Remove file"
+                  variant="ghost"
+                  size="icon"
+                  className="text-red-500 hover:bg-red-100 hover:text-red-600"
+                  disabled={data.isLoading}
+                  onClick={() => {
+                    setSelectedImage(null);
+                    reset();
+                    if (fileInputRef.current) {
+                      fileInputRef.current.value = '';
+                    }
+                  }}
+                >
+                  <X className="size-4" />
+                </Button>
+              </div>
 
-                                        {data.file ? (
-                                            <LoaderCircle className="animate-spin size-5 text-muted-foreground" />
-                                        ) : (
-                                            <ArrowUp className="animate-bounce size-5 text-muted-foreground" />
-                                        )}
-
-                                        <p className="text-sm text-muted-foreground">
-                                            {data.file ? "Deleting file..." : "Processing file..."}
-                                        </p>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    )}
-
-                    {data.file && (
-                        <>
-                            <h5>Uploaded File</h5>
-                            {!data.isLoading ? (
-                                <img
-                                    src={data.file ?? noImage}
-                                    alt="Proof Preview"
-                                    className="w-full h-48 object-contain rounded-xl border"
-                                />
-                            ) : (
-                                <div className='w-full h-48 shimmer'></div>
-                            )}
-                        </>
-                    )}
-
-                    {message && (
-                        <AlertBox
-                            icon={Info}
-                            heading={"Important"}
-                            message={message}
-                        />
-                    )}
-                </CardContent>
-                <CardFooter className='flex justify-end'>
+              <div className="relative w-full h-48 rounded-xl border overflow-hidden bg-muted">
+                {!data.isLoading ? (
+                  <img
+                    src={selectedImage ?? noImage}
+                    alt="Proof Preview"
+                    className="w-full h-full object-contain transition-opacity duration-300"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-background/60 backdrop-blur-sm">
                     {data.file ? (
-                        <Button
-                            title="Delete File"
-                            type="button"
-                            variant="destructive"
-                            className='cursor-pointer'
-                            onClick={handleDeleteFile}
-                        >
-                            Delete File
-                        </Button>
-                    ) : proofFile && (
-                        <Button
-                            title="Upload"
-                            variant="secondary"
-                            disabled={isSubmitting || !isValid}
-                            className={defaultButtonClassName}
-                            type="submit"
-                        >
-                            {isSubmitting ? "Uploading" : "Upload File"}
-                        </Button>
+                      <LoaderCircle className="animate-spin size-5 text-muted-foreground" />
+                    ) : (
+                      <ArrowUp className="animate-bounce size-5 text-muted-foreground" />
                     )}
-                </CardFooter>
-            </Card>
-        </form>
-    );
+
+                    <p className="text-sm text-muted-foreground">
+                      {data.file ? 'Deleting file...' : 'Processing file...'}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {data.file && (
+            <>
+              <h5>Uploaded File</h5>
+              {!data.isLoading ? (
+                <img
+                  src={data.file ?? noImage}
+                  alt="Proof Preview"
+                  className="w-full h-48 object-contain rounded-xl border"
+                />
+              ) : (
+                <div className="w-full h-48 shimmer"></div>
+              )}
+            </>
+          )}
+
+          {message && <AlertBox icon={Info} heading={'Important'} message={message} />}
+        </CardContent>
+        <CardFooter className="flex justify-end">
+          {data.file ? (
+            <Button
+              title="Delete File"
+              type="button"
+              variant="destructive"
+              className="cursor-pointer"
+              onClick={handleDeleteFile}
+            >
+              Delete File
+            </Button>
+          ) : (
+            proofFile && (
+              <Button
+                title="Upload"
+                variant="secondary"
+                disabled={isSubmitting || !isValid}
+                className={defaultButtonClassName}
+                type="submit"
+              >
+                {isSubmitting ? 'Uploading' : 'Upload File'}
+              </Button>
+            )
+          )}
+        </CardFooter>
+      </Card>
+    </form>
+  );
 };
 
 export default FileUploader;

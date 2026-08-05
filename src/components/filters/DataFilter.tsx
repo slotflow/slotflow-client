@@ -1,15 +1,15 @@
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { DataFilterProps } from "@/shared/interface/componentInterface";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { format } from 'date-fns';
+import { CalendarIcon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
+import { DataFilterProps } from '@/shared/interface/componentInterface';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 const DataFilter = ({
   dateRange,
   setDateRange,
-  title = "Timeframe Analysis",
-  description = "Filtering data by selected date range",
+  title = 'Timeframe Analysis',
+  description = 'Filtering data by selected date range',
 }: DataFilterProps) => {
   return (
     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 p-4 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-sm backdrop-blur-sm">
@@ -33,14 +33,17 @@ const DataFilter = ({
               <CalendarIcon className="mr-2 h-4 w-4 text-slate-500" />
               {dateRange?.from && dateRange?.to ? (
                 <span className="text-slate-700 dark:text-slate-300">
-                  {format(dateRange.from, "LLL dd")} - {format(dateRange.to, "LLL dd, y")}
+                  {format(dateRange.from, 'LLL dd')} - {format(dateRange.to, 'LLL dd, y')}
                 </span>
               ) : (
                 <span className="text-slate-500">Pick a custom range</span>
               )}
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-auto p-0 shadow-2xl rounded-xl border-slate-200 dark:border-slate-800" align="end">
+          <PopoverContent
+            className="w-auto p-0 shadow-2xl rounded-xl border-slate-200 dark:border-slate-800"
+            align="end"
+          >
             <Calendar
               initialFocus
               mode="range"

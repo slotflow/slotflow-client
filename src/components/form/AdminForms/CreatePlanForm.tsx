@@ -1,160 +1,158 @@
-import FormField from "../FormField";
-import { toast } from "react-toastify";
-import { useForm } from "react-hook-form";
-import { FormButton } from "../FormSplits";
-import SelectField from "../SelectField";
-import { Button } from "@/components/ui/button";
-import { createPlan } from "@/shared/apis/plan";
-import { appConfig } from "@/shared/config/env";
-import { PlanName } from "@/shared/interface/enums";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useQueryClient } from "@tanstack/react-query";
-import { slideOut } from "@/shared/helper/gsapAnimationSlide";
-import { CreatePlanFormProps } from "@/shared/interface/componentInterface";
-import { AdminCreatePlanFormType, adminCreatePlanZodSchema } from "@/shared/zod/adminZod";
-import { adVisibility, defaultButtonClassName, planNameOptions } from "@/shared/utils/constants";
+import FormField from '../FormField';
+import { toast } from 'react-toastify';
+import { useForm } from 'react-hook-form';
+import { FormButton } from '../FormSplits';
+import SelectField from '../SelectField';
+import { Button } from '@/components/ui/button';
+import { createPlan } from '@/shared/apis/plan';
+import { appConfig } from '@/shared/config/env';
+import { PlanName } from '@/shared/interface/enums';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
+import { slideOut } from '@/shared/helper/gsapAnimationSlide';
+import { CreatePlanFormProps } from '@/shared/interface/componentInterface';
+import { AdminCreatePlanFormType, adminCreatePlanZodSchema } from '@/shared/zod/adminZod';
+import { adVisibility, defaultButtonClassName, planNameOptions } from '@/shared/utils/constants';
 
-const CreatePlanForm = ({
-    onClose,
-    formRef
-}: CreatePlanFormProps) => {
+const CreatePlanForm = ({ onClose, formRef }: CreatePlanFormProps) => {
+  const queryClient = useQueryClient();
 
-    const queryClient = useQueryClient();
-
-    const handleCloseForm = () => {
-        slideOut(formRef.current, {
-            onComplete: onClose,
-        });
-    };
-
-    const {
-        register,
-        handleSubmit,
-        formState: { errors, isSubmitting, isValid },
-        reset,
-    } = useForm<AdminCreatePlanFormType>({
-        resolver: zodResolver(adminCreatePlanZodSchema),
-        mode: "onChange",
-        defaultValues: {
-            planName: PlanName.STARTER,
-            description: "",
-            price: 0,
-            features: ["", "", "", "", ""],
-            maxBookingPerMonth: 0,
-            adVisibility: false,
-        },
+  const handleCloseForm = () => {
+    slideOut(formRef.current, {
+      onComplete: onClose,
     });
+  };
 
-    const onSubmit = async (data: AdminCreatePlanFormType) => {
-        await createPlan(data)
-            .then((res) => {
-                if (res.success) {
-                    toast.success(res.message);
-                    reset();
-                    onClose();
-                    queryClient.invalidateQueries({ queryKey: ["plans"] });
-                } else {
-                    toast.error(res.message);
-                }
-            })
-            .catch((error) => {
-                if (appConfig.isDevelopment) {
-                    console.log("An error occured while saving plan : ", error);
-                }
-                toast.error(error.message);
-            });
-    };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isValid },
+    reset,
+  } = useForm<AdminCreatePlanFormType>({
+    resolver: zodResolver(adminCreatePlanZodSchema),
+    mode: 'onChange',
+    defaultValues: {
+      planName: PlanName.STARTER,
+      description: '',
+      price: 0,
+      features: ['', '', '', '', ''],
+      maxBookingPerMonth: 0,
+      adVisibility: false,
+    },
+  });
 
-    return (
-        <div
-            ref={formRef}
-            className="w-auto md:w-4xl rounded-lg bg-[var(--background)] p-6 shadow-xl border-1"
+  const onSubmit = async (data: AdminCreatePlanFormType) => {
+    await createPlan(data)
+      .then((res) => {
+        if (res.success) {
+          toast.success(res.message);
+          reset();
+          onClose();
+          queryClient.invalidateQueries({ queryKey: ['plans'] });
+        } else {
+          toast.error(res.message);
+        }
+      })
+      .catch((error) => {
+        if (appConfig.isDevelopment) {
+          console.log('An error occured while saving plan : ', error);
+        }
+        toast.error(error.message);
+      });
+  };
+
+  return (
+    <div
+      ref={formRef}
+      className="w-auto md:w-4xl rounded-lg bg-[var(--background)] p-6 shadow-xl border-1"
+    >
+      <h3 className="text-lg lg:text-2xl font-bold text-center my-4">Create New Plan</h3>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4"
+      >
+        <SelectField<AdminCreatePlanFormType, PlanName>
+          id="planName"
+          label="Plan Name"
+          register={register}
+          error={errors.planName?.message}
+          options={planNameOptions}
+          required
+        />
+        <FormField<AdminCreatePlanFormType>
+          id="description"
+          label="Plan Description"
+          placeholder="Enter Plan Description"
+          type="text"
+          register={register}
+          error={errors.description?.message}
+          readOnly={false}
+          required={true}
+        />
+        <FormField<AdminCreatePlanFormType>
+          id="price"
+          label="Plan Price"
+          placeholder="Enter Plan Price"
+          type="number"
+          register={register}
+          error={errors.price?.message}
+          readOnly={false}
+          required={true}
+        />
+
+        {Array.from({ length: 5 }).map((_, index) => (
+          <FormField<AdminCreatePlanFormType>
+            key={index}
+            label={`Plan Feature ${index + 1}`}
+            id={`features.${index}` as const}
+            placeholder={`Enter Feature ${index + 1}`}
+            type="text"
+            register={register}
+            error={errors.features?.[index]?.message}
+            readOnly={false}
+            required={index < 2}
+          />
+        ))}
+
+        <FormField<AdminCreatePlanFormType>
+          id="maxBookingPerMonth"
+          label="Plan Maximum Booking"
+          placeholder="Enter Plan Maximum Booking"
+          type="number"
+          register={register}
+          error={errors.maxBookingPerMonth?.message}
+          readOnly={false}
+          required={true}
+        />
+
+        <SelectField<AdminCreatePlanFormType, boolean>
+          id="adVisibility"
+          label="Advertisement Visibility"
+          register={register}
+          error={errors.adVisibility}
+          options={adVisibility}
+          required
+        />
+
+        <FormButton
+          text={isSubmitting ? 'Saving' : 'Save'}
+          loading={isSubmitting}
+          disabled={isSubmitting || !isValid}
+          title="Save"
+        />
+        <Button
+          title="Cancel"
+          variant="destructive"
+          className={defaultButtonClassName}
+          type="button"
+          disabled={isSubmitting}
+          onClick={handleCloseForm}
         >
-            <h3 className="text-lg lg:text-2xl font-bold text-center my-4">Create New Plan</h3>
-            <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-                <SelectField<AdminCreatePlanFormType, PlanName>
-                    id="planName"
-                    label="Plan Name"
-                    register={register}
-                    error={errors.planName?.message}
-                    options={planNameOptions}
-                    required
-                />
-                <FormField<AdminCreatePlanFormType>
-                    id="description"
-                    label="Plan Description"
-                    placeholder="Enter Plan Description"
-                    type="text"
-                    register={register}
-                    error={errors.description?.message}
-                    readOnly={false}
-                    required={true}
-                />
-                <FormField<AdminCreatePlanFormType>
-                    id="price"
-                    label="Plan Price"
-                    placeholder="Enter Plan Price"
-                    type="number"
-                    register={register}
-                    error={errors.price?.message}
-                    readOnly={false}
-                    required={true}
-                />
-
-                {Array.from({ length: 5 }).map((_, index) => (
-
-                    <FormField<AdminCreatePlanFormType>
-                        key={index}
-                        label={`Plan Feature ${index + 1}`}
-                        id={`features.${index}` as const}
-                        placeholder={`Enter Feature ${index + 1}`}
-                        type="text"
-                        register={register}
-                        error={errors.features?.[index]?.message}
-                        readOnly={false}
-                        required={index < 2}
-                    />
-                ))}
-
-                <FormField<AdminCreatePlanFormType>
-                    id="maxBookingPerMonth"
-                    label="Plan Maximum Booking"
-                    placeholder="Enter Plan Maximum Booking"
-                    type="number"
-                    register={register}
-                    error={errors.maxBookingPerMonth?.message}
-                    readOnly={false}
-                    required={true}
-                />
-
-                <SelectField<AdminCreatePlanFormType, boolean>
-                    id="adVisibility"
-                    label="Advertisement Visibility"
-                    register={register}
-                    error={errors.adVisibility}
-                    options={adVisibility}
-                    required
-                />
-
-                <FormButton
-                    text={isSubmitting ? "Saving" : "Save"}
-                    loading={isSubmitting}
-                    disabled={isSubmitting || !isValid}
-                    title="Save"
-                />
-                <Button
-                    title="Cancel"
-                    variant="destructive"
-                    className={defaultButtonClassName}
-                    type="button"
-                    disabled={isSubmitting}
-                    onClick={handleCloseForm}
-                >
-                    Cancel
-                </Button>
-            </form>
-        </div>
-    );
+          Cancel
+        </Button>
+      </form>
+    </div>
+  );
 };
 
 export default CreatePlanForm;

@@ -1,12 +1,12 @@
-import { useMotionValue, motion, useMotionTemplate } from "motion/react";
-import React, { MouseEvent as ReactMouseEvent, useState } from "react";
-import { CanvasRevealEffect } from "@/components/ui/canvas-reveal-effect";
-import { cn } from "@/lib/utils";
+import { useMotionValue, motion, useMotionTemplate } from 'motion/react';
+import React, { MouseEvent as ReactMouseEvent, useState } from 'react';
+import { CanvasRevealEffect } from '@/components/ui/canvas-reveal-effect';
+import { cn } from '@/lib/utils';
 
 export const CardSpotlight = ({
   children,
   radius = 350,
-  color = "#262626",
+  color = '#262626',
   className,
   ...props
 }: {
@@ -16,11 +16,7 @@ export const CardSpotlight = ({
 } & React.HTMLAttributes<HTMLDivElement>) => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  function handleMouseMove({
-    currentTarget,
-    clientX,
-    clientY,
-  }: ReactMouseEvent<HTMLDivElement>) {
+  function handleMouseMove({ currentTarget, clientX, clientY }: ReactMouseEvent<HTMLDivElement>) {
     let { left, top } = currentTarget.getBoundingClientRect();
 
     mouseX.set(clientX - left);
@@ -33,8 +29,8 @@ export const CardSpotlight = ({
   return (
     <div
       className={cn(
-        "group/spotlight p-10 rounded-md relative border border-neutral-800 dark:border-neutral-800",
-        className
+        'group/spotlight p-10 rounded-md relative border border-neutral-800 dark:border-neutral-800',
+        className,
       )}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}

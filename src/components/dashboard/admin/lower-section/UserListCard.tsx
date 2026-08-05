@@ -2,7 +2,14 @@ import { fetchUsers } from '@/shared/apis/user';
 import { User as UserIcon } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import DashboardDataCard from '../../DashboardDataCard';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 
 const UserListCard = () => {
   const { data, isLoading, isError, refetch } = useQuery({
@@ -26,15 +33,26 @@ const UserListCard = () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[60px] text-[10px] uppercase font-bold tracking-wider py-3 px-4">#</TableHead>
-              <TableHead className="text-[10px] uppercase font-bold tracking-wider py-3 px-4">User</TableHead>
-              <TableHead className="text-[10px] uppercase font-bold tracking-wider py-3 px-4">Email</TableHead>
+              <TableHead className="w-[60px] text-[10px] uppercase font-bold tracking-wider py-3 px-4">
+                #
+              </TableHead>
+              <TableHead className="text-[10px] uppercase font-bold tracking-wider py-3 px-4">
+                User
+              </TableHead>
+              <TableHead className="text-[10px] uppercase font-bold tracking-wider py-3 px-4">
+                Email
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {users.map((user, index) => (
-              <TableRow key={user._id} className="hover:bg-slate-50/30 dark:hover:bg-slate-900/30 border-slate-100 dark:border-slate-800 transition-colors">
-                <TableCell className="text-xs font-medium text-slate-400 py-3 px-4">{index + 1}</TableCell>
+              <TableRow
+                key={user._id}
+                className="hover:bg-slate-50/30 dark:hover:bg-slate-900/30 border-slate-100 dark:border-slate-800 transition-colors"
+              >
+                <TableCell className="text-xs font-medium text-slate-400 py-3 px-4">
+                  {index + 1}
+                </TableCell>
                 <TableCell className="py-3 px-4">
                   <div className="flex items-center gap-3">
                     <div className="p-1.5 bg-slate-100 dark:bg-slate-800 rounded-full">

@@ -1,31 +1,31 @@
-import { Suspense } from "react";
-import { Outlet } from "react-router-dom";
-import BoardingLayout from "@/layouts/BoardingLayout";
-import { useOnboardingMetadata } from "@/hooks/useOnboardingMetadata";
-import BoardingLoadingFallback from "@/pages/boarding/BoardingLoadingFallback";
+import { Suspense } from 'react';
+import { Outlet } from 'react-router-dom';
+import BoardingLayout from '@/layouts/BoardingLayout';
+import { useOnboardingMetadata } from '@/hooks/useOnboardingMetadata';
+import BoardingLoadingFallback from '@/pages/boarding/BoardingLoadingFallback';
 
 const BoardingLayoutWrapper = () => {
-    const metadata = useOnboardingMetadata();
+  const metadata = useOnboardingMetadata();
 
-    if (!metadata) {
-        return (
-            <Suspense fallback={<BoardingLoadingFallback />}>
-                <Outlet />
-            </Suspense>
-        );
-    }
-
+  if (!metadata) {
     return (
-        <BoardingLayout
-            pageNumber={metadata.pageNumber}
-            heading={metadata.heading}
-            description={metadata.description}
-        >
-            <Suspense fallback={<BoardingLoadingFallback />}>
-                <Outlet />
-            </Suspense>
-        </BoardingLayout>
+      <Suspense fallback={<BoardingLoadingFallback />}>
+        <Outlet />
+      </Suspense>
     );
+  }
+
+  return (
+    <BoardingLayout
+      pageNumber={metadata.pageNumber}
+      heading={metadata.heading}
+      description={metadata.description}
+    >
+      <Suspense fallback={<BoardingLoadingFallback />}>
+        <Outlet />
+      </Suspense>
+    </BoardingLayout>
+  );
 };
 
 export default BoardingLayoutWrapper;

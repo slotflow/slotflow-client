@@ -6,7 +6,6 @@ import error404 from '../../assets/svgs/error404.svg';
 import { gsapBigSvgYDirectionAnimation } from '@/shared/utils/constants';
 
 const Error404Page = () => {
-
   const errorRef = useRef(null);
   const navigate = useNavigate();
 
@@ -15,16 +14,18 @@ const Error404Page = () => {
   }, []);
 
   return (
-    <section id="error" className={`h-screen flex flex-col items-center justify-center bg-[var(--background)]`}>
-      <img
-        src={error404}
-        className='h-40 md:h-80'
-      />
+    <section
+      id="error"
+      className={`h-screen flex flex-col items-center justify-center bg-[var(--background)]`}
+    >
+      <img src={error404} className="h-40 md:h-80" />
       <Button
         title="Return To Home"
         onClick={() => {
-          navigate('/')
-        }} className="mt-6 cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]" >
+          navigate('/');
+        }}
+        className="mt-6 cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
+      >
         Return To Home
       </Button>
     </section>

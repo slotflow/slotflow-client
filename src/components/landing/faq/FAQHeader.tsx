@@ -1,5 +1,5 @@
-import { CircleHelp } from "lucide-react";
-import SplitTextReveal from "@/components/animation/SplitTextReveal";
+import { CircleHelp } from 'lucide-react';
+import SplitTextReveal from '@/components/animation/SplitTextReveal';
 
 const FAQHeader = () => {
   return (
@@ -8,9 +8,7 @@ const FAQHeader = () => {
         <div className="flex h-10 w-10 items-center justify-center rounded-full border border-primary/20 bg-primary/10 hover:border-[#635bff]">
           <CircleHelp className="h-5 w-5 text-primary" />
         </div>
-        <span className="text-sm font-semibold uppercase tracking-[0.35em] text-primary">
-          FAQ
-        </span>
+        <span className="text-sm font-semibold uppercase tracking-[0.35em] text-primary">FAQ</span>
       </div>
       <SplitTextReveal
         as="h2"
@@ -20,7 +18,10 @@ const FAQHeader = () => {
       >
         Questions?
         <span className="mt-2 block">
-          We've got <span className="bg-gradient-to-r from-violet-400 to-indigo-500 bg-clip-text text-transparent underline">answers.</span>
+          We've got{' '}
+          <span className="bg-gradient-to-r from-violet-400 to-indigo-500 bg-clip-text text-transparent underline">
+            answers.
+          </span>
         </span>
       </SplitTextReveal>
       <SplitTextReveal
@@ -29,8 +30,7 @@ const FAQHeader = () => {
         split="words"
         className="mx-auto mt-8 max-w-2xl text-lg leading-8 text-muted-foreground"
       >
-        Everything you need to know about bookings,
-        payments, providers and appointments before
+        Everything you need to know about bookings, payments, providers and appointments before
         getting started with SlotFlow.
       </SplitTextReveal>
     </div>

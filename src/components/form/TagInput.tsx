@@ -1,20 +1,17 @@
-import { useState } from "react";
-import { Input } from "../ui/input";
-import { Plus } from "lucide-react";
-import { Button } from "../ui/button";
-import { defaultButtonClassName } from "@/shared/utils/constants";
-import { TagInputProps } from "@/shared/interface/componentInterface";
+import { useState } from 'react';
+import { Input } from '../ui/input';
+import { Plus } from 'lucide-react';
+import { Button } from '../ui/button';
+import { defaultButtonClassName } from '@/shared/utils/constants';
+import { TagInputProps } from '@/shared/interface/componentInterface';
 
-const TagInput = ({ 
-  value, 
-  onChange 
-}: TagInputProps) => {
-  const [input, setInput] = useState("");
+const TagInput = ({ value, onChange }: TagInputProps) => {
+  const [input, setInput] = useState('');
 
   const addTag = () => {
-    if (input.trim() === "") return;
+    if (input.trim() === '') return;
     onChange([...value, input.trim()]);
-    setInput("");
+    setInput('');
   };
 
   const removeTag = (tag: string) => {

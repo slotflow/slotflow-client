@@ -10,26 +10,19 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "../ui/table";
+} from '@tanstack/react-table';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
   DropdownMenuCheckboxItem,
-} from "../ui/dropdown-menu";
-import * as React from "react";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { DataTableProps } from "@/shared/interface/componentInterface";
-import { defaultButtonClassName } from "@/shared/utils/constants";
+} from '../ui/dropdown-menu';
+import * as React from 'react';
+import { Input } from '../ui/input';
+import { Button } from '../ui/button';
+import { DataTableProps } from '@/shared/interface/componentInterface';
+import { defaultButtonClassName } from '@/shared/utils/constants';
 
 export function DataTable<TData, TValue>({
   columns,
@@ -41,7 +34,7 @@ export function DataTable<TData, TValue>({
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
-  const [globalFilter, setGlobalFilter] = React.useState("");
+  const [globalFilter, setGlobalFilter] = React.useState('');
 
   const [internalPagination, setInternalPagination] = React.useState<PaginationState>({
     pageIndex: 0,
@@ -50,13 +43,16 @@ export function DataTable<TData, TValue>({
 
   const paginationState = controlledPagination || internalPagination;
 
-  const handlePaginationChange: OnChangeFn<PaginationState> = React.useCallback((updaterOrValue) => {
-    if (onPaginationChange) {
-      onPaginationChange(updaterOrValue);
-    } else {
-      setInternalPagination(updaterOrValue);
-    }
-  }, [onPaginationChange]);
+  const handlePaginationChange: OnChangeFn<PaginationState> = React.useCallback(
+    (updaterOrValue) => {
+      if (onPaginationChange) {
+        onPaginationChange(updaterOrValue);
+      } else {
+        setInternalPagination(updaterOrValue);
+      }
+    },
+    [onPaginationChange],
+  );
 
   const table = useReactTable({
     data,
@@ -92,7 +88,9 @@ export function DataTable<TData, TValue>({
         <DropdownMenu>
           <div className="ml-auto">
             <DropdownMenuTrigger asChild>
-              <Button title="Columns" variant="secondary" className={defaultButtonClassName}>Columns</Button>
+              <Button title="Columns" variant="secondary" className={defaultButtonClassName}>
+                Columns
+              </Button>
             </DropdownMenuTrigger>
           </div>
           <DropdownMenuContent align="end">
@@ -135,10 +133,7 @@ export function DataTable<TData, TValue>({
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
+                <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -162,16 +157,17 @@ export function DataTable<TData, TValue>({
         <div className="text-sm text-muted-foreground">
           {pageCount ? (
             <>
-              Page {paginationState.pageIndex + 1} of {pageCount}
-              ({table.getFilteredRowModel().rows.length} items)
+              Page {paginationState.pageIndex + 1} of {pageCount}(
+              {table.getFilteredRowModel().rows.length} items)
             </>
           ) : (
             <>
-              Showing {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1} to{" "}
+              Showing{' '}
+              {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1} to{' '}
               {Math.min(
                 (table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize,
-                table.getFilteredRowModel().rows.length
-              )}{" "}
+                table.getFilteredRowModel().rows.length,
+              )}{' '}
               of {table.getFilteredRowModel().rows.length} entries
             </>
           )}
@@ -189,7 +185,7 @@ export function DataTable<TData, TValue>({
           </Button>
           <Button
             title="Next"
-             variant="secondary"
+            variant="secondary"
             className={defaultButtonClassName}
             size="sm"
             onClick={() => table.nextPage()}

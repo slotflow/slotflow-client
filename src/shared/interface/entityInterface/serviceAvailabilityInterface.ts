@@ -2,24 +2,24 @@
 
 // 1. Provider service availability interface used in the AdminProviderServiceAvailability compoenent
 export interface Availability {
-    day: string;
-    isAvailable: boolean;
-    duration?: number; // changed from string to number
-    startTime?: string;
-    endTime?: string;
-    modes?: string[];
-    slots?: string[];
+  day: string;
+  isAvailable: boolean;
+  duration?: number; // changed from string to number
+  startTime?: string;
+  endTime?: string;
+  modes?: string[];
+  slots?: string[];
 }
 
 // Provider service availability slot interface that is coming from the server with updation, used in AdminProviderServiceAvailability component
 export interface Slot {
-    time: string;
-    _id: string;
-    available: boolean;
-    occupied?: boolean;
+  time: string;
+  _id: string;
+  available: boolean;
+  occupied?: boolean;
 }
 
 //  Availability interface for the response
-export interface AvailabilityForResponse extends Omit<Availability, "slots"> {
-    slots: Slot[];
+export interface AvailabilityForResponse extends Omit<Availability, 'slots'> {
+  slots: Slot[];
 }

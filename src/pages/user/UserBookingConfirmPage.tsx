@@ -1,23 +1,22 @@
-import { useCallback, useEffect } from "react";
-import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { Button } from "@/components/ui/button";
-import { appConfig } from "@/shared/config/env";
-import { AppDispatch } from "@/shared/redux/appStore";
-import { checkBookingConfirmed } from "@/shared/apis/booking";
-import { Calendar, CheckCircle2, XCircle } from "lucide-react";
-import { PaymentProcessStatus } from "@/shared/interface/enums";
-import { useNavigate, useSearchParams, } from "react-router-dom";
-import { motion, AnimatePresence, Variants } from "framer-motion";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { setBookingPyamentData, setPaymentProcessStatus } from "@/shared/redux/slices/paymentSlice";
+import { useCallback, useEffect } from 'react';
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { Button } from '@/components/ui/button';
+import { appConfig } from '@/shared/config/env';
+import { AppDispatch } from '@/shared/redux/appStore';
+import { checkBookingConfirmed } from '@/shared/apis/booking';
+import { Calendar, CheckCircle2, XCircle } from 'lucide-react';
+import { PaymentProcessStatus } from '@/shared/interface/enums';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { setBookingPyamentData, setPaymentProcessStatus } from '@/shared/redux/slices/paymentSlice';
 
 const UserBookingConfirmPage = () => {
-
   const dispatch = useDispatch<AppDispatch>();
   const [searchParams] = useSearchParams();
-  const statusParam = searchParams.get("status");
-  const status = statusParam === "success";
+  const statusParam = searchParams.get('status');
+  const status = statusParam === 'success';
 
   const navigate = useNavigate();
 
@@ -25,18 +24,18 @@ const UserBookingConfirmPage = () => {
     try {
       const response = await checkBookingConfirmed();
       if (response.data) {
-        toast.success("Your Booking has been confirmed");
+        toast.success('Your Booking has been confirmed');
         dispatch(setPaymentProcessStatus(PaymentProcessStatus.SUCCESS));
-        dispatch(setBookingPyamentData(null))
+        dispatch(setBookingPyamentData(null));
       } else {
-        toast.error("Booking failed");
+        toast.error('Booking failed');
       }
     } catch (error) {
       if (appConfig.isDevelopment) {
-        console.log(error, "checkBookingConfirmed api failed");
+        console.log(error, 'checkBookingConfirmed api failed');
       }
     }
-  },[dispatch]);
+  }, [dispatch]);
 
   useEffect(() => {
     if (!status) return;
@@ -44,7 +43,7 @@ const UserBookingConfirmPage = () => {
       checkRecentBooking();
     }, 5000);
 
-    return (() => clearTimeout(timeout));
+    return () => clearTimeout(timeout);
   }, [status, checkRecentBooking]);
 
   const containerVariants: Variants = {
@@ -52,7 +51,7 @@ const UserBookingConfirmPage = () => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
+      transition: { duration: 0.6, ease: 'easeOut' },
     },
   };
 
@@ -84,7 +83,7 @@ const UserBookingConfirmPage = () => {
                   <h3 className="text-xl font-bold">Booking Confirmed!</h3>
                   <Button
                     title="My Bookings"
-                    onClick={() => navigate("/user/bookings")}
+                    onClick={() => navigate('/user/bookings')}
                     className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
                   >
                     <Calendar className="mr-2 h-5 w-5" />
@@ -102,7 +101,7 @@ const UserBookingConfirmPage = () => {
                   <h3 className="text-xl font-bold">Payment Failed</h3>
                   <Button
                     title="Go to Dashboard"
-                    onClick={() => navigate("/user/dashboard")}
+                    onClick={() => navigate('/user/dashboard')}
                     className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
                   >
                     Go to Dashboard

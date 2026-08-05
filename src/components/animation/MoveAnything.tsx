@@ -1,7 +1,7 @@
-import { motion, Variants } from "framer-motion";
-import React from "react";
+import { motion, Variants } from 'framer-motion';
+import React from 'react';
 
-type Direction = "left" | "right" | "top" | "bottom";
+type Direction = 'left' | 'right' | 'top' | 'bottom';
 
 interface MoveAnythingProps {
   children: React.ReactNode;
@@ -15,18 +15,8 @@ const variants: Variants = {
   hidden: (direction: Direction) => ({
     opacity: 0,
     scale: 0.9,
-    x:
-      direction === "left"
-        ? -80
-        : direction === "right"
-        ? 80
-        : 0,
-    y:
-      direction === "top"
-        ? -80
-        : direction === "bottom"
-        ? 80
-        : 0,
+    x: direction === 'left' ? -80 : direction === 'right' ? 80 : 0,
+    y: direction === 'top' ? -80 : direction === 'bottom' ? 80 : 0,
   }),
 
   visible: {
@@ -41,7 +31,7 @@ const MoveAnything = ({
   children,
   delay = 0,
   duration = 7,
-  direction = "bottom",
+  direction = 'bottom',
   className,
 }: MoveAnythingProps) => {
   return (
@@ -54,7 +44,7 @@ const MoveAnything = ({
       transition={{
         duration: 0.7,
         delay,
-        ease: "easeOut",
+        ease: 'easeOut',
       }}
     >
       <motion.div
@@ -65,8 +55,8 @@ const MoveAnything = ({
         transition={{
           duration,
           repeat: Infinity,
-          repeatType: "mirror",
-          ease: "easeInOut",
+          repeatType: 'mirror',
+          ease: 'easeInOut',
           delay: delay + 0.8,
         }}
       >

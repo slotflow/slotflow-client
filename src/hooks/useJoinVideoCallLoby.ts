@@ -1,22 +1,29 @@
-import { useNavigate } from "react-router-dom";
-import { appConfig } from "@/shared/config/env";
-import { joinOrLeft } from "@/shared/apis/booking";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { MediaTrackKind, Role } from "@/shared/interface/enums";
-import { AppDispatch, RootState } from "@/shared/redux/appStore";
-import { toggleMediaTrack } from "@/shared/helper/toggleMediaTrack";
-import { connectVideoSocket } from "@/shared/socket/videoSocketThunk";
-import { JoinRoomCallbackRequest } from "@/shared/interface/api/booking";
-import { useVideoCallLobbyParams, useVideoCallLobbyReturn } from "@/shared/interface/hooksInterface";
-import { setCamera, setMic, startVideoCallTimer, updateVideoCallTimer } from "@/shared/redux/slices/videoSlice";
+import { useNavigate } from 'react-router-dom';
+import { appConfig } from '@/shared/config/env';
+import { joinOrLeft } from '@/shared/apis/booking';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { MediaTrackKind, Role } from '@/shared/interface/enums';
+import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import { toggleMediaTrack } from '@/shared/helper/toggleMediaTrack';
+import { connectVideoSocket } from '@/shared/socket/videoSocketThunk';
+import { JoinRoomCallbackRequest } from '@/shared/interface/api/booking';
+import {
+  useVideoCallLobbyParams,
+  useVideoCallLobbyReturn,
+} from '@/shared/interface/hooksInterface';
+import {
+  setCamera,
+  setMic,
+  startVideoCallTimer,
+  updateVideoCallTimer,
+} from '@/shared/redux/slices/videoSlice';
 
 export const useVideoCallLobby = ({
   roomId,
   isCameraOn,
   isMicOn,
 }: useVideoCallLobbyParams): useVideoCallLobbyReturn => {
-
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
@@ -25,11 +32,13 @@ export const useVideoCallLobby = ({
   const [stream, setStream] = useState<MediaStream | null>(null);
 
   const { authUser: user } = useSelector((state: RootState) => state.auth);
-  const { isVideoCallTimerRunning, videoCallRoomId, videoCallRemainingTime } = useSelector((state: RootState) => state.video);
+  const { isVideoCallTimerRunning, videoCallRoomId, videoCallRemainingTime } = useSelector(
+    (state: RootState) => state.video,
+  );
 
   const videoCallJoinHandler = async () => {
     if (!user || !roomId) {
-      return { success: false, message: "Something went wrong, please truy again" };
+      return { success: false, message: 'Something went wrong, please truy again' };
     }
 
     const currentTime = new Date();
@@ -37,14 +46,14 @@ export const useVideoCallLobby = ({
     const data: JoinRoomCallbackRequest = {
       joined: true,
       joinedTime: currentTime,
-      videoCallRoomId: roomId
-    }
+      videoCallRoomId: roomId,
+    };
 
     try {
       const res = await joinOrLeft(data);
       if (res.success) {
         if (!res.data) {
-          return { success: false, message: "Something went wrong" };
+          return { success: false, message: 'Something went wrong' };
         } else {
           const totalDurationInSec = res.data.duration * 60;
           dispatch(connectVideoSocket());
@@ -54,21 +63,28 @@ export const useVideoCallLobby = ({
               ? videoCallRemainingTime
               : totalDurationInSec;
 
-          dispatch(startVideoCallTimer({
-            remainingTime,
-            roomId
-          }));
-          navigate(`/${user.role === Role.PROVIDER ? "provider" : "user"}/video-call-room/${roomId}`);
-          return { success: true, message: "Welcome to meet" };
+          dispatch(
+            startVideoCallTimer({
+              remainingTime,
+              roomId,
+            }),
+          );
+          navigate(
+            `/${user.role === Role.PROVIDER ? 'provider' : 'user'}/video-call-room/${roomId}`,
+          );
+          return { success: true, message: 'Welcome to meet' };
         }
       } else {
-        return { success: res.success || false, message: res.message || "Unable to join, please try again" };
+        return {
+          success: res.success || false,
+          message: res.message || 'Unable to join, please try again',
+        };
       }
     } catch (error) {
       if (appConfig.isDevelopment) {
-        console.error("Join room error:", error);
+        console.error('Join room error:', error);
       }
-      return { success: false, message: "Please try again" };
+      return { success: false, message: 'Please try again' };
     }
   };
 
@@ -91,10 +107,9 @@ export const useVideoCallLobby = ({
 
       dispatch(setCamera(videoTrack?.enabled ?? false));
       dispatch(setMic(audioTrack?.enabled ?? false));
-
     } catch (error) {
       if (appConfig.isDevelopment) {
-        console.error("Media access error:", error);
+        console.error('Media access error:', error);
       }
       dispatch(setCamera(false));
       dispatch(setMic(false));
@@ -150,6 +165,6 @@ export const useVideoCallLobby = ({
     videoCallJoinHandler,
     videoRef,
     toggleCamera,
-    toggleMic
+    toggleMic,
   };
-}
+};

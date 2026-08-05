@@ -1,357 +1,381 @@
-import { lazy } from "react";
-import PlanGuard from "./PlanGuard.tsx";
-import RoleLayout from "./RoleLayout.tsx";
-import { Role } from "@/shared/interface/enums.ts";
-import OnBoardingGuard from "./OnBoardingGuard.tsx";
-import { ProtectedRoute } from "./ProtectedRoutes.tsx";
-import { RouteNames } from "@/shared/utils/constants.ts";
-import BoardingLayoutWrapper from "./BoardingLayoutWrapper.tsx";
-import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
+import { lazy } from 'react';
+import PlanGuard from './PlanGuard.tsx';
+import RoleLayout from './RoleLayout.tsx';
+import { Role } from '@/shared/interface/enums.ts';
+import OnBoardingGuard from './OnBoardingGuard.tsx';
+import { ProtectedRoute } from './ProtectedRoutes.tsx';
+import { RouteNames } from '@/shared/utils/constants.ts';
+import BoardingLayoutWrapper from './BoardingLayoutWrapper.tsx';
+import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
 
-const AuthLayout = lazy(() => import("@/layouts/AuthLayout.tsx"));
-const LoginForm = lazy(() => import("@/components/form/CommonForms/LoginForm.tsx"));
-const SignUpForm = lazy(() => import("@/components/form/CommonForms/SignUpForm.tsx"));
-const ResetPasswordForm = lazy(() => import("@/components/form/CommonForms/ResetPasswordForm.tsx"));
-const OtpVerificatioForm = lazy(() => import("@/components/form/CommonForms/OtpVerificatioForm.tsx"));
-const EmailVerificationForm = lazy(() => import("@/components/form/CommonForms/EmailVerificationForm.tsx"));
+const AuthLayout = lazy(() => import('@/layouts/AuthLayout.tsx'));
+const LoginForm = lazy(() => import('@/components/form/CommonForms/LoginForm.tsx'));
+const SignUpForm = lazy(() => import('@/components/form/CommonForms/SignUpForm.tsx'));
+const ResetPasswordForm = lazy(() => import('@/components/form/CommonForms/ResetPasswordForm.tsx'));
+const OtpVerificatioForm = lazy(
+  () => import('@/components/form/CommonForms/OtpVerificatioForm.tsx'),
+);
+const EmailVerificationForm = lazy(
+  () => import('@/components/form/CommonForms/EmailVerificationForm.tsx'),
+);
 
-const FAQPage = lazy(() => import("@/pages/landing/FAQPage.tsx"));
-const BlogPage = lazy(() => import("@/pages/landing/BlogPage.tsx"));
-const HelpPage = lazy(() => import("@/pages/landing/HelpPage.tsx"));
-const ChatPage = lazy(() => import("@/pages/dashboard/ChatPage.tsx"));
-const AboutPage = lazy(() => import("@/pages/landing/AboutPage.tsx"));
-const LandingLayout = lazy(() => import("@/layouts/LandingLayout.tsx"));
-const CreditPage = lazy(() => import("@/pages/dashboard/CreditPage.tsx"));
-const PricingPage = lazy(() => import("@/pages/landing/PricingPage.tsx"));
-const ContactPage = lazy(() => import("@/pages/landing/ContactPage.tsx"));
-const LandingPage = lazy(() => import("@/pages/landing/LandingPage.tsx"));
-const Error404Page = lazy(() => import("@/pages/common/Error404Page.tsx"));
-const ReviewsPage = lazy(() => import("@/pages/dashboard/ReviewsPage.tsx"));
-const SettingsPage = lazy(() => import("@/pages/dashboard/SettingsPage.tsx"));
-const CalendarPage = lazy(() => import("@/pages/dashboard/CalendarPage.tsx"));
-const ReferralPage = lazy(() => import("@/pages/dashboard/ReferralPage.tsx"));
-const UserAccountPage = lazy(() => import("@/pages/user/UserAccountPage.tsx"));
-const VideoCallRoom = lazy(() => import("@/pages/dashboard/VideoCallRoom.tsx"));
-const RoleSelectPage = lazy(() => import("@/pages/boarding/RoleSelectPage.tsx"));
-const VideoCallLoby = lazy(() => import("@/pages/dashboard/VideoCallLobby.tsx"));
-const BlogDetailsPage = lazy(() => import("@/pages/landing/BlogDetailsPage.tsx"));
-const HearAboutUsPage = lazy(() => import("@/pages/boarding/HearAboutUsPage.tsx"));
-const LegalHomePage = lazy(() => import("@/pages/landing/legal/LegalHomePage.tsx"));
-const ListPaymentsPage = lazy(() => import("@/pages/dashboard/ListPaymentsPage.tsx"));
-const ListBookingsPage = lazy(() => import("@/pages/dashboard/ListBookingsPage.tsx"));
-const BookingDetailPage = lazy(() => import("@/pages/dashboard/BookingDetailPage.tsx"));
-const AccountSettings = lazy(() => import("@/components/settings/AccountSettings.tsx"));
-const SecuritySettings = lazy(() => import("@/components/settings/SecuritySettings.tsx"));
-const PrivacyPolicyPage = lazy(() => import("@/pages/landing/legal/PrivacyPolicyPage.tsx"));
-const TermsOfServicePage = lazy(() => import("@/pages/landing/legal/TermsOfServicePage.tsx"));
-const IntegrationsListing = lazy(() => import("@/components/settings/IntegrationsListing.tsx"));
-const PaymentDetailViewPage = lazy(() => import("@/pages/dashboard/PaymentDetailViewPage.tsx"));
-const NotificationSettings = lazy(() => import("@/components/settings/NotificationSettings.tsx"));
-const SubscriptionDetailViewPage = lazy(() => import("@/pages/dashboard/SubscriptionDetailViewPage.tsx"));
+const FAQPage = lazy(() => import('@/pages/landing/FAQPage.tsx'));
+const BlogPage = lazy(() => import('@/pages/landing/BlogPage.tsx'));
+const HelpPage = lazy(() => import('@/pages/landing/HelpPage.tsx'));
+const ChatPage = lazy(() => import('@/pages/dashboard/ChatPage.tsx'));
+const AboutPage = lazy(() => import('@/pages/landing/AboutPage.tsx'));
+const LandingLayout = lazy(() => import('@/layouts/LandingLayout.tsx'));
+const CreditPage = lazy(() => import('@/pages/dashboard/CreditPage.tsx'));
+const PricingPage = lazy(() => import('@/pages/landing/PricingPage.tsx'));
+const ContactPage = lazy(() => import('@/pages/landing/ContactPage.tsx'));
+const LandingPage = lazy(() => import('@/pages/landing/LandingPage.tsx'));
+const Error404Page = lazy(() => import('@/pages/common/Error404Page.tsx'));
+const ReviewsPage = lazy(() => import('@/pages/dashboard/ReviewsPage.tsx'));
+const SettingsPage = lazy(() => import('@/pages/dashboard/SettingsPage.tsx'));
+const CalendarPage = lazy(() => import('@/pages/dashboard/CalendarPage.tsx'));
+const ReferralPage = lazy(() => import('@/pages/dashboard/ReferralPage.tsx'));
+const UserAccountPage = lazy(() => import('@/pages/user/UserAccountPage.tsx'));
+const VideoCallRoom = lazy(() => import('@/pages/dashboard/VideoCallRoom.tsx'));
+const RoleSelectPage = lazy(() => import('@/pages/boarding/RoleSelectPage.tsx'));
+const VideoCallLoby = lazy(() => import('@/pages/dashboard/VideoCallLobby.tsx'));
+const BlogDetailsPage = lazy(() => import('@/pages/landing/BlogDetailsPage.tsx'));
+const HearAboutUsPage = lazy(() => import('@/pages/boarding/HearAboutUsPage.tsx'));
+const LegalHomePage = lazy(() => import('@/pages/landing/legal/LegalHomePage.tsx'));
+const ListPaymentsPage = lazy(() => import('@/pages/dashboard/ListPaymentsPage.tsx'));
+const ListBookingsPage = lazy(() => import('@/pages/dashboard/ListBookingsPage.tsx'));
+const BookingDetailPage = lazy(() => import('@/pages/dashboard/BookingDetailPage.tsx'));
+const AccountSettings = lazy(() => import('@/components/settings/AccountSettings.tsx'));
+const SecuritySettings = lazy(() => import('@/components/settings/SecuritySettings.tsx'));
+const PrivacyPolicyPage = lazy(() => import('@/pages/landing/legal/PrivacyPolicyPage.tsx'));
+const TermsOfServicePage = lazy(() => import('@/pages/landing/legal/TermsOfServicePage.tsx'));
+const IntegrationsListing = lazy(() => import('@/components/settings/IntegrationsListing.tsx'));
+const PaymentDetailViewPage = lazy(() => import('@/pages/dashboard/PaymentDetailViewPage.tsx'));
+const NotificationSettings = lazy(() => import('@/components/settings/NotificationSettings.tsx'));
+const SubscriptionDetailViewPage = lazy(
+  () => import('@/pages/dashboard/SubscriptionDetailViewPage.tsx'),
+);
 
-const UserServiceSelectPage = lazy(() => import("@/pages/user/UserServiceSelectPage.tsx"));
-const UserBookingConfirmPage = lazy(() => import("@/pages/user/UserBookingConfirmPage.tsx"));
-const UserListProvidersCardsPage = lazy(() => import("@/pages/user/UserListProvidersCardsPage.tsx"));
-const UserServiceProviderDetailPage = lazy(() => import("@/pages/user/UserServiceProviderDetailPage.tsx"));
+const UserServiceSelectPage = lazy(() => import('@/pages/user/UserServiceSelectPage.tsx'));
+const UserBookingConfirmPage = lazy(() => import('@/pages/user/UserBookingConfirmPage.tsx'));
+const UserListProvidersCardsPage = lazy(
+  () => import('@/pages/user/UserListProvidersCardsPage.tsx'),
+);
+const UserServiceProviderDetailPage = lazy(
+  () => import('@/pages/user/UserServiceProviderDetailPage.tsx'),
+);
 
-const ProviderAccountPage = lazy(() => import("@/pages/provider/ProviderAccountPage.tsx"));
-const ProviderDashboardPage = lazy(() => import("@/pages/provider/ProviderDashboardPage.tsx"));
-const ProviderAddAddressPage = lazy(() => import("@/pages/boarding/ProviderCreateAddressPage.tsx"));
-const ProviderSubscriptionPage = lazy(() => import("@/pages/provider/ProviderSubscriptionPage.tsx"));
-const ProviderProofSubmitionPage = lazy(() => import("@/pages/boarding/ProviderProofSubmitionPage.tsx"));
-const ProviderApprovalPendingPage = lazy(() => import("@/pages/boarding/ProviderApprovalPendingPage.tsx"));
-const ProviderSubscriptionConfirmPage = lazy(() => import("@/pages/provider/ProviderSubscriptionConfirmPage.tsx"));
-const ProviderCreateServiceDetailsPage = lazy(() => import("@/pages/boarding/ProviderCreateServiceDetailsPage.tsx"));
-const ProviderCreateServiceAvailabilityPage = lazy(() => import("@/pages/boarding/ProviderCreateServiceAvailabilityPage.tsx"));
+const ProviderAccountPage = lazy(() => import('@/pages/provider/ProviderAccountPage.tsx'));
+const ProviderDashboardPage = lazy(() => import('@/pages/provider/ProviderDashboardPage.tsx'));
+const ProviderAddAddressPage = lazy(() => import('@/pages/boarding/ProviderCreateAddressPage.tsx'));
+const ProviderSubscriptionPage = lazy(
+  () => import('@/pages/provider/ProviderSubscriptionPage.tsx'),
+);
+const ProviderProofSubmitionPage = lazy(
+  () => import('@/pages/boarding/ProviderProofSubmitionPage.tsx'),
+);
+const ProviderApprovalPendingPage = lazy(
+  () => import('@/pages/boarding/ProviderApprovalPendingPage.tsx'),
+);
+const ProviderSubscriptionConfirmPage = lazy(
+  () => import('@/pages/provider/ProviderSubscriptionConfirmPage.tsx'),
+);
+const ProviderCreateServiceDetailsPage = lazy(
+  () => import('@/pages/boarding/ProviderCreateServiceDetailsPage.tsx'),
+);
+const ProviderCreateServiceAvailabilityPage = lazy(
+  () => import('@/pages/boarding/ProviderCreateServiceAvailabilityPage.tsx'),
+);
 
-const AdminPlansPage = lazy(() => import("@/pages/admin/AdminPlansPage.tsx"));
-const AdminUsersPage = lazy(() => import("@/pages/admin/AdminUsersPage.tsx"));
-const AdminReportPage = lazy(() => import("@/pages/admin/AdminReportPage.tsx"));
-const AdminServicesPage = lazy(() => import("@/pages/admin/AdminServicesPage.tsx"));
-const AdminDashboardPage = lazy(() => import("@/pages/admin/AdminDashboardPage.tsx"));
-const AdminUserDetailPage = lazy(() => import("@/pages/admin/AdminUserDetailPage.tsx"));
-const AdminGrafanaDashboard = lazy(() => import("@/pages/admin/AdminGrafanaDashboard.tsx"));
-const AdminSubscriptionsPage = lazy(() => import("@/pages/admin/AdminSubscriptionsPage.tsx"));
-const AdminServiceProvidersPage = lazy(() => import("@/pages/admin/AdminServiceProvidersPage.tsx"));
-const AdminServiceProviderDetailPage = lazy(() => import("@/pages/admin/AdminServiceProviderDetailPage.tsx"));
+const AdminPlansPage = lazy(() => import('@/pages/admin/AdminPlansPage.tsx'));
+const AdminUsersPage = lazy(() => import('@/pages/admin/AdminUsersPage.tsx'));
+const AdminReportPage = lazy(() => import('@/pages/admin/AdminReportPage.tsx'));
+const AdminServicesPage = lazy(() => import('@/pages/admin/AdminServicesPage.tsx'));
+const AdminDashboardPage = lazy(() => import('@/pages/admin/AdminDashboardPage.tsx'));
+const AdminUserDetailPage = lazy(() => import('@/pages/admin/AdminUserDetailPage.tsx'));
+const AdminGrafanaDashboard = lazy(() => import('@/pages/admin/AdminGrafanaDashboard.tsx'));
+const AdminSubscriptionsPage = lazy(() => import('@/pages/admin/AdminSubscriptionsPage.tsx'));
+const AdminServiceProvidersPage = lazy(() => import('@/pages/admin/AdminServiceProvidersPage.tsx'));
+const AdminServiceProviderDetailPage = lazy(
+  () => import('@/pages/admin/AdminServiceProviderDetailPage.tsx'),
+);
 
 export const appRouter = createBrowserRouter([
-    {
-        path: "/",
-        element: <LandingLayout />,
+  {
+    path: '/',
+    element: <LandingLayout />,
+    children: [
+      { path: '/', element: <LandingPage /> },
+      { path: '/about', element: <AboutPage /> },
+      { path: '/contact', element: <ContactPage /> },
+      { path: '/pricing', element: <PricingPage /> },
+      { path: '/blog', element: <BlogPage /> },
+      { path: '/faq', element: <FAQPage /> },
+      { path: '/help', element: <HelpPage /> },
+      { path: '/blog/:blogId', element: <BlogDetailsPage /> },
+      {
+        path: '/legal',
+        element: <Outlet />,
         children: [
-            { path: "/", element: <LandingPage /> },
-            { path: "/about", element: <AboutPage /> },
-            { path: "/contact", element: <ContactPage /> },
-            { path: "/pricing", element: <PricingPage /> },
-            { path: "/blog", element: <BlogPage /> },
-            { path: "/faq", element: <FAQPage /> },
-            { path: "/help", element: <HelpPage /> },
-            { path: "/blog/:blogId", element: <BlogDetailsPage /> },
-            {
-                path: "/legal",
-                element: <Outlet />,
-                children: [
-                    {
-                        index: true,
-                        element: <LegalHomePage />,
-                    },
-                    {
-                        path: "privacy-policy",
-                        element: <PrivacyPolicyPage />,
-                    },
-                    {
-                        path: "terms-of-service",
-                        element: <TermsOfServicePage />,
-                    },
-                    {
-                        path: "refund-policy",
-                        element: <LegalHomePage />,
-                    },
-                    {
-                        path: "cancellation-policy",
-                        element: <LegalHomePage />,
-                    },
-                ],
-            }
-        ]
-    },
-    {
-        path: "/auth",
-        element: <AuthLayout />,
-        children: [
-            { path: "login", element: <LoginForm /> },
-            { path: "register", element: <SignUpForm /> },
-            { path: "verify/email", element: <EmailVerificationForm /> },
-            { path: "reset/password", element: <ResetPasswordForm /> },
-            { path: "verify/otp", element: <OtpVerificatioForm /> },
-        ]
-    },
-    {
-        path: "/admin",
-        element: (
-            <ProtectedRoute allowedRoles={[Role.ADMIN]}>
-                <RoleLayout />
-            </ProtectedRoute>
-        ),
-        children: [
-            { path: "dashboard", element: <AdminDashboardPage /> },
-            { path: "report", element: <AdminReportPage /> },
-            { path: "service-providers", element: <AdminServiceProvidersPage /> },
-            { path: "service-providers/:providerId", element: <AdminServiceProviderDetailPage /> },
-            { path: "users", element: <AdminUsersPage /> },
-            { path: "users/:userId", element: <AdminUserDetailPage /> },
-            { path: "services", element: <AdminServicesPage /> },
-            { path: "plans", element: <AdminPlansPage /> },
-            { path: "subscriptions", element: <AdminSubscriptionsPage /> },
-            { path: "subscriptions/:subscriptionId", element: <SubscriptionDetailViewPage /> },
-            { path: "payments", element: <ListPaymentsPage /> },
-            { path: "payments/:paymentId", element: <PaymentDetailViewPage /> },
-            { path: "grafana-dashboard", element: <AdminGrafanaDashboard /> },
-            { path: "*", element: <Error404Page /> },
+          {
+            index: true,
+            element: <LegalHomePage />,
+          },
+          {
+            path: 'privacy-policy',
+            element: <PrivacyPolicyPage />,
+          },
+          {
+            path: 'terms-of-service',
+            element: <TermsOfServicePage />,
+          },
+          {
+            path: 'refund-policy',
+            element: <LegalHomePage />,
+          },
+          {
+            path: 'cancellation-policy',
+            element: <LegalHomePage />,
+          },
         ],
-    },
-    {
-        element: (
-            <OnBoardingGuard>
-                <BoardingLayoutWrapper />
-            </OnBoardingGuard>
-        ),
+      },
+    ],
+  },
+  {
+    path: '/auth',
+    element: <AuthLayout />,
+    children: [
+      { path: 'login', element: <LoginForm /> },
+      { path: 'register', element: <SignUpForm /> },
+      { path: 'verify/email', element: <EmailVerificationForm /> },
+      { path: 'reset/password', element: <ResetPasswordForm /> },
+      { path: 'verify/otp', element: <OtpVerificatioForm /> },
+    ],
+  },
+  {
+    path: '/admin',
+    element: (
+      <ProtectedRoute allowedRoles={[Role.ADMIN]}>
+        <RoleLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      { path: 'dashboard', element: <AdminDashboardPage /> },
+      { path: 'report', element: <AdminReportPage /> },
+      { path: 'service-providers', element: <AdminServiceProvidersPage /> },
+      { path: 'service-providers/:providerId', element: <AdminServiceProviderDetailPage /> },
+      { path: 'users', element: <AdminUsersPage /> },
+      { path: 'users/:userId', element: <AdminUserDetailPage /> },
+      { path: 'services', element: <AdminServicesPage /> },
+      { path: 'plans', element: <AdminPlansPage /> },
+      { path: 'subscriptions', element: <AdminSubscriptionsPage /> },
+      { path: 'subscriptions/:subscriptionId', element: <SubscriptionDetailViewPage /> },
+      { path: 'payments', element: <ListPaymentsPage /> },
+      { path: 'payments/:paymentId', element: <PaymentDetailViewPage /> },
+      { path: 'grafana-dashboard', element: <AdminGrafanaDashboard /> },
+      { path: '*', element: <Error404Page /> },
+    ],
+  },
+  {
+    element: (
+      <OnBoardingGuard>
+        <BoardingLayoutWrapper />
+      </OnBoardingGuard>
+    ),
+    children: [
+      {
+        path: '/preboarding',
         children: [
-            {
-                path: "/preboarding",
-                children: [
-                    { path: "role", element: <RoleSelectPage /> },
-                    { path: "hear-about-us", element: <HearAboutUsPage /> },
-                ]
-            },
-            {
-                path: "/onboarding",
-                children: [
-                    { path: "address", element: <ProviderAddAddressPage /> },
-                    { path: "service", element: <ProviderCreateServiceDetailsPage /> },
-                    { path: "availability", element: <ProviderCreateServiceAvailabilityPage /> },
-                    { path: "proofs", element: <ProviderProofSubmitionPage /> },
-                    { path: "pending", element: <ProviderApprovalPendingPage /> },
-                    { path: "*", element: <Error404Page /> },
-                ]
-            },
-        ]
-    },
-    {
-        path: "/user",
-        element: (
-            <ProtectedRoute allowedRoles={[Role.USER]}>
-                <RoleLayout />
-            </ProtectedRoute>
-        ),
-        children: [
-            {
-                element: (
-                    <OnBoardingGuard>
-                        <Outlet />
-                    </OnBoardingGuard>
-                ),
-                children: [
-                    { index: true, element: <UserServiceSelectPage /> },
-                    { path: "dashboard", element: <UserListProvidersCardsPage /> },
-                    { path: "providerProfile/:providerId", element: <UserServiceProviderDetailPage /> },
-                    { path: "profile", element: <UserAccountPage /> },
-                    { path: "bookings", element: <ListBookingsPage /> },
-                    { path: "bookings/:bookingId", element: <BookingDetailPage /> },
-                    { path: "payments", element: <ListPaymentsPage /> },
-                    { path: "payments/:paymentId", element: <PaymentDetailViewPage /> },
-                    { path: "chat", element: <ChatPage /> },
-                    {
-                        path: "video-call-lobby/:roomId",
-                        element: <VideoCallLoby />
-                    },
-                    {
-                        path: "video-call-room?status",
-                        element: <VideoCallRoom />
-                    },
-                    { path: "calendar", element: <CalendarPage /> },
-                    { path: "reviews", element: <ReviewsPage /> },
-                    {
-                        path: "settings",
-                        element: <SettingsPage />,
-                        children: [
-                            { index: true, element: <Navigate to="notifications" replace /> },
-                            { path: "notifications", element: <NotificationSettings /> },
-                            { path: "account", element: <AccountSettings /> },
-                            { path: "integrations", element: <IntegrationsListing /> },
-                            { path: "security", element: <SecuritySettings /> },
-                        ]
-                    },
-                    { path: "credits", element: <CreditPage /> },
-                    { path: "referrals", element: <ReferralPage /> },
-                    { path: "booking/confirm", element: <UserBookingConfirmPage /> },
-                    { path: "*", element: <Error404Page /> },
-                ],
-            }
+          { path: 'role', element: <RoleSelectPage /> },
+          { path: 'hear-about-us', element: <HearAboutUsPage /> },
         ],
-    },
-    {
-        path: "/provider",
+      },
+      {
+        path: '/onboarding',
+        children: [
+          { path: 'address', element: <ProviderAddAddressPage /> },
+          { path: 'service', element: <ProviderCreateServiceDetailsPage /> },
+          { path: 'availability', element: <ProviderCreateServiceAvailabilityPage /> },
+          { path: 'proofs', element: <ProviderProofSubmitionPage /> },
+          { path: 'pending', element: <ProviderApprovalPendingPage /> },
+          { path: '*', element: <Error404Page /> },
+        ],
+      },
+    ],
+  },
+  {
+    path: '/user',
+    element: (
+      <ProtectedRoute allowedRoles={[Role.USER]}>
+        <RoleLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
         element: (
-            <ProtectedRoute allowedRoles={[Role.PROVIDER]}>
-                <RoleLayout />
-            </ProtectedRoute>
+          <OnBoardingGuard>
+            <Outlet />
+          </OnBoardingGuard>
         ),
         children: [
-            {
-                element: (
-                    <OnBoardingGuard>
-                        <Outlet />
-                    </OnBoardingGuard>
-                ),
-                children: [
-                    { path: "dashboard", element: <ProviderDashboardPage /> },
-                    { path: "profile", element: <ProviderAccountPage /> },
-                    {
-                        path: "reviews",
-                        element: (
-                            <PlanGuard routeName={RouteNames.REVIEWS}>
-                                <ReviewsPage />
-                            </PlanGuard>
-                        )
-                    },
-                    {
-                        path: "bookings",
-                        element: (
-                            <PlanGuard routeName={RouteNames.BOOKINGS}>
-                                <ListBookingsPage />
-                            </PlanGuard>
-                        )
-                    },
-                    {
-                        path: "bookings/:bookingId",
-                        element: <BookingDetailPage />
-                    },
-                    {
-                        path: "subscriptions",
-                        element: (
-                            <PlanGuard routeName={RouteNames.SUBSCRIPTIONS}>
-                                <ProviderSubscriptionPage />
-                            </PlanGuard>
-                        )
-                    },
-                    {
-                        path: "subscriptions/:subscriptionId",
-                        element: <SubscriptionDetailViewPage />
-                    },
-                    {
-                        path: "payments",
-                        element: (
-                            <PlanGuard routeName={RouteNames.PAYMENTS}>
-                                <ListPaymentsPage />
-                            </PlanGuard>
-                        )
-                    },
-                    {
-                        path: "payments/:paymentId",
-                        element: <PaymentDetailViewPage />
-                    },
-                    {
-                        path: "chat",
-                        element: (
-                            <PlanGuard routeName={RouteNames.CHAT}>
-                                <ChatPage />
-                            </PlanGuard>
-                        )
-                    },
-                    {
-                        path: "video-call-lobby/:roomId",
-                        element: <VideoCallLoby />
-                    },
-                    {
-                        path: "video-call-room/:roomId",
-                        element: <VideoCallRoom />
-                    },
-                    {
-                        path: "calendar",
-                        element: (
-                            <PlanGuard routeName={RouteNames.CALENDAR}>
-                                < CalendarPage />
-                            </PlanGuard>
-                        )
-                    },
-                    {
-                        path: "credits",
-                        element: (
-                            <PlanGuard routeName={RouteNames.CREDITS}>
-                                <CreditPage />
-                            </PlanGuard>
-                        )
-                    },
-                    {
-                        path: "referrals",
-                        element: (
-                            <PlanGuard routeName={RouteNames.REFERRALS}>
-                                <ReferralPage />
-                            </PlanGuard>
-                        )
-                    },
-                    {
-                        path: "settings",
-                        element: (
-                            <PlanGuard routeName={RouteNames.SETTINGS}>
-                                <SettingsPage />
-                            </PlanGuard>
-                        ),
-                        children: [
-                            { index: true, element: <Navigate to="notifications" replace /> },
-                            { path: "notifications", element: <NotificationSettings /> },
-                            { path: "account", element: <AccountSettings /> },
-                            { path: "integrations", element: <IntegrationsListing /> },
-                            { path: "security", element: <SecuritySettings /> },
-                        ]
-                    },
-                    { path: "subscription/confirm", element: <ProviderSubscriptionConfirmPage /> },
-                    { path: "*", element: <Error404Page /> },
-                ],
-            }
-        ]
-    },
-    { path: "*", element: <Error404Page /> },
-])
+          { index: true, element: <UserServiceSelectPage /> },
+          { path: 'dashboard', element: <UserListProvidersCardsPage /> },
+          { path: 'providerProfile/:providerId', element: <UserServiceProviderDetailPage /> },
+          { path: 'profile', element: <UserAccountPage /> },
+          { path: 'bookings', element: <ListBookingsPage /> },
+          { path: 'bookings/:bookingId', element: <BookingDetailPage /> },
+          { path: 'payments', element: <ListPaymentsPage /> },
+          { path: 'payments/:paymentId', element: <PaymentDetailViewPage /> },
+          { path: 'chat', element: <ChatPage /> },
+          {
+            path: 'video-call-lobby/:roomId',
+            element: <VideoCallLoby />,
+          },
+          {
+            path: 'video-call-room?status',
+            element: <VideoCallRoom />,
+          },
+          { path: 'calendar', element: <CalendarPage /> },
+          { path: 'reviews', element: <ReviewsPage /> },
+          {
+            path: 'settings',
+            element: <SettingsPage />,
+            children: [
+              { index: true, element: <Navigate to="notifications" replace /> },
+              { path: 'notifications', element: <NotificationSettings /> },
+              { path: 'account', element: <AccountSettings /> },
+              { path: 'integrations', element: <IntegrationsListing /> },
+              { path: 'security', element: <SecuritySettings /> },
+            ],
+          },
+          { path: 'credits', element: <CreditPage /> },
+          { path: 'referrals', element: <ReferralPage /> },
+          { path: 'booking/confirm', element: <UserBookingConfirmPage /> },
+          { path: '*', element: <Error404Page /> },
+        ],
+      },
+    ],
+  },
+  {
+    path: '/provider',
+    element: (
+      <ProtectedRoute allowedRoles={[Role.PROVIDER]}>
+        <RoleLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      {
+        element: (
+          <OnBoardingGuard>
+            <Outlet />
+          </OnBoardingGuard>
+        ),
+        children: [
+          { path: 'dashboard', element: <ProviderDashboardPage /> },
+          { path: 'profile', element: <ProviderAccountPage /> },
+          {
+            path: 'reviews',
+            element: (
+              <PlanGuard routeName={RouteNames.REVIEWS}>
+                <ReviewsPage />
+              </PlanGuard>
+            ),
+          },
+          {
+            path: 'bookings',
+            element: (
+              <PlanGuard routeName={RouteNames.BOOKINGS}>
+                <ListBookingsPage />
+              </PlanGuard>
+            ),
+          },
+          {
+            path: 'bookings/:bookingId',
+            element: <BookingDetailPage />,
+          },
+          {
+            path: 'subscriptions',
+            element: (
+              <PlanGuard routeName={RouteNames.SUBSCRIPTIONS}>
+                <ProviderSubscriptionPage />
+              </PlanGuard>
+            ),
+          },
+          {
+            path: 'subscriptions/:subscriptionId',
+            element: <SubscriptionDetailViewPage />,
+          },
+          {
+            path: 'payments',
+            element: (
+              <PlanGuard routeName={RouteNames.PAYMENTS}>
+                <ListPaymentsPage />
+              </PlanGuard>
+            ),
+          },
+          {
+            path: 'payments/:paymentId',
+            element: <PaymentDetailViewPage />,
+          },
+          {
+            path: 'chat',
+            element: (
+              <PlanGuard routeName={RouteNames.CHAT}>
+                <ChatPage />
+              </PlanGuard>
+            ),
+          },
+          {
+            path: 'video-call-lobby/:roomId',
+            element: <VideoCallLoby />,
+          },
+          {
+            path: 'video-call-room/:roomId',
+            element: <VideoCallRoom />,
+          },
+          {
+            path: 'calendar',
+            element: (
+              <PlanGuard routeName={RouteNames.CALENDAR}>
+                <CalendarPage />
+              </PlanGuard>
+            ),
+          },
+          {
+            path: 'credits',
+            element: (
+              <PlanGuard routeName={RouteNames.CREDITS}>
+                <CreditPage />
+              </PlanGuard>
+            ),
+          },
+          {
+            path: 'referrals',
+            element: (
+              <PlanGuard routeName={RouteNames.REFERRALS}>
+                <ReferralPage />
+              </PlanGuard>
+            ),
+          },
+          {
+            path: 'settings',
+            element: (
+              <PlanGuard routeName={RouteNames.SETTINGS}>
+                <SettingsPage />
+              </PlanGuard>
+            ),
+            children: [
+              { index: true, element: <Navigate to="notifications" replace /> },
+              { path: 'notifications', element: <NotificationSettings /> },
+              { path: 'account', element: <AccountSettings /> },
+              { path: 'integrations', element: <IntegrationsListing /> },
+              { path: 'security', element: <SecuritySettings /> },
+            ],
+          },
+          { path: 'subscription/confirm', element: <ProviderSubscriptionConfirmPage /> },
+          { path: '*', element: <Error404Page /> },
+        ],
+      },
+    ],
+  },
+  { path: '*', element: <Error404Page /> },
+]);

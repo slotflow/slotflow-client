@@ -1,14 +1,10 @@
-import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
-import { Role } from "@/shared/interface/enums";
-import { RootState } from "@/shared/redux/appStore";
-import { ProtectedRouteProps } from "@/shared/interface/componentInterface";
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
+import { Role } from '@/shared/interface/enums';
+import { RootState } from '@/shared/redux/appStore';
+import { ProtectedRouteProps } from '@/shared/interface/componentInterface';
 
-export const ProtectedRoute = ({ 
-  allowedRoles, 
-  children 
-}: ProtectedRouteProps) => {
-  
+export const ProtectedRoute = ({ allowedRoles, children }: ProtectedRouteProps) => {
   const user = useSelector((store: RootState) => store.auth.authUser);
 
   if (!user || !user.role) {

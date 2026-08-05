@@ -1,11 +1,6 @@
-import {
-    Clock3,
-    MapPin,
-    CheckCircle2,
-    CalendarDays,
-} from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Clock3, MapPin, CheckCircle2, CalendarDays } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 const AppointmentCard = () => {
   return (
@@ -17,29 +12,19 @@ const AppointmentCard = () => {
           </div>
 
           <div>
-            <h3 className="font-semibold">
-              Upcoming Appointment
-            </h3>
+            <h3 className="font-semibold">Upcoming Appointment</h3>
 
-            <p className="text-sm text-muted-foreground">
-              Tomorrow
-            </p>
+            <p className="text-sm text-muted-foreground">Tomorrow</p>
           </div>
         </div>
 
-        <Badge className="rounded-full">
-          Confirmed
-        </Badge>
+        <Badge className="rounded-full">Confirmed</Badge>
       </div>
 
       <div className="mt-6 rounded-2xl border border-border/60 bg-muted/40 p-4">
-        <h4 className="font-semibold">
-          Hair Consultation
-        </h4>
+        <h4 className="font-semibold">Hair Consultation</h4>
 
-        <p className="mt-1 text-sm text-muted-foreground">
-          Professional Service Provider
-        </p>
+        <p className="mt-1 text-sm text-muted-foreground">Professional Service Provider</p>
 
         <div className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
           <Clock3 className="h-4 w-4" />

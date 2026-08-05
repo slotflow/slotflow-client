@@ -13,7 +13,7 @@ const StatsCard = ({
   icon: Icon,
   price,
   isShow = true,
-  trend = "+12% from last month"
+  trend = '+12% from last month',
 }: DashboardCardOneProps) => {
   const isDark = !useSelector((store: RootState) => store.app.lightTheme);
 
@@ -24,20 +24,28 @@ const StatsCard = ({
       whileHover={{ y: -4, transition: { duration: 0.2 } }}
       className="relative h-full"
     >
-      <Card className={cn(
-        "h-full overflow-hidden transition-all duration-300 border border-slate-200/60 dark:border-slate-800/60",
-        "backdrop-blur-xl shadow-sm hover:shadow-md",
-        !isShow && "grayscale-[0.5] opacity-90"
-      )}>
+      <Card
+        className={cn(
+          'h-full overflow-hidden transition-all duration-300 border border-slate-200/60 dark:border-slate-800/60',
+          'backdrop-blur-xl shadow-sm hover:shadow-md',
+          !isShow && 'grayscale-[0.5] opacity-90',
+        )}
+      >
         <CardContent className="p-6">
           <div className="flex items-start justify-between">
             <div className="space-y-4 flex-1">
               <div className="flex items-center gap-2">
-                <div className={cn(
-                  "p-2 rounded-xl",
-                  isDark ? "bg-indigo-500/10 text-indigo-400" : "bg-indigo-50 text-indigo-600"
-                )}>
-                  {Icon ? <Icon size={20} className="shrink-0" /> : <Activity size={20} className="shrink-0" />}
+                <div
+                  className={cn(
+                    'p-2 rounded-xl',
+                    isDark ? 'bg-indigo-500/10 text-indigo-400' : 'bg-indigo-50 text-indigo-600',
+                  )}
+                >
+                  {Icon ? (
+                    <Icon size={20} className="shrink-0" />
+                  ) : (
+                    <Activity size={20} className="shrink-0" />
+                  )}
                 </div>
                 <span className="text-sm font-medium text-slate-500 dark:text-slate-400 line-clamp-1">
                   {title}
@@ -46,7 +54,7 @@ const StatsCard = ({
 
               <div className="space-y-1">
                 <h3 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
-                  {price ? formatNumberToPrice(value ?? 0) : value?.toLocaleString() ?? 0}
+                  {price ? formatNumberToPrice(value ?? 0) : (value?.toLocaleString() ?? 0)}
                 </h3>
                 {isShow && (
                   <div className="flex items-center gap-1.5">
@@ -101,6 +109,3 @@ const StatsCard = ({
 };
 
 export default StatsCard;
-
-
-

@@ -1,11 +1,11 @@
-import gsap from "gsap";
-import MoveUpward from "../animation/MoveUpward";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useRef, useEffect, useState } from "react";
-import WorkflowHeader from "./workflow/WorkflowHeader";
-import { bookingSteps } from "@/shared/utils/constants";
-import WorkflowTimeline from "./workflow/WorkflowTimeline";
-import WorkflowBackground from "./workflow/WorkflowBackground";
+import gsap from 'gsap';
+import MoveUpward from '../animation/MoveUpward';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useRef, useEffect, useState } from 'react';
+import WorkflowHeader from './workflow/WorkflowHeader';
+import { bookingSteps } from '@/shared/utils/constants';
+import WorkflowTimeline from './workflow/WorkflowTimeline';
+import WorkflowBackground from './workflow/WorkflowBackground';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -27,20 +27,17 @@ const WorkflowSection = () => {
     };
 
     updateHeight();
-    window.addEventListener("resize", updateHeight);
+    window.addEventListener('resize', updateHeight);
 
-    return () => window.removeEventListener("resize", updateHeight);
+    return () => window.removeEventListener('resize', updateHeight);
   }, []);
 
   useEffect(() => {
-    const frameModules = import.meta.glob(
-      "@/assets/landing/workflow/frames/*.jpg",
-      {
-        eager: true,
-        import: "default",
-        query: "?url",
-      }
-    );
+    const frameModules = import.meta.glob('@/assets/landing/workflow/frames/*.jpg', {
+      eager: true,
+      import: 'default',
+      query: '?url',
+    });
 
     const frameImages: HTMLImageElement[] = [];
 
@@ -65,7 +62,7 @@ const WorkflowSection = () => {
 
     if (!canvas || !section) return;
 
-    const context = canvas.getContext("2d");
+    const context = canvas.getContext('2d');
 
     if (!context) return;
 
@@ -85,20 +82,9 @@ const WorkflowSection = () => {
 
       if (!img || !img.complete) return;
 
-      context.clearRect(
-        0,
-        0,
-        canvas.width / scale,
-        canvas.height / scale
-      );
+      context.clearRect(0, 0, canvas.width / scale, canvas.height / scale);
 
-      context.drawImage(
-        img,
-        0,
-        0,
-        canvas.width / scale,
-        canvas.height / scale
-      );
+      context.drawImage(img, 0, 0, canvas.width / scale, canvas.height / scale);
     };
 
     if (textRef.current) {
@@ -109,10 +95,10 @@ const WorkflowSection = () => {
 
           return -(text.scrollHeight - container.clientHeight);
         },
-        ease: "none",
+        ease: 'none',
         scrollTrigger: {
           trigger: section,
-          start: "top top",
+          start: 'top top',
           end: `+=${VIDEO_SCROLL_DISTANCE}`,
           scrub: true,
         },
@@ -121,11 +107,11 @@ const WorkflowSection = () => {
 
     const tween = gsap.to(frameState, {
       frame: TOTAL_FRAMES - 1,
-      snap: "frame",
-      ease: "none",
+      snap: 'frame',
+      ease: 'none',
       scrollTrigger: {
         trigger: sectionRef.current,
-        start: "top top",
+        start: 'top top',
         end: `+=${VIDEO_SCROLL_DISTANCE}`,
         scrub: true,
         pin: true,
@@ -135,13 +121,9 @@ const WorkflowSection = () => {
       onUpdate: () => {
         render();
 
-        const progress =
-          frameState.frame / (TOTAL_FRAMES - 1);
+        const progress = frameState.frame / (TOTAL_FRAMES - 1);
 
-        const step = Math.min(
-          bookingSteps.length - 1,
-          Math.floor(progress * bookingSteps.length)
-        );
+        const step = Math.min(bookingSteps.length - 1, Math.floor(progress * bookingSteps.length));
 
         setActiveStep(step);
       },
@@ -173,7 +155,7 @@ const WorkflowSection = () => {
       </MoveUpward>
       <div
         className="w-full"
-        style={{ height: containerHeight ? `${containerHeight}px` : "120vh" }}
+        style={{ height: containerHeight ? `${containerHeight}px` : '120vh' }}
       >
         <section
           ref={sectionRef}
@@ -190,9 +172,7 @@ const WorkflowSection = () => {
             </div>
           </div>
           <div className="hidden lg:flex w-[38%] h-screen px-6">
-            <div
-              ref={textRef}
-              className="pt-[20vh] pb-[30vh] w-full">
+            <div ref={textRef} className="pt-[20vh] pb-[30vh] w-full">
               <WorkflowTimeline activeStep={activeStep} />
             </div>
           </div>

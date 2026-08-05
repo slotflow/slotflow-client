@@ -1,14 +1,13 @@
-import "leaflet/dist/leaflet.css";
+import 'leaflet/dist/leaflet.css';
 import { useEffect } from 'react';
-import AppContent from "./AppContent";
+import AppContent from './AppContent';
 import { Provider } from 'react-redux';
 import { toast } from 'react-toastify';
-import { PersistGate } from "redux-persist/integration/react";
+import { PersistGate } from 'redux-persist/integration/react';
 import { appStore, persistAppStore } from './shared/redux/appStore';
 import { onMessageListener } from './shared/helper/onMessageListener';
 
 function App() {
-
   useEffect(() => {
     onMessageListener().then((payload) => {
       if (!payload?.notification) return;
@@ -22,7 +21,7 @@ function App() {
         <AppContent />
       </PersistGate>
     </Provider>
-  )
+  );
 }
 
 export default App;

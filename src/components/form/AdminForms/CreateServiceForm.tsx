@@ -1,24 +1,21 @@
-import FormField from "../FormField";
-import { toast } from "react-toastify";
-import SelectField from "../SelectField";
-import { useForm } from "react-hook-form";
-import { FormButton } from "../FormSplits";
-import { Button } from "@/components/ui/button";
-import { appConfig } from "@/shared/config/env";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { createService } from "@/shared/apis/service";
-import { useQueryClient } from "@tanstack/react-query";
-import { ServiceCategory } from "@/shared/interface/enums";
-import { slideOut } from "@/shared/helper/gsapAnimationSlide";
-import { serviceCategoryOptions } from "@/shared/utils/constants";
-import { handleFormError } from "@/shared/helper/formErrorCatcher";
-import { CreateServiceFormProps } from "@/shared/interface/componentInterface";
-import { AdminCreateServiceFormType, adminCreateServiceZodSchema } from "@/shared/zod/adminZod";
+import FormField from '../FormField';
+import { toast } from 'react-toastify';
+import SelectField from '../SelectField';
+import { useForm } from 'react-hook-form';
+import { FormButton } from '../FormSplits';
+import { Button } from '@/components/ui/button';
+import { appConfig } from '@/shared/config/env';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { createService } from '@/shared/apis/service';
+import { useQueryClient } from '@tanstack/react-query';
+import { ServiceCategory } from '@/shared/interface/enums';
+import { slideOut } from '@/shared/helper/gsapAnimationSlide';
+import { serviceCategoryOptions } from '@/shared/utils/constants';
+import { handleFormError } from '@/shared/helper/formErrorCatcher';
+import { CreateServiceFormProps } from '@/shared/interface/componentInterface';
+import { AdminCreateServiceFormType, adminCreateServiceZodSchema } from '@/shared/zod/adminZod';
 
-const CreateServiceForm = ({
-  onClose,
-  formRef,
-}: CreateServiceFormProps) => {
+const CreateServiceForm = ({ onClose, formRef }: CreateServiceFormProps) => {
   const queryClient = useQueryClient();
 
   const handleCloseForm = () => {
@@ -35,9 +32,9 @@ const CreateServiceForm = ({
     formState: { errors, isSubmitting, isValid },
   } = useForm<AdminCreateServiceFormType>({
     resolver: zodResolver(adminCreateServiceZodSchema),
-    mode: "onChange",
+    mode: 'onChange',
     defaultValues: {
-      serviceName: "",
+      serviceName: '',
       serviceCategory: undefined,
     },
   });
@@ -49,15 +46,15 @@ const CreateServiceForm = ({
         toast.success(res.message);
         reset();
         handleCloseForm();
-        queryClient.invalidateQueries({ queryKey: ["appServices"] });
+        queryClient.invalidateQueries({ queryKey: ['appServices'] });
       } else {
         toast.error(res.message);
       }
     } catch (error) {
       if (appConfig.isDevelopment) {
-        console.log("Error while saving service:", error);
+        console.log('Error while saving service:', error);
       }
-      toast.error("Something went wrong while creating service")
+      toast.error('Something went wrong while creating service');
     }
   };
 
@@ -67,11 +64,7 @@ const CreateServiceForm = ({
       className="w-auto md:w-lg rounded-lg bg-[var(--background)] p-6 shadow-xl border-1"
     >
       <h3 className="text-lg lg:text-2xl font-bold text-center my-4">Create New Service</h3>
-      <form
-        onSubmit={handleSubmit(onSubmit, handleFormError(setFocus))}
-        className="space-y-6"
-      >
-
+      <form onSubmit={handleSubmit(onSubmit, handleFormError(setFocus))} className="space-y-6">
         <SelectField<AdminCreateServiceFormType, ServiceCategory>
           id="serviceCategory"
           label="Service Category"
@@ -92,7 +85,7 @@ const CreateServiceForm = ({
 
         <div className="space-y-2">
           <FormButton
-            text={isSubmitting ? "Saving" : "Save"}
+            text={isSubmitting ? 'Saving' : 'Save'}
             loading={isSubmitting}
             disabled={isSubmitting || !isValid}
             title="Save"

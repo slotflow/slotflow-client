@@ -1,4 +1,4 @@
-import { io, Socket } from "socket.io-client";
+import { io, Socket } from 'socket.io-client';
 
 export let socket: Socket | null = null;
 export let videoSocket: Socket | null = null;
@@ -7,10 +7,10 @@ export let eventSocket: Socket | null = null;
 export const getChatSocket = () => {
   if (!socket) {
     socket = io(`http://localhost:3000/chat`, {
-      path: "/socket.io",
+      path: '/socket.io',
       withCredentials: true,
       autoConnect: true,
-      transports: ["websocket"],
+      transports: ['websocket'],
     });
   }
   return socket;
@@ -26,10 +26,10 @@ export const distroyChatSocket = () => {
 export const getVideoSocket = () => {
   if (!videoSocket) {
     videoSocket = io(`http://localhost:3000/video`, {
-      path: "/socket.io",
+      path: '/socket.io',
       withCredentials: true,
       autoConnect: true,
-      transports: ["websocket"],
+      transports: ['websocket'],
     });
   }
   return videoSocket;
@@ -42,15 +42,13 @@ export const destroyVideoSocket = () => {
   }
 };
 
-
-
 export const getEventSocket = (): Socket => {
   if (!eventSocket) {
     eventSocket = io(`http://localhost:3000/events`, {
-      path: "/socket.io",
+      path: '/socket.io',
       withCredentials: true,
       autoConnect: true,
-      transports: ["websocket"],
+      transports: ['websocket'],
     });
   }
 

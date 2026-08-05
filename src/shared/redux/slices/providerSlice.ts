@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ProviderState, SetProofDataProps } from "@/shared/interface/sliceInterface";
-import { Availability } from "@/shared/interface/entityInterface/serviceAvailabilityInterface";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ProviderState, SetProofDataProps } from '@/shared/interface/sliceInterface';
+import { Availability } from '@/shared/interface/entityInterface/serviceAvailabilityInterface';
 
 const initialState: ProviderState = {
   availabilities: [],
@@ -16,7 +16,7 @@ const initialState: ProviderState = {
 };
 
 const providerSlice = createSlice({
-  name: "providerSlice",
+  name: 'providerSlice',
   initialState,
   reducers: {
     addAvailability: (state, action: PayloadAction<Availability | null>) => {
@@ -32,7 +32,7 @@ const providerSlice = createSlice({
       }
 
       const existingIndex = state.availabilities.findIndex(
-        (item) => item.day === newAvailability.day
+        (item) => item.day === newAvailability.day,
       );
 
       if (existingIndex !== -1) {

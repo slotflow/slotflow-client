@@ -5,19 +5,15 @@ import logo from '../../assets/logos/company/slotflowLogoTransparent.png';
 const Footer = () => {
   return (
     <footer className="overflow-hidden bg-background">
-
       <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
         <div className="grid gap-16 grid-col-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr_1fr]">
-
           <div className="space-y-6 col-span-2 lg:col-span-1">
             <div className="flex items-center gap-3">
               <div className="h-14 w-14 flex items-center justify-center rounded-xl">
-                <img src={logo} className='p-2' />
+                <img src={logo} className="p-2" />
               </div>
 
-              <span className="text-3xl font-bold text-[#635bff]">
-                Slotflow
-              </span>
+              <span className="text-3xl font-bold text-[#635bff]">Slotflow</span>
             </div>
 
             <p className="max-w-sm text-base text-zinc-500">
@@ -28,9 +24,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="mb-6 text-lg font-semibold">
-              Pages
-            </h3>
+            <h3 className="mb-6 text-lg font-semibold">Pages</h3>
 
             <ul className="space-y-4">
               {footerLinks.pages.map((item) => (
@@ -47,9 +41,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="mb-6 text-lg font-semibold">
-              Socials
-            </h3>
+            <h3 className="mb-6 text-lg font-semibold">Socials</h3>
 
             <ul className="space-y-4">
               {footerLinks.socials.map((item) => {
@@ -61,10 +53,7 @@ const Footer = () => {
                       href="#"
                       className="group flex items-center gap-3 text-zinc-400 transition dark:hover:text-white hover:text-zinc-700"
                     >
-                      <Icon
-                        size={18}
-                        className="opacity-70 transition group-hover:opacity-100"
-                      />
+                      <Icon size={18} className="opacity-70 transition group-hover:opacity-100" />
                       {item.name}
                     </a>
                   </li>
@@ -74,9 +63,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="mb-6 text-lg font-semibold">
-              Legal
-            </h3>
+            <h3 className="mb-6 text-lg font-semibold">Legal</h3>
 
             <ul className="space-y-4">
               {footerLinks.legal.map((item) => (
@@ -93,9 +80,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h3 className="mb-6 text-lg font-semibold">
-              Register
-            </h3>
+            <h3 className="mb-6 text-lg font-semibold">Register</h3>
 
             <ul className="space-y-4">
               {footerLinks.account.map((item) => (
@@ -119,9 +104,7 @@ const Footer = () => {
       </div>
       <div className="mt-12 p-6">
         <div className="flex flex-col items-center justify-center gap-4 text-sm text-muted-foreground md:flex-row">
-          <p>
-            © {new Date().getFullYear()} SlotFlow. All rights reserved.
-          </p>
+          <p>© {new Date().getFullYear()} SlotFlow. All rights reserved.</p>
           <a
             href="https://github.com/slotflow"
             target="_blank"
@@ -136,6 +119,6 @@ const Footer = () => {
       </div>
     </footer>
   );
-}
+};
 
 export default Footer;

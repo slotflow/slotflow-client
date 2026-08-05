@@ -1,13 +1,7 @@
-import { Clock3, MapPin, Star } from "lucide-react";
-import { ProviderCardProps } from "@/shared/interface/componentInterface";
+import { Clock3, MapPin, Star } from 'lucide-react';
+import { ProviderCardProps } from '@/shared/interface/componentInterface';
 
-const HeroProviderCard = ({
-  name,
-  category,
-  rating,
-  location,
-  time,
-}: ProviderCardProps) => {
+const HeroProviderCard = ({ name, category, rating, location, time }: ProviderCardProps) => {
   return (
     <div
       className="
@@ -21,9 +15,7 @@ const HeroProviderCard = ({
       "
     >
       <div className="flex justify-between">
-
         <div className="flex gap-4">
-
           <div
             className="
               flex
@@ -41,17 +33,11 @@ const HeroProviderCard = ({
           </div>
 
           <div>
+            <h5 className="font-semibold">{name}</h5>
 
-            <h5 className="font-semibold">
-              {name}
-            </h5>
-
-            <p className="text-sm text-muted-foreground">
-              {category}
-            </p>
+            <p className="text-sm text-muted-foreground">{category}</p>
 
             <div className="mt-2 flex gap-4 text-xs text-muted-foreground">
-
               <span className="flex items-center gap-1">
                 <MapPin className="h-3.5 w-3.5" />
                 {location}
@@ -61,26 +47,18 @@ const HeroProviderCard = ({
                 <Clock3 className="h-3.5 w-3.5" />
                 {time}
               </span>
-
             </div>
-
           </div>
-
         </div>
 
         <div className="flex items-start gap-1">
-
           <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
 
-          <span className="text-sm font-semibold">
-            {rating}
-          </span>
-
+          <span className="text-sm font-semibold">{rating}</span>
         </div>
-
       </div>
     </div>
   );
-}
+};
 
 export default HeroProviderCard;

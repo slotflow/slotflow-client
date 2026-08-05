@@ -10,16 +10,16 @@ This Privacy Policy explains how we collect, use, disclose, store, protect, and 
 
 This Privacy Policy applies to your use of:
 
-* The SlotFlow website;
-* The SlotFlow web application;
-* The Provider Dashboard;
-* Our application programming interfaces (APIs), where applicable;
-* Customer support services;
-* Chat and messaging features;
-* Video consultation services;
-* AI-powered features and virtual assistance;
-* Email communications;
-* SMS and WhatsApp notifications, where enabled.
+- The SlotFlow website;
+- The SlotFlow web application;
+- The Provider Dashboard;
+- Our application programming interfaces (APIs), where applicable;
+- Customer support services;
+- Chat and messaging features;
+- Video consultation services;
+- AI-powered features and virtual assistance;
+- Email communications;
+- SMS and WhatsApp notifications, where enabled.
 
 This Privacy Policy applies only to services offered within **India** and is intended for individuals and organizations using SlotFlow within India.
 
@@ -39,43 +39,43 @@ SlotFlow Technologies Private Limited collects information to provide, operate, 
 
 When you create an account, book appointments, communicate with Providers, or otherwise use the SlotFlow platform, we may collect information that you voluntarily provide, including:
 
-* Account information, such as your username, email address, and account credentials.
-* Appointment information, including appointment dates and times, selected services, appointment status, cancellation history, and any notes or information you choose to provide during the booking process.
-* Communications exchanged through the platform, including chat messages, customer support requests, feedback, and communications related to appointments.
-* Payment-related information necessary to complete transactions. Payments are processed securely through our third-party payment processor, **Stripe**. SlotFlow does not store your complete debit card, credit card, or other payment card details.
-* Location information that you choose to provide, such as your address, as well as your approximate location when permission is granted through your browser or device to help identify nearby Providers and improve location-based services.
+- Account information, such as your username, email address, and account credentials.
+- Appointment information, including appointment dates and times, selected services, appointment status, cancellation history, and any notes or information you choose to provide during the booking process.
+- Communications exchanged through the platform, including chat messages, customer support requests, feedback, and communications related to appointments.
+- Payment-related information necessary to complete transactions. Payments are processed securely through our third-party payment processor, **Stripe**. SlotFlow does not store your complete debit card, credit card, or other payment card details.
+- Location information that you choose to provide, such as your address, as well as your approximate location when permission is granted through your browser or device to help identify nearby Providers and improve location-based services.
 
 #### Information Collected from Providers
 
 When you register as a Provider and complete the onboarding process, we may collect:
 
-* Account information, including your username, email address, and account credentials.
-* Business and profile information, including your business or practice address, service information, service descriptions, pricing (where applicable), and profile details.
-* Availability information, including business hours, appointment schedules, availability settings, and booking preferences.
-* Verification information, including documents or other supporting information submitted during the Provider verification process to help confirm your identity, business, or eligibility to provide services through the platform.
-* Communications exchanged through the platform, including customer support requests, communications with Users, and other interactions related to the services you provide.
-* Payment and payout-related information required to process subscription payments or other financial transactions through our payment service providers. SlotFlow does not store complete payment card information.
-* Business location information, including your service address and approximate location where necessary to help Users discover nearby Providers.
+- Account information, including your username, email address, and account credentials.
+- Business and profile information, including your business or practice address, service information, service descriptions, pricing (where applicable), and profile details.
+- Availability information, including business hours, appointment schedules, availability settings, and booking preferences.
+- Verification information, including documents or other supporting information submitted during the Provider verification process to help confirm your identity, business, or eligibility to provide services through the platform.
+- Communications exchanged through the platform, including customer support requests, communications with Users, and other interactions related to the services you provide.
+- Payment and payout-related information required to process subscription payments or other financial transactions through our payment service providers. SlotFlow does not store complete payment card information.
+- Business location information, including your service address and approximate location where necessary to help Users discover nearby Providers.
 
 ### 2.2 Information Collected Automatically
 
 When you access or use the SlotFlow platform, certain technical information is collected automatically, which may include:
 
-* Browser type and version.
-* Device type.
-* Session duration and activity information.
-* Error logs and diagnostic information used to identify and resolve technical issues.
-* Approximate geographic location derived from your IP address or browser location services, where permission has been granted.
-* Cookies and similar technologies that help authenticate users, remember preferences, improve security, analyze platform performance, and enhance the overall user experience.
+- Browser type and version.
+- Device type.
+- Session duration and activity information.
+- Error logs and diagnostic information used to identify and resolve technical issues.
+- Approximate geographic location derived from your IP address or browser location services, where permission has been granted.
+- Cookies and similar technologies that help authenticate users, remember preferences, improve security, analyze platform performance, and enhance the overall user experience.
 
 ### 2.3 Information Received from Third Parties
 
 We may receive information about you from trusted third-party service providers and partners, including:
 
-* Authentication information when you choose to sign in using Google Sign-In or other supported authentication services.
-* Payment confirmations and transaction-related information from our payment processor, Stripe. We receive only the information necessary to confirm and manage transactions and do not receive or store your complete payment card details.
-* Information generated through our AI-powered features when you interact with our AI assistant. This may include your questions and, where necessary to respond appropriately, relevant appointment context. We design these features to use only the information reasonably necessary to provide the requested assistance.
-* Information from analytics, security, fraud prevention, and infrastructure providers that helps us maintain, protect, and improve the SlotFlow platform.
+- Authentication information when you choose to sign in using Google Sign-In or other supported authentication services.
+- Payment confirmations and transaction-related information from our payment processor, Stripe. We receive only the information necessary to confirm and manage transactions and do not receive or store your complete payment card details.
+- Information generated through our AI-powered features when you interact with our AI assistant. This may include your questions and, where necessary to respond appropriately, relevant appointment context. We design these features to use only the information reasonably necessary to provide the requested assistance.
+- Information from analytics, security, fraud prevention, and infrastructure providers that helps us maintain, protect, and improve the SlotFlow platform.
 
 We expect third-party providers that process personal information on our behalf to handle such information in accordance with applicable privacy and security requirements.
 
@@ -87,42 +87,42 @@ SlotFlow Technologies Private Limited processes personal information only for le
 
 We may use information collected from Users to:
 
-* Create, maintain, and manage user accounts.
-* Authenticate users and provide secure access to the SlotFlow platform.
-* Enable Users to search for, discover, and connect with suitable Providers.
-* Schedule, manage, modify, and cancel appointments.
-* Facilitate communications between Users and Providers through chat, messaging, and other communication features.
-* Enable and support video consultations where available.
-* Process payments, subscriptions, refunds, and transaction confirmations through authorized payment service providers.
-* Send appointment confirmations, reminders, notifications, service updates, and other transactional communications.
-* Respond to customer support requests, inquiries, and feedback.
-* Personalize the user experience by displaying relevant Providers, services, and platform content.
-* Improve the functionality, performance, accessibility, and reliability of the SlotFlow platform.
-* Analyze platform usage, identify trends, and develop new features and services.
-* Detect, investigate, and prevent fraud, unauthorized access, abuse, spam, and other unlawful or harmful activities.
-* Protect the security of our platform, systems, Users, Providers, and business operations.
-* Comply with applicable laws, regulations, legal obligations, court orders, and requests from competent authorities.
-* Send product announcements, feature updates, newsletters, promotional communications, and marketing materials where permitted by law or with your consent. You may opt out of marketing communications at any time.
+- Create, maintain, and manage user accounts.
+- Authenticate users and provide secure access to the SlotFlow platform.
+- Enable Users to search for, discover, and connect with suitable Providers.
+- Schedule, manage, modify, and cancel appointments.
+- Facilitate communications between Users and Providers through chat, messaging, and other communication features.
+- Enable and support video consultations where available.
+- Process payments, subscriptions, refunds, and transaction confirmations through authorized payment service providers.
+- Send appointment confirmations, reminders, notifications, service updates, and other transactional communications.
+- Respond to customer support requests, inquiries, and feedback.
+- Personalize the user experience by displaying relevant Providers, services, and platform content.
+- Improve the functionality, performance, accessibility, and reliability of the SlotFlow platform.
+- Analyze platform usage, identify trends, and develop new features and services.
+- Detect, investigate, and prevent fraud, unauthorized access, abuse, spam, and other unlawful or harmful activities.
+- Protect the security of our platform, systems, Users, Providers, and business operations.
+- Comply with applicable laws, regulations, legal obligations, court orders, and requests from competent authorities.
+- Send product announcements, feature updates, newsletters, promotional communications, and marketing materials where permitted by law or with your consent. You may opt out of marketing communications at any time.
 
 ### 3.2 How We Use Information Collected from Providers
 
 We may use information collected from Providers to:
 
-* Create, verify, maintain, and manage Provider accounts.
-* Review and process Provider onboarding applications and verification documents.
-* Display Provider profiles, business information, services, availability, and other information necessary for Users to discover and book services.
-* Manage appointment scheduling, bookings, cancellations, availability, and service delivery.
-* Facilitate communication between Providers and Users through messaging, chat, and other communication features.
-* Enable video consultations where supported.
-* Process subscription payments, invoices, refunds, and other financial transactions through authorized payment providers.
-* Provide customer support and respond to Provider inquiries.
-* Monitor compliance with our Terms of Service, community standards, and applicable policies.
-* Improve Provider tools, dashboards, analytics, and platform functionality.
-* Analyze platform usage to enhance the quality, reliability, and performance of our services.
-* Detect and prevent fraud, identity misuse, unauthorized account activity, and other security threats.
-* Protect the rights, safety, and security of Users, Providers, SlotFlow, and third parties.
-* Comply with applicable legal, regulatory, accounting, tax, and reporting obligations.
-* Send service announcements, subscription updates, feature releases, newsletters, educational content, and marketing communications where permitted by law or with your consent. Providers may opt out of marketing communications at any time.
+- Create, verify, maintain, and manage Provider accounts.
+- Review and process Provider onboarding applications and verification documents.
+- Display Provider profiles, business information, services, availability, and other information necessary for Users to discover and book services.
+- Manage appointment scheduling, bookings, cancellations, availability, and service delivery.
+- Facilitate communication between Providers and Users through messaging, chat, and other communication features.
+- Enable video consultations where supported.
+- Process subscription payments, invoices, refunds, and other financial transactions through authorized payment providers.
+- Provide customer support and respond to Provider inquiries.
+- Monitor compliance with our Terms of Service, community standards, and applicable policies.
+- Improve Provider tools, dashboards, analytics, and platform functionality.
+- Analyze platform usage to enhance the quality, reliability, and performance of our services.
+- Detect and prevent fraud, identity misuse, unauthorized account activity, and other security threats.
+- Protect the rights, safety, and security of Users, Providers, SlotFlow, and third parties.
+- Comply with applicable legal, regulatory, accounting, tax, and reporting obligations.
+- Send service announcements, subscription updates, feature releases, newsletters, educational content, and marketing communications where permitted by law or with your consent. Providers may opt out of marketing communications at any time.
 
 We do not use your personal information for purposes that are incompatible with those described in this Privacy Policy unless we obtain your consent or are otherwise permitted or required by applicable law.
 
@@ -178,13 +178,13 @@ We use analytics technologies, including **Google Analytics**, to understand how
 
 Analytics information may include:
 
-* Pages visited.
-* Time spent on pages.
-* Navigation patterns.
-* Browser type.
-* Device type.
-* Session duration.
-* Approximate geographic location derived from your IP address, where applicable.
+- Pages visited.
+- Time spent on pages.
+- Navigation patterns.
+- Browser type.
+- Device type.
+- Session duration.
+- Approximate geographic location derived from your IP address, where applicable.
 
 This information is generally aggregated and used to improve the functionality and performance of the platform.
 
@@ -198,9 +198,9 @@ We use local storage only to store limited, non-sensitive information, such as u
 
 Certain trusted third-party service providers may use cookies or similar technologies while providing services on our behalf, including:
 
-* **Google Analytics**, to help us understand platform usage and improve performance.
-* **Google OAuth**, to facilitate secure user authentication when you choose to sign in using your Google account.
-* **Stripe**, to securely process payments, assist with fraud prevention, and manage payment-related services.
+- **Google Analytics**, to help us understand platform usage and improve performance.
+- **Google OAuth**, to facilitate secure user authentication when you choose to sign in using your Google account.
+- **Stripe**, to securely process payments, assist with fraud prevention, and manage payment-related services.
 
 These third parties process information in accordance with their own privacy policies and applicable legal requirements.
 
@@ -208,9 +208,9 @@ These third parties process information in accordance with their own privacy pol
 
 You may manage or control cookies in several ways:
 
-* Through the cookie consent banner or preference center provided by SlotFlow, where available.
-* By adjusting your browser settings to block, delete, or restrict cookies.
-* By withdrawing your consent for non-essential cookies at any time, where applicable.
+- Through the cookie consent banner or preference center provided by SlotFlow, where available.
+- By adjusting your browser settings to block, delete, or restrict cookies.
+- By withdrawing your consent for non-essential cookies at any time, where applicable.
 
 Please note that disabling or rejecting certain cookies may affect the availability or functionality of some features of the SlotFlow platform. Strictly necessary cookies cannot be disabled because they are required for the secure operation of our services.
 
@@ -234,9 +234,9 @@ To facilitate bookings and the delivery of services through the SlotFlow platfor
 
 When you book an appointment or request a service, we may share information with the selected Provider that is reasonably necessary to deliver the requested service, including:
 
-* Your username.
-* Appointment details, including the selected service, date, time, and any information you choose to provide as part of the booking.
-* Your email address where necessary for service-related communication or appointment management.
+- Your username.
+- Appointment details, including the selected service, date, time, and any information you choose to provide as part of the booking.
+- Your email address where necessary for service-related communication or appointment management.
 
 Providers are expected to use this information solely for providing services through the SlotFlow platform and in accordance with applicable privacy laws.
 
@@ -244,12 +244,12 @@ Providers are expected to use this information solely for providing services thr
 
 When you browse or book services, we may display information about Providers, including:
 
-* Provider name and profile information.
-* Business or service information.
-* Service descriptions.
-* Business address or service location.
-* Availability and appointment schedules.
-* Other information that Providers choose to make publicly available through their profiles.
+- Provider name and profile information.
+- Business or service information.
+- Service descriptions.
+- Business address or service location.
+- Availability and appointment schedules.
+- Other information that Providers choose to make publicly available through their profiles.
 
 ### 6.2 Service Providers and Data Processors
 
@@ -257,14 +257,14 @@ We engage trusted third-party service providers that process personal informatio
 
 These service providers include:
 
-* Cloud hosting and infrastructure providers, including Amazon Web Services (AWS).
-* Database hosting providers, including MongoDB.
-* Payment processing providers, including Stripe.
-* Authentication providers, including Google Authentication services.
-* Analytics providers, including Google Analytics.
-* Email service providers, including Nodemailer or future email delivery providers such as Amazon Simple Email Service (SES).
-* Third-party artificial intelligence service providers that enable AI-powered features and virtual assistance.
-* Customer support, monitoring, security, and infrastructure service providers where necessary.
+- Cloud hosting and infrastructure providers, including Amazon Web Services (AWS).
+- Database hosting providers, including MongoDB.
+- Payment processing providers, including Stripe.
+- Authentication providers, including Google Authentication services.
+- Analytics providers, including Google Analytics.
+- Email service providers, including Nodemailer or future email delivery providers such as Amazon Simple Email Service (SES).
+- Third-party artificial intelligence service providers that enable AI-powered features and virtual assistance.
+- Customer support, monitoring, security, and infrastructure service providers where necessary.
 
 These providers are authorized to process personal information only to the extent necessary to perform services on our behalf and are required to protect such information.
 
@@ -272,11 +272,11 @@ These providers are authorized to process personal information only to the exten
 
 We may disclose personal information where we reasonably believe disclosure is necessary to:
 
-* Comply with applicable laws, regulations, legal processes, or governmental requests.
-* Respond to court orders, subpoenas, or other lawful requests.
-* Protect the rights, property, safety, or security of SlotFlow, our Users, Providers, employees, or the public.
-* Detect, investigate, prevent, or address fraud, security incidents, abuse, or other unlawful activities.
-* Enforce our Terms of Service or other agreements.
+- Comply with applicable laws, regulations, legal processes, or governmental requests.
+- Respond to court orders, subpoenas, or other lawful requests.
+- Protect the rights, property, safety, or security of SlotFlow, our Users, Providers, employees, or the public.
+- Detect, investigate, prevent, or address fraud, security incidents, abuse, or other unlawful activities.
+- Enforce our Terms of Service or other agreements.
 
 ### 6.4 Business Transfers
 
@@ -390,12 +390,12 @@ Where we rely on your consent to process personal information, you may withdraw 
 
 Where applicable under the California Consumer Privacy Act (CCPA), as amended by the California Privacy Rights Act (CPRA), eligible individuals may have additional rights, including:
 
-* The right to know what personal information is collected, used, disclosed, or shared.
-* The right to request deletion of personal information, subject to applicable exceptions.
-* The right to request correction of inaccurate personal information.
-* The right to opt out of the sale or sharing of personal information where applicable.
-* The right to limit the use of certain sensitive personal information where required by law.
-* The right to receive equal service and not be discriminated against for exercising applicable privacy rights.
+- The right to know what personal information is collected, used, disclosed, or shared.
+- The right to request deletion of personal information, subject to applicable exceptions.
+- The right to request correction of inaccurate personal information.
+- The right to opt out of the sale or sharing of personal information where applicable.
+- The right to limit the use of certain sensitive personal information where required by law.
+- The right to receive equal service and not be discriminated against for exercising applicable privacy rights.
 
 SlotFlow does not sell personal information and does not share personal information for cross-context behavioral advertising purposes.
 
@@ -419,15 +419,15 @@ Our security program is designed to safeguard personal information while support
 
 Our security measures include, where appropriate:
 
-* Encryption of data during transmission using industry-standard security protocols.
-* Encryption or other appropriate protections for sensitive information where applicable.
-* Access controls that limit access to personal information to authorized personnel who require such access to perform their job responsibilities.
-* Authentication and authorization mechanisms to help protect user accounts and platform resources.
-* Continuous monitoring for suspicious activity, unauthorized access attempts, fraud, abuse, and other security threats.
-* Logging and diagnostic systems to support incident detection, investigation, and response.
-* Periodic security assessments, reviews, and improvements to maintain the confidentiality, integrity, and availability of our systems and services.
-* Secure development and operational practices designed to reduce security risks throughout the lifecycle of our platform.
-* Appropriate contractual and organizational safeguards when engaging trusted third-party service providers that process personal information on our behalf.
+- Encryption of data during transmission using industry-standard security protocols.
+- Encryption or other appropriate protections for sensitive information where applicable.
+- Access controls that limit access to personal information to authorized personnel who require such access to perform their job responsibilities.
+- Authentication and authorization mechanisms to help protect user accounts and platform resources.
+- Continuous monitoring for suspicious activity, unauthorized access attempts, fraud, abuse, and other security threats.
+- Logging and diagnostic systems to support incident detection, investigation, and response.
+- Periodic security assessments, reviews, and improvements to maintain the confidentiality, integrity, and availability of our systems and services.
+- Secure development and operational practices designed to reduce security risks throughout the lifecycle of our platform.
+- Appropriate contractual and organizational safeguards when engaging trusted third-party service providers that process personal information on our behalf.
 
 Although we strive to implement appropriate security measures, no method of transmitting information over the Internet or storing electronic information can be guaranteed to be completely secure. Accordingly, we cannot guarantee absolute security.
 
@@ -435,13 +435,12 @@ If we become aware of a security incident or personal data breach that is likely
 
 You also play an important role in protecting your personal information. We encourage you to:
 
-* Use a strong and unique password for your SlotFlow account.
-* Keep your login credentials confidential.
-* Sign out from shared or public devices after using the platform.
-* Notify us promptly if you suspect unauthorized access to your account or any security-related issue.
+- Use a strong and unique password for your SlotFlow account.
+- Keep your login credentials confidential.
+- Sign out from shared or public devices after using the platform.
+- Notify us promptly if you suspect unauthorized access to your account or any security-related issue.
 
 Security is a shared responsibility, and we continuously work to improve our technical and organizational safeguards to protect the information entrusted to us.
-
 
 ## 10. Children's Privacy
 
@@ -485,10 +484,10 @@ When we make changes, we will update the **Effective Date** shown at the beginni
 
 If we make material changes that significantly affect how we collect, use, share, or otherwise process your personal information, we will provide appropriate notice before the changes become effective where required by applicable law. Such notice may be provided through one or more of the following methods:
 
-* A notice on the SlotFlow website or platform.
-* An in-application notification.
-* Email communication sent to the email address associated with your account.
-* Any other reasonable communication method permitted by applicable law.
+- A notice on the SlotFlow website or platform.
+- An in-application notification.
+- Email communication sent to the email address associated with your account.
+- Any other reasonable communication method permitted by applicable law.
 
 We encourage you to review this Privacy Policy periodically to stay informed about how we protect your personal information.
 

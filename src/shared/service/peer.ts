@@ -6,28 +6,27 @@ class PeerService {
   }
 
   initPeer() {
-    if (this.peer && this.peer.signalingState !== "closed") {
+    if (this.peer && this.peer.signalingState !== 'closed') {
       this.peer.close();
     }
     this.peer = new RTCPeerConnection({
       iceServers: [
         {
-          urls: [
-            "stun:stun.l.google.com:19302",
-            "stun:global.stun.twilio.com:3478",
-          ],
+          urls: ['stun:stun.l.google.com:19302', 'stun:global.stun.twilio.com:3478'],
         },
       ],
     });
   }
 
   close(): void {
-    if (this.peer && this.peer.signalingState !== "closed") {
+    if (this.peer && this.peer.signalingState !== 'closed') {
       this.peer.close();
     }
   }
 
-  async getAnswer(offer: RTCSessionDescriptionInit): Promise<RTCSessionDescriptionInit | undefined> {
+  async getAnswer(
+    offer: RTCSessionDescriptionInit,
+  ): Promise<RTCSessionDescriptionInit | undefined> {
     await this.peer.setRemoteDescription(new RTCSessionDescription(offer));
     const ans = await this.peer.createAnswer();
     await this.peer.setLocalDescription(ans);

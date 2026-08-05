@@ -1,15 +1,15 @@
-import { LucideIcon } from "lucide-react";
-import React, { ChangeEvent } from "react";
-import { RouteNames } from "../utils/constants";
-import { ColumnDef } from "@tanstack/react-table";
-import { ChartConfig } from "@/components/ui/chart";
-import { Plan } from "./entityInterface/planInterface";
-import { User } from "./entityInterface/userInterface";
-import { Review } from "./entityInterface/reviewInterface";
-import { Booking } from "./entityInterface/bookingInterface";
-import { Message } from "./entityInterface/message.interface";
-import { HearAboutUsOptionValue, PlanName, Role, ServiceCategory } from "./enums";
-import jsPDF from "jspdf";
+import { LucideIcon } from 'lucide-react';
+import React, { ChangeEvent } from 'react';
+import { RouteNames } from '../utils/constants';
+import { ColumnDef } from '@tanstack/react-table';
+import { ChartConfig } from '@/components/ui/chart';
+import { Plan } from './entityInterface/planInterface';
+import { User } from './entityInterface/userInterface';
+import { Review } from './entityInterface/reviewInterface';
+import { Booking } from './entityInterface/bookingInterface';
+import { Message } from './entityInterface/message.interface';
+import { HearAboutUsOptionValue, PlanName, Role, ServiceCategory } from './enums';
+import jsPDF from 'jspdf';
 
 // Common Response interface
 export interface ApiBaseResponse<T = null> {
@@ -35,11 +35,11 @@ export interface Route {
 
 // Gsap animation object interface
 export interface gsapBigSvgYDirectionAnimationInterface {
-  y: number,
-  duration: number,
-  yoyo: boolean,
-  repeat: number,
-  ease: string,
+  y: number;
+  duration: number;
+  yoyo: boolean;
+  repeat: number;
+  ease: string;
 }
 
 // Header compoenent Navs Array Interface
@@ -54,7 +54,7 @@ export type HandleChangeFunction = (e: ChangeEvent<HTMLInputElement | HTMLSelect
 export type HandleFeatureChangeFunction = (e: ChangeEvent<HTMLInputElement>, index: number) => void;
 
 // Section one interface
-// Role section Button function interface 
+// Role section Button function interface
 export type HandleRoleSelectionFunction = (url: string) => void;
 
 // Common Table compoenent
@@ -63,7 +63,7 @@ export interface CommonTableComponentProps<T, Q extends object = {}> {
   parentDivCalssName?: string;
 
   fetchApiFunction: (
-    queryParams?: FetchFunctionBaseQueryParams & Q
+    queryParams?: FetchFunctionBaseQueryParams & Q,
   ) => Promise<ApiPaginatedResponse<T>>;
 
   queryKey: string;
@@ -76,25 +76,20 @@ export interface CommonTableComponentProps<T, Q extends object = {}> {
 
 // Api fetch function interface
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export type ApiFetchFunction<T, Q extends object = {}> = (queryParams?: FetchFunctionBaseQueryParams & Q) => Promise<ApiPaginatedResponse<T>>;
+export type ApiFetchFunction<T, Q extends object = {}> = (
+  queryParams?: FetchFunctionBaseQueryParams & Q,
+) => Promise<ApiPaginatedResponse<T>>;
 
 // Api common request parameter interface
 export interface FetchFunctionBaseQueryParams {
   page?: number;
   limit?: number;
   sortBy?: string;
-  sortOrder?: "asc" | "desc";
+  sortOrder?: 'asc' | 'desc';
 }
 
 // Formate date timeRage Enum
-export type TimeRange = "7d"
-  | "14d"
-  | "30d"
-  | "45d"
-  | "60d"
-  | "90d"
-  | "180d"
-  | "365d"
+export type TimeRange = '7d' | '14d' | '30d' | '45d' | '60d' | '90d' | '180d' | '365d';
 
 // DateSelect data interface
 export interface dataSelectListItemInterface {
@@ -104,9 +99,9 @@ export interface dataSelectListItemInterface {
 
 // AppointmentOverTimeInterface
 export interface AppointmentOverTimeInterface {
-  completed: number,
-  missed: number,
-  cancelled: number
+  completed: number;
+  missed: number;
+  cancelled: number;
 }
 
 //  Chart Common Interface
@@ -136,9 +131,9 @@ export type BaseChartData = {
 // Provider service availability component day map interface
 export interface DayMapInterface {
   [key: string]: {
-    day: string,
-    tab: number
-  }
+    day: string;
+    tab: number;
+  };
 }
 
 // Plan feature interface
@@ -154,7 +149,9 @@ export interface PlanFeatureInterface {
 }
 
 // Plan list type interface
-export type PlanListType = Array<Pick<Plan, "_id" | "planName" | "price" | "description" | "features">>
+export type PlanListType = Array<
+  Pick<Plan, '_id' | 'planName' | 'price' | 'description' | 'features'>
+>;
 
 // Provider approval message interface
 export interface ProviderApprovalMessageInterface {
@@ -238,8 +235,8 @@ export interface GoogleCalendarEvent extends Partial<Booking> {
       title?: string;
       backgroundColor?: string;
       textColor?: string;
-    },
-  },
+    };
+  };
 }
 
 // Common tab interface
@@ -251,7 +248,7 @@ export interface CommonTabInterface {
 }
 
 // Select options interface
-export type SelectOptions = Array<{ label: string, value: string }>;
+export type SelectOptions = Array<{ label: string; value: string }>;
 
 // Provider cards filters interface
 export interface ProviderCardsFilters {
@@ -261,12 +258,12 @@ export interface ProviderCardsFilters {
   slotflowTrusted: boolean;
   categories: ServiceCategory[];
   location?: {
-    type: string,
-    coordinates: [number, number],
+    type: string;
+    coordinates: [number, number];
   };
   skip: number;
   limit: number;
-};
+}
 
 // Contact item interface
 export interface ContactItem {
@@ -279,20 +276,21 @@ export interface ContactItem {
 // admin reject provider modal state
 export interface AdminRejectProviderModalState {
   modalState: boolean;
-  providerId: User["_id"] | null;
+  providerId: User['_id'] | null;
 }
 
 // Chat Data interface
 export interface SocketDataInterface {
-  fromUserId: Message["senderId"];
-  toUserId: Message["receiverId"];
+  fromUserId: Message['senderId'];
+  toUserId: Message['receiverId'];
 }
 
 // set last message interface
-export type setLatMessageProps = Pick<Message, "senderId" | "text" | "createdAt">
+export type setLatMessageProps = Pick<Message, 'senderId' | 'text' | 'createdAt'>;
 
 // Chat list user interface
-export type ChatListUserProps = Pick<User, "_id" | "username" | "profileImage"> | Pick<User, "_id" | "username" | "profileImage">;
+export type ChatListUserProps =
+  Pick<User, '_id' | 'username' | 'profileImage'> | Pick<User, '_id' | 'username' | 'profileImage'>;
 
 // Option type interface
 export type OptionType<K> = {
@@ -302,8 +300,8 @@ export type OptionType<K> = {
 
 // Map dot lit locations coordinates interface
 export interface MapDotLitLocationsCoordinates {
-  start: { lat: number, lng: number },
-  end: { lat: number, lng: number }
+  start: { lat: number; lng: number };
+  end: { lat: number; lng: number };
 }
 
 // Tab item interface
@@ -315,14 +313,14 @@ export interface TabItem {
 }
 
 // Review form values interface
-export type ReviewFormValues = Pick<Review, "reviewText" | "rating">;
+export type ReviewFormValues = Pick<Review, 'reviewText' | 'rating'>;
 
 // Hear about us options interface
 export type HearAboutUsOptions = {
-  label: string
-  value: HearAboutUsOptionValue
-  icon: React.ComponentType<{ className?: string }>
-}
+  label: string;
+  value: HearAboutUsOptionValue;
+  icon: React.ComponentType<{ className?: string }>;
+};
 
 // Status preset interface
 export type StatusPreset = {
@@ -370,8 +368,8 @@ export interface BlogAuthorFields {
 export interface ContentfulReference {
   sys: {
     id: string;
-    linkType: "Entry";
-    type: "Link";
+    linkType: 'Entry';
+    type: 'Link';
   };
 }
 
@@ -502,10 +500,10 @@ export interface ContactSupportOptions {
 
 // borading steps interface
 export interface OnboardingStep {
-    pageNumber: number;
-    heading: string;
-    description: string;
-    path: string;
+  pageNumber: number;
+  heading: string;
+  description: string;
+  path: string;
 }
 
 export interface BoardingStep {

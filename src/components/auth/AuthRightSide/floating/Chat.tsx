@@ -1,6 +1,6 @@
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { MessageCircle, CheckCheck } from "lucide-react";
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { MessageCircle, CheckCheck } from 'lucide-react';
 
 const ChatCard = () => {
   return (
@@ -11,22 +11,15 @@ const ChatCard = () => {
         </div>
         <div className="flex-1 space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="font-semibold">
-              Messages
-            </h3>
+            <h3 className="font-semibold">Messages</h3>
 
-            <Badge
-              variant="secondary"
-              className="rounded-full px-2.5 py-0.5"
-            >
+            <Badge variant="secondary" className="rounded-full px-2.5 py-0.5">
               New
             </Badge>
           </div>
 
           <div className="space-y-1">
-            <p className="font-medium">
-              Dr. Meera
-            </p>
+            <p className="font-medium">Dr. Meera</p>
 
             <p className="text-sm leading-6 text-muted-foreground">
               Looking forward to meeting you tomorrow at 10:30 AM.

@@ -1,17 +1,13 @@
 import React from 'react';
-import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent
-} from "@/components/ui/chart";
+import { ChartContainer, ChartLegend, ChartLegendContent } from '@/components/ui/chart';
 import ChartHeader from './ChartHeader';
 import ChartOverlay from './ChartOverlay';
 import { Card, CardContent } from '../ui/card';
 import ChartDataNotAvailable from './ChartDataNotAvailable';
 import { TimeRange } from '@/shared/interface/commonInterface';
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
 import { filterChartDataHelper } from '@/shared/helper/dateFilter';
-import { ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { BarChartVerticalProps } from '@/shared/interface/componentInterface';
 
 const BarChartVertical = ({
@@ -21,18 +17,22 @@ const BarChartVertical = ({
   dataKeyOne,
   dataKeyTwo,
   chartConfig,
-  isLocked
+  isLocked,
 }: BarChartVerticalProps) => {
-
-  const [timeRange, setTimeRange] = React.useState<TimeRange>("7d");
+  const [timeRange, setTimeRange] = React.useState<TimeRange>('7d');
   const filteredData = filterChartDataHelper(chartData, timeRange);
 
   return (
     <Card className="relative overflow-hidden">
-      {isLocked && (<ChartOverlay stringOne="Starter" chartTitle={title} />)}
-      <ChartHeader title={title} description={description} onValueChange={setTimeRange} value={timeRange} />
+      {isLocked && <ChartOverlay stringOne="Starter" chartTitle={title} />}
+      <ChartHeader
+        title={title}
+        description={description}
+        onValueChange={setTimeRange}
+        value={timeRange}
+      />
       <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
-        <ChartContainer config={chartConfig} className="min-h-[200px]" >
+        <ChartContainer config={chartConfig} className="min-h-[200px]">
           {chartData.length === 0 ? (
             <ChartDataNotAvailable />
           ) : (
@@ -44,11 +44,11 @@ const BarChartVertical = ({
                 tickMargin={10}
                 axisLine={false}
                 tickFormatter={(value) => {
-                  const date = new Date(value)
-                  return date.toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                  })
+                  const date = new Date(value);
+                  return date.toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                  });
                 }}
               />
               <ChartTooltip content={<ChartTooltipContent />} />
@@ -58,7 +58,7 @@ const BarChartVertical = ({
                 fill="var(--mainColor)"
                 radius={[8, 8, 0, 0]}
                 barSize={20}
-                label={{ position: "top", fill: "var(--textOne)", fontSize: 12 }}
+                label={{ position: 'top', fill: 'var(--textOne)', fontSize: 12 }}
                 animationDuration={500}
               />
               <Bar
@@ -66,7 +66,7 @@ const BarChartVertical = ({
                 fill="var(--mainColorHover)"
                 radius={[8, 8, 0, 0]}
                 barSize={20}
-                label={{ position: "top", fill: "var(--textOne)", fontSize: 12 }}
+                label={{ position: 'top', fill: 'var(--textOne)', fontSize: 12 }}
                 animationDuration={700}
               />
             </BarChart>
@@ -74,7 +74,7 @@ const BarChartVertical = ({
         </ChartContainer>
       </CardContent>
     </Card>
-  )
-}
+  );
+};
 
-export default BarChartVertical
+export default BarChartVertical;

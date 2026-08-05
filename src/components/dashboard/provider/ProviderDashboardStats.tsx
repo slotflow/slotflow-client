@@ -1,39 +1,47 @@
-import DashboardStats from "../DashboardStats";
-import { Role } from "@/shared/interface/enums";
-import { ProviderDashboardStatsProps } from "@/shared/interface/componentInterface";
-import { revenueStatsMapForProvider, statsMapForProvider } from "@/shared/utils/constants";
-import { providerFetchDashboardRevenueStatsData, providerFetchDashboardStatsData } from "@/shared/apis/providerProfile";
-import { ProviderFetchDashboardRevenueStatsDataResponse, ProviderFetchDashboardStatsDataResponse } from "@/shared/interface/api/providerProfile";
+import DashboardStats from '../DashboardStats';
+import { Role } from '@/shared/interface/enums';
+import { ProviderDashboardStatsProps } from '@/shared/interface/componentInterface';
+import { revenueStatsMapForProvider, statsMapForProvider } from '@/shared/utils/constants';
+import {
+  providerFetchDashboardRevenueStatsData,
+  providerFetchDashboardStatsData,
+} from '@/shared/apis/providerProfile';
+import {
+  ProviderFetchDashboardRevenueStatsDataResponse,
+  ProviderFetchDashboardStatsDataResponse,
+} from '@/shared/interface/api/providerProfile';
 
-const ProviderDashboardStats = ({
-    dateRange
-}: ProviderDashboardStatsProps) => {
-    return (
-        <div className="flex flex-col gap-6">
-            <DashboardStats<ProviderFetchDashboardStatsDataResponse>
-                queryFunction={() => providerFetchDashboardStatsData({
-                    startDate: dateRange.from,
-                    endDate: dateRange.to,
-                })}
-                queryKey="dashboardStats"
-                dependencies={dateRange}
-                statsMap={statsMapForProvider}
-                shimmerCount={6}
-                role={Role.PROVIDER}
-            />
-            <DashboardStats<ProviderFetchDashboardRevenueStatsDataResponse>
-                queryFunction={() => providerFetchDashboardRevenueStatsData({
-                    startDate: dateRange.from,
-                    endDate: dateRange.to,
-                })}
-                queryKey="dashboardRevenueStats"
-                dependencies={dateRange}
-                statsMap={revenueStatsMapForProvider}
-                shimmerCount={5}
-                role={Role.PROVIDER}
-            />
-        </div>
-    )
-}
+const ProviderDashboardStats = ({ dateRange }: ProviderDashboardStatsProps) => {
+  return (
+    <div className="flex flex-col gap-6">
+      <DashboardStats<ProviderFetchDashboardStatsDataResponse>
+        queryFunction={() =>
+          providerFetchDashboardStatsData({
+            startDate: dateRange.from,
+            endDate: dateRange.to,
+          })
+        }
+        queryKey="dashboardStats"
+        dependencies={dateRange}
+        statsMap={statsMapForProvider}
+        shimmerCount={6}
+        role={Role.PROVIDER}
+      />
+      <DashboardStats<ProviderFetchDashboardRevenueStatsDataResponse>
+        queryFunction={() =>
+          providerFetchDashboardRevenueStatsData({
+            startDate: dateRange.from,
+            endDate: dateRange.to,
+          })
+        }
+        queryKey="dashboardRevenueStats"
+        dependencies={dateRange}
+        statsMap={revenueStatsMapForProvider}
+        shimmerCount={5}
+        role={Role.PROVIDER}
+      />
+    </div>
+  );
+};
 
-export default ProviderDashboardStats
+export default ProviderDashboardStats;

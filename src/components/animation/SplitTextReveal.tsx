@@ -91,95 +91,87 @@
 
 // export default SplitTextReveal;
 
-import React, { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { SplitText } from "gsap/SplitText";
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { SplitText } from 'gsap/SplitText';
 
-import { SplitTextRevealProps } from "@/shared/interface/componentInterface";
+import { SplitTextRevealProps } from '@/shared/interface/componentInterface';
 
 gsap.registerPlugin(SplitText);
 
 const SplitTextReveal = ({
-    children,
-    as = "div",
-    className = "",
-    split = "lines",
-    duration = 0.8,
-    stagger = 0.2,
-    delay = 0,
-    rotationX = -100,
-    y = 0,
-    once = true,
+  children,
+  as = 'div',
+  className = '',
+  split = 'lines',
+  duration = 0.8,
+  stagger = 0.2,
+  delay = 0,
+  rotationX = -100,
+  y = 0,
+  once = true,
 }: SplitTextRevealProps) => {
-    const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLElement>(null);
 
-    useEffect(() => {
-        if (!ref.current) return;
+  useEffect(() => {
+    if (!ref.current) return;
 
-        let splitInstance = SplitText.create(ref.current, {
-            type: split,
-        });
+    let splitInstance = SplitText.create(ref.current, {
+      type: split,
+    });
 
-        const targets = split.includes("chars")
-            ? splitInstance.chars
-            : split.includes("words")
-                ? splitInstance.words
-                : splitInstance.lines;
+    const targets = split.includes('chars')
+      ? splitInstance.chars
+      : split.includes('words')
+        ? splitInstance.words
+        : splitInstance.lines;
 
-        const animation = gsap.from(targets, {
-            opacity: 0,
-            rotationX,
-            y,
-            duration,
-            stagger,
-            delay,
-            ease: "power3.out",
-            transformOrigin: "50% 50% -50px",
-            scrollTrigger: once
-                ? undefined
-                : {
-                    trigger: ref.current,
-                    start: "top 80%",
-                },
-        });
+    const animation = gsap.from(targets, {
+      opacity: 0,
+      rotationX,
+      y,
+      duration,
+      stagger,
+      delay,
+      ease: 'power3.out',
+      transformOrigin: '50% 50% -50px',
+      scrollTrigger: once
+        ? undefined
+        : {
+            trigger: ref.current,
+            start: 'top 80%',
+          },
+    });
 
-        const handleResize = () => {
-            animation.kill();
-            splitInstance.revert();
+    const handleResize = () => {
+      animation.kill();
+      splitInstance.revert();
 
-            if (!ref.current) return;
+      if (!ref.current) return;
 
-            splitInstance = SplitText.create(ref.current, {
-                type: split,
-            });
-        };
+      splitInstance = SplitText.create(ref.current, {
+        type: split,
+      });
+    };
 
-        window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
 
-        return () => {
-            window.removeEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
 
-            animation.kill();
-            splitInstance.revert();
-        };
-    }, [
-        split,
-        duration,
-        stagger,
-        delay,
-        rotationX,
-        y,
-        once,
-    ]);
+      animation.kill();
+      splitInstance.revert();
+    };
+  }, [split, duration, stagger, delay, rotationX, y, once]);
 
-    return React.createElement(
-        as,
-        {
-            ref: ref as React.Ref<HTMLElement>,
-            className,
-        },
-        children
-    );
+  return React.createElement(
+    as,
+    {
+      ref: ref as React.Ref<HTMLElement>,
+      className,
+    },
+    children,
+  );
 };
 
 export default SplitTextReveal;

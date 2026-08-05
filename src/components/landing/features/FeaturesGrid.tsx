@@ -1,13 +1,12 @@
-import FeatureCard from "./FeatureCard";
-import SearchPreview from "./previews/SearchPreview";
-import BookingPreview from "./previews/BookingPreview";
-import PaymentPreview from "./previews/PaymentPreview";
-import HistoryPreview from "./previews/HistoryPreview";
-import ProviderPreview from "./previews/ProviderPreview";
-import AvailabilityPreview from "./previews/AvailabilityPreview";
+import FeatureCard from './FeatureCard';
+import SearchPreview from './previews/SearchPreview';
+import BookingPreview from './previews/BookingPreview';
+import PaymentPreview from './previews/PaymentPreview';
+import HistoryPreview from './previews/HistoryPreview';
+import ProviderPreview from './previews/ProviderPreview';
+import AvailabilityPreview from './previews/AvailabilityPreview';
 
 const FeaturesGrid = () => {
-  
   return (
     <div className="mt-20 grid auto-rows-[320px] gap-6 lg:grid-cols-3">
       <FeatureCard
@@ -36,7 +35,7 @@ const FeaturesGrid = () => {
       <FeatureCard
         title="Instant Booking"
         description="Book appointments in seconds with real-time availability."
-      className="lg:col-span-2"
+        className="lg:col-span-2"
       >
         <BookingPreview />
       </FeatureCard>

@@ -1,30 +1,27 @@
-import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
-import { RootState } from "@/shared/redux/appStore";
-import { useBooking } from "@/hooks/useUserBooking";
-import { fetchBookings } from "@/shared/apis/booking";
-import PageHeader from "@/components/common/PageHeader";
-import CommonTable from "@/components/table/CommonTable";
-import ConfirmAlert from "@/components/alert/ConfirmAlert";
-import { useRoleBasedNavigation } from "@/hooks/useRoleBasedNavigation";
-import BookingsTableColumn from "@/components/table/tableColumns/BookingsTableColumn";
-import { changeAppointmentStatusRequest, FetchBookingsResponse, ValidateRoomId } from "@/shared/interface/api/booking";
-import DataFetchingError from "@/components/error/DataFetchingError";
+import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/shared/redux/appStore';
+import { useBooking } from '@/hooks/useUserBooking';
+import { fetchBookings } from '@/shared/apis/booking';
+import PageHeader from '@/components/common/PageHeader';
+import CommonTable from '@/components/table/CommonTable';
+import ConfirmAlert from '@/components/alert/ConfirmAlert';
+import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
+import BookingsTableColumn from '@/components/table/tableColumns/BookingsTableColumn';
+import {
+  changeAppointmentStatusRequest,
+  FetchBookingsResponse,
+  ValidateRoomId,
+} from '@/shared/interface/api/booking';
+import DataFetchingError from '@/components/error/DataFetchingError';
 
 const ListBookingsPage = () => {
-
   const authUser = useSelector((state: RootState) => state.auth.authUser);
 
-  const {
-    JoinCallHandler,
-    handleNavigateToBookingsDetailPage
-  } = useRoleBasedNavigation();
+  const { JoinCallHandler, handleNavigateToBookingsDetailPage } = useRoleBasedNavigation();
 
-  const {
-    handleReviewAddFormToggle,
-    changeAppointmentStatusHandler,
-    cancelBookingHandler
-  } = useBooking();
+  const { handleReviewAddFormToggle, changeAppointmentStatusHandler, cancelBookingHandler } =
+    useBooking();
 
   // function to handle change appointment status by provider
   const handleChangeAppointmentStatus = async (data: changeAppointmentStatusRequest) => {
@@ -34,24 +31,27 @@ const ListBookingsPage = () => {
     } else {
       toast.error(res.message);
     }
-  }
+  };
 
   // function to handle user cancel booking
   const handleUserCancelBooking = async (bookingId: string) => {
     // need to add the confirm alert
-    toast(({ closeToast }) => (
-      <ConfirmAlert
-        message="Are you sure you want to cancel this booking?"
-        entityId={bookingId}
-        deleteHandler={cancelBookingHandler}
-        closeToast={closeToast}
-        errorMessage="Booking canceling failed"
-        successMessage="Review deleted successfully"
-        btnTitle="Cancel booking button"
-        btnText="Cancel"
-      />
-    ), { autoClose: false });
-  }
+    toast(
+      ({ closeToast }) => (
+        <ConfirmAlert
+          message="Are you sure you want to cancel this booking?"
+          entityId={bookingId}
+          deleteHandler={cancelBookingHandler}
+          closeToast={closeToast}
+          errorMessage="Booking canceling failed"
+          successMessage="Review deleted successfully"
+          btnTitle="Cancel booking button"
+          btnText="Cancel"
+        />
+      ),
+      { autoClose: false },
+    );
+  };
 
   const handleJoinCall = async (data: ValidateRoomId) => {
     const result = await JoinCallHandler(data);
@@ -60,7 +60,7 @@ const ListBookingsPage = () => {
     } else {
       toast.success(result.message);
     }
-  }
+  };
 
   if (!authUser) {
     return <DataFetchingError message="No user found" />;
@@ -84,9 +84,7 @@ const ListBookingsPage = () => {
         description="Manage your bookings and view history."
       />
       <CommonTable<FetchBookingsResponse>
-        fetchApiFunction={(params) =>
-          fetchBookings({ ...params })
-        }
+        fetchApiFunction={(params) => fetchBookings({ ...params })}
         columnsCount={6}
         column={columns}
         queryKey="bookings"
