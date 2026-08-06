@@ -44,7 +44,6 @@ import {
   Briefcase,
   RotateCcw,
   Handshake,
-  ScanHeart,
   CircleHelp,
   HelpCircle,
   ThumbsDown,
@@ -64,6 +63,8 @@ import {
   CircleCheckBig,
   MessageSquareText,
   PictureInPicture2,
+  LayoutDashboard,
+  Rows2,
 } from 'lucide-react';
 import {
   Route,
@@ -161,7 +162,7 @@ export enum RouteNames {
 
 // Routes for admin
 export const adminRoutes: Route[] = [
-  { path: 'dashboard', name: RouteNames.DASHBOARD, icon: Gauge },
+  { path: 'dashboard', name: RouteNames.DASHBOARD, icon: LayoutDashboard },
   { path: 'report', name: RouteNames.REPORTS, icon: BookLock },
   { path: 'service-providers', name: RouteNames.SERVICE_PROVIDERS, icon: Handshake },
   { path: 'users', name: RouteNames.USERS, icon: Users },
@@ -169,12 +170,12 @@ export const adminRoutes: Route[] = [
   { path: 'plans', name: RouteNames.PLANS, icon: LayoutGrid },
   { path: 'subscriptions', name: RouteNames.SUBSCRIPTIONS, icon: CreditCard },
   { path: 'payments', name: RouteNames.PAYMENTS, icon: Handshake },
-  { path: 'grafana-dashboard', name: RouteNames.GRAFANA_DASHBOARD, icon: ScanHeart },
+  { path: 'grafana-dashboard', name: RouteNames.GRAFANA_DASHBOARD, icon: Gauge },
 ];
 
 // Routes for user
 export const userRoutes: Route[] = [
-  { path: 'dashboard', name: RouteNames.SERVICES, icon: Gauge },
+  { path: 'dashboard', name: RouteNames.SERVICES, icon: Rows2 },
   { path: 'profile', name: RouteNames.PROFILE, icon: User },
   { path: 'bookings', name: RouteNames.BOOKINGS, icon: CalendarCheck },
   { path: 'payments', name: RouteNames.PAYMENTS, icon: CreditCard },
@@ -188,7 +189,7 @@ export const userRoutes: Route[] = [
 
 // Routes for provider
 export const providerRoutes: Route[] = [
-  { path: 'dashboard', name: RouteNames.DASHBOARD, icon: Gauge },
+  { path: 'dashboard', name: RouteNames.DASHBOARD, icon: LayoutDashboard },
   { path: 'profile', name: RouteNames.PROFILE, icon: User },
   { path: 'bookings', name: RouteNames.BOOKINGS, icon: CalendarCheck },
   { path: 'subscriptions', name: RouteNames.SUBSCRIPTIONS, icon: CreditCard },

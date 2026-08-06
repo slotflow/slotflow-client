@@ -1,5 +1,4 @@
 import { fetchPayments } from '@/shared/apis/payment';
-import PageHeader from '@/components/common/PageHeader';
 import CommonTable from '@/components/table/CommonTable';
 import { FetchPaymentsResponse } from '@/shared/interface/api/payment';
 import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
@@ -11,7 +10,6 @@ const ListPaymentsPage = () => {
 
   return (
     <div className="p-4">
-      <PageHeader title="Payments" description="Payments and view history." />
       <CommonTable<FetchPaymentsResponse>
         fetchApiFunction={fetchPayments}
         queryKey="payments"

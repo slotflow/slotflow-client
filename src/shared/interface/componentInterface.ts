@@ -719,6 +719,10 @@ export interface DataTableProps<TData, TValue> {
   pageCount?: number;
   onPaginationChange?: OnChangeFn<PaginationState>;
   pagination?: PaginationState;
+  actionButtons?: {
+      actionLabel?: string;
+      onActionClick?: () => void;
+    }[]
 }
 
 // Data table column header props interface
@@ -873,14 +877,6 @@ export interface BlogHeroProps {
 // Blog latest insights props
 export interface BlogLatestInsightsProps {
   articles: BlogArticle[];
-}
-
-// Page header props
-export interface PageHeaderProps {
-  title: string;
-  description?: string;
-  actionLabel?: string;
-  onActionClick?: () => void;
 }
 
 // Stats card props

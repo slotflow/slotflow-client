@@ -2,7 +2,6 @@ import dayjs from 'dayjs';
 import { Users } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import StatCard from '@/components/common/StatsCard';
-import PageHeader from '@/components/common/PageHeader';
 import CommonTable from '@/components/table/CommonTable';
 import ChartLineLinear from '@/components/chart/ChartLineLinear';
 import DataFetchingError from '@/components/error/DataFetchingError';
@@ -30,10 +29,6 @@ const ReferralPage = () => {
 
   return (
     <div className="container p-4 space-y-6">
-      <PageHeader
-        title="Referral Management"
-        description="Manage your referral and view history."
-      />
       <div className="grid gap-2 grid-col-1 md:grid-cols-2">
         <div className="grid gap-2 grid-cols-2">
           <StatCard

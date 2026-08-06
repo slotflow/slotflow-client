@@ -1,28 +1,28 @@
 import {
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
-  PaginationState,
-  OnChangeFn,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from '@tanstack/react-table';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
   DropdownMenuCheckboxItem,
-} from '../ui/dropdown-menu';
+} from './dropdown-menu';
+import {
+  OnChangeFn,
+  flexRender,
+  SortingState,
+  useReactTable,
+  PaginationState,
+  VisibilityState,
+  getCoreRowModel,
+  getSortedRowModel,
+  ColumnFiltersState,
+  getFilteredRowModel,
+  getPaginationRowModel,
+} from '@tanstack/react-table';
 import * as React from 'react';
-import { Input } from '../ui/input';
-import { Button } from '../ui/button';
-import { DataTableProps } from '@/shared/interface/componentInterface';
+import { Input } from './input';
+import { Button } from './button';
 import { defaultButtonClassName } from '@/shared/utils/constants';
+import { DataTableProps } from '@/shared/interface/componentInterface';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './table';
 
 export function DataTable<TData, TValue>({
   columns,
@@ -30,6 +30,7 @@ export function DataTable<TData, TValue>({
   pageCount,
   onPaginationChange,
   pagination: controlledPagination,
+  actionButtons
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
@@ -86,7 +87,17 @@ export function DataTable<TData, TValue>({
           className="max-w-sm"
         />
         <DropdownMenu>
-          <div className="ml-auto">
+          <div className="ml-auto space-x-2">
+            {actionButtons?.map((btn) => (
+              <Button
+                title={btn?.actionLabel}
+                variant="default"
+                className="cursor-pointer hover:bg-(--mainColor) hover:text-white transition-colors border-(--mainColor)"
+                onClick={btn?.onActionClick}
+              >
+                {btn?.actionLabel}
+              </Button>
+            ))}
             <DropdownMenuTrigger asChild>
               <Button title="Columns" variant="secondary" className={defaultButtonClassName}>
                 Columns

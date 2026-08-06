@@ -1,16 +1,12 @@
 import { toast } from 'react-toastify';
-import { fetchServices } from '@/shared/apis/service';
-import PageHeader from '@/components/common/PageHeader';
-import CommonTable from '@/components/table/CommonTable';
 import { useEffect, useRef, useState } from 'react';
+import { fetchServices } from '@/shared/apis/service';
+import CommonTable from '@/components/table/CommonTable';
 import { slideIn } from '@/shared/helper/gsapAnimationSlide';
 import { useAdminService } from '@/hooks/adminHooks/useService';
 import CreateServiceForm from '@/components/form/AdminForms/CreateServiceForm';
 import AdminAppServicesTableColumns from '@/components/table/tableColumns/AdminAppServicesTableColumn';
-import {
-  ChangeServiceBlockStatusRequest,
-  FetchServicesResponse,
-} from '@/shared/interface/api/service';
+import { ChangeServiceBlockStatusRequest, FetchServicesResponse } from '@/shared/interface/api/service';
 
 const AdminServicesPage = () => {
   const [showForm, setShowForm] = useState(false);
@@ -37,18 +33,18 @@ const AdminServicesPage = () => {
 
   return (
     <div className="p-4">
-      <PageHeader
-        title="Services"
-        description="Application services list"
-        actionLabel="Create New Service"
-        onActionClick={() => setShowForm(true)}
-      />
 
       <CommonTable<FetchServicesResponse>
         fetchApiFunction={fetchServices}
         queryKey="appServices"
         column={column}
         columnsCount={5}
+        actionButtons={[
+          {
+            actionLabel: "Create New Service",
+            onActionClick: () => setShowForm(true)
+          }
+        ]}
       />
 
       {showForm && (

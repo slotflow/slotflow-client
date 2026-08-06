@@ -2,7 +2,6 @@ import React from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { fetchUsers } from '@/shared/apis/user';
-import PageHeader from '@/components/common/PageHeader';
 import CommonTable from '@/components/table/CommonTable';
 import { useAdminUser } from '@/hooks/adminHooks/useUser';
 import { User } from '@/shared/interface/entityInterface/userInterface';
@@ -33,7 +32,6 @@ const AdminUsersPage = () => {
 
   return (
     <div className="p-4">
-      <PageHeader title="Users" description="Users list" />
       <CommonTable<AdminfetchAllUsersResponse>
         fetchApiFunction={fetchUsers}
         queryKey="users"

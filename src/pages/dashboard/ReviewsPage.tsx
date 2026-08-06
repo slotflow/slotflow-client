@@ -9,18 +9,14 @@ import NoData from '@/components/common/NoData';
 import { RootState } from '@/shared/redux/appStore';
 import { fetchReviews } from '@/shared/apis/review';
 import ReviewCard from '@/components/review/ReviewCard';
-import PageHeader from '@/components/common/PageHeader';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import DataFetchingError from '@/components/error/DataFetchingError';
 import ConfirmAlert from '@/components/alert/ConfirmAlert';
+import DataFetchingError from '@/components/error/DataFetchingError';
 import { ReviewsPageProps } from '@/shared/interface/componentInterface';
 import ReviewCardsShimmer from '@/components/shimmers/ReviewCardsShimmer';
 import { ApiPaginatedResponse } from '@/shared/interface/commonInterface';
 import { Review } from '@/shared/interface/entityInterface/reviewInterface';
-import {
-  FetchReviewsResponse,
-  ToggleReviewBlockStatusRequest,
-} from '@/shared/interface/api/review';
+import { FetchReviewsResponse, ToggleReviewBlockStatusRequest } from '@/shared/interface/api/review';
 
 const ReviewsPage = ({ isPage = true, providerId, userId }: ReviewsPageProps) => {
   const limit = 10;
@@ -88,7 +84,6 @@ const ReviewsPage = ({ isPage = true, providerId, userId }: ReviewsPageProps) =>
 
   return (
     <div className={`${isPage ? 'container p-4 space-y-6' : 'mt-2 md:mt-0'}`}>
-      {isPage && <PageHeader title="Reviews" description="Manage your reviews." />}
 
       {isLoading && <ReviewCardsShimmer />}
 

@@ -1,19 +1,14 @@
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/shared/redux/appStore';
 import { useBooking } from '@/hooks/useUserBooking';
+import { RootState } from '@/shared/redux/appStore';
 import { fetchBookings } from '@/shared/apis/booking';
-import PageHeader from '@/components/common/PageHeader';
 import CommonTable from '@/components/table/CommonTable';
 import ConfirmAlert from '@/components/alert/ConfirmAlert';
+import DataFetchingError from '@/components/error/DataFetchingError';
 import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
 import BookingsTableColumn from '@/components/table/tableColumns/BookingsTableColumn';
-import {
-  changeAppointmentStatusRequest,
-  FetchBookingsResponse,
-  ValidateRoomId,
-} from '@/shared/interface/api/booking';
-import DataFetchingError from '@/components/error/DataFetchingError';
+import { changeAppointmentStatusRequest, FetchBookingsResponse, ValidateRoomId } from '@/shared/interface/api/booking';
 
 const ListBookingsPage = () => {
   const authUser = useSelector((state: RootState) => state.auth.authUser);
@@ -79,10 +74,6 @@ const ListBookingsPage = () => {
 
   return (
     <div className="p-4">
-      <PageHeader
-        title="Bookings Management"
-        description="Manage your bookings and view history."
-      />
       <CommonTable<FetchBookingsResponse>
         fetchApiFunction={(params) => fetchBookings({ ...params })}
         columnsCount={6}

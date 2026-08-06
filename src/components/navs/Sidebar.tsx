@@ -1,6 +1,6 @@
-import { LogOut, Sun, Moon } from 'lucide-react';
 import SingleTab from './SingleTab';
 import { toast } from 'react-toastify';
+import { LogOut, Sun, Moon } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { redirectPaths } from '@/shared/utils/constants';
@@ -40,7 +40,7 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
 
   return (
     <aside
-      className={`${sidebarOpen ? 'w-[18%]' : 'w-[5%]'} h-full shrink-0 flex flex-col border-r bg-[var(--menuBg)] transition-all duration-300 ease-in-out`}
+      className={`${sidebarOpen ? 'w-[18%]' : 'w-[5%]'} h-full shrink-0 flex flex-col border-r bg-[var(--background)] transition-all duration-300 ease-in-out`}
     >
       <div
         className={`flex items-center py-6 ${sidebarOpen ? 'px-6' : 'px-0 justify-center'} transition-all duration-300`}
@@ -56,7 +56,7 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
       </div>
 
       <div className={`flex-1 overflow-y-auto no-scrollbar ${sidebarOpen ? 'px-4' : 'px-2'} pb-4`}>
-        <nav className="flex flex-col gap-1 mt-2">
+        <nav className="flex flex-col mt-2">
           {routes.map((route) => {
             const isProvider = user?.role === 'PROVIDER';
             const isLocked =
@@ -92,7 +92,7 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
 
       {user?.isLoggedIn && user.role && (
         <div
-          className={`border-t border-black/5 dark:border-white/5 p-4 ${!sidebarOpen && 'px-2'} bg-black/[0.01] dark:bg-white/[0.01]`}
+          className={`p-4 ${!sidebarOpen && 'px-2'}`}
         >
           <SingleTab
             icon={!themeMode ? Sun : Moon}

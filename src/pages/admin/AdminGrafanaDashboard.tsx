@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
 import { grafanaConfig } from '@/shared/config/env';
 import { RootState } from '@/shared/redux/appStore';
-import PageHeader from '@/components/common/PageHeader';
 
 const AdminGrafanaDashboard = () => {
 
@@ -20,10 +19,6 @@ const AdminGrafanaDashboard = () => {
 
   return (
     <div style={{ height: '100vh', width: '100%' }} className="p-4">
-      <PageHeader
-        title="Grafana Dashboard"
-        description="Detailed view of metrics, logs and traces of all services"
-      />
       <iframe
         src={url.toString()}
         width="100%"

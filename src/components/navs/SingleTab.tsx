@@ -22,8 +22,8 @@ const SingleTab = ({
                   locked
                     ? 'opacity-50 cursor-not-allowed text-gray-400 dark:text-gray-500 bg-transparent'
                     : active
-                      ? 'bg-[var(--mainColor)]/10 text-[var(--mainColor)] font-semibold'
-                      : 'text-gray-600 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-gray-100 cursor-pointer font-medium'
+                      ? 'bg-primary/10 font-semibold'
+                      : 'text-muted-foreground hover:bg-black/5 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-gray-100 cursor-pointer font-medium'
                 }
             `}
     >

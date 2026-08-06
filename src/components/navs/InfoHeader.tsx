@@ -1,18 +1,27 @@
-import dayjs from 'dayjs';
 import { Button } from '../ui/button';
 import { useEffect, useState } from 'react';
+import { useMatches } from 'react-router-dom';
 import { Bell, PanelLeft } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import avatar from '../../assets/defaultImages/avatar.png';
 import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import { AppRouteHandle } from '@/shared/interface/commonInterface';
 import { InfoHeaderProps } from '@/shared/interface/componentInterface';
 import { toggleNotificationContainer, toggleSidebar } from '@/shared/redux/slices/appSlice';
 
 const InfoHeader = ({ profileImage, username }: InfoHeaderProps) => {
+
+  const matches = useMatches();
   const dispatch = useDispatch<AppDispatch>();
+  const [isOnline, setIsOnline] = useState(true);
   const { profileImageUpdating } = useSelector((state: RootState) => state.auth);
 
-  const [isOnline, setIsOnline] = useState(true);
+  const currentRoute = matches.slice().reverse().find((match) => {
+    const handle = match.handle as AppRouteHandle;
+    return !!handle?.title;
+  });
+  const pageTitle = (currentRoute?.handle as AppRouteHandle | undefined)?.title ?? '';
+
   useEffect(() => {
     const handleOffline = () => setIsOnline(false);
     const handleOnline = () => setIsOnline(true);
@@ -31,8 +40,8 @@ const InfoHeader = ({ profileImage, username }: InfoHeaderProps) => {
   };
 
   return (
-    <nav className="m-4 mt-2 px-4 md:px-6 py-3 flex items-center justify-between rounded-2xl bg-[var(--menuBg)]/80 backdrop-blur-xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] border border-gray-200/20 dark:border-white/5 transition-all duration-300">
-      <div className="flex items-center gap-2 md:gap-4">
+    <nav className="px-4 md:px-6 py-3 flex items-center justify-between border-b transition-all duration-300">
+      <div className="flex items-center gap-2 md:gap-4 w-full">
         <Button
           title="Toggle Sidebar"
           variant="ghost"
@@ -67,23 +76,18 @@ const InfoHeader = ({ profileImage, username }: InfoHeaderProps) => {
         </div>
       </div>
 
-      <div className="flex items-center gap-3 md:gap-5">
-        <div className="hidden lg:flex flex-col items-end">
-          <span className="text-[10px] text-gray-500 font-semibold uppercase tracking-widest">
-            {dayjs().format('dddd')}
-          </span>
-          <h4 className="text-sm font-medium opacity-90 tracking-wide">
-            {dayjs().format('DD MMM YYYY, hh:mm A')}
-          </h4>
-        </div>
+      <div className="flex items-center justify-center w-full">
+        <h1 className="text-sm md:text-base font-semibold tracking-tight">
+          {pageTitle}
+        </h1>
+      </div>
 
-        <div className="w-px h-6 bg-gray-400/20 hidden lg:block"></div>
-
+      <div className="flex items-center justify-end gap-3 md:gap-5 w-full">
         <Button
           title="notifications"
           variant="ghost"
           size="icon"
-          className="relative rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer"
+          className="relative rounded-md hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer"
           onClick={() => dispatch(toggleNotificationContainer())}
         >
           <Bell className="w-5 h-5 opacity-80" />

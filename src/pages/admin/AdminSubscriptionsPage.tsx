@@ -1,4 +1,3 @@
-import PageHeader from '@/components/common/PageHeader';
 import CommonTable from '@/components/table/CommonTable';
 import { fetchSubscriptions } from '@/shared/apis/subscription';
 import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
@@ -12,10 +11,6 @@ const AdminSubscriptionsPage = () => {
 
   return (
     <div className="p-4">
-      <PageHeader
-        title="Subscriptions"
-        description="Subscriptions subscribed by service providers"
-      />
       <CommonTable<FetchProviderSubscriptionsResponse>
         fetchApiFunction={fetchSubscriptions}
         queryKey="subscriptions"

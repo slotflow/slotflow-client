@@ -159,20 +159,104 @@ export const appRouter = createBrowserRouter([
       </ProtectedRoute>
     ),
     children: [
-      { path: 'dashboard', element: <AdminDashboardPage /> },
-      { path: 'report', element: <AdminReportPage /> },
-      { path: 'service-providers', element: <AdminServiceProvidersPage /> },
-      { path: 'service-providers/:providerId', element: <AdminServiceProviderDetailPage /> },
-      { path: 'users', element: <AdminUsersPage /> },
-      { path: 'users/:userId', element: <AdminUserDetailPage /> },
-      { path: 'services', element: <AdminServicesPage /> },
-      { path: 'plans', element: <AdminPlansPage /> },
-      { path: 'subscriptions', element: <AdminSubscriptionsPage /> },
-      { path: 'subscriptions/:subscriptionId', element: <SubscriptionDetailViewPage /> },
-      { path: 'payments', element: <ListPaymentsPage /> },
-      { path: 'payments/:paymentId', element: <PaymentDetailViewPage /> },
-      { path: 'grafana-dashboard', element: <AdminGrafanaDashboard /> },
-      { path: '*', element: <Error404Page /> },
+      {
+        path: 'dashboard',
+        element: <AdminDashboardPage />,
+        handle: {
+          title: 'Overview',
+        },
+      },
+      {
+        path: 'report',
+        element: <AdminReportPage />,
+        handle: {
+          title: 'Reports',
+        },
+      },
+      {
+        path: 'service-providers',
+        element: <AdminServiceProvidersPage />,
+        handle: {
+          title: 'Service Providers',
+        },
+      },
+      {
+        path: 'service-providers/:providerId',
+        element: <AdminServiceProviderDetailPage />,
+        handle: {
+          title: 'Service Provider Details',
+        },
+      },
+      {
+        path: 'users',
+        element: <AdminUsersPage />,
+        handle: {
+          title: 'Users',
+        },
+      },
+      {
+        path: 'users/:userId',
+        element: <AdminUserDetailPage />,
+        handle: {
+          title: 'User Details',
+        },
+      },
+      {
+        path: 'services',
+        element: <AdminServicesPage />,
+        handle: {
+          title: 'Services',
+        },
+      },
+      {
+        path: 'plans',
+        element: <AdminPlansPage />,
+        handle: {
+          title: 'Plans',
+        },
+      },
+      {
+        path: 'subscriptions',
+        element: <AdminSubscriptionsPage />,
+        handle: {
+          title: 'Subscriptions',
+        },
+      },
+      {
+        path: 'subscriptions/:subscriptionId',
+        element: <SubscriptionDetailViewPage />,
+        handle: {
+          title: 'Subscription Details',
+        },
+      },
+      {
+        path: 'payments',
+        element: <ListPaymentsPage />,
+        handle: {
+          title: 'Payments',
+        },
+      },
+      {
+        path: 'payments/:paymentId',
+        element: <PaymentDetailViewPage />,
+        handle: {
+          title: 'Payment Details',
+        },
+      },
+      {
+        path: 'grafana-dashboard',
+        element: <AdminGrafanaDashboard />,
+        handle: {
+          title: 'Grafana Dashboard',
+        },
+      },
+      {
+        path: '*',
+        element: <Error404Page />,
+        handle: {
+          title: 'Page Not Found',
+        },
+      },
     ],
   },
   {
@@ -217,40 +301,169 @@ export const appRouter = createBrowserRouter([
           </OnBoardingGuard>
         ),
         children: [
-          { index: true, element: <UserServiceSelectPage /> },
-          { path: 'dashboard', element: <UserListProvidersCardsPage /> },
-          { path: 'providerProfile/:providerId', element: <UserServiceProviderDetailPage /> },
-          { path: 'profile', element: <UserAccountPage /> },
-          { path: 'bookings', element: <ListBookingsPage /> },
-          { path: 'bookings/:bookingId', element: <BookingDetailPage /> },
-          { path: 'payments', element: <ListPaymentsPage /> },
-          { path: 'payments/:paymentId', element: <PaymentDetailViewPage /> },
-          { path: 'chat', element: <ChatPage /> },
+          {
+            index: true,
+            element: <UserServiceSelectPage />,
+            handle: {
+              title: 'Services',
+            },
+          },
+          {
+            path: 'dashboard',
+            element: <UserListProvidersCardsPage />,
+            handle: {
+              title: 'Dashboard',
+            },
+          },
+          {
+            path: 'providerProfile/:providerId',
+            element: <UserServiceProviderDetailPage />,
+            handle: {
+              title: 'Service Provider Details',
+            },
+          },
+          {
+            path: 'profile',
+            element: <UserAccountPage />,
+            handle: {
+              title: 'Profile',
+            },
+          },
+          {
+            path: 'bookings',
+            element: <ListBookingsPage />,
+            handle: {
+              title: 'Bookings',
+            },
+          },
+          {
+            path: 'bookings/:bookingId',
+            element: <BookingDetailPage />,
+            handle: {
+              title: 'Booking Details',
+            },
+          },
+          {
+            path: 'payments',
+            element: <ListPaymentsPage />,
+            handle: {
+              title: 'Payments',
+            },
+          },
+          {
+            path: 'payments/:paymentId',
+            element: <PaymentDetailViewPage />,
+            handle: {
+              title: 'Payment Details',
+            },
+          },
+          {
+            path: 'chat',
+            element: <ChatPage />,
+            handle: {
+              title: 'Chat',
+            },
+          },
           {
             path: 'video-call-lobby/:roomId',
             element: <VideoCallLoby />,
+            handle: {
+              title: 'Video Call Lobby',
+            },
           },
           {
             path: 'video-call-room?status',
             element: <VideoCallRoom />,
+            handle: {
+              title: 'Video Call',
+            },
           },
-          { path: 'calendar', element: <CalendarPage /> },
-          { path: 'reviews', element: <ReviewsPage /> },
+          {
+            path: 'calendar',
+            element: <CalendarPage />,
+            handle: {
+              title: 'Calendar',
+            },
+          },
+          {
+            path: 'reviews',
+            element: <ReviewsPage />,
+            handle: {
+              title: 'Reviews',
+            },
+          },
           {
             path: 'settings',
             element: <SettingsPage />,
+            handle: {
+              title: 'Settings',
+            },
             children: [
-              { index: true, element: <Navigate to="notifications" replace /> },
-              { path: 'notifications', element: <NotificationSettings /> },
-              { path: 'account', element: <AccountSettings /> },
-              { path: 'integrations', element: <IntegrationsListing /> },
-              { path: 'security', element: <SecuritySettings /> },
+              {
+                index: true,
+                element: <Navigate to="notifications" replace />,
+                handle: {
+                  title: 'Notifications',
+                },
+              },
+              {
+                path: 'notifications',
+                element: <NotificationSettings />,
+                handle: {
+                  title: 'Notifications',
+                },
+              },
+              {
+                path: 'account',
+                element: <AccountSettings />,
+                handle: {
+                  title: 'Account Settings',
+                },
+              },
+              {
+                path: 'integrations',
+                element: <IntegrationsListing />,
+                handle: {
+                  title: 'Integrations',
+                },
+              },
+              {
+                path: 'security',
+                element: <SecuritySettings />,
+                handle: {
+                  title: 'Security',
+                },
+              },
             ],
           },
-          { path: 'credits', element: <CreditPage /> },
-          { path: 'referrals', element: <ReferralPage /> },
-          { path: 'booking/confirm', element: <UserBookingConfirmPage /> },
-          { path: '*', element: <Error404Page /> },
+          {
+            path: 'credits',
+            element: <CreditPage />,
+            handle: {
+              title: 'Credits',
+            },
+          },
+          {
+            path: 'referrals',
+            element: <ReferralPage />,
+            handle: {
+              title: 'Referrals',
+            },
+          },
+          {
+            path: 'booking/confirm',
+            element: <UserBookingConfirmPage />,
+            handle: {
+              title: 'Confirm Booking',
+            },
+          },
+          {
+            path: '*',
+            element: <Error404Page />,
+            handle: {
+              title: 'Page Not Found',
+            },
+          },
         ],
       },
     ],
@@ -270,8 +483,20 @@ export const appRouter = createBrowserRouter([
           </OnBoardingGuard>
         ),
         children: [
-          { path: 'dashboard', element: <ProviderDashboardPage /> },
-          { path: 'profile', element: <ProviderAccountPage /> },
+          {
+            path: 'dashboard',
+            element: <ProviderDashboardPage />,
+            handle: {
+              title: 'Dashboard',
+            },
+          },
+          {
+            path: 'profile',
+            element: <ProviderAccountPage />,
+            handle: {
+              title: 'Profile',
+            },
+          },
           {
             path: 'reviews',
             element: (
@@ -279,6 +504,9 @@ export const appRouter = createBrowserRouter([
                 <ReviewsPage />
               </PlanGuard>
             ),
+            handle: {
+              title: 'Reviews',
+            },
           },
           {
             path: 'bookings',
@@ -287,10 +515,16 @@ export const appRouter = createBrowserRouter([
                 <ListBookingsPage />
               </PlanGuard>
             ),
+            handle: {
+              title: 'Bookings',
+            },
           },
           {
             path: 'bookings/:bookingId',
             element: <BookingDetailPage />,
+            handle: {
+              title: 'Booking Details',
+            },
           },
           {
             path: 'subscriptions',
@@ -299,10 +533,16 @@ export const appRouter = createBrowserRouter([
                 <ProviderSubscriptionPage />
               </PlanGuard>
             ),
+            handle: {
+              title: 'Subscriptions',
+            },
           },
           {
             path: 'subscriptions/:subscriptionId',
             element: <SubscriptionDetailViewPage />,
+            handle: {
+              title: 'Subscription Details',
+            },
           },
           {
             path: 'payments',
@@ -311,10 +551,16 @@ export const appRouter = createBrowserRouter([
                 <ListPaymentsPage />
               </PlanGuard>
             ),
+            handle: {
+              title: 'Payments',
+            },
           },
           {
             path: 'payments/:paymentId',
             element: <PaymentDetailViewPage />,
+            handle: {
+              title: 'Payment Details',
+            },
           },
           {
             path: 'chat',
@@ -323,14 +569,23 @@ export const appRouter = createBrowserRouter([
                 <ChatPage />
               </PlanGuard>
             ),
+            handle: {
+              title: 'Chat',
+            },
           },
           {
             path: 'video-call-lobby/:roomId',
             element: <VideoCallLoby />,
+            handle: {
+              title: 'Video Call Lobby',
+            },
           },
           {
             path: 'video-call-room/:roomId',
             element: <VideoCallRoom />,
+            handle: {
+              title: 'Video Call',
+            },
           },
           {
             path: 'calendar',
@@ -339,6 +594,9 @@ export const appRouter = createBrowserRouter([
                 <CalendarPage />
               </PlanGuard>
             ),
+            handle: {
+              title: 'Calendar',
+            },
           },
           {
             path: 'credits',
@@ -347,6 +605,9 @@ export const appRouter = createBrowserRouter([
                 <CreditPage />
               </PlanGuard>
             ),
+            handle: {
+              title: 'Credits',
+            },
           },
           {
             path: 'referrals',
@@ -355,6 +616,9 @@ export const appRouter = createBrowserRouter([
                 <ReferralPage />
               </PlanGuard>
             ),
+            handle: {
+              title: 'Referrals',
+            },
           },
           {
             path: 'settings',
@@ -363,16 +627,61 @@ export const appRouter = createBrowserRouter([
                 <SettingsPage />
               </PlanGuard>
             ),
+            handle: {
+              title: 'Settings',
+            },
             children: [
-              { index: true, element: <Navigate to="notifications" replace /> },
-              { path: 'notifications', element: <NotificationSettings /> },
-              { path: 'account', element: <AccountSettings /> },
-              { path: 'integrations', element: <IntegrationsListing /> },
-              { path: 'security', element: <SecuritySettings /> },
+              {
+                index: true,
+                element: <Navigate to="notifications" replace />,
+                handle: {
+                  title: 'Settings',
+                },
+              },
+              {
+                path: 'notifications',
+                element: <NotificationSettings />,
+                handle: {
+                  title: 'Notifications',
+                },
+              },
+              {
+                path: 'account',
+                element: <AccountSettings />,
+                handle: {
+                  title: 'Account Settings',
+                },
+              },
+              {
+                path: 'integrations',
+                element: <IntegrationsListing />,
+                handle: {
+                  title: 'Integrations',
+                },
+              },
+              {
+                path: 'security',
+                element: <SecuritySettings />,
+                handle: {
+                  title: 'Security',
+                },
+              },
             ],
           },
-          { path: 'subscription/confirm', element: <ProviderSubscriptionConfirmPage /> },
-          { path: '*', element: <Error404Page /> },
+          {
+            path: 'subscription/confirm',
+            element: <ProviderSubscriptionConfirmPage />,
+            handle: {
+              title: 'Confirm Subscription',
+            },
+          },
+          {
+            path: '*',
+            element: <Error404Page />,
+            handle: {
+              title: 'Page Not Found',
+            },
+          },
         ],
       },
     ],

@@ -1,11 +1,3 @@
-import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import DataField from '@/components/app/DataField';
-import PageHeader from '@/components/common/PageHeader';
-import { Card, CardContent } from '@/components/ui/card';
-import { fetchPaymentDetails } from '@/shared/apis/payment';
-import DataFetchingError from '@/components/error/DataFetchingError';
-import ProfileDetailsShimmer from '@/components/shimmers/DataFieldShimmer';
 import {
   BadgeCheck,
   Calendar,
@@ -19,6 +11,13 @@ import {
   Mail,
   Receipt,
 } from 'lucide-react';
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import DataField from '@/components/app/DataField';
+import { Card, CardContent } from '@/components/ui/card';
+import { fetchPaymentDetails } from '@/shared/apis/payment';
+import DataFetchingError from '@/components/error/DataFetchingError';
+import ProfileDetailsShimmer from '@/components/shimmers/DataFieldShimmer';
 
 const PaymentDetailViewPage = () => {
   const { paymentId } = useParams<{ paymentId: string }>();
@@ -57,7 +56,6 @@ const PaymentDetailViewPage = () => {
         <ProfileDetailsShimmer row={12} />
       ) : data ? (
         <div className="">
-          <PageHeader title="Payment Details" description="Detailed view of payment" />
           <Card>
             <CardContent className="space-y-2">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">

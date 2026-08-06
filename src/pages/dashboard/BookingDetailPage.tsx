@@ -14,7 +14,6 @@ import {
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import DataField from '@/components/app/DataField';
-import PageHeader from '@/components/common/PageHeader';
 import { Card, CardContent } from '@/components/ui/card';
 import { fetchBookingDetails } from '@/shared/apis/booking';
 import { formatDateWithTime } from '@/shared/helper/formatter';
@@ -51,7 +50,6 @@ const BookingDetailPage = () => {
 
   return (
     <div className="p-4">
-      <PageHeader title="Booking Details" description="Detailed view of booking" />
       {isError && error ? (
         <DataFetchingError message={(error as Error).message} />
       ) : isLoading ? (

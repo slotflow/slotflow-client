@@ -4,7 +4,7 @@ import { DateRange } from 'react-day-picker';
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import { Calendar } from '@/components/ui/calendar';
-import { DataTable } from '@/components/table/data-table';
+import { DataTable } from '@/components/ui/data-table';
 import TableShimmer from '@/components/shimmers/TableShimmer';
 import { handleExportPDF } from '@/shared/helper/pdfGenerator';
 import { fetchRevenueReportForAdmin } from '@/shared/apis/payment';

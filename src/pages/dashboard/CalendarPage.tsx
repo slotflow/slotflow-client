@@ -8,7 +8,6 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import { CreditCard, Unplug } from 'lucide-react';
 import { RootState } from '@/shared/redux/appStore';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import PageHeader from '@/components/common/PageHeader';
 import FeatureLocked from '@/components/app/FeatureLocked';
 import { fetchCalendarEvents } from '@/shared/apis/google';
 import CalendarShimmer from '@/components/shimmers/CalendarShimmer';
@@ -56,7 +55,6 @@ const CalendarPage = () => {
 
   return (
     <div className="container p-4 space-y-6">
-      <PageHeader title="Calendar" description="Shows your bookings and meetings." />
       {isLoading ? (
         <CalendarShimmer />
       ) : isError && error ? (

@@ -8,7 +8,6 @@ import {
 import { useLocation } from 'react-router-dom';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { settingsTabs } from '@/shared/utils/constants';
-import PageHeader from '@/components/common/PageHeader';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
 const SettingsPage = () => {
@@ -19,8 +18,6 @@ const SettingsPage = () => {
 
   return (
     <div className="container p-4 space-y-6">
-      <PageHeader title="Settings" description="Manage your account, notifications and security." />
-
       <div className="flex flex-col md:flex-row w-full py-4 mt-4 space-x-0 md:space-x-2">
         <div className="hidden md:block w-2/12">
           <ScrollArea className="h-[calc(100vh-150px)]">

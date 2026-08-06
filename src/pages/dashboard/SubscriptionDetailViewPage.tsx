@@ -1,11 +1,3 @@
-import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import DataField from '@/components/app/DataField';
-import PageHeader from '@/components/common/PageHeader';
-import { Card, CardContent } from '@/components/ui/card';
-import DataFetchingError from '@/components/error/DataFetchingError';
-import { fetchSubscriptionDetails } from '@/shared/apis/subscription';
-import ProfileDetailsShimmer from '@/components/shimmers/DataFieldShimmer';
 import {
   BadgeCheck,
   Calendar,
@@ -16,6 +8,13 @@ import {
   Megaphone,
   Package,
 } from 'lucide-react';
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import DataField from '@/components/app/DataField';
+import { Card, CardContent } from '@/components/ui/card';
+import DataFetchingError from '@/components/error/DataFetchingError';
+import { fetchSubscriptionDetails } from '@/shared/apis/subscription';
+import ProfileDetailsShimmer from '@/components/shimmers/DataFieldShimmer';
 
 const SubscriptionDetailViewPage = () => {
   const { subscriptionId } = useParams<{ subscriptionId: string }>();
@@ -58,7 +57,6 @@ const SubscriptionDetailViewPage = () => {
 
   return (
     <div className="p-4">
-      <PageHeader title="Subscription Details" description="Detailed view of subscription" />
       {isError && error ? (
         <DataFetchingError message={(error as Error).message} />
       ) : isLoading ? (

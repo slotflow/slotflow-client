@@ -61,17 +61,18 @@ export type HandleRoleSelectionFunction = (url: string) => void;
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface CommonTableComponentProps<T, Q extends object = {}> {
   parentDivCalssName?: string;
-
   fetchApiFunction: (
     queryParams?: FetchFunctionBaseQueryParams & Q,
   ) => Promise<ApiPaginatedResponse<T>>;
-
   queryKey: string;
   column: ColumnDef<T>[];
   columnsCount: number;
   pageSize?: number;
-
   queryParams?: Q;
+  actionButtons?: {
+      actionLabel?: string;
+      onActionClick?: () => void;
+    }[]
 }
 
 // Api fetch function interface
@@ -511,4 +512,9 @@ export interface BoardingStep {
   title: string;
   description: string;
   image: string;
+}
+
+//
+export interface AppRouteHandle {
+  title?: string;
 }

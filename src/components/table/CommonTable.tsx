@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import { DataTable } from '../table/data-table';
+import { DataTable } from '../ui/data-table';
 import { useQuery } from '@tanstack/react-query';
 import TableShimmer from '../shimmers/TableShimmer';
 import DataFetchingError from '../error/DataFetchingError';
 import { OnChangeFn, PaginationState } from '@tanstack/react-table';
-import {
-  CommonTableComponentProps,
-  FetchFunctionBaseQueryParams,
-} from '@/shared/interface/commonInterface';
+import { CommonTableComponentProps, FetchFunctionBaseQueryParams } from '@/shared/interface/commonInterface';
+
+// TODO Rename to PaginatedDataTable
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 const CommonTable = <T, Q extends object = {}>({
@@ -18,6 +17,7 @@ const CommonTable = <T, Q extends object = {}>({
   columnsCount,
   pageSize = 10,
   queryParams,
+  actionButtons
 }: CommonTableComponentProps<T, Q>) => {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
@@ -54,6 +54,7 @@ const CommonTable = <T, Q extends object = {}>({
           pageCount={data.totalPages}
           pagination={pagination}
           onPaginationChange={handlePaginationChange}
+          actionButtons={actionButtons}
         />
       ) : isError && error ? (
         <DataFetchingError message={(error as Error).message} className="min-h-full" />
