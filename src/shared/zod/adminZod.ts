@@ -44,12 +44,32 @@ export const adminCreatePlanZodSchema = z.object({
 export type AdminCreatePlanFormType = z.infer<typeof adminCreatePlanZodSchema>;
 
 // Admin Create Service Schema
+// export const adminCreateServiceZodSchema = z.object({
+//   serviceName: z
+//     .string()
+//     .min(4, 'Service name must be at least 4 characters')
+//     .max(50, 'Service name cannot exceed 50 characters')
+//     .regex(appServiceNameRegex, 'Service name can only contain letters, numbers, and spaces'),
+//   serviceCategory: z.nativeEnum(ServiceCategory),
+// });
+
+// export type AdminCreateServiceFormType = z.infer<typeof adminCreateServiceZodSchema>;
+
 export const adminCreateServiceZodSchema = z.object({
-  serviceName: z
-    .string()
-    .min(4, 'Service name must be at least 4 characters')
-    .max(50, 'Service name cannot exceed 50 characters')
-    .regex(appServiceNameRegex, 'Service name can only contain letters, numbers, and spaces'),
+  serviceNames: z
+    .array(
+      z
+        .string()
+        .trim()
+        .min(4, 'Service name must be at least 4 characters')
+        .max(50, 'Service name cannot exceed 50 characters')
+        .regex(
+          appServiceNameRegex,
+          'Service name can only contain letters, numbers, and spaces',
+        ),
+    )
+    .min(1, 'At least one service name is required'),
+
   serviceCategory: z.nativeEnum(ServiceCategory),
 });
 

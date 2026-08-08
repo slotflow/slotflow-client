@@ -243,7 +243,7 @@ export interface FormFieldProps<T extends FieldValues> {
   readOnly?: boolean;
   required?: boolean;
   accept?: string;
-  labelInfo?: string;
+  infoText?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -489,6 +489,7 @@ export interface SelectFieldProps<T extends FieldValues, K> {
   register: UseFormRegister<T>;
   required?: boolean;
   defaultValue?: string | number | boolean;
+  infoText?: string;
 }
 
 // tag input props interface

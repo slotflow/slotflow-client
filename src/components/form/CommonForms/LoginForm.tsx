@@ -13,7 +13,7 @@ import { SigninResponse } from '@/shared/interface/api/auth';
 import { appConfig, serviceConfig } from '@/shared/config/env';
 import { redirectPaths } from '../../../shared/utils/constants';
 import { OnboardingStatus, Role } from '@/shared/interface/enums';
-import { setForgotPassword } from '@/shared/redux/slices/appSlice';
+import { setForgotPassword, updateBoardingStep } from '@/shared/redux/slices/appSlice';
 import { LoginFormType, LoginZodSchema } from '@/shared/zod/authZod';
 
 const LoginForm = () => {
@@ -49,6 +49,7 @@ const LoginForm = () => {
       user.onboardingStatus === OnboardingStatus.IN_PROGRESS &&
       user.onboardingType === Role.PROVIDER
     ) {
+      dispatch(updateBoardingStep(6));
       if (!user.isAddressAdded && !user.isAddressVerified) {
         navigate(redirectPaths.ONBOARDING_ADDRESS, { replace: true });
       } else if (!user.isServiceDetailsAdded && !user.isServiceDetailsVerified) {
@@ -107,9 +108,9 @@ const LoginForm = () => {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
               <fieldset disabled={isSubmitting} className="space-y-3">
                 <FormField<LoginFormType>
-                  label="Email Address"
+                  label="Email"
                   id="email"
-                  placeholder="Enter email address"
+                  placeholder="Enter email"
                   type="email"
                   register={register}
                   error={errors.email?.message}

@@ -65,9 +65,9 @@ SlotFlow reserves the right to suspend or terminate Accounts that violate these 
 
 ## 3.1 Account Registration
 
-To access certain features of the Platform, you must create an Account by providing your full name, a valid email address, and a password. You may also register or sign in using a supported third-party authentication provider, such as Google, where available.
+To access certain features of the Platform, you must create an Account by providing your full name, a valid email, and a password. You may also register or sign in using a supported third-party authentication provider, such as Google, where available.
 
-Your email address must be verified using the verification method provided by SlotFlow before your Account can be activated.
+Your email must be verified using the verification method provided by SlotFlow before your Account can be activated.
 
 ## 3.2 Accurate Information
 
@@ -352,7 +352,7 @@ SlotFlow may temporarily suspend or permanently terminate your Account, with or 
 - You misuse the Platform or its artificial intelligence features.
 - We are required to do so by applicable law or a lawful request from a competent authority.
 
-Where appropriate, SlotFlow will notify you of the action taken through your registered email address. You may contact Support to request a review of the decision.
+Where appropriate, SlotFlow will notify you of the action taken through your registered email. You may contact Support to request a review of the decision.
 
 ## 9.4 Effect of Suspension
 

@@ -82,7 +82,7 @@ const AddressListing = ({
       <CardContent className="space-y-2">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-4">
           <DataField label="Address Line" value={data?.addressLine} Icon={MapPin} />
-          <DataField label="Landmark" value={data?.landMark} Icon={MapPinPlus} />
+          <DataField label="Landmark" value={data?.landmark} Icon={MapPinPlus} />
           <DataField label="Place" value={data?.place} Icon={Map} />
           <DataField label="City" value={data?.city} Icon={Building} />
           {!isShowPreview && !isUserLookingProvider && (

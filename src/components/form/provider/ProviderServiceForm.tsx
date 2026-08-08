@@ -40,6 +40,7 @@ import {
   redirectPaths,
   defaultButtonClassName,
 } from '@/shared/utils/constants';
+import DynamicStringListField from '../DynamicStringListFields';
 
 const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFormProps) => {
   const navigate = useNavigate();
@@ -66,7 +67,7 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
       serviceDescription: '',
       servicePrice: 0,
       serviceExperience: '',
-      requirements: [],
+      requirements: [''],
       serviceType: undefined,
       serviceMode: undefined,
       tags: [],
@@ -201,7 +202,7 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
         <div className="space-y-4 w-full space-x-2 pt-6">
           <SelectField<ProviderCreateServiceDetailsFormType, ServiceCategory>
             id="serviceCategory"
-            label="Service Category"
+            label="Category"
             options={serviceCategoryOptions}
             register={register}
             error={errors.serviceCategory}
@@ -218,17 +219,18 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
           />
 
           <FormField<ProviderCreateServiceDetailsFormType>
-            label="Service Name"
+            label="Name"
             id="serviceName"
-            placeholder="Enter service name"
+            placeholder="Enter name"
             type="text"
             register={register}
             error={errors.serviceName?.message}
+            infoText="Use this field to enter your company / service name"
             required
           />
 
           <FormField<ProviderCreateServiceDetailsFormType>
-            label="Service Description"
+            label="Description"
             id="serviceDescription"
             placeholder="Enter description"
             type="text"
@@ -238,7 +240,7 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
           />
 
           <FormField<ProviderCreateServiceDetailsFormType>
-            label="Service Price"
+            label="Price"
             id="servicePrice"
             placeholder="₹ 1000"
             type="number"
@@ -248,7 +250,7 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
           />
 
           <FormField<ProviderCreateServiceDetailsFormType>
-            label="Service Experience in Years"
+            label="Experience in Years"
             id="serviceExperienceYears"
             placeholder="Enter experience years"
             type="number"
@@ -258,7 +260,7 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
           />
 
           <FormField<ProviderCreateServiceDetailsFormType>
-            label="Service Experience (descriptive)"
+            label="Experience (descriptive)"
             id="serviceExperience"
             placeholder="Enter experience"
             type="text"
@@ -269,7 +271,7 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
 
           <SelectField<ProviderCreateServiceDetailsFormType, ServiceType>
             id="serviceType"
-            label="Service Type"
+            label="Type"
             options={serviceTypeOptions}
             register={register}
             error={errors.serviceType}
@@ -278,7 +280,7 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
 
           <SelectField<ProviderCreateServiceDetailsFormType, ServiceMode>
             id="serviceMode"
-            label="Service Mode"
+            label="Mode"
             options={serviceModeOptions}
             register={register}
             error={errors.serviceMode}
@@ -286,71 +288,33 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
           />
         </div>
         <div className="space-y-4 w-full space-x-2 md:pt-6">
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label className="text-xs md:text-sm font-medium">Requirements</Label>
-            </div>
 
-            <div className="space-y-2 overflow-y-auto pr-1">
-              {displayRequirements.map((req, index) => {
-                const fieldError = Array.isArray(errors.requirements)
-                  ? errors.requirements[index]?.message
-                  : undefined;
-                return (
-                  <div key={index} className="space-y-1">
-                    <div className="flex items-center gap-2 group animate-in fade-in slide-in-from-top-1 duration-200">
-                      <div className="relative flex-1">
-                        <Input
-                          type="text"
-                          placeholder="Enter requirement"
-                          value={req}
-                          onChange={(e) => handleRequirementChange(index, e.target.value)}
-                          className={`pr-10 focus:border-[var(--mainColor)] focus-visible:ring-0 ${fieldError ? 'border-destructive focus:border-destructive' : ''}`}
-                          maxLength={200}
-                        />
-                      </div>
-                      {displayRequirements.length > 1 && (
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => handleRemoveRequirement(index)}
-                          className="h-9 w-9 text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
-                        >
-                          <Trash2 className="size-4" />
-                        </Button>
-                      )}
-                      {index === displayRequirements.length - 1 &&
-                        displayRequirements.length < 10 && (
-                          <Button
-                            type="button"
-                            variant="outline"
-                            size="icon"
-                            onClick={handleAddRequirement}
-                            className="h-9 w-9 border-dashed text-primary hover:bg-primary/10 transition-colors"
-                          >
-                            <Plus className="size-4" />
-                          </Button>
-                        )}
-                    </div>
-                    {fieldError && (
-                      <p className="text-[var(--error-color)] text-xs px-2">{fieldError}</p>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-            {errors.requirements &&
-              !Array.isArray(errors.requirements) &&
-              errors.requirements.message && (
-                <p className="text-[var(--error-color)] text-xs px-2">
-                  {errors.requirements.message}
-                </p>
-              )}
-          </div>
+          <DynamicStringListField
+            label="Requirements"
+            placeholder="Enter Requirement"
+            values={requirements}
+            errors={
+              Array.isArray(errors.requirements)
+                ? errors.requirements.map(
+                  (error) => error?.message,
+                )
+                : []
+            }
+            arrayError={
+              !Array.isArray(errors.requirements)
+                ? errors.requirements?.message
+                : undefined
+            }
+            onChange={(values) => {
+              setValue('requirements', values, {
+                shouldDirty: true,
+                shouldValidate: true,
+              });
+            }}
+          />
 
           <FormField<ProviderCreateServiceDetailsFormType>
-            label="Max Participants"
+            label="Maximum Participants"
             id="maxParticipants"
             type="number"
             placeholder="1"

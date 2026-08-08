@@ -10,7 +10,7 @@ export const signupZodSchema = z
       .max(30, 'Username cannot exceed 30 characters')
       .regex(usernameRegex, 'Invalid Username format'),
 
-    email: z.string().email('Invalid email address'),
+    email: z.string().email('Invalid email'),
 
     password: z
       .string()
@@ -36,7 +36,7 @@ export type SignupFormType = z.infer<typeof signupZodSchema>;
 
 // Login Schema
 export const LoginZodSchema = z.object({
-  email: z.string().email('Invalid email address'),
+  email: z.string().email('Invalid email'),
 
   password: z
     .string()
@@ -78,7 +78,7 @@ export type ResetPasswordFormType = z.infer<typeof resetPasswordZodSchema>;
 
 // Verify Email Schema
 export const verifyEmailZodSchema = z.object({
-  email: z.string().email('Invalid email address'),
+  email: z.string().email('Invalid email'),
 });
 
 export type VerifyEmailFormType = z.infer<typeof verifyEmailZodSchema>;

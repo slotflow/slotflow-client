@@ -79,7 +79,7 @@ const SignUpForm = () => {
                 />
 
                 <FormField<SignupFormType>
-                  label="Email Address"
+                  label="Email"
                   id="email"
                   placeholder="Enter email"
                   type="email"

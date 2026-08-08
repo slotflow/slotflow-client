@@ -45,7 +45,7 @@ const AddressForm = ({ isUpdating = false, heading }: AddressFormProps) => {
     defaultValues: {
       _id: '',
       addressLine: '',
-      landMark: '',
+      landmark: '',
       phone: '',
       place: '',
       city: '',
@@ -150,7 +150,7 @@ const AddressForm = ({ isUpdating = false, heading }: AddressFormProps) => {
 
           <FormField<CreateAddressFormType>
             label="Landmark"
-            id="landMark"
+            id="landmark"
             placeholder="Enter landmark"
             type="text"
             required
@@ -165,7 +165,7 @@ const AddressForm = ({ isUpdating = false, heading }: AddressFormProps) => {
             render={({ field }) => (
               <div className="space-y-2">
                 <label className="block text-xs md:text-sm font-medium text-[var(--textTwo)] hover:text-[var(--textTwoHover)]">
-                  Phone {<span className="mx-1 text-red-500">*</span>}
+                  Phone
                 </label>
                 <PhoneInput
                   value={field.value}
@@ -235,7 +235,7 @@ const AddressForm = ({ isUpdating = false, heading }: AddressFormProps) => {
             render={({ field }) => (
               <div className="flex flex-col space-y-2">
                 <label className="text-sm font-medium">
-                  Country <span className="mx-1 text-red-500">*</span>
+                  Country
                 </label>
 
                 <CountryDropdown
@@ -258,7 +258,7 @@ const AddressForm = ({ isUpdating = false, heading }: AddressFormProps) => {
         <div className="space-y-4 w-full space-x-2 md:pt-6">
           <div className="flex-1 space-y-4 px-6 md:px-0">
             <Label className="text-xs md:text-sm" htmlFor="location">
-              Select Location{<span className="mx-1 text-red-500">*</span>}
+              Select Location
             </Label>
             <LocationPicker onLocationSelect={handleLocationSelect} />
             <AlertBox

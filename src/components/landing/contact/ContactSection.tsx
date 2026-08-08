@@ -23,7 +23,7 @@ const ContactSection = () => {
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-medium">Email Address</label>
+                <label className="mb-2 block text-sm font-medium">Email</label>
 
                 <Input type="email" placeholder="john@example.com" className="h-12 rounded-xl" />
               </div>

@@ -46,7 +46,7 @@ const InfoHeader = ({ profileImage, username }: InfoHeaderProps) => {
           title="Toggle Sidebar"
           variant="ghost"
           size="icon"
-          className="rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer"
+          className="rounded-md hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer"
           onClick={handleSidebar}
         >
           <PanelLeft className="w-5 h-5 opacity-80" />
@@ -62,7 +62,7 @@ const InfoHeader = ({ profileImage, username }: InfoHeaderProps) => {
               <img
                 src={profileImage || avatar}
                 alt="Profile"
-                className="size-9 rounded-full object-cover ring-2 ring-primary/20 shadow-sm"
+                className="size-8 rounded-full object-cover ring-2 ring-primary/20 shadow-sm"
               />
             )}
             <div

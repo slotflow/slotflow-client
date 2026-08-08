@@ -15,7 +15,7 @@ const CommonTable = <T, Q extends object = {}>({
   queryKey,
   column,
   columnsCount,
-  pageSize = 10,
+  pageSize = 14,
   queryParams,
   actionButtons
 }: CommonTableComponentProps<T, Q>) => {

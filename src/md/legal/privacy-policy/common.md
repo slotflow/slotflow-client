@@ -39,7 +39,7 @@ SlotFlow Technologies Private Limited collects information to provide, operate, 
 
 When you create an account, book appointments, communicate with Providers, or otherwise use the SlotFlow platform, we may collect information that you voluntarily provide, including:
 
-- Account information, such as your username, email address, and account credentials.
+- Account information, such as your username, email, and account credentials.
 - Appointment information, including appointment dates and times, selected services, appointment status, cancellation history, and any notes or information you choose to provide during the booking process.
 - Communications exchanged through the platform, including chat messages, customer support requests, feedback, and communications related to appointments.
 - Payment-related information necessary to complete transactions. Payments are processed securely through our third-party payment processor, **Stripe**. SlotFlow does not store your complete debit card, credit card, or other payment card details.
@@ -49,7 +49,7 @@ When you create an account, book appointments, communicate with Providers, or ot
 
 When you register as a Provider and complete the onboarding process, we may collect:
 
-- Account information, including your username, email address, and account credentials.
+- Account information, including your username, email, and account credentials.
 - Business and profile information, including your business or practice address, service information, service descriptions, pricing (where applicable), and profile details.
 - Availability information, including business hours, appointment schedules, availability settings, and booking preferences.
 - Verification information, including documents or other supporting information submitted during the Provider verification process to help confirm your identity, business, or eligibility to provide services through the platform.
@@ -236,7 +236,7 @@ When you book an appointment or request a service, we may share information with
 
 - Your username.
 - Appointment details, including the selected service, date, time, and any information you choose to provide as part of the booking.
-- Your email address where necessary for service-related communication or appointment management.
+- Your email where necessary for service-related communication or appointment management.
 
 Providers are expected to use this information solely for providing services through the SlotFlow platform and in accordance with applicable privacy laws.
 
@@ -486,7 +486,7 @@ If we make material changes that significantly affect how we collect, use, share
 
 - A notice on the SlotFlow website or platform.
 - An in-application notification.
-- Email communication sent to the email address associated with your account.
+- Email communication sent to the email associated with your account.
 - Any other reasonable communication method permitted by applicable law.
 
 We encourage you to review this Privacy Policy periodically to stay informed about how we protect your personal information.

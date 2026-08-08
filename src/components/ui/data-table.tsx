@@ -39,7 +39,7 @@ export function DataTable<TData, TValue>({
 
   const [internalPagination, setInternalPagination] = React.useState<PaginationState>({
     pageIndex: 0,
-    pageSize: 10,
+    pageSize: 14,
   });
 
   const paginationState = controlledPagination || internalPagination;
@@ -90,6 +90,7 @@ export function DataTable<TData, TValue>({
           <div className="ml-auto space-x-2">
             {actionButtons?.map((btn) => (
               <Button
+                key={btn.actionLabel}
                 title={btn?.actionLabel}
                 variant="default"
                 className="cursor-pointer hover:bg-(--mainColor) hover:text-white transition-colors border-(--mainColor)"

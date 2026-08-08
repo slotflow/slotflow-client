@@ -33,7 +33,6 @@ const AdminServicesPage = () => {
 
   return (
     <div className="p-4">
-
       <CommonTable<FetchServicesResponse>
         fetchApiFunction={fetchServices}
         queryKey="appServices"

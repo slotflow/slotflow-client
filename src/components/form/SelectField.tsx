@@ -6,8 +6,8 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Input } from '../ui/input';
-import { Label } from '@/components/ui/label';
 import { FieldValues } from 'react-hook-form';
+import FormLabelWithInfo from './FormLabelWithInfo';
 import { SelectFieldProps } from '@/shared/interface/componentInterface';
 
 const SelectField = <T extends FieldValues, K>({
@@ -19,6 +19,7 @@ const SelectField = <T extends FieldValues, K>({
   register,
   required = false,
   defaultValue,
+  infoText
 }: SelectFieldProps<T, K>) => {
   const reg = register(id);
 
@@ -36,9 +37,11 @@ const SelectField = <T extends FieldValues, K>({
 
   return (
     <div className="space-y-2">
-      <Label htmlFor={id} className="text-sm">
-        {label} {required && <span className="text-red-500">*</span>}
-      </Label>
+      <FormLabelWithInfo 
+        label={label}
+        htmlFor={id}
+        infoText={infoText}
+      />
 
       <Input
         type="hidden"
@@ -56,6 +59,7 @@ const SelectField = <T extends FieldValues, K>({
             target: { name: reg.name, value: parsedValue },
           });
         }}
+        required={required}
       >
         <SelectTrigger className={`w-full ${error ? 'border-red-500' : ''}`}>
           <SelectValue placeholder={placeholder} />

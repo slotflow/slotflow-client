@@ -83,9 +83,9 @@ SlotFlow reserves the right to suspend, reject, or permanently terminate any Ser
 
 ## 3.1 Account Registration
 
-To register as a Service Provider, you must first create an Account by providing your full name, a valid email address, and a password. You may also register or sign in using a supported third-party authentication provider, such as Google, where available.
+To register as a Service Provider, you must first create an Account by providing your full name, a valid email, and a password. You may also register or sign in using a supported third-party authentication provider, such as Google, where available.
 
-Your email address must be verified before your Account can proceed to provider onboarding.
+Your email must be verified before your Account can proceed to provider onboarding.
 
 ## 3.2 Provider Onboarding and Verification
 
@@ -499,7 +499,7 @@ SlotFlow may immediately suspend or permanently terminate a Service Provider Acc
 - Spam, harassment, unlawful conduct, or other abusive behaviour has occurred.
 - Continued operation of the Account presents a security risk or legal concern.
 
-Where appropriate, SlotFlow will notify the Service Provider using the registered email address. Providers may contact Support to request a review of the action taken.
+Where appropriate, SlotFlow will notify the Service Provider using the registered email. Providers may contact Support to request a review of the action taken.
 
 ## 9.5 Effect of Suspension
 

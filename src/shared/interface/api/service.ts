@@ -7,7 +7,10 @@ export type FetchServicesResponse = Pick<
 >;
 
 // request type of admin create app service api
-export type CreateServiceRequest = Pick<Service, 'serviceName' | 'serviceCategory'>;
+export interface CreateServiceRequest {
+  serviceCategory: Service["serviceCategory"];
+  serviceNames: string[];
+};
 
 // request type of admin change app service block status api
 export type ChangeServiceBlockStatusRequest = {

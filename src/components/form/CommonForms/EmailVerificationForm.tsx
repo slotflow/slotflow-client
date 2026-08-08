@@ -54,7 +54,7 @@ const EmailVerificationForm = () => {
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
               <FormField<VerifyEmailFormType>
-                label="Email Address"
+                label="Email"
                 id="email"
                 placeholder="Enter your registered email"
                 type="email"

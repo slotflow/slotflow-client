@@ -5,7 +5,7 @@ export type FetchMyAddressResponse = Pick<
   Address,
   | '_id'
   | 'addressLine'
-  | 'landMark'
+  | 'landmark'
   | 'phone'
   | 'place'
   | 'city'
@@ -27,7 +27,7 @@ export type FetchAddressResponse = Pick<
   | 'pincode'
   | 'state'
   | 'country'
-  | 'landMark'
+  | 'landmark'
   | 'location'
 >;
 
@@ -35,7 +35,7 @@ export type FetchAddressResponse = Pick<
 export type CreateAddressRequest = Pick<
   Address,
   | 'addressLine'
-  | 'landMark'
+  | 'landmark'
   | 'phone'
   | 'place'
   | 'city'
@@ -51,7 +51,7 @@ export type UserCreateAddressResponse = Pick<
   Address,
   | '_id'
   | 'addressLine'
-  | 'landMark'
+  | 'landmark'
   | 'phone'
   | 'place'
   | 'city'
@@ -68,7 +68,7 @@ export type UpdateAddressRequest = Pick<
   Address,
   | '_id'
   | 'addressLine'
-  | 'landMark'
+  | 'landmark'
   | 'phone'
   | 'place'
   | 'city'
@@ -84,7 +84,7 @@ export type UpdateAddressResponse = Pick<
   Address,
   | '_id'
   | 'addressLine'
-  | 'landMark'
+  | 'landmark'
   | 'phone'
   | 'place'
   | 'city'

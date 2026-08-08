@@ -1,4 +1,3 @@
-import FormField from '../FormField';
 import { toast } from 'react-toastify';
 import SelectField from '../SelectField';
 import { useForm } from 'react-hook-form';
@@ -10,12 +9,14 @@ import { createService } from '@/shared/apis/service';
 import { useQueryClient } from '@tanstack/react-query';
 import { ServiceCategory } from '@/shared/interface/enums';
 import { slideOut } from '@/shared/helper/gsapAnimationSlide';
+import DynamicStringListField from '../DynamicStringListFields';
 import { serviceCategoryOptions } from '@/shared/utils/constants';
 import { handleFormError } from '@/shared/helper/formErrorCatcher';
 import { CreateServiceFormProps } from '@/shared/interface/componentInterface';
 import { AdminCreateServiceFormType, adminCreateServiceZodSchema } from '@/shared/zod/adminZod';
 
 const CreateServiceForm = ({ onClose, formRef }: CreateServiceFormProps) => {
+
   const queryClient = useQueryClient();
 
   const handleCloseForm = () => {
@@ -29,42 +30,77 @@ const CreateServiceForm = ({ onClose, formRef }: CreateServiceFormProps) => {
     handleSubmit,
     reset,
     setFocus,
+    setValue,
+    watch,
     formState: { errors, isSubmitting, isValid },
   } = useForm<AdminCreateServiceFormType>({
     resolver: zodResolver(adminCreateServiceZodSchema),
     mode: 'onChange',
     defaultValues: {
-      serviceName: '',
+      serviceNames: [''],
       serviceCategory: undefined,
     },
   });
 
-  const onSubmit = async (data: AdminCreateServiceFormType) => {
+  const serviceNames = watch('serviceNames');
+
+  const onSubmit = async (
+    data: AdminCreateServiceFormType,
+  ): Promise<void> => {
     try {
-      const res = await createService(data);
+      const normalizedNames = data.serviceNames
+        .map((serviceName) => serviceName.trim())
+        .filter(Boolean);
+
+      const res = await createService({
+        serviceCategory: data.serviceCategory,
+        serviceNames: normalizedNames,
+      });
+
       if (res.success) {
         toast.success(res.message);
-        reset();
+
+        const initialNames = [''];
+
+        reset({
+          serviceNames: initialNames,
+          serviceCategory: undefined,
+        });
+
         handleCloseForm();
-        queryClient.invalidateQueries({ queryKey: ['appServices'] });
+
+        queryClient.invalidateQueries({
+          queryKey: ['appServices'],
+        });
       } else {
         toast.error(res.message);
       }
     } catch (error) {
       if (appConfig.isDevelopment) {
-        console.log('Error while saving service:', error);
+        console.log('Error while saving services:', error);
       }
-      toast.error('Something went wrong while creating service');
+
+      toast.error('Something went wrong while creating services');
     }
   };
 
   return (
-    <div
-      ref={formRef}
-      className="w-auto md:w-lg rounded-lg bg-[var(--background)] p-6 shadow-xl border-1"
+  <div
+    ref={formRef}
+    className="w-auto md:w-lg max-h-[90vh] rounded-lg bg-[var(--background)] p-6 shadow-xl border-1 flex flex-col"
+  >
+    <h3 className="text-lg lg:text-2xl font-bold text-center my-4 shrink-0">
+      Create New Services
+    </h3>
+
+    <form
+      onSubmit={handleSubmit(
+        onSubmit,
+        handleFormError(setFocus),
+      )}
+      className="flex flex-col min-h-0 flex-1"
     >
-      <h3 className="text-lg lg:text-2xl font-bold text-center my-4">Create New Service</h3>
-      <form onSubmit={handleSubmit(onSubmit, handleFormError(setFocus))} className="space-y-6">
+      <div className="flex-1 min-h-0 overflow-y-auto pr-2 space-y-6">
         <SelectField<AdminCreateServiceFormType, ServiceCategory>
           id="serviceCategory"
           label="Service Category"
@@ -73,35 +109,52 @@ const CreateServiceForm = ({ onClose, formRef }: CreateServiceFormProps) => {
           error={errors.serviceCategory}
         />
 
-        <FormField<AdminCreateServiceFormType>
-          id="serviceName"
-          label="Service Name"
-          placeholder="Enter Service Name"
-          type="text"
-          register={register}
-          error={errors.serviceName?.message}
-          required
+        <DynamicStringListField
+          label="Service Names"
+          placeholder="Enter service name"
+          values={serviceNames}
+          errors={
+            Array.isArray(errors.serviceNames)
+              ? errors.serviceNames.map(
+                  (error) => error?.message,
+                )
+              : []
+          }
+          arrayError={
+            !Array.isArray(errors.serviceNames)
+              ? errors.serviceNames?.message
+              : undefined
+          }
+          onChange={(values) => {
+            setValue('serviceNames', values, {
+              shouldDirty: true,
+              shouldValidate: true,
+            });
+          }}
+          helperText="You can paste multiple service names separated by commas or new lines."
+        />
+      </div>
+
+      <div className="space-y-2 pt-4 shrink-0">
+        <FormButton
+          text={isSubmitting ? 'Saving' : 'Save'}
+          loading={isSubmitting}
+          disabled={isSubmitting || !isValid}
+          title="Save"
         />
 
-        <div className="space-y-2">
-          <FormButton
-            text={isSubmitting ? 'Saving' : 'Save'}
-            loading={isSubmitting}
-            disabled={isSubmitting || !isValid}
-            title="Save"
-          />
-          <Button
-            title="Cancel"
-            variant="destructive"
-            className="cursor-pointer w-full"
-            type="button"
-            onClick={handleCloseForm}
-          >
-            Cancel
-          </Button>
-        </div>
-      </form>
-    </div>
+        <Button
+          title="Cancel"
+          variant="destructive"
+          className="cursor-pointer w-full"
+          type="button"
+          onClick={handleCloseForm}
+        >
+          Cancel
+        </Button>
+      </div>
+    </form>
+  </div>
   );
 };
 

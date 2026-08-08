@@ -24,16 +24,16 @@ export const setupAxiosInterceptors = () => {
 
         case 401:
           appStore.dispatch(setAuthUser(null));
-          toast.error('Session expired. Please log in again.');
+          toast.error(message || 'Session expired. Please log in again.');
           break;
 
         case 403:
           appStore.dispatch(setAuthUser(null));
-          toast.error('Your account has been blocked.');
+          toast.error(message || 'Your account has been blocked.');
           break;
 
         case 404:
-          toast.error('Requested resource not found.');
+          toast.error(message || 'Requested resource not found.');
           break;
 
         case 500:

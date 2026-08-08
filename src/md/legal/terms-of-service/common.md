@@ -347,7 +347,7 @@ SlotFlow reserves the right to modify, update, or replace these Terms at any tim
 
 Where practical, SlotFlow will notify Users and Service Providers of material changes to these Terms through one or more of the following methods:
 
-- Email sent to the registered email address associated with the Account.
+- Email sent to the registered email associated with the Account.
 - A notice published on the SlotFlow website.
 - An in-app or dashboard notification, where available.
 - Any other reasonable electronic communication method that SlotFlow may introduce in the future.
@@ -453,7 +453,7 @@ Any legal notice to SlotFlow must be sent to:
 
 **Email:** [legal@slotflow.online](mailto:legal@slotflow.online)
 
-SlotFlow may provide notices to you using your registered email address, website notices, in-app notifications, or any other reasonable electronic communication method.
+SlotFlow may provide notices to you using your registered email, website notices, in-app notifications, or any other reasonable electronic communication method.
 
 Notices sent electronically shall be deemed received on the date they are transmitted unless otherwise required by applicable law.
 
