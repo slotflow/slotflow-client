@@ -1,5 +1,7 @@
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
+import { FormButton } from '../FormButton';
+import { FormHeading } from '../FormHeading';
 import { Input } from '@/components/ui/input';
 import { useNavigate } from 'react-router-dom';
 import { appConfig } from '@/shared/config/env';
@@ -8,7 +10,6 @@ import React, { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { formatTime } from '@/shared/helper/formatter';
 import { useDispatch, useSelector } from 'react-redux';
-import { FormButton, FormHeading } from '../FormSplits';
 import { redirectPaths } from '@/shared/utils/constants';
 import { resendOtp, verifyOtp } from '@/shared/apis/auth';
 import { AppDispatch, RootState } from '@/shared/redux/appStore';

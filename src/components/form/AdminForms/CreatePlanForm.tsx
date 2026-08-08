@@ -1,7 +1,7 @@
 import FormField from '../FormField';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
-import { FormButton } from '../FormSplits';
+import { FormButton } from '../FormButton';
 import SelectField from '../SelectField';
 import { Button } from '@/components/ui/button';
 import { createPlan } from '@/shared/apis/plan';

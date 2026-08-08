@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import SelectField from '../SelectField';
 import { useForm } from 'react-hook-form';
-import { FormButton } from '../FormSplits';
+import { FormButton } from '../FormButton';
 import { Button } from '@/components/ui/button';
 import { appConfig } from '@/shared/config/env';
 import { zodResolver } from '@hookform/resolvers/zod';
