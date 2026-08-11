@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { Textarea } from '../ui/textarea';
+import { Eye, EyeOff } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Eye, EyeOff, Info } from 'lucide-react';
 import { type FieldValues } from 'react-hook-form';
+import FormLabelWithInfo from './FormLabelWithInfo';
 import { CustomValidator } from '@/shared/utils/validator';
 import { FormFieldProps } from '@/shared/interface/componentInterface';
-import FormLabelWithInfo from './FormLabelWithInfo';
 
 const FormField = <T extends FieldValues>({
   id,

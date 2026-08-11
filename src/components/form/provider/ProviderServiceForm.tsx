@@ -1,8 +1,7 @@
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
+import { LoaderCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { appConfig } from '@/shared/config/env';
@@ -11,36 +10,33 @@ import FormField from '@/components/form/FormField';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch, useSelector } from 'react-redux';
 import SelectField from '@/components/form/SelectField';
-import { LoaderCircle, Plus, Trash2 } from 'lucide-react';
+import DynamicStringListField from '../DynamicStringListFields';
 import { fetchServicesByCategory } from '@/shared/apis/service';
 import { OptionType } from '@/shared/interface/commonInterface';
 import { AppDispatch, RootState } from '@/shared/redux/appStore';
 import { ProviderServiceFormProps } from '@/shared/interface/componentInterface';
+import { providerCreateServiceDetailsZodSchema, ProviderCreateServiceDetailsFormType } from '@/shared/zod/providerZod';
 import {
-  providerCreateServiceDetailsZodSchema,
-  ProviderCreateServiceDetailsFormType,
-} from '@/shared/zod/providerZod';
-import {
-  AdminVerificationStatus,
-  OnboardingStatus,
-  ServiceCategory,
-  ServiceMode,
-  ServiceType,
-} from '@/shared/interface/enums';
-import {
-  providerCreateServiceDetails,
-  providerFetchServiceDetails,
-  providerUpdateServiceDetails,
-} from '@/shared/apis/providerService';
-import {
-  serviceCategoryOptions,
-  serviceModeOptions,
-  serviceTypeOptions,
   groupOptions,
   redirectPaths,
+  serviceModeOptions,
+  serviceTypeOptions,
+  serviceCategoryOptions,
   defaultButtonClassName,
 } from '@/shared/utils/constants';
-import DynamicStringListField from '../DynamicStringListFields';
+import {
+  ServiceType,
+  ServiceMode,
+  ServiceCategory,
+  OnboardingStatus,
+  AdminVerificationStatus,
+} from '@/shared/interface/enums';
+import {
+  providerFetchServiceDetails,
+  providerUpdateServiceDetails,
+  providerCreateServiceDetails,
+} from '@/shared/apis/providerService';
+
 
 const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFormProps) => {
   const navigate = useNavigate();
@@ -81,33 +77,6 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
   const tags = watch('tags');
   const serviceCategory = watch('serviceCategory');
   const requirements = watch('requirements') || [];
-  const displayRequirements = requirements.length === 0 ? [''] : requirements;
-
-  const handleAddRequirement = () => {
-    if (displayRequirements.length < 10) {
-      setValue('requirements', [...displayRequirements, ''], {
-        shouldValidate: true,
-        shouldDirty: true,
-      });
-    }
-  };
-
-  const handleRemoveRequirement = (index: number) => {
-    const updated = displayRequirements.filter((_, i) => i !== index);
-    setValue('requirements', updated, {
-      shouldValidate: true,
-      shouldDirty: true,
-    });
-  };
-
-  const handleRequirementChange = (index: number, value: string) => {
-    const updated = [...displayRequirements];
-    updated[index] = value;
-    setValue('requirements', updated, {
-      shouldValidate: true,
-      shouldDirty: true,
-    });
-  };
 
   useEffect(() => {
     if (!serviceCategory || serviceCategory.length === 0) {
