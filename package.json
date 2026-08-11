@@ -15,7 +15,8 @@
     "test": "vitest",
     "test:run": "vitest run",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "validate": "pnpm lint && pnpm format:check && pnpm test:run && pnpm build"
   },
   "dependencies": {
     "@codebymk/validator": "^1.0.4",
