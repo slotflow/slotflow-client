@@ -16,7 +16,7 @@ describe('FormHeading', () => {
         ).toBeInTheDocument();
 
         expect(
-            screen.getByText("This")
+            screen.getByText("Manage your services easily")
         ).toBeInTheDocument();
     })
 })
