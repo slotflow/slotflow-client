@@ -85,76 +85,76 @@ const CreateServiceForm = ({ onClose, formRef }: CreateServiceFormProps) => {
   };
 
   return (
-  <div
-    ref={formRef}
-    className="w-auto md:w-lg max-h-[90vh] rounded-lg bg-[var(--background)] p-6 shadow-xl border-1 flex flex-col"
-  >
-    <h3 className="text-lg lg:text-2xl font-bold text-center my-4 shrink-0">
-      Create New Services
-    </h3>
-
-    <form
-      onSubmit={handleSubmit(
-        onSubmit,
-        handleFormError(setFocus),
-      )}
-      className="flex flex-col min-h-0 flex-1"
+    <div
+      ref={formRef}
+      className="w-auto md:w-lg max-h-[90vh] rounded-lg bg-[var(--background)] p-6 shadow-xl border-1 flex flex-col"
     >
-      <div className="flex-1 min-h-0 overflow-y-auto pr-2 space-y-6">
-        <SelectField<AdminCreateServiceFormType, ServiceCategory>
-          id="serviceCategory"
-          label="Service Category"
-          options={serviceCategoryOptions}
-          register={register}
-          error={errors.serviceCategory}
-        />
+      <h3 className="text-lg lg:text-2xl font-bold text-center my-4 shrink-0">
+        Create New Services
+      </h3>
 
-        <DynamicStringListField
-          label="Service Names"
-          placeholder="Enter service name"
-          values={serviceNames}
-          errors={
-            Array.isArray(errors.serviceNames)
-              ? errors.serviceNames.map(
+      <form
+        onSubmit={handleSubmit(
+          onSubmit,
+          handleFormError(setFocus),
+        )}
+        className="flex flex-col min-h-0 flex-1"
+      >
+        <div className="flex-1 min-h-0 overflow-y-auto pr-2 space-y-6">
+          <SelectField<AdminCreateServiceFormType, ServiceCategory>
+            id="serviceCategory"
+            label="Service Category"
+            options={serviceCategoryOptions}
+            register={register}
+            error={errors.serviceCategory}
+          />
+
+          <DynamicStringListField
+            label="Service Names"
+            placeholder="Enter service name"
+            values={serviceNames}
+            errors={
+              Array.isArray(errors.serviceNames)
+                ? errors.serviceNames.map(
                   (error) => error?.message,
                 )
-              : []
-          }
-          arrayError={
-            !Array.isArray(errors.serviceNames)
-              ? errors.serviceNames?.message
-              : undefined
-          }
-          onChange={(values) => {
-            setValue('serviceNames', values, {
-              shouldDirty: true,
-              shouldValidate: true,
-            });
-          }}
-          helperText="You can paste multiple service names separated by commas or new lines."
-        />
-      </div>
+                : []
+            }
+            arrayError={
+              !Array.isArray(errors.serviceNames)
+                ? errors.serviceNames?.message
+                : undefined
+            }
+            onChange={(values) => {
+              setValue('serviceNames', values, {
+                shouldDirty: true,
+                shouldValidate: true,
+              });
+            }}
+            helperText="You can paste multiple service names separated by commas or new lines."
+          />
+        </div>
 
-      <div className="space-y-2 pt-4 shrink-0">
-        <FormButton
-          text={isSubmitting ? 'Saving' : 'Save'}
-          loading={isSubmitting}
-          disabled={isSubmitting || !isValid}
-          title="Save"
-        />
+        <div className="space-y-2 pt-4 shrink-0">
+          <FormButton
+            text={isSubmitting ? 'Saving' : 'Save'}
+            loading={isSubmitting}
+            disabled={isSubmitting || !isValid}
+            title="Save"
+          />
 
-        <Button
-          title="Cancel"
-          variant="destructive"
-          className="cursor-pointer w-full"
-          type="button"
-          onClick={handleCloseForm}
-        >
-          Cancel
-        </Button>
-      </div>
-    </form>
-  </div>
+          <Button
+            title="Cancel"
+            variant="destructive"
+            className="cursor-pointer w-full"
+            type="button"
+            onClick={handleCloseForm}
+          >
+            Cancel
+          </Button>
+        </div>
+      </form>
+    </div>
   );
 };
 

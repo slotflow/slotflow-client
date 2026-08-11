@@ -132,11 +132,10 @@ const DynamicStringListField = ({
                         handleChange(index, event)
                       }
                       maxLength={maxLength}
-                      className={`pr-10 focus:border-[var(--mainColor)] focus-visible:ring-0 ${
-                        fieldError
+                      className={`pr-10 focus:border-[var(--mainColor)] focus-visible:ring-0 ${fieldError
                           ? 'border-destructive focus:border-destructive'
                           : ''
-                      }`}
+                        }`}
                     />
                   </div>
 

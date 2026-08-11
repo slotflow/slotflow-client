@@ -47,7 +47,7 @@ const FormField = <T extends FieldValues>({
 
   return (
     <div className="space-y-2">
-      <FormLabelWithInfo 
+      <FormLabelWithInfo
         label={label}
         htmlFor={id}
         infoText={infoText}
@@ -88,8 +88,7 @@ const FormField = <T extends FieldValues>({
             })}
             className={`
             ${type === 'password' && error && 'border-destructive'}
-            ${
-              passwordStrength !== null
+            ${passwordStrength !== null
                 ? passwordStrength <= 25
                   ? 'focus:border-red-500 border-red-500'
                   : passwordStrength <= 50
@@ -102,7 +101,7 @@ const FormField = <T extends FieldValues>({
                 : error
                   ? 'focus:border-destructive border-destructive'
                   : 'focus:border-(--mainColor)'
-            }
+              }
             `}
           />
           {showTogglePassword && (
@@ -132,6 +131,6 @@ const FormField = <T extends FieldValues>({
       {error && <p className="text-[var(--error-color)] text-xs px-2 line-clamp-4">{error}</p>}
     </div>
   );
-};
+};    
 
 export default FormField;

@@ -1413,45 +1413,45 @@ export const serviceCategoryOptions: OptionType<ServiceCategory>[] = [
     value: ServiceCategory.REAL_ESTATE_AND_PROPERTY,
   },
   {
-  label: 'Food & Catering',
-  value: ServiceCategory.FOOD_AND_CATERING,
-},
-{
-  label: 'Travel & Hospitality',
-  value: ServiceCategory.TRAVEL_AND_HOSPITALITY,
-},
-{
-  label: 'Financial & Insurance',
-  value: ServiceCategory.FINANCIAL_AND_INSURANCE,
-},
-{
-  label: 'Pets & Animal Care',
-  value: ServiceCategory.PETS_AND_ANIMAL_CARE,
-},
-{
-  label: 'Legal & Government Services',
-  value: ServiceCategory.LEGAL_AND_GOVERNMENT,
-},
-{
-  label: 'Spiritual & Religious Services',
-  value: ServiceCategory.SPIRITUAL_AND_RELIGIOUS,
-},
-{
-  label: 'Childcare & Family Services',
-  value: ServiceCategory.CHILDCARE_AND_FAMILY,
-},
-{
-  label: 'Fashion & Tailoring',
-  value: ServiceCategory.FASHION_AND_TAILORING,
-},
-{
-  label: 'Photography & Media',
-  value: ServiceCategory.PHOTOGRAPHY_AND_MEDIA,
-},
-{
-  label: 'Business & Marketing',
-  value: ServiceCategory.BUSINESS_AND_MARKETING,
-},
+    label: 'Food & Catering',
+    value: ServiceCategory.FOOD_AND_CATERING,
+  },
+  {
+    label: 'Travel & Hospitality',
+    value: ServiceCategory.TRAVEL_AND_HOSPITALITY,
+  },
+  {
+    label: 'Financial & Insurance',
+    value: ServiceCategory.FINANCIAL_AND_INSURANCE,
+  },
+  {
+    label: 'Pets & Animal Care',
+    value: ServiceCategory.PETS_AND_ANIMAL_CARE,
+  },
+  {
+    label: 'Legal & Government Services',
+    value: ServiceCategory.LEGAL_AND_GOVERNMENT,
+  },
+  {
+    label: 'Spiritual & Religious Services',
+    value: ServiceCategory.SPIRITUAL_AND_RELIGIOUS,
+  },
+  {
+    label: 'Childcare & Family Services',
+    value: ServiceCategory.CHILDCARE_AND_FAMILY,
+  },
+  {
+    label: 'Fashion & Tailoring',
+    value: ServiceCategory.FASHION_AND_TAILORING,
+  },
+  {
+    label: 'Photography & Media',
+    value: ServiceCategory.PHOTOGRAPHY_AND_MEDIA,
+  },
+  {
+    label: 'Business & Marketing',
+    value: ServiceCategory.BUSINESS_AND_MARKETING,
+  },
 ];
 
 // Planduration options
