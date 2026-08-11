@@ -14,14 +14,10 @@ export const handleFormError =
     const errorValue = errors[firstErrorField];
 
     if (Array.isArray(errorValue)) {
-      const firstErrorIndex = errorValue.findIndex(
-        (error) => error !== undefined,
-      );
+      const firstErrorIndex = errorValue.findIndex((error) => error !== undefined);
 
       if (firstErrorIndex !== -1) {
-        setFocus(
-          `${firstErrorField}.${firstErrorIndex}` as Path<T>,
-        );
+        setFocus(`${firstErrorField}.${firstErrorIndex}` as Path<T>);
       }
     } else {
       setFocus(firstErrorField as Path<T>);

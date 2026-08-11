@@ -721,9 +721,9 @@ export interface DataTableProps<TData, TValue> {
   onPaginationChange?: OnChangeFn<PaginationState>;
   pagination?: PaginationState;
   actionButtons?: {
-      actionLabel?: string;
-      onActionClick?: () => void;
-    }[]
+    actionLabel?: string;
+    onActionClick?: () => void;
+  }[];
 }
 
 // Data table column header props interface

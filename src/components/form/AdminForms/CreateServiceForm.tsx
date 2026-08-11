@@ -16,7 +16,6 @@ import { CreateServiceFormProps } from '@/shared/interface/componentInterface';
 import { AdminCreateServiceFormType, adminCreateServiceZodSchema } from '@/shared/zod/adminZod';
 
 const CreateServiceForm = ({ onClose, formRef }: CreateServiceFormProps) => {
-
   const queryClient = useQueryClient();
 
   const handleCloseForm = () => {
@@ -44,9 +43,7 @@ const CreateServiceForm = ({ onClose, formRef }: CreateServiceFormProps) => {
 
   const serviceNames = watch('serviceNames');
 
-  const onSubmit = async (
-    data: AdminCreateServiceFormType,
-  ): Promise<void> => {
+  const onSubmit = async (data: AdminCreateServiceFormType): Promise<void> => {
     try {
       const normalizedNames = data.serviceNames
         .map((serviceName) => serviceName.trim())
@@ -94,10 +91,7 @@ const CreateServiceForm = ({ onClose, formRef }: CreateServiceFormProps) => {
       </h3>
 
       <form
-        onSubmit={handleSubmit(
-          onSubmit,
-          handleFormError(setFocus),
-        )}
+        onSubmit={handleSubmit(onSubmit, handleFormError(setFocus))}
         className="flex flex-col min-h-0 flex-1"
       >
         <div className="flex-1 min-h-0 overflow-y-auto pr-2 space-y-6">
@@ -115,15 +109,11 @@ const CreateServiceForm = ({ onClose, formRef }: CreateServiceFormProps) => {
             values={serviceNames}
             errors={
               Array.isArray(errors.serviceNames)
-                ? errors.serviceNames.map(
-                  (error) => error?.message,
-                )
+                ? errors.serviceNames.map((error) => error?.message)
                 : []
             }
             arrayError={
-              !Array.isArray(errors.serviceNames)
-                ? errors.serviceNames?.message
-                : undefined
+              !Array.isArray(errors.serviceNames) ? errors.serviceNames?.message : undefined
             }
             onChange={(values) => {
               setValue('serviceNames', values, {

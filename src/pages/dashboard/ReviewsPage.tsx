@@ -16,7 +16,10 @@ import { ReviewsPageProps } from '@/shared/interface/componentInterface';
 import ReviewCardsShimmer from '@/components/shimmers/ReviewCardsShimmer';
 import { ApiPaginatedResponse } from '@/shared/interface/commonInterface';
 import { Review } from '@/shared/interface/entityInterface/reviewInterface';
-import { FetchReviewsResponse, ToggleReviewBlockStatusRequest } from '@/shared/interface/api/review';
+import {
+  FetchReviewsResponse,
+  ToggleReviewBlockStatusRequest,
+} from '@/shared/interface/api/review';
 
 const ReviewsPage = ({ isPage = true, providerId, userId }: ReviewsPageProps) => {
   const limit = 10;
@@ -84,7 +87,6 @@ const ReviewsPage = ({ isPage = true, providerId, userId }: ReviewsPageProps) =>
 
   return (
     <div className={`${isPage ? 'container p-4 space-y-6' : 'mt-2 md:mt-0'}`}>
-
       {isLoading && <ReviewCardsShimmer />}
 
       {isError && <DataFetchingError message="Data fetching error" />}

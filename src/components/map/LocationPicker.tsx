@@ -51,7 +51,6 @@
 //         lng +
 //         locationIqConfig.locationIqUrlEnd;
 
-
 //       const res = await fetch(url);
 //       const data = await res.json();
 
@@ -134,16 +133,11 @@ const LocationPicker = ({ onLocationSelect }: LocationPickerProps) => {
 
     console.log('Initializing map');
 
-    const map = L.map(mapRef.current).setView(
-      [20.5937, 78.9629],
-      5
-    );
+    const map = L.map(mapRef.current).setView([20.5937, 78.9629], 5);
 
     mapInstance.current = map;
 
-    const tileUrl =
-      locationIqConfig.locationIqMapApiStart +
-      locationIqConfig.locationIqMapApi;
+    const tileUrl = locationIqConfig.locationIqMapApiStart + locationIqConfig.locationIqMapApi;
 
     console.log('LocationIQ tile URL:', tileUrl);
 
@@ -168,15 +162,13 @@ const LocationPicker = ({ onLocationSelect }: LocationPickerProps) => {
         locationIqConfig.locationIqUrlLon +
         lng +
         locationIqConfig.locationIqUrlEnd +
-        "&accept-language=en";
+        '&accept-language=en';
 
       try {
         const response = await fetch(url);
 
         if (!response.ok) {
-          throw new Error(
-            `LocationIQ request failed: ${response.status}`
-          );
+          throw new Error(`LocationIQ request failed: ${response.status}`);
         }
 
         const data = await response.json();
@@ -204,9 +196,7 @@ const LocationPicker = ({ onLocationSelect }: LocationPickerProps) => {
 
   return (
     <div>
-      <p className="mb-2 text-sm text-gray-600">
-        Click on the map to select a location
-      </p>
+      <p className="mb-2 text-sm text-gray-600">Click on the map to select a location</p>
 
       <div
         ref={mapRef}

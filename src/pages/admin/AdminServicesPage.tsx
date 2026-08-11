@@ -6,7 +6,10 @@ import { slideIn } from '@/shared/helper/gsapAnimationSlide';
 import { useAdminService } from '@/hooks/adminHooks/useService';
 import CreateServiceForm from '@/components/form/AdminForms/CreateServiceForm';
 import AdminAppServicesTableColumns from '@/components/table/tableColumns/AdminAppServicesTableColumn';
-import { ChangeServiceBlockStatusRequest, FetchServicesResponse } from '@/shared/interface/api/service';
+import {
+  ChangeServiceBlockStatusRequest,
+  FetchServicesResponse,
+} from '@/shared/interface/api/service';
 
 const AdminServicesPage = () => {
   const [showForm, setShowForm] = useState(false);
@@ -40,9 +43,9 @@ const AdminServicesPage = () => {
         columnsCount={5}
         actionButtons={[
           {
-            actionLabel: "Create New Service",
-            onActionClick: () => setShowForm(true)
-          }
+            actionLabel: 'Create New Service',
+            onActionClick: () => setShowForm(true),
+          },
         ]}
       />
 

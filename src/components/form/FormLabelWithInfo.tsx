@@ -1,9 +1,4 @@
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Info } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 
@@ -13,11 +8,7 @@ interface FormLabelWithInfoProps {
   infoText?: string;
 }
 
-const FormLabelWithInfo = ({
-  htmlFor,
-  label,
-  infoText,
-}: FormLabelWithInfoProps) => {
+const FormLabelWithInfo = ({ htmlFor, label, infoText }: FormLabelWithInfoProps) => {
   return (
     <div className="flex items-center gap-1.5">
       <Label htmlFor={htmlFor} className="text-sm">
@@ -37,10 +28,7 @@ const FormLabelWithInfo = ({
               </button>
             </TooltipTrigger>
 
-            <TooltipContent
-              side="right"
-              className="max-w-xs text-sm leading-relaxed"
-            >
+            <TooltipContent side="right" className="max-w-xs text-sm leading-relaxed">
               {infoText}
             </TooltipContent>
           </Tooltip>

@@ -234,9 +234,7 @@ const AddressForm = ({ isUpdating = false, heading }: AddressFormProps) => {
             rules={{ required: 'Country is required' }}
             render={({ field }) => (
               <div className="flex flex-col space-y-2">
-                <label className="text-sm font-medium">
-                  Country
-                </label>
+                <label className="text-sm font-medium">Country</label>
 
                 <CountryDropdown
                   placeholder="Select Country"

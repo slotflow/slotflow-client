@@ -3,7 +3,6 @@ import { grafanaConfig } from '@/shared/config/env';
 import { RootState } from '@/shared/redux/appStore';
 
 const AdminGrafanaDashboard = () => {
-
   const { lightTheme } = useSelector((state: RootState) => state.app);
   const { grafanaUrl } = grafanaConfig;
 

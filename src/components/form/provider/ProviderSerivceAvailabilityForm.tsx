@@ -12,7 +12,10 @@ import { createServiceAvailabilities } from '@/shared/apis/serviceAvailability';
 import { addAvailability, removeAvailability } from '@/shared/redux/slices/providerSlice';
 import { ProviderServiceAvailabilityFormProps } from '@/shared/interface/componentInterface';
 import TimeRangeSetter from '@/components/serviceAvailability/createServiceAvailabilityPageSplits/TimeRangeSetter';
-import { ProviderServiceAvailabilityFormType, providerServiceAvailabilityZodSchema } from '@/shared/zod/providerZod';
+import {
+  ProviderServiceAvailabilityFormType,
+  providerServiceAvailabilityZodSchema,
+} from '@/shared/zod/providerZod';
 import GenerateTimeSlots from '@/components/serviceAvailability/createServiceAvailabilityPageSplits/GenerateTimeSlots';
 import SavedAvailabilities from '@/components/serviceAvailability/createServiceAvailabilityPageSplits/SavedAvailabilityes';
 import AvailabilityDataSelectionFields from '@/components/serviceAvailability/createServiceAvailabilityPageSplits/AvailabilityDataSelectionFields';

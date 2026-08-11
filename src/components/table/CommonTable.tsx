@@ -4,7 +4,10 @@ import { useQuery } from '@tanstack/react-query';
 import TableShimmer from '../shimmers/TableShimmer';
 import DataFetchingError from '../error/DataFetchingError';
 import { OnChangeFn, PaginationState } from '@tanstack/react-table';
-import { CommonTableComponentProps, FetchFunctionBaseQueryParams } from '@/shared/interface/commonInterface';
+import {
+  CommonTableComponentProps,
+  FetchFunctionBaseQueryParams,
+} from '@/shared/interface/commonInterface';
 
 // TODO Rename to PaginatedDataTable
 
@@ -17,7 +20,7 @@ const CommonTable = <T, Q extends object = {}>({
   columnsCount,
   pageSize = 14,
   queryParams,
-  actionButtons
+  actionButtons,
 }: CommonTableComponentProps<T, Q>) => {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,

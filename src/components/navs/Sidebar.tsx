@@ -91,9 +91,7 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
       </div>
 
       {user?.isLoggedIn && user.role && (
-        <div
-          className={`p-4 ${!sidebarOpen && 'px-2'}`}
-        >
+        <div className={`p-4 ${!sidebarOpen && 'px-2'}`}>
           <SingleTab
             icon={!themeMode ? Sun : Moon}
             text={!themeMode ? 'Light Mode' : 'Dark Mode'}

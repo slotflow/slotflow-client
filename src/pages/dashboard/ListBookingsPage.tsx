@@ -8,7 +8,11 @@ import ConfirmAlert from '@/components/alert/ConfirmAlert';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
 import BookingsTableColumn from '@/components/table/tableColumns/BookingsTableColumn';
-import { changeAppointmentStatusRequest, FetchBookingsResponse, ValidateRoomId } from '@/shared/interface/api/booking';
+import {
+  changeAppointmentStatusRequest,
+  FetchBookingsResponse,
+  ValidateRoomId,
+} from '@/shared/interface/api/booking';
 
 const ListBookingsPage = () => {
   const authUser = useSelector((state: RootState) => state.auth.authUser);

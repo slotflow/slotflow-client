@@ -30,7 +30,7 @@ export function DataTable<TData, TValue>({
   pageCount,
   onPaginationChange,
   pagination: controlledPagination,
-  actionButtons
+  actionButtons,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);

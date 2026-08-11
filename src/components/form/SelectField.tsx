@@ -19,7 +19,7 @@ const SelectField = <T extends FieldValues, K>({
   register,
   required = false,
   defaultValue,
-  infoText
+  infoText,
 }: SelectFieldProps<T, K>) => {
   const reg = register(id);
 
@@ -37,11 +37,7 @@ const SelectField = <T extends FieldValues, K>({
 
   return (
     <div className="space-y-2">
-      <FormLabelWithInfo 
-        label={label}
-        htmlFor={id}
-        infoText={infoText}
-      />
+      <FormLabelWithInfo label={label} htmlFor={id} infoText={infoText} />
 
       <Input
         type="hidden"

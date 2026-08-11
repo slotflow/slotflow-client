@@ -70,9 +70,9 @@ export interface CommonTableComponentProps<T, Q extends object = {}> {
   pageSize?: number;
   queryParams?: Q;
   actionButtons?: {
-      actionLabel?: string;
-      onActionClick?: () => void;
-    }[]
+    actionLabel?: string;
+    onActionClick?: () => void;
+  }[];
 }
 
 // Api fetch function interface

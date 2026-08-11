@@ -10,16 +10,18 @@ import { InfoHeaderProps } from '@/shared/interface/componentInterface';
 import { toggleNotificationContainer, toggleSidebar } from '@/shared/redux/slices/appSlice';
 
 const InfoHeader = ({ profileImage, username }: InfoHeaderProps) => {
-
   const matches = useMatches();
   const dispatch = useDispatch<AppDispatch>();
   const [isOnline, setIsOnline] = useState(true);
   const { profileImageUpdating } = useSelector((state: RootState) => state.auth);
 
-  const currentRoute = matches.slice().reverse().find((match) => {
-    const handle = match.handle as AppRouteHandle;
-    return !!handle?.title;
-  });
+  const currentRoute = matches
+    .slice()
+    .reverse()
+    .find((match) => {
+      const handle = match.handle as AppRouteHandle;
+      return !!handle?.title;
+    });
   const pageTitle = (currentRoute?.handle as AppRouteHandle | undefined)?.title ?? '';
 
   useEffect(() => {
@@ -77,9 +79,7 @@ const InfoHeader = ({ profileImage, username }: InfoHeaderProps) => {
       </div>
 
       <div className="flex items-center justify-center w-full">
-        <h1 className="text-sm md:text-base font-semibold tracking-tight">
-          {pageTitle}
-        </h1>
+        <h1 className="text-sm md:text-base font-semibold tracking-tight">{pageTitle}</h1>
       </div>
 
       <div className="flex items-center justify-end gap-3 md:gap-5 w-full">

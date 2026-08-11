@@ -28,10 +28,7 @@ const DynamicStringListField = ({
     onChange(updatedValues);
   };
 
-  const handleFieldChange = (
-    index: number,
-    value: string,
-  ): void => {
+  const handleFieldChange = (index: number, value: string): void => {
     const hasMultipleValues = /[,\n]/.test(value);
 
     if (!hasMultipleValues) {
@@ -58,11 +55,7 @@ const DynamicStringListField = ({
     updatedValues[index] = pastedValues.shift() ?? '';
 
     const emptyIndexes = updatedValues
-      .map((item, fieldIndex) =>
-        fieldIndex !== index && !item.trim()
-          ? fieldIndex
-          : -1,
-      )
+      .map((item, fieldIndex) => (fieldIndex !== index && !item.trim() ? fieldIndex : -1))
       .filter((fieldIndex) => fieldIndex !== -1);
 
     emptyIndexes.forEach((emptyIndex) => {
@@ -70,8 +63,7 @@ const DynamicStringListField = ({
         return;
       }
 
-      updatedValues[emptyIndex] =
-        pastedValues.shift() ?? '';
+      updatedValues[emptyIndex] = pastedValues.shift() ?? '';
     });
 
     if (pastedValues.length > 0) {
@@ -90,17 +82,12 @@ const DynamicStringListField = ({
       return;
     }
 
-    const updatedValues = values.filter(
-      (_, valueIndex) => valueIndex !== index,
-    );
+    const updatedValues = values.filter((_, valueIndex) => valueIndex !== index);
 
     updateValues(updatedValues);
   };
 
-  const handleChange = (
-    index: number,
-    event: ChangeEvent<HTMLInputElement>,
-  ): void => {
+  const handleChange = (index: number, event: ChangeEvent<HTMLInputElement>): void => {
     handleFieldChange(index, event.target.value);
   };
 
@@ -108,9 +95,7 @@ const DynamicStringListField = ({
     <div className="space-y-4 w-full">
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <label className="text-xs md:text-sm font-medium">
-            {label}
-          </label>
+          <label className="text-xs md:text-sm font-medium">{label}</label>
         </div>
 
         <div className="space-y-2 overflow-y-auto pr-1">
@@ -118,24 +103,18 @@ const DynamicStringListField = ({
             const fieldError = errors[index];
 
             return (
-              <div
-                key={index}
-                className="space-y-1"
-              >
+              <div key={index} className="space-y-1">
                 <div className="flex items-center gap-2 group animate-in fade-in slide-in-from-top-1 duration-200">
                   <div className="relative flex-1">
                     <Input
                       type="text"
                       placeholder={placeholder}
                       value={value}
-                      onChange={(event) =>
-                        handleChange(index, event)
-                      }
+                      onChange={(event) => handleChange(index, event)}
                       maxLength={maxLength}
-                      className={`pr-10 focus:border-[var(--mainColor)] focus-visible:ring-0 ${fieldError
-                          ? 'border-destructive focus:border-destructive'
-                          : ''
-                        }`}
+                      className={`pr-10 focus:border-[var(--mainColor)] focus-visible:ring-0 ${
+                        fieldError ? 'border-destructive focus:border-destructive' : ''
+                      }`}
                     />
                   </div>
 
@@ -167,26 +146,16 @@ const DynamicStringListField = ({
                 </div>
 
                 {fieldError && (
-                  <p className="text-[var(--error-color)] text-xs px-2">
-                    {fieldError}
-                  </p>
+                  <p className="text-[var(--error-color)] text-xs px-2">{fieldError}</p>
                 )}
               </div>
             );
           })}
         </div>
 
-        {arrayError && (
-          <p className="text-[var(--error-color)] text-xs px-2">
-            {arrayError}
-          </p>
-        )}
+        {arrayError && <p className="text-[var(--error-color)] text-xs px-2">{arrayError}</p>}
 
-        {helperText && (
-          <p className="text-xs text-muted-foreground">
-            {helperText}
-          </p>
-        )}
+        {helperText && <p className="text-xs text-muted-foreground">{helperText}</p>}
       </div>
     </div>
   );

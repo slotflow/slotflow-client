@@ -15,7 +15,10 @@ import { fetchServicesByCategory } from '@/shared/apis/service';
 import { OptionType } from '@/shared/interface/commonInterface';
 import { AppDispatch, RootState } from '@/shared/redux/appStore';
 import { ProviderServiceFormProps } from '@/shared/interface/componentInterface';
-import { providerCreateServiceDetailsZodSchema, ProviderCreateServiceDetailsFormType } from '@/shared/zod/providerZod';
+import {
+  providerCreateServiceDetailsZodSchema,
+  ProviderCreateServiceDetailsFormType,
+} from '@/shared/zod/providerZod';
 import {
   groupOptions,
   redirectPaths,
@@ -36,7 +39,6 @@ import {
   providerUpdateServiceDetails,
   providerCreateServiceDetails,
 } from '@/shared/apis/providerService';
-
 
 const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFormProps) => {
   const navigate = useNavigate();
@@ -257,22 +259,17 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
           />
         </div>
         <div className="space-y-4 w-full space-x-2 md:pt-6">
-
           <DynamicStringListField
             label="Requirements"
             placeholder="Enter Requirement"
             values={requirements}
             errors={
               Array.isArray(errors.requirements)
-                ? errors.requirements.map(
-                  (error) => error?.message,
-                )
+                ? errors.requirements.map((error) => error?.message)
                 : []
             }
             arrayError={
-              !Array.isArray(errors.requirements)
-                ? errors.requirements?.message
-                : undefined
+              !Array.isArray(errors.requirements) ? errors.requirements?.message : undefined
             }
             onChange={(values) => {
               setValue('requirements', values, {
