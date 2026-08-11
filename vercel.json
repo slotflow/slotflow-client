@@ -5,7 +5,7 @@
       "destination": "/index.html"
     }
   ],
-   "git": {
+  "git": {
     "deploymentEnabled": {
       "main": false,
       "dev": false
