@@ -1,11 +1,4 @@
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  LabelList,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from 'recharts';
 import {
   Card,
   CardContent,
@@ -13,19 +6,15 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import { LoaderCircle, TrendingUp } from "lucide-react";
-import { chartConfig } from "@/shared/utils/constants";
-import { HorizontalChartForAdminReactProps } from "@/shared/interface/componentInterface";
+} from '@/components/ui/card';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { LoaderCircle, TrendingUp } from 'lucide-react';
+import { chartConfig } from '@/shared/utils/constants';
+import { HorizontalChartForAdminReactProps } from '@/shared/interface/componentInterface';
 
 const HorizontalChartForAdminReact = ({
   chartData,
-  isLOading
+  isLOading,
 }: HorizontalChartForAdminReactProps) => {
   return (
     <Card>
@@ -36,66 +25,59 @@ const HorizontalChartForAdminReact = ({
       <CardContent>
         {isLOading ? (
           <div className="h-full flex justify-center items-center">
-            <span><LoaderCircle className="animate-spin" /></span>
+            <span>
+              <LoaderCircle className="animate-spin" />
+            </span>
           </div>
         ) : (
-        <ChartContainer config={chartConfig}>
-          <BarChart
-            accessibilityLayer
-            data={chartData}
-            layout="vertical"
-            margin={{
-              right: 16,
-            }}
-          >
-            <CartesianGrid horizontal={false} />
-            <YAxis
-              dataKey="name"
-              type="category"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-              width={150}
-            />
-            <XAxis dataKey="value" type="number" hide />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="line" />}
-            />
-            <Bar
-              dataKey="value"
-              fill="#635bff"
-              radius={4}
+          <ChartContainer config={chartConfig}>
+            <BarChart
+              accessibilityLayer
+              data={chartData}
+              layout="vertical"
+              margin={{
+                right: 16,
+              }}
             >
-              <LabelList
+              <CartesianGrid horizontal={false} />
+              <YAxis
                 dataKey="name"
-                position="insideLeft"
-                offset={20}
-                className="fill-[#ffffff]"
-                fontSize={12}
+                type="category"
+                tickLine={false}
+                tickMargin={10}
+                axisLine={false}
+                width={150}
               />
-              <LabelList
-                dataKey="value"
-                position="right"
-                offset={8}
-                className="fill-foreground"
-                fontSize={12}
-              />
-            </Bar>
-          </BarChart>
-        </ChartContainer>
-           )}
+              <XAxis dataKey="value" type="number" hide />
+              <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
+              <Bar dataKey="value" fill="#635bff" radius={4}>
+                <LabelList
+                  dataKey="name"
+                  position="insideLeft"
+                  offset={20}
+                  className="fill-[#ffffff]"
+                  fontSize={12}
+                />
+                <LabelList
+                  dataKey="value"
+                  position="right"
+                  offset={8}
+                  className="fill-foreground"
+                  fontSize={12}
+                />
+              </Bar>
+            </BarChart>
+          </ChartContainer>
+        )}
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 leading-none font-medium">
           Analyze the trending data <TrendingUp className="h-4 w-4" />
         </div>
-        <div className="text-muted-foreground leading-none">
-          Showing stats in bar chart
-        </div>
+        <div className="text-muted-foreground leading-none">Showing stats in bar chart</div>
       </CardFooter>
     </Card>
   );
-}
+};
 
 export default HorizontalChartForAdminReact;

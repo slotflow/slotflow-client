@@ -1,16 +1,27 @@
-import { toast } from "react-toastify";
-import type { FieldErrors, Path, UseFormSetFocus } from "react-hook-form";
+import { toast } from 'react-toastify';
+import type { FieldErrors, Path, UseFormSetFocus, FieldValues } from 'react-hook-form';
 
 export const handleFormError =
-  <T extends Record<string, string | number | boolean | "" | undefined | null>>(
-    setFocus: UseFormSetFocus<T>,
-  ) =>
-    (errors: FieldErrors<T>) => {
-      const firstErrorField = Object.keys(errors)[0] as Path<T> | undefined;
+  <T extends FieldValues>(setFocus: UseFormSetFocus<T>) =>
+  (errors: FieldErrors<T>): void => {
+    const firstErrorField = Object.keys(errors)[0];
 
-      if (firstErrorField) {
-        setFocus(firstErrorField);
+    if (!firstErrorField) {
+      toast.error('Please fix the highlighted fields.');
+      return;
+    }
+
+    const errorValue = errors[firstErrorField];
+
+    if (Array.isArray(errorValue)) {
+      const firstErrorIndex = errorValue.findIndex((error) => error !== undefined);
+
+      if (firstErrorIndex !== -1) {
+        setFocus(`${firstErrorField}.${firstErrorIndex}` as Path<T>);
       }
+    } else {
+      setFocus(firstErrorField as Path<T>);
+    }
 
-      toast.error("Please fix the highlighted fields.");
-    };
+    toast.error('Please fix the highlighted fields.');
+  };

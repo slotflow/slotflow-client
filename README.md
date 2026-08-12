@@ -18,14 +18,13 @@ SlotFlow provides a unified platform for users to discover and book services, wh
 
 The platform is built around a multi-role architecture with **Users, Providers, and Administrators**, and integrates real-time communication, payments, Google Calendar, push notifications, and role-based access control.
 
-
 ## Overview
 
 SlotFlow supports three primary roles:
 
-* **User** – Discover providers, view available services and slots, and book appointments.
-* **Provider** – Create and manage services, manage availability, and handle appointments for online and offline services.
-* **Admin** – Manage and oversee the platform.
+- **User** – Discover providers, view available services and slots, and book appointments.
+- **Provider** – Create and manage services, manage availability, and handle appointments for online and offline services.
+- **Admin** – Manage and oversee the platform.
 
 The frontend communicates with a backend microservice architecture and provides dedicated interfaces and workflows based on the authenticated user's role and permissions.
 
@@ -33,32 +32,32 @@ The frontend communicates with a backend microservice architecture and provides 
 
 ### Appointment Booking
 
-* Search and discover service providers
-* Browse provider services and availability
-* Book appointments based on available time slots
-* Support for both online and offline appointments
-* Appointment management and status handling
-* Calendar-based scheduling
+- Search and discover service providers
+- Browse provider services and availability
+- Book appointments based on available time slots
+- Support for both online and offline appointments
+- Appointment management and status handling
+- Calendar-based scheduling
 
 ### Provider Management
 
 Providers can:
 
-* Offer and manage their services
-* Configure availability
-* Manage appointments
-* Provide services online or at physical locations
-* Manage their provider-side workflows
+- Offer and manage their services
+- Configure availability
+- Manage appointments
+- Provide services online or at physical locations
+- Manage their provider-side workflows
 
 ### Authentication & Authorization
 
 SlotFlow supports:
 
-* Email and password authentication
-* Google authentication
-* JWT-based authentication
-* Role-based access control for Users, Providers, and Admins
-* Protected routes using React Router
+- Email and password authentication
+- Google authentication
+- JWT-based authentication
+- Role-based access control for Users, Providers, and Admins
+- Protected routes using React Router
 
 ### Payments
 
@@ -76,9 +75,9 @@ The frontend uses Socket.IO for real-time communication with the SlotFlow socket
 
 Real-time functionality includes:
 
-* One-to-one and service-related chat
-* Real-time messaging
-* WebSocket-based client communication
+- One-to-one and service-related chat
+- Real-time messaging
+- WebSocket-based client communication
 
 ### Push Notifications
 
@@ -131,7 +130,7 @@ Standard REST API requests are routed through the gateway's HTTP proxy, while So
                 │              │              ▲
                 ▼              ▼              │
           API Gateway     API Gateway      Firebase
-          WebSocket Proxy  HTTP Proxy         ▲ 
+          WebSocket Proxy  HTTP Proxy         ▲
                 │              │              │
         ┌───────┘   ┌────────┬─┴────────┐     │
         │           │        │          │     │
@@ -141,11 +140,11 @@ Standard REST API requests are routed through the gateway's HTTP proxy, while So
         │          │           │         │
         │          │           │         │
         └──────────┴─────┬─────┴─────────┘
-                         │       
+                         │
         ┌──────────┬─────┴─────┬─────────┐
         │          │           │         │
         ▼          ▼           ▼         ▼
-      Redis      Kafka        OTEL    MongoDB  (Service-specific DBs)    
+      Redis      Kafka        OTEL    MongoDB  (Service-specific DBs)
     (Shared)                   │
                         ┌──────┼──────┐
                         │      │      │
@@ -158,12 +157,12 @@ SlotFlow follows a microservice-oriented backend architecture.
 
 The frontend integrates with the following backend components:
 
-* **API Gateway** – Entry point for frontend API communication, HTTP proxying, and WebSocket proxying.
-* **Main Backend** – Core application functionality and business logic.
-* **Socket Service** – Real-time communication and chat functionality.
-* **Payment Service** – Payment processing and Stripe-related operations.
-* **Notification Service** – Notification-related backend functionality.
-* **Infrastructure** – Supports Kafka, observability, monitoring, and related infrastructure components.
+- **API Gateway** – Entry point for frontend API communication, HTTP proxying, and WebSocket proxying.
+- **Main Backend** – Core application functionality and business logic.
+- **Socket Service** – Real-time communication and chat functionality.
+- **Payment Service** – Payment processing and Stripe-related operations.
+- **Notification Service** – Notification-related backend functionality.
+- **Infrastructure** – Supports Kafka, observability, monitoring, and related infrastructure components.
 
 ### Backend Repositories
 
@@ -189,14 +188,14 @@ The frontend integrates with the following backend components:
 
 The SlotFlow infrastructure repository manages supporting infrastructure for the distributed backend, including:
 
-* Apache Kafka and Kafka UI
-* OpenTelemetry Collector
-* Prometheus
-* Grafana
-* Loki
-* Tempo
-* Docker-based infrastructure containers
-* Kafka topic administration and creation
+- Apache Kafka and Kafka UI
+- OpenTelemetry Collector
+- Prometheus
+- Grafana
+- Loki
+- Tempo
+- Docker-based infrastructure containers
+- Kafka topic administration and creation
 
 Contentful is also used to manage constant content and data for the SlotFlow landing pages and related routes.
 
@@ -206,13 +205,13 @@ The interface combines reusable components from **shadcn/ui** with custom-design
 
 The frontend uses:
 
-* Tailwind CSS for responsive styling
-* shadcn/ui for accessible component primitives
-* Custom components for SlotFlow-specific workflows
-* Framer Motion for interface transitions
-* GSAP for advanced animations
-* Lenis for smooth scrolling
-* Skeleton and shimmer states for asynchronous content
+- Tailwind CSS for responsive styling
+- shadcn/ui for accessible component primitives
+- Custom components for SlotFlow-specific workflows
+- Framer Motion for interface transitions
+- GSAP for advanced animations
+- Lenis for smooth scrolling
+- Skeleton and shimmer states for asynchronous content
 
 The goal is to provide a responsive interface while maintaining consistent interaction patterns across user, provider, and admin workflows.
 
@@ -228,11 +227,11 @@ Redux is used for application-level state that needs to be accessed across diffe
 
 TanStack Query is used for server state and API-driven data, including:
 
-* Data fetching
-* Caching
-* Request lifecycle management
-* Synchronization
-* Loading and error states
+- Data fetching
+- Caching
+- Request lifecycle management
+- Synchronization
+- Loading and error states
 
 ### Axios
 
@@ -248,21 +247,22 @@ The application is built as a React/Vite frontend and deployed as a production w
 
 SlotFlow is designed as a full-stack, production-oriented SaaS project demonstrating:
 
-* Multi-role application architecture
-* Role-based access control
-* Appointment scheduling
-* Online and offline service workflows
-* REST API integration
-* Server-state management
-* Real-time WebSocket communication
-* Real-time chat
-* Payment integration
-* Google Calendar integration
-* Push notifications
-* Microservice-based backend communication
-* Responsive component-driven UI
-* Modern frontend animation and interaction patterns
-* Production deployment
+- Multi-role application architecture
+- Role-based access control
+- Appointment scheduling
+- Online and offline service workflows
+- REST API integration
+- Server-state management
+- Real-time WebSocket communication
+- Real-time chat
+- Payment integration
+- Google Calendar integration
+- Push notifications
+- Microservice-based backend communication
+- Responsive component-driven UI
+- Modern frontend animation and interaction patterns
+- Production deployment
+
 ---
 
 <p align="center">

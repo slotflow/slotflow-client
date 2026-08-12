@@ -10,28 +10,37 @@ import DataFetchingError from '@/components/error/DataFetchingError';
 import ProfileHorizontalTabs from '@/components/profile/ProfileHorizontalTabs';
 
 const AdminUserDetailPage = () => {
+  const { userId } = useParams();
+  const [tab, setTab] = useState<number>(0);
 
-    const { userId } = useParams();
-    const [tab, setTab] = useState<number>(0);
+  if (!userId) return <DataFetchingError message={'User Profile fetching error'} />;
 
-    if (!userId) return <DataFetchingError message={"User Profile fetching error"} />
-
-    return (
-        <div className="min-h-full p-2 flex flex-col">
-            <div className="mt-6 md:flex">
-                <ProfileHorizontalTabs isAdmin={true} setTab={setTab} tab={tab} tabArray={userTabs} />
-                <div className={`flex-grow`}>
-                    {tab === 0 && (
-                        <ProfileListing fetchApiFunction={() => fetchUserProfileDetails(userId)} queryKey="userProfile" userOrProviderId={userId} adminLookingUser shimmerRow={8} />
-                    ) || tab === 1 && (
-                        <AddressListing fetchApiFunction={() => fetchAddressByUserId(userId)} queryKey='' userOrProviderId={userId} />
-                    ) || tab === 2 && (
-                        <ReviewsPage userId={userId} isPage={false} />
-                    )}
-                </div>
-            </div>
+  return (
+    <div className="min-h-full p-2 flex flex-col">
+      <div className="mt-6 md:flex">
+        <ProfileHorizontalTabs isAdmin={true} setTab={setTab} tab={tab} tabArray={userTabs} />
+        <div className={`flex-grow`}>
+          {(tab === 0 && (
+            <ProfileListing
+              fetchApiFunction={() => fetchUserProfileDetails(userId)}
+              queryKey="userProfile"
+              userOrProviderId={userId}
+              adminLookingUser
+              shimmerRow={8}
+            />
+          )) ||
+            (tab === 1 && (
+              <AddressListing
+                fetchApiFunction={() => fetchAddressByUserId(userId)}
+                queryKey=""
+                userOrProviderId={userId}
+              />
+            )) ||
+            (tab === 2 && <ReviewsPage userId={userId} isPage={false} />)}
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
 
 export default AdminUserDetailPage;

@@ -1,0 +1,88 @@
+name: Slotflow Client CI
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'vite.config.ts'
+      - 'tsconfig.json'
+      - 'tsconfig.app.json'
+      - 'tsconfig.node.json'
+      - 'eslint.config.js'
+      - '.prettierrc'
+      - '.prettierignore'
+      - 'vercel.json'
+      - 'index.html'
+      - '.github/workflows/**'
+
+  pull_request:
+    branches:
+      - main
+      - dev
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'vite.config.ts'
+      - 'tsconfig.json'
+      - 'tsconfig.app.json'
+      - 'tsconfig.node.json'
+      - 'eslint.config.js'
+      - '.prettierrc'
+      - '.prettierignore'
+      - 'vercel.json'
+      - 'index.html'
+      - '.github/workflows/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # - name: Check lint
+      #   run: pnpm lint
+      
+      # - name: Check formatting
+      #   run: pnpm format:check
+
+      # - name: Run tests
+      #   run: pnpm test:run
+      
+      # - name: Build project
+      #   run:  pnpm build
+      
+      - name: Validate project
+        run: pnpm validate
+      
+      - name: Deploy to Vercel Preview
+        if: github.ref == 'refs/heads/dev'
+        run: pnpm dlx vercel deploy --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy to Vercel Production
+        if: github.ref == 'refs/heads/main'
+        run: pnpm dlx vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}

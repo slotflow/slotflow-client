@@ -1,10 +1,7 @@
-import ProviderServiceForm from "@/components/form/provider/ProviderServiceForm";
+import ProviderServiceForm from '@/components/form/provider/ProviderServiceForm';
 
 const ProviderCreateServiceDetailsPage = () => {
-
-  return (
-    <ProviderServiceForm/>
-  );
+  return <ProviderServiceForm />;
 };
 
 export default ProviderCreateServiceDetailsPage;

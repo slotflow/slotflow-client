@@ -1,5 +1,5 @@
-import { appConfig } from "../config/env";
-import { toast } from "react-toastify";
+import { appConfig } from '../config/env';
+import { toast } from 'react-toastify';
 
 export const toggleMediaTrack = async ({
   kind,
@@ -10,7 +10,7 @@ export const toggleMediaTrack = async ({
   videoRef,
   peerConnection,
 }: {
-  kind: "video" | "audio";
+  kind: 'video' | 'audio';
   stream: MediaStream | null;
   setStream: (s: MediaStream) => void;
   isOn: boolean;
@@ -19,9 +19,10 @@ export const toggleMediaTrack = async ({
   peerConnection?: RTCPeerConnection;
 }) => {
   if (isOn) {
-    stream?.getTracks()
-      .filter(t => t.kind === kind)
-      .forEach(t => t.stop());
+    stream
+      ?.getTracks()
+      .filter((t) => t.kind === kind)
+      .forEach((t) => t.stop());
 
     setIsOn(false);
     return;
@@ -42,9 +43,10 @@ export const toggleMediaTrack = async ({
         videoRef.current.srcObject = freshStream;
       }
     } else {
-      stream.getTracks()
-        .filter(t => t.kind === kind)
-        .forEach(t => stream.removeTrack(t));
+      stream
+        .getTracks()
+        .filter((t) => t.kind === kind)
+        .forEach((t) => stream.removeTrack(t));
 
       stream.addTrack(newTrack);
 
@@ -54,9 +56,7 @@ export const toggleMediaTrack = async ({
     }
 
     if (peerConnection) {
-      const sender = peerConnection
-        .getSenders()
-        .find(s => s.track?.kind === kind);
+      const sender = peerConnection.getSenders().find((s) => s.track?.kind === kind);
 
       if (sender) {
         sender.replaceTrack(newTrack);
@@ -68,6 +68,6 @@ export const toggleMediaTrack = async ({
     toast.error(`Failed to turn on ${kind}`);
     if (appConfig.isDevelopment) {
       console.error(`Cannot turn on ${kind}:`, err);
-    } 
+    }
   }
 };

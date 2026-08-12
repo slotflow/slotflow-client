@@ -2,12 +2,20 @@ import { Briefcase } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import DashboardDataCard from '../../DashboardDataCard';
 import { fetchServiceProvidersForAdmin } from '@/shared/apis/providerProfile';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 
 const ProviderListCard = () => {
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ['admin-latest-providers'],
-    queryFn: () => fetchServiceProvidersForAdmin({ limit: 5, sortBy: 'createdAt', sortOrder: 'desc' }),
+    queryFn: () =>
+      fetchServiceProvidersForAdmin({ limit: 5, sortBy: 'createdAt', sortOrder: 'desc' }),
   });
 
   const providers = data?.items || [];
@@ -26,15 +34,26 @@ const ProviderListCard = () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[60px] text-[10px] uppercase font-bold tracking-wider py-3 px-4">#</TableHead>
-              <TableHead className="text-[10px] uppercase font-bold tracking-wider py-3 px-4">Provider</TableHead>
-              <TableHead className="text-[10px] uppercase font-bold tracking-wider py-3 px-4">Email</TableHead>
+              <TableHead className="w-[60px] text-[10px] uppercase font-bold tracking-wider py-3 px-4">
+                #
+              </TableHead>
+              <TableHead className="text-[10px] uppercase font-bold tracking-wider py-3 px-4">
+                Provider
+              </TableHead>
+              <TableHead className="text-[10px] uppercase font-bold tracking-wider py-3 px-4">
+                Email
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {providers.map((provider, index) => (
-              <TableRow key={provider._id} className="hover:bg-slate-50/30 dark:hover:bg-slate-900/30 border-slate-100 dark:border-slate-800 transition-colors">
-                <TableCell className="text-xs font-medium text-slate-400 py-3 px-4">{index + 1}</TableCell>
+              <TableRow
+                key={provider._id}
+                className="hover:bg-slate-50/30 dark:hover:bg-slate-900/30 border-slate-100 dark:border-slate-800 transition-colors"
+              >
+                <TableCell className="text-xs font-medium text-slate-400 py-3 px-4">
+                  {index + 1}
+                </TableCell>
                 <TableCell className="py-3 px-4">
                   <div className="flex items-center gap-3">
                     <div className="p-1.5 bg-slate-100 dark:bg-slate-800 rounded-full">

@@ -1,51 +1,63 @@
-import { User } from "./entityInterface/userInterface";
-import { BlogArticle, FaqFields, ProviderCardsFilters, ReviewFields } from "./commonInterface";
-import { Message } from "./entityInterface/message.interface";
-import { UserViewProviderCardProps } from "./componentInterface";
-import { ProviderProfile } from "./entityInterface/providerProfileInterface";
-import { Availability } from "./entityInterface/serviceAvailabilityInterface";
-import { HearAboutUsOptionValue, PaymentProcessStatus, PaymentProcessType, PlanName, Role, ServiceCategory, SubscriptionStatus } from "./enums";
+import { User } from './entityInterface/userInterface';
+import { BlogArticle, FaqFields, ProviderCardsFilters, ReviewFields } from './commonInterface';
+import { Message } from './entityInterface/message.interface';
+import { UserViewProviderCardProps } from './componentInterface';
+import { ProviderProfile } from './entityInterface/providerProfileInterface';
+import { Availability } from './entityInterface/serviceAvailabilityInterface';
+import {
+  HearAboutUsOptionValue,
+  PaymentProcessStatus,
+  PaymentProcessType,
+  PlanName,
+  Role,
+  ServiceCategory,
+  SubscriptionStatus,
+} from './enums';
 
 // Auth slice state
-export type AuthUser = Pick<User, 
-"username" | 
-"profileImage" | 
-"phone" | 
-"email" | 
-"role" | 
-"onboardingStatus" | 
-"onboardingType" | 
-"isBlocked" | 
-"googleConnected" | 
-"stripeAccountStatus" | 
-"stripeCustomerId" | 
-"allowPushNotification" |
-"referralCode"> & 
-Pick<ProviderProfile, 
-"isAddressVerified" | 
-"isAdminVerified" | 
-"isAvailabilityVerified" | 
-"isProofsVerified" | 
-"isServiceDetailsVerified" | 
-"verificationRejectionReason" | 
-"adminVerificationStatus"> & {
-  uid: string;
-  isLoggedIn?: boolean;
-  isAddressAdded?: boolean;
-  isServiceDetailsAdded?: boolean;
-  isServiceAvailabilityAdded?: boolean;
-  isProofSubmitted?: {
-    identityProof: boolean;
-    serviceProof: boolean;
+export type AuthUser = Pick<
+  User,
+  | 'username'
+  | 'profileImage'
+  | 'phone'
+  | 'email'
+  | 'role'
+  | 'onboardingStatus'
+  | 'onboardingType'
+  | 'isBlocked'
+  | 'googleConnected'
+  | 'stripeAccountStatus'
+  | 'stripeCustomerId'
+  | 'allowPushNotification'
+  | 'referralCode'
+> &
+  Pick<
+    ProviderProfile,
+    | 'isAddressVerified'
+    | 'isAdminVerified'
+    | 'isAvailabilityVerified'
+    | 'isProofsVerified'
+    | 'isServiceDetailsVerified'
+    | 'verificationRejectionReason'
+    | 'adminVerificationStatus'
+  > & {
+    uid: string;
+    isLoggedIn?: boolean;
+    isAddressAdded?: boolean;
+    isServiceDetailsAdded?: boolean;
+    isServiceAvailabilityAdded?: boolean;
+    isProofSubmitted?: {
+      identityProof: boolean;
+      serviceProof: boolean;
+    };
+    isAdminVerified?: boolean;
+    providerSubscription?: PlanName;
+    subscriptionStartDate?: Date;
+    subscriptionEndDate?: Date;
+    subscriptionStatus?: SubscriptionStatus;
+    serviceDescription?: string;
+    token?: string;
   };
-  isAdminVerified?: boolean; 
-  providerSubscription?: PlanName;
-  subscriptionStartDate?: Date;
-  subscriptionEndDate?: Date;
-  subscriptionStatus?: SubscriptionStatus;
-  serviceDescription?: string;
-  token?: string;
-}
 
 export interface AuthState {
   authUser: AuthUser | null;
@@ -88,8 +100,8 @@ export interface AdminState {
 }
 
 export interface SetProviderRejectModalType {
-  modalState: boolean,
-  providerId: User["_id"] | null,
+  modalState: boolean;
+  providerId: User['_id'] | null;
 }
 
 // Proof data type for provider slice
@@ -131,13 +143,13 @@ type LastMessages = Record<
 >;
 
 // selected user for chat
-export type SelectedUser = Pick<User, "_id" | "username" | "profileImage">;
+export type SelectedUser = Pick<User, '_id' | 'username' | 'profileImage'>;
 
 // chat slice initial state
 export interface chatSliceInitalState {
   onlineUsers: string[] | null;
-  lastMessages: LastMessages,
-  selectedUser: SelectedUser | null,
+  lastMessages: LastMessages;
+  selectedUser: SelectedUser | null;
   socketId: string | null;
   isConnected: boolean;
   messages: Message[] | null;
@@ -146,7 +158,7 @@ export interface chatSliceInitalState {
 
 // payment slice initial state
 export interface PaymentSlice {
-  type: PaymentProcessType,
+  type: PaymentProcessType;
   isOpen: boolean;
   bookingData: {
     providerId: string;
@@ -154,13 +166,13 @@ export interface PaymentSlice {
     slot: string;
     date: Date;
     selectedServiceMode: string;
-  } | null,
+  } | null;
 
   subscriptionData: {
     planId: string;
     planDuration: number;
     isTrialPlan: boolean;
-  } | null,
+  } | null;
 
-  status: PaymentProcessStatus
+  status: PaymentProcessStatus;
 }

@@ -1,4 +1,4 @@
-import { CreditTransactionSource, CreditTransactionStatus, CreditTransactionType } from "../enums";
+import { CreditTransactionSource, CreditTransactionStatus, CreditTransactionType } from '../enums';
 
 export interface CreditTransaction {
   _id: string;

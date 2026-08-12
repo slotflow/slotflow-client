@@ -10,7 +10,7 @@ const FAQBackground = () => {
               linear-gradient(to right, currentColor 1px, transparent 1px),
               linear-gradient(to bottom, currentColor 1px, transparent 1px)
             `,
-            backgroundSize: "60px 60px",
+            backgroundSize: '60px 60px',
           }}
         />
       </div>

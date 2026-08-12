@@ -1,27 +1,26 @@
-import { ArrowRight } from "lucide-react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { AppDispatch } from "@/shared/redux/appStore";
-import { contactSupportOptions } from "@/shared/utils/constants";
-import { toggleLiveChatBubble } from "@/shared/redux/slices/appSlice";
+import { ArrowRight } from 'lucide-react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { AppDispatch } from '@/shared/redux/appStore';
+import { contactSupportOptions } from '@/shared/utils/constants';
+import { toggleLiveChatBubble } from '@/shared/redux/slices/appSlice';
 
 const ContactSupportSection = () => {
-
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
   const handleAction = (action: string) => {
     switch (action) {
-      case "chat":
+      case 'chat':
         dispatch(toggleLiveChatBubble());
         break;
 
-      case "help":
-        navigate("/help");
+      case 'help':
+        navigate('/help');
         break;
 
-      case "faq":
-        navigate("/faq");
+      case 'faq':
+        navigate('/faq');
         break;
     }
   };
@@ -30,13 +29,11 @@ const ContactSupportSection = () => {
     <section id="support" className="py-28">
       <div className="mx-auto max-w-7xl px-4 lg:px-0">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-4xl font-bold tracking-tight">
-            Need help right away?
-          </h2>
+          <h2 className="text-4xl font-bold tracking-tight">Need help right away?</h2>
 
           <p className="mt-5 text-lg text-muted-foreground">
-            Choose the fastest way to connect with our team or explore helpful
-            resources at your own pace.
+            Choose the fastest way to connect with our team or explore helpful resources at your own
+            pace.
           </p>
         </div>
 
@@ -50,9 +47,7 @@ const ContactSupportSection = () => {
                 <item.icon className="h-7 w-7 text-primary" />
               </div>
 
-              <h3 className="mt-8 text-2xl font-semibold">
-                {item.title}
-              </h3>
+              <h3 className="mt-8 text-2xl font-semibold">{item.title}</h3>
 
               <button
                 className="mt-10 flex items-center gap-2 font-semibold text-primary transition hover:gap-3 cursor-pointer"

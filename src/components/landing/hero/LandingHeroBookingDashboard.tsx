@@ -1,12 +1,9 @@
-import {
-  Search,
-  ShieldCheck,
-} from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import HeroProviderCard from "./HeroProviderCard";
-import Floating from "@/components/animation/Floating";
-import AnimatedCounter from "@/components/animation/AnimatedCounter";
-import MoveUpward from "@/components/animation/MoveUpward";
+import { Search, ShieldCheck } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import HeroProviderCard from './HeroProviderCard';
+import Floating from '@/components/animation/Floating';
+import AnimatedCounter from '@/components/animation/AnimatedCounter';
+import MoveUpward from '@/components/animation/MoveUpward';
 
 const LandingHeroBookingDashboard = () => {
   return (
@@ -16,16 +13,10 @@ const LandingHeroBookingDashboard = () => {
         <div className="border-b p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">
-                Welcome back
-              </p>
-              <h3 className="mt-1 text-xl font-semibold">
-                Find Your Service
-              </h3>
+              <p className="text-sm text-muted-foreground">Welcome back</p>
+              <h3 className="mt-1 text-xl font-semibold">Find Your Service</h3>
             </div>
-            <Badge className="rounded-full">
-              Live
-            </Badge>
+            <Badge className="rounded-full">Live</Badge>
           </div>
         </div>
         <MoveUpward>
@@ -33,31 +24,21 @@ const LandingHeroBookingDashboard = () => {
             <div className="flex items-center gap-3 rounded-2xl border bg-muted/40 px-4 py-4">
               <Search className="h-5 w-5 text-muted-foreground" />
               <div className="flex-1">
-                <p className="text-sm text-muted-foreground">
-                  Search services
-                </p>
-                <p className="font-medium">
-                  Hair Salon, Dentist...
-                </p>
+                <p className="text-sm text-muted-foreground">Search services</p>
+                <p className="font-medium">Hair Salon, Dentist...</p>
               </div>
             </div>
           </div>
         </MoveUpward>
         <MoveUpward>
           <div className="px-6">
-            <p className="mb-4 text-sm font-medium text-muted-foreground">
-              Categories
-            </p>
+            <p className="mb-4 text-sm font-medium text-muted-foreground">Categories</p>
             <div className="grid grid-cols-2 gap-2 md:gap-3">
-              {[
-                "Salon",
-                "Clinic",
-                "Spa",
-                "Consultant",
-              ].map((item) => (
+              {['Salon', 'Clinic', 'Spa', 'Consultant'].map((item) => (
                 <div
                   key={item}
-                  className="rounded-2xl border bg-background p-2 md:p-4 text-center font-medium transition-all duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-lg cursor-pointer">
+                  className="rounded-2xl border bg-background p-2 md:p-4 text-center font-medium transition-all duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-lg cursor-pointer"
+                >
                   {item}
                 </div>
               ))}
@@ -67,12 +48,8 @@ const LandingHeroBookingDashboard = () => {
         <div className="mt-8 px-6">
           <MoveUpward>
             <div className="mb-4 flex items-center justify-between">
-              <h4 className="font-semibold">
-                Top Providers
-              </h4>
-              <span className="text-sm text-primary">
-                View all
-              </span>
+              <h4 className="font-semibold">Top Providers</h4>
+              <span className="text-sm text-primary">View all</span>
             </div>
           </MoveUpward>
           <div className="space-y-4">
@@ -109,11 +86,7 @@ const LandingHeroBookingDashboard = () => {
           <div className="border-t p-6">
             <div className="grid grid-cols-2 gap-4">
               <div className="rounded-2xl border bg-muted/30 p-5">
-                <AnimatedCounter
-                  text="Todays Bookings"
-                  to={124}
-                  className="text-2xl font-bold"
-                />
+                <AnimatedCounter text="Todays Bookings" to={124} className="text-2xl font-bold" />
               </div>
               <div className="rounded-2xl border bg-muted/30 p-5">
                 <AnimatedCounter
@@ -134,21 +107,14 @@ const LandingHeroBookingDashboard = () => {
               <ShieldCheck className="h-5 w-5 text-green-600" />
             </div>
             <div>
-              <p className="font-semibold">
-                Booking Confirmed
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Appointment secured.
-              </p>
+              <p className="font-semibold">Booking Confirmed</p>
+              <p className="text-sm text-muted-foreground">Appointment secured.</p>
             </div>
           </div>
         </div>
       </Floating>
     </div>
   );
-}
+};
 
 export default LandingHeroBookingDashboard;
-
-
-

@@ -1,17 +1,13 @@
-import { ProfileDetailsShimmerProps } from "@/shared/interface/shimmerInterface";
+import { ProfileDetailsShimmerProps } from '@/shared/interface/shimmerInterface';
 
-const DataFieldShimmer = ({ 
-    row 
-}: ProfileDetailsShimmerProps) => {
-    return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-            {Array.from({ length: row }).map((_, index) => (
-                <div key={index} className="shimmer h-16 rounded-sm">
+const DataFieldShimmer = ({ row }: ProfileDetailsShimmerProps) => {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+      {Array.from({ length: row }).map((_, index) => (
+        <div key={index} className="shimmer h-16 rounded-sm"></div>
+      ))}
+    </div>
+  );
+};
 
-                </div>
-            ))}
-        </div>
-    )
-}
-
-export default DataFieldShimmer
+export default DataFieldShimmer;

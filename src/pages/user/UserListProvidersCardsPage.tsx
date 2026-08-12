@@ -17,27 +17,29 @@ import { UserFetchServiceProvidersResponse } from '@/shared/interface/api/user';
  */
 
 const UserListProvidersCardsPage = () => {
-
   const dispatch = useDispatch<AppDispatch>();
-  const [search, setSearch] = useState<string>("");
+  const [search, setSearch] = useState<string>('');
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
-  const { selectedCategories, providers, providerCardsfFlter } = useSelector((store: RootState) => store.user);
+  const { selectedCategories, providers, providerCardsfFlter } = useSelector(
+    (store: RootState) => store.user,
+  );
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError, error } = useInfiniteQuery({
-    queryKey: ['providers', providerCardsfFlter],
-    queryFn: async ({ pageParam = 0 }) => {
-      const res = await fetchServiceProvidersForUser({
-        ...providerCardsfFlter,
-        skip: pageParam,
-        limit: 12,
-      });
-      return res.data as UserFetchServiceProvidersResponse[];
-    },
-    initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages) => {
-      return lastPage?.length === 12 ? allPages.length * 12 : undefined;
-    },
-  });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError, error } =
+    useInfiniteQuery({
+      queryKey: ['providers', providerCardsfFlter],
+      queryFn: async ({ pageParam = 0 }) => {
+        const res = await fetchServiceProvidersForUser({
+          ...providerCardsfFlter,
+          skip: pageParam,
+          limit: 12,
+        });
+        return res.data as UserFetchServiceProvidersResponse[];
+      },
+      initialPageParam: 0,
+      getNextPageParam: (lastPage, allPages) => {
+        return lastPage?.length === 12 ? allPages.length * 12 : undefined;
+      },
+    });
 
   useEffect(() => {
     if (!loadMoreRef.current) return;
@@ -54,7 +56,7 @@ const UserListProvidersCardsPage = () => {
         root: null,
         rootMargin: '200px',
         threshold: 0,
-      }
+      },
     );
 
     observer.observe(loadMoreRef.current);
@@ -68,9 +70,8 @@ const UserListProvidersCardsPage = () => {
     if (data) {
       const flattenedProviders = data?.pages.flat();
       dispatch(setProviders(flattenedProviders));
-    };
+    }
   }, [selectedCategories, dispatch, data]);
-
 
   return (
     <div className="p-2 min-h-full flex flex-col">
@@ -82,16 +83,15 @@ const UserListProvidersCardsPage = () => {
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search for a service..."
               className="h-10 rounded-2xl border-0 bg-background pl-12 pr-4 ring-1 ring-border transition-all focus-visible:ring-1 focus-visible:ring-[var(--mainColor)]"
-              />
-              <div>
-                {search}
-              </div>
+            />
+            <div>{search}</div>
           </div>
           <Button
             title="Search"
             variant="default"
             className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
-            onClick={() => dispatch(toggleFilterSideBar())} >
+            onClick={() => dispatch(toggleFilterSideBar())}
+          >
             Search
             <Search />
           </Button>
@@ -100,9 +100,10 @@ const UserListProvidersCardsPage = () => {
           title="Filters"
           variant="default"
           className="h-10 cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
-          onClick={() => dispatch(toggleFilterSideBar())} >
-           Filters
-          <Filter/>
+          onClick={() => dispatch(toggleFilterSideBar())}
+        >
+          Filters
+          <Filter />
         </Button>
       </div>
 
@@ -112,7 +113,7 @@ const UserListProvidersCardsPage = () => {
         </div>
       ) : isError && error ? (
         <div className="flex-1 flex justify-center items-center">
-          <DataFetchingError message={(error as Error).message || "Something went wrong"} />
+          <DataFetchingError message={(error as Error).message || 'Something went wrong'} />
         </div>
       ) : providers && providers.length > 0 ? (
         <>
@@ -121,10 +122,7 @@ const UserListProvidersCardsPage = () => {
               <UserViewProviderCard key={index} {...provider} />
             ))}
           </div>
-          <div
-            ref={loadMoreRef}
-            className="h-12 flex items-center justify-center"
-          >
+          <div ref={loadMoreRef} className="h-12 flex items-center justify-center">
             {isFetchingNextPage && (
               <div className="flex w-full justify-center gap-2">
                 <p>Fetching more providers...</p>

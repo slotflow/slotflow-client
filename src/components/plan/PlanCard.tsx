@@ -1,32 +1,33 @@
-import { Badge } from "../ui/badge";
-import { Button } from "../ui/button";
-import { toast } from "react-toastify";
-import { CheckIcon } from "lucide-react";
-import { useDispatch } from "react-redux";
-import { useForm } from "react-hook-form";
-import SelectField from "../form/SelectField";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { planDurations } from "@/shared/utils/constants";
-import { formatNumberToPrice } from "@/shared/helper/formatter";
-import { PlanName, SubscriptionValidity } from "@/shared/interface/enums";
-import { ProviderPlanCardProps } from "@/shared/interface/componentInterface";
-import { PlanDurationFormType, planDurationZodSchema } from "@/shared/zod/providerZod";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
-import { setPaymentSelectionOpen, setSubscriptionPaymentData } from "@/shared/redux/slices/paymentSlice";
+import { Badge } from '../ui/badge';
+import { Button } from '../ui/button';
+import { toast } from 'react-toastify';
+import { CheckIcon } from 'lucide-react';
+import { useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import SelectField from '../form/SelectField';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { planDurations } from '@/shared/utils/constants';
+import { formatNumberToPrice } from '@/shared/helper/formatter';
+import { PlanName, SubscriptionValidity } from '@/shared/interface/enums';
+import { ProviderPlanCardProps } from '@/shared/interface/componentInterface';
+import { PlanDurationFormType, planDurationZodSchema } from '@/shared/zod/providerZod';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card';
+import {
+  setPaymentSelectionOpen,
+  setSubscriptionPaymentData,
+} from '@/shared/redux/slices/paymentSlice';
 
 const PlanCard = ({
   plan,
   isTrial,
   dummy,
   popular,
-  billingCycle = "monthly"
+  billingCycle = 'monthly',
 }: ProviderPlanCardProps) => {
   const dispatch = useDispatch();
 
   // yearly pricing is controlled with 11 months and 1 month is free
-  const yearlyPrice = plan.price > 0
-    ? plan.price * 11
-    : plan.price;
+  const yearlyPrice = plan.price > 0 ? plan.price * 11 : plan.price;
 
   const {
     register,
@@ -40,40 +41,48 @@ const PlanCard = ({
   });
 
   const handleGoToPayment = handleSubmit((data) => {
-    if (plan.planName !== PlanName.TRIAL && (!data.planDuration || data.planDuration === SubscriptionValidity.SEVEN_DAYS)) {
-      toast.warning("Please select a plan duration");
+    if (
+      plan.planName !== PlanName.TRIAL &&
+      (!data.planDuration || data.planDuration === SubscriptionValidity.SEVEN_DAYS)
+    ) {
+      toast.warning('Please select a plan duration');
       return;
-    };
+    }
 
-    dispatch(setSubscriptionPaymentData({
-      isTrialPlan: Boolean(isTrial),
-      planDuration: data.planDuration,
-      planId: plan._id,
-    }))
+    dispatch(
+      setSubscriptionPaymentData({
+        isTrialPlan: Boolean(isTrial),
+        planDuration: data.planDuration,
+        planId: plan._id,
+      }),
+    );
     dispatch(setPaymentSelectionOpen(true));
   });
 
   return (
     <Card
       key={plan._id}
-      className={`p-4 rounded-2xl shadow-sm flex flex-col hover:border-[var(--mainColor)] ${popular ? "border-primary" : ""
-        }`}
+      className={`p-4 rounded-2xl shadow-sm flex flex-col hover:border-[var(--mainColor)] ${
+        popular ? 'border-primary' : ''
+      }`}
     >
       <CardHeader>
-        {popular && (
-          <Badge className="uppercase w-max self-center mb-3">
-            Most popular
-          </Badge>
-        )}
-        <CardTitle className="mb-3 text-lg lg:text-xl rounded-4xl p-1 text-center">{plan.planName}</CardTitle>
+        {popular && <Badge className="uppercase w-max self-center mb-3">Most popular</Badge>}
+        <CardTitle className="mb-3 text-lg lg:text-xl rounded-4xl p-1 text-center">
+          {plan.planName}
+        </CardTitle>
         <span className="font-bold text-5xl text-center">
-          {billingCycle === "monthly" ? plan.price === 0 ? "FREE" : formatNumberToPrice(plan.price,0) : yearlyPrice === 0 ? "FREE" : formatNumberToPrice(yearlyPrice,0)}
+          {billingCycle === 'monthly'
+            ? plan.price === 0
+              ? 'FREE'
+              : formatNumberToPrice(plan.price, 0)
+            : yearlyPrice === 0
+              ? 'FREE'
+              : formatNumberToPrice(yearlyPrice, 0)}
         </span>
       </CardHeader>
 
-      <CardDescription className="text-center">
-        {plan.description}
-      </CardDescription>
+      <CardDescription className="text-center">{plan.description}</CardDescription>
 
       <CardContent className="flex-1">
         <ul className="mt-7 space-y-2.5 text-sm">

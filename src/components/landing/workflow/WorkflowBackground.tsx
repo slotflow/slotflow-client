@@ -11,7 +11,7 @@ const WorkflowBackground = () => {
               linear-gradient(to right, currentColor 1px, transparent 1px),
               linear-gradient(to bottom, currentColor 1px, transparent 1px)
             `,
-            backgroundSize: "56px 56px",
+            backgroundSize: '56px 56px',
           }}
         />
       </div>

@@ -1,10 +1,6 @@
-import { AlertProps } from "@/shared/interface/componentInterface";
+import { AlertProps } from '@/shared/interface/componentInterface';
 
-const AlertBox = ({
-  icon: Icon,
-  heading,
-  message,
-}: AlertProps) => {
+const AlertBox = ({ icon: Icon, heading, message }: AlertProps) => {
   return (
     <div className="items-start gap-3 bg-yellow-50 border border-yellow-200 text-yellow-800 rounded-xl p-4 shadow-sm mb-4">
       <div className="flex">
@@ -12,9 +8,7 @@ const AlertBox = ({
         <h4 className="font-semibold text-sm ml-2">{heading}</h4>
       </div>
       <div className="flex flex-col">
-        <p className="text-sm text-justify">
-          {message}
-        </p>
+        <p className="text-sm text-justify">{message}</p>
       </div>
     </div>
   );

@@ -1,29 +1,25 @@
-import FormField from "../FormField";
-import { toast } from "react-toastify";
-import SelectField from "../SelectField";
-import { useForm } from "react-hook-form";
-import { FormButton } from "../FormSplits";
-import { Button } from "@/components/ui/button";
-import { appConfig } from "@/shared/config/env";
-import { RootState } from "@/shared/redux/appStore";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useDispatch, useSelector } from "react-redux";
-import { useQueryClient } from "@tanstack/react-query";
-import { AppDispatch } from "recharts/types/state/store";
-import { slideOut } from "@/shared/helper/gsapAnimationSlide";
-import { verificationOptions } from "@/shared/utils/constants";
-import { handleFormError } from "@/shared/helper/formErrorCatcher";
-import { AdminVerificationStatus } from "@/shared/interface/enums";
-import { adminRejectProvider } from "@/shared/apis/providerProfile";
-import { setAdminVerificationState } from "@/shared/redux/slices/authSlice";
-import { RejectproviderFormProps } from "@/shared/interface/componentInterface";
-import { AdminRejectProviderFormType, adminRejectProviderZodSchema } from "@/shared/zod/adminZod";
+import FormField from '../FormField';
+import { toast } from 'react-toastify';
+import SelectField from '../SelectField';
+import { useForm } from 'react-hook-form';
+import { FormButton } from '../FormButton';
+import { Button } from '@/components/ui/button';
+import { appConfig } from '@/shared/config/env';
+import { RootState } from '@/shared/redux/appStore';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useDispatch, useSelector } from 'react-redux';
+import { useQueryClient } from '@tanstack/react-query';
+import { AppDispatch } from 'recharts/types/state/store';
+import { slideOut } from '@/shared/helper/gsapAnimationSlide';
+import { verificationOptions } from '@/shared/utils/constants';
+import { handleFormError } from '@/shared/helper/formErrorCatcher';
+import { AdminVerificationStatus } from '@/shared/interface/enums';
+import { adminRejectProvider } from '@/shared/apis/providerProfile';
+import { setAdminVerificationState } from '@/shared/redux/slices/authSlice';
+import { RejectproviderFormProps } from '@/shared/interface/componentInterface';
+import { AdminRejectProviderFormType, adminRejectProviderZodSchema } from '@/shared/zod/adminZod';
 
-const RejectproviderForm = ({
-  onClose,
-  formRef,
-}: RejectproviderFormProps) => {
-
+const RejectproviderForm = ({ onClose, formRef }: RejectproviderFormProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const queryClient = useQueryClient();
 
@@ -43,9 +39,9 @@ const RejectproviderForm = ({
     formState: { errors, isSubmitting, isValid },
   } = useForm<AdminRejectProviderFormType>({
     resolver: zodResolver(adminRejectProviderZodSchema),
-    mode: "onChange",
+    mode: 'onChange',
     defaultValues: {
-      verificationRejectionReason: "",
+      verificationRejectionReason: '',
       isAddressVerified: false,
       isAvailabilityVerified: false,
       isProofsVerified: false,
@@ -56,7 +52,7 @@ const RejectproviderForm = ({
   const onSubmit = async (data: AdminRejectProviderFormType) => {
     try {
       if (!rejectProviderId) {
-        toast.error("Provider is not selected");
+        toast.error('Provider is not selected');
         return;
       }
 
@@ -66,13 +62,13 @@ const RejectproviderForm = ({
         reset();
         handleCloseForm();
         dispatch(setAdminVerificationState(AdminVerificationStatus.REJECTED));
-        queryClient.invalidateQueries({ queryKey: ["providers"] });
+        queryClient.invalidateQueries({ queryKey: ['providers'] });
       } else {
         toast.error(res.message);
       }
     } catch (error) {
       if (appConfig.isDevelopment) {
-        console.log("Error while rejecting provider : ", error);
+        console.log('Error while rejecting provider : ', error);
       }
     }
   };
@@ -83,11 +79,7 @@ const RejectproviderForm = ({
       className="w-auto md:w-lg rounded-lg bg-[var(--background)] p-6 shadow-xl border-1"
     >
       <h3 className="text-lg lg:text-2xl font-bold text-center my-4">Reject Provider</h3>
-      <form
-        onSubmit={handleSubmit(onSubmit, handleFormError(setFocus))}
-        className="space-y-6"
-      >
-
+      <form onSubmit={handleSubmit(onSubmit, handleFormError(setFocus))} className="space-y-6">
         <SelectField<AdminRejectProviderFormType, boolean>
           id="isAddressVerified"
           label="Address Verification"
@@ -132,7 +124,7 @@ const RejectproviderForm = ({
 
         <div className="space-y-2">
           <FormButton
-            text={isSubmitting ? "Rejecting..." : "Reject Provider"}
+            text={isSubmitting ? 'Rejecting...' : 'Reject Provider'}
             loading={isSubmitting}
             disabled={isSubmitting || !isValid}
             title="Reject Provider"

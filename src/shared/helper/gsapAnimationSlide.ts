@@ -1,4 +1,4 @@
-import gsap from "gsap";
+import gsap from 'gsap';
 
 interface SlideOptions {
   yFrom?: number;
@@ -19,28 +19,22 @@ export const slideIn = (
     opacityFrom = 0,
     opacityTo = 1,
     duration = 0.45,
-    ease = "power3.out",
-  }: SlideOptions = {}
+    ease = 'power3.out',
+  }: SlideOptions = {},
 ) => {
   if (!element) return;
 
   gsap.fromTo(
     element,
     { y: yFrom, opacity: opacityFrom },
-    { y: yTo, opacity: opacityTo, duration, ease }
+    { y: yTo, opacity: opacityTo, duration, ease },
   );
 };
 
 /** Slide OUT (center → top) */
 export const slideOut = (
   element: HTMLElement | null,
-  {
-    yTo = -120,
-    opacityTo = 0,
-    duration = 0.35,
-    ease = "power3.in",
-    onComplete,
-  }: SlideOptions = {}
+  { yTo = -120, opacityTo = 0, duration = 0.35, ease = 'power3.in', onComplete }: SlideOptions = {},
 ) => {
   if (!element) return;
 

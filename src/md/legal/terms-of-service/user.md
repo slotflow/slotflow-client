@@ -12,7 +12,6 @@ By accessing, registering for, or using the Platform, you acknowledge that you h
 
 If you are using the Platform on behalf of a business, organization, or other legal entity, you represent and warrant that you have the authority to bind that entity to these Terms. In such cases, "you" and "User" refer to both you as an individual and the entity you represent.
 
-
 ## 1. DEFINITIONS
 
 For the purposes of these Terms of Service, the following definitions apply:
@@ -32,7 +31,6 @@ For the purposes of these Terms of Service, the following definitions apply:
 **1.7 Payment** means any payment made by a User for booking Services through the Platform, including applicable taxes, service charges, and processing fees where applicable.
 
 **1.8 Intellectual Property Rights** means all copyrights, trademarks, patents, trade secrets, database rights, design rights, domain names, and all other intellectual property or proprietary rights recognized under applicable laws.
-
 
 ## 2. Eligibility
 
@@ -56,23 +54,20 @@ You agree to use the Platform in accordance with all applicable laws, regulation
 
 You may not create or use an Account if:
 
-* Your Account has previously been suspended or terminated by SlotFlow.
-* You impersonate another individual, business, or organization.
-* You provide false, misleading, or inaccurate information during registration or while using the Platform.
-* Your use of the Platform violates applicable laws or these Terms.
+- Your Account has previously been suspended or terminated by SlotFlow.
+- You impersonate another individual, business, or organization.
+- You provide false, misleading, or inaccurate information during registration or while using the Platform.
+- Your use of the Platform violates applicable laws or these Terms.
 
 SlotFlow reserves the right to suspend or terminate Accounts that violate these eligibility requirements.
-
-
-
 
 ## 3. Account Registration and Security
 
 ## 3.1 Account Registration
 
-To access certain features of the Platform, you must create an Account by providing your full name, a valid email address, and a password. You may also register or sign in using a supported third-party authentication provider, such as Google, where available.
+To access certain features of the Platform, you must create an Account by providing your full name, a valid email, and a password. You may also register or sign in using a supported third-party authentication provider, such as Google, where available.
 
-Your email address must be verified using the verification method provided by SlotFlow before your Account can be activated.
+Your email must be verified using the verification method provided by SlotFlow before your Account can be activated.
 
 ## 3.2 Accurate Information
 
@@ -82,10 +77,10 @@ You agree to provide accurate, current, and complete information during registra
 
 You are responsible for:
 
-* Maintaining the confidentiality of your Account credentials.
-* Ensuring that your login credentials are not shared with any other person.
-* All activities performed through your Account.
-* Promptly notifying SlotFlow if you believe your Account has been accessed without authorization or your credentials have been compromised.
+- Maintaining the confidentiality of your Account credentials.
+- Ensuring that your login credentials are not shared with any other person.
+- All activities performed through your Account.
+- Promptly notifying SlotFlow if you believe your Account has been accessed without authorization or your credentials have been compromised.
 
 SlotFlow is not responsible for any loss or damage resulting from your failure to maintain the security of your Account.
 
@@ -101,16 +96,14 @@ Users may request deletion of their Account at any time through the Platform. Up
 
 SlotFlow reserves the right to suspend or terminate your Account, with or without prior notice, if we reasonably believe that you have:
 
-* Provided false, misleading, or incomplete information.
-* Violated these Terms or other Platform policies.
-* Engaged in fraudulent or unlawful activities.
-* Attempted payment fraud or chargeback abuse.
-* Created fake or malicious bookings.
-* Harassed, threatened, or abused another User or Service Provider.
-* Used the Platform for spam, scams, or other malicious activities.
-* Attempted to interfere with the security, integrity, or operation of the Platform.
-
-
+- Provided false, misleading, or incomplete information.
+- Violated these Terms or other Platform policies.
+- Engaged in fraudulent or unlawful activities.
+- Attempted payment fraud or chargeback abuse.
+- Created fake or malicious bookings.
+- Harassed, threatened, or abused another User or Service Provider.
+- Used the Platform for spam, scams, or other malicious activities.
+- Attempted to interfere with the security, integrity, or operation of the Platform.
 
 ## 4. Appointment Payments
 
@@ -134,9 +127,9 @@ Users may cancel Appointments in accordance with the SlotFlow Cancellation and R
 
 Where a refund is applicable, the refunded amount may be reduced by a cancellation fee based on factors including, but not limited to:
 
-* Time remaining before the scheduled Appointment.
-* Cancellation timing.
-* Applicable Platform policies.
+- Time remaining before the scheduled Appointment.
+- Cancellation timing.
+- Applicable Platform policies.
 
 The applicable refund amount and cancellation charges will be communicated during the cancellation process.
 
@@ -147,10 +140,6 @@ Where applicable, taxes, including Goods and Services Tax (GST), may be included
 ## 4.6 Payment Disputes
 
 If you believe a payment has been processed incorrectly, you should contact SlotFlow as soon as reasonably possible. We may investigate the transaction and work with our payment service providers to resolve legitimate payment-related issues.
-
-
-
-
 
 ## 5. Permitted Use of the Platform
 
@@ -166,17 +155,17 @@ You agree to use the Platform only for lawful purposes and in accordance with th
 
 You must not:
 
-* Copy, reproduce, distribute, or commercially exploit any part of the Platform without prior written permission.
-* Reverse engineer, decompile, disassemble, or attempt to discover the source code of any part of the Platform.
-* Use bots, crawlers, scrapers, automated scripts, or similar technologies to collect information from the Platform.
-* Collect, download, or harvest Service Provider information or other Platform data for commercial purposes.
-* Attempt to gain unauthorized access to any Account, system, database, or network connected to the Platform.
-* Introduce malware, viruses, ransomware, malicious code, or any technology intended to disrupt the Platform.
-* Use the Platform to send spam, phishing messages, fraudulent communications, or misleading content.
-* Impersonate another individual or organization.
-* Create fake Appointments or engage in fraudulent booking activities.
-* Misuse or attempt to manipulate the Platform's artificial intelligence features, including prompt injection, automated abuse, or attempts to bypass security or usage controls.
-* Use the Platform in violation of any applicable law or regulation.
+- Copy, reproduce, distribute, or commercially exploit any part of the Platform without prior written permission.
+- Reverse engineer, decompile, disassemble, or attempt to discover the source code of any part of the Platform.
+- Use bots, crawlers, scrapers, automated scripts, or similar technologies to collect information from the Platform.
+- Collect, download, or harvest Service Provider information or other Platform data for commercial purposes.
+- Attempt to gain unauthorized access to any Account, system, database, or network connected to the Platform.
+- Introduce malware, viruses, ransomware, malicious code, or any technology intended to disrupt the Platform.
+- Use the Platform to send spam, phishing messages, fraudulent communications, or misleading content.
+- Impersonate another individual or organization.
+- Create fake Appointments or engage in fraudulent booking activities.
+- Misuse or attempt to manipulate the Platform's artificial intelligence features, including prompt injection, automated abuse, or attempts to bypass security or usage controls.
+- Use the Platform in violation of any applicable law or regulation.
 
 ## 5.4 Public API Usage
 
@@ -194,7 +183,6 @@ Your use of those services is governed by their respective terms, privacy polici
 
 You may not use the Platform or its data to develop, benchmark, market, train artificial intelligence models, or operate products or services that compete with SlotFlow without prior written permission.
 
-
 ## 6. User Content and Reviews
 
 ## 6.1 Ownership of User Content
@@ -205,11 +193,11 @@ You retain ownership of the content you submit to the Platform, including your p
 
 By submitting User Content to the Platform, you grant SlotFlow a worldwide, non-exclusive, royalty-free license to store, host, reproduce, display, and process such content solely for the purposes of:
 
-* Operating and maintaining the Platform.
-* Providing Appointment-related services.
-* Displaying reviews and ratings.
-* Resolving disputes and providing customer support.
-* Complying with applicable legal obligations.
+- Operating and maintaining the Platform.
+- Providing Appointment-related services.
+- Displaying reviews and ratings.
+- Resolving disputes and providing customer support.
+- Complying with applicable legal obligations.
 
 This license automatically ends when your User Content is permanently deleted from the Platform, except where retention is required by law or for legitimate legal, security, or dispute-resolution purposes.
 
@@ -237,13 +225,13 @@ Profile image deletions will generally take effect immediately, subject to norma
 
 You must not upload, post, transmit, or otherwise make available any content that:
 
-* Violates any applicable law.
-* Infringes the intellectual property or other rights of another person.
-* Contains false, misleading, or fraudulent information.
-* Is abusive, threatening, defamatory, discriminatory, obscene, or otherwise inappropriate.
-* Contains malware, viruses, or other harmful code.
-* Impersonates another individual or organization.
-* Discloses another person's confidential or personal information without authorization.
+- Violates any applicable law.
+- Infringes the intellectual property or other rights of another person.
+- Contains false, misleading, or fraudulent information.
+- Is abusive, threatening, defamatory, discriminatory, obscene, or otherwise inappropriate.
+- Contains malware, viruses, or other harmful code.
+- Impersonates another individual or organization.
+- Discloses another person's confidential or personal information without authorization.
 
 ## 6.7 Content Moderation
 
@@ -256,12 +244,6 @@ We may also cooperate with law enforcement or regulatory authorities where requi
 While SlotFlow maintains appropriate operational safeguards, Users are responsible for retaining copies of any content they consider important.
 
 SlotFlow is not liable for loss of User Content resulting from events beyond its reasonable control.
-
-
-
-
-
-
 
 ## 7. Intellectual Property
 
@@ -290,10 +272,6 @@ If you submit suggestions, ideas, feature requests, bug reports, comments, or ot
 ## 7.5 Reservation of Rights
 
 All rights not expressly granted under these Terms are reserved by SlotFlow and its licensors.
-
-
-
-
 
 ## 8. Acceptable Use Policy
 
@@ -325,12 +303,12 @@ Messaging and video consultation features must be used solely for legitimate App
 
 Users must not use these features to:
 
-* Send advertisements or unsolicited promotional content.
-* Distribute spam or phishing messages.
-* Share illegal, offensive, or sexually explicit material.
-* Transmit malware or harmful files.
-* Stream or publicly broadcast Platform video consultations.
-* Request confidential information such as passwords, one-time passwords (OTPs), or payment credentials.
+- Send advertisements or unsolicited promotional content.
+- Distribute spam or phishing messages.
+- Share illegal, offensive, or sexually explicit material.
+- Transmit malware or harmful files.
+- Stream or publicly broadcast Platform video consultations.
+- Request confidential information such as passwords, one-time passwords (OTPs), or payment credentials.
 
 Users may take screenshots only in accordance with applicable law and with appropriate respect for the privacy and rights of other participants.
 
@@ -346,9 +324,6 @@ Users must not attempt to misuse or manipulate SlotFlow's artificial intelligenc
 
 Where SlotFlow reasonably believes that a User has violated this Acceptable Use Policy, we may investigate the matter and take appropriate action, including issuing warnings, removing content, restricting Platform functionality, suspending or terminating Accounts, or reporting unlawful activities to the appropriate authorities where required by law.
 
-
-
-
 ## 9. Account Suspension and Termination
 
 ## 9.1 Account Closure by Users
@@ -361,23 +336,23 @@ Account deletion requests cannot be completed while there is an active dispute, 
 
 Upon successful deletion of a User Account:
 
-* Your personal profile information will be permanently deleted from the Platform.
-* Your profile image will be removed.
-* Reviews submitted by you may remain on the Platform in an anonymous form where appropriate.
-* Completed Appointment records may be retained where required for legal compliance, accounting, fraud prevention, dispute resolution, or other legitimate business purposes.
-* Information required by applicable law may continue to be retained for the period required by law.
+- Your personal profile information will be permanently deleted from the Platform.
+- Your profile image will be removed.
+- Reviews submitted by you may remain on the Platform in an anonymous form where appropriate.
+- Completed Appointment records may be retained where required for legal compliance, accounting, fraud prevention, dispute resolution, or other legitimate business purposes.
+- Information required by applicable law may continue to be retained for the period required by law.
 
 ## 9.3 Suspension or Termination by SlotFlow
 
 SlotFlow may temporarily suspend or permanently terminate your Account, with or without prior notice where permitted by law, if we reasonably believe that:
 
-* You have violated these Terms or other Platform policies.
-* You have engaged in fraud, payment abuse, spam, harassment, or unlawful conduct.
-* Your Account presents a security risk or has been compromised.
-* You misuse the Platform or its artificial intelligence features.
-* We are required to do so by applicable law or a lawful request from a competent authority.
+- You have violated these Terms or other Platform policies.
+- You have engaged in fraud, payment abuse, spam, harassment, or unlawful conduct.
+- Your Account presents a security risk or has been compromised.
+- You misuse the Platform or its artificial intelligence features.
+- We are required to do so by applicable law or a lawful request from a competent authority.
 
-Where appropriate, SlotFlow will notify you of the action taken through your registered email address. You may contact Support to request a review of the decision.
+Where appropriate, SlotFlow will notify you of the action taken through your registered email. You may contact Support to request a review of the decision.
 
 ## 9.4 Effect of Suspension
 

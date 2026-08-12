@@ -10,16 +10,16 @@ Creating a SlotFlow account allows you to discover service providers, schedule a
 
 1. Open the **Sign Up** page.
 2. Enter your full name.
-3. Provide a valid email address.
+3. Provide a valid email.
 4. Create a strong password.
 5. Read and accept the **Terms of Service** and **Privacy Policy**.
 6. Click **Create Account**.
 
-Once your account has been created, you'll be asked to verify your email address before accessing all features.
+Once your account has been created, you'll be asked to verify your email before accessing all features.
 
 ### Tips
 
-- Use an email address you access regularly.
+- Use an email you access regularly.
 - Create a password containing uppercase letters, lowercase letters, numbers, and special characters.
 - Keep your login credentials secure and never share them with anyone.
 
@@ -32,7 +32,7 @@ After creating your account and verifying your email, you can sign in to access 
 ### Steps for login
 
 1. Open the **Login** page.
-2. Enter your registered email address.
+2. Enter your registered email.
 3. Enter your password.
 4. Click **Sign In**.
 
@@ -43,7 +43,7 @@ If you registered using Google, simply select **Continue with Google**.
 If you can't remember your password:
 
 1. Select **Forgot Password** on the login page.
-2. Enter your registered email address.
+2. Enter your registered email.
 3. Follow the password reset instructions sent to your inbox.
 4. Create a new password and sign in again.
 
@@ -57,7 +57,7 @@ Email verification helps keep your account secure and ensures you receive import
 
 After registration:
 
-1. SlotFlow sends a verification email to your registered email address.
+1. SlotFlow sends a verification email to your registered email.
 2. Open the email.
 3. Click the **Verify Email** button or verification link.
 4. Your account will be activated immediately.
@@ -68,10 +68,10 @@ If the verification email doesn't arrive:
 
 - Check your Spam or Junk folder.
 - Wait a few minutes and refresh your inbox.
-- Ensure you entered the correct email address during registration.
+- Ensure you entered the correct email during registration.
 - Request a new verification email from the login page if available.
 
-> **Note:** Some platform features may remain unavailable until your email address has been verified.
+> **Note:** Some platform features may remain unavailable until your email has been verified.
 
 ---
 

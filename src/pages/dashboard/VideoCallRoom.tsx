@@ -1,22 +1,26 @@
-import { toast } from "react-toastify";
-import peer from "@/shared/service/peer";
-import { Button } from "@/components/ui/button";
-import { videoSocket } from "@/lib/socketService";
-import { joinOrLeft } from "@/shared/apis/booking";
-import { useEffect, useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { formatTime } from "@/shared/helper/formatter";
-import { useNavigate, useParams } from "react-router-dom";
-import { AppDispatch, RootState } from "@/shared/redux/appStore";
-import { toggleMediaTrack } from "@/shared/helper/toggleMediaTrack";
-import { JoinRoomCallbackRequest } from "@/shared/interface/api/booking";
-import { disconnectVideoSocket } from "@/shared/socket/videoSocketThunk";
-import { Mic, MicOff, Video, VideoOff, PhoneOff, LoaderCircle } from "lucide-react";
-import { MediaTrackKind, PeerValues, Role, VideoCallSocket } from "@/shared/interface/enums";
-import { setCamera, setMic, stopVideoCallTimer, updateVideoCallTimer } from "@/shared/redux/slices/videoSlice";
+import { toast } from 'react-toastify';
+import peer from '@/shared/service/peer';
+import { Button } from '@/components/ui/button';
+import { videoSocket } from '@/lib/socketService';
+import { joinOrLeft } from '@/shared/apis/booking';
+import { useEffect, useState, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { formatTime } from '@/shared/helper/formatter';
+import { useNavigate, useParams } from 'react-router-dom';
+import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import { toggleMediaTrack } from '@/shared/helper/toggleMediaTrack';
+import { JoinRoomCallbackRequest } from '@/shared/interface/api/booking';
+import { disconnectVideoSocket } from '@/shared/socket/videoSocketThunk';
+import { Mic, MicOff, Video, VideoOff, PhoneOff, LoaderCircle } from 'lucide-react';
+import { MediaTrackKind, PeerValues, Role, VideoCallSocket } from '@/shared/interface/enums';
+import {
+  setCamera,
+  setMic,
+  stopVideoCallTimer,
+  updateVideoCallTimer,
+} from '@/shared/redux/slices/videoSlice';
 
 const RoomPage = () => {
-
   const { roomId } = useParams();
   const navigate = useNavigate();
 
@@ -34,7 +38,9 @@ const RoomPage = () => {
 
   const user = useSelector((state: RootState) => state.auth.authUser);
   const { isCameraOn, isMicOn } = useSelector((state: RootState) => state.video);
-  const { isVideoCallTimerRunning, videoCallRemainingTime } = useSelector((state: RootState) => state.video);
+  const { isVideoCallTimerRunning, videoCallRemainingTime } = useSelector(
+    (state: RootState) => state.video,
+  );
 
   useEffect(() => {
     let isMounted = true;
@@ -56,7 +62,7 @@ const RoomPage = () => {
 
       myStreamRef.current = stream;
       setMyStream(stream);
-      if (peer.peer && peer.peer.signalingState !== "closed") {
+      if (peer.peer && peer.peer.signalingState !== 'closed') {
         stream.getTracks().forEach((track) => peer.peer.addTrack(track, stream));
       }
     };
@@ -69,7 +75,6 @@ const RoomPage = () => {
         myStreamRef.current.getTracks().forEach((t) => t.stop());
       }
     };
-
   }, [dispatch]);
 
   useEffect(() => {
@@ -103,7 +108,10 @@ const RoomPage = () => {
   }, [remoteStream]);
 
   useEffect(() => {
-    videoSocket?.emit(VideoCallSocket.roomJoin, { roomId, user: { id: user?.uid, name: user?.username } });
+    videoSocket?.emit(VideoCallSocket.roomJoin, {
+      roomId,
+      user: { id: user?.uid, name: user?.username },
+    });
 
     videoSocket?.on(VideoCallSocket.userJoined, async ({ id, user: joinedUser }) => {
       setRemoteSocketId(id);
@@ -112,7 +120,11 @@ const RoomPage = () => {
       if (joinedUser?.id !== user?.uid) {
         toast.success(`${joinedUser?.name} joined the call`);
       }
-      videoSocket?.emit(VideoCallSocket.userCall, { to: id, offer, user: { name: user?.username } });
+      videoSocket?.emit(VideoCallSocket.userCall, {
+        to: id,
+        offer,
+        user: { name: user?.username },
+      });
     });
 
     videoSocket?.on(VideoCallSocket.incomingCall, async ({ from, offer, user: caller }) => {
@@ -144,7 +156,7 @@ const RoomPage = () => {
       videoSocket?.emit(VideoCallSocket.roomLeave, { roomId });
       dispatch(disconnectVideoSocket());
     };
-  }, [roomId, user?.email]);
+  }, [roomId, user?.email, dispatch, user?.uid, user?.username]);
 
   const toggleCamera = () =>
     toggleMediaTrack({
@@ -178,7 +190,7 @@ const RoomPage = () => {
 
   const handleEndCall = async () => {
     if (!user || !roomId) {
-      toast.error("Something went wrong, please try again");
+      toast.error('Something went wrong, please try again');
       return;
     }
 
@@ -188,17 +200,16 @@ const RoomPage = () => {
       joined: true,
       leftCallTime: currentTime,
       videoCallRoomId: roomId,
-    }
+    };
 
     try {
-
       const res = await joinOrLeft(data);
 
       if (res.success) {
-        toast.success("You left meet successfully");
+        toast.success('You left meet successfully');
         myStream?.getTracks().forEach((t) => t.stop());
         peer.peer.close();
-        videoSocket?.emit("room:leave", { roomId });
+        videoSocket?.emit('room:leave', { roomId });
         dispatch(disconnectVideoSocket());
 
         if (myStream) {
@@ -216,30 +227,35 @@ const RoomPage = () => {
         }
 
         if (videoCallRemainingTime > 0) {
-          dispatch(stopVideoCallTimer({
-            remainingTime: videoCallRemainingTime,
-            roomId
-          }));
+          dispatch(
+            stopVideoCallTimer({
+              remainingTime: videoCallRemainingTime,
+              roomId,
+            }),
+          );
         } else {
-          dispatch(stopVideoCallTimer({
-            remainingTime: 0,
-            roomId: null
-          }));
+          dispatch(
+            stopVideoCallTimer({
+              remainingTime: 0,
+              roomId: null,
+            }),
+          );
         }
 
-        navigate(`/${user?.role === Role.PROVIDER ? "provider/bookings" : "user/bookings"}`, { replace: true });
+        navigate(`/${user?.role === Role.PROVIDER ? 'provider/bookings' : 'user/bookings'}`, {
+          replace: true,
+        });
       } else {
-        toast.error(res.message || "Unable to join, please try again");
+        toast.error(res.message || 'Unable to join, please try again');
       }
     } catch (error) {
-      console.log("error : ", error)
-      toast.error("Please try again");
+      console.log('error : ', error);
+      toast.error('Please try again');
     }
   };
 
   return (
     <div className="flex flex-col items-center justify-center h-full relative">
-
       <div className="absolute top-2 right-4">
         {isVideoCallTimerRunning ? (
           <span className="text-xs md:text-sm text-black font-semibold bg-amber-300 px-3 py-1 rounded-md shadow">
@@ -264,10 +280,10 @@ const RoomPage = () => {
           {(!isCameraOn || !isMicOn) && (
             <div className="absolute inset-0 flex items-center justify-center bg-black/70 text-white text-lg font-semibold border">
               {!isCameraOn && !isMicOn
-                ? "Camera and Mic turned off"
+                ? 'Camera and Mic turned off'
                 : !isCameraOn
-                  ? "Camera turned off"
-                  : "Mic turned off"}
+                  ? 'Camera turned off'
+                  : 'Mic turned off'}
             </div>
           )}
         </div>
@@ -292,18 +308,32 @@ const RoomPage = () => {
       </div>
 
       <div className="flex gap-4 mt-6 bg-[var(--menuItemHoverBg)] p-4 rounded-xl shadow">
-        <Button title={isCameraOn ? "Video On" : "Video Off"} onClick={toggleCamera} variant={isCameraOn ? "default" : "destructive"} className="cursor-pointer" >
+        <Button
+          title={isCameraOn ? 'Video On' : 'Video Off'}
+          onClick={toggleCamera}
+          variant={isCameraOn ? 'default' : 'destructive'}
+          className="cursor-pointer"
+        >
           {isCameraOn ? <Video /> : <VideoOff />}
         </Button>
-        <Button title={isMicOn ? "Mic On" : "Mic Off"} onClick={toggleMic} variant={isMicOn ? "default" : "destructive"} className="cursor-pointer" >
+        <Button
+          title={isMicOn ? 'Mic On' : 'Mic Off'}
+          onClick={toggleMic}
+          variant={isMicOn ? 'default' : 'destructive'}
+          className="cursor-pointer"
+        >
           {isMicOn ? <Mic /> : <MicOff />}
         </Button>
-        <Button title="End Call" onClick={handleEndCall} variant="destructive" className="cursor-pointer" >
+        <Button
+          title="End Call"
+          onClick={handleEndCall}
+          variant="destructive"
+          className="cursor-pointer"
+        >
           <PhoneOff />
         </Button>
       </div>
     </div>
-
   );
 };
 

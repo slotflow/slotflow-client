@@ -1,4 +1,4 @@
-import { AdminVerificationStatus } from "../enums";
+import { AdminVerificationStatus } from '../enums';
 
 // ProviderProfile
 export interface ProviderProfile {

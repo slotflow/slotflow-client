@@ -1,7 +1,7 @@
-import { Bell, CheckCircle2 } from "lucide-react";
+import { Bell, CheckCircle2 } from 'lucide-react';
 
-import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
+import { Badge } from '@/components/ui/badge';
+import { Card } from '@/components/ui/card';
 
 const NotificationCard = () => {
   return (
@@ -12,22 +12,15 @@ const NotificationCard = () => {
         </div>
         <div className="flex-1 space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="font-semibold">
-              Notification
-            </h3>
+            <h3 className="font-semibold">Notification</h3>
 
-            <Badge
-              variant="secondary"
-              className="rounded-full px-2.5 py-0.5"
-            >
+            <Badge variant="secondary" className="rounded-full px-2.5 py-0.5">
               Now
             </Badge>
           </div>
 
           <div className="space-y-1">
-            <p className="font-medium">
-              Appointment Confirmed
-            </p>
+            <p className="font-medium">Appointment Confirmed</p>
 
             <p className="text-sm leading-6 text-muted-foreground">
               Your appointment has been successfully confirmed.

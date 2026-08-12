@@ -10,11 +10,10 @@ import {
   XCircle,
   Calendar,
   CheckCircle,
-} from "lucide-react";
+} from 'lucide-react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import DataField from '@/components/app/DataField';
-import PageHeader from '@/components/common/PageHeader';
 import { Card, CardContent } from '@/components/ui/card';
 import { fetchBookingDetails } from '@/shared/apis/booking';
 import { formatDateWithTime } from '@/shared/helper/formatter';
@@ -23,39 +22,34 @@ import ProfileDetailsShimmer from '@/components/shimmers/DataFieldShimmer';
 import { Booking } from '@/shared/interface/entityInterface/bookingInterface';
 
 const BookingDetailPage = () => {
-
-  const { bookingId } = useParams<{ bookingId: Booking["_id"] }>();
+  const { bookingId } = useParams<{ bookingId: Booking['_id'] }>();
 
   const { data, isLoading, isError, error } = useQuery({
     queryFn: async () => {
       const res = await fetchBookingDetails(bookingId!);
       return res.data;
     },
-    queryKey: ["booking", bookingId],
+    queryKey: ['booking', bookingId],
     staleTime: 60 * 60 * 1000,
     refetchOnWindowFocus: false,
-    enabled: !!bookingId
+    enabled: !!bookingId,
   });
 
   const dataMap = [
-    { label: "Booked On", value: data?.appointmentDate, isDate: true, Icon: Calendar },
-    { label: "Booking At", value: data?.createdAt, isDate: true, Icon: Clock },
-    { label: "Service Mode", value: data?.appointmentMode, Icon: Video },
-    { label: "Booking Status", value: data?.appointmentStatus, Icon: Info },
-    { label: "Slot Time", value: data?.appointmentTime, Icon: Clock },
-    { label: "Room Id", value: data?.videoCallRoomId, Icon: Hash },
-    { label: "Provider Username", value: data?.serviceProviderId.username, Icon: User },
-    { label: "Provider Email", value: data?.serviceProviderId.email, Icon: Mail },
-    { label: "Customer Username", value: data?.userId.username, Icon: User },
-    { label: "Customer Email", value: data?.userId.email, Icon: Mail },
+    { label: 'Booked On', value: data?.appointmentDate, isDate: true, Icon: Calendar },
+    { label: 'Booking At', value: data?.createdAt, isDate: true, Icon: Clock },
+    { label: 'Service Mode', value: data?.appointmentMode, Icon: Video },
+    { label: 'Booking Status', value: data?.appointmentStatus, Icon: Info },
+    { label: 'Slot Time', value: data?.appointmentTime, Icon: Clock },
+    { label: 'Room Id', value: data?.videoCallRoomId, Icon: Hash },
+    { label: 'Provider Username', value: data?.serviceProviderId.username, Icon: User },
+    { label: 'Provider Email', value: data?.serviceProviderId.email, Icon: Mail },
+    { label: 'Customer Username', value: data?.userId.username, Icon: User },
+    { label: 'Customer Email', value: data?.userId.email, Icon: Mail },
   ];
 
   return (
     <div className="p-4">
-      <PageHeader
-        title="Booking Details"
-        description="Detailed view of booking"
-      />
       {isError && error ? (
         <DataFetchingError message={(error as Error).message} />
       ) : isLoading ? (
@@ -71,14 +65,12 @@ const BookingDetailPage = () => {
               </div>
 
               <div className="border-b">
-                <h4 className="p-4 font-bold text-purple-400">
-                  Time Map
-                </h4>
+                <h4 className="p-4 font-bold text-purple-400">Time Map</h4>
               </div>
 
               <DataField
                 label="Customer Joined"
-                value={data?.onlineTrack?.user?.joined ? "✅ Yes" : "❌ No"}
+                value={data?.onlineTrack?.user?.joined ? '✅ Yes' : '❌ No'}
                 Icon={data?.onlineTrack?.user?.joined ? CheckCircle : XCircle}
               />
 
@@ -98,7 +90,7 @@ const BookingDetailPage = () => {
 
               <DataField
                 label="Provider Joined"
-                value={data?.onlineTrack?.provider?.joined ? "✅ Yes" : "❌ No"}
+                value={data?.onlineTrack?.provider?.joined ? '✅ Yes' : '❌ No'}
                 Icon={data?.onlineTrack?.provider?.joined ? CheckCircle : XCircle}
               />
 
@@ -116,9 +108,7 @@ const BookingDetailPage = () => {
                 Icon={LogOut}
               />
               <div className="border-b">
-                <h4 className="p-4 font-bold text-purple-400">
-                  Status History
-                </h4>
+                <h4 className="p-4 font-bold text-purple-400">Status History</h4>
               </div>
 
               {data?.statusTrack && data.statusTrack.length > 0 ? (
@@ -127,7 +117,7 @@ const BookingDetailPage = () => {
                     <DataField
                       key={index}
                       label={track.appointmentStatus}
-                      value={track.time ? formatDateWithTime(track.time) : "No time recorded"}
+                      value={track.time ? formatDateWithTime(track.time) : 'No time recorded'}
                       Icon={Info}
                     />
                   );
@@ -141,8 +131,8 @@ const BookingDetailPage = () => {
       ) : (
         <DataFetchingError message="No data found" />
       )}
-    </div >
-  )
-}
+    </div>
+  );
+};
 
 export default BookingDetailPage;

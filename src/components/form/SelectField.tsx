@@ -4,30 +4,31 @@ import {
   SelectContent,
   SelectItem,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 import { Input } from '../ui/input';
-import { Label } from "@/components/ui/label";
-import { FieldValues } from "react-hook-form";
-import { SelectFieldProps } from "@/shared/interface/componentInterface";
+import { FieldValues } from 'react-hook-form';
+import FormLabelWithInfo from './FormLabelWithInfo';
+import { SelectFieldProps } from '@/shared/interface/componentInterface';
 
-const SelectField = <T extends FieldValues,K>({
+const SelectField = <T extends FieldValues, K>({
   id,
   label,
   options,
-  placeholder = "Select an option",
+  placeholder = 'Select an option',
   error,
   register,
   required = false,
   defaultValue,
-}: SelectFieldProps<T,K>) => {
+  infoText,
+}: SelectFieldProps<T, K>) => {
   const reg = register(id);
 
   // FULLY TYPE-SAFE PARSER — NO ANY
   const parseValue = (value: string): string | number | boolean => {
-    if (value === "true") return true;
-    if (value === "false") return false;
+    if (value === 'true') return true;
+    if (value === 'false') return false;
 
-    if (!isNaN(Number(value)) && value.trim() !== "") {
+    if (!isNaN(Number(value)) && value.trim() !== '') {
       return Number(value);
     }
 
@@ -36,23 +37,17 @@ const SelectField = <T extends FieldValues,K>({
 
   return (
     <div className="space-y-2">
-      <Label htmlFor={id} className="text-sm">
-        {label} {required && <span className="text-red-500">*</span>}
-      </Label>
+      <FormLabelWithInfo label={label} htmlFor={id} infoText={infoText} />
 
       <Input
         type="hidden"
         name={reg.name}
         ref={reg.ref}
-        defaultValue={
-          defaultValue !== undefined ? String(defaultValue) : undefined
-        }
+        defaultValue={defaultValue !== undefined ? String(defaultValue) : undefined}
       />
 
       <Select
-        defaultValue={
-          defaultValue !== undefined ? String(defaultValue) : undefined
-        }
+        defaultValue={defaultValue !== undefined ? String(defaultValue) : undefined}
         onValueChange={(val) => {
           const parsedValue = parseValue(val);
 
@@ -60,8 +55,9 @@ const SelectField = <T extends FieldValues,K>({
             target: { name: reg.name, value: parsedValue },
           });
         }}
+        required={required}
       >
-        <SelectTrigger className={`w-full ${error ? "border-red-500" : ""}`}>
+        <SelectTrigger className={`w-full ${error ? 'border-red-500' : ''}`}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
 
@@ -75,9 +71,7 @@ const SelectField = <T extends FieldValues,K>({
       </Select>
 
       {error && (
-        <p className="text-xs text-red-500">
-          {typeof error === "string" ? error : error.message}
-        </p>
+        <p className="text-xs text-red-500">{typeof error === 'string' ? error : error.message}</p>
       )}
     </div>
   );

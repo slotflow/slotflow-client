@@ -1,11 +1,11 @@
-import { Button } from "@/components/ui/button";
-import { defaultButtonClassName } from "@/shared/utils/constants";
-import { FeatureLockedProps } from "@/shared/interface/componentInterface";
+import { Button } from '@/components/ui/button';
+import { defaultButtonClassName } from '@/shared/utils/constants';
+import { FeatureLockedProps } from '@/shared/interface/componentInterface';
 
 const FeatureLocked = ({
   icon: Icon,
   message,
-  buttonText = "Upgrade Subscription",
+  buttonText = 'Upgrade Subscription',
   onButtonClick,
 }: FeatureLockedProps) => {
   return (

@@ -1,32 +1,33 @@
-import { useState } from "react";
-import { DataTable } from "../table/data-table";
-import { useQuery } from "@tanstack/react-query";
-import TableShimmer from "../shimmers/TableShimmer";
-import DataFetchingError from "../error/DataFetchingError";
-import { OnChangeFn, PaginationState } from "@tanstack/react-table";
-import { CommonTableComponentProps, FetchFunctionBaseQueryParams } from "@/shared/interface/commonInterface";
+import { useState } from 'react';
+import { DataTable } from '../ui/data-table';
+import { useQuery } from '@tanstack/react-query';
+import TableShimmer from '../shimmers/TableShimmer';
+import DataFetchingError from '../error/DataFetchingError';
+import { OnChangeFn, PaginationState } from '@tanstack/react-table';
+import {
+  CommonTableComponentProps,
+  FetchFunctionBaseQueryParams,
+} from '@/shared/interface/commonInterface';
 
-const CommonTable = <
-  T,
-  Q extends object = {}
->({
+// TODO Rename to PaginatedDataTable
+
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+const CommonTable = <T, Q extends object = {}>({
   parentDivCalssName,
   fetchApiFunction,
   queryKey,
   column,
   columnsCount,
-  pageSize = 10,
+  pageSize = 14,
   queryParams,
+  actionButtons,
 }: CommonTableComponentProps<T, Q>) => {
-
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize,
   });
 
-  const handlePaginationChange: OnChangeFn<PaginationState> = (
-    updaterOrValue
-  ) => {
+  const handlePaginationChange: OnChangeFn<PaginationState> = (updaterOrValue) => {
     setPagination(updaterOrValue);
   };
 
@@ -38,18 +39,13 @@ const CommonTable = <
 
   const { data, isLoading, isError, error } = useQuery({
     queryFn: () => fetchApiFunction(finalQueryParams),
-    queryKey: [
-      queryKey,
-      pagination.pageIndex,
-      pagination.pageSize,
-      queryParams,
-    ],
+    queryKey: [queryKey, pagination.pageIndex, pagination.pageSize, queryParams],
     staleTime: 60 * 60 * 1000,
     refetchOnWindowFocus: false,
   });
 
   return (
-    <div className={`${parentDivCalssName || ""}`}>
+    <div className={`${parentDivCalssName || ''}`}>
       {isLoading ? (
         <div className="mt-2">
           <TableShimmer columnsCount={columnsCount} />
@@ -61,17 +57,12 @@ const CommonTable = <
           pageCount={data.totalPages}
           pagination={pagination}
           onPaginationChange={handlePaginationChange}
+          actionButtons={actionButtons}
         />
       ) : isError && error ? (
-        <DataFetchingError
-          message={(error as Error).message}
-          className="min-h-full"
-        />
+        <DataFetchingError message={(error as Error).message} className="min-h-full" />
       ) : (
-        <DataFetchingError
-          message={`No ${queryKey} found in database`}
-          className="min-h-full"
-        />
+        <DataFetchingError message={`No ${queryKey} found in database`} className="min-h-full" />
       )}
     </div>
   );

@@ -10,11 +10,9 @@ export const countryRegex = /^[a-zA-Z ]{2,50}$/;
 
 export const usernameRegex = /^[a-zA-Z ]{4,30}$/;
 
-export const strongPasswordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,50}$/;
+export const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,50}$/;
 
-export const descriptionRegex =
-    /^[\w\d\s!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]{10,200}$/;
+export const descriptionRegex = /^[\w\d\s!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]{10,200}$/;
 
 export const appServiceNameRegex = /^[A-Za-z0-9 ]{4,50}$/;
 

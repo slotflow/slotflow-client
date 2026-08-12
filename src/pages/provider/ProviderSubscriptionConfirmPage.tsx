@@ -1,73 +1,76 @@
-import { toast } from "react-toastify";
-import { useEffect, useRef } from "react";
-import { Button } from "@/components/ui/button";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { PaymentProcessStatus } from "@/shared/interface/enums";
-import { AppDispatch, RootState } from "@/shared/redux/appStore";
-import { fetchMySubscription } from "@/shared/apis/subscription";
-import { motion, AnimatePresence, Variants } from "framer-motion";
-import { LoaderCircle, CheckCircle2, LayoutDashboard, XCircle } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { setSubscription, setSubscriptionUpdating } from "@/shared/redux/slices/authSlice";
-import { setPaymentProcessStatus, setSubscriptionPaymentData } from "@/shared/redux/slices/paymentSlice";
+import { toast } from 'react-toastify';
+import { useCallback, useEffect, useRef } from 'react';
+import { Button } from '@/components/ui/button';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { PaymentProcessStatus } from '@/shared/interface/enums';
+import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import { fetchMySubscription } from '@/shared/apis/subscription';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { LoaderCircle, CheckCircle2, LayoutDashboard, XCircle } from 'lucide-react';
+import { setSubscription, setSubscriptionUpdating } from '@/shared/redux/slices/authSlice';
+import {
+  setPaymentProcessStatus,
+  setSubscriptionPaymentData,
+} from '@/shared/redux/slices/paymentSlice';
+import { appConfig } from '@/shared/config/env';
 
 const ProviderSubscriptionConfirmPage = () => {
-
   const [searchParams] = useSearchParams();
-  const statusParam = searchParams.get("status");
-  const status = statusParam === "success";
+  const statusParam = searchParams.get('status');
+  const status = statusParam === 'success';
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { authUser, subscriptionUpdating } = useSelector(
-    (state: RootState) => state.auth
-  );
+  const { authUser, subscriptionUpdating } = useSelector((state: RootState) => state.auth);
 
   const isFetched = useRef(false);
   const maxRetries = 5;
-  let attempts = 0;
+  const attempts = useRef(0);
 
-  const fetchSubscription = async () => {
+  const fetchSubscription = useCallback(async () => {
     try {
       const res = await fetchMySubscription();
       if (res.success && res.data) {
         dispatch(setSubscription(res.data));
-        toast.success("Subscription Activated!");
+        toast.success('Subscription Activated!');
         dispatch(setPaymentProcessStatus(PaymentProcessStatus.SUCCESS));
-        dispatch(setSubscriptionPaymentData(null))
+        dispatch(setSubscriptionPaymentData(null));
         isFetched.current = true;
         return;
       }
 
-      attempts++;
+      attempts.current++;
 
-      if (attempts < maxRetries) {
+      if (attempts.current < maxRetries) {
         setTimeout(fetchSubscription, 5000);
       } else {
-        toast.error("Subscription activation delayed");
+        toast.error('Subscription activation delayed');
       }
-
     } catch (error) {
-      toast.error("Subscription activation failed");
+      if (appConfig.isDevelopment) {
+        console.log('Subscription failed error : ', error);
+      }
+      toast.error('Subscription activation failed');
     } finally {
       setTimeout(() => {
         dispatch(setSubscriptionUpdating(false));
       }, 1500);
     }
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     if (!status || !authUser || isFetched.current) return;
-     setTimeout(fetchSubscription, 5000);
-  }, [authUser, status]);
+    setTimeout(fetchSubscription, 5000);
+  }, [authUser, status, fetchSubscription]);
 
   const containerVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
+      transition: { duration: 0.6, ease: 'easeOut' },
     },
   };
 
@@ -97,9 +100,7 @@ const ProviderSubscriptionConfirmPage = () => {
                   className="flex flex-col items-center space-y-6 text-center"
                 >
                   <LoaderCircle className="h-16 w-16 animate-spin text-[var(--mainColor)]" />
-                  <h3 className="text-lg font-semibold">
-                    Activating Subscription
-                  </h3>
+                  <h3 className="text-lg font-semibold">Activating Subscription</h3>
                 </motion.div>
               ) : status ? (
                 <motion.div
@@ -109,12 +110,10 @@ const ProviderSubscriptionConfirmPage = () => {
                   className="flex flex-col items-center space-y-6 text-center"
                 >
                   <CheckCircle2 className="h-16 w-16 text-green-500" />
-                  <h3 className="text-xl font-bold">
-                    Subscription Activated!
-                  </h3>
+                  <h3 className="text-xl font-bold">Subscription Activated!</h3>
                   <Button
                     title="Go to Dashboard"
-                    onClick={() => navigate("/provider/dashboard")}
+                    onClick={() => navigate('/provider/dashboard')}
                     className="bg-[var(--mainColor)] text-white"
                   >
                     <LayoutDashboard className="mr-2 h-5 w-5" />
@@ -132,7 +131,7 @@ const ProviderSubscriptionConfirmPage = () => {
                   <h3 className="text-xl font-bold">Payment Failed</h3>
                   <Button
                     title="Go to Dashboard"
-                    onClick={() => navigate("/provider/dashboard")}
+                    onClick={() => navigate('/provider/dashboard')}
                     className="bg-[var(--mainColor)] text-white"
                   >
                     Go to Dashboard

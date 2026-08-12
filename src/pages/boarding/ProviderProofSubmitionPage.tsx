@@ -1,17 +1,25 @@
-import { LoaderCircle } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/shared/redux/appStore";
-import FileUploader from "@/components/form/CommonForms/FileUploader";
-import { setIsProofSubmitted } from "@/shared/redux/slices/authSlice";
-import { defaultButtonClassName, redirectPaths } from "@/shared/utils/constants";
-import { setProviderIdentityProofs, setProviderServiceProofs } from "@/shared/redux/slices/providerSlice";
-import { providerDeleteIdentityProof, providerDeleteServiceProof, providerFetchMyProofs, providerUpdateIdentityProof, providerUpdateProofServiceProof } from "@/shared/apis/providerProfile";
+import { LoaderCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import FileUploader from '@/components/form/CommonForms/FileUploader';
+import { setIsProofSubmitted } from '@/shared/redux/slices/authSlice';
+import { defaultButtonClassName, redirectPaths } from '@/shared/utils/constants';
+import {
+  setProviderIdentityProofs,
+  setProviderServiceProofs,
+} from '@/shared/redux/slices/providerSlice';
+import {
+  providerDeleteIdentityProof,
+  providerDeleteServiceProof,
+  providerFetchMyProofs,
+  providerUpdateIdentityProof,
+  providerUpdateProofServiceProof,
+} from '@/shared/apis/providerProfile';
 
 const ProviderProofSubmissionPage = () => {
-
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { authUser } = useSelector((state: RootState) => state.auth);
@@ -19,27 +27,36 @@ const ProviderProofSubmissionPage = () => {
   const { identityProof, serviceProof } = useSelector((state: RootState) => state.provider);
 
   useEffect(() => {
-    if (!authUser?.isProofSubmitted?.identityProof && !authUser?.isProofSubmitted?.serviceProof) return;
+    if (!authUser?.isProofSubmitted?.identityProof && !authUser?.isProofSubmitted?.serviceProof)
+      return;
     async function fetchOldProofs() {
       const result = await providerFetchMyProofs();
       if (result) {
-        dispatch(setProviderIdentityProofs({
-          file: result.data?.identityProof as string,
-          isLoading: false,
-        }));
-        dispatch(setProviderServiceProofs({
-          file: result.data?.serviceProof as string,
-          isLoading: false,
-        }));
+        dispatch(
+          setProviderIdentityProofs({
+            file: result.data?.identityProof as string,
+            isLoading: false,
+          }),
+        );
+        dispatch(
+          setProviderServiceProofs({
+            file: result.data?.serviceProof as string,
+            isLoading: false,
+          }),
+        );
       }
     }
 
     fetchOldProofs();
-  }, [authUser?.isProofSubmitted?.identityProof, authUser?.isProofSubmitted?.serviceProof, dispatch]);
+  }, [
+    authUser?.isProofSubmitted?.identityProof,
+    authUser?.isProofSubmitted?.serviceProof,
+    dispatch,
+  ]);
 
   if (!authUser) return null;
 
-  const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
+  const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
   const handleNextutton = async (e: React.MouseEvent<HTMLButtonElement>) => {
     setIsSubmitting(true);
     e.preventDefault();
@@ -47,7 +64,7 @@ const ProviderProofSubmissionPage = () => {
     await delay(1000);
     navigate(redirectPaths.ONBOARDING_PENDING);
     setIsSubmitting(false);
-  }
+  };
 
   return (
     <div className="md:flex w-full space-y-6 space-x-2">
@@ -78,21 +95,24 @@ const ProviderProofSubmissionPage = () => {
             onClick={handleNextutton}
             className={defaultButtonClassName}
             type="button"
-            disabled={isSubmitting || (!identityProof.file || !serviceProof.file)}
+            disabled={isSubmitting || !identityProof.file || !serviceProof.file}
           >
             {isSubmitting ? (
               <>
                 <LoaderCircle className="animate-spin size-4 mr-2" />
-                {(authUser?.isProofSubmitted && isSubmitting) ? "Updating" : "Submitting"}
+                {authUser?.isProofSubmitted && isSubmitting ? 'Updating' : 'Submitting'}
               </>
+            ) : authUser?.isProofSubmitted?.identityProof &&
+              authUser?.isProofSubmitted?.serviceProof ? (
+              'Update'
             ) : (
-              (authUser?.isProofSubmitted?.identityProof && authUser?.isProofSubmitted?.serviceProof) ? "Update" : "Submit"
+              'Submit'
             )}
           </Button>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default ProviderProofSubmissionPage;

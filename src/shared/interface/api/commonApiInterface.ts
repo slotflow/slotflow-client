@@ -1,4 +1,4 @@
-import { ProviderProfile } from "../entityInterface/providerProfileInterface";
+import { ProviderProfile } from '../entityInterface/providerProfileInterface';
 
 // request interface of update file
 export interface UpdateFileDataRequest {
@@ -7,7 +7,7 @@ export interface UpdateFileDataRequest {
 }
 
 // response type admin or provider fetching providers proofs
-export type FetchProvidersProofsResponse = Pick<ProviderProfile, "identityProof" | "serviceProof">;
+export type FetchProvidersProofsResponse = Pick<ProviderProfile, 'identityProof' | 'serviceProof'>;
 
 // Chart DTOS
 export interface MiniChartData {

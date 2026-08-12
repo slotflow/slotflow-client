@@ -1,6 +1,6 @@
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, CreditCard, ShieldCheck } from "lucide-react";
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { CheckCircle2, CreditCard, ShieldCheck } from 'lucide-react';
 
 const PaymentCard = () => {
   return (
@@ -11,26 +11,18 @@ const PaymentCard = () => {
         </div>
         <div className="flex-1 space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="font-semibold">
-              Payment
-            </h3>
+            <h3 className="font-semibold">Payment</h3>
 
-            <Badge
-              variant="secondary"
-              className="rounded-full px-2.5 py-0.5"
-            >
+            <Badge variant="secondary" className="rounded-full px-2.5 py-0.5">
               Success
             </Badge>
           </div>
 
           <div className="space-y-1">
-            <p className="font-medium">
-              Payment Successful
-            </p>
+            <p className="font-medium">Payment Successful</p>
 
             <p className="text-sm leading-6 text-muted-foreground">
-              Your payment has been securely processed and your appointment is
-              confirmed.
+              Your payment has been securely processed and your appointment is confirmed.
             </p>
           </div>
 

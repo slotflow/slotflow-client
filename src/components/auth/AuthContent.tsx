@@ -1,13 +1,8 @@
-import { ReactNode } from "react";
-import { useLocation } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { ReactNode } from 'react';
+import { useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 
-const AuthContent = ({
-    children
-}:{
-    children: ReactNode
-}) => {
-
+const AuthContent = ({ children }: { children: ReactNode }) => {
   const location = useLocation();
 
   return (

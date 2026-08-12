@@ -1,4 +1,4 @@
-import { PaymentFor, PaymentGateway, PaymentMethod, PaymentStatus } from "../enums";
+import { PaymentFor, PaymentGateway, PaymentMethod, PaymentStatus } from '../enums';
 
 export interface Payment {
   _id: string;

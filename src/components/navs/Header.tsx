@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { Button } from "../ui/button";
-import { Menu, X } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import ThemeToggler from "../common/ThemeToggler";
-import { AnimatePresence, motion } from "framer-motion";
-import { navigation, redirectPaths } from "@/shared/utils/constants";
+import { useState } from 'react';
+import { Button } from '../ui/button';
+import { Menu, X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import ThemeToggler from '../common/ThemeToggler';
+import { AnimatePresence, motion } from 'framer-motion';
+import { navigation, redirectPaths } from '@/shared/utils/constants';
 import logo from '../../assets/logos/company/slotflowLogoTransparent.png';
 
 const Header = () => {
@@ -18,10 +18,7 @@ const Header = () => {
   return (
     <nav className="relative z-50 w-full transition-colors duration-300">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between">
-        <div
-          onClick={() => navigate("/")}
-          className="flex flex-1 cursor-pointer items-center"
-        >
+        <div onClick={() => navigate('/')} className="flex flex-1 cursor-pointer items-center">
           <img src={logo} className="size-8" alt="Slotflow Logo" />
 
           <h4 className="ml-2 rounded-lg px-2 text-3xl font-bold italic text-[var(--mainColor)]">
@@ -70,7 +67,7 @@ const Header = () => {
           >
             <AnimatePresence mode="wait">
               <motion.div
-                key={mobileMenuOpen ? "close" : "menu"}
+                key={mobileMenuOpen ? 'close' : 'menu'}
                 initial={{ rotate: -90, opacity: 0 }}
                 animate={{ rotate: 0, opacity: 1 }}
                 exit={{ rotate: 90, opacity: 0 }}

@@ -1,11 +1,11 @@
-import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, CalendarDays } from "lucide-react";
-import { redirectPaths } from "@/shared/utils/constants";
-import SplitTextReveal from "@/components/animation/SplitTextReveal";
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { ArrowRight, CalendarDays } from 'lucide-react';
+import { redirectPaths } from '@/shared/utils/constants';
+import SplitTextReveal from '@/components/animation/SplitTextReveal';
 
 const ContactCTA = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <section id="cta" className="pb-24 lg:pb-32">
       <div className="mx-auto max-w-7xl px-4 lg:px-0">
@@ -32,23 +32,22 @@ const ContactCTA = () => {
               once={false}
               className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-muted-foreground"
             >
-              Discover how Slotflow can help you automate appointments,
-              improve customer experiences, and grow your business with
-              confidence.
+              Discover how Slotflow can help you automate appointments, improve customer
+              experiences, and grow your business with confidence.
             </SplitTextReveal>
 
             <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Button 
+              <Button
                 className="h-8 lg:h-12 rounded-xl px-8"
                 onClick={() => navigate(redirectPaths.LOGIN)}
-                >
+              >
                 Login
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
               <Button
                 variant="outline"
                 className="h-8 lg:h-12 rounded-xl px-8"
-                onClick={() => navigate("/pricing")}
+                onClick={() => navigate('/pricing')}
               >
                 View Pricing
               </Button>

@@ -4,7 +4,14 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchPayments } from '@/shared/apis/payment';
 import DashboardDataCard from '../../DashboardDataCard';
 import { formatNumberToPrice } from '@/shared/helper/formatter';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 
 const PaymentListCard = () => {
   const { data, isLoading, isError, refetch } = useQuery({
@@ -28,16 +35,29 @@ const PaymentListCard = () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[60px] text-[10px] uppercase font-bold tracking-wider py-3 px-4">#</TableHead>
-              <TableHead className="text-[10px] uppercase font-bold tracking-wider py-3 px-4">Payment For</TableHead>
-              <TableHead className="text-[10px] uppercase font-bold tracking-wider py-3 px-4">Amount</TableHead>
-              <TableHead className="text-[10px] uppercase font-bold tracking-wider py-3 px-4 text-right">Date</TableHead>
+              <TableHead className="w-[60px] text-[10px] uppercase font-bold tracking-wider py-3 px-4">
+                #
+              </TableHead>
+              <TableHead className="text-[10px] uppercase font-bold tracking-wider py-3 px-4">
+                Payment For
+              </TableHead>
+              <TableHead className="text-[10px] uppercase font-bold tracking-wider py-3 px-4">
+                Amount
+              </TableHead>
+              <TableHead className="text-[10px] uppercase font-bold tracking-wider py-3 px-4 text-right">
+                Date
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {payments.map((payment, index) => (
-              <TableRow key={payment._id} className="hover:bg-slate-50/30 dark:hover:bg-slate-900/30 border-slate-100 dark:border-slate-800 transition-colors">
-                <TableCell className="text-xs font-medium text-slate-400 py-3 px-4">{index + 1}</TableCell>
+              <TableRow
+                key={payment._id}
+                className="hover:bg-slate-50/30 dark:hover:bg-slate-900/30 border-slate-100 dark:border-slate-800 transition-colors"
+              >
+                <TableCell className="text-xs font-medium text-slate-400 py-3 px-4">
+                  {index + 1}
+                </TableCell>
                 <TableCell className="py-3 px-4">
                   <span className="text-xs font-semibold text-slate-700 dark:text-slate-200">
                     {payment.paymentFor}

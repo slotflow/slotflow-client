@@ -15,10 +15,15 @@ const DashboardDataCard = ({
   children,
   className,
   empty,
-  emptyMessage = "No data available"
+  emptyMessage = 'No data available',
 }: DashboardDataCardProps) => {
   return (
-    <Card className={cn("overflow-hidden border-slate-200/60 dark:border-slate-800/60 backdrop-blur-xl transition-all duration-300 hover:shadow-md h-full flex flex-col", className)}>
+    <Card
+      className={cn(
+        'overflow-hidden border-slate-200/60 dark:border-slate-800/60 backdrop-blur-xl transition-all duration-300 hover:shadow-md h-full flex flex-col',
+        className,
+      )}
+    >
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4 border-b border-slate-100 dark:border-slate-900">
         <div className="flex items-center gap-2">
           <div className="p-2 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg">
@@ -28,24 +33,24 @@ const DashboardDataCard = ({
             {title}
           </CardTitle>
         </div>
-        <Button 
-          variant="ghost" 
-          size="icon" 
-          onClick={onReload} 
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={onReload}
           disabled={isLoading}
           className="h-8 w-8 text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
         >
-          <RefreshCw className={cn("h-4 w-4", isLoading && "animate-spin")} />
+          <RefreshCw className={cn('h-4 w-4', isLoading && 'animate-spin')} />
         </Button>
       </CardHeader>
-      
+
       <CardContent className="flex-1 p-0 relative overflow-hidden">
         <AnimatePresence mode="wait">
           {isLoading ? (
-            <motion.div 
+            <motion.div
               key="loading"
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1 }} 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="p-4 space-y-4"
             >
@@ -60,9 +65,9 @@ const DashboardDataCard = ({
               ))}
             </motion.div>
           ) : isError ? (
-            <motion.div 
+            <motion.div
               key="error"
-              initial={{ opacity: 0 }} 
+              initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="p-8 flex flex-col items-center justify-center text-center h-full"
@@ -70,20 +75,22 @@ const DashboardDataCard = ({
               <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded-full mb-3">
                 <AlertCircle className="h-6 w-6 text-red-500" />
               </div>
-              <p className="text-sm font-medium text-slate-800 dark:text-slate-200">Failed to load data</p>
-              <Button 
-                variant="link" 
-                size="sm" 
-                onClick={onReload} 
+              <p className="text-sm font-medium text-slate-800 dark:text-slate-200">
+                Failed to load data
+              </p>
+              <Button
+                variant="link"
+                size="sm"
+                onClick={onReload}
                 className="text-indigo-600 dark:text-indigo-400 mt-1"
               >
                 Try again
               </Button>
             </motion.div>
           ) : empty ? (
-             <motion.div 
+            <motion.div
               key="empty"
-              initial={{ opacity: 0 }} 
+              initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="p-8 flex flex-col items-center justify-center text-center h-full"
@@ -94,9 +101,9 @@ const DashboardDataCard = ({
               <p className="text-xs text-slate-500 dark:text-slate-400">{emptyMessage}</p>
             </motion.div>
           ) : (
-            <motion.div 
+            <motion.div
               key="content"
-              initial={{ opacity: 0 }} 
+              initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               className="h-full"
             >

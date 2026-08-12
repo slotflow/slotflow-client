@@ -1,26 +1,14 @@
-import { useState } from "react";
-import PageHeader from "@/components/common/PageHeader";
-import ProviderPlanList from "@/components/provider/ProviderPlanList";
-import ProviderSubscriptionHistory from "@/components/provider/ProviderSubscriptionHistory";
+import ProviderPlanList from '@/components/provider/ProviderPlanList';
+import ProviderSubscriptionHistory from '@/components/provider/ProviderSubscriptionHistory';
 
+// TODO move the providerplan list to settings subscription page
 const ProviderSubscriptionPage = () => {
-
-    const [showPlans, setShowPlans] = useState<boolean>(false);
-
-    return (
-        <div className="p-4">
-            <PageHeader
-                title="Subscriptions"
-                description="Manage your subscription and view history"
-                actionLabel={showPlans ? "Hide Plans" : "Show Plans"}
-                onActionClick={() => setShowPlans(!showPlans)}
-            />
-            <ProviderSubscriptionHistory />
-            {showPlans && (
-                <ProviderPlanList />
-            )}
-        </div>
-    );
+  return (
+    <div className="p-4">
+      <ProviderSubscriptionHistory />
+      <ProviderPlanList />
+    </div>
+  );
 };
 
 export default ProviderSubscriptionPage;

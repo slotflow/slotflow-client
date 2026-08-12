@@ -1,4 +1,4 @@
-# TERMS OF SERVICE for Service providers 
+# TERMS OF SERVICE for Service providers
 
 Last Updated: 5 july 2026 Effective Date: 10 july 2026
 
@@ -40,7 +40,6 @@ For the purposes of these Terms of Service, the following definitions apply:
 
 **1.12 Intellectual Property Rights** means all copyrights, trademarks, patents, trade secrets, database rights, design rights, domain names, and all other intellectual property or proprietary rights recognized under applicable laws.
 
-
 ## 2. Eligibility
 
 ## 2.1 Minimum Age Requirement
@@ -71,35 +70,34 @@ You agree to provide complete, accurate, and up-to-date information regarding yo
 
 You may not register or continue to operate as a Service Provider if:
 
-* Your Account has previously been suspended or terminated by SlotFlow.
-* You submit forged, altered, expired, or misleading verification documents.
-* You impersonate another individual or business.
-* You provide false or misleading information.
-* You are prohibited by applicable law from providing the Services you offer.
-* Your activities violate these Terms or applicable laws.
+- Your Account has previously been suspended or terminated by SlotFlow.
+- You submit forged, altered, expired, or misleading verification documents.
+- You impersonate another individual or business.
+- You provide false or misleading information.
+- You are prohibited by applicable law from providing the Services you offer.
+- Your activities violate these Terms or applicable laws.
 
 SlotFlow reserves the right to suspend, reject, or permanently terminate any Service Provider Account that fails to satisfy these eligibility requirements.
-
 
 ## 3. Account Registration and Security
 
 ## 3.1 Account Registration
 
-To register as a Service Provider, you must first create an Account by providing your full name, a valid email address, and a password. You may also register or sign in using a supported third-party authentication provider, such as Google, where available.
+To register as a Service Provider, you must first create an Account by providing your full name, a valid email, and a password. You may also register or sign in using a supported third-party authentication provider, such as Google, where available.
 
-Your email address must be verified before your Account can proceed to provider onboarding.
+Your email must be verified before your Account can proceed to provider onboarding.
 
 ## 3.2 Provider Onboarding and Verification
 
 Before you may publish Services or accept Appointments, you must complete the provider onboarding process by submitting information requested by SlotFlow, which may include:
 
-* Personal and contact information.
-* Business or professional information, where applicable.
-* Address information.
-* Service details.
-* Service availability and scheduling information.
-* Government-issued identity documents.
-* Professional licenses, certifications, or other verification documents where required.
+- Personal and contact information.
+- Business or professional information, where applicable.
+- Address information.
+- Service details.
+- Service availability and scheduling information.
+- Government-issued identity documents.
+- Professional licenses, certifications, or other verification documents where required.
 
 Submission of this information does not guarantee approval. SlotFlow reserves the right to approve, reject, suspend, or request additional information before activating a Service Provider Account.
 
@@ -111,10 +109,10 @@ You agree to provide complete, accurate, and current information throughout the 
 
 You are solely responsible for:
 
-* Maintaining the confidentiality of your Account credentials.
-* Protecting access to your Account.
-* All activities conducted through your Account.
-* Promptly notifying SlotFlow of any unauthorized access or suspected security breach.
+- Maintaining the confidentiality of your Account credentials.
+- Protecting access to your Account.
+- All activities conducted through your Account.
+- Promptly notifying SlotFlow of any unauthorized access or suspected security breach.
 
 SlotFlow is not liable for losses arising from unauthorized access resulting from your failure to secure your Account.
 
@@ -134,18 +132,17 @@ Following verification and completion of all outstanding obligations, the Accoun
 
 SlotFlow may suspend, restrict, or permanently terminate a Service Provider Account if we determine that the Service Provider has:
 
-* Submitted false, forged, altered, or misleading information or verification documents.
-* Violated these Terms or other Platform policies.
-* Engaged in fraudulent, deceptive, or unlawful conduct.
-* Committed payment or payout fraud.
-* Created fake bookings or manipulated Platform activity.
-* Harassed, threatened, or abused Customers or other Platform users.
-* Used messaging, video consultations, or other Platform features for spam, scams, or prohibited activities.
-* Attempted to compromise the security, integrity, or availability of the Platform.
-* Failed to comply with applicable laws, professional standards, licensing requirements, or tax obligations.
+- Submitted false, forged, altered, or misleading information or verification documents.
+- Violated these Terms or other Platform policies.
+- Engaged in fraudulent, deceptive, or unlawful conduct.
+- Committed payment or payout fraud.
+- Created fake bookings or manipulated Platform activity.
+- Harassed, threatened, or abused Customers or other Platform users.
+- Used messaging, video consultations, or other Platform features for spam, scams, or prohibited activities.
+- Attempted to compromise the security, integrity, or availability of the Platform.
+- Failed to comply with applicable laws, professional standards, licensing requirements, or tax obligations.
 
 SlotFlow reserves the right to investigate suspected violations and to take any action it considers necessary to protect the Platform, its users, and Service Providers.
-
 
 ## 4. Subscription Plans and Billing
 
@@ -155,10 +152,10 @@ Access to certain Service Provider features requires an active Subscription Plan
 
 SlotFlow currently offers the following subscription plans:
 
-* Trial
-* Starter
-* Professional
-* Enterprise
+- Trial
+- Starter
+- Professional
+- Enterprise
 
 Features, usage limits, and pricing vary depending on the selected Subscription Plan. Current pricing is available on the SlotFlow pricing page.
 
@@ -226,8 +223,6 @@ Payments received from Customers for completed Appointments are processed separa
 
 Eligible earnings are generally scheduled for payout to Service Providers on a daily basis, subject to payment processing timelines, verification requirements, disputes, refunds, applicable deductions, and compliance with Platform policies.
 
-
-
 ## 5. Permitted Use of the Platform
 
 ## 5.1 Limited Right to Use
@@ -244,16 +239,16 @@ By uploading such content, you grant SlotFlow a non-exclusive, worldwide, royalt
 
 Service Providers must not:
 
-* Reverse engineer, copy, modify, or attempt to reproduce the Platform or its functionality.
-* Use bots, crawlers, scrapers, automated scripts, or artificial intelligence tools to extract Platform data.
-* Download, collect, or compile Customer information except as required to fulfill legitimate Appointments.
-* Share Customer personal information outside the Platform except where required to provide the booked Service or comply with applicable law.
-* Abuse, manipulate, or attempt to circumvent the Platform's artificial intelligence systems through prompt injection, automated abuse, or other malicious techniques.
-* Upload malicious software, malware, ransomware, viruses, or harmful code.
-* Create fake Appointments, manipulate reviews, ratings, search rankings, or Platform analytics.
-* Misrepresent qualifications, certifications, pricing, availability, or Services.
-* Use the Platform for unlawful, fraudulent, deceptive, or misleading purposes.
-* Operate multiple Service Provider Accounts without written authorization from SlotFlow.
+- Reverse engineer, copy, modify, or attempt to reproduce the Platform or its functionality.
+- Use bots, crawlers, scrapers, automated scripts, or artificial intelligence tools to extract Platform data.
+- Download, collect, or compile Customer information except as required to fulfill legitimate Appointments.
+- Share Customer personal information outside the Platform except where required to provide the booked Service or comply with applicable law.
+- Abuse, manipulate, or attempt to circumvent the Platform's artificial intelligence systems through prompt injection, automated abuse, or other malicious techniques.
+- Upload malicious software, malware, ransomware, viruses, or harmful code.
+- Create fake Appointments, manipulate reviews, ratings, search rankings, or Platform analytics.
+- Misrepresent qualifications, certifications, pricing, availability, or Services.
+- Use the Platform for unlawful, fraudulent, deceptive, or misleading purposes.
+- Operate multiple Service Provider Accounts without written authorization from SlotFlow.
 
 ## 5.4 Public API Usage
 
@@ -281,18 +276,17 @@ For security purposes, SlotFlow may monitor unusual login activity and may tempo
 
 You may not use the Platform, public APIs, Customer information, Service Provider information, or any Platform data to:
 
-* Develop or operate a competing appointment booking platform.
-* Copy or reproduce SlotFlow features, workflows, or artificial intelligence functionality.
-* Benchmark or analyze the Platform using automated tools.
-* Train machine learning or artificial intelligence models.
-* Build commercial databases using Platform information.
+- Develop or operate a competing appointment booking platform.
+- Copy or reproduce SlotFlow features, workflows, or artificial intelligence functionality.
+- Benchmark or analyze the Platform using automated tools.
+- Train machine learning or artificial intelligence models.
+- Build commercial databases using Platform information.
 
 ## 5.8 Website Embedding and API Display
 
 Where permitted through an approved SlotFlow API, Service Providers may display limited profile information, public service details, and booking functionality on their own websites.
 
 Such use must comply with SlotFlow's API documentation, branding requirements, and usage limitations. Unauthorized modification or misuse of API responses is prohibited.
-
 
 ## 6. Provider Content and Verification Materials
 
@@ -304,13 +298,13 @@ You retain ownership of the content you upload to the Platform, including your p
 
 By submitting Provider Content, you grant SlotFlow a worldwide, non-exclusive, royalty-free license to host, store, reproduce, display, distribute, and use such content for the purposes of:
 
-* Operating and improving the Platform.
-* Displaying your public profile and Services.
-* Enabling Appointment bookings.
-* Providing customer support.
-* Processing search results and recommendations.
-* Operating artificial intelligence features that assist Customers in discovering and booking your Services.
-* Complying with applicable legal obligations.
+- Operating and improving the Platform.
+- Displaying your public profile and Services.
+- Enabling Appointment bookings.
+- Providing customer support.
+- Processing search results and recommendations.
+- Operating artificial intelligence features that assist Customers in discovering and booking your Services.
+- Complying with applicable legal obligations.
 
 You may remove or update your publicly visible Provider Content at any time through the Platform, subject to technical limitations.
 
@@ -320,11 +314,11 @@ Identity documents, government-issued identification, professional licenses, cer
 
 Verification materials:
 
-* Are stored using appropriate encryption and security measures.
-* Are accessible only to authorized SlotFlow personnel and the relevant Service Provider.
-* May be reviewed manually or through automated verification systems, including artificial intelligence-assisted fraud detection.
-* May be securely shared with trusted verification partners where necessary to complete the verification process.
-* Will not be permanently deleted while your Service Provider Account remains active or where retention is required by applicable law or legitimate business purposes.
+- Are stored using appropriate encryption and security measures.
+- Are accessible only to authorized SlotFlow personnel and the relevant Service Provider.
+- May be reviewed manually or through automated verification systems, including artificial intelligence-assisted fraud detection.
+- May be securely shared with trusted verification partners where necessary to complete the verification process.
+- Will not be permanently deleted while your Service Provider Account remains active or where retention is required by applicable law or legitimate business purposes.
 
 Where submitted verification materials are incomplete, unclear, expired, or otherwise insufficient, SlotFlow may request updated documentation before approving or continuing your Service Provider Account.
 
@@ -340,10 +334,10 @@ Verification documents and other non-public information will never be used for m
 
 SlotFlow may use publicly available Provider Content to:
 
-* Recommend suitable Service Providers to Customers.
-* Assist Customers with booking decisions.
-* Improve appointment discovery and scheduling.
-* Power Platform features that facilitate appointment booking and customer support.
+- Recommend suitable Service Providers to Customers.
+- Assist Customers with booking decisions.
+- Improve appointment discovery and scheduling.
+- Power Platform features that facilitate appointment booking and customer support.
 
 Verification documents are processed only for verification and fraud prevention purposes and are not used to train external artificial intelligence models.
 
@@ -351,13 +345,13 @@ Verification documents are processed only for verification and fraud prevention 
 
 Service Providers must not upload or submit content that:
 
-* Contains false or misleading information.
-* Includes forged or altered identity documents, licenses, or certifications.
-* Uses copyrighted materials without authorization.
-* Displays misleading portfolio images or fabricated work samples.
-* Infringes another person's intellectual property rights.
-* Contains unlawful, offensive, defamatory, abusive, or discriminatory material.
-* Contains malware, viruses, or other harmful code.
+- Contains false or misleading information.
+- Includes forged or altered identity documents, licenses, or certifications.
+- Uses copyrighted materials without authorization.
+- Displays misleading portfolio images or fabricated work samples.
+- Infringes another person's intellectual property rights.
+- Contains unlawful, offensive, defamatory, abusive, or discriminatory material.
+- Contains malware, viruses, or other harmful code.
 
 ## 6.7 Content Moderation
 
@@ -398,7 +392,6 @@ If you submit suggestions, ideas, feature requests, bug reports, comments, or ot
 ## 7.5 Reservation of Rights
 
 All rights not expressly granted under these Terms are reserved by SlotFlow and its licensors.
-
 
 ## 8. Acceptable Use Policy
 
@@ -462,7 +455,6 @@ SlotFlow may investigate suspected violations of this Acceptable Use Policy usin
 
 Where violations are identified, SlotFlow may issue warnings, remove content, suspend Platform features, temporarily suspend Accounts, permanently terminate Service Provider Accounts, or report unlawful conduct to the appropriate authorities where required by law.
 
-
 ## 9. Account Suspension and Termination
 
 ## 9.1 Account Closure by Service Providers
@@ -473,20 +465,20 @@ Deletion requests are subject to review by SlotFlow and will generally require c
 
 An Account cannot be deleted while there are:
 
-* Pending or scheduled Appointments.
-* Active customer disputes or refund requests.
-* Outstanding payment investigations.
-* Pending payouts.
-* Legal or regulatory obligations requiring continued retention of the Account.
+- Pending or scheduled Appointments.
+- Active customer disputes or refund requests.
+- Outstanding payment investigations.
+- Pending payouts.
+- Legal or regulatory obligations requiring continued retention of the Account.
 
 ## 9.2 Effect of Account Deletion
 
 Following successful completion of the deletion process:
 
-* Your public Service Provider profile, Services, portfolio, availability, and other publicly visible information will be permanently removed from the Platform.
-* Subscription benefits will immediately cease.
-* Verification documents and operational records may continue to be retained where required by law or for fraud prevention, security, audit, accounting, taxation, payout processing, dispute resolution, or other legitimate business purposes.
-* Information retained under applicable legal obligations will be securely stored and protected.
+- Your public Service Provider profile, Services, portfolio, availability, and other publicly visible information will be permanently removed from the Platform.
+- Subscription benefits will immediately cease.
+- Verification documents and operational records may continue to be retained where required by law or for fraud prevention, security, audit, accounting, taxation, payout processing, dispute resolution, or other legitimate business purposes.
+- Information retained under applicable legal obligations will be securely stored and protected.
 
 ## 9.3 Subscription Expiration
 
@@ -498,16 +490,16 @@ Premium features associated with the expired Subscription will be disabled until
 
 SlotFlow may immediately suspend or permanently terminate a Service Provider Account where we reasonably believe that:
 
-* These Terms have been violated.
-* Fraudulent or misleading information has been submitted.
-* Fake verification documents or certifications have been provided.
-* Fraudulent payment activity has occurred.
-* Customers have been encouraged to complete bookings or payments outside the Platform.
-* Artificial intelligence features have been abused or manipulated.
-* Spam, harassment, unlawful conduct, or other abusive behaviour has occurred.
-* Continued operation of the Account presents a security risk or legal concern.
+- These Terms have been violated.
+- Fraudulent or misleading information has been submitted.
+- Fake verification documents or certifications have been provided.
+- Fraudulent payment activity has occurred.
+- Customers have been encouraged to complete bookings or payments outside the Platform.
+- Artificial intelligence features have been abused or manipulated.
+- Spam, harassment, unlawful conduct, or other abusive behaviour has occurred.
+- Continued operation of the Account presents a security risk or legal concern.
 
-Where appropriate, SlotFlow will notify the Service Provider using the registered email address. Providers may contact Support to request a review of the action taken.
+Where appropriate, SlotFlow will notify the Service Provider using the registered email. Providers may contact Support to request a review of the action taken.
 
 ## 9.5 Effect of Suspension
 
@@ -518,5 +510,3 @@ SlotFlow may temporarily suspend bookings, messaging, subscription benefits, pay
 ## 9.6 Surviving Provisions
 
 Termination or suspension of a Service Provider Account does not affect provisions of these Terms that are intended by their nature to survive, including provisions relating to subscriptions, payments, payouts, intellectual property, privacy, verification records, fraud prevention, dispute resolution, limitation of liability, and applicable legal obligations.
-
-

@@ -1,11 +1,14 @@
-import { User } from "../entityInterface/userInterface";
-import { Availability, AvailabilityForResponse } from "../entityInterface/serviceAvailabilityInterface";
+import { User } from '../entityInterface/userInterface';
+import {
+  Availability,
+  AvailabilityForResponse,
+} from '../entityInterface/serviceAvailabilityInterface';
 
 // request type of admin fetch provider service availability api
 export type FetchServiceAvailabilityRequest = {
-    providerId: string;
-    date: Date;
-}
+  providerId: string;
+  date: Date;
+};
 
 // response type of the admin fetch provider service availability api
 export type FetchServiceAvailabilityResponse = AvailabilityForResponse;
@@ -17,7 +20,7 @@ export interface CreateServiceAvailabilitiesRequest {
 
 // request type of the fetch engaged slots api
 export interface FetchEngagedSlotsRequest {
-  providerId: User["_id"];
+  providerId: User['_id'];
   date: Date;
 }
 
