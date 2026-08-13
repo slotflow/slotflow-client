@@ -13,3 +13,5 @@ pnpm-lock.yaml
 *.min.js
 *.min.css
 src/test
+README.md
+screenshots/
