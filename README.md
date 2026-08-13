@@ -18,6 +18,8 @@ SlotFlow provides a unified platform for users to discover and book services, wh
 
 The platform is built around a multi-role architecture with **Users, Providers, and Administrators**, and integrates real-time communication, payments, Google Calendar, push notifications, and role-based access control.
 
+![SlotFlow Landing Hero](./screenshots/landing_hero_dark.png)
+
 ## Overview
 
 SlotFlow supports three primary roles:
@@ -115,7 +117,7 @@ The application includes dedicated loading states and skeleton/shimmer component
 | **Firebase Cloud Messaging** | Push notifications                                     |
 | **Stripe**                   | Payment integration                                    |
 
-## Frontend Architecture
+## Architecture
 
 The SlotFlow frontend communicates with the backend through the API Gateway.
 
@@ -262,7 +264,6 @@ SlotFlow is designed as a full-stack, production-oriented SaaS project demonstra
 - Responsive component-driven UI
 - Modern frontend animation and interaction patterns
 - Production deployment
-
 ---
 
 <p align="center">
