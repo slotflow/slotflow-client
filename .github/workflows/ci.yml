@@ -25,21 +25,6 @@ on:
     branches:
       - main
       - dev
-    paths:
-      - 'src/**'
-      - 'public/**'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
-      - 'vite.config.ts'
-      - 'tsconfig.json'
-      - 'tsconfig.app.json'
-      - 'tsconfig.node.json'
-      - 'eslint.config.js'
-      - '.prettierrc'
-      - '.prettierignore'
-      - 'vercel.json'
-      - 'index.html'
-      - '.github/workflows/**'
 
 jobs:
   validate:
@@ -52,16 +37,47 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Detect application changes
+        id: changes
+        shell: bash
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          else
+            BASE_SHA="${{ github.event.before }}"
+          fi
+
+          echo "Comparing:"
+          echo "BASE: $BASE_SHA"
+          echo "HEAD: $GITHUB_SHA"
+
+          CHANGED_FILES=$(git diff --name-only "$BASE_SHA" "$GITHUB_SHA")
+
+          echo "Changed files:"
+          echo "$CHANGED_FILES"
+
+          if echo "$CHANGED_FILES" | grep -Eq \
+            '^(src/|public/|package\.json$|pnpm-lock\.yaml$|vite\.config\.ts$|tailwind\.config\.ts$|components\.json$|tsconfig\.json$|tsconfig\.app\.json$|tsconfig\.node\.json$|eslint\.config\.js$|\.prettierrc$|\.prettierignore$|vercel\.json$|index\.html$|\.github/workflows/)'; then
+            echo "application_changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "application_changed=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Setup Node.js
+        if: steps.changes.outputs.application_changed == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: 22
 
       - name: Setup pnpm
+        if: steps.changes.outputs.application_changed == 'true'
         uses: pnpm/action-setup@v4
 
       - name: Install dependencies
+        if: steps.changes.outputs.application_changed == 'true'
         run: pnpm install --frozen-lockfile
 
       # - name: Check lint
@@ -77,12 +93,23 @@ jobs:
       #   run:  pnpm build
       
       - name: Validate project
+        if: steps.changes.outputs.application_changed == 'true'
         run: pnpm validate
       
+      - name: Documentation-only change
+        if: steps.changes.outputs.application_changed != 'true'
+        run: echo "Documentation-only change. Project validation is not required."
+      
       - name: Deploy to Vercel Preview
-        if: github.ref == 'refs/heads/dev'
+        if: |
+          github.event_name == 'push' &&
+          github.ref == 'refs/heads/dev' &&
+          steps.changes.outputs.application_changed == 'true'
         run: pnpm dlx vercel deploy --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy to Vercel Production
-        if: github.ref == 'refs/heads/main'
+        if: |
+          github.event_name == 'push' &&
+          github.ref == 'refs/heads/main' &&
+          steps.changes.outputs.application_changed == 'true'
         run: pnpm dlx vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
