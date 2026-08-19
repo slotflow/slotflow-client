@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Input } from '../ui/input';
 import { Plus } from 'lucide-react';
+import { Label } from '../ui/label';
 import { Button } from '../ui/button';
 import { defaultButtonClassName } from '@/shared/utils/constants';
 import { TagInputProps } from '@/shared/interface/componentInterface';
@@ -20,12 +21,14 @@ const TagInput = ({ value, onChange }: TagInputProps) => {
 
   return (
     <div className="w-full">
-      <label className="text-sm font-medium">Tags</label>
+      <Label htmlFor="tags" className="text-sm font-medium">
+        Tags
+      </Label>
       <div className="flex gap-2 mt-1">
         <Input
           type="text"
           value={input}
-          placeholder="Type a tag and press Add"
+          placeholder="Enter your tags here"
           onChange={(e) => setInput(e.target.value)}
           className="border rounded-md px-3 py-2 w-full text-sm"
         />

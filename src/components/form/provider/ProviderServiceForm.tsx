@@ -22,14 +22,16 @@ import {
 import {
   groupOptions,
   redirectPaths,
-  serviceModeOptions,
+  // TODO Remove
+  // serviceModeOptions,
   serviceTypeOptions,
   serviceCategoryOptions,
   defaultButtonClassName,
 } from '@/shared/utils/constants';
 import {
   ServiceType,
-  ServiceMode,
+  // TODO Remove
+  // ServiceMode,
   ServiceCategory,
   OnboardingStatus,
   AdminVerificationStatus,
@@ -67,10 +69,11 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
       serviceExperience: '',
       requirements: [''],
       serviceType: undefined,
-      serviceMode: undefined,
       tags: [],
       videoUrl: '',
       portfolioUrl: '',
+      // TODO Remove
+      // serviceMode: undefined,
       maxParticipants: 1,
       isGroupService: false,
     },
@@ -79,6 +82,7 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
   const tags = watch('tags');
   const serviceCategory = watch('serviceCategory');
   const requirements = watch('requirements') || [];
+  const isGroupService = watch('isGroupService');
 
   useEffect(() => {
     if (!serviceCategory || serviceCategory.length === 0) {
@@ -124,7 +128,8 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
         serviceDescription: result.serviceDescription,
         serviceExperienceYears: result.serviceExperienceYears,
         serviceExperience: result.serviceExperience,
-        serviceMode: result.serviceMode,
+        // TODO Remove
+        // serviceMode: result.serviceMode,
         serviceName: result.serviceName,
         servicePrice: result.servicePrice,
         serviceType: result.serviceType,
@@ -242,13 +247,14 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
 
           <SelectField<ProviderCreateServiceDetailsFormType, ServiceType>
             id="serviceType"
-            label="Type"
+            label="Service Type"
             options={serviceTypeOptions}
             register={register}
             error={errors.serviceType}
             required
           />
-
+          {/* 
+          // TODO Remove
           <SelectField<ProviderCreateServiceDetailsFormType, ServiceMode>
             id="serviceMode"
             label="Mode"
@@ -256,9 +262,8 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
             register={register}
             error={errors.serviceMode}
             required
-          />
-        </div>
-        <div className="space-y-4 w-full space-x-2 md:pt-6">
+          /> */}
+
           <DynamicStringListField
             label="Requirements"
             placeholder="Enter Requirement"
@@ -278,39 +283,42 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
               });
             }}
           />
-
-          <FormField<ProviderCreateServiceDetailsFormType>
-            label="Maximum Participants"
-            id="maxParticipants"
-            type="number"
-            placeholder="1"
-            register={register}
-            error={errors.maxParticipants?.message}
-            required
-          />
-
+        </div>
+        <div className="space-y-4 w-full space-x-2 md:pt-6">
           <SelectField<ProviderCreateServiceDetailsFormType, boolean>
             id="isGroupService"
-            label="Is this a group service?"
+            label="Booking Type"
             options={groupOptions}
             register={register}
             error={errors.isGroupService}
             required
           />
 
+          {isGroupService && (
+            <FormField<ProviderCreateServiceDetailsFormType>
+              label="Maximum Participants"
+              id="maxParticipants"
+              type="number"
+              placeholder="2"
+              register={register}
+              error={errors.maxParticipants?.message}
+              required
+            />
+          )}
+
           <FormField<ProviderCreateServiceDetailsFormType>
-            label="Demo Video Url"
+            label="Demo Video Link"
             id="videoUrl"
-            placeholder="https://"
+            placeholder="Enter your demo video link"
             type="text"
             register={register}
             error={errors.videoUrl?.message}
           />
 
           <FormField<ProviderCreateServiceDetailsFormType>
-            label="Portfolio Url"
+            label="Portfolio Link"
             id="portfolioUrl"
-            placeholder="https://"
+            placeholder="Enter your portfolio link"
             type="text"
             register={register}
             error={errors.portfolioUrl?.message}

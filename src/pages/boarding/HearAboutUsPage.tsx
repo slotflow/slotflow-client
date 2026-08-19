@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { RootState } from '@/shared/redux/appStore';
+import { AppDispatch, RootState } from '@/shared/redux/appStore';
 import { AnimatePresence, motion } from 'framer-motion';
 import { usePreBoarding } from '@/hooks/usePreboarding';
 import { redirectPaths } from '@/shared/utils/constants';
@@ -10,9 +10,11 @@ import { HearAboutUsOptionValue, Role } from '@/shared/interface/enums';
 import ReferralCodeCard from '@/components/boarding/hearAboutUs/ReferralCodeCard';
 import HearAboutUsButtons from '@/components/boarding/hearAboutUs/HearAboutUsButtons';
 import HearAboutUsOptions from '@/components/boarding/hearAboutUs/HearAboutUsOptionCard';
+import { updateBoardingStep } from '@/shared/redux/slices/appSlice';
 
 const HearAboutUsPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const { submitPreBoardingHandler } = usePreBoarding();
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [referralCode, setReferralCode] = useState<string | null>(null);
@@ -82,7 +84,10 @@ const HearAboutUsPage = () => {
       <HearAboutUsButtons
         isSubmitting={isSubmitting}
         disabled={isSubmitting || !selectedOption}
-        onPrevious={() => navigate(redirectPaths.PRE_BOARDING_ROLE)}
+        onPrevious={() => {
+          dispatch(updateBoardingStep(2));
+          navigate(redirectPaths.PRE_BOARDING_ROLE);
+        }}
         onSubmit={handleSubmit}
       />
     </>

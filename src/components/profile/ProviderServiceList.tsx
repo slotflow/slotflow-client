@@ -3,7 +3,8 @@ import { Button } from '../ui/button';
 import DataField from '../app/DataField';
 import { SelectSeparator } from '../ui/select';
 import { useQuery } from '@tanstack/react-query';
-import { ServiceMode } from '@/shared/interface/enums';
+// TODO Remove
+// import { ServiceMode } from '@/shared/interface/enums';
 import { AnimatePresence, motion } from 'framer-motion';
 import DataFetchingError from '../error/DataFetchingError';
 import DataFieldShimmer from '../shimmers/DataFieldShimmer';
@@ -19,7 +20,8 @@ import {
   IndianRupee,
   Layers,
   LayoutGrid,
-  MonitorSmartphone,
+  // TODO Remove
+  // MonitorSmartphone,
   Notebook,
   Tag,
   UserPlus,
@@ -87,11 +89,12 @@ const ProviderServiceList = ({
           {data?.requirements?.map((req, i) => (
             <DataField key={i} label={`Requirement ${i + 1}`} value={req} Icon={ClipboardList} />
           ))}
-          <DataField
+          // TODO Remove
+          {/* <DataField
             label="Mode"
             value={data?.serviceMode === ServiceMode.BOTH ? 'Online & Offline' : data?.serviceMode}
             Icon={MonitorSmartphone}
-          />
+          /> */}
           <DataField label="Type" value={data?.serviceType} Icon={Layers} />
           <DataField label="Demo Video Url" value={data?.videoUrl} link Icon={Video} />
           <DataField label="Portfolio Url" value={data?.portfolioUrl} link Icon={Notebook} />

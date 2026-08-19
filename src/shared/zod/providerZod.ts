@@ -1,7 +1,8 @@
 import z from 'zod';
 import {
   ServiceCategory,
-  ServiceMode,
+  // TODO Remove
+  // ServiceMode,
   ServiceType,
   SubscriptionValidity,
 } from '../interface/enums';
@@ -64,7 +65,8 @@ export const providerCreateServiceDetailsZodSchema = z.object({
 
   serviceType: z.nativeEnum(ServiceType),
 
-  serviceMode: z.nativeEnum(ServiceMode),
+  // TODO Remove
+  // serviceMode: z.nativeEnum(ServiceMode),
 
   tags: z.array(z.string()).optional(),
 

@@ -104,7 +104,8 @@ import {
   PlanName,
   Role,
   ServiceCategory,
-  ServiceMode,
+  // TODO Remove
+  // ServiceMode,
   ServiceType,
 } from '../interface/enums';
 
@@ -1160,53 +1161,53 @@ export const AppointmentsStatsMapForAdmin: StatsMapForAdminInterface[] = [
 // boarding data for the preboarding and onboarding pages
 export const boardingData: BoardingStep[] = [
   {
-    id: 1,
+    id: 0,
     title: 'Account Setup',
     image: choose,
     description:
       "Choose how you'd like to use Slotflow. Whether you're booking services or offering them, we'll tailor your experience accordingly.",
   },
   {
-    id: 2,
+    id: 1,
     title: 'How did you hear about us?',
     image: choose,
     description:
       'Help us understand how you discovered Slotflow. Your feedback enables us to improve and reach more users effectively.',
   },
   {
-    id: 3,
+    id: 2,
     title: 'Address',
     image: address,
     description:
       'Provide your business address accurately so customers can discover your services and book appointments with confidence.',
   },
   {
-    id: 4,
+    id: 3,
     title: 'Service Details',
     image: service,
     description:
       "Tell customers about the services you provide, including descriptions, pricing, and any important information they'll need before booking.",
   },
   {
-    id: 5,
+    id: 4,
     title: 'Availability',
     image: availability,
     description:
       'Set your working days and available time slots to ensure customers can book appointments that fit your schedule.',
   },
   {
-    id: 6,
+    id: 5,
     title: 'Upload Proofs',
     image: fileUpload,
     description:
       'Upload the required verification documents. Please ensure they are valid, clearly visible, and meet the specified file requirements.',
   },
   {
-    id: 7,
+    id: 6,
     title: 'Approval',
     image: working,
     description:
-      "Your application has been submitted successfully. Our team is reviewing your information, and you'll receive an email once your account has been approved.",
+      "Your application is ready for review. Please submit your information for our team to review. Once your account has been approved, you'll receive an email confirmation.",
   },
 ];
 
@@ -1321,12 +1322,13 @@ export const serviceTypeOptions: OptionType<ServiceType>[] = [
   { label: 'Recurring', value: ServiceType.RECURRING },
 ];
 
+// TODO Remove
 // Service mode options
-export const serviceModeOptions: OptionType<ServiceMode>[] = [
-  { label: 'Online', value: ServiceMode.ONLINE },
-  { label: 'Offline', value: ServiceMode.OFFLINE },
-  { label: 'Both', value: ServiceMode.BOTH },
-];
+// export const serviceModeOptions: OptionType<ServiceMode>[] = [
+//   { label: 'Online', value: ServiceMode.ONLINE },
+//   { label: 'Offline', value: ServiceMode.OFFLINE },
+//   { label: 'Both', value: ServiceMode.BOTH },
+// ];
 
 // Group options
 export const groupOptions: OptionType<boolean>[] = [
@@ -1607,43 +1609,43 @@ export const onboardingContent: Record<
 
 export const ONBOARDING_CONFIG: Record<string, OnboardingStep> = {
   '/preboarding/role': {
-    pageNumber: 1,
+    pageNumber: 0,
     heading: onboardingContent.setupRole.title,
     description: onboardingContent.setupRole.description,
     path: '/preboarding/role',
   },
   '/preboarding/hear-about-us': {
-    pageNumber: 2,
+    pageNumber: 1,
     heading: onboardingContent.hearAboutUs.title,
     description: onboardingContent.hearAboutUs.description,
     path: '/preboarding/hear-about-us',
   },
   '/onboarding/address': {
-    pageNumber: 3,
+    pageNumber: 2,
     heading: onboardingContent.address.title,
     description: onboardingContent.address.description,
     path: '/onboarding/address',
   },
   '/onboarding/service': {
-    pageNumber: 4,
+    pageNumber: 3,
     heading: onboardingContent.serviceDetails.title,
     description: onboardingContent.serviceDetails.description,
     path: '/onboarding/service',
   },
   '/onboarding/availability': {
-    pageNumber: 5,
+    pageNumber: 4,
     heading: onboardingContent.availability.title,
     description: onboardingContent.availability.description,
     path: '/onboarding/availability',
   },
   '/onboarding/proofs': {
-    pageNumber: 6,
+    pageNumber: 5,
     heading: onboardingContent.proofs.title,
     description: onboardingContent.proofs.description,
     path: '/onboarding/proofs',
   },
   '/onboarding/pending': {
-    pageNumber: 7,
+    pageNumber: 6,
     heading: onboardingContent.profileApproval.title,
     description: onboardingContent.profileApproval.description,
     path: '/onboarding/pending',

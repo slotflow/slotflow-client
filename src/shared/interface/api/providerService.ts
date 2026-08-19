@@ -8,7 +8,8 @@ type FetchServiceDetailsResponse = Pick<
   | 'servicePrice'
   | 'serviceExperience'
   | 'serviceType'
-  | 'serviceMode'
+  // TODO Remove
+  // | 'serviceMode'
   | 'requirements'
   | 'maxParticipants'
   | 'isGroupService'
@@ -35,7 +36,8 @@ export type ProviderUpdateServiceDetailsRequest = Pick<
   | 'serviceId'
   | 'serviceDescription'
   | 'serviceExperience'
-  | 'serviceMode'
+  // TODO Remove
+  // | 'serviceMode'
   | 'serviceName'
   | 'servicePrice'
   | 'serviceType'
@@ -54,7 +56,8 @@ export type ProviderCreateServiceDetailsRequest = Pick<
   | 'serviceId'
   | 'serviceDescription'
   | 'serviceExperience'
-  | 'serviceMode'
+  // TODO Remove
+  // | 'serviceMode'
   | 'serviceName'
   | 'servicePrice'
   | 'serviceType'

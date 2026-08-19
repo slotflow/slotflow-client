@@ -14,7 +14,7 @@ const SideBox = ({ pageNumber }: SideBoxProps) => {
         <SideBoxSteps pageNumber={pageNumber} />
         <div className="flex justify-center flex-1 items-center">
           <img
-            src={boardingData[pageNumber - 1].image}
+            src={boardingData[pageNumber].image}
             className="h-40 md:h-72 w-full object-contain"
             alt="Illustration"
           />

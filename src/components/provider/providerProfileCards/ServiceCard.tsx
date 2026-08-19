@@ -2,12 +2,21 @@ import { useSelector } from 'react-redux';
 import NoData from '@/components/common/NoData';
 import DataField from '@/components/app/DataField';
 import { RootState } from '@/shared/redux/appStore';
-import { ServiceMode } from '@/shared/interface/enums';
+// TODO Remove
+// import { ServiceMode } from '@/shared/interface/enums';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import DataFieldShimmer from '@/components/shimmers/DataFieldShimmer';
 import { ServiceCardProps } from '@/shared/interface/componentInterface';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Briefcase, Hash, Layers, MonitorSmartphone, UserPlus, Users } from 'lucide-react';
+import {
+  Briefcase,
+  Hash,
+  Layers,
+  // TODO Remove
+  // MonitorSmartphone,
+  UserPlus,
+  Users,
+} from 'lucide-react';
 
 const ServiceCard = ({
   isLoading,
@@ -52,13 +61,13 @@ const ServiceCard = ({
                 value={data?.maxParticipants}
                 Icon={UserPlus}
               />
-              <DataField
+              {/* <DataField
                 label={data?.serviceMode === ServiceMode.BOTH ? 'Modes' : 'Mode'}
                 value={
                   data?.serviceMode === ServiceMode.BOTH ? 'Online & Offline' : data?.serviceMode
                 }
                 Icon={MonitorSmartphone}
-              />
+              /> */}
               {!isShowPreview && !isUserLookingProvider && (
                 <>
                   <DataField label="Type" value={data?.serviceType} Icon={Layers} />
