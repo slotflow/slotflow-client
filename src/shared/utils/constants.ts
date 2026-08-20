@@ -159,48 +159,185 @@ export enum RouteNames {
   GRAFANA_DASHBOARD = 'Grafana Dashboard',
   CREDITS = 'Credits',
   REFERRALS = 'Referrals',
+  NOTIFICATIONS = `Notifications`,
+  ACCOUNT = `Account`,
+  SECURITY = `Security`,
 }
 
-// Routes for admin
-export const adminRoutes: Route[] = [
-  { path: 'dashboard', name: RouteNames.DASHBOARD, icon: LayoutDashboard },
-  { path: 'report', name: RouteNames.REPORTS, icon: BookLock },
-  { path: 'service-providers', name: RouteNames.SERVICE_PROVIDERS, icon: Handshake },
-  { path: 'users', name: RouteNames.USERS, icon: Users },
-  { path: 'services', name: RouteNames.SERVICES, icon: Briefcase },
-  { path: 'plans', name: RouteNames.PLANS, icon: LayoutGrid },
-  { path: 'subscriptions', name: RouteNames.SUBSCRIPTIONS, icon: CreditCard },
-  { path: 'payments', name: RouteNames.PAYMENTS, icon: Handshake },
-  { path: 'grafana-dashboard', name: RouteNames.GRAFANA_DASHBOARD, icon: Gauge },
+// route for sidebar
+export const sidebarRoutes: Route[] = [
+  {
+    path: 'dashboard',
+    name: RouteNames.DASHBOARD,
+    icon: LayoutDashboard,
+    roles: [Role.ADMIN, Role.PROVIDER],
+  },
+
+  {
+    path: 'services',
+    name: RouteNames.SERVICES,
+    icon: Rows2,
+    roles: [Role.ADMIN, Role.USER],
+  },
+
+  {
+    path: `profile`,
+    name: RouteNames.PROFILE,
+    icon: User,
+    roles: [Role.PROVIDER],
+  },
+
+  {
+    path: 'subscriptions',
+    name: RouteNames.SUBSCRIPTIONS,
+    icon: CreditCard,
+    roles: [Role.ADMIN, Role.PROVIDER],
+  },
+
+  {
+    path: 'service-providers',
+    name: RouteNames.SERVICE_PROVIDERS,
+    icon: Handshake,
+    roles: [Role.ADMIN],
+  },
+  {
+    path: 'users',
+    name: RouteNames.USERS,
+    icon: Users,
+    roles: [Role.ADMIN],
+  },
+
+  {
+    path: 'plans',
+    name: RouteNames.PLANS,
+    icon: LayoutGrid,
+    roles: [Role.ADMIN],
+  },
+
+  {
+    path: 'bookings',
+    name: RouteNames.BOOKINGS,
+    icon: CalendarCheck,
+    roles: [Role.USER, Role.PROVIDER],
+  },
+
+  {
+    path: 'payments',
+    name: RouteNames.PAYMENTS,
+    icon: Handshake,
+    roles: [Role.USER, Role.PROVIDER, Role.ADMIN],
+  },
+
+  {
+    path: 'calendar',
+    name: RouteNames.CALENDAR,
+    icon: Calendar1,
+    roles: [Role.USER, Role.PROVIDER],
+  },
+
+  {
+    path: 'chat',
+    name: RouteNames.CHAT,
+    icon: MessageSquare,
+    roles: [Role.USER, Role.PROVIDER],
+  },
+
+  {
+    path: 'reviews',
+    name: RouteNames.REVIEWS,
+    icon: Star,
+    roles: [Role.USER, Role.PROVIDER],
+  },
+
+  {
+    path: 'credits',
+    name: RouteNames.CREDITS,
+    icon: Wallet2Icon,
+    roles: [Role.USER, Role.PROVIDER],
+  },
+
+  {
+    path: 'referrals',
+    name: RouteNames.REFERRALS,
+    icon: UserPlus,
+    roles: [Role.USER, Role.PROVIDER],
+  },
+
+  {
+    path: 'grafana-dashboard',
+    name: RouteNames.GRAFANA_DASHBOARD,
+    icon: Gauge,
+    roles: [Role.ADMIN],
+  },
+
+  {
+    path: 'report',
+    name: RouteNames.REPORTS,
+    icon: BookLock,
+    roles: [Role.ADMIN, Role.PROVIDER],
+  },
+
+  {
+    path: 'settings',
+    name: RouteNames.SETTINGS,
+    icon: Settings,
+    roles: [Role.USER, Role.PROVIDER],
+    subroutes: [
+      {
+        path: 'notifications',
+        name: RouteNames.NOTIFICATIONS,
+        icon: Mail,
+        roles: [Role.USER, Role.PROVIDER],
+      },
+      {
+        path: 'account',
+        name: RouteNames.ACCOUNT,
+        icon: Shield,
+        roles: [Role.USER, Role.PROVIDER],
+      },
+      {
+        path: 'integrations',
+        name: RouteNames.INTEGRATIONS,
+        icon: CreditCard,
+        roles: [Role.USER, Role.PROVIDER],
+      },
+      {
+        path: 'security',
+        name: RouteNames.SECURITY,
+        icon: LockIcon,
+        roles: [Role.USER, Role.PROVIDER],
+      },
+    ],
+  },
 ];
 
-// Routes for user
-export const userRoutes: Route[] = [
-  { path: 'dashboard', name: RouteNames.SERVICES, icon: Rows2 },
-  { path: 'profile', name: RouteNames.PROFILE, icon: User },
-  { path: 'bookings', name: RouteNames.BOOKINGS, icon: CalendarCheck },
-  { path: 'payments', name: RouteNames.PAYMENTS, icon: CreditCard },
-  { path: 'chat', name: RouteNames.CHAT, icon: MessageSquare },
-  { path: 'calendar', name: RouteNames.CALENDAR, icon: Calendar1 },
-  { path: 'reviews', name: RouteNames.REVIEWS, icon: Star },
-  { path: 'credits', name: RouteNames.CREDITS, icon: Wallet2Icon },
-  { path: 'referrals', name: RouteNames.REFERRALS, icon: UserPlus },
-  { path: 'settings', name: RouteNames.SETTINGS, icon: Settings },
-];
-
-// Routes for provider
-export const providerRoutes: Route[] = [
-  { path: 'dashboard', name: RouteNames.DASHBOARD, icon: LayoutDashboard },
-  { path: 'profile', name: RouteNames.PROFILE, icon: User },
-  { path: 'bookings', name: RouteNames.BOOKINGS, icon: CalendarCheck },
-  { path: 'subscriptions', name: RouteNames.SUBSCRIPTIONS, icon: CreditCard },
-  { path: 'payments', name: RouteNames.PAYMENTS, icon: Handshake },
-  { path: 'calendar', name: RouteNames.CALENDAR, icon: Calendar1 },
-  { path: 'chat', name: RouteNames.CHAT, icon: MessageSquare },
-  { path: 'reviews', name: RouteNames.REVIEWS, icon: Star },
-  { path: 'credits', name: RouteNames.CREDITS, icon: Wallet2Icon },
-  { path: 'referrals', name: RouteNames.REFERRALS, icon: UserPlus },
-  { path: 'settings', name: RouteNames.SETTINGS, icon: Settings },
+// Settings Page Tabs
+export const settingsTabs: CommonTabInterface[] = [
+  {
+    value: 'notifications',
+    label: 'Notifications',
+    icon: Mail,
+  },
+  {
+    value: 'account',
+    label: 'Account',
+    icon: Shield,
+  },
+  {
+    value: 'integrations',
+    label: 'Integrations',
+    icon: CreditCard,
+  },
+  {
+    value: 'security',
+    label: 'Security',
+    icon: LockIcon,
+  },
+  {
+    value: 'subscription',
+    label: 'Subscription',
+    icon: CreditCard,
+  },
 ];
 
 // Access Control For Provider
@@ -209,6 +346,8 @@ export const planAccessMap: Record<PlanName, RouteNames[]> = {
     RouteNames.DASHBOARD,
     RouteNames.PROFILE,
     RouteNames.SUBSCRIPTIONS,
+    RouteNames.CREDITS,
+    RouteNames.REFERRALS,
     RouteNames.SETTINGS,
   ],
   [PlanName.TRIAL]: [
@@ -216,6 +355,8 @@ export const planAccessMap: Record<PlanName, RouteNames[]> = {
     RouteNames.PROFILE,
     RouteNames.BOOKINGS,
     RouteNames.SUBSCRIPTIONS,
+    RouteNames.CREDITS,
+    RouteNames.REFERRALS,
     RouteNames.SETTINGS,
   ],
   [PlanName.STARTER]: [
@@ -1407,35 +1548,6 @@ export const profileTabs: CommonTabInterface[] = [
 export const providerDashboardTabs: CommonTabInterface[] = [
   { value: 'stats', label: 'Stats', icon: Activity },
   { value: 'graphs', label: 'Graphs', icon: BarChart },
-];
-
-// Settings Page Tabs
-export const settingsTabs: CommonTabInterface[] = [
-  {
-    value: 'notifications',
-    label: 'Notifications',
-    icon: Mail,
-  },
-  {
-    value: 'account',
-    label: 'Account',
-    icon: Shield,
-  },
-  {
-    value: 'integrations',
-    label: 'Integrations',
-    icon: CreditCard,
-  },
-  {
-    value: 'security',
-    label: 'Security',
-    icon: LockIcon,
-  },
-  {
-    value: 'subscription',
-    label: 'Subscription',
-    icon: CreditCard,
-  },
 ];
 
 // Advertisement visibility select field options

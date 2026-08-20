@@ -27,10 +27,14 @@ export interface ApiPaginatedResponse<T> {
 }
 
 // Routes array interface
-export interface Route {
+interface RouteInterface {
   path: string;
   name: RouteNames;
   icon: LucideIcon;
+  roles?: Role[];
+}
+export interface Route extends RouteInterface {
+  subroutes?: RouteInterface[];
 }
 
 // Gsap animation object interface

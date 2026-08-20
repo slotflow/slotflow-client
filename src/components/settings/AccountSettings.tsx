@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux';
 import UserInfo from './account/UserInfo';
-import { Separator } from '../ui/separator';
 import ProfileHead from './account/ProfileHead';
 import { Role } from '@/shared/interface/enums';
 import { RootState } from '@/shared/redux/appStore';
@@ -14,30 +13,21 @@ const AccountSettings = () => {
   const authUser = useSelector((state: RootState) => state.auth.authUser);
 
   return (
-    <>
-      <div>
-        <h3 className="text-lg font-medium">Account</h3>
-        <p className="text-muted-foreground text-sm">
-          Manage your account details and security settings
-        </p>
-      </div>
-      <Separator className="my-4 flex-none" />
-      <div className="space-y-2">
-        <ProfileHead />
-        <UserInfo />
-        <AddressListing fetchApiFunction={fetchMyAddress} queryKey="myAddress" canUpdate={true} />
-        {authUser?.role === Role.PROVIDER && (
-          <>
-            <ProviderServiceList
-              fetchApiFunction={providerFetchServiceDetails}
-              queryKey="providerService"
-              canUpdate={true}
-            />
-            <ProviderServiceAvailability role={Role.PROVIDER} canUpdate={true} />
-          </>
-        )}
-      </div>
-    </>
+    <div className="space-y-2 max-w-5xl mx-auto">
+      <ProfileHead />
+      <UserInfo />
+      <AddressListing fetchApiFunction={fetchMyAddress} queryKey="myAddress" canUpdate={true} />
+      {authUser?.role === Role.PROVIDER && (
+        <>
+          <ProviderServiceList
+            fetchApiFunction={providerFetchServiceDetails}
+            queryKey="providerService"
+            canUpdate={true}
+          />
+          <ProviderServiceAvailability role={Role.PROVIDER} canUpdate={true} />
+        </>
+      )}
+    </div>
   );
 };
 

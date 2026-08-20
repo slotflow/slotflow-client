@@ -8,16 +8,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import avatar from '@/assets/defaultImages/avatar.png';
 import { getUploadUrl, uploadToS3 } from '@/shared/apis/s3';
 import { userUpdateProfileImage } from '@/shared/apis/user';
-import { AuthState } from '@/shared/interface/sliceInterface';
 import { AppDispatch, RootState } from '@/shared/redux/appStore';
 import { ApiBaseResponse } from '@/shared/interface/commonInterface';
 import { UserUpdateProfileImageResponse } from '@/shared/interface/api/user';
 
 const ProfileHead = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { authUser, profileImageUpdating }: AuthState = useSelector(
-    (store: RootState) => store.auth,
-  );
+  const authUser = useSelector((store: RootState) => store.auth.authUser);
+  const [profileImageUpdating, setProfileImageUpdating] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,6 +27,7 @@ const ProfileHead = () => {
 
     const formData = new FormData();
     formData.append('profileImage', file);
+    setProfileImageUpdating(true);
 
     try {
       const res = await getUploadUrl({ file: file, folder: 'profiles' });
@@ -49,6 +48,8 @@ const ProfileHead = () => {
       if (appConfig.isDevelopment) console.error('Error getting upload URL : ', error);
       toast.error('Failed to upload image. Please try again.');
       return;
+    } finally {
+      setProfileImageUpdating(false);
     }
   };
 

@@ -1,26 +1,22 @@
+import { userUpdateInfo } from '@/shared/apis/user';
 import { signin, signout } from '@/shared/apis/auth';
 import { createAddress } from '@/shared/apis/address';
 import { SigninResponse } from '@/shared/interface/api/auth';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ApiBaseResponse } from '@/shared/interface/commonInterface';
 import { AuthState, AuthUser } from '@/shared/interface/sliceInterface';
-import { userUpdateInfo, userUpdateProfileImage } from '@/shared/apis/user';
+import { UserUpdateUserInfoResponse } from '@/shared/interface/api/user';
+import { UserCreateAddressResponse } from '@/shared/interface/api/address';
 import { SubscriptionActivated } from '@/shared/interface/api/subscription';
 import { providerCreateServiceDetails } from '@/shared/apis/providerService';
 import { providerSubmitDetailsForReview } from '@/shared/apis/providerProfile';
 import { createServiceAvailabilities } from '@/shared/apis/serviceAvailability';
 import { ProviderSubmitDetailsResponse } from '@/shared/interface/api/providerProfile';
 import { AdminVerificationStatus, StripeAccountStatus } from '@/shared/interface/enums';
-import {
-  UserUpdateProfileImageResponse,
-  UserUpdateUserInfoResponse,
-} from '@/shared/interface/api/user';
-import { UserCreateAddressResponse } from '@/shared/interface/api/address';
 
 const initialState: AuthState = {
   authUser: null,
   isAuthLoading: false,
-  profileImageUpdating: false,
   eventSocketId: null,
   eventSocketIsConnected: false,
   subscriptionUpdating: false,
@@ -118,26 +114,8 @@ const authSlice = createSlice({
       .addCase(signout.pending, () => {})
       .addCase(signout.fulfilled, (state) => {
         state.authUser = null;
-        state.profileImageUpdating = false;
       })
       .addCase(signout.rejected, () => {});
-
-    builder
-      .addCase(userUpdateProfileImage.pending, (state) => {
-        state.profileImageUpdating = true;
-      })
-      .addCase(
-        userUpdateProfileImage.fulfilled,
-        (state, action: PayloadAction<ApiBaseResponse<UserUpdateProfileImageResponse>>) => {
-          state.profileImageUpdating = false;
-          if (state.authUser) {
-            state.authUser.profileImage = action.payload.data as string;
-          }
-        },
-      )
-      .addCase(userUpdateProfileImage.rejected, (state) => {
-        state.profileImageUpdating = false;
-      });
 
     builder
       .addCase(createAddress.pending, (state) => {

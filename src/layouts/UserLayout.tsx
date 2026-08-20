@@ -2,9 +2,9 @@ import MainLayout from './MainLayout';
 import { useSelector } from 'react-redux';
 import { Role } from '@/shared/interface/enums';
 import { RootState } from '@/shared/redux/appStore';
-import { userRoutes } from '@/shared/utils/constants';
 import ReviewForm from '@/components/user/ReviewForm';
 import { Outlet, useLocation } from 'react-router-dom';
+import { getRoutesByRole } from '@/shared/helper/getRouteByRole';
 import PaymentSelection from '@/components/payment/PaymentSelection';
 import FilterRightSideBar from '@/components/filters/FilterRightSideBar';
 import NotificationsContainer from '@/components/notification/NotificationsContainer';
@@ -16,6 +16,7 @@ const UserLayout = () => {
     (store: RootState) => store.user.isReviewCreateFormOpen,
   );
   const isPaymentSelectionOpen = useSelector((store: RootState) => store.payment.isOpen);
+  const userRoutes = getRoutesByRole(Role.PROVIDER);
 
   return (
     <MainLayout

@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import PlanCard from '../plan/PlanCard';
 import { useQuery } from '@tanstack/react-query';
+import PlanCard from '../../components/plan/PlanCard';
 import { providerFetchPlans } from '@/shared/apis/plan';
-import DataFetchingError from '../error/DataFetchingError';
-import BillingCycleToggle from '../plan/BillingCycleToggle';
-import ProviderPlanCardShimmer from '../shimmers/ProviderPlanCardShimmer';
+import DataFetchingError from '../../components/error/DataFetchingError';
+import BillingCycleToggle from '../../components/plan/BillingCycleToggle';
+import ProviderPlanCardShimmer from '../../components/shimmers/ProviderPlanCardShimmer';
 
-const ProviderPlanList = () => {
+const SubScribePlanPage = () => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
   const { data, isLoading, isError, error } = useQuery({
     queryFn: async () => {
@@ -19,7 +19,7 @@ const ProviderPlanList = () => {
   });
 
   return (
-    <>
+    <div className="p-4">
       <section className="w-full">
         <div className="mx-auto px-4 lg:px-0 max-w-7xl transition-colors duration-300 ease-in-out">
           <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
@@ -52,8 +52,8 @@ const ProviderPlanList = () => {
           <DataFetchingError message="No plans found" />
         )}
       </div>
-    </>
+    </div>
   );
 };
 
-export default ProviderPlanList;
+export default SubScribePlanPage;

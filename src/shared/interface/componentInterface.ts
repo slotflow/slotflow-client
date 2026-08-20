@@ -543,12 +543,6 @@ export interface FooterProps {
   className?: string;
 }
 
-// InfoHeader component props interface
-export interface InfoHeaderProps {
-  profileImage?: string;
-  username: string;
-}
-
 // Nav compoenents interfaces
 export interface SideBarProps {
   routes: Route[];
@@ -564,6 +558,8 @@ export interface SingleTabProps {
   className?: string;
   locked?: boolean;
   active?: boolean;
+  hasSubroutes?: boolean;
+  expanded?: boolean;
 }
 
 // NotificationCard component props interface

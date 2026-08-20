@@ -7,7 +7,7 @@ import { ProtectedRoute } from './ProtectedRoutes.tsx';
 import { RouteNames } from '@/shared/utils/constants.ts';
 import BoardingLayoutWrapper from './BoardingLayoutWrapper.tsx';
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
-import SubscribePlan from '@/components/settings/SubscribePlan.tsx';
+import SubScribePlanPage from '@/pages/provider/SubScribePlanPage.tsx';
 
 const AuthLayout = lazy(() => import('@/layouts/AuthLayout.tsx'));
 const LoginForm = lazy(() => import('@/components/form/CommonForms/LoginForm.tsx'));
@@ -636,7 +636,7 @@ export const appRouter = createBrowserRouter([
                 index: true,
                 element: <Navigate to="notifications" replace />,
                 handle: {
-                  title: 'Settings',
+                  title: 'Notifincations',
                 },
               },
               {
@@ -650,7 +650,7 @@ export const appRouter = createBrowserRouter([
                 path: 'account',
                 element: <AccountSettings />,
                 handle: {
-                  title: 'Account Settings',
+                  title: 'Account',
                 },
               },
               {
@@ -667,14 +667,14 @@ export const appRouter = createBrowserRouter([
                   title: 'Security',
                 },
               },
-              {
-                path: 'subscription',
-                element: <SubscribePlan />,
-                handle: {
-                  title: 'Subscription',
-                },
-              },
             ],
+          },
+          {
+            path: `upgrade`,
+            element: <SubScribePlanPage />,
+            handle: {
+              title: `Upgrade Plan`,
+            },
           },
           {
             path: 'subscription/confirm',

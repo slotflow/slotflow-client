@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Button } from '../ui/button';
-import { Separator } from '../ui/separator';
 import { SelectSeparator } from '../ui/select';
 import { motion, AnimatePresence } from 'framer-motion';
 import { defaultButtonClassName } from '@/shared/utils/constants';
@@ -11,14 +10,7 @@ const SecuritySettings = () => {
   const [showForm, setShowForm] = useState<boolean>(false);
 
   return (
-    <>
-      <div>
-        <h3 className="text-lg font-medium">Security and Privacy</h3>
-        <p className="text-muted-foreground text-sm">
-          Manage your account details and security and privacy settings
-        </p>
-      </div>
-      <Separator className="my-4 flex-none" />
+    <div className="max-w-5xl mx-auto">
       <Card>
         <CardHeader className="flex justify-between items-center">
           <CardTitle className="">Password</CardTitle>
@@ -52,7 +44,7 @@ const SecuritySettings = () => {
           )}
         </AnimatePresence>
       </Card>
-    </>
+    </div>
   );
 };
 

@@ -1,6 +1,4 @@
 import { toast } from 'react-toastify';
-import { Separator } from '../ui/separator';
-import { Card, CardContent } from '../ui/card';
 import { RootState } from '@/shared/redux/appStore';
 import React, { useCallback, useEffect } from 'react';
 import { AppDispatch } from '@/shared/redux/appStore';
@@ -177,34 +175,25 @@ const IntegrationsListing = () => {
   if (!authUser) return null;
 
   return (
-    <>
-      <div className="flex-none">
-        <h3 className="text-lg font-medium">Integrations</h3>
-        <p className="text-muted-foreground text-sm">Integrations description</p>
+    <div className="max-w-5xl mx-auto">
+      <div className="grid grid-cols-1 gap-4">
+        {listData?.map((item, index) => (
+          <IntegrationCard
+            key={index}
+            image={item.image}
+            heading={item.heading}
+            description={item.description}
+            title={item.title}
+            text={item.text}
+            action={item.action}
+            show={item.show}
+            connectionStatus={item.connectionStatus}
+            connectionText={item.connectionText}
+            isLoading={item.isLoading}
+          />
+        ))}
       </div>
-      <Separator className="my-4 flex-none" />
-      <Card>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 gap-4">
-            {listData?.map((item, index) => (
-              <IntegrationCard
-                key={index}
-                image={item.image}
-                heading={item.heading}
-                description={item.description}
-                title={item.title}
-                text={item.text}
-                action={item.action}
-                show={item.show}
-                connectionStatus={item.connectionStatus}
-                connectionText={item.connectionText}
-                isLoading={item.isLoading}
-              />
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-    </>
+    </div>
   );
 };
 

@@ -2,10 +2,11 @@ import { useEffect } from 'react';
 import MainLayout from './MainLayout';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/shared/redux/appStore';
+import { planAccessMap } from '@/shared/utils/constants';
 import { PlanName, Role } from '@/shared/interface/enums';
+import { getRoutesByRole } from '@/shared/helper/getRouteByRole';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import PaymentSelection from '@/components/payment/PaymentSelection';
-import { planAccessMap, providerRoutes } from '@/shared/utils/constants';
 import ProviderFreeSubscription from '@/components/provider/ProviderFreeSubscription';
 import NotificationsContainer from '@/components/notification/NotificationsContainer';
 
@@ -19,7 +20,8 @@ const ProviderLayout = () => {
   const allowedRouteNames = planName
     ? planAccessMap[planName]
     : planAccessMap[PlanName.NO_SUBSCRIPTION];
-  const filteredRoutes = providerRoutes.filter((route) => allowedRouteNames.includes(route.name));
+  const providerRoutes = getRoutesByRole(Role.PROVIDER);
+  const accessibleRoutes = providerRoutes.filter((route) => allowedRouteNames.includes(route.name));
 
   useEffect(() => {
     if (!authUser) return;
@@ -58,7 +60,7 @@ const ProviderLayout = () => {
   return (
     <MainLayout
       routes={providerRoutes}
-      filteredRoutes={filteredRoutes}
+      filteredRoutes={accessibleRoutes}
       profileImage={authUser?.profileImage}
       username={authUser?.username}
     >

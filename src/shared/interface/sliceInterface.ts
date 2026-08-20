@@ -62,7 +62,6 @@ export type AuthUser = Pick<
 export interface AuthState {
   authUser: AuthUser | null;
   isAuthLoading: boolean;
-  profileImageUpdating: boolean;
   eventSocketId: string | null;
   eventSocketIsConnected: boolean;
   subscriptionUpdating: boolean;
