@@ -1098,3 +1098,15 @@ export interface FAQPageSearchProps {
   value: string;
   onChange: (value: string) => void;
 }
+
+// PLan feature value
+export interface PlanFeatureValueProps {
+  available: boolean;
+  inDevelopment: boolean;
+  limit?: string;
+}
+
+//
+export interface PricingFeatureDetailsProps {
+  billingCycle: 'monthly' | 'yearly';
+}

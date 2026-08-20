@@ -7,6 +7,7 @@ import { ProtectedRoute } from './ProtectedRoutes.tsx';
 import { RouteNames } from '@/shared/utils/constants.ts';
 import BoardingLayoutWrapper from './BoardingLayoutWrapper.tsx';
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
+import SubscribePlan from '@/components/settings/SubscribePlan.tsx';
 
 const AuthLayout = lazy(() => import('@/layouts/AuthLayout.tsx'));
 const LoginForm = lazy(() => import('@/components/form/CommonForms/LoginForm.tsx'));
@@ -664,6 +665,13 @@ export const appRouter = createBrowserRouter([
                 element: <SecuritySettings />,
                 handle: {
                   title: 'Security',
+                },
+              },
+              {
+                path: 'subscription',
+                element: <SubscribePlan />,
+                handle: {
+                  title: 'Subscription',
                 },
               },
             ],

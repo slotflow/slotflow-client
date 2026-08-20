@@ -5,7 +5,7 @@ import { PlanList } from '@/shared/utils/constants';
 import MoveUpward from '@/components/animation/MoveUpward';
 import SectionHeading from '@/components/common/SectionHeading';
 import BillingCycleToggle from '@/components/plan/BillingCycleToggle';
-import PricingFeaturesDetails from '@/components/landing/pricing/PricingFeaturesDetails';
+import PricingFeatureDetails from '@/components/landing/pricing/PricingFeatureDetails';
 
 const PricingPage = () => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
@@ -62,7 +62,7 @@ const PricingPage = () => {
       </MoveUpward>
 
       <MoveUpward>
-        <PricingFeaturesDetails />
+        <PricingFeatureDetails billingCycle={billingCycle} />
       </MoveUpward>
     </main>
   );

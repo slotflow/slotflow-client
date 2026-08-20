@@ -1,4 +1,3 @@
-import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { toast } from 'react-toastify';
 import { CheckIcon } from 'lucide-react';
@@ -62,12 +61,11 @@ const PlanCard = ({
   return (
     <Card
       key={plan._id}
-      className={`p-4 rounded-2xl shadow-sm flex flex-col hover:border-[var(--mainColor)] ${
-        popular ? 'border-primary' : ''
+      className={`p-4 rounded-2xl h-full shadow-sm flex flex-col hover:border-[var(--mainColor)] ${
+        popular ? 'border-2 border-primary' : ''
       }`}
     >
       <CardHeader>
-        {popular && <Badge className="uppercase w-max self-center mb-3">Most popular</Badge>}
         <CardTitle className="mb-3 text-lg lg:text-xl rounded-4xl p-1 text-center">
           {plan.planName}
         </CardTitle>

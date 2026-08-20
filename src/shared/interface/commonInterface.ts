@@ -140,13 +140,29 @@ export interface DayMapInterface {
 // Plan feature interface
 export interface PlanFeatureInterface {
   type: string;
-  features: {
-    name: string;
-    free: boolean;
-    starter: boolean;
-    professional: boolean;
-    enterprise: boolean;
-  }[];
+  features: PlanFeature[];
+}
+
+// Plan Feature
+export interface PlanFeature {
+  name: string;
+
+  trial: boolean;
+  starter: boolean;
+  professional: boolean;
+  enterprise: boolean;
+
+  inDevelopment: boolean;
+
+  limit?: PlanFeatureLimit;
+}
+
+// Plan feature limit
+export interface PlanFeatureLimit {
+  trial?: string;
+  starter?: string;
+  professional?: string;
+  enterprise?: string;
 }
 
 // Plan list type interface
