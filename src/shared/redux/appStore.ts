@@ -9,6 +9,7 @@ import { storeConstants } from '../utils/constants';
 import localStorage from 'redux-persist/lib/storage';
 import providerReducer from './slices/providerSlice';
 import integrationReducer from './slices/integrationSlice';
+import notificationReducer from './slices/notificationSlice';
 import { persistReducer, persistStore } from 'redux-persist';
 import { setupAxiosInterceptors } from '@/lib/axiosInterceptor';
 import { combineReducers, configureStore, type Action } from '@reduxjs/toolkit';
@@ -28,6 +29,7 @@ const rootReducers = {
   video: videoReducer,
   integration: integrationReducer,
   payment: paymentReducer,
+  notification: notificationReducer
 };
 
 const rootReducer = combineReducers(rootReducers);

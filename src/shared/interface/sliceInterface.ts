@@ -1,5 +1,5 @@
 import { User } from './entityInterface/userInterface';
-import { BlogArticle, FaqFields, ProviderCardsFilters, ReviewFields } from './commonInterface';
+import { BlogArticle, FaqFields, NotificationChannel, NotificationType, ProviderCardsFilters, ReviewFields } from './commonInterface';
 import { Message } from './entityInterface/message.interface';
 import { UserViewProviderCardProps } from './componentInterface';
 import { ProviderProfile } from './entityInterface/providerProfileInterface';
@@ -174,4 +174,14 @@ export interface PaymentSlice {
   } | null;
 
   status: PaymentProcessStatus;
+}
+
+//
+export interface NotificationPreference {
+  channel: NotificationChannel;
+  preferences: Partial<Record<NotificationType, boolean>>;
+}
+
+export interface NotificationSlice {
+  preferences: NotificationPreference[];
 }

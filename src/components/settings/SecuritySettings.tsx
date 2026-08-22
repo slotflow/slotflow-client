@@ -10,10 +10,10 @@ const SecuritySettings = () => {
   const [showForm, setShowForm] = useState<boolean>(false);
 
   return (
-    <div className="max-w-5xl mx-auto">
+    <div className="max-w-5xl mx-auto space-y-3">
       <Card>
         <CardHeader className="flex justify-between items-center">
-          <CardTitle className="">Password</CardTitle>
+          <CardTitle className="">Change Password</CardTitle>
           <Button
             title="Update Password"
             variant={showForm ? 'destructive' : 'default'}

@@ -527,6 +527,7 @@ export interface OnboardingStep {
   path: string;
 }
 
+// 
 export interface BoardingStep {
   id: number;
   title: string;
@@ -534,7 +535,22 @@ export interface BoardingStep {
   image: string;
 }
 
-//
+// 
 export interface AppRouteHandle {
   title?: string;
 }
+
+// 
+export type NotificationChannel = 'email' | 'push' | 'in_app';
+
+// 
+export type NotificationType =
+  | 'appointment_updates'
+  | 'appointment_reminders'
+  | 'appointment_changes'
+  | 'new_appointments'
+  | 'payment_notifications'
+  | 'payment_activity'
+  | 'account_activity'
+  | 'system_updates'
+  | 'promotional_updates';

@@ -181,7 +181,7 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
               side="top"
               align="start"
               sideOffset={8}
-              className="min-w-56 rounded-lg"
+              className="min-w-72 rounded-lg"
             >
               <DropdownMenuLabel className="font-normal">
                 <div className="flex items-center gap-2">

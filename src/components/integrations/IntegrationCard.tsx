@@ -1,4 +1,11 @@
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from '@/components/ui/card';
 import { Button } from '../ui/button';
 import { Check, LoaderCircle } from 'lucide-react';
 import { defaultButtonClassName } from '@/shared/utils/constants';
@@ -17,37 +24,42 @@ const IntegrationCard = ({
   isLoading,
 }: IntegrationCardProps) => {
   return (
-    <Card
-      className={`w-full mt-4 border shadow-sm transition-all hover:shadow-md ${
-        show ? 'flex flex-col' : 'hidden'
-      }`}
-    >
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+    <Card className={`w-full overflow-hidden rounded-md ${show ? 'flex flex-col' : 'hidden'}`}>
+      <CardHeader className="px-3">
         <div className="flex items-center gap-3">
           <img
             src={image}
             alt="Integration"
             className="size-10 rounded-md border object-contain bg-muted"
           />
-          <div>
-            <CardTitle className="text-base font-semibold leading-none">{heading}</CardTitle>
-          </div>
+
+          <CardTitle className="text-2xl font-semibold">
+            {heading}
+          </CardTitle>
         </div>
 
-        {connectionStatus && (
-          <div className="flex items-center gap-1 text-xs font-medium border rounded-md px-2 py-1">
-            <Check className="w-3.5 h-3.5" />
-            {connectionText}
-          </div>
-        )}
+        <CardDescription className="mt-2 text-base">
+          {description}
+        </CardDescription>
       </CardHeader>
 
-      <CardContent className="text-sm text-muted-foreground pb-4">{description}</CardContent>
+      <CardContent className="hidden" />
 
-      <CardFooter className="flex justify-end pt-0 mt-auto">
+      <CardFooter className="flex items-center justify-between border-t px-3">
+        {connectionStatus ? (
+          <div className="flex items-center gap-2 text-sm font-medium">
+            <Check className="size-4" />
+            {connectionText}
+          </div>
+        ) : (
+          <p className="text-sm text-muted-foreground">
+            Connect this integration to enable its features.
+          </p>
+        )}
+
         {connectionStatus ? null : isLoading ? (
           <div className="flex items-center gap-2 text-sm">
-            <LoaderCircle className="animate-spin w-4 h-4" />
+            <LoaderCircle className="size-4 animate-spin" />
             Connecting...
           </div>
         ) : (

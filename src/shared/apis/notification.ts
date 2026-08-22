@@ -5,6 +5,8 @@ import {
   FetchNotificationsQueryParams,
   FetchNotificationsResponse,
   RegisterDeviceRequest,
+  UpdateNotificationPreferenceRequest,
+  UpdateNotificationPreferenceResponse,
 } from '../interface/api/notification';
 
 export const registerDevice = async (data: RegisterDeviceRequest): Promise<ApiBaseResponse> => {
@@ -19,4 +21,10 @@ export const fetchNotifications: ApiFetchFunction<
   const query = buildQueryParams(queryParams);
   const response = await axiosInstance.get(`/notifications?${query}`);
   return response.data.data;
+};
+
+
+export const handleNotificationChange = async (data: UpdateNotificationPreferenceRequest): Promise<ApiBaseResponse<UpdateNotificationPreferenceResponse>> => {
+  const response = await axiosInstance.patch('/notifications/preferences',data);
+  return response.data;
 };

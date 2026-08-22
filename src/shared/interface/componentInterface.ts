@@ -45,6 +45,8 @@ import {
   ChatComponentProps,
   FaqFields,
   FetchFunctionBaseQueryParams,
+  NotificationChannel,
+  NotificationType,
   OptionType,
   Route,
   statsMapIntrface,
@@ -1105,4 +1107,18 @@ export interface PlanFeatureValueProps {
 //
 export interface PricingFeatureDetailsProps {
   billingCycle: 'monthly' | 'yearly';
+}
+
+//
+export interface NotificationItemProps {
+  title: string;
+  description: string;
+  channel: NotificationChannel;
+  type: NotificationType;
+  checked: boolean;
+  onChange: (
+    channel: NotificationChannel,
+    type: NotificationType,
+    enabled: boolean,
+  ) => void;
 }
