@@ -1,4 +1,12 @@
 import {
+  adminFetchDashboardUserStatsData,
+  adminFetchDashboardRevenueStatsData,
+  adminFetchDashboardProviderStatsData,
+  adminFetchDashboardAppointmentStatsData,
+  adminFetchDashboardSubscriptionStatsData,
+} from '@/services/apis/admin';
+import { useState } from 'react';
+import {
   adminOverviewTabs,
   userStatsMapForAdmin,
   providerStatsMapForAdmin,
@@ -7,31 +15,23 @@ import {
   revenueAndPaymentsStatsMapForAdmin,
 } from '@/shared/utils/constants';
 import {
-  adminFetchDashboardUserStatsData,
-  adminFetchDashboardRevenueStatsData,
-  adminFetchDashboardProviderStatsData,
-  adminFetchDashboardAppointmentStatsData,
-  adminFetchDashboardSubscriptionStatsData,
-} from '@/shared/apis/admin';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import {
   Select,
   SelectItem,
   SelectValue,
   SelectTrigger,
   SelectContent,
 } from '@/components/ui/select';
-import { useState } from 'react';
-import { DateRange } from 'react-day-picker';
 import {
   AdminFetchDashboardUserStatsDataResponse,
   AdminFetchDashboardProviderStatsDataResponse,
   AdminFetchDashboardAppointmentStatsDataResponse,
   AdminFetchDashboardSubscriptionStatsDataResponse,
   AdminFetchDashboardRevenueAndPaymentsStatsDataResponse,
-} from '@/shared/interface/api/adminDashboard';
+} from '@/shared/types/api/adminDashboard';
+import { DateRange } from 'react-day-picker';
 import DataFilter from '@/components/filters/DataFilter';
 import DashboardStats from '@/components/dashboard/DashboardStats';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const AdminDashboardStats = () => {
   const [selectedTab, setSelectedTab] = useState(adminOverviewTabs[0].value);

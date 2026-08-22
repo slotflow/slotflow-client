@@ -4,10 +4,10 @@ import NotificationCard from './NotificationCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import DataFetchingError from '../error/DataFetchingError';
-import { fetchNotifications } from '@/shared/apis/notification';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import { AppDispatch, RootState } from '@/app/store/appStore';
+import { fetchNotifications } from '@/services/apis/notification';
 import NotificationCardShimmer from '../shimmers/NotificationCardShimmer';
-import { toggleNotificationContainer } from '@/shared/redux/slices/appSlice';
+import { toggleNotificationContainer } from '@/app/store/slices/appSlice';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 
 const NotificationsContainer = () => {

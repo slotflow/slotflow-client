@@ -1,19 +1,19 @@
+import {
+  DropdownMenu,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+} from '../../ui/dropdown-menu';
 import { Button } from '../../ui/button';
 import { MoreHorizontal } from 'lucide-react';
 import { ColumnDef } from '@tanstack/react-table';
-import { formateDate } from '@/shared/helper/formatter';
-import { SubscriptionStatus } from '@/shared/interface/enums';
+import { SubscriptionStatus } from '@/shared/types/enums';
+import { formateDate } from '@/shared/utils/helper/formatter';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
-import { Subscription } from '@/shared/interface/entityInterface/subscriptionInterface';
-import { FetchProviderSubscriptionsResponse } from '@/shared/interface/api/subscription';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '../../ui/dropdown-menu';
+import { Subscription } from '@/shared/types/entity/subscription';
+import { FetchProviderSubscriptionsResponse } from '@/shared/types/api/subscription';
 
 // For admin side view and provider side view of provider subscriptions
 const ProvidersSubscriptionsTableColumns = (

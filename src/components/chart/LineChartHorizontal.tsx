@@ -1,19 +1,19 @@
 import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import {
-  ChartContainer,
   ChartLegend,
-  ChartLegendContent,
   ChartTooltip,
+  ChartContainer,
+  ChartLegendContent,
   ChartTooltipContent,
 } from '@/components/ui/chart';
 import ChartHeader from './ChartHeader';
 import ChartOverlay from './ChartOverlay';
+import { TimeRange } from '@/shared/types/common';
+import { Card, CardContent } from '@/components/ui/card';
 import ChartDataNotAvailable from './ChartDataNotAvailable';
-import { TimeRange } from '@/shared/interface/commonInterface';
 import { CartesianGrid, Line, LineChart, XAxis } from 'recharts';
-import { filterChartDataHelper } from '@/shared/helper/dateFilter';
-import { LineChartHorizontalProps } from '@/shared/interface/componentInterface';
+import { LineChartHorizontalProps } from '@/shared/types/component';
+import { filterChartDataHelper } from '@/shared/utils/helper/dateFilter';
 
 const LineChartHorizontal = ({
   title,

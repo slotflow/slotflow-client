@@ -1,23 +1,26 @@
 import FormField from '../FormField';
 import { toast } from 'react-toastify';
 import SelectField from '../SelectField';
+import { appConfig } from '@/config/env';
 import { useForm } from 'react-hook-form';
 import { FormButton } from '../FormButton';
 import { Button } from '@/components/ui/button';
-import { appConfig } from '@/shared/config/env';
-import { RootState } from '@/shared/redux/appStore';
+import { RootState } from '@/app/store/appStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch, useSelector } from 'react-redux';
 import { useQueryClient } from '@tanstack/react-query';
 import { AppDispatch } from 'recharts/types/state/store';
-import { slideOut } from '@/shared/helper/gsapAnimationSlide';
+import { AdminVerificationStatus } from '@/shared/types/enums';
 import { verificationOptions } from '@/shared/utils/constants';
-import { handleFormError } from '@/shared/helper/formErrorCatcher';
-import { AdminVerificationStatus } from '@/shared/interface/enums';
-import { adminRejectProvider } from '@/shared/apis/providerProfile';
-import { setAdminVerificationState } from '@/shared/redux/slices/authSlice';
-import { RejectproviderFormProps } from '@/shared/interface/componentInterface';
-import { AdminRejectProviderFormType, adminRejectProviderZodSchema } from '@/shared/zod/adminZod';
+import { RejectproviderFormProps } from '@/shared/types/component';
+import { slideOut } from '@/shared/utils/helper/gsapAnimationSlide';
+import { adminRejectProvider } from '@/services/apis/providerProfile';
+import { setAdminVerificationState } from '@/app/store/slices/authSlice';
+import { handleFormError } from '@/shared/utils/helper/formErrorCatcher';
+import {
+  AdminRejectProviderFormType,
+  adminRejectProviderZodSchema,
+} from '@/shared/validators/zod/adminZod';
 
 const RejectproviderForm = ({ onClose, formRef }: RejectproviderFormProps) => {
   const dispatch = useDispatch<AppDispatch>();

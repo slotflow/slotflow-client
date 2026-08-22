@@ -1,15 +1,12 @@
+import { FetchServicesResponse, ChangeServiceBlockStatusRequest } from '@/shared/types/api/service';
 import { toast } from 'react-toastify';
 import { useEffect, useRef, useState } from 'react';
-import { fetchServices } from '@/shared/apis/service';
-import CommonTable from '@/components/table/CommonTable';
-import { slideIn } from '@/shared/helper/gsapAnimationSlide';
+import { fetchServices } from '@/services/apis/service';
 import { useAdminService } from '@/hooks/adminHooks/useService';
+import { slideIn } from '@/shared/utils/helper/gsapAnimationSlide';
+import PaginatedDataTable from '@/components/table/PaginatedDataTable';
 import CreateServiceForm from '@/components/form/AdminForms/CreateServiceForm';
 import AdminAppServicesTableColumns from '@/components/table/tableColumns/AdminAppServicesTableColumn';
-import {
-  ChangeServiceBlockStatusRequest,
-  FetchServicesResponse,
-} from '@/shared/interface/api/service';
 
 const AdminServicesPage = () => {
   const [showForm, setShowForm] = useState(false);
@@ -36,7 +33,7 @@ const AdminServicesPage = () => {
 
   return (
     <div className="p-4">
-      <CommonTable<FetchServicesResponse>
+      <PaginatedDataTable<FetchServicesResponse>
         fetchApiFunction={fetchServices}
         queryKey="appServices"
         column={column}

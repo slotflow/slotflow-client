@@ -1,4 +1,4 @@
-import { ProviderAvailabilityShimmerProps } from '@/shared/interface/shimmerInterface';
+import { ProviderAvailabilityShimmerProps } from '@/shared/types/shimmer';
 
 const ProviderAvailabilityShimmer = ({ row, slotCount }: ProviderAvailabilityShimmerProps) => {
   return (

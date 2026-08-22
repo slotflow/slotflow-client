@@ -9,27 +9,27 @@ import {
   ShieldUser,
   BadgeCheck,
 } from 'lucide-react';
-import {
-  UserFetchMyProfileDetailsResponse,
-  AdminFetchUserProfileDetailsResponse,
-} from '@/shared/interface/api/user';
 import React, { useEffect } from 'react';
 import DataField from '../app/DataField';
 import { useSelector } from 'react-redux';
-import { SelectSeparator } from '../ui/select';
 import {
   ProviderFetchMyProfileDetailsResponse,
   UserFetchProviderProfileDetailsResponse,
   AdminFetchProviderProfileDetailsResponse,
-} from '@/shared/interface/api/providerProfile';
+} from '@/shared/types/api/providerProfile';
+import { SelectSeparator } from '../ui/select';
 import { useQuery } from '@tanstack/react-query';
-import { RootState } from '@/shared/redux/appStore';
+import { RootState } from '@/app/store/appStore';
 import { STATUS_PRESETS } from '@/shared/utils/constants';
 import DataFetchingError from '../error/DataFetchingError';
 import getBooleanStatusComponent from '../app/GetBooleanStatus';
 import DataFieldShimmer from '@/components/shimmers/DataFieldShimmer';
+import { UserOrProviderProfileDetailsComponentProps } from '@/shared/types/component';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { UserOrProviderProfileDetailsComponentProps } from '@/shared/interface/componentInterface';
+import {
+  UserFetchMyProfileDetailsResponse,
+  AdminFetchUserProfileDetailsResponse,
+} from '@/shared/types/api/user';
 
 const ProfileListing = ({
   userOrProviderId,

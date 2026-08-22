@@ -1,17 +1,17 @@
 import FormField from '../FormField';
 import { toast } from 'react-toastify';
+import { appConfig } from '@/config/env';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { FormButton } from '../FormButton';
 import { FormHeading } from '../FormHeading';
 import { useNavigate } from 'react-router-dom';
-import { appConfig } from '@/shared/config/env';
-import { resetPassword } from '@/shared/apis/auth';
-import { AppDispatch } from '@/shared/redux/appStore';
+import { AppDispatch } from '@/app/store/appStore';
+import { resetPassword } from '@/services/apis/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { redirectPaths } from '@/shared/utils/constants';
-import { setForgotPassword } from '@/shared/redux/slices/appSlice';
-import { ResetPasswordFormType, resetPasswordZodSchema } from '@/shared/zod/authZod';
+import { setForgotPassword } from '@/app/store/slices/appSlice';
+import { ResetPasswordFormType, resetPasswordZodSchema } from '@/shared/validators/zod/authZod';
 
 const ResetPasswordForm = () => {
   const navigate = useNavigate();

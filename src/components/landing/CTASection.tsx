@@ -1,5 +1,5 @@
-import { useNavigate } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { redirectPaths } from '@/shared/utils/constants';
 import SplitTextReveal from '../animation/SplitTextReveal';

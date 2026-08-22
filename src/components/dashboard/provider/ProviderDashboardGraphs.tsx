@@ -1,10 +1,18 @@
 import { useMemo } from 'react';
+import {
+  topBookingDaysChartConfig,
+  appointmentModeChartConfig,
+  peakBookingHoursChartConfig,
+  completionBreakdownChartConfig,
+  newVsReturningUsersChartConfig,
+  appointmentsOverTimeChartConfig,
+} from '@/shared/utils/constants';
 import { useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
-import { PlanName } from '@/shared/interface/enums';
-import { RootState } from '@/shared/redux/appStore';
+import { PlanName } from '@/shared/types/enums';
+import { RootState } from '@/app/store/appStore';
 import RadialChart from '../../chart/RadialChart';
-import { graphView } from '@/shared/helper/graphView';
+import { graphView } from '@/shared/utils/helper/graphView';
 import AreaGroupedChart from '../../chart/AreaGroupedChart';
 import BarChartVertical from '../../chart/BarChartVertical';
 import LoadingFallback from '@/pages/common/LoadingFallback';
@@ -12,18 +20,10 @@ import ChartLineMultiple from '../../chart/ChatLineMultiple';
 import DataFetchingError from '../../error/DataFetchingError';
 import BarChartHorizontal from '../../chart/BarChartHorizontal';
 import LineChartHorizontal from '../../chart/LineChartHorizontal';
-import { providerFetchDashboardGraphData } from '@/shared/apis/providerProfile';
+import { ProviderDashboardGraphsProps } from '@/shared/types/component';
+import { providerFetchDashboardGraphData } from '@/services/apis/providerProfile';
 import PieChartCompletionBreakdown from '../../chart/PieChartCompletionBreakdown';
-import { ProviderDashboardGraphsProps } from '@/shared/interface/componentInterface';
-import { ProviderDashboardGraphResponse } from '@/shared/interface/api/providerProfile';
-import {
-  appointmentModeChartConfig,
-  appointmentsOverTimeChartConfig,
-  completionBreakdownChartConfig,
-  newVsReturningUsersChartConfig,
-  peakBookingHoursChartConfig,
-  topBookingDaysChartConfig,
-} from '@/shared/utils/constants';
+import { ProviderDashboardGraphResponse } from '@/shared/types/api/providerProfile';
 
 const ProviderDashboardGraphs = ({ dateRange }: ProviderDashboardGraphsProps) => {
   const user = useSelector((store: RootState) => store.auth.authUser);

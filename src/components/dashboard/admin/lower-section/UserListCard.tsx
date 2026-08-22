@@ -1,15 +1,15 @@
-import { fetchUsers } from '@/shared/apis/user';
-import { User as UserIcon } from 'lucide-react';
-import { useQuery } from '@tanstack/react-query';
-import DashboardDataCard from '../../DashboardDataCard';
 import {
   Table,
+  TableRow,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
 } from '@/components/ui/table';
+import { User as UserIcon } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import { fetchUsers } from '@/services/apis/user';
+import DashboardDataCard from '../../DashboardDataCard';
 
 const UserListCard = () => {
   const { data, isLoading, isError, refetch } = useQuery({

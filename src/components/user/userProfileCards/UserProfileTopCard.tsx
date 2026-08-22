@@ -1,7 +1,7 @@
 import { Card, CardContent } from '@/components/ui/card';
-import { getInitials } from '@/shared/helper/getInitials';
+import { getInitials } from '@/shared/utils/helper/getInitials';
+import { UserProfileTopCardProps } from '@/shared/types/component';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { UserProfileTopCardProps } from '@/shared/interface/componentInterface';
 
 const UserProfileTopCard = ({ name, image }: UserProfileTopCardProps) => {
   return (

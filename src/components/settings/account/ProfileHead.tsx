@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { appConfig } from '@/config/env';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { appConfig } from '@/shared/config/env';
 import { LoaderCircle, Pen } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import avatar from '@/assets/defaultImages/avatar.png';
-import { getUploadUrl, uploadToS3 } from '@/shared/apis/s3';
-import { userUpdateProfileImage } from '@/shared/apis/user';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
-import { ApiBaseResponse } from '@/shared/interface/commonInterface';
-import { UserUpdateProfileImageResponse } from '@/shared/interface/api/user';
+import { ApiBaseResponse } from '@/shared/types/common';
+import { getUploadUrl, uploadToS3 } from '@/services/apis/s3';
+import { userUpdateProfileImage } from '@/services/apis/user';
+import { AppDispatch, RootState } from '@/app/store/appStore';
+import { UserUpdateProfileImageResponse } from '@/shared/types/api/user';
 
 const ProfileHead = () => {
   const dispatch = useDispatch<AppDispatch>();

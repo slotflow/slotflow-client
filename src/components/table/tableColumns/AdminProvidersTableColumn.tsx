@@ -1,23 +1,23 @@
-import { Button } from '../../ui/button';
-import { MoreHorizontal } from 'lucide-react';
-import { ColumnDef } from '@tanstack/react-table';
-import { DataTableColumnHeader } from '../DataTableColumnHeader';
-import { AdminVerificationStatus } from '@/shared/interface/enums';
-import { User } from '@/shared/interface/entityInterface/userInterface';
-import { AdminRejectProviderModalState } from '@/shared/interface/commonInterface';
 import {
   DropdownMenu,
-  DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuSeparator,
 } from '../../ui/dropdown-menu';
+import { Button } from '../../ui/button';
 import {
-  AdminChangeProviderBlockStatusRequest,
-  AdminChangeProviderTrustTagRequest,
   AdminFetchAllProvidersResponse,
-} from '@/shared/interface/api/providerProfile';
+  AdminChangeProviderTrustTagRequest,
+  AdminChangeProviderBlockStatusRequest,
+} from '@/shared/types/api/providerProfile';
+import { MoreHorizontal } from 'lucide-react';
+import { ColumnDef } from '@tanstack/react-table';
+import { User } from '@/shared/types/entity/user';
+import { AdminVerificationStatus } from '@/shared/types/enums';
+import { DataTableColumnHeader } from '../DataTableColumnHeader';
+import { AdminRejectProviderModalState } from '@/shared/types/common';
 
 const AdminProvidersTableColumns = (
   handleAdminApproveProvider: (providerId: User['_id']) => void,

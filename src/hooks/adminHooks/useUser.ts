@@ -1,8 +1,8 @@
-import { appConfig } from '@/shared/config/env';
+import { appConfig } from '@/config/env';
 import { useQueryClient } from '@tanstack/react-query';
-import { changeUserBlockStatus } from '@/shared/apis/user';
-import { UseAdminUserReturn } from '@/shared/interface/hooksInterface';
-import { AdminChangeUserStatusRequest } from '@/shared/interface/api/user';
+import { UseAdminUserReturn } from '@/shared/types/hooks';
+import { changeUserBlockStatus } from '@/services/apis/user';
+import { AdminChangeUserStatusRequest } from '@/shared/types/api/user';
 
 export const useAdminUser = (): UseAdminUserReturn => {
   const queryClient = useQueryClient();

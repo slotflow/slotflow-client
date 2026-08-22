@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { PlanName } from '@/shared/types/enums';
 import { useQuery } from '@tanstack/react-query';
-import { RootState } from '@/shared/redux/appStore';
-import { PlanName } from '@/shared/interface/enums';
+import { RootState } from '@/app/store/appStore';
 import StatsCard from '@/components/dashboard/StatsCard';
 import DataFetchingError from '../error/DataFetchingError';
-import { DashboardStatsProps } from '@/shared/interface/componentInterface';
+import { DashboardStatsProps } from '@/shared/types/component';
 import DashboardStatsShimmer from '@/components/shimmers/DashboardStatsShimmer';
 
 const DashboardStats = <T extends Record<string, number>>({

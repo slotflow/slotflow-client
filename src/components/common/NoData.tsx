@@ -1,4 +1,4 @@
-import { NoDataProps } from '@/shared/interface/componentInterface';
+import { NoDataProps } from '@/shared/types/component';
 
 const NoData = ({ message }: NoDataProps) => {
   return (

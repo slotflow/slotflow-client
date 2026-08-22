@@ -1,5 +1,5 @@
-import { motion, Variants } from 'framer-motion';
 import React from 'react';
+import { motion, Variants } from 'framer-motion';
 
 type Direction = 'left' | 'right' | 'top' | 'bottom';
 

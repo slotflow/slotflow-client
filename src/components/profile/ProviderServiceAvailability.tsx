@@ -1,33 +1,33 @@
 import { toast } from 'react-toastify';
 import DataField from '../app/DataField';
 import { useDispatch } from 'react-redux';
+import { Role } from '@/shared/types/enums';
+import { useEffect, useState } from 'react';
 import { SelectSeparator } from '../ui/select';
-import { Role } from '@/shared/interface/enums';
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import TimeSlotLegend from '../app/TimeSlotLegend';
-import { useEffect, useState } from 'react';
+import { AppDispatch } from '@/app/store/appStore';
 import { Calendar } from '@/components/ui/calendar';
 import { getEventSocket } from '@/lib/socketService';
-import { AppDispatch } from '@/shared/redux/appStore';
 import { AnimatePresence, motion } from 'framer-motion';
 import DataFetchingError from '../error/DataFetchingError';
 import getBooleanStatusComponent from '../app/GetBooleanStatus';
+import { Slot } from '@/shared/types/entity/serviceAvailability';
 import { CalendarDays, Clock, Settings2, Timer } from 'lucide-react';
+import { setBookingPyamentData } from '@/app/store/slices/paymentSlice';
 import AvailablityFetchingError from '../error/AvailabilityFetchingError';
-import { setBookingPyamentData } from '@/shared/redux/slices/paymentSlice';
+import { EventSocketEnum, SlotEngageRequest } from '@/shared/types/socket';
+import { ProviderServiceAvailabilityProps } from '@/shared/types/component';
 import { defaultButtonClassName, STATUS_PRESETS } from '@/shared/utils/constants';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { Slot } from '@/shared/interface/entityInterface/serviceAvailabilityInterface';
-import { EventSocketEnum, SlotEngageRequest } from '@/shared/interface/socket.interface';
-import { ProviderServiceAvailabilityProps } from '@/shared/interface/componentInterface';
 import ProviderAvailabilityShimmer from '@/components/shimmers/ProviderAvailabilityShimmer';
 import ProviderServiceAvailabilityForm from '../form/provider/ProviderSerivceAvailabilityForm';
 import {
   fetchEngagedSlots,
   fetchMyServiceAvailability,
   fetchServiceAvailabilityByProviderId,
-} from '@/shared/apis/serviceAvailability';
+} from '@/services/apis/serviceAvailability';
 
 const ProviderServiceAvailability = ({
   providerId,

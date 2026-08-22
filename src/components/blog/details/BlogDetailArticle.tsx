@@ -1,5 +1,5 @@
 import TOC from '@/components/scroll/TOC';
-import { BlogDetailArticleProps } from '@/shared/interface/componentInterface';
+import { BlogDetailArticleProps } from '@/shared/types/component';
 
 const BlogDetailArticle = ({ article }: BlogDetailArticleProps) => {
   return (

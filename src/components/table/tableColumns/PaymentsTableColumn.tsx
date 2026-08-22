@@ -1,19 +1,19 @@
+import {
+  DropdownMenu,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+} from '@/components/ui/dropdown-menu';
 import { MoreHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
-import { PaymentFor } from '@/shared/interface/enums';
+import { PaymentFor } from '@/shared/types/enums';
+import { Payment } from '@/shared/types/entity/payment';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
-import { formateDate, formatNumberToPrice } from '@/shared/helper/formatter';
-import { Payment } from '@/shared/interface/entityInterface/paymentInterface';
-import { FetchPaymentsResponse } from '@/shared/interface/api/payment';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+import { FetchPaymentsResponse } from '@/shared/types/api/payment';
+import { formateDate, formatNumberToPrice } from '@/shared/utils/helper/formatter';
 
 // for admin side, provider side and user side view of payments table
 const PaymentsTableColumn = (

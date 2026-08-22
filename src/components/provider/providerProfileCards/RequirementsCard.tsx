@@ -1,9 +1,9 @@
 import NoData from '@/components/common/NoData';
 import { Info, CheckCircle } from 'lucide-react';
+import { RequirementsCardProps } from '@/shared/types/component';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import DataFieldShimmer from '@/components/shimmers/DataFieldShimmer';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { RequirementsCardProps } from '@/shared/interface/componentInterface';
 
 const RequirementsCard = ({ isLoading, isError, data }: RequirementsCardProps) => {
   return (

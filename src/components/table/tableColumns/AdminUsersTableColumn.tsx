@@ -1,20 +1,17 @@
+import {
+  DropdownMenu,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+} from '../../ui/dropdown-menu';
+import { AdminfetchAllUsersResponse, AdminChangeUserStatusRequest } from '@/shared/types/api/user';
 import { Button } from '../../ui/button';
 import { MoreHorizontal } from 'lucide-react';
 import { ColumnDef } from '@tanstack/react-table';
+import { User } from '@/shared/types/entity/user';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
-import { User } from '@/shared/interface/entityInterface/userInterface';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '../../ui/dropdown-menu';
-import {
-  AdminChangeUserStatusRequest,
-  AdminfetchAllUsersResponse,
-} from '@/shared/interface/api/user';
 
 const AdminUsersTableColumns = (
   handleAdminChangeUserBlockStatus: (data: AdminChangeUserStatusRequest) => void,

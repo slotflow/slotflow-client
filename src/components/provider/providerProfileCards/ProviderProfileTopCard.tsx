@@ -1,16 +1,16 @@
+import { Role } from '@/shared/types/enums';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
-import { Role } from '@/shared/interface/enums';
 import { Share2, ShieldCheck } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card, CardContent } from '@/components/ui/card';
-import { getInitials } from '@/shared/helper/getInitials';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
-import { setIsShowPreview } from '@/shared/redux/slices/providerSlice';
+import { AppDispatch, RootState } from '@/app/store/appStore';
+import { getInitials } from '@/shared/utils/helper/getInitials';
+import { setIsShowPreview } from '@/app/store/slices/providerSlice';
+import { ProviderProfileTopCardProps } from '@/shared/types/component';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { ProviderProfileTopCardProps } from '@/shared/interface/componentInterface';
 
 const ProviderProfileTopCard = ({
   isLoading,

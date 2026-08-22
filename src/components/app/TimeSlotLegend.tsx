@@ -1,7 +1,7 @@
-import { Role } from '@/shared/interface/enums';
+import { Role } from '@/shared/types/enums';
 import { Button } from '@/components/ui/button';
-import { formateDate } from '@/shared/helper/formatter';
-import { TimeSlotLegendProps } from '@/shared/interface/componentInterface';
+import { formateDate } from '@/shared/utils/helper/formatter';
+import { TimeSlotLegendProps } from '@/shared/types/component';
 
 const TimeSlotLegend = ({
   role,

@@ -1,12 +1,12 @@
-import SelectField from '../../form/SelectField';
-import { ServiceMode } from '@/shared/interface/enums';
-import { ProviderServiceAvailabilityFormType } from '@/shared/zod/providerZod';
-import { AvailabilityDataSelectionFieldsProps } from '@/shared/interface/componentInterface';
 import {
   daysOfWeekOptions,
   isAvailableOptions,
   serviceDurationsOptions,
 } from '@/shared/utils/constants';
+import SelectField from '../../form/SelectField';
+import { ServiceMode } from '@/shared/types/enums';
+import { AvailabilityDataSelectionFieldsProps } from '@/shared/types/component';
+import { ProviderServiceAvailabilityFormType } from '@/shared/validators/zod/providerZod';
 
 const AvailabilityDataSelectionFields = ({
   register,

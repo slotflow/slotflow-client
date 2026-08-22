@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { FilterCompHeaderProps } from '@/shared/interface/componentInterface';
+import { FilterCompHeaderProps } from '@/shared/types/component';
 
 const FilterCompHeader = ({ title, isOpen, onToggle, Icon }: FilterCompHeaderProps) => {
   return (

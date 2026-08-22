@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import MainLayout from './MainLayout';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/shared/redux/appStore';
+import { RootState } from '@/app/store/appStore';
+import { PlanName, Role } from '@/shared/types/enums';
 import { planAccessMap } from '@/shared/utils/constants';
-import { PlanName, Role } from '@/shared/interface/enums';
-import { getRoutesByRole } from '@/shared/helper/getRouteByRole';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import PaymentSelection from '@/components/payment/PaymentSelection';
+import { getRoutesByRole } from '@/shared/utils/helper/getRouteByRole';
 import ProviderFreeSubscription from '@/components/provider/ProviderFreeSubscription';
 import NotificationsContainer from '@/components/notification/NotificationsContainer';
 
@@ -58,12 +58,7 @@ const ProviderLayout = () => {
   }, [authUser, navigate, pathname]);
 
   return (
-    <MainLayout
-      routes={providerRoutes}
-      filteredRoutes={accessibleRoutes}
-      profileImage={authUser?.profileImage}
-      username={authUser?.username}
-    >
+    <MainLayout routes={providerRoutes} filteredRoutes={accessibleRoutes}>
       <Outlet />
       {isOpen && authUser?.role === Role.USER && <PaymentSelection />}
       {subscriptionData?.isTrialPlan && <ProviderFreeSubscription />}

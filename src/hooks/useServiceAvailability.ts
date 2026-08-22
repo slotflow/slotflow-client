@@ -1,10 +1,7 @@
 import { useCallback } from 'react';
-import { ServiceMode } from '@/shared/interface/enums';
+import { ServiceMode } from '@/shared/types/enums';
 import { addMinutes, format, isBefore, isEqual } from 'date-fns';
-import {
-  UseAddAvailabilityProps,
-  UseAddAvailabilityReturn,
-} from '@/shared/interface/hooksInterface';
+import { UseAddAvailabilityProps, UseAddAvailabilityReturn } from '@/shared/types/hooks';
 
 export const useAddAvailability = ({
   getValues,

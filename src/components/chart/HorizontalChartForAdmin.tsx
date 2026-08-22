@@ -1,16 +1,16 @@
-import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from 'recharts';
 import {
   Card,
+  CardTitle,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
+  CardDescription,
 } from '@/components/ui/card';
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { LoaderCircle, TrendingUp } from 'lucide-react';
 import { chartConfig } from '@/shared/utils/constants';
-import { HorizontalChartForAdminReactProps } from '@/shared/interface/componentInterface';
+import { LoaderCircle, TrendingUp } from 'lucide-react';
+import { HorizontalChartForAdminReactProps } from '@/shared/types/component';
+import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from 'recharts';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 
 const HorizontalChartForAdminReact = ({
   chartData,

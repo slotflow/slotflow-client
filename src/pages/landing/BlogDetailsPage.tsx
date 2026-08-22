@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { RootState } from '@/shared/redux/appStore';
+import { RootState } from '@/app/store/appStore';
+import { BlogArticle } from '@/shared/types/common';
 import MoveUpward from '@/components/animation/MoveUpward';
 import BlogNewsletter from '@/components/blog/BlogNewsletter';
-import { BlogArticle } from '@/shared/interface/commonInterface';
 import BlogDetailHero from '@/components/blog/details/BlogDetailHero';
 import BlogDetailQuote from '@/components/blog/details/BlogDetailQuote';
 import BlogDetailArticle from '@/components/blog/details/BlogDetailArticle';

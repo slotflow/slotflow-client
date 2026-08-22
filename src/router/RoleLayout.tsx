@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import { Role } from '@/shared/types/enums';
 import UserLayout from '@/layouts/UserLayout';
-import { Role } from '@/shared/interface/enums';
 import AdminLayout from '@/layouts/AdminLayout';
-import { RootState } from '@/shared/redux/appStore';
+import { RootState } from '@/app/store/appStore';
 import ProviderLayout from '@/layouts/ProviderLayout';
 
 const RoleLayout = () => {

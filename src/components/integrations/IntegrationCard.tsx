@@ -8,8 +8,8 @@ import {
 } from '@/components/ui/card';
 import { Button } from '../ui/button';
 import { Check, LoaderCircle } from 'lucide-react';
+import { IntegrationCardProps } from '@/shared/types/component';
 import { defaultButtonClassName } from '@/shared/utils/constants';
-import { IntegrationCardProps } from '@/shared/interface/componentInterface';
 
 const IntegrationCard = ({
   image,
@@ -33,14 +33,10 @@ const IntegrationCard = ({
             className="size-10 rounded-md border object-contain bg-muted"
           />
 
-          <CardTitle className="text-2xl font-semibold">
-            {heading}
-          </CardTitle>
+          <CardTitle className="text-2xl font-semibold">{heading}</CardTitle>
         </div>
 
-        <CardDescription className="mt-2 text-base">
-          {description}
-        </CardDescription>
+        <CardDescription className="mt-2 text-base">{description}</CardDescription>
       </CardHeader>
 
       <CardContent className="hidden" />

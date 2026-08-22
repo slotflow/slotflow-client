@@ -1,19 +1,16 @@
 import React from 'react';
-import { CheckIcon, MinusIcon, Clock3Icon } from 'lucide-react';
 import {
   Table,
+  TableRow,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
 } from '@/components/ui/table';
+import { CheckIcon, MinusIcon, Clock3Icon } from 'lucide-react';
 import { planFeatures, PlanList } from '@/shared/utils/constants';
-import { formatNumberToPrice } from '@/shared/helper/formatter';
-import {
-  PlanFeatureValueProps,
-  PricingFeatureDetailsProps,
-} from '@/shared/interface/componentInterface';
+import { formatNumberToPrice } from '@/shared/utils/helper/formatter';
+import { PlanFeatureValueProps, PricingFeatureDetailsProps } from '@/shared/types/component';
 
 export const PLAN_TIERS = ['trial', 'starter', 'professional', 'enterprise'] as const;
 

@@ -2,7 +2,7 @@
 import './index.css';
 import App from './App.tsx';
 import { createRoot } from 'react-dom/client';
-import { registerServiceWorker } from './shared/helper/registerServiceWorker.ts';
+import { registerServiceWorker } from './shared/utils/helper/registerServiceWorker.ts';
 
 registerServiceWorker();
 

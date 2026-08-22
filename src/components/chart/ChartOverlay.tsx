@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { RootState } from '@/shared/redux/appStore';
-import { ChartOverlayProps } from '@/shared/interface/componentInterface';
+import { RootState } from '@/app/store/appStore';
+import { ChartOverlayProps } from '@/shared/types/component';
 
 const ChartOverlay = ({ stringOne, chartTitle }: ChartOverlayProps) => {
   const themeMode = useSelector((store: RootState) => store.app.lightTheme);

@@ -1,10 +1,10 @@
 import { ChevronDown } from 'lucide-react';
-import { SingleTabProps } from '@/shared/interface/componentInterface';
+import { SingleTabProps } from '@/shared/types/component';
 
 const SingleTab = ({
   icon: Icon,
   text,
-  sidebarOpen,
+  isSidebarOpen,
   onClick,
   className = '',
   locked = false,
@@ -21,7 +21,7 @@ const SingleTab = ({
                 px-3 py-2 my-1
                 rounded-sm
                 transition-all duration-200
-                ${!sidebarOpen ? 'justify-center mx-1' : 'justify-start'}
+                ${!isSidebarOpen ? 'justify-center mx-1' : 'justify-start'}
                 ${className}
                 ${
                   locked
@@ -35,14 +35,14 @@ const SingleTab = ({
       <Icon
         className={`
                     shrink-0
-                    ${sidebarOpen ? 'w-5 h-5' : 'w-6 h-6'}
+                    ${isSidebarOpen ? 'w-5 h-5' : 'w-6 h-6'}
                     ${active && !locked ? 'text-[var(--mainColor)]' : ''}
                 `}
       />
 
-      {sidebarOpen && <span className="ml-3 text-[14px] truncate flex-1">{text}</span>}
+      {isSidebarOpen && <span className="ml-3 text-[14px] truncate flex-1">{text}</span>}
 
-      {sidebarOpen && hasSubroutes && !locked && (
+      {isSidebarOpen && hasSubroutes && !locked && (
         <ChevronDown
           className={`
                         ml-auto

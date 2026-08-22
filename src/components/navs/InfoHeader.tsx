@@ -2,9 +2,9 @@ import { Button } from '../ui/button';
 import { useDispatch } from 'react-redux';
 import { useMatches } from 'react-router-dom';
 import { Bell, PanelLeft } from 'lucide-react';
-import { AppDispatch } from '@/shared/redux/appStore';
-import { AppRouteHandle } from '@/shared/interface/commonInterface';
-import { toggleNotificationContainer, toggleSidebar } from '@/shared/redux/slices/appSlice';
+import { AppDispatch } from '@/app/store/appStore';
+import { AppRouteHandle } from '@/shared/types/common';
+import { toggleNotificationContainer, toggleSidebar } from '@/app/store/slices/appSlice';
 
 const InfoHeader = () => {
   const matches = useMatches();

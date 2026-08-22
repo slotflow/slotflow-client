@@ -1,14 +1,17 @@
 import FormField from '../FormField';
 import { toast } from 'react-toastify';
+import { appConfig } from '@/config/env';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
-import { appConfig } from '@/shared/config/env';
-import { updatePassword } from '@/shared/apis/user';
+import { updatePassword } from '@/services/apis/user';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Submitting from '@/components/common/Submitting';
 import { defaultButtonClassName } from '@/shared/utils/constants';
-import { UpdatePasswordFormProps } from '@/shared/interface/componentInterface';
-import { UpdatePasswordFormType, updatePasswordSchema } from '@/shared/zod/commonZodFields';
+import { UpdatePasswordFormProps } from '@/shared/types/component';
+import {
+  UpdatePasswordFormType,
+  updatePasswordSchema,
+} from '@/shared/validators/zod/commonZodFields';
 
 const UpdatePasswordForm = ({ onClose }: UpdatePasswordFormProps) => {
   const {

@@ -1,8 +1,8 @@
 import L from 'leaflet';
 import { useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
+import { MapPreviewProps } from '@/shared/types/component';
 import googleMap from '../../assets/logos/external/googleMap.png';
-import { MapPreviewProps } from '@/shared/interface/componentInterface';
 
 const MapPreview = ({ lat, lon }: MapPreviewProps) => {
   const mapRef = useRef<HTMLDivElement | null>(null);

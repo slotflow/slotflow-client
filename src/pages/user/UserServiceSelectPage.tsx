@@ -6,11 +6,11 @@ import { Input } from '@/components/ui/input';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useDispatch, useSelector } from 'react-redux';
+import { ServiceCategory } from '@/shared/types/enums';
 import MoveUpward from '@/components/animation/MoveUpward';
-import { ServiceCategory } from '@/shared/interface/enums';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import { AppDispatch, RootState } from '@/app/store/appStore';
 import { defaultButtonClassName } from '@/shared/utils/constants';
-import { pushServiceCategory } from '@/shared/redux/slices/userSlice';
+import { pushServiceCategory } from '@/app/store/slices/userSlice';
 
 const UserServiceSelectPage = () => {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const UserServiceSelectPage = () => {
 
   /**
    * Toggles a service category in the user's selected categories.
-   * @param category
+   * @param category // service category
    */
   const handleCategoryToggle = (category: ServiceCategory) => {
     const currentCategories = selectedCategories ?? [];

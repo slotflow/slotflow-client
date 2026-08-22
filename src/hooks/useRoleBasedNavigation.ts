@@ -1,13 +1,13 @@
 import { useSelector } from 'react-redux';
+import { Role } from '@/shared/types/enums';
 import { useNavigate } from 'react-router-dom';
-import { Role } from '@/shared/interface/enums';
-import { RootState } from '@/shared/redux/appStore';
-import { validateRoomId } from '@/shared/apis/booking';
-import { ValidateRoomId } from '@/shared/interface/api/booking';
-import { Booking } from '@/shared/interface/entityInterface/bookingInterface';
-import { Payment } from '@/shared/interface/entityInterface/paymentInterface';
-import { useRoleBasedNavigationReturn } from '@/shared/interface/hooksInterface';
-import { Subscription } from '@/shared/interface/entityInterface/subscriptionInterface';
+import { RootState } from '@/app/store/appStore';
+import { Booking } from '@/shared/types/entity/booking';
+import { Payment } from '@/shared/types/entity/payment';
+import { validateRoomId } from '@/services/apis/booking';
+import { ValidateRoomId } from '@/shared/types/api/booking';
+import { Subscription } from '@/shared/types/entity/subscription';
+import { useRoleBasedNavigationReturn } from '@/shared/types/hooks';
 
 export const useRoleBasedNavigation = (): useRoleBasedNavigationReturn => {
   const navigate = useNavigate();

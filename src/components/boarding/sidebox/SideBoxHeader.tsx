@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { appConfig } from '@/config/env';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { appConfig } from '@/shared/config/env';
-import { RootState } from '@/shared/redux/appStore';
+import { RootState } from '@/app/store/appStore';
 import { LoaderCircle, LogOut } from 'lucide-react';
 import ThemeToggler from '@/components/common/ThemeToggler';
 import { useSignout } from '@/hooks/systemHooks/useSignout';

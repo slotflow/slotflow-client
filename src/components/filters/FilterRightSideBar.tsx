@@ -1,26 +1,26 @@
 import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
 import LocationPicker from '../map/LocationPicker';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useDispatch, useSelector } from 'react-redux';
-import { ServiceCategory } from '@/shared/interface/enums';
+import { ServiceCategory } from '@/shared/types/enums';
+import { Location } from '@/shared/types/entity/address';
 import FilterCompHeader from '../filters/FilterCompHeader';
-import { fetchServicesByCategory } from '@/shared/apis/service';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
-import { toggleFilterSideBar } from '@/shared/redux/slices/appSlice';
-import { setProviderCardsFilter } from '@/shared/redux/slices/userSlice';
-import { ProviderCardsFilters } from '@/shared/interface/commonInterface';
-import { Location } from '@/shared/interface/entityInterface/addressInterface';
+import { ProviderCardsFilters } from '@/shared/types/common';
+import { AppDispatch, RootState } from '@/app/store/appStore';
+import { fetchServicesByCategory } from '@/services/apis/service';
+import { toggleFilterSideBar } from '@/app/store/slices/appSlice';
+import { setProviderCardsFilter } from '@/app/store/slices/userSlice';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { BookCheck, ChartBarStacked, IndianRupee, Locate, SlidersHorizontal } from 'lucide-react';
 
 const FilterRightSideBar = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { selectedCategories } = useSelector((state: RootState) => state.user);
-  const { filterSideBarOpen } = useSelector((state: RootState) => state.app);
+  const { isFilterSideBarOpen } = useSelector((state: RootState) => state.app);
 
   const [showMapFilter, setShowMapFilter] = useState<boolean>(true);
   const [showPriceFilter, setShowPriceFilter] = useState<boolean>(true);
@@ -112,7 +112,7 @@ const FilterRightSideBar = () => {
   };
 
   return (
-    <Sheet open={filterSideBarOpen} onOpenChange={() => dispatch(toggleFilterSideBar())}>
+    <Sheet open={isFilterSideBarOpen} onOpenChange={() => dispatch(toggleFilterSideBar())}>
       <SheetContent className="w-[320px] sm:w-[400px] bg-[var(--menuBg)] border-l flex flex-col p-6 shadow-2xl">
         <SheetHeader className="mb-4">
           <SheetTitle className="flex items-center gap-2 text-xl font-bold">

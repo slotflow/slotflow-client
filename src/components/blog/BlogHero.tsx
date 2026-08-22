@@ -1,13 +1,13 @@
-import { BookOpen, ArrowRight, CalendarDays } from 'lucide-react';
 import { Card } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { formateDate } from '@/shared/helper/formatter';
+import { BlogHeroProps } from '@/shared/types/component';
 import SplitTextReveal from '../animation/SplitTextReveal';
 import AnimatedCounter from '../animation/AnimatedCounter';
-import { BlogHeroProps } from '@/shared/interface/componentInterface';
+import { formateDate } from '@/shared/utils/helper/formatter';
+import { BookOpen, ArrowRight, CalendarDays } from 'lucide-react';
 
 const BlogHero = ({
   articlesCount,

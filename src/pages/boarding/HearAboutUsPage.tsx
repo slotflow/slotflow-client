@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import { useDispatch, useSelector } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
 import { usePreBoarding } from '@/hooks/usePreboarding';
 import { redirectPaths } from '@/shared/utils/constants';
-import { HearAboutUsOptionValue, Role } from '@/shared/interface/enums';
+import { AppDispatch, RootState } from '@/app/store/appStore';
+import { updateBoardingStep } from '@/app/store/slices/appSlice';
+import { HearAboutUsOptionValue, Role } from '@/shared/types/enums';
 import ReferralCodeCard from '@/components/boarding/hearAboutUs/ReferralCodeCard';
 import HearAboutUsButtons from '@/components/boarding/hearAboutUs/HearAboutUsButtons';
 import HearAboutUsOptions from '@/components/boarding/hearAboutUs/HearAboutUsOptionCard';
-import { updateBoardingStep } from '@/shared/redux/slices/appSlice';
 
 const HearAboutUsPage = () => {
   const navigate = useNavigate();

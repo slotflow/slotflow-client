@@ -1,5 +1,5 @@
-import { fetchUsersForChat } from '@/shared/apis/user';
 import ChatSidebar from '@/components/chat/ChatSideBar';
+import { fetchUsersForChat } from '@/services/apis/user';
 import ChatContainer from '@/components/chat/ChatContainer';
 
 const ChatPage = () => {

@@ -1,8 +1,8 @@
-import CommonTable from '../table/CommonTable';
+import PaginatedDataTable from '../table/PaginatedDataTable';
 import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
 import PaymentsTableColumn from '../table/tableColumns/PaymentsTableColumn';
-import { AdminUserOrProviderPaymentsProps } from '@/shared/interface/componentInterface';
-import { FetchPaymentsQueryParams, FetchPaymentsResponse } from '@/shared/interface/api/payment';
+import { AdminUserOrProviderPaymentsProps } from '@/shared/types/component';
+import { FetchPaymentsQueryParams, FetchPaymentsResponse } from '@/shared/types/api/payment';
 
 const AdminUserOrProviderPayments = ({
   providerId,
@@ -12,7 +12,7 @@ const AdminUserOrProviderPayments = ({
   const column = PaymentsTableColumn(handleGetPaymentDetailsPage);
 
   return (
-    <CommonTable<FetchPaymentsResponse, FetchPaymentsQueryParams>
+    <PaginatedDataTable<FetchPaymentsResponse, FetchPaymentsQueryParams>
       fetchApiFunction={(queryParams) => fetchFunction({ providerId, ...queryParams })}
       queryKey={`payments-${providerId}`}
       column={column}

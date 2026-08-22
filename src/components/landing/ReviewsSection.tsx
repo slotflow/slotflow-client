@@ -1,11 +1,11 @@
 import { Star } from 'lucide-react';
-import { appConfig } from '@/shared/config/env';
+import { appConfig } from '@/config/env';
 import { useEffect, useRef, useState } from 'react';
-import { getReviews } from '@/shared/apis/contentful';
 import SectionHeading from '../common/SectionHeading';
 import { useDispatch, useSelector } from 'react-redux';
-import { setReviews } from '@/shared/redux/slices/appSlice';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import { getReviews } from '@/services/apis/contentful';
+import { setReviews } from '@/app/store/slices/appSlice';
+import { AppDispatch, RootState } from '@/app/store/appStore';
 import { InfiniteMovingCards } from '@/components/ui/infinite-moving-cards';
 
 const ReviewsSection = () => {

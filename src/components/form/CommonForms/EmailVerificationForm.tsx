@@ -1,16 +1,16 @@
 import FormField from '../FormField';
 import { toast } from 'react-toastify';
+import { appConfig } from '@/config/env';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { FormButton } from '../FormButton';
 import { FormHeading } from '../FormHeading';
 import { useNavigate } from 'react-router-dom';
-import { appConfig } from '@/shared/config/env';
-import { verifyEmail } from '@/shared/apis/auth';
+import { verifyEmail } from '@/services/apis/auth';
+import { AppDispatch } from '@/app/store/appStore';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AppDispatch } from '@/shared/redux/appStore';
 import { redirectPaths } from '@/shared/utils/constants';
-import { VerifyEmailFormType, verifyEmailZodSchema } from '@/shared/zod/authZod';
+import { VerifyEmailFormType, verifyEmailZodSchema } from '@/shared/validators/zod/authZod';
 
 const EmailVerificationForm = () => {
   const navigate = useNavigate();

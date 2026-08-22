@@ -4,14 +4,14 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import GoogleButton from '../GoogleButton';
 import { FormButton } from '../FormButton';
-import { signup } from '@/shared/apis/auth';
 import { FormHeading } from '../FormHeading';
+import { signup } from '@/services/apis/auth';
 import { useNavigate } from 'react-router-dom';
-import { AppDispatch } from '@/shared/redux/appStore';
+import { AppDispatch } from '@/app/store/appStore';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { appConfig, serviceConfig } from '@/config/env';
 import { redirectPaths } from '@/shared/utils/constants';
-import { appConfig, serviceConfig } from '@/shared/config/env';
-import { SignupFormType, signupZodSchema } from '@/shared/zod/authZod';
+import { SignupFormType, signupZodSchema } from '@/shared/validators/zod/authZod';
 
 const SignUpForm = () => {
   const navigate = useNavigate();

@@ -1,8 +1,8 @@
 import { X } from 'lucide-react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
-import { setLastMessage, setSelectedUser } from '@/shared/redux/slices/chatSlice';
+import { AppDispatch, RootState } from '@/app/store/appStore';
+import { setLastMessage, setSelectedUser } from '@/app/store/slices/chatSlice';
 
 const ChatHeader = () => {
   const dispatch = useDispatch<AppDispatch>();

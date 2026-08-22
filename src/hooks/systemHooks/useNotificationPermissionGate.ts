@@ -1,15 +1,15 @@
-import { appConfig } from '@/shared/config/env';
-import { RootState } from '@/shared/redux/appStore';
-import { getFcmToken } from '@/shared/helper/getToken';
+import { appConfig } from '@/config/env';
+import { RootState } from '@/app/store/appStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCallback, useEffect, useMemo } from 'react';
-import { getDeviceId } from '@/shared/helper/getDeviceId';
-import { registerDevice } from '@/shared/apis/notification';
-import { userSetPushNotification } from '@/shared/apis/user';
-import { PermissionStatus, Platform } from '@/shared/interface/enums';
-import { updateNotificationPreference } from '@/shared/redux/slices/authSlice';
-import { useNotificationPermissionGateReturn } from '@/shared/interface/hooksInterface';
-import { requestNotificationPermission } from '@/shared/helper/requestNotificationPermission';
+import { getFcmToken } from '@/shared/utils/helper/getToken';
+import { registerDevice } from '@/services/apis/notification';
+import { userSetPushNotification } from '@/services/apis/user';
+import { getDeviceId } from '@/shared/utils/helper/getDeviceId';
+import { PermissionStatus, Platform } from '@/shared/types/enums';
+import { useNotificationPermissionGateReturn } from '@/shared/types/hooks';
+import { updateNotificationPreference } from '@/app/store/slices/authSlice';
+import { requestNotificationPermission } from '@/shared/utils/helper/requestNotificationPermission';
 
 export const useNotificationPermissionGate = (): useNotificationPermissionGateReturn => {
   const dispatch = useDispatch();

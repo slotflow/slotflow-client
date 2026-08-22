@@ -1,46 +1,42 @@
 import { toast } from 'react-toastify';
-import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
-import { LoaderCircle } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { appConfig } from '@/shared/config/env';
-import TagInput from '@/components/form/TagInput';
-import FormField from '@/components/form/FormField';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useDispatch, useSelector } from 'react-redux';
-import SelectField from '@/components/form/SelectField';
-import DynamicStringListField from '../DynamicStringListFields';
-import { fetchServicesByCategory } from '@/shared/apis/service';
-import { OptionType } from '@/shared/interface/commonInterface';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
-import { ProviderServiceFormProps } from '@/shared/interface/componentInterface';
 import {
-  providerCreateServiceDetailsZodSchema,
-  ProviderCreateServiceDetailsFormType,
-} from '@/shared/zod/providerZod';
+  ServiceType,
+  ServiceCategory,
+  OnboardingStatus,
+  AdminVerificationStatus,
+} from '@/shared/types/enums';
 import {
   groupOptions,
   redirectPaths,
-  // TODO Remove
-  // serviceModeOptions,
   serviceTypeOptions,
   serviceCategoryOptions,
   defaultButtonClassName,
 } from '@/shared/utils/constants';
 import {
-  ServiceType,
-  // TODO Remove
-  // ServiceMode,
-  ServiceCategory,
-  OnboardingStatus,
-  AdminVerificationStatus,
-} from '@/shared/interface/enums';
-import {
   providerFetchServiceDetails,
   providerUpdateServiceDetails,
   providerCreateServiceDetails,
-} from '@/shared/apis/providerService';
+} from '@/services/apis/providerService';
+import { appConfig } from '@/config/env';
+import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { LoaderCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import TagInput from '@/components/form/TagInput';
+import { OptionType } from '@/shared/types/common';
+import FormField from '@/components/form/FormField';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useDispatch, useSelector } from 'react-redux';
+import SelectField from '@/components/form/SelectField';
+import { AppDispatch, RootState } from '@/app/store/appStore';
+import DynamicStringListField from '../DynamicStringListFields';
+import { fetchServicesByCategory } from '@/services/apis/service';
+import { ProviderServiceFormProps } from '@/shared/types/component';
+import {
+  providerCreateServiceDetailsZodSchema,
+  ProviderCreateServiceDetailsFormType,
+} from '@/shared/validators/zod/providerZod';
 
 const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFormProps) => {
   const navigate = useNavigate();
@@ -72,8 +68,6 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
       tags: [],
       videoUrl: '',
       portfolioUrl: '',
-      // TODO Remove
-      // serviceMode: undefined,
       maxParticipants: 1,
       isGroupService: false,
     },
@@ -128,8 +122,6 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
         serviceDescription: result.serviceDescription,
         serviceExperienceYears: result.serviceExperienceYears,
         serviceExperience: result.serviceExperience,
-        // TODO Remove
-        // serviceMode: result.serviceMode,
         serviceName: result.serviceName,
         servicePrice: result.servicePrice,
         serviceType: result.serviceType,
@@ -253,16 +245,6 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
             error={errors.serviceType}
             required
           />
-          {/* 
-          // TODO Remove
-          <SelectField<ProviderCreateServiceDetailsFormType, ServiceMode>
-            id="serviceMode"
-            label="Mode"
-            options={serviceModeOptions}
-            register={register}
-            error={errors.serviceMode}
-            required
-          /> */}
 
           <DynamicStringListField
             label="Requirements"

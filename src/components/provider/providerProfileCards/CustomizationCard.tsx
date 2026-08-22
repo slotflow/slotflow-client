@@ -2,8 +2,8 @@ import { Edit } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { Button } from '@/components/ui/button';
-import { PlanName } from '@/shared/interface/enums';
-import { RootState } from '@/shared/redux/appStore';
+import { PlanName } from '@/shared/types/enums';
+import { RootState } from '@/app/store/appStore';
 import { defaultButtonClassName } from '@/shared/utils/constants';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 

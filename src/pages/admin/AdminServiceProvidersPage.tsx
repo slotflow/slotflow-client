@@ -1,19 +1,19 @@
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { useEffect, useRef } from 'react';
+import {
+  AdminFetchAllProvidersResponse,
+  AdminChangeProviderTrustTagRequest,
+  AdminChangeProviderBlockStatusRequest,
+} from '@/shared/types/api/providerProfile';
 import { useNavigate } from 'react-router-dom';
-import { RootState } from '@/shared/redux/appStore';
-import CommonTable from '@/components/table/CommonTable';
-import { slideIn } from '@/shared/helper/gsapAnimationSlide';
+import { RootState } from '@/app/store/appStore';
 import { useAdminProvider } from '@/hooks/adminHooks/useProvider';
-import { fetchServiceProvidersForAdmin } from '@/shared/apis/providerProfile';
+import { slideIn } from '@/shared/utils/helper/gsapAnimationSlide';
+import PaginatedDataTable from '@/components/table/PaginatedDataTable';
+import { fetchServiceProvidersForAdmin } from '@/services/apis/providerProfile';
 import RejectproviderForm from '@/components/form/AdminForms/RejectproviderForm';
 import AdminProvidersTableColumns from '@/components/table/tableColumns/AdminProvidersTableColumn';
-import {
-  AdminChangeProviderBlockStatusRequest,
-  AdminChangeProviderTrustTagRequest,
-  AdminFetchAllProvidersResponse,
-} from '@/shared/interface/api/providerProfile';
 
 const AdminServiceProvidersPage = () => {
   const navigate = useNavigate();
@@ -79,7 +79,7 @@ const AdminServiceProvidersPage = () => {
 
   return (
     <div className="p-4">
-      <CommonTable<AdminFetchAllProvidersResponse>
+      <PaginatedDataTable<AdminFetchAllProvidersResponse>
         fetchApiFunction={fetchServiceProvidersForAdmin}
         queryKey="providers"
         column={columns}

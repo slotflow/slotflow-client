@@ -1,26 +1,15 @@
 import { lazy } from 'react';
 import PlanGuard from './PlanGuard.tsx';
 import RoleLayout from './RoleLayout.tsx';
-import { Role } from '@/shared/interface/enums.ts';
+import { Role } from '@/shared/types/enums.ts';
 import OnBoardingGuard from './OnBoardingGuard.tsx';
 import { ProtectedRoute } from './ProtectedRoutes.tsx';
 import { RouteNames } from '@/shared/utils/constants.ts';
 import BoardingLayoutWrapper from './BoardingLayoutWrapper.tsx';
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
-import SubScribePlanPage from '@/pages/provider/SubScribePlanPage.tsx';
-
-const AuthLayout = lazy(() => import('@/layouts/AuthLayout.tsx'));
-const LoginForm = lazy(() => import('@/components/form/CommonForms/LoginForm.tsx'));
-const SignUpForm = lazy(() => import('@/components/form/CommonForms/SignUpForm.tsx'));
-const ResetPasswordForm = lazy(() => import('@/components/form/CommonForms/ResetPasswordForm.tsx'));
-const OtpVerificatioForm = lazy(
-  () => import('@/components/form/CommonForms/OtpVerificatioForm.tsx'),
-);
-const EmailVerificationForm = lazy(
-  () => import('@/components/form/CommonForms/EmailVerificationForm.tsx'),
-);
 
 const FAQPage = lazy(() => import('@/pages/landing/FAQPage.tsx'));
+const AuthLayout = lazy(() => import('@/layouts/AuthLayout.tsx'));
 const BlogPage = lazy(() => import('@/pages/landing/BlogPage.tsx'));
 const HelpPage = lazy(() => import('@/pages/landing/HelpPage.tsx'));
 const ChatPage = lazy(() => import('@/pages/dashboard/ChatPage.tsx'));
@@ -35,47 +24,67 @@ const ReviewsPage = lazy(() => import('@/pages/dashboard/ReviewsPage.tsx'));
 const SettingsPage = lazy(() => import('@/pages/dashboard/SettingsPage.tsx'));
 const CalendarPage = lazy(() => import('@/pages/dashboard/CalendarPage.tsx'));
 const ReferralPage = lazy(() => import('@/pages/dashboard/ReferralPage.tsx'));
+const AdminPlansPage = lazy(() => import('@/pages/admin/AdminPlansPage.tsx'));
+const AdminUsersPage = lazy(() => import('@/pages/admin/AdminUsersPage.tsx'));
 const UserAccountPage = lazy(() => import('@/pages/user/UserAccountPage.tsx'));
 const VideoCallRoom = lazy(() => import('@/pages/dashboard/VideoCallRoom.tsx'));
+const AdminReportPage = lazy(() => import('@/pages/admin/AdminReportPage.tsx'));
 const RoleSelectPage = lazy(() => import('@/pages/boarding/RoleSelectPage.tsx'));
 const VideoCallLoby = lazy(() => import('@/pages/dashboard/VideoCallLobby.tsx'));
 const BlogDetailsPage = lazy(() => import('@/pages/landing/BlogDetailsPage.tsx'));
 const HearAboutUsPage = lazy(() => import('@/pages/boarding/HearAboutUsPage.tsx'));
+const LoginForm = lazy(() => import('@/components/form/CommonForms/LoginForm.tsx'));
 const LegalHomePage = lazy(() => import('@/pages/landing/legal/LegalHomePage.tsx'));
+const AdminServicesPage = lazy(() => import('@/pages/admin/AdminServicesPage.tsx'));
+const SignUpForm = lazy(() => import('@/components/form/CommonForms/SignUpForm.tsx'));
 const ListPaymentsPage = lazy(() => import('@/pages/dashboard/ListPaymentsPage.tsx'));
 const ListBookingsPage = lazy(() => import('@/pages/dashboard/ListBookingsPage.tsx'));
+const AdminDashboardPage = lazy(() => import('@/pages/admin/AdminDashboardPage.tsx'));
+const SubScribePlanPage = lazy(() => import('@/pages/provider/SubScribePlanPage.tsx'));
 const BookingDetailPage = lazy(() => import('@/pages/dashboard/BookingDetailPage.tsx'));
 const AccountSettings = lazy(() => import('@/components/settings/AccountSettings.tsx'));
+const AdminUserDetailPage = lazy(() => import('@/pages/admin/AdminUserDetailPage.tsx'));
 const SecuritySettings = lazy(() => import('@/components/settings/SecuritySettings.tsx'));
+const ProviderAccountPage = lazy(() => import('@/pages/provider/ProviderAccountPage.tsx'));
+const UserServiceSelectPage = lazy(() => import('@/pages/user/UserServiceSelectPage.tsx'));
 const PrivacyPolicyPage = lazy(() => import('@/pages/landing/legal/PrivacyPolicyPage.tsx'));
+const AdminGrafanaDashboard = lazy(() => import('@/pages/admin/AdminGrafanaDashboard.tsx'));
+const UserBookingConfirmPage = lazy(() => import('@/pages/user/UserBookingConfirmPage.tsx'));
 const TermsOfServicePage = lazy(() => import('@/pages/landing/legal/TermsOfServicePage.tsx'));
+const AdminSubscriptionsPage = lazy(() => import('@/pages/admin/AdminSubscriptionsPage.tsx'));
+const ProviderDashboardPage = lazy(() => import('@/pages/provider/ProviderDashboardPage.tsx'));
 const IntegrationsListing = lazy(() => import('@/components/settings/IntegrationsListing.tsx'));
 const PaymentDetailViewPage = lazy(() => import('@/pages/dashboard/PaymentDetailViewPage.tsx'));
 const NotificationSettings = lazy(() => import('@/components/settings/NotificationSettings.tsx'));
-const SubscriptionDetailViewPage = lazy(
-  () => import('@/pages/dashboard/SubscriptionDetailViewPage.tsx'),
-);
-
-const UserServiceSelectPage = lazy(() => import('@/pages/user/UserServiceSelectPage.tsx'));
-const UserBookingConfirmPage = lazy(() => import('@/pages/user/UserBookingConfirmPage.tsx'));
+const ResetPasswordForm = lazy(() => import('@/components/form/CommonForms/ResetPasswordForm.tsx'));
+const ProviderAddAddressPage = lazy(() => import('@/pages/boarding/ProviderCreateAddressPage.tsx'));
+const AdminServiceProvidersPage = lazy(() => import('@/pages/admin/AdminServiceProvidersPage.tsx'));
 const UserListProvidersCardsPage = lazy(
   () => import('@/pages/user/UserListProvidersCardsPage.tsx'),
 );
-const UserServiceProviderDetailPage = lazy(
-  () => import('@/pages/user/UserServiceProviderDetailPage.tsx'),
-);
-
-const ProviderAccountPage = lazy(() => import('@/pages/provider/ProviderAccountPage.tsx'));
-const ProviderDashboardPage = lazy(() => import('@/pages/provider/ProviderDashboardPage.tsx'));
-const ProviderAddAddressPage = lazy(() => import('@/pages/boarding/ProviderCreateAddressPage.tsx'));
 const ProviderSubscriptionPage = lazy(
   () => import('@/pages/provider/ProviderSubscriptionPage.tsx'),
+);
+const OtpVerificatioForm = lazy(
+  () => import('@/components/form/CommonForms/OtpVerificatioForm.tsx'),
 );
 const ProviderProofSubmitionPage = lazy(
   () => import('@/pages/boarding/ProviderProofSubmitionPage.tsx'),
 );
+const SubscriptionDetailViewPage = lazy(
+  () => import('@/pages/dashboard/SubscriptionDetailViewPage.tsx'),
+);
+const UserServiceProviderDetailPage = lazy(
+  () => import('@/pages/user/UserServiceProviderDetailPage.tsx'),
+);
 const ProviderApprovalPendingPage = lazy(
   () => import('@/pages/boarding/ProviderApprovalPendingPage.tsx'),
+);
+const EmailVerificationForm = lazy(
+  () => import('@/components/form/CommonForms/EmailVerificationForm.tsx'),
+);
+const AdminServiceProviderDetailPage = lazy(
+  () => import('@/pages/admin/AdminServiceProviderDetailPage.tsx'),
 );
 const ProviderSubscriptionConfirmPage = lazy(
   () => import('@/pages/provider/ProviderSubscriptionConfirmPage.tsx'),
@@ -85,19 +94,6 @@ const ProviderCreateServiceDetailsPage = lazy(
 );
 const ProviderCreateServiceAvailabilityPage = lazy(
   () => import('@/pages/boarding/ProviderCreateServiceAvailabilityPage.tsx'),
-);
-
-const AdminPlansPage = lazy(() => import('@/pages/admin/AdminPlansPage.tsx'));
-const AdminUsersPage = lazy(() => import('@/pages/admin/AdminUsersPage.tsx'));
-const AdminReportPage = lazy(() => import('@/pages/admin/AdminReportPage.tsx'));
-const AdminServicesPage = lazy(() => import('@/pages/admin/AdminServicesPage.tsx'));
-const AdminDashboardPage = lazy(() => import('@/pages/admin/AdminDashboardPage.tsx'));
-const AdminUserDetailPage = lazy(() => import('@/pages/admin/AdminUserDetailPage.tsx'));
-const AdminGrafanaDashboard = lazy(() => import('@/pages/admin/AdminGrafanaDashboard.tsx'));
-const AdminSubscriptionsPage = lazy(() => import('@/pages/admin/AdminSubscriptionsPage.tsx'));
-const AdminServiceProvidersPage = lazy(() => import('@/pages/admin/AdminServiceProvidersPage.tsx'));
-const AdminServiceProviderDetailPage = lazy(
-  () => import('@/pages/admin/AdminServiceProviderDetailPage.tsx'),
 );
 
 export const appRouter = createBrowserRouter([

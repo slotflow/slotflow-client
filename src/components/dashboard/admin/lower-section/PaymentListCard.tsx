@@ -1,17 +1,17 @@
-import { format } from 'date-fns';
-import { DollarSign } from 'lucide-react';
-import { useQuery } from '@tanstack/react-query';
-import { fetchPayments } from '@/shared/apis/payment';
-import DashboardDataCard from '../../DashboardDataCard';
-import { formatNumberToPrice } from '@/shared/helper/formatter';
 import {
   Table,
+  TableRow,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
 } from '@/components/ui/table';
+import { format } from 'date-fns';
+import { DollarSign } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import { fetchPayments } from '@/services/apis/payment';
+import DashboardDataCard from '../../DashboardDataCard';
+import { formatNumberToPrice } from '@/shared/utils/helper/formatter';
 
 const PaymentListCard = () => {
   const { data, isLoading, isError, refetch } = useQuery({

@@ -1,6 +1,6 @@
 import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { FAQPageSearchProps } from '@/shared/interface/componentInterface';
+import { FAQPageSearchProps } from '@/shared/types/component';
 
 const FAQPageSearch = ({ onChange, value }: FAQPageSearchProps) => {
   return (

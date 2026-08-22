@@ -1,10 +1,10 @@
+import { appConfig } from '@/config/env';
 import { useDispatch } from 'react-redux';
-import { signout } from '@/shared/apis/auth';
-import { appConfig } from '@/shared/config/env';
+import { signout } from '@/services/apis/auth';
 import { useQueryClient } from '@tanstack/react-query';
-import { useSignoutReturn } from '@/shared/interface/hooksInterface';
-import { AppDispatch, persistAppStore } from '@/shared/redux/appStore';
-import { disconnectEventSocket } from '@/shared/socket/eventSocketThunk';
+import { useSignoutReturn } from '@/shared/types/hooks';
+import { AppDispatch, persistAppStore } from '@/app/store/appStore';
+import { disconnectEventSocket } from '@/services/socket/eventSocketThunk';
 
 export const useSignout = (): useSignoutReturn => {
   const dispatch = useDispatch<AppDispatch>();

@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { axiosInstance } from './axios';
-import { appStore } from '@/shared/redux/appStore';
-import { setAuthUser } from '@/shared/redux/slices/authSlice';
+import { appStore } from '@/app/store/appStore';
+import { setAuthUser } from '@/app/store/slices/authSlice';
 
 export const setupAxiosInterceptors = () => {
   axiosInstance.interceptors.response.use(

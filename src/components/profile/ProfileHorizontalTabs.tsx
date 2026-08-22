@@ -7,7 +7,7 @@ import {
   SelectContent,
 } from '@/components/ui/select';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { ProfileHorizontalTabsComponentProps } from '@/shared/interface/componentInterface';
+import { ProfileHorizontalTabsComponentProps } from '@/shared/types/component';
 
 const ProfileHorizontalTabs = ({
   isAdmin,

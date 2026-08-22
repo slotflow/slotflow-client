@@ -1,12 +1,12 @@
 import { useSelector } from 'react-redux';
 import UserInfo from './account/UserInfo';
+import { Role } from '@/shared/types/enums';
 import ProfileHead from './account/ProfileHead';
-import { Role } from '@/shared/interface/enums';
-import { RootState } from '@/shared/redux/appStore';
-import { fetchMyAddress } from '@/shared/apis/address';
+import { RootState } from '@/app/store/appStore';
 import AddressListing from '../profile/AddressListing';
+import { fetchMyAddress } from '@/services/apis/address';
 import ProviderServiceList from '../profile/ProviderServiceList';
-import { providerFetchServiceDetails } from '@/shared/apis/providerService';
+import { providerFetchServiceDetails } from '@/services/apis/providerService';
 import ProviderServiceAvailability from '../profile/ProviderServiceAvailability';
 
 const AccountSettings = () => {

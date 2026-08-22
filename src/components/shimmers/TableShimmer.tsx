@@ -1,4 +1,4 @@
-import { TableShimmerProps } from '@/shared/interface/shimmerInterface';
+import { TableShimmerProps } from '@/shared/types/shimmer';
 
 const TableShimmer = ({ columnsCount }: TableShimmerProps) => {
   return (

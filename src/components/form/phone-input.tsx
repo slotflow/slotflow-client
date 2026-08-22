@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { cn } from '@/lib/utils';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
   Command,
   CommandEmpty,
@@ -15,7 +14,8 @@ import flags from 'react-phone-number-input/flags';
 import * as RPNInput from 'react-phone-number-input';
 import { CheckIcon, ChevronsUpDown } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { PhoneInputProps } from '@/shared/interface/componentInterface';
+import { PhoneInputProps } from '@/shared/types/component';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> = React.forwardRef<
   React.ElementRef<typeof RPNInput.default>,

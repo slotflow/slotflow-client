@@ -1,20 +1,20 @@
 import { toast } from 'react-toastify';
-import { useCallback, useEffect, useRef } from 'react';
+import { appConfig } from '@/config/env';
 import { Button } from '@/components/ui/button';
+import { useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { PaymentProcessStatus } from '@/shared/types/enums';
+import { AppDispatch, RootState } from '@/app/store/appStore';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { PaymentProcessStatus } from '@/shared/interface/enums';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
-import { fetchMySubscription } from '@/shared/apis/subscription';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
+import { fetchMySubscription } from '@/services/apis/subscription';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { LoaderCircle, CheckCircle2, LayoutDashboard, XCircle } from 'lucide-react';
-import { setSubscription, setSubscriptionUpdating } from '@/shared/redux/slices/authSlice';
+import { setSubscription, setSubscriptionUpdating } from '@/app/store/slices/authSlice';
 import {
   setPaymentProcessStatus,
   setSubscriptionPaymentData,
-} from '@/shared/redux/slices/paymentSlice';
-import { appConfig } from '@/shared/config/env';
+} from '@/app/store/slices/paymentSlice';
 
 const ProviderSubscriptionConfirmPage = () => {
   const [searchParams] = useSearchParams();

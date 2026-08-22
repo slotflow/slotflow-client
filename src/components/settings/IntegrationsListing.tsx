@@ -1,20 +1,20 @@
 import { toast } from 'react-toastify';
-import { RootState } from '@/shared/redux/appStore';
+import { RootState } from '@/app/store/appStore';
+import { AppDispatch } from '@/app/store/appStore';
 import React, { useCallback, useEffect } from 'react';
-import { AppDispatch } from '@/shared/redux/appStore';
 import { useDispatch, useSelector } from 'react-redux';
-import { connectStripeAccount } from '@/shared/apis/payment';
+import { appConfig, serviceConfig } from '@/config/env';
 import IntegrationCard from '../integrations/IntegrationCard';
-import { checkStripeAccountStatus } from '@/shared/apis/user';
-import { appConfig, serviceConfig } from '@/shared/config/env';
+import { connectStripeAccount } from '@/services/apis/payment';
+import { checkStripeAccountStatus } from '@/services/apis/user';
 import stripeLogo from '../../assets/logos/external/stripe.jpeg';
-import { Role, StripeAccountStatus } from '@/shared/interface/enums';
+import { Role, StripeAccountStatus } from '@/shared/types/enums';
 import googleCalendarLogo from '../../assets/logos/external/googleCalendar.png';
-import { setGoogleConnect, setStripeAccountStatus } from '@/shared/redux/slices/authSlice';
+import { setGoogleConnect, setStripeAccountStatus } from '@/app/store/slices/authSlice';
 import {
   setGoogleConnectionLoading,
   setStripeConnectionLoading,
-} from '@/shared/redux/slices/integrationSlice';
+} from '@/app/store/slices/integrationSlice';
 
 const IntegrationsListing = () => {
   const dispatch = useDispatch<AppDispatch>();

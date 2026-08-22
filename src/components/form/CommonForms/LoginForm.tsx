@@ -1,21 +1,21 @@
 import FormField from '../FormField';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
-import GoogleButton from '../GoogleButton';
 import { useDispatch } from 'react-redux';
+import GoogleButton from '../GoogleButton';
 import { FormButton } from '../FormButton';
-import { signin } from '@/shared/apis/auth';
 import { FormHeading } from '../FormHeading';
+import { signin } from '@/services/apis/auth';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { AppDispatch } from '@/shared/redux/appStore';
+import { AppDispatch } from '@/app/store/appStore';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { SigninResponse } from '@/shared/interface/api/auth';
-import { appConfig, serviceConfig } from '@/shared/config/env';
+import { appConfig, serviceConfig } from '@/config/env';
+import { SigninResponse } from '@/shared/types/api/auth';
+import { OnboardingStatus, Role } from '@/shared/types/enums';
 import { redirectPaths } from '../../../shared/utils/constants';
-import { OnboardingStatus, Role } from '@/shared/interface/enums';
-import { LoginFormType, LoginZodSchema } from '@/shared/zod/authZod';
-import { setForgotPassword, updateBoardingStep } from '@/shared/redux/slices/appSlice';
+import { LoginFormType, LoginZodSchema } from '@/shared/validators/zod/authZod';
+import { setForgotPassword, updateBoardingStep } from '@/app/store/slices/appSlice';
 
 const LoginForm = () => {
   const navigate = useNavigate();

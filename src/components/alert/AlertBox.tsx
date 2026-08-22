@@ -1,4 +1,4 @@
-import { AlertProps } from '@/shared/interface/componentInterface';
+import { AlertProps } from '@/shared/types/component';
 
 const AlertBox = ({ icon: Icon, heading, message }: AlertProps) => {
   return (

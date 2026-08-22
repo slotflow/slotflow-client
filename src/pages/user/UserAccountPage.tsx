@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
-import { RootState } from '@/shared/redux/appStore';
-import { fetchMyAddress } from '@/shared/apis/address';
+import { RootState } from '@/app/store/appStore';
 import UserProfile from '@/components/user/UserProfile';
-import { userFetchMyProfileDetails } from '@/shared/apis/user';
+import { fetchMyAddress } from '@/services/apis/address';
+import { userFetchMyProfileDetails } from '@/services/apis/user';
 import AddressListing from '@/components/profile/AddressListing';
 import ProfileListing from '@/components/profile/ProfileListing';
 import DataFetchingError from '@/components/error/DataFetchingError';

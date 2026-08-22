@@ -1,15 +1,12 @@
 import { toast } from 'react-toastify';
 import { useEffect, useRef, useState } from 'react';
-import { adminFetchAllPlans } from '@/shared/apis/plan';
-import CommonTable from '@/components/table/CommonTable';
 import { useAdminPlan } from '@/hooks/adminHooks/usePlan';
-import { slideIn } from '@/shared/helper/gsapAnimationSlide';
+import { adminFetchAllPlans } from '@/services/apis/plan';
+import { slideIn } from '@/shared/utils/helper/gsapAnimationSlide';
+import PaginatedDataTable from '@/components/table/PaginatedDataTable';
 import CreatePlanForm from '@/components/form/AdminForms/CreatePlanForm';
 import AdminPlansTableColumns from '@/components/table/tableColumns/AdminPlansTableColumn';
-import {
-  AdminFetchAllPlansResponse,
-  ChangePlanBlockStatusRequest,
-} from '@/shared/interface/api/plan';
+import { AdminFetchAllPlansResponse, ChangePlanBlockStatusRequest } from '@/shared/types/api/plan';
 
 const AdminPlansPage = () => {
   const [showForm, setShowForm] = useState(false);
@@ -36,7 +33,7 @@ const AdminPlansPage = () => {
 
   return (
     <div className="p-3">
-      <CommonTable<AdminFetchAllPlansResponse>
+      <PaginatedDataTable<AdminFetchAllPlansResponse>
         fetchApiFunction={adminFetchAllPlans}
         queryKey="plans"
         column={column}

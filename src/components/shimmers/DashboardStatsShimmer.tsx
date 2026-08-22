@@ -1,5 +1,5 @@
+import { DashboardStatsShimmerProps } from '@/shared/types/shimmer';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
-import { DashboardStatsShimmerProps } from '@/shared/interface/shimmerInterface';
 
 const DashboardStatsShimmer = ({ count = 4 }: DashboardStatsShimmerProps) => {
   const ShimmerCount = Array.from({ length: count });

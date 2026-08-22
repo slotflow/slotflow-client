@@ -1,10 +1,10 @@
 import { Check } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useDispatch } from 'react-redux';
-import { Role } from '@/shared/interface/enums';
-import { AppDispatch } from '@/shared/redux/appStore';
-import { updateBoardingStep } from '@/shared/redux/slices/appSlice';
-import { RoleSelectCardProps } from '@/shared/interface/componentInterface';
+import { Role } from '@/shared/types/enums';
+import { AppDispatch } from '@/app/store/appStore';
+import { RoleSelectCardProps } from '@/shared/types/component';
+import { updateBoardingStep } from '@/app/store/slices/appSlice';
 
 const RoleSelectCard = ({
   role,

@@ -1,7 +1,7 @@
 import { SearchX } from 'lucide-react';
 import FAQShimmer from '@/components/shimmers/FAQShimmer';
 import MoveUpward from '@/components/animation/MoveUpward';
-import { FAQAccordionProps } from '@/shared/interface/componentInterface';
+import { FAQAccordionProps } from '@/shared/types/component';
 import {
   Accordion,
   AccordionContent,

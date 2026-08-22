@@ -1,17 +1,20 @@
 import FormField from '../FormField';
 import { toast } from 'react-toastify';
+import SelectField from '../SelectField';
+import { appConfig } from '@/config/env';
 import { useForm } from 'react-hook-form';
 import { FormButton } from '../FormButton';
-import SelectField from '../SelectField';
 import { Button } from '@/components/ui/button';
-import { createPlan } from '@/shared/apis/plan';
-import { appConfig } from '@/shared/config/env';
-import { PlanName } from '@/shared/interface/enums';
+import { PlanName } from '@/shared/types/enums';
+import { createPlan } from '@/services/apis/plan';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQueryClient } from '@tanstack/react-query';
-import { slideOut } from '@/shared/helper/gsapAnimationSlide';
-import { CreatePlanFormProps } from '@/shared/interface/componentInterface';
-import { AdminCreatePlanFormType, adminCreatePlanZodSchema } from '@/shared/zod/adminZod';
+import { CreatePlanFormProps } from '@/shared/types/component';
+import { slideOut } from '@/shared/utils/helper/gsapAnimationSlide';
+import {
+  AdminCreatePlanFormType,
+  adminCreatePlanZodSchema,
+} from '@/shared/validators/zod/adminZod';
 import { adVisibility, defaultButtonClassName, planNameOptions } from '@/shared/utils/constants';
 
 const CreatePlanForm = ({ onClose, formRef }: CreatePlanFormProps) => {

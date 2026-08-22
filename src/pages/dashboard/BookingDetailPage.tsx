@@ -14,12 +14,12 @@ import {
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import DataField from '@/components/app/DataField';
+import { Booking } from '@/shared/types/entity/booking';
 import { Card, CardContent } from '@/components/ui/card';
-import { fetchBookingDetails } from '@/shared/apis/booking';
-import { formatDateWithTime } from '@/shared/helper/formatter';
+import { fetchBookingDetails } from '@/services/apis/booking';
+import { formatDateWithTime } from '@/shared/utils/helper/formatter';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import ProfileDetailsShimmer from '@/components/shimmers/DataFieldShimmer';
-import { Booking } from '@/shared/interface/entityInterface/bookingInterface';
 
 const BookingDetailPage = () => {
   const { bookingId } = useParams<{ bookingId: Booking['_id'] }>();

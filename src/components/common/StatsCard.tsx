@@ -1,8 +1,8 @@
+import { Badge } from '../ui/badge';
+import { StatCardProps } from '@/shared/types/component';
+import { LineChart, Line, ResponsiveContainer } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Info, XCircle, TrendingUp, LoaderCircle, CheckCircle2, TrendingDown } from 'lucide-react';
-import { LineChart, Line, ResponsiveContainer } from 'recharts';
-import { Badge } from '../ui/badge';
-import { StatCardProps } from '@/shared/interface/componentInterface';
 
 const StatCard = ({
   title,

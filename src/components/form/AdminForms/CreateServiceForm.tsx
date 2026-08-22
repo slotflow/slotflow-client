@@ -1,19 +1,22 @@
 import { toast } from 'react-toastify';
 import SelectField from '../SelectField';
+import { appConfig } from '@/config/env';
 import { useForm } from 'react-hook-form';
 import { FormButton } from '../FormButton';
 import { Button } from '@/components/ui/button';
-import { appConfig } from '@/shared/config/env';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { createService } from '@/shared/apis/service';
 import { useQueryClient } from '@tanstack/react-query';
-import { ServiceCategory } from '@/shared/interface/enums';
-import { slideOut } from '@/shared/helper/gsapAnimationSlide';
+import { ServiceCategory } from '@/shared/types/enums';
+import { createService } from '@/services/apis/service';
 import DynamicStringListField from '../DynamicStringListFields';
 import { serviceCategoryOptions } from '@/shared/utils/constants';
-import { handleFormError } from '@/shared/helper/formErrorCatcher';
-import { CreateServiceFormProps } from '@/shared/interface/componentInterface';
-import { AdminCreateServiceFormType, adminCreateServiceZodSchema } from '@/shared/zod/adminZod';
+import { CreateServiceFormProps } from '@/shared/types/component';
+import { slideOut } from '@/shared/utils/helper/gsapAnimationSlide';
+import { handleFormError } from '@/shared/utils/helper/formErrorCatcher';
+import {
+  AdminCreateServiceFormType,
+  adminCreateServiceZodSchema,
+} from '@/shared/validators/zod/adminZod';
 
 const CreateServiceForm = ({ onClose, formRef }: CreateServiceFormProps) => {
   const queryClient = useQueryClient();

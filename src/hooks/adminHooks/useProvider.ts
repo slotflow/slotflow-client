@@ -1,20 +1,20 @@
+import { appConfig } from '@/config/env';
 import { useDispatch } from 'react-redux';
-import { appConfig } from '@/shared/config/env';
-import { AppDispatch } from '@/shared/redux/appStore';
-import { useQueryClient } from '@tanstack/react-query';
-import { User } from '@/shared/interface/entityInterface/userInterface';
-import { setProviderRejectModal } from '@/shared/redux/slices/adminSlice';
-import { UseAdminProviderReturn } from '@/shared/interface/hooksInterface';
-import { AdminRejectProviderModalState } from '@/shared/interface/commonInterface';
 import {
   adminApproveProvider,
-  adminChangeProviderBlockStatus,
   adminChangeProviderTrustTag,
-} from '@/shared/apis/providerProfile';
+  adminChangeProviderBlockStatus,
+} from '@/services/apis/providerProfile';
 import {
-  AdminChangeProviderBlockStatusRequest,
   AdminChangeProviderTrustTagRequest,
-} from '@/shared/interface/api/providerProfile';
+  AdminChangeProviderBlockStatusRequest,
+} from '@/shared/types/api/providerProfile';
+import { User } from '@/shared/types/entity/user';
+import { AppDispatch } from '@/app/store/appStore';
+import { useQueryClient } from '@tanstack/react-query';
+import { UseAdminProviderReturn } from '@/shared/types/hooks';
+import { AdminRejectProviderModalState } from '@/shared/types/common';
+import { setProviderRejectModal } from '@/app/store/slices/adminSlice';
 
 export const useAdminProvider = (): UseAdminProviderReturn => {
   const queryClient = useQueryClient();

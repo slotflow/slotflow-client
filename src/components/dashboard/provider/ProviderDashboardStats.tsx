@@ -1,15 +1,15 @@
-import DashboardStats from '../DashboardStats';
-import { Role } from '@/shared/interface/enums';
-import { ProviderDashboardStatsProps } from '@/shared/interface/componentInterface';
-import { revenueStatsMapForProvider, statsMapForProvider } from '@/shared/utils/constants';
 import {
-  providerFetchDashboardRevenueStatsData,
   providerFetchDashboardStatsData,
-} from '@/shared/apis/providerProfile';
+  providerFetchDashboardRevenueStatsData,
+} from '@/services/apis/providerProfile';
 import {
-  ProviderFetchDashboardRevenueStatsDataResponse,
   ProviderFetchDashboardStatsDataResponse,
-} from '@/shared/interface/api/providerProfile';
+  ProviderFetchDashboardRevenueStatsDataResponse,
+} from '@/shared/types/api/providerProfile';
+import { Role } from '@/shared/types/enums';
+import DashboardStats from '../DashboardStats';
+import { ProviderDashboardStatsProps } from '@/shared/types/component';
+import { revenueStatsMapForProvider, statsMapForProvider } from '@/shared/utils/constants';
 
 const ProviderDashboardStats = ({ dateRange }: ProviderDashboardStatsProps) => {
   return (

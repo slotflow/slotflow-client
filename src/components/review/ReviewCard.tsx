@@ -1,12 +1,12 @@
 import React from 'react';
 import { Button } from '../ui/button';
 import ReviewStatus from './ReviewStatus';
-import { Role } from '@/shared/interface/enums';
+import { Role } from '@/shared/types/enums';
 import ReviewUserProfile from './ReviewUserProfile';
 import { ShieldCheck, ShieldX, Trash } from 'lucide-react';
+import { ReviewCardProps } from '@/shared/types/component';
 import noProfile from '../../assets/defaultImages/avatar.png';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
-import { ReviewCardProps } from '@/shared/interface/componentInterface';
 
 const ReviewCard = ({
   review,

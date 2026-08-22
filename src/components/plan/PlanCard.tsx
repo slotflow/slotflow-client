@@ -6,15 +6,15 @@ import { useForm } from 'react-hook-form';
 import SelectField from '../form/SelectField';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { planDurations } from '@/shared/utils/constants';
-import { formatNumberToPrice } from '@/shared/helper/formatter';
-import { PlanName, SubscriptionValidity } from '@/shared/interface/enums';
-import { ProviderPlanCardProps } from '@/shared/interface/componentInterface';
-import { PlanDurationFormType, planDurationZodSchema } from '@/shared/zod/providerZod';
+import { ProviderPlanCardProps } from '@/shared/types/component';
+import { formatNumberToPrice } from '@/shared/utils/helper/formatter';
+import { PlanName, SubscriptionValidity } from '@/shared/types/enums';
+import { PlanDurationFormType, planDurationZodSchema } from '@/shared/validators/zod/providerZod';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card';
 import {
   setPaymentSelectionOpen,
   setSubscriptionPaymentData,
-} from '@/shared/redux/slices/paymentSlice';
+} from '@/app/store/slices/paymentSlice';
 
 const PlanCard = ({
   plan,

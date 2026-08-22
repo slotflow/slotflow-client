@@ -1,11 +1,11 @@
+import { appConfig } from '@/config/env';
 import { useDispatch } from 'react-redux';
-import { appConfig } from '@/shared/config/env';
-import { AppDispatch } from '@/shared/redux/appStore';
+import { AppDispatch } from '@/app/store/appStore';
 import { useQueryClient } from '@tanstack/react-query';
-import { toggleReviewCreateForm } from '@/shared/redux/slices/userSlice';
-import { cancelBooking, changeAppointmentStatus } from '@/shared/apis/booking';
-import { UseBookingCustomHookReturn } from '@/shared/interface/hooksInterface';
-import { changeAppointmentStatusRequest } from '@/shared/interface/api/booking';
+import { UseBookingCustomHookReturn } from '@/shared/types/hooks';
+import { toggleReviewCreateForm } from '@/app/store/slices/userSlice';
+import { changeAppointmentStatusRequest } from '@/shared/types/api/booking';
+import { cancelBooking, changeAppointmentStatus } from '@/services/apis/booking';
 
 export const useBooking = (): UseBookingCustomHookReturn => {
   const queryClient = useQueryClient();

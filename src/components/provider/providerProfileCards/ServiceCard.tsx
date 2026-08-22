@@ -1,22 +1,12 @@
+import { Hash, Users, Layers, UserPlus, Briefcase } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import NoData from '@/components/common/NoData';
+import { RootState } from '@/app/store/appStore';
 import DataField from '@/components/app/DataField';
-import { RootState } from '@/shared/redux/appStore';
-// TODO Remove
-// import { ServiceMode } from '@/shared/interface/enums';
+import { ServiceCardProps } from '@/shared/types/component';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import DataFieldShimmer from '@/components/shimmers/DataFieldShimmer';
-import { ServiceCardProps } from '@/shared/interface/componentInterface';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  Briefcase,
-  Hash,
-  Layers,
-  // TODO Remove
-  // MonitorSmartphone,
-  UserPlus,
-  Users,
-} from 'lucide-react';
 
 const ServiceCard = ({
   isLoading,

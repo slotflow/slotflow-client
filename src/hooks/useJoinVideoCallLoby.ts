@@ -1,23 +1,20 @@
-import { useNavigate } from 'react-router-dom';
-import { appConfig } from '@/shared/config/env';
-import { joinOrLeft } from '@/shared/apis/booking';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { MediaTrackKind, Role } from '@/shared/interface/enums';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
-import { toggleMediaTrack } from '@/shared/helper/toggleMediaTrack';
-import { connectVideoSocket } from '@/shared/socket/videoSocketThunk';
-import { JoinRoomCallbackRequest } from '@/shared/interface/api/booking';
+import { useVideoCallLobbyParams, useVideoCallLobbyReturn } from '@/shared/types/hooks';
 import {
-  useVideoCallLobbyParams,
-  useVideoCallLobbyReturn,
-} from '@/shared/interface/hooksInterface';
-import {
-  setCamera,
   setMic,
+  setCamera,
   startVideoCallTimer,
   updateVideoCallTimer,
-} from '@/shared/redux/slices/videoSlice';
+} from '@/app/store/slices/videoSlice';
+import { appConfig } from '@/config/env';
+import { useNavigate } from 'react-router-dom';
+import { joinOrLeft } from '@/services/apis/booking';
+import { useDispatch, useSelector } from 'react-redux';
+import { MediaTrackKind, Role } from '@/shared/types/enums';
+import { AppDispatch, RootState } from '@/app/store/appStore';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { JoinRoomCallbackRequest } from '@/shared/types/api/booking';
+import { connectVideoSocket } from '@/services/socket/videoSocketThunk';
+import { toggleMediaTrack } from '@/shared/utils/helper/toggleMediaTrack';
 
 export const useVideoCallLobby = ({
   roomId,

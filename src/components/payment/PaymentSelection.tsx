@@ -1,25 +1,22 @@
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 import { motion } from 'framer-motion';
+import { stripeConfig } from '@/config/env';
 import { LoaderCircle, X } from 'lucide-react';
 import { loadStripe } from '@stripe/stripe-js';
-import { stripeConfig } from '@/shared/config/env';
-import { RootState } from '@/shared/redux/appStore';
+import { RootState } from '@/app/store/appStore';
 import { getEventSocket } from '@/lib/socketService';
 import { useDispatch, useSelector } from 'react-redux';
+import { EventSocketEnum } from '@/shared/types/socket';
 import { Card, CardContent } from '@/components/ui/card';
-import { bookAnAppointment } from '@/shared/apis/booking';
+import { bookAnAppointment } from '@/services/apis/booking';
 import paypalLogo from '../../assets/logos/external/paypal.png';
 import stripeLogo from '../../assets/logos/external/stripe.jpeg';
 import razorpayLogo from '../../assets/logos/external/razorpay.png';
-import { EventSocketEnum } from '@/shared/interface/socket.interface';
-import { checkoutForSubscribePlan } from '@/shared/apis/subscription';
-import { setSubscriptionUpdating } from '@/shared/redux/slices/authSlice';
-import { PaymentProcessStatus, PaymentProcessType } from '@/shared/interface/enums';
-import {
-  setPaymentProcessStatus,
-  setPaymentSelectionOpen,
-} from '@/shared/redux/slices/paymentSlice';
+import { setSubscriptionUpdating } from '@/app/store/slices/authSlice';
+import { checkoutForSubscribePlan } from '@/services/apis/subscription';
+import { PaymentProcessStatus, PaymentProcessType } from '@/shared/types/enums';
+import { setPaymentProcessStatus, setPaymentSelectionOpen } from '@/app/store/slices/paymentSlice';
 
 const PaymentSelection = () => {
   const dispatch = useDispatch();

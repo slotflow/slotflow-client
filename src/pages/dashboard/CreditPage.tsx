@@ -1,13 +1,13 @@
 import dayjs from 'dayjs';
 import { useQuery } from '@tanstack/react-query';
 import StatCard from '@/components/common/StatsCard';
-import CommonTable from '@/components/table/CommonTable';
 import ChartLineLinear from '@/components/chart/ChartLineLinear';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import { Wallet, TrendingUp, TrendingDown, Info } from 'lucide-react';
+import PaginatedDataTable from '@/components/table/PaginatedDataTable';
+import { FetchCreditTransactionsResponse } from '@/shared/types/api/credit';
 import { creditAccountChartLineLinearConfig } from '@/shared/utils/constants';
-import { FetchCreditTransactionsResponse } from '@/shared/interface/api/credit';
-import { fetchCreditAccountDetails, fetchCreditTransactions } from '@/shared/apis/credit';
+import { fetchCreditAccountDetails, fetchCreditTransactions } from '@/services/apis/credit';
 import CreditTransactionTableColumn from '@/components/table/tableColumns/CreditTransactionTableColumn';
 
 const CreditPage = () => {
@@ -94,7 +94,7 @@ const CreditPage = () => {
         </div>
       </div>
       <div>
-        <CommonTable<FetchCreditTransactionsResponse>
+        <PaginatedDataTable<FetchCreditTransactionsResponse>
           column={column}
           fetchApiFunction={(params) =>
             fetchCreditTransactions({

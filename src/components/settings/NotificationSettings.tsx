@@ -1,36 +1,22 @@
-import {
-  Card,
-  CardTitle,
-  CardHeader,
-  CardContent,
-  CardDescription,
-} from '../ui/card';
+import { Card, CardTitle, CardHeader, CardContent, CardDescription } from '../ui/card';
 import { useSelector } from 'react-redux';
-import { Role } from '@/shared/interface/enums';
-import { RootState } from '@/shared/redux/appStore';
-import { handleNotificationChange } from '@/shared/apis/notification';
+import { Role } from '@/shared/types/enums';
+import { RootState } from '@/app/store/appStore';
+import { handleNotificationChange } from '@/services/apis/notification';
+import { NotificationType, NotificationChannel } from '@/shared/types/common';
 import NotificationSettingsItem from '../notification/NotificationSettingsItem';
 import { NOTIFICATION_CHANNEL, NOTIFICATION_TYPE } from '@/shared/utils/constants';
-import { NotificationType, NotificationChannel } from '@/shared/interface/commonInterface';
 
 const NotificationSettings = () => {
-  const authUser = useSelector(
-    (state: RootState) => state.auth.authUser,
-  );
+  const authUser = useSelector((state: RootState) => state.auth.authUser);
 
-  const preferences = useSelector(
-    (state: RootState) => state.notification.preferences,
-  );
+  const preferences = useSelector((state: RootState) => state.notification.preferences);
 
   const getNotificationPreference = (
     channel: NotificationChannel,
     type: NotificationType,
   ): boolean => {
-    return (
-      preferences
-        .find((item) => item.channel === channel)
-        ?.preferences[type] ?? false
-    );
+    return preferences.find((item) => item.channel === channel)?.preferences[type] ?? false;
   };
 
   const handleNotificationToggle = async (
@@ -45,21 +31,15 @@ const NotificationSettings = () => {
         enabled,
       });
     } catch (error) {
-      console.error(
-        'Failed to update notification preference:',
-        error,
-      );
+      console.error('Failed to update notification preference:', error);
     }
   };
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
-
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">
-            Email notifications
-          </CardTitle>
+          <CardTitle className="text-base">Email notifications</CardTitle>
 
           <CardDescription>
             Choose which notifications you want to receive by email.
@@ -67,7 +47,6 @@ const NotificationSettings = () => {
         </CardHeader>
 
         <CardContent className="divide-y">
-
           <NotificationSettingsItem
             title="Appointment updates"
             description="Receive emails when an appointment is booked, rescheduled, cancelled, or completed."
@@ -127,22 +106,16 @@ const NotificationSettings = () => {
             )}
             onChange={handleNotificationToggle}
           />
-
         </CardContent>
       </Card>
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">
-            Push notifications
-          </CardTitle>
+          <CardTitle className="text-base">Push notifications</CardTitle>
 
-          <CardDescription>
-            Manage notifications sent directly to your device.
-          </CardDescription>
+          <CardDescription>Manage notifications sent directly to your device.</CardDescription>
         </CardHeader>
 
         <CardContent className="divide-y">
-
           {authUser?.role === Role.PROVIDER && (
             <NotificationSettingsItem
               title="New appointments"
@@ -192,22 +165,16 @@ const NotificationSettings = () => {
             )}
             onChange={handleNotificationToggle}
           />
-
         </CardContent>
       </Card>
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">
-            In-app notifications
-          </CardTitle>
+          <CardTitle className="text-base">In-app notifications</CardTitle>
 
-          <CardDescription>
-            Choose which notifications appear inside SlotFlow.
-          </CardDescription>
+          <CardDescription>Choose which notifications appear inside SlotFlow.</CardDescription>
         </CardHeader>
 
         <CardContent>
-
           <NotificationSettingsItem
             title="Appointments"
             description="Show updates about bookings, cancellations, and rescheduled appointments."
@@ -255,10 +222,8 @@ const NotificationSettings = () => {
             )}
             onChange={handleNotificationToggle}
           />
-
         </CardContent>
       </Card>
-
     </div>
   );
 };

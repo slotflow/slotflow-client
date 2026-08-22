@@ -1,23 +1,23 @@
+import {
+  setProviderServiceProofs,
+  setProviderIdentityProofs,
+} from '@/app/store/slices/providerSlice';
+import {
+  providerFetchMyProofs,
+  providerDeleteServiceProof,
+  providerDeleteIdentityProof,
+  providerUpdateIdentityProof,
+  providerUpdateProofServiceProof,
+} from '@/services/apis/providerProfile';
 import { LoaderCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import { AppDispatch, RootState } from '@/app/store/appStore';
+import { setIsProofSubmitted } from '@/app/store/slices/authSlice';
 import FileUploader from '@/components/form/CommonForms/FileUploader';
-import { setIsProofSubmitted } from '@/shared/redux/slices/authSlice';
 import { defaultButtonClassName, redirectPaths } from '@/shared/utils/constants';
-import {
-  setProviderIdentityProofs,
-  setProviderServiceProofs,
-} from '@/shared/redux/slices/providerSlice';
-import {
-  providerDeleteIdentityProof,
-  providerDeleteServiceProof,
-  providerFetchMyProofs,
-  providerUpdateIdentityProof,
-  providerUpdateProofServiceProof,
-} from '@/shared/apis/providerProfile';
 
 const ProviderProofSubmissionPage = () => {
   const navigate = useNavigate();

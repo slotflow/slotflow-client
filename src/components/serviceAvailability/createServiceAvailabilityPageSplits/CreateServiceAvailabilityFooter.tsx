@@ -1,7 +1,7 @@
 import { Button } from '../../ui/button';
 import { Check, LoaderCircle } from 'lucide-react';
 import { defaultButtonClassName } from '@/shared/utils/constants';
-import { CreateServiceAvailabilityFooterProps } from '@/shared/interface/componentInterface';
+import { CreateServiceAvailabilityFooterProps } from '@/shared/types/component';
 
 const CreateServiceAvailabilityFooter = ({
   selectedTimeSlots,

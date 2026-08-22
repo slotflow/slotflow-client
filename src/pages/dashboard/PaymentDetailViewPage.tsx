@@ -1,21 +1,21 @@
 import {
-  BadgeCheck,
-  Calendar,
-  CreditCard,
-  FileText,
   Hash,
-  IndianRupee,
-  Landmark,
-  Layers,
   Link,
   Mail,
+  Layers,
   Receipt,
+  FileText,
+  Calendar,
+  Landmark,
+  BadgeCheck,
+  CreditCard,
+  IndianRupee,
 } from 'lucide-react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import DataField from '@/components/app/DataField';
 import { Card, CardContent } from '@/components/ui/card';
-import { fetchPaymentDetails } from '@/shared/apis/payment';
+import { fetchPaymentDetails } from '@/services/apis/payment';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import ProfileDetailsShimmer from '@/components/shimmers/DataFieldShimmer';
 

@@ -21,7 +21,7 @@ import * as React from 'react';
 import { Input } from './input';
 import { Button } from './button';
 import { defaultButtonClassName } from '@/shared/utils/constants';
-import { DataTableProps } from '@/shared/interface/componentInterface';
+import { DataTableProps } from '@/shared/types/component';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './table';
 
 export function DataTable<TData, TValue>({

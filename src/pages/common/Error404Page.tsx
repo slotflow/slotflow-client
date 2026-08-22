@@ -1,7 +1,7 @@
 import gsap from 'gsap';
+import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { useEffect, useRef } from 'react';
 import error404 from '../../assets/svgs/error404.svg';
 import { gsapBigSvgYDirectionAnimation } from '@/shared/utils/constants';
 

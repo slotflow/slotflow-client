@@ -1,4 +1,3 @@
-import { Card, CardContent } from '@/components/ui/card';
 import {
   ChartLegend,
   ChartTooltip,
@@ -9,8 +8,9 @@ import {
 import ChartHeader from './ChartHeader';
 import ChartOverlay from './ChartOverlay';
 import { Pie, PieChart, Cell } from 'recharts';
+import { Card, CardContent } from '@/components/ui/card';
 import ChartDataNotAvailable from './ChartDataNotAvailable';
-import { CompletionChartProps } from '@/shared/interface/componentInterface';
+import { CompletionChartProps } from '@/shared/types/component';
 
 const PieChartCompletionBreakdown = ({
   title,

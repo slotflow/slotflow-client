@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { appConfig } from '@/shared/config/env';
-import { getFaqs } from '@/shared/apis/contentful';
+import { appConfig } from '@/config/env';
+import { getFaqs } from '@/services/apis/contentful';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
-import { appendFaqs, setFaqTotal, setFaqLoading } from '@/shared/redux/slices/appSlice';
+import { AppDispatch, RootState } from '@/app/store/appStore';
+import { appendFaqs, setFaqTotal, setFaqLoading } from '@/app/store/slices/appSlice';
 
 interface UseFaqsProps {
   limit: number;

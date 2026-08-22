@@ -1,21 +1,21 @@
+import {
+  redirectPaths,
+  blockBackStatuses,
+  onboardingContent,
+  verificationStatusTextMap,
+} from '@/shared/utils/constants';
 import { toast } from 'react-toastify';
+import { appConfig } from '@/config/env';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { appConfig } from '@/shared/config/env';
+import { AuthUser } from '@/shared/types/slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card, CardContent } from '@/components/ui/card';
-import { AuthUser } from '@/shared/interface/sliceInterface';
+import { AppDispatch, RootState } from '@/app/store/appStore';
+import { AdminVerificationStatus } from '@/shared/types/enums';
 import { Check, LoaderCircle, TriangleAlert, X } from 'lucide-react';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
-import { AdminVerificationStatus } from '@/shared/interface/enums';
-import { providerSubmitDetailsForReview } from '@/shared/apis/providerProfile';
-import {
-  blockBackStatuses,
-  onboardingContent,
-  redirectPaths,
-  verificationStatusTextMap,
-} from '@/shared/utils/constants';
+import { providerSubmitDetailsForReview } from '@/services/apis/providerProfile';
 
 const ProviderApprovalPendingPage = () => {
   const navigate = useNavigate();

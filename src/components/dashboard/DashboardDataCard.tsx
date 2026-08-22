@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { RefreshCw, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { DashboardDataCardProps } from '@/shared/interface/componentInterface';
+import { DashboardDataCardProps } from '@/shared/types/component';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const DashboardDataCard = ({

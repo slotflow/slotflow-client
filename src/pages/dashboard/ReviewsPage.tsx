@@ -2,24 +2,21 @@ import React from 'react';
 import { toast } from 'react-toastify';
 import { ArrowDown } from 'lucide-react';
 import { useSelector } from 'react-redux';
+import { Role } from '@/shared/types/enums';
 import { useReview } from '@/hooks/useReview';
-import { Role } from '@/shared/interface/enums';
 import { Button } from '@/components/ui/button';
 import NoData from '@/components/common/NoData';
-import { RootState } from '@/shared/redux/appStore';
-import { fetchReviews } from '@/shared/apis/review';
+import { RootState } from '@/app/store/appStore';
+import { Review } from '@/shared/types/entity/review';
+import { fetchReviews } from '@/services/apis/review';
 import ReviewCard from '@/components/review/ReviewCard';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import ConfirmAlert from '@/components/alert/ConfirmAlert';
+import { ReviewsPageProps } from '@/shared/types/component';
+import { ApiPaginatedResponse } from '@/shared/types/common';
 import DataFetchingError from '@/components/error/DataFetchingError';
-import { ReviewsPageProps } from '@/shared/interface/componentInterface';
 import ReviewCardsShimmer from '@/components/shimmers/ReviewCardsShimmer';
-import { ApiPaginatedResponse } from '@/shared/interface/commonInterface';
-import { Review } from '@/shared/interface/entityInterface/reviewInterface';
-import {
-  FetchReviewsResponse,
-  ToggleReviewBlockStatusRequest,
-} from '@/shared/interface/api/review';
+import { FetchReviewsResponse, ToggleReviewBlockStatusRequest } from '@/shared/types/api/review';
 
 const ReviewsPage = ({ isPage = true, providerId, userId }: ReviewsPageProps) => {
   const limit = 10;

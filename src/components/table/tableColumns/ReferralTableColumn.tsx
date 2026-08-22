@@ -1,9 +1,9 @@
 import { Badge } from '@/components/ui/badge';
 import { ColumnDef } from '@tanstack/react-table';
-import { formateDate } from '@/shared/helper/formatter';
-import { ReferralStatus } from '@/shared/interface/enums';
+import { ReferralStatus } from '@/shared/types/enums';
+import { formateDate } from '@/shared/utils/helper/formatter';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
-import { FetchReferralsResponse } from '@/shared/interface/api/referral';
+import { FetchReferralsResponse } from '@/shared/types/api/referral';
 
 const ReferralTableColumn = (): ColumnDef<FetchReferralsResponse>[] => [
   {

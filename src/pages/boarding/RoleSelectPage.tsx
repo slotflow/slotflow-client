@@ -3,13 +3,13 @@ import { toast } from 'react-toastify';
 import { motion } from 'framer-motion';
 import { useDispatch } from 'react-redux';
 import { ChevronRight } from 'lucide-react';
+import { Role } from '@/shared/types/enums';
 import { useNavigate } from 'react-router-dom';
-import { Role } from '@/shared/interface/enums';
 import service from '@/assets/svgs/service.svg';
 import booking from '@/assets/svgs/booking.svg';
 import { Button } from '@/components/ui/button';
-import { AppDispatch } from '@/shared/redux/appStore';
-import { setBoardingData } from '@/shared/redux/slices/authSlice';
+import { AppDispatch } from '@/app/store/appStore';
+import { setBoardingData } from '@/app/store/slices/authSlice';
 import RoleSelectCard from '../../components/boarding/roleSelect/RoleSelectCard';
 import { defaultButtonClassName, redirectPaths } from '@/shared/utils/constants';
 

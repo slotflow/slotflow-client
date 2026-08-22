@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 import { CardSpotlight } from '@/components/ui/card-spotlight';
-import { IntegrationSectionCardProps } from '@/shared/interface/componentInterface';
+import { IntegrationSectionCardProps } from '@/shared/types/component';
 
 const IntegrationCard = ({ title, description, logo }: IntegrationSectionCardProps) => {
   return (

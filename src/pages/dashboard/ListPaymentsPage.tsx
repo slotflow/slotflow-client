@@ -1,6 +1,6 @@
-import { fetchPayments } from '@/shared/apis/payment';
-import CommonTable from '@/components/table/CommonTable';
-import { FetchPaymentsResponse } from '@/shared/interface/api/payment';
+import { fetchPayments } from '@/services/apis/payment';
+import { FetchPaymentsResponse } from '@/shared/types/api/payment';
+import PaginatedDataTable from '@/components/table/PaginatedDataTable';
 import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
 import PaymentsTableColumn from '@/components/table/tableColumns/PaymentsTableColumn';
 
@@ -10,7 +10,7 @@ const ListPaymentsPage = () => {
 
   return (
     <div className="p-4">
-      <CommonTable<FetchPaymentsResponse>
+      <PaginatedDataTable<FetchPaymentsResponse>
         fetchApiFunction={fetchPayments}
         queryKey="payments"
         column={column}

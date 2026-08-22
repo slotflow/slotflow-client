@@ -1,7 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import MoveUpward from '../animation/MoveUpward';
 import SplitTextReveal from '../animation/SplitTextReveal';
-import { SectionHeadingProps } from '@/shared/interface/componentInterface';
+import { SectionHeadingProps } from '@/shared/types/component';
 
 const SectionHeading = ({
   badge,

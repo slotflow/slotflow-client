@@ -1,21 +1,21 @@
 import { toast } from 'react-toastify';
+import { appConfig } from '@/config/env';
 import { useDispatch } from 'react-redux';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import React, { useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { appConfig } from '@/shared/config/env';
 import AlertBox from '@/components/alert/AlertBox';
-import { AppDispatch } from '@/shared/redux/appStore';
+import { AppDispatch } from '@/app/store/appStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { getUploadUrl, uploadToS3 } from '@/shared/apis/s3';
+import { FileUploaderProps } from '@/shared/types/component';
+import { getUploadUrl, uploadToS3 } from '@/services/apis/s3';
 import { defaultButtonClassName } from '@/shared/utils/constants';
-import { ArrowUp, Check, Info, LoaderCircle, X } from 'lucide-react';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { ArrowUp, Check, Info, LoaderCircle, X } from 'lucide-react';
 import noImage from '../../../assets/defaultImages/imagePlaceholder.png';
-import { FileUploaderProps } from '@/shared/interface/componentInterface';
-import { ImageFileFormType, imageFileZodeSchema } from '@/shared/zod/providerZod';
+import { ImageFileFormType, imageFileZodeSchema } from '@/shared/validators/zod/providerZod';
 
 const FileUploader = ({
   folderName,

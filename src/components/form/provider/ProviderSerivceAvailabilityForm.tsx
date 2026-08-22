@@ -1,23 +1,23 @@
 import { toast } from 'react-toastify';
+import { appConfig } from '@/config/env';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { appConfig } from '@/shared/config/env';
 import React, { useEffect, useMemo } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch, useSelector } from 'react-redux';
 import { redirectPaths } from '@/shared/utils/constants';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import { AppDispatch, RootState } from '@/app/store/appStore';
 import { useAddAvailability } from '@/hooks/useServiceAvailability';
-import { createServiceAvailabilities } from '@/shared/apis/serviceAvailability';
-import { addAvailability, removeAvailability } from '@/shared/redux/slices/providerSlice';
-import { ProviderServiceAvailabilityFormProps } from '@/shared/interface/componentInterface';
+import { ProviderServiceAvailabilityFormProps } from '@/shared/types/component';
+import { createServiceAvailabilities } from '@/services/apis/serviceAvailability';
+import { addAvailability, removeAvailability } from '@/app/store/slices/providerSlice';
 import TimeRangeSetter from '@/components/serviceAvailability/createServiceAvailabilityPageSplits/TimeRangeSetter';
+import GenerateTimeSlots from '@/components/serviceAvailability/createServiceAvailabilityPageSplits/GenerateTimeSlots';
+import SavedAvailabilities from '@/components/serviceAvailability/createServiceAvailabilityPageSplits/SavedAvailabilityes';
 import {
   ProviderServiceAvailabilityFormType,
   providerServiceAvailabilityZodSchema,
-} from '@/shared/zod/providerZod';
-import GenerateTimeSlots from '@/components/serviceAvailability/createServiceAvailabilityPageSplits/GenerateTimeSlots';
-import SavedAvailabilities from '@/components/serviceAvailability/createServiceAvailabilityPageSplits/SavedAvailabilityes';
+} from '@/shared/validators/zod/providerZod';
 import AvailabilityDataSelectionFields from '@/components/serviceAvailability/createServiceAvailabilityPageSplits/AvailabilityDataSelectionFields';
 import CreateServiceAvailabilityFooter from '@/components/serviceAvailability/createServiceAvailabilityPageSplits/CreateServiceAvailabilityFooter';
 

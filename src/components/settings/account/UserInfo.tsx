@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from '@/components/ui/button';
+import { RootState } from '@/app/store/appStore';
 import DataField from '@/components/app/DataField';
-import { RootState } from '@/shared/redux/appStore';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SelectSeparator } from '@/components/ui/select';
 import { Mail, Phone, ShieldUser, User } from 'lucide-react';

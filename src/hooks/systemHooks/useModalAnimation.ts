@@ -1,6 +1,6 @@
 import gsap from 'gsap';
 import { useEffect, useRef } from 'react';
-import { useModalAnimationProps, useModalAnimationReturn } from '@/shared/interface/hooksInterface';
+import { useModalAnimationProps, useModalAnimationReturn } from '@/shared/types/hooks';
 
 export const useModalAnimation = ({ onClose }: useModalAnimationProps): useModalAnimationReturn => {
   const modalRef = useRef<HTMLDivElement>(null);

@@ -2,11 +2,11 @@ import dayjs from 'dayjs';
 import { Users } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import StatCard from '@/components/common/StatsCard';
-import CommonTable from '@/components/table/CommonTable';
 import ChartLineLinear from '@/components/chart/ChartLineLinear';
 import DataFetchingError from '@/components/error/DataFetchingError';
+import PaginatedDataTable from '@/components/table/PaginatedDataTable';
 import { referralChartLineLinearConfig } from '@/shared/utils/constants';
-import { fetchReferralDetails, fetchReferrals } from '@/shared/apis/referral';
+import { fetchReferralDetails, fetchReferrals } from '@/services/apis/referral';
 import ReferralTableColumn from '@/components/table/tableColumns/ReferralTableColumn';
 
 const ReferralPage = () => {
@@ -96,7 +96,7 @@ const ReferralPage = () => {
           )}
         </div>
       </div>
-      <CommonTable
+      <PaginatedDataTable
         column={column}
         columnsCount={4}
         fetchApiFunction={fetchReferrals}

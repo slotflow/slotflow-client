@@ -1,12 +1,12 @@
+import {
+  CreditTransactionType,
+  CreditTransactionSource,
+  CreditTransactionStatus,
+} from '@/shared/types/enums';
 import { Badge } from '@/components/ui/badge';
 import { ColumnDef } from '@tanstack/react-table';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
-import { FetchCreditTransactionsResponse } from '@/shared/interface/api/credit';
-import {
-  CreditTransactionSource,
-  CreditTransactionStatus,
-  CreditTransactionType,
-} from '@/shared/interface/enums';
+import { FetchCreditTransactionsResponse } from '@/shared/types/api/credit';
 
 const CreditTransactionTableColumn = (): ColumnDef<FetchCreditTransactionsResponse>[] => [
   {

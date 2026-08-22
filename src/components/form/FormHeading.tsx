@@ -1,7 +1,7 @@
 import React from 'react';
+import { AuthFormsHeadingProps } from '@/shared/types/component';
 import { CardDescription, CardHeader, CardTitle } from '../ui/card';
 import logo from '../../assets/logos/company/slotflowLogoTransparent.png';
-import { AuthFormsHeadingProps } from '@/shared/interface/componentInterface';
 
 export const FormHeading = React.memo(({ title, description }: AuthFormsHeadingProps) => {
   return (

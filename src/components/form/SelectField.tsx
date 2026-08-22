@@ -8,7 +8,7 @@ import {
 import { Input } from '../ui/input';
 import { FieldValues } from 'react-hook-form';
 import FormLabelWithInfo from './FormLabelWithInfo';
-import { SelectFieldProps } from '@/shared/interface/componentInterface';
+import { SelectFieldProps } from '@/shared/types/component';
 
 const SelectField = <T extends FieldValues, K>({
   id,

@@ -4,16 +4,12 @@ import { useQuery } from '@tanstack/react-query';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useDispatch, useSelector } from 'react-redux';
 import DataFetchingError from '../error/DataFetchingError';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import { AppDispatch, RootState } from '@/app/store/appStore';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import ChatSidebarShimmer from '@/components/shimmers/ChatSidebarShimmer';
-import { FetchUsersForChatSidebarResponse } from '@/shared/interface/api/user';
-import { setLastMessage, setOnlineUsers, setSelectedUser } from '@/shared/redux/slices/chatSlice';
-import {
-  ApiBaseResponse,
-  ChatListUserProps,
-  setLatMessageProps,
-} from '@/shared/interface/commonInterface';
+import { FetchUsersForChatSidebarResponse } from '@/shared/types/api/user';
+import { setLastMessage, setOnlineUsers, setSelectedUser } from '@/app/store/slices/chatSlice';
+import { ApiBaseResponse, ChatListUserProps, setLatMessageProps } from '@/shared/types/common';
 
 const formatDate = (date: string) => {
   const now = new Date();

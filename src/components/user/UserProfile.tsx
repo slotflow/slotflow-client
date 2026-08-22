@@ -1,5 +1,5 @@
+import { UserProfileProps } from '@/shared/types/component';
 import UserProfileTopCard from './userProfileCards/UserProfileTopCard';
-import { UserProfileProps } from '@/shared/interface/componentInterface';
 
 const UserProfile = ({ username, profileImage, address, profile }: UserProfileProps) => {
   return (

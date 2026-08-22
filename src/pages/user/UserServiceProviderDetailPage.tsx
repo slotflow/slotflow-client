@@ -1,13 +1,13 @@
+import { Role } from '@/shared/types/enums';
 import { useParams } from 'react-router-dom';
-import ReviewsPage from '../dashboard/ReviewsPage';
-import { Role } from '@/shared/interface/enums';
 import { useQuery } from '@tanstack/react-query';
-import { fetchAddressByUserId } from '@/shared/apis/address';
+import ReviewsPage from '../dashboard/ReviewsPage';
+import { fetchAddressByUserId } from '@/services/apis/address';
 import AddressListing from '@/components/profile/AddressListing';
 import ProviderProfile from '@/components/provider/ProviderProfile';
 import DataFetchingError from '@/components/error/DataFetchingError';
-import { fetchProviderDetailsForUser } from '@/shared/apis/providerProfile';
-import { fetchProviderServiceByProviderId } from '@/shared/apis/providerService';
+import { fetchProviderDetailsForUser } from '@/services/apis/providerProfile';
+import { fetchProviderServiceByProviderId } from '@/services/apis/providerService';
 import ProviderServiceAvailability from '@/components/profile/ProviderServiceAvailability';
 
 const UserServiceProviderDetailPage = () => {

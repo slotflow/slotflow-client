@@ -1,3 +1,14 @@
+import {
+  Map,
+  Globe,
+  Mail,
+  Phone,
+  MapPin,
+  Building,
+  Landmark,
+  MapPinned,
+  MapPinPlus,
+} from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '../ui/button';
 import DataField from '../app/DataField';
@@ -5,25 +16,14 @@ import { useSelector } from 'react-redux';
 import MapPreview from '../map/MapPreview';
 import { SelectSeparator } from '../ui/select';
 import { useQuery } from '@tanstack/react-query';
-import { RootState } from '@/shared/redux/appStore';
+import { RootState } from '@/app/store/appStore';
 import { AnimatePresence, motion } from 'framer-motion';
 import AddressForm from '../form/CommonForms/AddressForm';
 import DataFetchingError from '../error/DataFetchingError';
 import { defaultButtonClassName } from '@/shared/utils/constants';
 import DataFieldShimmer from '@/components/shimmers/DataFieldShimmer';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { UserOrProviderAddressDetailsComponentProps } from '@/shared/interface/componentInterface';
-import {
-  Building,
-  Globe,
-  Landmark,
-  Mail,
-  Map,
-  MapPin,
-  MapPinned,
-  MapPinPlus,
-  Phone,
-} from 'lucide-react';
+import { UserOrProviderAddressDetailsComponentProps } from '@/shared/types/component';
 
 const AddressListing = ({
   userOrProviderId,

@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
-import { grafanaConfig } from '@/shared/config/env';
-import { RootState } from '@/shared/redux/appStore';
+import { grafanaConfig } from '@/config/env';
+import { RootState } from '@/app/store/appStore';
 
 const AdminGrafanaDashboard = () => {
   const { lightTheme } = useSelector((state: RootState) => state.app);

@@ -1,7 +1,7 @@
 import SideBoxSteps from './SideBoxSteps';
 import SideBoxHeader from './SideBoxHeader';
 import { boardingData } from '@/shared/utils/constants';
-import { SideBoxProps } from '@/shared/interface/componentInterface';
+import { SideBoxProps } from '@/shared/types/component';
 
 const SideBox = ({ pageNumber }: SideBoxProps) => {
   const description = boardingData[pageNumber].description || '';

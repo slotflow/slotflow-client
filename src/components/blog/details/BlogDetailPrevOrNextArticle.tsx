@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '../../ui/card';
-import { BlogDetailPrevOrNextArticleProps } from '@/shared/interface/componentInterface';
+import { BlogDetailPrevOrNextArticleProps } from '@/shared/types/component';
 
 const BlogDetailPrevOrNextArticle = ({
   nextArticle,

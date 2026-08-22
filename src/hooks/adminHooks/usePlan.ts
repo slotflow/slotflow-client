@@ -1,8 +1,8 @@
-import { appConfig } from '@/shared/config/env';
+import { appConfig } from '@/config/env';
 import { useQueryClient } from '@tanstack/react-query';
-import { changePlanBlockStatus } from '@/shared/apis/plan';
-import { UseAdminPlanReturn } from '@/shared/interface/hooksInterface';
-import { ChangePlanBlockStatusRequest } from '@/shared/interface/api/plan';
+import { UseAdminPlanReturn } from '@/shared/types/hooks';
+import { changePlanBlockStatus } from '@/services/apis/plan';
+import { ChangePlanBlockStatusRequest } from '@/shared/types/api/plan';
 
 export const useAdminPlan = (): UseAdminPlanReturn => {
   const queryClient = useQueryClient();

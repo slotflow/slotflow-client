@@ -1,8 +1,8 @@
 import { Sparkle } from 'lucide-react';
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Role } from '@/shared/interface/enums';
-import { RootState } from '@/shared/redux/appStore';
+import { Role } from '@/shared/types/enums';
+import { RootState } from '@/app/store/appStore';
 import { Outlet, useNavigate } from 'react-router-dom';
 import AuthContent from '@/components/auth/AuthContent';
 import SectionHeading from '@/components/common/SectionHeading';

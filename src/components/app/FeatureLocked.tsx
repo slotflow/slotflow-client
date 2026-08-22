@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
+import { FeatureLockedProps } from '@/shared/types/component';
 import { defaultButtonClassName } from '@/shared/utils/constants';
-import { FeatureLockedProps } from '@/shared/interface/componentInterface';
 
 const FeatureLocked = ({
   icon: Icon,

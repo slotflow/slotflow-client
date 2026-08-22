@@ -1,14 +1,14 @@
 import React from 'react';
-import { ChartContainer, ChartLegend, ChartLegendContent } from '@/components/ui/chart';
 import ChartHeader from './ChartHeader';
 import ChartOverlay from './ChartOverlay';
 import { Card, CardContent } from '../ui/card';
+import { TimeRange } from '@/shared/types/common';
 import ChartDataNotAvailable from './ChartDataNotAvailable';
-import { TimeRange } from '@/shared/interface/commonInterface';
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
-import { filterChartDataHelper } from '@/shared/helper/dateFilter';
+import { BarChartVerticalProps } from '@/shared/types/component';
+import { filterChartDataHelper } from '@/shared/utils/helper/dateFilter';
 import { ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { BarChartVerticalProps } from '@/shared/interface/componentInterface';
+import { ChartContainer, ChartLegend, ChartLegendContent } from '@/components/ui/chart';
 
 const BarChartVertical = ({
   title,

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Button } from '../ui/button';
 import { toast } from 'react-toastify';
+import { appConfig } from '@/config/env';
 import { LoaderCircle } from 'lucide-react';
-import { appConfig } from '@/shared/config/env';
-import { ConfirmDeleteProps } from '@/shared/interface/componentInterface';
+import { ConfirmDeleteProps } from '@/shared/types/component';
 
 const ConfirmAlert = ({
   message,

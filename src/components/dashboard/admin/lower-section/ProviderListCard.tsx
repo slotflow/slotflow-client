@@ -1,15 +1,15 @@
-import { Briefcase } from 'lucide-react';
-import { useQuery } from '@tanstack/react-query';
-import DashboardDataCard from '../../DashboardDataCard';
-import { fetchServiceProvidersForAdmin } from '@/shared/apis/providerProfile';
 import {
   Table,
+  TableRow,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
 } from '@/components/ui/table';
+import { Briefcase } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import DashboardDataCard from '../../DashboardDataCard';
+import { fetchServiceProvidersForAdmin } from '@/services/apis/providerProfile';
 
 const ProviderListCard = () => {
   const { data, isLoading, isError, refetch } = useQuery({

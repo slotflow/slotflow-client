@@ -1,5 +1,5 @@
 import React from 'react';
-import { useIsMobileReturn } from '@/shared/interface/hooksInterface';
+import { useIsMobileReturn } from '@/shared/types/hooks';
 
 export const useIsMobile = (): useIsMobileReturn => {
   const MOBILE_BREAKPOINT = 768;

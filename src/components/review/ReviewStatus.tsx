@@ -1,4 +1,4 @@
-import { ReviewStatusProps } from '@/shared/interface/componentInterface';
+import { ReviewStatusProps } from '@/shared/types/component';
 
 const ReviewStatus = ({ status, icon: Icon, isNot = false }: ReviewStatusProps) => {
   return (

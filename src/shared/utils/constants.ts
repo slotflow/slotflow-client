@@ -11,6 +11,7 @@ import {
   UserX,
   Phone,
   Gauge,
+  Rows2,
   Wallet,
   Layers,
   Rocket,
@@ -61,21 +62,26 @@ import {
   WalletMinimal,
   CalendarCheck,
   CircleCheckBig,
+  LayoutDashboard,
   MessageSquareText,
   PictureInPicture2,
-  LayoutDashboard,
-  Rows2,
 } from 'lucide-react';
 import {
   Route,
   BookingSteps,
   PlanListType,
   BlogCTAItems,
+  BoardingStep,
   CompanyValues,
+  OnboardingStep,
   DayMapInterface,
+  NotificationType,
   statsMapIntrface,
   CommonTabInterface,
   HearAboutUsOptions,
+  NotificationChannel,
+  PlanFeatureInterface,
+  ContactSupportOptions,
   BookingStepsHeroPeople,
   LandingPageIntegrations,
   FeatureContentInterface,
@@ -85,45 +91,35 @@ import {
   MapDotLitLocationsCoordinates,
   ProviderApprovalMessageInterface,
   gsapBigSvgYDirectionAnimationInterface,
-  ContactSupportOptions,
-  OnboardingStep,
-  BoardingStep,
-  PlanFeatureInterface,
-  NotificationChannel,
-  NotificationType,
-} from '../interface/commonInterface';
-import { ChartConfig } from '@/components/ui/chart';
-import { OptionType } from '../interface/commonInterface';
-import { ContactItem } from '../interface/commonInterface';
-import chatImage from '@/assets/LandingPageImages/chat.jpg';
-import calendarImage from '../../assets/LandingPageImages/calendar2.png';
-import videoCallImage from '../../assets/LandingPageImages/videoCall.jpg';
-import bookingImage from '../../assets/LandingPageImages/heroSectionOneImg2.png';
-import { ProviderFetchDashboardStatsDataResponse } from '../interface/api/providerProfile';
+} from '../types/common';
+import { OptionType } from '../types/common';
 import {
+  Role,
+  PlanName,
+  ServiceType,
+  ServiceCategory,
   AdminVerificationStatus,
   HearAboutUsOptionValue,
-  PlanName,
-  Role,
-  ServiceCategory,
-  // TODO Remove
-  // ServiceMode,
-  ServiceType,
-} from '../interface/enums';
-
+} from '../types/enums';
+import choose from '@/assets/svgs/choose.svg';
+import { ContactItem } from '../types/common';
+import address from '@/assets/svgs/address.svg';
+import working from '@/assets/svgs/working.svg';
+import { ChartConfig } from '@/components/ui/chart';
+import fileUpload from '@/assets/svgs/fileUpload.svg';
+import service from '@/assets/svgs/serviceDetails.svg';
 import zoomLogo from '@/assets/logos/external/zoom.png';
+import availability from '@/assets/svgs/availability.svg';
 import gmailLogo from '@/assets/logos/external/gmail.png';
+import chatImage from '@/assets/LandingPageImages/chat.jpg';
 import whatsappLogo from '@/assets/logos/external/whatsapp.png';
 import stripeLogo from '../../assets/logos/external/stripe.jpeg';
 import googleMapsLogo from '@/assets/logos/external/googleMap.png';
+import calendarImage from '../../assets/LandingPageImages/calendar2.png';
+import videoCallImage from '../../assets/LandingPageImages/videoCall.jpg';
 import googleCalendarLogo from '../../assets/logos/external/googleCalendar.png';
-
-import choose from '@/assets/svgs/choose.svg';
-import address from '@/assets/svgs/address.svg';
-import working from '@/assets/svgs/working.svg';
-import fileUpload from '@/assets/svgs/fileUpload.svg';
-import service from '@/assets/svgs/serviceDetails.svg';
-import availability from '@/assets/svgs/availability.svg';
+import bookingImage from '../../assets/LandingPageImages/heroSectionOneImg2.png';
+import { ProviderFetchDashboardStatsDataResponse } from '../types/api/providerProfile';
 
 // Plan Tiers
 export const PLAN_TIERS = ['free', 'starter', 'professional', 'enterprise'] as const;
@@ -1563,14 +1559,6 @@ export const serviceTypeOptions: OptionType<ServiceType>[] = [
   { label: 'One Time', value: ServiceType.ONE_TIME },
   { label: 'Recurring', value: ServiceType.RECURRING },
 ];
-
-// TODO Remove
-// Service mode options
-// export const serviceModeOptions: OptionType<ServiceMode>[] = [
-//   { label: 'Online', value: ServiceMode.ONLINE },
-//   { label: 'Offline', value: ServiceMode.OFFLINE },
-//   { label: 'Both', value: ServiceMode.BOTH },
-// ];
 
 // Group options
 export const groupOptions: OptionType<boolean>[] = [

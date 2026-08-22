@@ -1,14 +1,14 @@
 import { Star } from 'lucide-react';
 import { useSelector } from 'react-redux';
-import { Role } from '@/shared/interface/enums';
-import { RootState } from '@/shared/redux/appStore';
+import { Role } from '@/shared/types/enums';
+import { RootState } from '@/app/store/appStore';
 import ServiceCard from './providerProfileCards/ServiceCard';
+import { ProviderProfileProps } from '@/shared/types/component';
 import ExperienceCard from './providerProfileCards/ExperienceCard';
 import AttachmentCard from './providerProfileCards/AttachmentCard';
 import RequirementsCard from './providerProfileCards/RequirementsCard';
 import CustomizationCard from './providerProfileCards/CustomizationCard';
 import BookAppointmentCard from './providerProfileCards/BookAppointmentCard';
-import { ProviderProfileProps } from '@/shared/interface/componentInterface';
 import ProviderProfileTopCardProps from './providerProfileCards/ProviderProfileTopCard';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 

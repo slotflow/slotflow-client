@@ -1,9 +1,9 @@
-import { appConfig } from '@/shared/config/env';
+import { appConfig } from '@/config/env';
+import { Review } from '@/shared/types/entity/review';
 import { useQueryClient } from '@tanstack/react-query';
-import { useReviewReturn } from '@/shared/interface/hooksInterface';
-import { Review } from '@/shared/interface/entityInterface/reviewInterface';
-import { ToggleReviewBlockStatusRequest } from '@/shared/interface/api/review';
-import { deleteReview, reportReview, toggleReviewBlockStatus } from '@/shared/apis/review';
+import { useReviewReturn } from '@/shared/types/hooks';
+import { ToggleReviewBlockStatusRequest } from '@/shared/types/api/review';
+import { deleteReview, reportReview, toggleReviewBlockStatus } from '@/services/apis/review';
 
 export const useReview = (): useReviewReturn => {
   const queryClient = useQueryClient();

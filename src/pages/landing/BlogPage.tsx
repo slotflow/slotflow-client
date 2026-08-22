@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import BlogCTA from '@/components/blog/BlogCTA';
-import LoadingFallback from '../common/LoadingFallback';
 import BlogHero from '@/components/blog/BlogHero';
 import { useDispatch, useSelector } from 'react-redux';
+import LoadingFallback from '../common/LoadingFallback';
 import MoveUpward from '@/components/animation/MoveUpward';
 import BlogNewsletter from '@/components/blog/BlogNewsletter';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import { AppDispatch, RootState } from '@/app/store/appStore';
 import BlogEditorsPicks from '@/components/blog/BlogEditorsPicks';
-import { getArticles, getCategories } from '@/shared/apis/contentful';
 import BlogLatestInsights from '@/components/blog/BlogLatestInsights';
+import { getArticles, getCategories } from '@/services/apis/contentful';
 import BlogFeaturedArticles from '@/components/blog/BlogFeaturedArticles';
-import { setArticleCategories, setArticles } from '@/shared/redux/slices/appSlice';
+import { setArticleCategories, setArticles } from '@/app/store/slices/appSlice';
 
 const BlogPage = () => {
   const dispatch = useDispatch<AppDispatch>();

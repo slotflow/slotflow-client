@@ -1,5 +1,5 @@
 import IconText from './IconText';
-import { StatusPreset } from '@/shared/interface/commonInterface';
+import { StatusPreset } from '@/shared/types/common';
 
 const getBooleanStatusComponent = (value?: boolean, preset?: StatusPreset) => {
   if (!preset) return null;

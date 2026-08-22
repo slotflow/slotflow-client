@@ -1,11 +1,11 @@
 import { cn } from '@/lib/utils';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/shared/redux/appStore';
+import { RootState } from '@/app/store/appStore';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Activity, LockIcon, TrendingUp } from 'lucide-react';
-import { formatNumberToPrice } from '@/shared/helper/formatter';
-import { DashboardCardOneProps } from '@/shared/interface/componentInterface';
+import { DashboardCardOneProps } from '@/shared/types/component';
+import { formatNumberToPrice } from '@/shared/utils/helper/formatter';
 
 const StatsCard = ({
   title,

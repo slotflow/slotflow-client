@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { toast } from 'react-toastify';
+import { appConfig } from '@/config/env';
 import { Card, CardContent } from '../ui/card';
-import { appConfig } from '@/shared/config/env';
 
 const BlogNewsletter = () => {
   const [email, setEmail] = useState<string>('');

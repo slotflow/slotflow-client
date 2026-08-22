@@ -1,5 +1,5 @@
 import { Button } from '../ui/button';
-import { GoogleButtonProps } from '@/shared/interface/componentInterface';
+import { GoogleButtonProps } from '@/shared/types/component';
 
 const GoogleButton = ({ onClick, text, className = 'w-full' }: GoogleButtonProps) => {
   return (

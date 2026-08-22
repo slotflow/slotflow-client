@@ -1,11 +1,11 @@
 import MainLayout from './MainLayout';
 import { useSelector } from 'react-redux';
-import { Role } from '@/shared/interface/enums';
-import { RootState } from '@/shared/redux/appStore';
+import { Role } from '@/shared/types/enums';
+import { RootState } from '@/app/store/appStore';
 import ReviewForm from '@/components/user/ReviewForm';
 import { Outlet, useLocation } from 'react-router-dom';
-import { getRoutesByRole } from '@/shared/helper/getRouteByRole';
 import PaymentSelection from '@/components/payment/PaymentSelection';
+import { getRoutesByRole } from '@/shared/utils/helper/getRouteByRole';
 import FilterRightSideBar from '@/components/filters/FilterRightSideBar';
 import NotificationsContainer from '@/components/notification/NotificationsContainer';
 
@@ -21,8 +21,6 @@ const UserLayout = () => {
   return (
     <MainLayout
       routes={userRoutes}
-      profileImage={user?.profileImage}
-      username={user?.username}
       rightSidebar={location.pathname === '/user/dashboard' ? <FilterRightSideBar /> : null}
     >
       <Outlet />

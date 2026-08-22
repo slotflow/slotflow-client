@@ -1,25 +1,25 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { ColumnDef } from '@tanstack/react-table';
-import { checkJoin } from '@/shared/helper/checkJoin';
-import { formateDate } from '@/shared/helper/formatter';
-import { DataTableColumnHeader } from '../DataTableColumnHeader';
-import { AppointmentStatus, Role } from '@/shared/interface/enums';
-import { Booking } from '@/shared/interface/entityInterface/bookingInterface';
-import { Check, MoreHorizontal, NotebookPen, ReceiptText, VideoIcon, X } from 'lucide-react';
 import {
-  changeAppointmentStatusRequest,
-  FetchBookingsResponse,
   ValidateRoomId,
-} from '@/shared/interface/api/booking';
+  FetchBookingsResponse,
+  changeAppointmentStatusRequest,
+} from '@/shared/types/api/booking';
 import {
   DropdownMenu,
-  DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
+  DropdownMenuContent,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
+import { ColumnDef } from '@tanstack/react-table';
+import { Booking } from '@/shared/types/entity/booking';
+import { checkJoin } from '@/shared/utils/helper/checkJoin';
+import { formateDate } from '@/shared/utils/helper/formatter';
+import { AppointmentStatus, Role } from '@/shared/types/enums';
+import { DataTableColumnHeader } from '../DataTableColumnHeader';
+import { Check, MoreHorizontal, NotebookPen, ReceiptText, VideoIcon, X } from 'lucide-react';
 
 const BookingsTableColumn = (
   handleJoinCall: (data: ValidateRoomId) => void,

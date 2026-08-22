@@ -4,8 +4,8 @@ import { Eye, EyeOff } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { type FieldValues } from 'react-hook-form';
 import FormLabelWithInfo from './FormLabelWithInfo';
+import { FormFieldProps } from '@/shared/types/component';
 import { CustomValidator } from '@/shared/utils/validator';
-import { FormFieldProps } from '@/shared/interface/componentInterface';
 
 const FormField = <T extends FieldValues>({
   id,

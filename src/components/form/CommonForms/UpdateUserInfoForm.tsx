@@ -3,14 +3,14 @@ import { toast } from 'react-toastify';
 import { Button } from '../../ui/button';
 import { PhoneInput } from '.././phone-input';
 import Submitting from '../../common/Submitting';
-import { userUpdateInfo } from '@/shared/apis/user';
+import { userUpdateInfo } from '@/services/apis/user';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import { AppDispatch, RootState } from '@/app/store/appStore';
 import { defaultButtonClassName } from '@/shared/utils/constants';
-import { UpdateUserInfoFormProps } from '@/shared/interface/componentInterface';
-import { UserInfoFormType, userInfoZodSchema } from '@/shared/zod/commonZodFields';
+import { UpdateUserInfoFormProps } from '@/shared/types/component';
+import { UserInfoFormType, userInfoZodSchema } from '@/shared/validators/zod/commonZodFields';
 
 const UpdateUserInfoForm = ({ onClose }: UpdateUserInfoFormProps) => {
   const dispatch = useDispatch<AppDispatch>();

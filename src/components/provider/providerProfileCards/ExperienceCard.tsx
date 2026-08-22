@@ -1,6 +1,6 @@
 import { Briefcase } from 'lucide-react';
+import { ExperienceCardProps } from '@/shared/types/component';
 import DataFetchingError from '@/components/error/DataFetchingError';
-import { ExperienceCardProps } from '@/shared/interface/componentInterface';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const ExperienceCard = ({ isLoading, isError, data }: ExperienceCardProps) => {

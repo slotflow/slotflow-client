@@ -1,9 +1,9 @@
-import { appConfig } from '@/shared/config/env';
+import { appConfig } from '@/config/env';
 import { useQueryClient } from '@tanstack/react-query';
-import { changeServiceBlockStatus } from '@/shared/apis/service';
-import { ApiBaseResponse } from '@/shared/interface/commonInterface';
-import { UseAdminServiceReturn } from '@/shared/interface/hooksInterface';
-import { ChangeServiceBlockStatusRequest } from '@/shared/interface/api/service';
+import { ApiBaseResponse } from '@/shared/types/common';
+import { UseAdminServiceReturn } from '@/shared/types/hooks';
+import { changeServiceBlockStatus } from '@/services/apis/service';
+import { ChangeServiceBlockStatusRequest } from '@/shared/types/api/service';
 
 export const useAdminService = (): UseAdminServiceReturn => {
   const queryClient = useQueryClient();

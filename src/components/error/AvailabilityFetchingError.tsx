@@ -1,6 +1,6 @@
 import fetchError from '../../assets/svgs/fetch-error.svg';
 import noAvailability from '../../assets/svgs/availability.svg';
-import { AvailablityFetchingErrorProps } from '@/shared/interface/componentInterface';
+import { AvailablityFetchingErrorProps } from '@/shared/types/component';
 
 const AvailablityFetchingError = ({ isAvailable }: AvailablityFetchingErrorProps) => {
   return (

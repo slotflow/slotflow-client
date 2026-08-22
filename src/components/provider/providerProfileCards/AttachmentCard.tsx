@@ -1,9 +1,9 @@
 import IconText from '@/components/app/IconText';
 import DataField from '@/components/app/DataField';
 import { FileText, ChevronRight } from 'lucide-react';
+import { AttachmentCardProps } from '@/shared/types/component';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import DataFieldShimmer from '@/components/shimmers/DataFieldShimmer';
-import { AttachmentCardProps } from '@/shared/interface/componentInterface';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const AttachmentCard = ({ isLoading, isError, data }: AttachmentCardProps) => {

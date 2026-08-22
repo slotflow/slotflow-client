@@ -1,5 +1,5 @@
 import defaultProfileImg from '../../assets/defaultImages/avatar.png';
-import { ChatBubbleProfileImageProps } from '@/shared/interface/componentInterface';
+import { ChatBubbleProfileImageProps } from '@/shared/types/component';
 
 const ChatBubbleProfileImage = ({ profileImage }: ChatBubbleProfileImageProps) => {
   return (

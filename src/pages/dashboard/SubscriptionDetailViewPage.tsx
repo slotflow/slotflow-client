@@ -1,19 +1,19 @@
 import {
-  BadgeCheck,
+  Package,
   Calendar,
-  CalendarClock,
-  CalendarDays,
+  Megaphone,
+  BadgeCheck,
   IndianRupee,
   ListOrdered,
-  Megaphone,
-  Package,
+  CalendarDays,
+  CalendarClock,
 } from 'lucide-react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import DataField from '@/components/app/DataField';
 import { Card, CardContent } from '@/components/ui/card';
 import DataFetchingError from '@/components/error/DataFetchingError';
-import { fetchSubscriptionDetails } from '@/shared/apis/subscription';
+import { fetchSubscriptionDetails } from '@/services/apis/subscription';
 import ProfileDetailsShimmer from '@/components/shimmers/DataFieldShimmer';
 
 const SubscriptionDetailViewPage = () => {

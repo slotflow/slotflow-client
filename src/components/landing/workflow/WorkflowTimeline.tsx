@@ -1,6 +1,6 @@
 import WorkflowStep from './WorkflowStep';
 import { bookingSteps } from '@/shared/utils/constants';
-import { WorkflowTimelineProps } from '@/shared/interface/componentInterface';
+import { WorkflowTimelineProps } from '@/shared/types/component';
 
 const WorkflowTimeline = ({ activeStep }: WorkflowTimelineProps) => {
   return (

@@ -4,13 +4,13 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { Filter, LoaderCircle, Search } from 'lucide-react';
-import { setProviders } from '@/shared/redux/slices/userSlice';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
-import { toggleFilterSideBar } from '@/shared/redux/slices/appSlice';
+import { setProviders } from '@/app/store/slices/userSlice';
+import { AppDispatch, RootState } from '@/app/store/appStore';
+import { toggleFilterSideBar } from '@/app/store/slices/appSlice';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import UserViewProviderCard from '@/components/user/UserViewProviderCard';
-import { fetchServiceProvidersForUser } from '@/shared/apis/providerService';
-import { UserFetchServiceProvidersResponse } from '@/shared/interface/api/user';
+import { UserFetchServiceProvidersResponse } from '@/shared/types/api/user';
+import { fetchServiceProvidersForUser } from '@/services/apis/providerService';
 
 /**
  * TODO implement the search

@@ -1,14 +1,13 @@
 import MainLayout from './MainLayout';
 import { Outlet } from 'react-router-dom';
-import { Role } from '@/shared/interface/enums';
-import avatar from '@/assets/defaultImages/avatar.png';
-import { getRoutesByRole } from '@/shared/helper/getRouteByRole';
+import { Role } from '@/shared/types/enums';
+import { getRoutesByRole } from '@/shared/utils/helper/getRouteByRole';
 
 const AdminLayout = () => {
   const adminRoutes = getRoutesByRole(Role.ADMIN);
 
   return (
-    <MainLayout routes={adminRoutes} profileImage={avatar} username="Slotflow Admin">
+    <MainLayout routes={adminRoutes}>
       <Outlet />
     </MainLayout>
   );

@@ -1,19 +1,19 @@
 import { toast } from 'react-toastify';
+import { appConfig } from '@/config/env';
 import { useForm } from 'react-hook-form';
 import { FormButton } from '../FormButton';
 import { FormHeading } from '../FormHeading';
 import { Input } from '@/components/ui/input';
 import { useNavigate } from 'react-router-dom';
-import { appConfig } from '@/shared/config/env';
 import { Button } from '@/components/ui/button';
 import React, { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { formatTime } from '@/shared/helper/formatter';
 import { useDispatch, useSelector } from 'react-redux';
 import { redirectPaths } from '@/shared/utils/constants';
-import { resendOtp, verifyOtp } from '@/shared/apis/auth';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
-import { VerifyOtpFormType, verifyOtpZodSchema } from '@/shared/zod/authZod';
+import { resendOtp, verifyOtp } from '@/services/apis/auth';
+import { formatTime } from '@/shared/utils/helper/formatter';
+import { AppDispatch, RootState } from '@/app/store/appStore';
+import { VerifyOtpFormType, verifyOtpZodSchema } from '@/shared/validators/zod/authZod';
 
 const OtpVerificatioForm = () => {
   const navigate = useNavigate();

@@ -1,16 +1,16 @@
-import { useCallback, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import { appConfig } from '@/config/env';
 import { useDispatch } from 'react-redux';
+import { useCallback, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { appConfig } from '@/shared/config/env';
-import { AppDispatch } from '@/shared/redux/appStore';
-import { checkBookingConfirmed } from '@/shared/apis/booking';
+import { AppDispatch } from '@/app/store/appStore';
+import { PaymentProcessStatus } from '@/shared/types/enums';
 import { Calendar, CheckCircle2, XCircle } from 'lucide-react';
-import { PaymentProcessStatus } from '@/shared/interface/enums';
+import { checkBookingConfirmed } from '@/services/apis/booking';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { setBookingPyamentData, setPaymentProcessStatus } from '@/shared/redux/slices/paymentSlice';
+import { setBookingPyamentData, setPaymentProcessStatus } from '@/app/store/slices/paymentSlice';
 
 const UserBookingConfirmPage = () => {
   const dispatch = useDispatch<AppDispatch>();

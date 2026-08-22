@@ -1,33 +1,29 @@
+import {
+  Tag,
+  Hash,
+  Video,
+  Users,
+  Layers,
+  FileText,
+  Notebook,
+  UserPlus,
+  Briefcase,
+  LayoutGrid,
+  IndianRupee,
+  ClipboardList,
+} from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '../ui/button';
 import DataField from '../app/DataField';
 import { SelectSeparator } from '../ui/select';
 import { useQuery } from '@tanstack/react-query';
-// TODO Remove
-// import { ServiceMode } from '@/shared/interface/enums';
 import { AnimatePresence, motion } from 'framer-motion';
 import DataFetchingError from '../error/DataFetchingError';
 import DataFieldShimmer from '../shimmers/DataFieldShimmer';
 import { defaultButtonClassName } from '@/shared/utils/constants';
+import { ProviderServiceListProps } from '@/shared/types/component';
 import ProviderServiceForm from '../form/provider/ProviderServiceForm';
-import { ProviderServiceListProps } from '@/shared/interface/componentInterface';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import {
-  Briefcase,
-  ClipboardList,
-  FileText,
-  Hash,
-  IndianRupee,
-  Layers,
-  LayoutGrid,
-  // TODO Remove
-  // MonitorSmartphone,
-  Notebook,
-  Tag,
-  UserPlus,
-  Users,
-  Video,
-} from 'lucide-react';
 
 const ProviderServiceList = ({
   providerId,
@@ -89,12 +85,6 @@ const ProviderServiceList = ({
           {data?.requirements?.map((req, i) => (
             <DataField key={i} label={`Requirement ${i + 1}`} value={req} Icon={ClipboardList} />
           ))}
-          // TODO Remove
-          {/* <DataField
-            label="Mode"
-            value={data?.serviceMode === ServiceMode.BOTH ? 'Online & Offline' : data?.serviceMode}
-            Icon={MonitorSmartphone}
-          /> */}
           <DataField label="Type" value={data?.serviceType} Icon={Layers} />
           <DataField label="Demo Video Url" value={data?.videoUrl} link Icon={Video} />
           <DataField label="Portfolio Url" value={data?.portfolioUrl} link Icon={Notebook} />

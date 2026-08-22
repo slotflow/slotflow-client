@@ -4,8 +4,8 @@ import { ShieldCheck, Star } from 'lucide-react';
 import { cardGradients } from '@/shared/utils/constants';
 import { Card, CardContent } from '@/components/ui/card';
 import avatar from '../../assets/defaultImages/avatar.png';
-import { formatNumberToPrice } from '@/shared/helper/formatter';
-import { UserViewProviderCardProps } from '@/shared/interface/componentInterface';
+import { UserViewProviderCardProps } from '@/shared/types/component';
+import { formatNumberToPrice } from '@/shared/utils/helper/formatter';
 
 const UserViewProviderCard = ({ provider, serviceDetails }: UserViewProviderCardProps) => {
   const navigate = useNavigate();

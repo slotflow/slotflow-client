@@ -1,5 +1,5 @@
 import noProfile from '../../assets/defaultImages/avatar.png';
-import { ReviewUserProfileProps } from '@/shared/interface/componentInterface';
+import { ReviewUserProfileProps } from '@/shared/types/component';
 
 const ReviewUserProfile = ({ profileImage, username, text }: ReviewUserProfileProps) => {
   return (

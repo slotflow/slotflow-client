@@ -1,9 +1,9 @@
-import { Search, ShieldCheck } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import HeroProviderCard from './HeroProviderCard';
+import { Search, ShieldCheck } from 'lucide-react';
 import Floating from '@/components/animation/Floating';
-import AnimatedCounter from '@/components/animation/AnimatedCounter';
 import MoveUpward from '@/components/animation/MoveUpward';
+import AnimatedCounter from '@/components/animation/AnimatedCounter';
 
 const LandingHeroBookingDashboard = () => {
   return (

@@ -1,15 +1,15 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
   SelectItem,
+  SelectValue,
+  SelectTrigger,
+  SelectContent,
 } from '@/components/ui/select';
 import { useState } from 'react';
 import { DateRange } from 'react-day-picker';
 import DataFilter from '@/components/filters/DataFilter';
 import { providerDashboardTabs } from '@/shared/utils/constants';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ProviderDashboardStats from '@/components/dashboard/provider/ProviderDashboardStats';
 import ProviderDashboardGraphs from '@/components/dashboard/provider/ProviderDashboardGraphs';
 

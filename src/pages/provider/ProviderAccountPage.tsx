@@ -1,18 +1,18 @@
 import { useSelector } from 'react-redux';
-import { Role } from '@/shared/interface/enums';
+import { Role } from '@/shared/types/enums';
 import { useQuery } from '@tanstack/react-query';
-import { RootState } from '@/shared/redux/appStore';
-import { fetchMyAddress } from '@/shared/apis/address';
+import { RootState } from '@/app/store/appStore';
+import { fetchMyAddress } from '@/services/apis/address';
 import AddressListing from '@/components/profile/AddressListing';
 import ProviderProofs from '@/components/profile/ProviderProofs';
 import ProviderProfile from '@/components/provider/ProviderProfile';
 import DataFetchingError from '@/components/error/DataFetchingError';
-import { providerFetchServiceDetails } from '@/shared/apis/providerService';
+import { providerFetchServiceDetails } from '@/services/apis/providerService';
 import ProviderServiceAvailability from '@/components/profile/ProviderServiceAvailability';
 import {
-  providerFetchMyProfileDetails,
   providerFetchMyProofs,
-} from '@/shared/apis/providerProfile';
+  providerFetchMyProfileDetails,
+} from '@/services/apis/providerProfile';
 
 const ProviderAccountPage = () => {
   const { authUser } = useSelector((state: RootState) => state.auth);

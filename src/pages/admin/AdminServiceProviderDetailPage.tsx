@@ -1,24 +1,24 @@
 import { useState } from 'react';
+import { Role } from '@/shared/types/enums';
 import { useParams } from 'react-router-dom';
-import { Role } from '@/shared/interface/enums';
 import ReviewsPage from '../dashboard/ReviewsPage';
-import { fetchPayments } from '@/shared/apis/payment';
+import { fetchPayments } from '@/services/apis/payment';
 import { providerTabs } from '@/shared/utils/constants';
-import { fetchAddressByUserId } from '@/shared/apis/address';
+import { fetchAddressByUserId } from '@/services/apis/address';
 import AddressListing from '@/components/profile/AddressListing';
 import ProfileListing from '@/components/profile/ProfileListing';
 import ProviderProofs from '@/components/profile/ProviderProofs';
 import DataFetchingError from '@/components/error/DataFetchingError';
-import ProfileHorizontalTabs from '@/components/profile/ProfileHorizontalTabs';
-import { fetchProviderServiceByProviderId } from '@/shared/apis/providerService';
 import ProviderServiceDetails from '@/components/profile/ProviderServiceList';
+import ProfileHorizontalTabs from '@/components/profile/ProfileHorizontalTabs';
+import { fetchProviderServiceByProviderId } from '@/services/apis/providerService';
 import AdminProviderSubscriptions from '@/components/admin/AdminProviderSubscriptions';
 import AdminUserOrProviderPayments from '@/components/admin/AdminUserOrProviderPayments';
 import ProviderServiceAvailability from '@/components/profile/ProviderServiceAvailability';
 import {
   adminFetchProviderProofs,
   fetchProviderDetailsForAdmin,
-} from '@/shared/apis/providerProfile';
+} from '@/services/apis/providerProfile';
 
 const AdminServiceProviderDetailPage = () => {
   const { providerId } = useParams();

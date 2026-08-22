@@ -1,19 +1,19 @@
 import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import {
-  ChartContainer,
   ChartLegend,
-  ChartLegendContent,
   ChartTooltip,
+  ChartContainer,
+  ChartLegendContent,
   ChartTooltipContent,
 } from '@/components/ui/chart';
 import ChartHeader from './ChartHeader';
 import ChartOverlay from './ChartOverlay';
+import { TimeRange } from '@/shared/types/common';
 import { Bar, BarChart, XAxis, YAxis } from 'recharts';
+import { Card, CardContent } from '@/components/ui/card';
 import ChartDataNotAvailable from './ChartDataNotAvailable';
-import { TimeRange } from '@/shared/interface/commonInterface';
-import { filterChartDataHelper } from '@/shared/helper/dateFilter';
-import { BarChartHorizontalProps } from '@/shared/interface/componentInterface';
+import { BarChartHorizontalProps } from '@/shared/types/component';
+import { filterChartDataHelper } from '@/shared/utils/helper/dateFilter';
 
 const BarChartHorizontal = ({
   title,

@@ -9,15 +9,15 @@ import {
   DropdownMenuContent,
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
-import { Role } from '@/shared/interface/enums';
+import { Role } from '@/shared/types/enums';
+import { AuthUser } from '@/shared/types/slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { SideBarProps } from '@/shared/types/component';
 import { redirectPaths } from '@/shared/utils/constants';
+import { toggleTheme } from '@/app/store/slices/appSlice';
 import { useSignout } from '@/hooks/systemHooks/useSignout';
-import { AuthUser } from '@/shared/interface/sliceInterface';
-import { toggleTheme } from '@/shared/redux/slices/appSlice';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
-import { SideBarProps } from '@/shared/interface/componentInterface';
+import { AppDispatch, RootState } from '@/app/store/appStore';
 import logo from '../../assets/logos/company/slotflowLogoTransparent.png';
 import { LogOut, Sun, Moon, Settings, Bell, CreditCard } from 'lucide-react';
 
@@ -29,7 +29,7 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
   const [expandedRoutes, setExpandedRoutes] = useState<string[]>([]);
 
   const themeMode: boolean = useSelector((store: RootState) => store.app.lightTheme);
-  const sidebarOpen: boolean = useSelector((store: RootState) => store.app.sidebarOpen);
+  const isSidebarOpen: boolean = useSelector((store: RootState) => store.app.isSidebarOpen);
   const user: Partial<AuthUser> | null = useSelector((store: RootState) => store.auth?.authUser);
 
   const handleSignout = async () => {
@@ -57,13 +57,13 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
 
   return (
     <aside
-      className={`${sidebarOpen ? 'w-[18%]' : 'w-[5%]'} h-full shrink-0 flex flex-col border-r bg-[var(--background)] transition-all duration-300 ease-in-out`}
+      className={`${isSidebarOpen ? 'w-[18%]' : 'w-[5%]'} h-full shrink-0 flex flex-col border-r bg-[var(--background)] transition-all duration-300 ease-in-out`}
     >
       <div
-        className={`flex items-center py-6 ${sidebarOpen ? 'px-6' : 'px-0 justify-center'} transition-all duration-300`}
+        className={`flex items-center py-6 ${isSidebarOpen ? 'px-6' : 'px-0 justify-center'} transition-all duration-300`}
       >
         <img src={logo} className="w-8 h-8 object-contain shrink-0" alt="SlotFlow Logo" />
-        {sidebarOpen && (
+        {isSidebarOpen && (
           <div className="flex flex-col ml-3 overflow-hidden">
             <span className="text-[var(--mainColor)] text-xl md:text-2xl font-black tracking-tight leading-none">
               SlotFlow
@@ -72,7 +72,9 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
         )}
       </div>
 
-      <div className={`flex-1 overflow-y-auto no-scrollbar ${sidebarOpen ? 'px-4' : 'px-2'} pb-4`}>
+      <div
+        className={`flex-1 overflow-y-auto no-scrollbar ${isSidebarOpen ? 'px-4' : 'px-2'} pb-4`}
+      >
         <nav className="flex flex-col mt-2">
           {routes.map((route) => {
             const isProvider = user?.role === Role.PROVIDER;
@@ -96,7 +98,7 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
                   <SingleTab
                     icon={route.icon}
                     text={route.name}
-                    sidebarOpen={sidebarOpen}
+                    isSidebarOpen={isSidebarOpen}
                     locked={isLocked}
                     hasSubroutes
                     expanded={isExpanded}
@@ -108,17 +110,22 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
                       <SingleTab
                         icon={route.icon}
                         text={route.name}
-                        sidebarOpen={sidebarOpen}
+                        isSidebarOpen={isSidebarOpen}
                         locked={false}
                         active={isActive}
                       />
                     )}
                   </NavLink>
                 ) : (
-                  <SingleTab icon={route.icon} text={route.name} sidebarOpen={sidebarOpen} locked />
+                  <SingleTab
+                    icon={route.icon}
+                    text={route.name}
+                    isSidebarOpen={isSidebarOpen}
+                    locked
+                  />
                 )}
 
-                {hasSubroutes && isExpanded && sidebarOpen && (
+                {hasSubroutes && isExpanded && isSidebarOpen && (
                   <div className="border-l border-border pl-2">
                     {subRoutes.map((subRoute) => {
                       const subPath = `${fullPath}/${subRoute.path}`;
@@ -129,7 +136,7 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
                             <SingleTab
                               icon={subRoute.icon}
                               text={subRoute.name}
-                              sidebarOpen={sidebarOpen}
+                              isSidebarOpen={isSidebarOpen}
                               active={isActive}
                               className="my-0.5"
                             />
@@ -146,7 +153,7 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
       </div>
 
       {user?.isLoggedIn && user.role && (
-        <div className={`p-4 ${!sidebarOpen && 'px-2'}`}>
+        <div className={`p-4 ${!isSidebarOpen && 'px-2'}`}>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button

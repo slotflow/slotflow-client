@@ -1,13 +1,10 @@
+import { appConfig } from '@/config/env';
 import { useDispatch } from 'react-redux';
-import { appConfig } from '@/shared/config/env';
-import { postPreBoarding } from '@/shared/apis/user';
-import { AppDispatch } from '@/shared/redux/appStore';
-import { setAuthUser, setBoardingData } from '@/shared/redux/slices/authSlice';
-import { AdminVerificationStatus, HearAboutUsOptionValue } from '@/shared/interface/enums';
-import {
-  SubmitPreBoardingHandlerProps,
-  UsePreBoardingReturn,
-} from '@/shared/interface/hooksInterface';
+import { AppDispatch } from '@/app/store/appStore';
+import { postPreBoarding } from '@/services/apis/user';
+import { setAuthUser, setBoardingData } from '@/app/store/slices/authSlice';
+import { AdminVerificationStatus, HearAboutUsOptionValue } from '@/shared/types/enums';
+import { UsePreBoardingReturn, SubmitPreBoardingHandlerProps } from '@/shared/types/hooks';
 
 export const usePreBoarding = (): UsePreBoardingReturn => {
   const dispatch = useDispatch<AppDispatch>();

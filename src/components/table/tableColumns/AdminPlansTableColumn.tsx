@@ -1,20 +1,17 @@
+import { AdminFetchAllPlansResponse, ChangePlanBlockStatusRequest } from '@/shared/types/api/plan';
+import {
+  DropdownMenu,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuSeparator,
+} from '../../ui/dropdown-menu';
 import { Button } from '../../ui/button';
 import { ColumnDef } from '@tanstack/react-table';
 import { Check, MoreHorizontal, X } from 'lucide-react';
-import { formatNumberToPrice } from '@/shared/helper/formatter';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
-import {
-  ChangePlanBlockStatusRequest,
-  AdminFetchAllPlansResponse,
-} from '@/shared/interface/api/plan';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '../../ui/dropdown-menu';
+import { formatNumberToPrice } from '@/shared/utils/helper/formatter';
 
 const AdminPlansTableColumns = (
   handleAdminChangePlanStatus: (data: ChangePlanBlockStatusRequest) => void,

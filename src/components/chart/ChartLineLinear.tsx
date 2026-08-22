@@ -1,13 +1,13 @@
 import React from 'react';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import ChartHeader from './ChartHeader';
 import { TrendingUp } from 'lucide-react';
+import { TimeRange } from '@/shared/types/common';
 import ChartDataNotAvailable from './ChartDataNotAvailable';
-import { TimeRange } from '@/shared/interface/commonInterface';
+import { ChartLineLinearProps } from '@/shared/types/component';
 import { CartesianGrid, Line, LineChart, XAxis } from 'recharts';
-import { filterChartDataHelper } from '@/shared/helper/dateFilter';
-import { ChartLineLinearProps } from '@/shared/interface/componentInterface';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { filterChartDataHelper } from '@/shared/utils/helper/dateFilter';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 
 const ChartLineLinear = ({
   title,

@@ -1,6 +1,6 @@
-import { CardTitle, CardHeader, CardDescription } from '@/components/ui/card';
 import DateSelect from './DateSelect';
-import { ChartHeaderProps } from '@/shared/interface/componentInterface';
+import { ChartHeaderProps } from '@/shared/types/component';
+import { CardTitle, CardHeader, CardDescription } from '@/components/ui/card';
 
 const ChartHeader = ({
   title = 'Title',

@@ -3,8 +3,8 @@ import { Input } from '../ui/input';
 import { Plus } from 'lucide-react';
 import { Label } from '../ui/label';
 import { Button } from '../ui/button';
+import { TagInputProps } from '@/shared/types/component';
 import { defaultButtonClassName } from '@/shared/utils/constants';
-import { TagInputProps } from '@/shared/interface/componentInterface';
 
 const TagInput = ({ value, onChange }: TagInputProps) => {
   const [input, setInput] = useState('');

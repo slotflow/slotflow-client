@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import { Moon, Sun } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleTheme } from '@/shared/redux/slices/appSlice';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import { toggleTheme } from '@/app/store/slices/appSlice';
+import { AppDispatch, RootState } from '@/app/store/appStore';
 
 const ThemeToggler = () => {
   const dispatch = useDispatch<AppDispatch>();

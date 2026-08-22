@@ -2,10 +2,10 @@ import IconText from './IconText';
 import { Copy } from 'lucide-react';
 import { Button } from '../ui/button';
 import { toast } from 'react-toastify';
-import { formateDate } from '@/shared/helper/formatter';
+import { DataFieldProps } from '@/shared/types/component';
+import { formateDate } from '@/shared/utils/helper/formatter';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
-import { DataFieldProps } from '@/shared/interface/componentInterface';
-import { formatBoolean, formatDuration } from '@/shared/helper/formatter';
+import { formatBoolean, formatDuration } from '@/shared/utils/helper/formatter';
 
 const DataField = ({
   label,

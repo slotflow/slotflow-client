@@ -1,18 +1,18 @@
+import {
+  ValidateRoomId,
+  FetchBookingsResponse,
+  changeAppointmentStatusRequest,
+} from '@/shared/types/api/booking';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
+import { RootState } from '@/app/store/appStore';
 import { useBooking } from '@/hooks/useUserBooking';
-import { RootState } from '@/shared/redux/appStore';
-import { fetchBookings } from '@/shared/apis/booking';
-import CommonTable from '@/components/table/CommonTable';
+import { fetchBookings } from '@/services/apis/booking';
 import ConfirmAlert from '@/components/alert/ConfirmAlert';
 import DataFetchingError from '@/components/error/DataFetchingError';
+import PaginatedDataTable from '@/components/table/PaginatedDataTable';
 import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
 import BookingsTableColumn from '@/components/table/tableColumns/BookingsTableColumn';
-import {
-  changeAppointmentStatusRequest,
-  FetchBookingsResponse,
-  ValidateRoomId,
-} from '@/shared/interface/api/booking';
 
 const ListBookingsPage = () => {
   const authUser = useSelector((state: RootState) => state.auth.authUser);
@@ -78,7 +78,7 @@ const ListBookingsPage = () => {
 
   return (
     <div className="p-4">
-      <CommonTable<FetchBookingsResponse>
+      <PaginatedDataTable<FetchBookingsResponse>
         fetchApiFunction={(params) => fetchBookings({ ...params })}
         columnsCount={6}
         column={columns}

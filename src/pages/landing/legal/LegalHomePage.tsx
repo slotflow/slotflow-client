@@ -1,6 +1,6 @@
-import { ArrowRight, Scale } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { ArrowRight, Scale } from 'lucide-react';
 import { footerLinks } from '@/shared/utils/constants';
 import { Card, CardContent } from '@/components/ui/card';
 import SectionHeading from '@/components/common/SectionHeading';

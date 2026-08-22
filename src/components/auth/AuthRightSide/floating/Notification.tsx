@@ -1,7 +1,6 @@
-import { Bell, CheckCircle2 } from 'lucide-react';
-
-import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Bell, CheckCircle2 } from 'lucide-react';
 
 const NotificationCard = () => {
   return (

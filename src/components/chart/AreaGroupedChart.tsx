@@ -1,4 +1,3 @@
-import { Card, CardContent } from '@/components/ui/card';
 import {
   ChartLegend,
   ChartTooltip,
@@ -9,11 +8,12 @@ import {
 import * as React from 'react';
 import ChartHeader from './ChartHeader';
 import ChartOverlay from './ChartOverlay';
+import { TimeRange } from '@/shared/types/common';
+import { Card, CardContent } from '@/components/ui/card';
 import ChartDataNotAvailable from './ChartDataNotAvailable';
-import { TimeRange } from '@/shared/interface/commonInterface';
+import { AreaGroupChartProps } from '@/shared/types/component';
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
-import { filterChartDataHelper } from '@/shared/helper/dateFilter';
-import { AreaGroupChartProps } from '@/shared/interface/componentInterface';
+import { filterChartDataHelper } from '@/shared/utils/helper/dateFilter';
 
 const AreaGroupedChart = ({
   title,

@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { RootState } from '@/app/store/appStore';
 import { X, LoaderCircle, Coins } from 'lucide-react';
-import { RootState } from '@/shared/redux/appStore';
 import { useQueryClient } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSubscription } from '@/shared/redux/slices/authSlice';
-import { subscribeToTrialPlan } from '@/shared/apis/subscription';
-import { PlanName, SubscriptionStatus } from '@/shared/interface/enums';
+import { setSubscription } from '@/app/store/slices/authSlice';
+import { subscribeToTrialPlan } from '@/services/apis/subscription';
+import { PlanName, SubscriptionStatus } from '@/shared/types/enums';
 import {
   setPaymentSelectionOpen,
   setSubscriptionPaymentData,
-} from '@/shared/redux/slices/paymentSlice';
+} from '@/app/store/slices/paymentSlice';
 
 const ProviderFreeSubscription = () => {
   const dispatch = useDispatch();

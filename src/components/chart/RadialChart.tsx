@@ -1,10 +1,10 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import ChartHeader from './ChartHeader';
 import ChartOverlay from './ChartOverlay';
+import { Card, CardContent } from '@/components/ui/card';
 import ChartDataNotAvailable from './ChartDataNotAvailable';
 import { LabelList, RadialBar, RadialBarChart } from 'recharts';
-import { ChartDataItem, RadialChartInterface } from '@/shared/interface/componentInterface';
+import { ChartDataItem, RadialChartInterface } from '@/shared/types/component';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 
 const RadialChart = <T extends ChartDataItem>({
   title,

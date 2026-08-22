@@ -1,7 +1,7 @@
 import { Trash } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { SavedAvailabilitiesProps } from '@/shared/types/component';
 import { destructiveButtonClassName } from '@/shared/utils/constants';
-import { SavedAvailabilitiesProps } from '@/shared/interface/componentInterface';
 
 const SavedAvailabilities = ({ availabilities, removeAvailability }: SavedAvailabilitiesProps) => {
   if (!availabilities || availabilities.length === 0) {

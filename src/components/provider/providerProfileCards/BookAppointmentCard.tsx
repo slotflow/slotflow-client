@@ -1,12 +1,12 @@
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useDispatch, useSelector } from 'react-redux';
-import { formateDate } from '@/shared/helper/formatter';
 import { Card, CardContent } from '@/components/ui/card';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import { formateDate } from '@/shared/utils/helper/formatter';
+import { AppDispatch, RootState } from '@/app/store/appStore';
 import { defaultButtonClassName } from '@/shared/utils/constants';
-import { setPaymentSelectionOpen } from '@/shared/redux/slices/paymentSlice';
-import { BookAppointmentCardProps } from '@/shared/interface/componentInterface';
+import { BookAppointmentCardProps } from '@/shared/types/component';
+import { setPaymentSelectionOpen } from '@/app/store/slices/paymentSlice';
 
 const BookAppointmentCard = ({ isLoading, isError, data }: BookAppointmentCardProps) => {
   const dispatch = useDispatch<AppDispatch>();

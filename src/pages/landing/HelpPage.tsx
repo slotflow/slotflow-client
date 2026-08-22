@@ -4,7 +4,7 @@ import TOC from '@/components/scroll/TOC';
 import ReactMarkdown from 'react-markdown';
 import markdown from '@/md/contact/help.md?raw';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import { extractHeadings } from '@/shared/helper/extractTocHeadings';
+import { extractHeadings } from '@/shared/utils/helper/extractTocHeadings';
 
 const HelpPage = () => {
   const headings = extractHeadings(markdown);

@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { RootState } from '@/shared/redux/appStore';
+import { RootState } from '@/app/store/appStore';
 import { Mic, MicOff, Video, VideoOff } from 'lucide-react';
 import { useVideoCallLobby } from '@/hooks/useJoinVideoCallLoby';
 

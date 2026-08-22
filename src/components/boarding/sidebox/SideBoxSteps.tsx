@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/shared/redux/appStore';
+import { RootState } from '@/app/store/appStore';
 import { boardingData } from '@/shared/utils/constants';
 
 const SideBoxSteps = ({ pageNumber }: { pageNumber: number }) => {

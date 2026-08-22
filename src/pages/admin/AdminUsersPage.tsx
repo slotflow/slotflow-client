@@ -1,12 +1,12 @@
 import React from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { fetchUsers } from '@/shared/apis/user';
-import CommonTable from '@/components/table/CommonTable';
+import { fetchUsers } from '@/services/apis/user';
+import { User } from '@/shared/types/entity/user';
 import { useAdminUser } from '@/hooks/adminHooks/useUser';
-import { User } from '@/shared/interface/entityInterface/userInterface';
-import { AdminfetchAllUsersResponse } from '@/shared/interface/api/user';
-import { AdminChangeUserStatusRequest } from '@/shared/interface/api/user';
+import { AdminfetchAllUsersResponse } from '@/shared/types/api/user';
+import PaginatedDataTable from '@/components/table/PaginatedDataTable';
+import { AdminChangeUserStatusRequest } from '@/shared/types/api/user';
 import AdminUsersTableColumns from '@/components/table/tableColumns/AdminUsersTableColumn';
 
 const AdminUsersPage = () => {
@@ -32,7 +32,7 @@ const AdminUsersPage = () => {
 
   return (
     <div className="p-4">
-      <CommonTable<AdminfetchAllUsersResponse>
+      <PaginatedDataTable<AdminfetchAllUsersResponse>
         fetchApiFunction={fetchUsers}
         queryKey="users"
         column={column}

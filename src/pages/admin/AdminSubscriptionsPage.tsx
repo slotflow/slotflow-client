@@ -1,7 +1,7 @@
-import CommonTable from '@/components/table/CommonTable';
-import { fetchSubscriptions } from '@/shared/apis/subscription';
+import { fetchSubscriptions } from '@/services/apis/subscription';
+import PaginatedDataTable from '@/components/table/PaginatedDataTable';
 import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
-import { FetchProviderSubscriptionsResponse } from '@/shared/interface/api/subscription';
+import { FetchProviderSubscriptionsResponse } from '@/shared/types/api/subscription';
 import ProvidersSubscriptionsTableColumns from '@/components/table/tableColumns/ProviderSubscriptionsTableColumn';
 
 const AdminSubscriptionsPage = () => {
@@ -11,7 +11,7 @@ const AdminSubscriptionsPage = () => {
 
   return (
     <div className="p-4">
-      <CommonTable<FetchProviderSubscriptionsResponse>
+      <PaginatedDataTable<FetchProviderSubscriptionsResponse>
         fetchApiFunction={fetchSubscriptions}
         queryKey="subscriptions"
         column={column}
