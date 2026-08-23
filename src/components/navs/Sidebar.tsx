@@ -1,50 +1,39 @@
-import { useState } from 'react';
 import SingleTab from './SingleTab';
-import { toast } from 'react-toastify';
-import {
-  DropdownMenu,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuSeparator,
-} from '@/components/ui/dropdown-menu';
+import { useSelector } from 'react-redux';
 import { Role } from '@/shared/types/enums';
+import { useState, useEffect } from 'react';
 import { AuthUser } from '@/shared/types/slice';
-import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { RootState } from '@/app/store/appStore';
+import { SidebarDropDown } from './SidebarDropDown';
 import { SideBarProps } from '@/shared/types/component';
-import { redirectPaths } from '@/shared/utils/constants';
-import { toggleTheme } from '@/app/store/slices/appSlice';
-import { useSignout } from '@/hooks/systemHooks/useSignout';
-import { AppDispatch, RootState } from '@/app/store/appStore';
+import { NavLink, useLocation } from 'react-router-dom';
 import logo from '../../assets/logos/company/slotflowLogoTransparent.png';
-import { LogOut, Sun, Moon, Settings, Bell, CreditCard } from 'lucide-react';
 
 const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
-
-  const { signoutHandler } = useSignout();
+  const location = useLocation();
   const [expandedRoutes, setExpandedRoutes] = useState<string[]>([]);
 
-  const themeMode: boolean = useSelector((store: RootState) => store.app.lightTheme);
   const isSidebarOpen: boolean = useSelector((store: RootState) => store.app.isSidebarOpen);
   const user: Partial<AuthUser> | null = useSelector((store: RootState) => store.auth?.authUser);
 
-  const handleSignout = async () => {
-    const res = await signoutHandler();
-    if (res.success) {
-      toast.success(res.message);
-      navigate(redirectPaths.LOGIN);
-    } else {
-      toast.error(res.message);
-    }
-  };
+  const basePath =
+    user?.role === 'ADMIN' ? '/admin' : user?.role === 'PROVIDER' ? '/provider' : '/user';
 
-  const changeTheme = (): void => {
-    dispatch(toggleTheme());
-  };
+  // Automatically expand parent routes when navigating to a child subroute
+  useEffect(() => {
+    routes.forEach((route) => {
+      if (route.subroutes && route.subroutes.length > 0) {
+        const fullParentPath = `${basePath}/${route.path}`;
+        const hasActiveSubroute = route.subroutes.some(
+          (sub) => location.pathname === `${fullParentPath}/${sub.path}`,
+        );
+
+        if (hasActiveSubroute) {
+          setExpandedRoutes((prev) => (prev.includes(route.path) ? prev : [...prev, route.path]));
+        }
+      }
+    });
+  }, [location.pathname, routes, basePath]);
 
   const toggleRoute = (path: string) => {
     setExpandedRoutes((prev) =>
@@ -52,15 +41,16 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
     );
   };
 
-  const basePath =
-    user?.role === 'ADMIN' ? '/admin' : user?.role === 'PROVIDER' ? '/provider' : '/user';
-
   return (
     <aside
-      className={`${isSidebarOpen ? 'w-[18%]' : 'w-[5%]'} h-full shrink-0 flex flex-col border-r bg-[var(--background)] transition-all duration-300 ease-in-out`}
+      className={`${
+        isSidebarOpen ? 'w-[18%]' : 'w-[5%]'
+      } h-full shrink-0 flex flex-col border-r bg-[var(--background)] transition-all duration-300 ease-in-out`}
     >
       <div
-        className={`flex items-center py-6 ${isSidebarOpen ? 'px-6' : 'px-0 justify-center'} transition-all duration-300`}
+        className={`flex items-center py-6 ${
+          isSidebarOpen ? 'px-6' : 'px-0 justify-center'
+        } transition-all duration-300`}
       >
         <img src={logo} className="w-8 h-8 object-contain shrink-0" alt="SlotFlow Logo" />
         {isSidebarOpen && (
@@ -85,12 +75,16 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
                 : false;
 
             const fullPath = `${basePath}/${route.path}`;
-
             const subRoutes = route.subroutes ?? [];
-
             const hasSubroutes = subRoutes.length > 0;
-
             const isExpanded = expandedRoutes.includes(route.path);
+
+            // Check active states for parent and subroutes
+            const isDirectlyActive = location.pathname === fullPath;
+            const isSubrouteActive = hasSubroutes
+              ? subRoutes.some((sub) => location.pathname === `${fullPath}/${sub.path}`)
+              : false;
+            const isParentActive = isDirectlyActive || isSubrouteActive;
 
             return (
               <div key={fullPath}>
@@ -102,6 +96,7 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
                     locked={isLocked}
                     hasSubroutes
                     expanded={isExpanded}
+                    active={isParentActive}
                     onClick={() => toggleRoute(route.path)}
                   />
                 ) : !isLocked ? (
@@ -125,6 +120,7 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
                   />
                 )}
 
+                {/* Subroutes only render when sidebar is open and expanded */}
                 {hasSubroutes && isExpanded && isSidebarOpen && (
                   <div className="border-l border-border pl-2">
                     {subRoutes.map((subRoute) => {
@@ -152,114 +148,7 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
         </nav>
       </div>
 
-      {user?.isLoggedIn && user.role && (
-        <div className={`p-4 ${!isSidebarOpen && 'px-2'}`}>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button
-                type="button"
-                className="flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left transition-colors hover:bg-[var(--sidebar-accent)]"
-              >
-                <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-primary text-primary-foreground">
-                  {user.profileImage ? (
-                    <img
-                      src={user.profileImage}
-                      alt={user.username ?? 'Profile'}
-                      className="h-full w-full object-cover"
-                    />
-                  ) : (
-                    <span className="text-sm font-semibold">
-                      {user.username?.charAt(0).toUpperCase() ?? 'U'}
-                    </span>
-                  )}
-                </div>
-
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-semibold">{user.username}</p>
-
-                  <p className="truncate text-xs text-muted-foreground">{user.email}</p>
-                </div>
-
-                <Settings className="size-4 shrink-0 text-muted-foreground" />
-              </button>
-            </DropdownMenuTrigger>
-
-            <DropdownMenuContent
-              side="top"
-              align="start"
-              sideOffset={8}
-              className="min-w-72 rounded-lg"
-            >
-              <DropdownMenuLabel className="font-normal">
-                <div className="flex items-center gap-2">
-                  <div className="flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-primary text-primary-foreground">
-                    {user.profileImage ? (
-                      <img
-                        src={user.profileImage}
-                        alt={user.username ?? 'Profile'}
-                        className="h-full w-full object-cover"
-                      />
-                    ) : (
-                      <span className="text-sm font-semibold">
-                        {user.username?.charAt(0).toUpperCase() ?? 'U'}
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="min-w-0">
-                    <p className="truncate text-sm font-semibold">{user.username}</p>
-
-                    <p className="truncate text-xs text-muted-foreground">{user.email}</p>
-                  </div>
-                </div>
-              </DropdownMenuLabel>
-
-              <DropdownMenuSeparator />
-
-              <DropdownMenuItem onClick={() => navigate(`${basePath}/profile`)}>
-                <CreditCard />
-                <span>Account</span>
-              </DropdownMenuItem>
-
-              {user.role === Role.PROVIDER && (
-                <DropdownMenuItem onClick={() => navigate('/provider/subscriptions')}>
-                  <CreditCard />
-                  <span>Upgrade to Pro</span>
-                </DropdownMenuItem>
-              )}
-
-              <DropdownMenuItem onClick={() => navigate(`${basePath}/settings`)}>
-                <Settings />
-                <span>Settings</span>
-              </DropdownMenuItem>
-
-              <DropdownMenuItem onClick={() => navigate(`${basePath}/settings/notifications`)}>
-                <Bell />
-                <span>Notifications</span>
-              </DropdownMenuItem>
-
-              {user.role === Role.PROVIDER && (
-                <DropdownMenuItem onClick={() => navigate('/provider/settings/billing')}>
-                  <CreditCard />
-                  <span>Billing</span>
-                </DropdownMenuItem>
-              )}
-
-              <DropdownMenuItem onClick={changeTheme}>
-                {!themeMode ? <Sun /> : <Moon />}
-                <span>{!themeMode ? 'Light Mode' : 'Dark Mode'}</span>
-              </DropdownMenuItem>
-
-              <DropdownMenuSeparator />
-
-              <DropdownMenuItem onClick={handleSignout} className="text-red-500 focus:text-red-500">
-                <LogOut />
-                <span>Logout</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      )}
+      <SidebarDropDown isSidebarOpen={isSidebarOpen} basePath={basePath} />
     </aside>
   );
 };

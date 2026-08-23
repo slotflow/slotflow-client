@@ -27,6 +27,7 @@ const AreaGroupedChart = ({
   minimumPlan,
 }: AreaGroupChartProps) => {
   const [timeRange, setTimeRange] = React.useState<TimeRange>('7d');
+
   const filteredData = filterChartDataHelper(chartData ?? [], timeRange);
 
   return (
@@ -38,11 +39,12 @@ const AreaGroupedChart = ({
         onValueChange={setTimeRange}
         value={timeRange}
       />
+
       <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
-        <ChartContainer config={chartConfig} className="min-h-[200px]">
-          {chartData.length === 0 ? (
-            <ChartDataNotAvailable />
-          ) : (
+        {filteredData.length === 0 ? (
+          <ChartDataNotAvailable />
+        ) : (
+          <ChartContainer config={chartConfig} className="min-h-[250px]">
             <AreaChart data={filteredData}>
               <defs>
                 {[
@@ -56,7 +58,9 @@ const AreaGroupedChart = ({
                   </linearGradient>
                 ))}
               </defs>
+
               <CartesianGrid vertical={false} />
+
               <XAxis
                 dataKey="date"
                 tickLine={false}
@@ -65,12 +69,14 @@ const AreaGroupedChart = ({
                 minTickGap={32}
                 tickFormatter={(value) => {
                   const date = new Date(value);
+
                   return date.toLocaleDateString('en-US', {
                     month: 'short',
                     day: 'numeric',
                   });
                 }}
               />
+
               <ChartTooltip
                 cursor={false}
                 content={
@@ -85,6 +91,7 @@ const AreaGroupedChart = ({
                   />
                 }
               />
+
               <Area
                 dataKey={dataKeyOne}
                 type="natural"
@@ -92,6 +99,7 @@ const AreaGroupedChart = ({
                 stroke={chartConfig[dataKeyOne]?.color}
                 stackId="a"
               />
+
               <Area
                 dataKey={dataKeyTwo}
                 type="natural"
@@ -99,6 +107,7 @@ const AreaGroupedChart = ({
                 stroke={chartConfig[dataKeyTwo]?.color}
                 stackId="a"
               />
+
               <Area
                 dataKey={dataKeyThree}
                 type="natural"
@@ -106,10 +115,11 @@ const AreaGroupedChart = ({
                 stroke={chartConfig[dataKeyThree]?.color}
                 stackId="a"
               />
+
               <ChartLegend content={<ChartLegendContent />} />
             </AreaChart>
-          )}
-        </ChartContainer>
+          </ChartContainer>
+        )}
       </CardContent>
     </Card>
   );

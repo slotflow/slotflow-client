@@ -1,6 +1,6 @@
-import { Role } from '../interface/enums';
-import { sidebarRoutes } from '../utils/constants';
-import { Route } from '../interface/commonInterface';
+import { Role } from '../../types/enums';
+import { sidebarRoutes } from '../constants';
+import { Route } from '../../types/common';
 
 export const getRoutesByRole = (role: Role): Route[] => {
   return sidebarRoutes.filter((route) => {

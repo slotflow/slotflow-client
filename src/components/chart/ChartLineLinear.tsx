@@ -36,10 +36,13 @@ const ChartLineLinear = ({
         />
       )}
       <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
-        <ChartContainer config={chartConfig} className={`${chartContainerClassName || ''} w-full`}>
-          {chartData.length === 0 ? (
-            <ChartDataNotAvailable />
-          ) : (
+        {chartData.length === 0 ? (
+          <ChartDataNotAvailable />
+        ) : (
+          <ChartContainer
+            config={chartConfig}
+            className={`${chartContainerClassName || ''} w-full`}
+          >
             <LineChart
               accessibilityLayer
               data={filteredData}
@@ -95,8 +98,8 @@ const ChartLineLinear = ({
                 />
               )}
             </LineChart>
-          )}
-        </ChartContainer>
+          </ChartContainer>
+        )}
       </CardContent>
       {footerTextOne ||
         (footerTextTwo && (

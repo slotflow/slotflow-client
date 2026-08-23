@@ -1,18 +1,19 @@
 import { Suspense, useEffect } from 'react';
 import { Role } from '@/shared/types/enums';
-import { useNavigate } from 'react-router-dom';
 import Sidebar from '@/components/navs/Sidebar';
 import { AuthUser } from '@/shared/types/slice';
 import InfoHeader from '@/components/navs/InfoHeader';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuthUser } from '@/app/store/slices/authSlice';
 import { MainLayoutProps } from '@/shared/types/component';
+import { useLocation, useNavigate } from 'react-router-dom';
 import LoadingFallback from '../pages/common/LoadingFallback';
 import { AppDispatch, RootState } from '@/app/store/appStore';
 import { connectEventSocket } from '@/services/socket/eventSocketThunk';
 import { useNotificationPermissionGate } from '@/hooks/systemHooks/useNotificationPermissionGate';
 
 const MainLayout = ({ routes, filteredRoutes, children, rightSidebar }: MainLayoutProps) => {
+  const location = useLocation();
   const { isSidebarOpen } = useSelector((store: RootState) => store.app);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
@@ -76,9 +77,11 @@ const MainLayout = ({ routes, filteredRoutes, children, rightSidebar }: MainLayo
 
   return (
     <div className="flex h-screen bg-background transition-all duration-300">
-      <Sidebar routes={routes} filteredRoutes={filteredRoutes} />
+      {location.pathname !== '/provider/upgrade' && (
+        <Sidebar routes={routes} filteredRoutes={filteredRoutes} />
+      )}
       <div className={`flex-1 flex flex-col ${isSidebarOpen ? 'w-[82%]' : 'w-[95%]'}`}>
-        <InfoHeader />
+        {location.pathname !== '/provider/upgrade' && <InfoHeader />}
         <div className="flex-1 overflow-y-auto no-scrollbar px-2 relative">
           <Suspense fallback={<LoadingFallback />}>{children}</Suspense>
         </div>

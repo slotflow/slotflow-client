@@ -7,6 +7,8 @@ import { ProtectedRoute } from './ProtectedRoutes.tsx';
 import { RouteNames } from '@/shared/utils/constants.ts';
 import BoardingLayoutWrapper from './BoardingLayoutWrapper.tsx';
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
+import ProviderDashboardPage from '@/pages/provider/ProviderDashboardPage.tsx';
+import ProviderDashboardGraphsPage from '@/pages/provider/ProviderDashboardGraphsPage.tsx';
 
 const FAQPage = lazy(() => import('@/pages/landing/FAQPage.tsx'));
 const AuthLayout = lazy(() => import('@/layouts/AuthLayout.tsx'));
@@ -52,13 +54,15 @@ const AdminGrafanaDashboard = lazy(() => import('@/pages/admin/AdminGrafanaDashb
 const UserBookingConfirmPage = lazy(() => import('@/pages/user/UserBookingConfirmPage.tsx'));
 const TermsOfServicePage = lazy(() => import('@/pages/landing/legal/TermsOfServicePage.tsx'));
 const AdminSubscriptionsPage = lazy(() => import('@/pages/admin/AdminSubscriptionsPage.tsx'));
-const ProviderDashboardPage = lazy(() => import('@/pages/provider/ProviderDashboardPage.tsx'));
 const IntegrationsListing = lazy(() => import('@/components/settings/IntegrationsListing.tsx'));
 const PaymentDetailViewPage = lazy(() => import('@/pages/dashboard/PaymentDetailViewPage.tsx'));
 const NotificationSettings = lazy(() => import('@/components/settings/NotificationSettings.tsx'));
 const ResetPasswordForm = lazy(() => import('@/components/form/CommonForms/ResetPasswordForm.tsx'));
 const ProviderAddAddressPage = lazy(() => import('@/pages/boarding/ProviderCreateAddressPage.tsx'));
 const AdminServiceProvidersPage = lazy(() => import('@/pages/admin/AdminServiceProvidersPage.tsx'));
+const ProviderDashboardStatsPage = lazy(
+  () => import('@/pages/provider/ProviderDashboardStatsPage.tsx'),
+);
 const UserListProvidersCardsPage = lazy(
   () => import('@/pages/user/UserListProvidersCardsPage.tsx'),
 );
@@ -486,6 +490,29 @@ export const appRouter = createBrowserRouter([
             handle: {
               title: 'Dashboard',
             },
+            children: [
+              {
+                index: true,
+                element: <Navigate to="stats" replace />,
+                handle: {
+                  title: 'Stats',
+                },
+              },
+              {
+                path: 'stats',
+                element: <ProviderDashboardStatsPage />,
+                handle: {
+                  title: 'Stats',
+                },
+              },
+              {
+                path: 'graphs',
+                element: <ProviderDashboardGraphsPage />,
+                handle: {
+                  title: 'Graphs',
+                },
+              },
+            ],
           },
           {
             path: 'profile',

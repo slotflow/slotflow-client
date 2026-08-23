@@ -2,7 +2,7 @@ import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import { visit } from 'unist-util-visit';
 import type { Heading, Text } from 'mdast';
-import { TOCHeadingProps } from '../interface/componentInterface';
+import { TOCHeadingProps } from '../../types/component';
 
 const slugify = (text: string) =>
   text

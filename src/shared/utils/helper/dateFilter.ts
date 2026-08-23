@@ -1,5 +1,5 @@
 import { format, subDays } from 'date-fns';
-import { TimeRange } from '../interface/commonInterface';
+import { TimeRange } from '../../types/common';
 
 export function filterChartDataHelper<T extends { date: string }>(
   data: T[],

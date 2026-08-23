@@ -1,7 +1,7 @@
 import * as XLSX from 'xlsx';
 import { format } from 'date-fns';
 import { toast } from 'react-toastify';
-import { AdminFetchRevenueReportRow } from '../interface/api/payment';
+import { AdminFetchRevenueReportRow } from '../../types/api/payment';
 
 type ExcelRow = {
   '#': number | string;

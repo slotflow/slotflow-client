@@ -19,7 +19,7 @@ const ChartOverlay = ({ stringOne, chartTitle }: ChartOverlayProps) => {
         </div>
         <button
           className="px-4 py-1 rounded bg-indigo-600 text-white text-sm hover:bg-indigo-700 transition"
-          onClick={() => navigate('subscriptions')}
+          onClick={() => navigate('/provider/upgrade')}
         >
           Upgrade Plan
         </button>

@@ -1,6 +1,6 @@
 import { messaging } from '@/lib/firebase';
 import { getToken } from 'firebase/messaging';
-import { appConfig, firebaseCloudMessageConfig } from '../../config/env';
+import { appConfig, firebaseCloudMessageConfig } from '../../../config/env';
 
 export const getFcmToken = async (): Promise<string | undefined> => {
   try {

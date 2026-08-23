@@ -12,14 +12,15 @@ const DataFilter = ({
   description = 'Filtering data by selected date range',
 }: DataFilterProps) => {
   return (
-    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 p-4 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-sm backdrop-blur-sm">
+    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 p-4 rounded-2xl border border-border shadow-sm backdrop-blur-sm bg-background/80">
       <div className="flex items-center gap-2">
-        <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg">
-          <CalendarIcon className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+        <div className="p-2 bg-primary/10 rounded-lg">
+          <CalendarIcon className="w-5 h-5 text-primary" />
         </div>
+
         <div>
-          <h3 className="font-semibold text-slate-800 dark:text-slate-200">{title}</h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400">{description}</p>
+          <h3 className="font-semibold text-foreground">{title}</h3>
+          <p className="text-xs text-muted-foreground">{description}</p>
         </div>
       </div>
 
@@ -28,20 +29,22 @@ const DataFilter = ({
           <PopoverTrigger asChild>
             <Button
               variant="outline"
-              className="w-full sm:w-[280px] justify-start text-left font-normal hover:border-indigo-500 hover:bg-indigo-50/50 dark:hover:bg-indigo-900/10 transition-all duration-200 shadow-sm px-4 h-11 border-slate-300 dark:border-slate-700"
+              className="w-full sm:w-[280px] justify-start text-left font-normal hover:border-primary hover:bg-muted transition-all duration-200 shadow-sm px-4 h-11 border-border"
             >
-              <CalendarIcon className="mr-2 h-4 w-4 text-slate-500" />
+              <CalendarIcon className="mr-2 h-4 w-4 text-muted-foreground" />
+
               {dateRange?.from && dateRange?.to ? (
-                <span className="text-slate-700 dark:text-slate-300">
+                <span className="text-foreground">
                   {format(dateRange.from, 'LLL dd')} - {format(dateRange.to, 'LLL dd, y')}
                 </span>
               ) : (
-                <span className="text-slate-500">Pick a custom range</span>
+                <span className="text-muted-foreground">Pick a custom range</span>
               )}
             </Button>
           </PopoverTrigger>
+
           <PopoverContent
-            className="w-auto p-0 shadow-2xl rounded-xl border-slate-200 dark:border-slate-800"
+            className="w-auto p-0 shadow-2xl rounded-xl border-border bg-background"
             align="end"
           >
             <Calendar

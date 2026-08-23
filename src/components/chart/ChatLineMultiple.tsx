@@ -37,10 +37,10 @@ const ChartLineMultiple = ({
         value={timeRange}
       />
       <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
-        <ChartContainer config={chartConfig} className="min-h-[200px]">
-          {chartData.length === 0 ? (
-            <ChartDataNotAvailable />
-          ) : (
+        {chartData.length === 0 ? (
+          <ChartDataNotAvailable />
+        ) : (
+          <ChartContainer config={chartConfig} className="min-h-[200px]">
             <LineChart
               accessibilityLayer
               data={filteredData}
@@ -81,8 +81,8 @@ const ChartLineMultiple = ({
               />
               <ChartLegend content={<ChartLegendContent />} />
             </LineChart>
-          )}
-        </ChartContainer>
+          </ChartContainer>
+        )}
       </CardContent>
     </Card>
   );

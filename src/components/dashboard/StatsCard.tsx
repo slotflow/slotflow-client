@@ -26,7 +26,7 @@ const StatsCard = ({
     >
       <Card
         className={cn(
-          'h-full overflow-hidden transition-all duration-300 border border-slate-200/60 dark:border-slate-800/60',
+          'h-full overflow-hidden transition-all duration-300 border border-border',
           'backdrop-blur-xl shadow-sm hover:shadow-md',
           !isShow && 'grayscale-[0.5] opacity-90',
         )}
@@ -38,7 +38,7 @@ const StatsCard = ({
                 <div
                   className={cn(
                     'p-2 rounded-xl',
-                    isDark ? 'bg-indigo-500/10 text-indigo-400' : 'bg-indigo-50 text-indigo-600',
+                    isDark ? 'bg-primary/10 text-primary' : 'bg-primary/10 text-primary',
                   )}
                 >
                   {Icon ? (
@@ -47,22 +47,25 @@ const StatsCard = ({
                     <Activity size={20} className="shrink-0" />
                   )}
                 </div>
-                <span className="text-sm font-medium text-slate-500 dark:text-slate-400 line-clamp-1">
+
+                <span className="text-sm font-medium text-muted-foreground line-clamp-1">
                   {title}
                 </span>
               </div>
 
               <div className="space-y-1">
-                <h3 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
+                <h3 className="text-2xl font-bold tracking-tight text-foreground">
                   {price ? formatNumberToPrice(value ?? 0) : (value?.toLocaleString() ?? 0)}
                 </h3>
+
                 {isShow && (
                   <div className="flex items-center gap-1.5">
                     <div className="flex items-center text-xs font-semibold text-emerald-600 dark:text-emerald-400">
                       <TrendingUp size={12} className="mr-1" />
                       {trend.split(' ')[0]}
                     </div>
-                    <span className="text-[10px] text-slate-400 dark:text-slate-500 font-medium uppercase tracking-wider">
+
+                    <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">
                       growth
                     </span>
                   </div>
@@ -70,14 +73,12 @@ const StatsCard = ({
               </div>
             </div>
 
-            {/* Decorative background element */}
             <div className="absolute -right-4 -bottom-4 opacity-[0.03] dark:opacity-[0.05] pointer-events-none transform rotate-12">
               {Icon ? <Icon size={120} /> : <Activity size={120} />}
             </div>
           </div>
         </CardContent>
 
-        {/* Lock Overlay for No Access */}
         <AnimatePresence>
           {!isShow && (
             <motion.div
@@ -86,18 +87,19 @@ const StatsCard = ({
               exit={{ opacity: 0 }}
               className="absolute inset-0 z-20 flex items-center justify-center"
             >
-              <div className="absolute inset-0 bg-slate-50/60 dark:bg-slate-950/80 backdrop-blur-[6px]" />
+              <div className="absolute inset-0 bg-background/60 backdrop-blur-[6px]" />
+
               <div className="relative z-30 flex flex-col items-center gap-3">
-                <div className="p-3 bg-white dark:bg-slate-900 rounded-full shadow-lg border border-slate-200 dark:border-slate-800">
-                  <LockIcon className="w-5 h-5 text-indigo-500" />
+                <div className="p-3 bg-background rounded-full shadow-lg border border-border">
+                  <LockIcon className="w-5 h-5 text-primary" />
                 </div>
+
                 <div className="text-center">
-                  <p className="text-xs font-bold text-slate-700 dark:text-slate-200 uppercase tracking-widest">
+                  <p className="text-xs font-bold text-foreground uppercase tracking-widest">
                     Pro Feature
                   </p>
-                  <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">
-                    Upgrade to access
-                  </p>
+
+                  <p className="text-[10px] text-muted-foreground mt-0.5">Upgrade to access</p>
                 </div>
               </div>
             </motion.div>

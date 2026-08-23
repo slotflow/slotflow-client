@@ -157,9 +157,11 @@ export enum RouteNames {
   GRAFANA_DASHBOARD = 'Grafana Dashboard',
   CREDITS = 'Credits',
   REFERRALS = 'Referrals',
-  NOTIFICATIONS = `Notifications`,
-  ACCOUNT = `Account`,
-  SECURITY = `Security`,
+  NOTIFICATIONS = 'Notifications',
+  ACCOUNT = 'Account',
+  SECURITY = 'Security',
+  STATS = 'Stats',
+  GRAPHS = 'Grpahs',
 }
 
 // route for sidebar
@@ -169,6 +171,20 @@ export const sidebarRoutes: Route[] = [
     name: RouteNames.DASHBOARD,
     icon: LayoutDashboard,
     roles: [Role.ADMIN, Role.PROVIDER],
+    subroutes: [
+      {
+        path: 'stats',
+        name: RouteNames.STATS,
+        icon: Activity,
+        roles: [Role.PROVIDER],
+      },
+      {
+        path: 'graphs',
+        name: RouteNames.GRAPHS,
+        icon: BarChart,
+        roles: [Role.PROVIDER],
+      },
+    ],
   },
 
   {
@@ -1540,12 +1556,6 @@ export const profileTabs: CommonTabInterface[] = [
   { value: 'tab3', label: 'Service', icon: Briefcase, role: [Role.PROVIDER] },
   { value: 'tab4', label: 'Availability', icon: Clock, role: [Role.PROVIDER] },
   { value: 'tab5', label: 'Profile Preview', icon: User, role: [Role.PROVIDER] },
-];
-
-// Provider dashboard tabs
-export const providerDashboardTabs: CommonTabInterface[] = [
-  { value: 'stats', label: 'Stats', icon: Activity },
-  { value: 'graphs', label: 'Graphs', icon: BarChart },
 ];
 
 // Advertisement visibility select field options
