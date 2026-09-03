@@ -21,6 +21,7 @@ import { HearAboutUsOptionValue, Role, ServiceMode } from './enums';
 import { AdminRejectProviderModalState, ApiBaseResponse } from './common';
 import { changeAppointmentStatusRequest, ValidateRoomId } from './api/booking';
 import { AdminChangeUserStatusRequest, PreBoardingResponse } from './api/user';
+import { Plan } from './entity/planInterface';
 
 // Admin plan hook return type interface
 export interface UseAdminPlanReturn {
@@ -108,6 +109,7 @@ export interface useRoleBasedNavigationReturn {
   handleGetPaymentDetailsPage: (paymentId: Payment['_id']) => void;
   JoinCallHandler: (data: ValidateRoomId) => Promise<{ success: boolean; message: string }>;
   handleNavigateToBookingsDetailPage: (appointmentId: Booking['_id']) => void;
+  handleNavigateToPlanDetailPage: (planId: Plan['_id']) => void;
 }
 
 // Add availability hook parameter type interface

@@ -7,9 +7,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { SelectSeparator } from '@/components/ui/select';
 import { Mail, Phone, ShieldUser, User } from 'lucide-react';
 import getBooleanStatusComponent from '@/components/app/GetBooleanStatus';
+import UpdateUserInfoForm from '@/components/form/Common/UpdateUserInfoForm';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { defaultButtonClassName, STATUS_PRESETS } from '@/shared/utils/constants';
-import UpdateUserInfoForm from '@/components/form/CommonForms/UpdateUserInfoForm';
 
 const UserInfo = () => {
   const authUser = useSelector((store: RootState) => store.auth.authUser);

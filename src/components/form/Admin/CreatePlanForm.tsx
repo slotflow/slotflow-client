@@ -46,10 +46,13 @@ const CreatePlanForm = ({ onClose, formRef }: CreatePlanFormProps) => {
       features: [''],
       maxBookingPerMonth: 0,
       adVisibility: false,
+      hasTrial: false,
+      trialDays: 14,
     },
   });
 
   const features = watch('features');
+  const hasTrial = watch('hasTrial');
 
   const onSubmit = async (data: AdminCreatePlanFormType) => {
     await createPlan(data)
@@ -130,6 +133,28 @@ const CreatePlanForm = ({ onClose, formRef }: CreatePlanFormProps) => {
                 options={adVisibility}
                 required
               />
+              <SelectField<AdminCreatePlanFormType, boolean>
+                id="hasTrial"
+                label="Enable 14-Day Free Trial?"
+                register={register}
+                error={errors.hasTrial?.message}
+                options={[
+                  { label: 'No', value: false },
+                  { label: 'Yes', value: true },
+                ]}
+                required
+              />
+              {hasTrial && (
+                <FormField<AdminCreatePlanFormType>
+                  id="trialDays"
+                  label="Trial Period (Days)"
+                  placeholder="14"
+                  type="number"
+                  register={register}
+                  error={errors.trialDays?.message}
+                  required
+                />
+              )}
             </div>
           </div>
 

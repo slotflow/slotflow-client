@@ -6,14 +6,16 @@ import {
 } from '../../shared/types/common';
 import {
   CreatePlanRequest,
+  ResyncPlanStripeRequest,
+  ResyncPlanStripeResponse,
   ProviderFetchPlansResponse,
   AdminFetchAllPlansResponse,
   ChangePlanBlockStatusRequest,
-  ResyncPlanStripeRequest,
-  ResyncPlanStripeResponse,
+  AdminFetchPlanDetailsResponse,
 } from '../../shared/types/api/plan';
 import { axiosInstance } from '@/lib/axios';
 import { buildQueryParams } from '../../shared/utils/helper/buildQueryParams';
+import { Plan } from '@/shared/types/entity/planInterface';
 
 export const adminFetchAllPlans: ApiFetchFunction<
   AdminFetchAllPlansResponse,
@@ -49,5 +51,12 @@ export const resyncPlanStripe = async (
   data: ResyncPlanStripeRequest,
 ): Promise<ApiBaseResponse<ResyncPlanStripeResponse>> => {
   const response = await axiosInstance.post(`/plans${data.planId}/resync`);
+  return response.data;
+};
+
+export const adminFetchPlanDetails = async (
+  planId: Plan['_id'],
+): Promise<ApiBaseResponse<AdminFetchPlanDetailsResponse>> => {
+  const response = await axiosInstance.get(`/plans/${planId}`);
   return response.data;
 };

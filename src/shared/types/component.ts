@@ -1126,3 +1126,16 @@ export interface NotificationItemProps {
   checked: boolean;
   onChange: (channel: NotificationChannel, type: NotificationType, enabled: boolean) => void;
 }
+
+//
+export interface CupyFieldProps {
+  value: string;
+  label?: string;
+}
+
+//
+export interface DataShimmerProps {
+  w?: string;
+  h?: string;
+  className?: string;
+}

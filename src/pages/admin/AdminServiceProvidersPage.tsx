@@ -12,7 +12,7 @@ import { useAdminProvider } from '@/hooks/adminHooks/useProvider';
 import { slideIn } from '@/shared/utils/helper/gsapAnimationSlide';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
 import { fetchServiceProvidersForAdmin } from '@/services/apis/providerProfile';
-import RejectproviderForm from '@/components/form/AdminForms/RejectproviderForm';
+import RejectproviderForm from '@/components/form/Admin/RejectproviderForm';
 import AdminProvidersTableColumns from '@/components/table/tableColumns/AdminProvidersTableColumn';
 
 const AdminServiceProvidersPage = () => {

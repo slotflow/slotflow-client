@@ -3,7 +3,7 @@ import { dataFetchingError } from '@/shared/types/component';
 
 const DataFetchingError = ({ message, className }: dataFetchingError) => {
   return (
-    <div className={`flex flex-col flex-grow min-h-full ${className}`}>
+    <div className={`flex flex-col min-h-full ${className}`}>
       <div className="w-full flex flex-col justify-center items-center flex-grow">
         <img src={fetchError} className="h-40 md:h-80" />
         <h6>{message || 'Fetching error please try again.'}</h6>

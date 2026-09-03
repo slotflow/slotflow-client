@@ -15,8 +15,8 @@ import { Button } from '@/components/ui/button';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/app/store/appStore';
+import FileUploader from '@/components/form/Common/FileUploader';
 import { setIsProofSubmitted } from '@/app/store/slices/authSlice';
-import FileUploader from '@/components/form/CommonForms/FileUploader';
 import { defaultButtonClassName, redirectPaths } from '@/shared/utils/constants';
 
 const ProviderProofSubmissionPage = () => {

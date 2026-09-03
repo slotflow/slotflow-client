@@ -23,6 +23,8 @@ export interface Plan {
   isBlocked: boolean;
   stripePlanDetails: StripePlanDetails | null;
   stripeSync: StripeSyncStatus;
+  hasTrial: boolean;
+  trialDays: number;
   createdAt: string;
   updatedAt: string;
 }

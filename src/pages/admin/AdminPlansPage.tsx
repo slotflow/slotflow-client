@@ -3,13 +3,14 @@ import { useEffect, useRef, useState } from 'react';
 import { useAdminPlan } from '@/hooks/adminHooks/usePlan';
 import { adminFetchAllPlans } from '@/services/apis/plan';
 import { slideIn } from '@/shared/utils/helper/gsapAnimationSlide';
+import CreatePlanForm from '@/components/form/Admin/CreatePlanForm';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
-import CreatePlanForm from '@/components/form/AdminForms/CreatePlanForm';
+import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
 import AdminPlansTableColumns from '@/components/table/tableColumns/AdminPlansTableColumn';
 import {
+  ResyncPlanStripeRequest,
   AdminFetchAllPlansResponse,
   ChangePlanBlockStatusRequest,
-  ResyncPlanStripeRequest,
 } from '@/shared/types/api/plan';
 
 const AdminPlansPage = () => {
@@ -18,6 +19,8 @@ const AdminPlansPage = () => {
 
   const { changePlanBlockStatus, resyncPlanWithStripe, changeBlockStatusPlanId, resyncingPlanId } =
     useAdminPlan();
+
+  const { handleNavigateToPlanDetailPage } = useRoleBasedNavigation();
 
   const handleAdminChangePlanStatus = async (data: ChangePlanBlockStatusRequest) => {
     const res = await changePlanBlockStatus(data);
@@ -40,6 +43,7 @@ const AdminPlansPage = () => {
   const column = AdminPlansTableColumns(
     handleAdminChangePlanStatus,
     handleResyncStripe,
+    handleNavigateToPlanDetailPage,
     changeBlockStatusPlanId,
     resyncingPlanId,
   );
@@ -56,7 +60,7 @@ const AdminPlansPage = () => {
         fetchApiFunction={adminFetchAllPlans}
         queryKey="plans"
         column={column}
-        columnsCount={4}
+        columnsCount={9}
         actionButtons={[
           {
             actionLabel: 'Create New Plan',

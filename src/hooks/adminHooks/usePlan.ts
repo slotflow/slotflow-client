@@ -4,9 +4,9 @@ import { ApiPaginatedResponse } from '@/shared/types/common';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { changePlanBlockStatus, resyncPlanStripe } from '@/services/apis/plan';
 import {
+  ResyncPlanStripeRequest,
   AdminFetchAllPlansResponse,
   ChangePlanBlockStatusRequest,
-  ResyncPlanStripeRequest,
 } from '@/shared/types/api/plan';
 
 export const useAdminPlan = (): UseAdminPlanReturn => {

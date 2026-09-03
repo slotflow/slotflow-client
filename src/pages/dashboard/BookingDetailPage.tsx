@@ -19,7 +19,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { fetchBookingDetails } from '@/services/apis/booking';
 import { formatDateWithTime } from '@/shared/utils/helper/formatter';
 import DataFetchingError from '@/components/error/DataFetchingError';
-import ProfileDetailsShimmer from '@/components/shimmers/DataFieldShimmer';
+import DetailsShimmer from '@/components/shimmers/DataFieldShimmer';
 
 const BookingDetailPage = () => {
   const { bookingId } = useParams<{ bookingId: Booking['_id'] }>();
@@ -53,7 +53,7 @@ const BookingDetailPage = () => {
       {isError && error ? (
         <DataFetchingError message={(error as Error).message} />
       ) : isLoading ? (
-        <ProfileDetailsShimmer row={14} />
+        <DetailsShimmer row={14} />
       ) : data ? (
         <div className="">
           <Card>

@@ -23,6 +23,8 @@ export type CreatePlanRequest = Pick<
   | 'features'
   | 'maxBookingPerMonth'
   | 'adVisibility'
+  | 'hasTrial'
+  | 'trialDays'
 >;
 
 // request type of change plan block status api
@@ -48,3 +50,6 @@ export type ResyncPlanStripeResponse = {
   stripePlanDetails: Plan['stripePlanDetails'];
   stripeSync: Plan['stripeSync'];
 };
+
+// response type for plan details
+export type AdminFetchPlanDetailsResponse = Omit<Plan, 'createdAt' | 'updatedAt'>;

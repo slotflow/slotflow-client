@@ -5,13 +5,11 @@ import { descriptionRegex, appServiceNameRegex, verificationRejectionReasonRegex
 // Admin Create Plan Schema
 export const adminCreatePlanZodSchema = z.object({
   planName: z.nativeEnum(PlanName),
-
   description: z
     .string()
     .min(10, 'Description must be at least 10 characters')
     .max(200, 'Description cannot exceed 200 characters')
     .regex(descriptionRegex, 'Invalid description. Contains unsupported characters.'),
-
   monthlyPrice: z
     .number()
     .min(0, 'Plan monthly price must be at least 0')
@@ -20,7 +18,6 @@ export const adminCreatePlanZodSchema = z.object({
     .number()
     .min(0, 'Plan yearly price must be at least 0')
     .max(100000, 'Plan yearly price must be at most 100000'),
-
   features: z
     .array(
       z
@@ -31,17 +28,21 @@ export const adminCreatePlanZodSchema = z.object({
     )
     .min(5, 'At least one feature is required')
     .max(15, 'Maximum 10 features allowed'),
-
   maxBookingPerMonth: z
     .number({
       invalid_type_error: 'Maximum booking must be a number',
     })
     .min(0, 'Max booking cannot be negative')
     .max(10000, 'Max booking cannot exceed 10000'),
-
   adVisibility: z.boolean({
     invalid_type_error: 'Ad visibility must be true or false',
   }),
+  hasTrial: z.boolean().default(false),
+  trialDays: z
+    .number()
+    .min(0, 'Trial days cannot be negative')
+    .max(30, 'Trial days cannot exceed 30')
+    .default(0),
 });
 
 export type AdminCreatePlanFormType = z.infer<typeof adminCreatePlanZodSchema>;

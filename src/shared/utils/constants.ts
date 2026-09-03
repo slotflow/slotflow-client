@@ -502,7 +502,7 @@ export const planFeatures: PlanFeatureInterface[] = [
         enterprise: true,
         inDevelopment: false,
         limit: {
-          trial: 'Unlimited (14 days)',
+          trial: '30 bookings (14 days)',
           starter: '300 bookings/month',
           professional: 'Unlimited',
           enterprise: 'Unlimited',

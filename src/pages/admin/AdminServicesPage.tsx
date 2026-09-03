@@ -5,7 +5,7 @@ import { fetchServices } from '@/services/apis/service';
 import { useAdminService } from '@/hooks/adminHooks/useService';
 import { slideIn } from '@/shared/utils/helper/gsapAnimationSlide';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
-import CreateServiceForm from '@/components/form/AdminForms/CreateServiceForm';
+import CreateServiceForm from '@/components/form/Admin/CreateServiceForm';
 import AdminAppServicesTableColumns from '@/components/table/tableColumns/AdminAppServicesTableColumn';
 
 const AdminServicesPage = () => {

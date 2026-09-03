@@ -8,6 +8,7 @@ import { validateRoomId } from '@/services/apis/booking';
 import { ValidateRoomId } from '@/shared/types/api/booking';
 import { Subscription } from '@/shared/types/entity/subscription';
 import { useRoleBasedNavigationReturn } from '@/shared/types/hooks';
+import { Plan } from '@/shared/types/entity/planInterface';
 
 export const useRoleBasedNavigation = (): useRoleBasedNavigationReturn => {
   const navigate = useNavigate();
@@ -62,10 +63,15 @@ export const useRoleBasedNavigation = (): useRoleBasedNavigationReturn => {
     }
   };
 
+  const handleNavigateToPlanDetailPage = (planId: Plan['_id']) => {
+    navigate(`/admin/plans/${planId}`);
+  };
+
   return {
     handleAdminGetProviderDetailPage,
     handleGetPaymentDetailsPage,
     JoinCallHandler,
     handleNavigateToBookingsDetailPage,
+    handleNavigateToPlanDetailPage,
   };
 };

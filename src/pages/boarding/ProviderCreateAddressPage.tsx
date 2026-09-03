@@ -1,4 +1,4 @@
-import AddressForm from '@/components/form/CommonForms/AddressForm';
+import AddressForm from '@/components/form/Common/AddressForm';
 
 const ProviderAddAddressPage = () => {
   return <AddressForm />;
