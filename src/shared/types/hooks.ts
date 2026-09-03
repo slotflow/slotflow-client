@@ -8,7 +8,11 @@ import { Review } from './entity/review';
 import { Payment } from './entity/payment';
 import { Booking } from './entity/booking';
 import { Subscription } from './entity/subscription';
-import { ChangePlanBlockStatusRequest } from './api/plan';
+import {
+  ChangePlanBlockStatusRequest,
+  ResyncPlanStripeRequest,
+  ResyncPlanStripeResponse,
+} from './api/plan';
 import { Availability } from './entity/serviceAvailability';
 import { ToggleReviewBlockStatusRequest } from './api/review';
 import { ChangeServiceBlockStatusRequest } from './api/service';
@@ -20,7 +24,12 @@ import { AdminChangeUserStatusRequest, PreBoardingResponse } from './api/user';
 
 // Admin plan hook return type interface
 export interface UseAdminPlanReturn {
-  changePlanStatus: (data: ChangePlanBlockStatusRequest) => Promise<ApiBaseResponse>;
+  changePlanBlockStatus: (data: ChangePlanBlockStatusRequest) => Promise<ApiBaseResponse>;
+  resyncPlanWithStripe: (
+    data: ResyncPlanStripeRequest,
+  ) => Promise<ApiBaseResponse<ResyncPlanStripeResponse>>;
+  changeBlockStatusPlanId: string | null;
+  resyncingPlanId: string | null;
 }
 
 // Admin provider hook return type interface

@@ -150,14 +150,6 @@ export enum SubscriptionStatus {
   FAILED = 'FAILED',
 }
 
-export enum SubscriptionValidity {
-  SEVEN_DAYS = 7,
-  ONE_MONTH = 30,
-  THREE_MONTHS = 90,
-  SIX_MONTHS = 180,
-  TWELVE_MONTHS = 360,
-}
-
 export enum NotificationType {
   BOOKING_CONFIRMED = 'BOOKING_CONFIRMED',
   BOOKING_CANCELLED = 'BOOKING_CANCELLED',
@@ -288,4 +280,9 @@ export enum StripeAccountStatus {
   RESTRICTED = 'restricted',
   REVOKED = 'revoked',
   NOT_CONNECTED = 'not_connected',
+}
+
+export enum BillingCycle {
+  MONTHLY = 'monthly',
+  YEARLY = 'yearly',
 }

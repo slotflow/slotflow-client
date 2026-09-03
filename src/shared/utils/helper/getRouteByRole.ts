@@ -1,12 +1,23 @@
 import { Role } from '../../types/enums';
-import { sidebarRoutes } from '../constants';
 import { Route } from '../../types/common';
+import { sidebarRoutes } from '../constants';
 
 export const getRoutesByRole = (role: Role): Route[] => {
-  return sidebarRoutes.filter((route) => {
-    return (
-      route.roles?.includes(role) ||
-      route.subroutes?.some((subroute) => subroute.roles?.includes(role))
-    );
-  });
+  if (!role) return [];
+
+  return sidebarRoutes
+    .filter((route) => {
+      const hasParentRole = route.roles?.includes(role);
+      const hasSubrouteRole = route.subroutes?.some((sub) => sub.roles?.includes(role));
+      return hasParentRole || hasSubrouteRole;
+    })
+    .map((route) => {
+      if (route.subroutes) {
+        return {
+          ...route,
+          subroutes: route.subroutes.filter((sub) => sub.roles?.includes(role)),
+        };
+      }
+      return route;
+    });
 };

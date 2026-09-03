@@ -152,7 +152,7 @@ export interface PlanFeatureLimit {
 
 // Plan list type interface
 export type PlanListType = Array<
-  Pick<Plan, '_id' | 'planName' | 'price' | 'description' | 'features'>
+  Pick<Plan, '_id' | 'planName' | 'monthlyPrice' | 'yearlyPrice' | 'description' | 'features'>
 >;
 
 // Provider approval message interface
@@ -535,3 +535,14 @@ export type NotificationType =
   | 'account_activity'
   | 'system_updates'
   | 'promotional_updates';
+
+// cms plan fields
+export interface PlanFields {
+  planKey: number;
+  displayName: PlanName;
+  description: string;
+  monthlyPrice: number;
+  yearlyPrice: number;
+  featuresList: string[];
+  isPopular: boolean;
+}

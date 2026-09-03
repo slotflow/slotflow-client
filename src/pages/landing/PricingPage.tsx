@@ -1,14 +1,29 @@
-import { useState } from 'react';
 import { IndianRupee } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import PlanCard from '@/components/plan/PlanCard';
-import { PlanList } from '@/shared/utils/constants';
-import MoveUpward from '@/components/animation/MoveUpward';
+import { BillingCycle } from '@/shared/types/enums';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPlans } from '@/services/apis/contentful';
+import { AppDispatch, RootState } from '@/app/store/appStore';
 import SectionHeading from '@/components/common/SectionHeading';
 import BillingCycleToggle from '@/components/plan/BillingCycleToggle';
 import PricingFeatureDetails from '@/components/landing/pricing/PricingFeatureDetails';
 
 const PricingPage = () => {
-  const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
+  const [billingCycle, setBillingCycle] = useState<BillingCycle>(BillingCycle.MONTHLY);
+
+  const dispatch = useDispatch<AppDispatch>();
+  const { planData } = useSelector((state: RootState) => state.cms);
+
+  useEffect(() => {
+    dispatch(getPlans());
+  }, [dispatch]);
+
+  const plans = [...(planData?.plans || [])].sort((a, b) => a.planKey - b.planKey);
+  const loading = planData?.loading;
+  const error = planData?.error;
+
+  console.log('plans : ', plans);
 
   return (
     <main className="w-full">
@@ -44,26 +59,33 @@ const PricingPage = () => {
         </div>
       </section>
 
-      <MoveUpward>
-        <section id="pricing-cards w-full">
+      <section id="pricing-cards" className="w-full">
+        {loading && plans.length === 0 ? (
+          <div className="text-center py-12">Loading plans...</div>
+        ) : error && plans.length === 0 ? (
+          <div className="text-center py-12 text-red-500">{error}</div>
+        ) : (
           <div className="max-w-7xl mx-auto mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:items-center">
-            {PlanList.map((plan) => (
+            {plans.map((plan) => (
               <PlanCard
-                key={plan._id}
+                key={plan.planKey}
                 isTrial={true}
-                plan={plan}
-                dummy={true}
-                popular={plan._id === '2' ? true : false}
+                plan={{
+                  ...plan,
+                  _id: String(plan.planKey),
+                  planName: plan.displayName,
+                  features: plan.featuresList,
+                }}
+                dummy={false}
+                popular={plan.isPopular}
                 billingCycle={billingCycle}
               />
             ))}
           </div>
-        </section>
-      </MoveUpward>
+        )}
+      </section>
 
-      <MoveUpward>
-        <PricingFeatureDetails billingCycle={billingCycle} />
-      </MoveUpward>
+      <PricingFeatureDetails billingCycle={billingCycle} plans={plans} />
     </main>
   );
 };

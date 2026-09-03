@@ -16,7 +16,7 @@ const UserLayout = () => {
     (store: RootState) => store.user.isReviewCreateFormOpen,
   );
   const isPaymentSelectionOpen = useSelector((store: RootState) => store.payment.isOpen);
-  const userRoutes = getRoutesByRole(Role.PROVIDER);
+  const userRoutes = getRoutesByRole(Role.USER);
 
   return (
     <MainLayout

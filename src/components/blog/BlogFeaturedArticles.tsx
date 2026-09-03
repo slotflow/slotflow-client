@@ -24,69 +24,69 @@ const BlogFeaturedArticles = ({ featuredArticles }: BlogFeaturedArticlesProps) =
           <Card className="group overflow-hidden rounded-3xl lg:col-span-2">
             <div className="overflow-hidden">
               <img
-                src={featuredArticles[0].articleImage}
+                src={featuredArticles[0]?.articleImage}
                 className="h-[420px] w-full object-cover transition duration-500 group-hover:scale-105"
               />
             </div>
             <div className="space-y-5 p-8">
               <div className="flex gap-3">
-                <Badge>{featuredArticles[0].category}</Badge>
+                <Badge>{featuredArticles[0]?.category}</Badge>
                 <Badge variant="secondary">Editor's Pick</Badge>
               </div>
               <Link
                 to={`/blog/${featuredArticles[0]?.id}`}
                 className="hover:underline text-4xl font-bold leading-tight transition group-hover:text-primary"
               >
-                {featuredArticles[0].heroTitle}
+                {featuredArticles[0]?.heroTitle}
               </Link>
               <p className="leading-8 text-muted-foreground mt-4">
-                {featuredArticles[0].heroDescription}
+                {featuredArticles[0]?.heroDescription}
               </p>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <img
-                    src={featuredArticles[0].author?.profileImage}
+                    src={featuredArticles[0]?.author?.profileImage}
                     className="h-11 w-11 rounded-full"
                   />
                   <div>
-                    <h4 className="font-semibold">{featuredArticles[0].author?.author}</h4>
+                    <h4 className="font-semibold">{featuredArticles[0]?.author?.author}</h4>
                     <p className="text-sm text-muted-foreground">
-                      {featuredArticles[0].author?.proffession}
+                      {featuredArticles[0]?.author?.proffession}
                     </p>
                   </div>
                 </div>
                 <div className="text-right text-sm text-muted-foreground">
-                  <p>{formateDate(new Date(featuredArticles[0].createdAt))}</p>
-                  <p>{featuredArticles[0].readTime}</p>
+                  <p>{formateDate(new Date(featuredArticles[0]?.createdAt))}</p>
+                  <p>{featuredArticles[0]?.readTime}</p>
                 </div>
               </div>
             </div>
           </Card>
           <div className="space-y-6">
             {featuredArticles.slice(1, 4).map((article) => (
-              <Card key={article.articleTitle} className="group overflow-hidden rounded-2xl">
+              <Card key={article?.articleTitle} className="group overflow-hidden rounded-2xl">
                 <div className="flex">
                   <img
-                    src={article.articleImage}
+                    src={article?.articleImage}
                     className="h-36 w-36 object-cover transition duration-500 group-hover:scale-110"
                   />
                   <div className="flex flex-1 flex-col justify-between p-5">
                     <div className="space-y-4">
-                      <Badge variant="secondary">{article.category}</Badge>
+                      <Badge variant="secondary">{article?.category}</Badge>
 
                       <Link
-                        to={`/blog/${article.id}`}
+                        to={`/blog/${article?.id}`}
                         className="hover:underline line-clamp-2 text-lg font-semibold leading-snug transition-colors hover:text-primary"
                       >
-                        {article.articleTitle}
+                        {article?.articleTitle}
                       </Link>
                     </div>
 
                     <div className="mt-6 flex items-center justify-between border-t pt-4 text-sm text-muted-foreground">
-                      <span>{article.readTime}</span>
+                      <span>{article?.readTime}</span>
 
                       <Link
-                        to={`/blog/${article.id}`}
+                        to={`/blog/${article?.id}`}
                         className="font-medium transition-colors hover:text-primary"
                       >
                         Read →

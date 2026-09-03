@@ -69,7 +69,6 @@ import {
 import {
   Route,
   BookingSteps,
-  PlanListType,
   BlogCTAItems,
   BoardingStep,
   CompanyValues,
@@ -379,6 +378,7 @@ export const planAccessMap: Record<PlanName, RouteNames[]> = {
     RouteNames.BOOKINGS,
     RouteNames.SUBSCRIPTIONS,
     RouteNames.PAYMENTS,
+    RouteNames.CALENDAR,
     RouteNames.CREDITS,
     RouteNames.REFERRALS,
     RouteNames.SETTINGS,
@@ -389,11 +389,11 @@ export const planAccessMap: Record<PlanName, RouteNames[]> = {
     RouteNames.BOOKINGS,
     RouteNames.SUBSCRIPTIONS,
     RouteNames.PAYMENTS,
-    RouteNames.CHAT,
-    RouteNames.REVIEWS,
     RouteNames.CALENDAR,
     RouteNames.CREDITS,
     RouteNames.REFERRALS,
+    RouteNames.CHAT,
+    RouteNames.REVIEWS,
     RouteNames.SETTINGS,
   ],
   [PlanName.ENTERPRISE]: [
@@ -402,11 +402,11 @@ export const planAccessMap: Record<PlanName, RouteNames[]> = {
     RouteNames.BOOKINGS,
     RouteNames.SUBSCRIPTIONS,
     RouteNames.PAYMENTS,
-    RouteNames.CHAT,
-    RouteNames.REVIEWS,
     RouteNames.CALENDAR,
     RouteNames.CREDITS,
     RouteNames.REFERRALS,
+    RouteNames.CHAT,
+    RouteNames.REVIEWS,
     RouteNames.SETTINGS,
   ],
 };
@@ -481,81 +481,6 @@ export const dateSelectList: dataSelectListItemInterface[] = [
   { value: '365d', content: 'Last year' },
 ];
 
-// Pricing Setion Data
-export const PlanList: PlanListType = [
-  {
-    _id: '0',
-    planName: PlanName.TRIAL,
-    description:
-      'A simple way to explore SlotFlow and experience essential appointment management.',
-    features: [
-      '7-day access',
-      'Up to 7 bookings',
-      'Essential booking management',
-      'In-app notifications',
-      'Basic dashboard',
-      'Perfect for exploring SlotFlow',
-    ],
-    price: 0,
-  },
-  {
-    _id: '1',
-    planName: PlanName.STARTER,
-    description:
-      'Essential tools for solo professionals to manage appointments and build their online presence.',
-    features: [
-      'Everything in Trial',
-      'Up to 100 bookings per month',
-      'Email notifications',
-      'Push notifications',
-      'Google Calendar integration',
-      'Stripe payout integration',
-      'Basic analytics',
-      'Daily reports',
-      'Report history',
-      'Customer reviews',
-      'AI-powered features',
-      'Email support',
-    ],
-    price: 499,
-  },
-  {
-    _id: '2',
-    planName: PlanName.PROFESSIONAL,
-    description:
-      'Advanced tools for growing businesses that need smarter communication, insights, and automation.',
-    features: [
-      'Everything in Starter',
-      'Up to 500 bookings per month',
-      'WhatsApp notifications',
-      'Mobile/SMS notifications',
-      'WhatsApp integration',
-      'Notion integration',
-      'Realtime chat',
-      'Video calls for online appointments',
-      'Advanced analytics',
-      'Advanced report insights',
-      'Priority support',
-    ],
-    price: 1499,
-  },
-  {
-    _id: '3',
-    planName: PlanName.ENTERPRISE,
-    description:
-      'A complete solution for established businesses requiring maximum flexibility, scale, and premium capabilities.',
-    features: [
-      'Everything in Professional',
-      'Unlimited bookings',
-      'Advanced analytics and insights',
-      'Full report access',
-      'Premium support',
-      'Built for scale',
-    ],
-    price: 4999,
-  },
-];
-
 //// Plan feature comparison table
 export const planFeatures: PlanFeatureInterface[] = [
   {
@@ -577,9 +502,9 @@ export const planFeatures: PlanFeatureInterface[] = [
         enterprise: true,
         inDevelopment: false,
         limit: {
-          trial: '7 bookings',
-          starter: '100 bookings/month',
-          professional: '500 bookings/month',
+          trial: 'Unlimited (14 days)',
+          starter: '300 bookings/month',
+          professional: 'Unlimited',
           enterprise: 'Unlimited',
         },
       },
@@ -606,7 +531,7 @@ export const planFeatures: PlanFeatureInterface[] = [
       },
       {
         name: 'Email notifications',
-        trial: false,
+        trial: true,
         starter: true,
         professional: true,
         enterprise: true,
@@ -614,7 +539,7 @@ export const planFeatures: PlanFeatureInterface[] = [
       },
       {
         name: 'Push notifications',
-        trial: false,
+        trial: true,
         starter: true,
         professional: true,
         enterprise: true,
@@ -634,7 +559,7 @@ export const planFeatures: PlanFeatureInterface[] = [
         starter: false,
         professional: true,
         enterprise: true,
-        inDevelopment: true,
+        inDevelopment: false,
       },
     ],
   },
@@ -643,7 +568,7 @@ export const planFeatures: PlanFeatureInterface[] = [
     features: [
       {
         name: 'Google Calendar integration',
-        trial: false,
+        trial: true,
         starter: true,
         professional: true,
         enterprise: true,
@@ -651,7 +576,7 @@ export const planFeatures: PlanFeatureInterface[] = [
       },
       {
         name: 'Stripe payout integration',
-        trial: false,
+        trial: true,
         starter: true,
         professional: true,
         enterprise: true,
@@ -673,28 +598,31 @@ export const planFeatures: PlanFeatureInterface[] = [
         enterprise: true,
         inDevelopment: true,
       },
-    ],
-  },
-  {
-    type: 'Communication',
-    features: [
       {
-        name: 'Realtime chat',
+        name: 'Custom integrations & Webhooks',
         trial: false,
         starter: false,
-        professional: true,
+        professional: false,
         enterprise: true,
         inDevelopment: false,
       },
     ],
   },
   {
-    type: 'Video',
+    type: 'Communication',
     features: [
       {
-        name: 'Video calls for online appointments',
-        trial: false,
-        starter: false,
+        name: 'Real-time Chat',
+        trial: true,
+        starter: true,
+        professional: true,
+        enterprise: true,
+        inDevelopment: false,
+      },
+      {
+        name: 'Video Calls for online appointments',
+        trial: true,
+        starter: true,
         professional: true,
         enterprise: true,
         inDevelopment: false,
@@ -705,7 +633,7 @@ export const planFeatures: PlanFeatureInterface[] = [
     type: 'Analytics',
     features: [
       {
-        name: 'Provider dashboard',
+        name: 'Basic Dashboard',
         trial: true,
         starter: true,
         professional: true,
@@ -713,76 +641,18 @@ export const planFeatures: PlanFeatureInterface[] = [
         inDevelopment: false,
       },
       {
-        name: 'Basic analytics',
-        trial: false,
-        starter: true,
-        professional: true,
-        enterprise: true,
-        inDevelopment: false,
-      },
-      {
-        name: 'Advanced analytics',
-        trial: false,
+        name: 'Advanced Reports & Insights',
+        trial: true,
         starter: false,
         professional: true,
         enterprise: true,
         inDevelopment: false,
       },
       {
-        name: 'Advanced analytics and insights',
+        name: 'AI Analytics Dashboard',
         trial: false,
         starter: false,
         professional: false,
-        enterprise: true,
-        inDevelopment: false,
-      },
-    ],
-  },
-  {
-    type: 'Reports',
-    features: [
-      {
-        name: 'Daily reports',
-        trial: false,
-        starter: true,
-        professional: true,
-        enterprise: true,
-        inDevelopment: false,
-      },
-      {
-        name: 'Report history',
-        trial: false,
-        starter: true,
-        professional: true,
-        enterprise: true,
-        inDevelopment: false,
-      },
-      {
-        name: 'Advanced report insights',
-        trial: false,
-        starter: false,
-        professional: true,
-        enterprise: true,
-        inDevelopment: false,
-      },
-      {
-        name: 'Full report access',
-        trial: false,
-        starter: false,
-        professional: false,
-        enterprise: true,
-        inDevelopment: false,
-      },
-    ],
-  },
-  {
-    type: 'Reviews',
-    features: [
-      {
-        name: 'Receive customer reviews',
-        trial: false,
-        starter: true,
-        professional: true,
         enterprise: true,
         inDevelopment: false,
       },
@@ -793,8 +663,21 @@ export const planFeatures: PlanFeatureInterface[] = [
     features: [
       {
         name: 'AI-powered features',
-        trial: false,
+        trial: true,
         starter: true,
+        professional: true,
+        enterprise: true,
+        inDevelopment: true,
+      },
+    ],
+  },
+  {
+    type: 'Marketing',
+    features: [
+      {
+        name: 'Ad Visibility',
+        trial: false,
+        starter: false,
         professional: true,
         enterprise: true,
         inDevelopment: false,
@@ -805,16 +688,8 @@ export const planFeatures: PlanFeatureInterface[] = [
     type: 'Support',
     features: [
       {
-        name: 'Support',
-        trial: false,
-        starter: true,
-        professional: true,
-        enterprise: true,
-        inDevelopment: false,
-      },
-      {
         name: 'Email support',
-        trial: false,
+        trial: true,
         starter: true,
         professional: true,
         enterprise: true,
@@ -822,7 +697,7 @@ export const planFeatures: PlanFeatureInterface[] = [
       },
       {
         name: 'Priority support',
-        trial: false,
+        trial: true,
         starter: false,
         professional: true,
         enterprise: true,
@@ -842,7 +717,7 @@ export const planFeatures: PlanFeatureInterface[] = [
     type: 'Plan Control',
     features: [
       {
-        name: '7-day trial validity',
+        name: '14-day Professional trial',
         trial: true,
         starter: false,
         professional: false,
@@ -856,6 +731,25 @@ export const planFeatures: PlanFeatureInterface[] = [
         professional: true,
         enterprise: true,
         inDevelopment: false,
+      },
+    ],
+  },
+  {
+    type: 'Developer Tools',
+    features: [
+      {
+        name: 'Slot Availability API',
+        trial: true,
+        starter: false,
+        professional: true,
+        enterprise: true,
+        inDevelopment: false,
+        limit: {
+          trial: '10,000 req/month',
+          starter: 'Not available',
+          professional: '10,000 req/month',
+          enterprise: '30,000 req/month',
+        },
       },
     ],
   },
@@ -951,15 +845,15 @@ export const footerLinks = {
   account: [
     {
       name: 'Sign Up',
-      href: '/signup',
+      href: '/auth/register',
     },
     {
       name: 'Login',
-      href: '/login',
+      href: '/auth/login',
     },
     {
       name: 'Forgot Password',
-      href: '/forgot-password',
+      href: '/auth/verify/email',
     },
   ],
 };

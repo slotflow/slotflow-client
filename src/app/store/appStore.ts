@@ -1,4 +1,5 @@
 import appReducer from './slices/appSlice';
+import cmsReducer from './slices/cmsSlice';
 import authReducer from './slices/authSlice';
 import chatReducer from './slices/chatSlice';
 import userReducer from './slices/userSlice';
@@ -30,6 +31,7 @@ const rootReducers = {
   integration: integrationReducer,
   payment: paymentReducer,
   notification: notificationReducer,
+  cms: cmsReducer,
 };
 
 const rootReducer = combineReducers(rootReducers);

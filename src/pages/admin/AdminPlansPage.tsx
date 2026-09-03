@@ -6,16 +6,21 @@ import { slideIn } from '@/shared/utils/helper/gsapAnimationSlide';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
 import CreatePlanForm from '@/components/form/AdminForms/CreatePlanForm';
 import AdminPlansTableColumns from '@/components/table/tableColumns/AdminPlansTableColumn';
-import { AdminFetchAllPlansResponse, ChangePlanBlockStatusRequest } from '@/shared/types/api/plan';
+import {
+  AdminFetchAllPlansResponse,
+  ChangePlanBlockStatusRequest,
+  ResyncPlanStripeRequest,
+} from '@/shared/types/api/plan';
 
 const AdminPlansPage = () => {
   const [showForm, setShowForm] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
 
-  const { changePlanStatus } = useAdminPlan();
+  const { changePlanBlockStatus, resyncPlanWithStripe, changeBlockStatusPlanId, resyncingPlanId } =
+    useAdminPlan();
 
   const handleAdminChangePlanStatus = async (data: ChangePlanBlockStatusRequest) => {
-    const res = await changePlanStatus(data);
+    const res = await changePlanBlockStatus(data);
     if (res.success) {
       toast.success(res.message);
     } else {
@@ -23,7 +28,21 @@ const AdminPlansPage = () => {
     }
   };
 
-  const column = AdminPlansTableColumns(handleAdminChangePlanStatus);
+  const handleResyncStripe = async (data: ResyncPlanStripeRequest) => {
+    const res = await resyncPlanWithStripe(data);
+    if (res.success) {
+      toast.success(res.message);
+    } else {
+      toast.error(res.message);
+    }
+  };
+
+  const column = AdminPlansTableColumns(
+    handleAdminChangePlanStatus,
+    handleResyncStripe,
+    changeBlockStatusPlanId,
+    resyncingPlanId,
+  );
 
   useEffect(() => {
     if (showForm && formRef.current) {

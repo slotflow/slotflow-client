@@ -1,12 +1,15 @@
 # Dependencies
 node_modules/
 
+# dev
+dist
+
 # Environment Secrets
 .env
 .env.local
 .env*.local
 
-# Local Tools & Screenshots
+# Local Tools
 .vercel/
 
 # Logs & Cache

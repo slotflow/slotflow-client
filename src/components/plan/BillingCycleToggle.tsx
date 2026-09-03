@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
-
-export type BillingCycle = 'monthly' | 'yearly';
+import { BillingCycle } from '@/shared/types/enums';
 
 interface BillingCycleToggleProps {
   billingCycle: BillingCycle;
@@ -19,43 +18,51 @@ const BillingCycleToggle = ({
 }: BillingCycleToggleProps) => {
   return (
     <div className={`flex justify-center ${className}`}>
-      <div className="relative flex items-center rounded-full border border-border bg-background/70 p-1 shadow-lg backdrop-blur-xl">
-        <motion.div
-          layoutId="billing-toggle"
-          transition={{
-            type: 'spring',
-            stiffness: 400,
-            damping: 30,
-          }}
-          className="absolute inset-y-1 rounded-full bg-primary"
-          animate={{
-            width: billingCycle === 'monthly' ? 108 : 100,
-            left: billingCycle === 'monthly' ? 4 : 112,
-          }}
-        />
+      <div className="flex items-center gap-3">
+        {/* Toggle */}
+        <div className="relative flex h-11 items-center rounded-full border border-border bg-background/70 p-1 shadow-lg backdrop-blur-xl">
+          {/* Animated active background */}
+          <motion.div
+            layoutId="billing-toggle"
+            transition={{
+              type: 'spring',
+              stiffness: 400,
+              damping: 30,
+            }}
+            className="absolute inset-y-1 left-1 w-[104px] rounded-full bg-primary"
+            animate={{
+              x: billingCycle === BillingCycle.MONTHLY ? 0 : 104,
+            }}
+          />
 
-        <button
-          type="button"
-          onClick={() => onBillingCycleChange('monthly')}
-          className={`relative z-10 px-8 py-2 text-sm font-semibold transition-colors ${
-            billingCycle === 'monthly' ? 'text-primary-foreground' : 'text-muted-foreground'
-          }`}
-        >
-          Monthly
-        </button>
+          <button
+            type="button"
+            onClick={() => onBillingCycleChange(BillingCycle.MONTHLY)}
+            className={`relative z-10 flex h-9 w-[104px] cursor-pointer items-center justify-center rounded-full text-sm font-semibold transition-colors ${
+              billingCycle === BillingCycle.MONTHLY
+                ? 'text-primary-foreground'
+                : 'text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            Monthly
+          </button>
 
-        <button
-          type="button"
-          onClick={() => onBillingCycleChange('yearly')}
-          className={`relative z-10 px-8 py-2 text-sm font-semibold transition-colors ${
-            billingCycle === 'yearly' ? 'text-primary-foreground' : 'text-muted-foreground'
-          }`}
-        >
-          Yearly
-        </button>
+          <button
+            type="button"
+            onClick={() => onBillingCycleChange(BillingCycle.YEARLY)}
+            className={`relative z-10 flex h-9 w-[104px] cursor-pointer items-center justify-center rounded-full text-sm font-semibold transition-colors ${
+              billingCycle === BillingCycle.YEARLY
+                ? 'text-primary-foreground'
+                : 'text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            Yearly
+          </button>
+        </div>
 
+        {/* Discount */}
         {showDiscount && (
-          <span className="ml-3 rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-600">
+          <span className="whitespace-nowrap rounded-full bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold text-emerald-600">
             {discountText}
           </span>
         )}

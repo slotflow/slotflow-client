@@ -1,8 +1,7 @@
 import { useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { RootState } from '@/app/store/appStore';
-import { BlogArticle } from '@/shared/types/common';
+import LoadingFallback from '../common/LoadingFallback';
 import MoveUpward from '@/components/animation/MoveUpward';
 import BlogNewsletter from '@/components/blog/BlogNewsletter';
 import BlogDetailHero from '@/components/blog/details/BlogDetailHero';
@@ -13,27 +12,26 @@ import BlogDetailPrevOrNextArticle from '@/components/blog/details/BlogDetailPre
 
 const BlogDetailsPage = () => {
   const { blogId } = useParams();
-  const { articles } = useSelector((state: RootState) => state.app);
-  const [article, setArticle] = useState<BlogArticle>(articles[0]);
-  const [prevArticle, setPrevArticle] = useState<BlogArticle | null>(null);
-  const [nextArticle, setNextArticle] = useState<BlogArticle | null>(articles[1]);
+  const blogData = useSelector((state: RootState) => state.cms.blogData);
+  const articles = blogData?.articles ?? [];
+  const isLoading = blogData?.loadingArticles ?? true;
 
-  useEffect(() => {
-    if (!blogId || !articles) return;
-    const currentIndex = articles.findIndex((article) => article.id === Number(blogId));
+  const currentIndex = articles.findIndex((item) => item.id === Number(blogId));
+  const article = currentIndex !== -1 ? articles[currentIndex] : null;
+  const prevArticle = currentIndex > 0 ? articles[currentIndex - 1] : null;
+  const nextArticle =
+    currentIndex >= 0 && currentIndex < articles.length - 1 ? articles[currentIndex + 1] : null;
 
-    if (currentIndex === -1) return;
-
-    setArticle(articles[currentIndex]);
-    setPrevArticle(currentIndex > 0 ? articles[currentIndex - 1] : null);
-    setNextArticle(currentIndex < articles.length - 1 ? articles[currentIndex + 1] : null);
-  }, [blogId, articles]);
+  // Loading state handling
+  if (isLoading || !article) {
+    return <LoadingFallback />;
+  }
 
   return (
     <main className="min-h-screen w-full">
       <BlogDetailHero
         author={article?.author}
-        category={article.category}
+        category={article?.category}
         createdAt={article?.createdAt}
         description={article?.heroDescription}
         heroBackground={article?.heroBackground}

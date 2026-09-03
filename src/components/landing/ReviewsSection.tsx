@@ -1,56 +1,24 @@
+import { useEffect } from 'react';
 import { Star } from 'lucide-react';
-import { appConfig } from '@/config/env';
-import { useEffect, useRef, useState } from 'react';
 import SectionHeading from '../common/SectionHeading';
 import { useDispatch, useSelector } from 'react-redux';
 import { getReviews } from '@/services/apis/contentful';
-import { setReviews } from '@/app/store/slices/appSlice';
 import { AppDispatch, RootState } from '@/app/store/appStore';
 import { InfiniteMovingCards } from '@/components/ui/infinite-moving-cards';
 
 const ReviewsSection = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const reviews = useSelector((state: RootState) => state.app.reviews);
-  const [reviewsLoading, setReviewsLoading] = useState<boolean>(false);
-  const hasFetchedReviews = useRef(false);
+  const reviewsData = useSelector((state: RootState) => state.cms.reviewsData);
 
   useEffect(() => {
-    if (hasFetchedReviews.current || reviews.length >= 10) {
-      return;
-    }
+    dispatch(getReviews());
+  }, [dispatch]);
 
-    hasFetchedReviews.current = true;
-    let isActive = true;
-
-    const fetchReviews = async () => {
-      try {
-        setReviewsLoading(true);
-        const fetchedReviews = await getReviews();
-
-        if (isActive) {
-          dispatch(setReviews(fetchedReviews));
-        }
-      } catch (error) {
-        if (appConfig.isDevelopment) {
-          console.error('Failed to fetch reviews:', error);
-        }
-      } finally {
-        if (isActive) {
-          setReviewsLoading(false);
-        }
-      }
-    };
-
-    void fetchReviews();
-
-    return () => {
-      isActive = false;
-    };
-  }, [dispatch, reviews.length]);
+  const reviews = reviewsData?.reviews ?? [];
+  const reviewsLoading = reviewsData?.loading ?? true;
 
   const firstRowReviews = reviews.slice(0, 5);
   const secondRowReviews = reviews.slice(5, 10);
-
   return (
     <section className="w-full">
       <SectionHeading

@@ -8,22 +8,22 @@ const BlogDetailArticle = ({ article }: BlogDetailArticleProps) => {
         <article className="mx-auto max-w-4xl">
           <section id="article-title">
             <p className="text-2xl leading-10 text-foreground font-medium">
-              {article.articleTitle}
+              {article?.articleTitle}
             </p>
             <div className="my-14">
               <img
-                src={article.articleImage}
+                src={article?.articleImage}
                 className="w-full rounded-3xl object-cover shadow-xl"
               />
               <p className="mt-4 text-center text-sm text-muted-foreground">
-                {article.articleImageDescription}
+                {article?.articleImageDescription}
               </p>
             </div>
           </section>
           <section id="article-introduction" className="scroll-mt-28">
             <h2 className="text-4xl font-bold tracking-tight">Introduction</h2>
             <div className="mt-6 space-y-6 text-lg leading-9 text-muted-foreground">
-              <p>{article.introduction}</p>
+              <p>{article?.introduction}</p>
             </div>
           </section>
           <div
@@ -33,24 +33,24 @@ const BlogDetailArticle = ({ article }: BlogDetailArticleProps) => {
             <div className="flex gap-5">
               <div>
                 <h3 className="text-xl font-semibold">Pro Tip</h3>
-                <p className="mt-3 leading-8 text-muted-foreground">{article.protip}</p>
+                <p className="mt-3 leading-8 text-muted-foreground">{article?.protip}</p>
               </div>
             </div>
           </div>
           <section id="article-para-1" className="scroll-mt-28 mt-20">
-            <h2 className="text-4xl font-bold tracking-tight">{article.paraOneTitle}</h2>
+            <h2 className="text-4xl font-bold tracking-tight">{article?.paraOneTitle}</h2>
             <div className="mt-6 space-y-6 text-lg leading-9 text-muted-foreground">
-              <p>{article.paraOneContent}</p>
+              <p>{article?.paraOneContent}</p>
             </div>
           </section>
           <section id="article-para-2" className="scroll-mt-28 mt-20">
-            <h2 className="text-4xl font-bold tracking-tight">{article.paraTwoTitle}</h2>
+            <h2 className="text-4xl font-bold tracking-tight">{article?.paraTwoTitle}</h2>
             <div className="mt-6 space-y-6 text-lg leading-9 text-muted-foreground">
-              <p>{article.paraTwoContent}</p>
+              <p>{article?.paraTwoContent}</p>
             </div>
           </section>
           <section id="article-list" className="mt-20 scroll-mt-28">
-            <h2 className="text-4xl font-bold tracking-tight">{article.listTitle}</h2>
+            <h2 className="text-4xl font-bold tracking-tight">{article?.listTitle}</h2>
             <ul className="mt-10 grid gap-1 grid-cols-1">
               {article?.listContent.map((item) => (
                 <li
@@ -64,16 +64,16 @@ const BlogDetailArticle = ({ article }: BlogDetailArticleProps) => {
           </section>
           <div id="article-quote" className="my-20 rounded-3xl bg-muted/40 p-10">
             <blockquote className="text-3xl font-semibold leading-relaxed">
-              "{article.quote}"
+              "{article?.quote}"
             </blockquote>
             <p className="mt-6 text-muted-foreground">
-              — {article.author?.author ?? 'Slotflow Team'}
+              — {article?.author?.author ?? 'Slotflow Team'}
             </p>
           </div>
           <section id="article-conclusion" className="scroll-mt-28">
             <h2 className="text-4xl font-bold tracking-tight">Conclusion</h2>
             <div className="mt-6 space-y-6 text-lg leading-9 text-muted-foreground">
-              <p>{article.conclusion}</p>
+              <p>{article?.conclusion}</p>
             </div>
           </section>
         </article>
@@ -96,17 +96,17 @@ const BlogDetailArticle = ({ article }: BlogDetailArticleProps) => {
             },
             {
               id: 'article-para-1',
-              title: article.paraOneTitle,
+              title: article?.paraOneTitle,
               depth: 0,
             },
             {
               id: 'article-para-2',
-              title: article.paraTwoTitle,
+              title: article?.paraTwoTitle,
               depth: 0,
             },
             {
               id: 'article-list',
-              title: article.listTitle,
+              title: article?.listTitle,
               depth: 0,
             },
             {

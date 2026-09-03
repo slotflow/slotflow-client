@@ -12,6 +12,7 @@ import {
   NotificationChannel,
   ApiPaginatedResponse,
   FetchFunctionBaseQueryParams,
+  PlanFields,
 } from './common';
 import {
   UserFetchServiceProvidersResponse,
@@ -40,7 +41,7 @@ import { RouteNames } from '../utils/constants';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { ChartConfig } from '@/components/ui/chart';
 import * as RPNInput from 'react-phone-number-input';
-import { PlanName, Role, ServiceMode } from './enums';
+import { BillingCycle, PlanName, Role, ServiceMode } from './enums';
 import { Location } from '@/shared/types/entity/address';
 import { Dispatch, ReactNode, SetStateAction } from 'react';
 import { Availability } from './entity/serviceAvailability';
@@ -596,11 +597,14 @@ export interface SideBoxProps {
 
 // ProviderPlanCard component props interface
 export interface ProviderPlanCardProps {
-  plan: Pick<Plan, '_id' | 'planName' | 'price' | 'description' | 'features'>;
+  plan: Pick<
+    Plan,
+    '_id' | 'planName' | 'monthlyPrice' | 'yearlyPrice' | 'description' | 'features'
+  >;
   isTrial?: boolean;
   dummy?: boolean;
   popular?: boolean;
-  billingCycle?: 'monthly' | 'yearly';
+  billingCycle?: BillingCycle;
 }
 
 // UserOrProviderAddressDetails component props interface
@@ -1109,7 +1113,8 @@ export interface PlanFeatureValueProps {
 
 //
 export interface PricingFeatureDetailsProps {
-  billingCycle: 'monthly' | 'yearly';
+  billingCycle: BillingCycle;
+  plans: PlanFields[];
 }
 
 //

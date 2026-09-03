@@ -310,7 +310,7 @@ export const appRouter = createBrowserRouter([
             },
           },
           {
-            path: 'dashboard',
+            path: 'services',
             element: <UserListProvidersCardsPage />,
             handle: {
               title: 'Dashboard',

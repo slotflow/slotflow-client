@@ -1,6 +1,6 @@
 import { Plan } from '../entity/planInterface';
 import { Subscription } from '../entity/subscription';
-import { PlanName, SubscriptionStatus, SubscriptionValidity } from '../enums';
+import { BillingCycle, PlanName, SubscriptionStatus } from '../enums';
 
 // query params of fetch subscription
 export interface FetchSubscriptionsQueryParams {
@@ -21,7 +21,7 @@ type SubscriptionProps = Pick<
 >;
 
 // plan props
-type PlanProps = Pick<Plan, 'planName' | 'price' | 'adVisibility' | 'maxBookingPerMonth'>;
+type PlanProps = Pick<Plan, 'planName' | 'adVisibility' | 'maxBookingPerMonth'>;
 
 // response of fetch subscription details
 export interface FetchSubscriptionDetailsResponse extends SubscriptionProps {
@@ -42,5 +42,5 @@ export type FetchMySubscriptionResponse = SubscriptionActivated;
 // request of checkout for subscribe plan
 export interface CheckoutForSubscribePlanRequest {
   planId: Plan['_id'];
-  planDuration: SubscriptionValidity;
+  billingCycle: BillingCycle;
 }

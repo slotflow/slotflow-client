@@ -60,7 +60,9 @@ const ProviderLayout = () => {
   return (
     <MainLayout routes={providerRoutes} filteredRoutes={accessibleRoutes}>
       <Outlet />
-      {isOpen && authUser?.role === Role.USER && <PaymentSelection />}
+      {isOpen && !subscriptionData?.isTrialPlan && authUser?.role === Role.PROVIDER && (
+        <PaymentSelection />
+      )}
       {subscriptionData?.isTrialPlan && <ProviderFreeSubscription />}
       <NotificationsContainer />
     </MainLayout>

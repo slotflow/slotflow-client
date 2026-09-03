@@ -7,16 +7,19 @@ import {
   TableHead,
   TableHeader,
 } from '@/components/ui/table';
+import { BillingCycle } from '@/shared/types/enums';
+import { planFeatures } from '@/shared/utils/constants';
 import { CheckIcon, MinusIcon, Clock3Icon } from 'lucide-react';
-import { planFeatures, PlanList } from '@/shared/utils/constants';
 import { formatNumberToPrice } from '@/shared/utils/helper/formatter';
 import { PlanFeatureValueProps, PricingFeatureDetailsProps } from '@/shared/types/component';
 
 export const PLAN_TIERS = ['trial', 'starter', 'professional', 'enterprise'] as const;
-
 export type PlanTier = (typeof PLAN_TIERS)[number];
 
-const PricingFeatureDetails = ({ billingCycle = 'monthly' }: PricingFeatureDetailsProps) => {
+const PricingFeatureDetails = ({
+  billingCycle = BillingCycle.MONTHLY,
+  plans,
+}: PricingFeatureDetailsProps) => {
   return (
     <section id="table" className="hidden w-full lg:block">
       <div className="mx-auto mt-20 max-w-7xl lg:mt-32">
@@ -28,29 +31,27 @@ const PricingFeatureDetails = ({ billingCycle = 'monthly' }: PricingFeatureDetai
                   Features
                 </TableHead>
 
-                {PlanList.map((plan) => {
-                  const yearlyPrice = plan.price > 0 ? plan.price * 11 : plan.price;
-
+                {plans.map((plan) => {
                   return (
                     <TableHead
-                      key={plan.planName}
+                      key={plan.displayName}
                       className={`w-2/12 px-4 py-5 text-center ${
-                        plan.planName === 'PROFESSIONAL' ? 'bg-primary/5' : ''
+                        plan.isPopular ? 'bg-primary/5' : ''
                       }`}
                     >
                       <div className="flex flex-col items-center gap-1">
                         <span className="text-base font-semibold text-foreground">
-                          {plan.planName}
+                          {plan.displayName}
                         </span>
 
                         <span className="text-xs font-normal text-muted-foreground">
-                          {billingCycle === 'monthly'
-                            ? plan.price === 0
+                          {billingCycle === BillingCycle.MONTHLY
+                            ? plan.monthlyPrice === 0
                               ? 'Free'
-                              : formatNumberToPrice(plan.price, 0)
-                            : yearlyPrice === 0
+                              : formatNumberToPrice(plan.monthlyPrice, 0)
+                            : plan.yearlyPrice === 0
                               ? 'FREE'
-                              : formatNumberToPrice(yearlyPrice, 0)}
+                              : formatNumberToPrice(plan.yearlyPrice, 0)}
                         </span>
                       </div>
                     </TableHead>

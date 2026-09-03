@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import PlanCard from '../../components/plan/PlanCard';
 import { providerFetchPlans } from '@/services/apis/plan';
+import { BillingCycle, PlanName } from '@/shared/types/enums';
 import { ArrowLeft, Sparkles, ShieldCheck } from 'lucide-react';
 import DataFetchingError from '../../components/error/DataFetchingError';
 import BillingCycleToggle from '../../components/plan/BillingCycleToggle';
@@ -10,7 +11,7 @@ import ProviderPlanCardShimmer from '../../components/shimmers/ProviderPlanCardS
 
 const SubScribePlanPage = () => {
   const navigate = useNavigate();
-  const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
+  const [billingCycle, setBillingCycle] = useState<BillingCycle>(BillingCycle.MONTHLY);
 
   const { data, isLoading, isError, error } = useQuery({
     queryFn: async () => {
@@ -64,7 +65,7 @@ const SubScribePlanPage = () => {
           ) : data && data.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 items-stretch justify-center">
               {data.map((plan) => {
-                const isTrial: boolean = plan?.price === 0;
+                const isTrial: boolean = plan?.planName === PlanName.TRIAL;
                 return (
                   <div key={plan._id} className="flex">
                     <PlanCard
@@ -89,7 +90,7 @@ const SubScribePlanPage = () => {
         <div className="border-t border-border pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-muted-foreground">
           <button
             onClick={() => navigate(-1)}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-foreground bg-secondary/80 hover:bg-secondary transition-all duration-200 hover:-translate-x-0.5 active:translate-x-0"
+            className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-foreground bg-secondary/80 hover:bg-secondary transition-all duration-200 hover:-translate-x-0.5 active:translate-x-0"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Dashboard</span>

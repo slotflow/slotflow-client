@@ -1,25 +1,27 @@
 import {
   Role,
   PlanName,
+  BillingCycle,
   ServiceCategory,
   SubscriptionStatus,
   PaymentProcessType,
   PaymentProcessStatus,
   HearAboutUsOptionValue,
 } from './enums';
+import {
+  FaqFields,
+  BlogArticle,
+  ReviewFields,
+  NotificationType,
+  NotificationChannel,
+  ProviderCardsFilters,
+  PlanFields,
+} from './common';
 import { User } from './entity/user';
 import { Message } from './entity/message';
 import { UserViewProviderCardProps } from './component';
 import { ProviderProfile } from './entity/providerProfile';
 import { Availability } from './entity/serviceAvailability';
-import {
-  BlogArticle,
-  FaqFields,
-  NotificationChannel,
-  NotificationType,
-  ProviderCardsFilters,
-  ReviewFields,
-} from './common';
 
 // Auth slice state
 export type AuthUser = Pick<
@@ -88,13 +90,6 @@ export interface appState {
   otpExpiresAt: number | null;
   otpTimerIsRunning: boolean;
   isNotificationsOpen: boolean;
-  articles: BlogArticle[];
-  articleCategories: string[];
-  reviews: ReviewFields[];
-  faqs: FaqFields[];
-  faqLoaded: boolean;
-  faqLoading: boolean;
-  faqTotal: number;
   isLiveChatBubbleOpen: boolean;
   boardingSteps: number;
 }
@@ -173,13 +168,11 @@ export interface PaymentSlice {
     date: Date;
     selectedServiceMode: string;
   } | null;
-
   subscriptionData: {
     planId: string;
-    planDuration: number;
+    billingCycle: BillingCycle;
     isTrialPlan: boolean;
   } | null;
-
   status: PaymentProcessStatus;
 }
 
@@ -189,6 +182,37 @@ export interface NotificationPreference {
   preferences: Partial<Record<NotificationType, boolean>>;
 }
 
+//
 export interface NotificationSlice {
   preferences: NotificationPreference[];
+}
+
+//
+export interface CmsState {
+  planData: {
+    plans: PlanFields[];
+    total: number;
+    loading: boolean;
+    error: string | null;
+  } | null;
+  blogData: {
+    articles: BlogArticle[];
+    articleCategories: string[];
+    loadingArticles: boolean;
+    loadingCategories: boolean;
+    errorArticles: string | null;
+    errorCategories: string | null;
+  } | null;
+  reviewsData: {
+    reviews: ReviewFields[];
+    total: number;
+    loading: boolean;
+    error: string | null;
+  } | null;
+  faqData: {
+    faqs: FaqFields[];
+    total: number;
+    loading: boolean;
+    error: string | null;
+  } | null;
 }

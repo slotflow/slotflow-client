@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import { toast } from 'react-toastify';
 import autoTable from 'jspdf-autotable';
 import { JsPDFWithAutoTable } from '@/shared/types/common';
-import logo from '../../assets/logos/company/slotfloFullLogo.png';
+import logo from '../../../assets/logos/company/slotfloFullLogo.png';
 import { AdminFetchRevenueReportRow } from '@/shared/types/api/payment';
 
 export const exportToPDF = async (

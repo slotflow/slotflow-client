@@ -12,22 +12,25 @@ export const adminCreatePlanZodSchema = z.object({
     .max(200, 'Description cannot exceed 200 characters')
     .regex(descriptionRegex, 'Invalid description. Contains unsupported characters.'),
 
-  price: z
-    .number({
-      invalid_type_error: 'Price must be a number',
-    })
-    .min(0, 'Price cannot be negative')
-    .max(100000, 'Price cannot exceed 100000'),
+  monthlyPrice: z
+    .number()
+    .min(0, 'Plan monthly price must be at least 0')
+    .max(100000, 'Plan mothly price must be at most 100000'),
+  yearlyPrice: z
+    .number()
+    .min(0, 'Plan yearly price must be at least 0')
+    .max(100000, 'Plan yearly price must be at most 100000'),
 
   features: z
     .array(
       z
         .string()
+        .trim()
         .min(1, 'Feature must be at least 1 character')
         .max(50, 'Feature cannot exceed 50 characters'),
     )
-    .min(1, 'At least one feature is required')
-    .max(10, 'Maximum 10 features allowed'),
+    .min(5, 'At least one feature is required')
+    .max(15, 'Maximum 10 features allowed'),
 
   maxBookingPerMonth: z
     .number({

@@ -3,7 +3,6 @@ import {
   Calendar,
   Megaphone,
   BadgeCheck,
-  IndianRupee,
   ListOrdered,
   CalendarDays,
   CalendarClock,
@@ -46,12 +45,6 @@ const SubscriptionDetailViewPage = () => {
       value: data?.subscriptionPlanId?.adVisibility,
       isBoolean: true,
       Icon: Megaphone,
-    },
-    {
-      label: 'Subscription price',
-      value: data?.subscriptionPlanId?.price,
-      isPrice: true,
-      Icon: IndianRupee,
     },
   ];
 

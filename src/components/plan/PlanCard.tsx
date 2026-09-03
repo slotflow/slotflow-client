@@ -1,15 +1,9 @@
 import { Button } from '../ui/button';
-import { toast } from 'react-toastify';
 import { CheckIcon } from 'lucide-react';
 import { useDispatch } from 'react-redux';
-import { useForm } from 'react-hook-form';
-import SelectField from '../form/SelectField';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { planDurations } from '@/shared/utils/constants';
+import { BillingCycle } from '@/shared/types/enums';
 import { ProviderPlanCardProps } from '@/shared/types/component';
 import { formatNumberToPrice } from '@/shared/utils/helper/formatter';
-import { PlanName, SubscriptionValidity } from '@/shared/types/enums';
-import { PlanDurationFormType, planDurationZodSchema } from '@/shared/validators/zod/providerZod';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card';
 import {
   setPaymentSelectionOpen,
@@ -21,42 +15,20 @@ const PlanCard = ({
   isTrial,
   dummy,
   popular,
-  billingCycle = 'monthly',
+  billingCycle = BillingCycle.MONTHLY,
 }: ProviderPlanCardProps) => {
   const dispatch = useDispatch();
 
-  // yearly pricing is controlled with 11 months and 1 month is free
-  const yearlyPrice = plan.price > 0 ? plan.price * 11 : plan.price;
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<PlanDurationFormType>({
-    resolver: zodResolver(planDurationZodSchema),
-    defaultValues: {
-      planDuration: SubscriptionValidity.SEVEN_DAYS,
-    },
-  });
-
-  const handleGoToPayment = handleSubmit((data) => {
-    if (
-      plan.planName !== PlanName.TRIAL &&
-      (!data.planDuration || data.planDuration === SubscriptionValidity.SEVEN_DAYS)
-    ) {
-      toast.warning('Please select a plan duration');
-      return;
-    }
-
+  const handleGoToPayment = () => {
     dispatch(
       setSubscriptionPaymentData({
         isTrialPlan: Boolean(isTrial),
-        planDuration: data.planDuration,
         planId: plan._id,
+        billingCycle: billingCycle,
       }),
     );
     dispatch(setPaymentSelectionOpen(true));
-  });
+  };
 
   return (
     <Card
@@ -65,25 +37,23 @@ const PlanCard = ({
         popular ? 'border-2 border-primary' : ''
       }`}
     >
-      <CardHeader>
+      <CardHeader className="pb-0">
         <CardTitle className="mb-3 text-lg lg:text-xl rounded-4xl p-1 text-center">
           {plan.planName}
         </CardTitle>
         <span className="font-bold text-5xl text-center">
-          {billingCycle === 'monthly'
-            ? plan.price === 0
+          {billingCycle === BillingCycle.MONTHLY
+            ? plan.monthlyPrice === 0
               ? 'FREE'
-              : formatNumberToPrice(plan.price, 0)
-            : yearlyPrice === 0
+              : formatNumberToPrice(plan.monthlyPrice, 0)
+            : plan.yearlyPrice === 0
               ? 'FREE'
-              : formatNumberToPrice(yearlyPrice, 0)}
+              : formatNumberToPrice(plan.yearlyPrice, 0)}
         </span>
       </CardHeader>
 
-      <CardDescription className="text-center">{plan.description}</CardDescription>
-
-      <CardContent className="flex-1">
-        <ul className="mt-7 space-y-2.5 text-sm">
+      <CardContent className="flex-1 pt-4">
+        <ul className="space-y-2.5 text-sm">
           {plan.features.map((feature, i) => (
             <li key={i} className="flex space-x-2">
               <CheckIcon className="flex-shrink-0 mt-0.5 h-4 w-4" />
@@ -93,15 +63,9 @@ const PlanCard = ({
         </ul>
       </CardContent>
 
-      {!isTrial && (
-        <SelectField<PlanDurationFormType, number>
-          id="planDuration"
-          label="Select Plan Duration"
-          options={planDurations}
-          register={register}
-          error={errors.planDuration}
-        />
-      )}
+      <CardDescription className="text-center px-6 min-h-[3rem] flex items-center justify-center">
+        {plan.description}
+      </CardDescription>
 
       {!dummy ? (
         <div className="mt-auto">
@@ -110,7 +74,7 @@ const PlanCard = ({
             className="w-full cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
             onClick={handleGoToPayment}
           >
-            Choose Plan
+            Upgrade
           </Button>
         </div>
       ) : (

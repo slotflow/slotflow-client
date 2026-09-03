@@ -86,8 +86,8 @@ const ProviderServiceList = ({
             <DataField key={i} label={`Requirement ${i + 1}`} value={req} Icon={ClipboardList} />
           ))}
           <DataField label="Type" value={data?.serviceType} Icon={Layers} />
-          <DataField label="Demo Video Url" value={data?.videoUrl} link Icon={Video} />
-          <DataField label="Portfolio Url" value={data?.portfolioUrl} link Icon={Notebook} />
+          <DataField label="Demo Video" value={data?.videoUrl} link Icon={Video} />
+          <DataField label="Portfolio" value={data?.portfolioUrl} link Icon={Notebook} />
           <DataField label="Tags" value={data?.tags} tags Icon={Hash} />
           <DataField label="Price" value={data?.servicePrice} isPrice={true} Icon={IndianRupee} />
           <DataField

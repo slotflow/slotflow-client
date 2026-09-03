@@ -3,13 +3,26 @@ import { Plan } from '../entity/planInterface';
 // response type of admin fetch all plans api
 export type AdminFetchAllPlansResponse = Pick<
   Plan,
-  '_id' | 'planName' | 'isBlocked' | 'price' | 'maxBookingPerMonth' | 'adVisibility'
+  | '_id'
+  | 'planName'
+  | 'isBlocked'
+  | 'monthlyPrice'
+  | 'yearlyPrice'
+  | 'maxBookingPerMonth'
+  | 'adVisibility'
+  | 'stripeSync'
 >;
 
 // request type of create plan api
 export type CreatePlanRequest = Pick<
   Plan,
-  'planName' | 'description' | 'price' | 'features' | 'maxBookingPerMonth' | 'adVisibility'
+  | 'planName'
+  | 'description'
+  | 'monthlyPrice'
+  | 'yearlyPrice'
+  | 'features'
+  | 'maxBookingPerMonth'
+  | 'adVisibility'
 >;
 
 // request type of change plan block status api
@@ -21,5 +34,17 @@ export type ChangePlanBlockStatusRequest = {
 // response type of provider fetch plans api
 export type ProviderFetchPlansResponse = Pick<
   Plan,
-  '_id' | 'planName' | 'price' | 'features' | 'description'
+  '_id' | 'planName' | 'monthlyPrice' | 'yearlyPrice' | 'features' | 'description'
 >;
+
+// request type of resync plan stripe
+export type ResyncPlanStripeRequest = {
+  planId: Plan['_id'];
+};
+
+// request type of resync plan stripe
+export type ResyncPlanStripeResponse = {
+  planId: Plan['_id'];
+  stripePlanDetails: Plan['stripePlanDetails'];
+  stripeSync: Plan['stripeSync'];
+};

@@ -9,6 +9,8 @@ import {
   ProviderFetchPlansResponse,
   AdminFetchAllPlansResponse,
   ChangePlanBlockStatusRequest,
+  ResyncPlanStripeRequest,
+  ResyncPlanStripeResponse,
 } from '../../shared/types/api/plan';
 import { axiosInstance } from '@/lib/axios';
 import { buildQueryParams } from '../../shared/utils/helper/buildQueryParams';
@@ -40,5 +42,12 @@ export const providerFetchPlans = async (): Promise<
   ApiBaseResponse<ApiPaginatedResponse<ProviderFetchPlansResponse>>
 > => {
   const response = await axiosInstance.get('/plans');
+  return response.data;
+};
+
+export const resyncPlanStripe = async (
+  data: ResyncPlanStripeRequest,
+): Promise<ApiBaseResponse<ResyncPlanStripeResponse>> => {
+  const response = await axiosInstance.post(`/plans${data.planId}/resync`);
   return response.data;
 };

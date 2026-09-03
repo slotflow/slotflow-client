@@ -1,28 +1,71 @@
 import { appConfig } from '@/config/env';
-import { useQueryClient } from '@tanstack/react-query';
 import { UseAdminPlanReturn } from '@/shared/types/hooks';
-import { changePlanBlockStatus } from '@/services/apis/plan';
-import { ChangePlanBlockStatusRequest } from '@/shared/types/api/plan';
+import { ApiPaginatedResponse } from '@/shared/types/common';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { changePlanBlockStatus, resyncPlanStripe } from '@/services/apis/plan';
+import {
+  AdminFetchAllPlansResponse,
+  ChangePlanBlockStatusRequest,
+  ResyncPlanStripeRequest,
+} from '@/shared/types/api/plan';
 
 export const useAdminPlan = (): UseAdminPlanReturn => {
   const queryClient = useQueryClient();
 
-  const changePlanStatus = async (data: ChangePlanBlockStatusRequest) => {
-    try {
-      const res = await changePlanBlockStatus(data);
+  const changePlanBlockStatusMutation = useMutation({
+    mutationFn: (data: ChangePlanBlockStatusRequest) => changePlanBlockStatus(data),
+    onSuccess: (res) => {
       if (res.success) {
         queryClient.invalidateQueries({ queryKey: ['plans'] });
       }
-      return res;
-    } catch (error) {
+    },
+    onError: (error) => {
       if (appConfig.isDevelopment) {
-        console.log('Error in changePlanStatus ', error);
+        console.error('Error in changePlanStatus:', error);
       }
-      return { success: false, message: 'Please try again' };
-    }
-  };
+    },
+  });
+
+  const resyncStripeMutation = useMutation({
+    mutationFn: (data: ResyncPlanStripeRequest) => resyncPlanStripe(data),
+    onSuccess: (res) => {
+      if (res.success && res.data) {
+        const { planId, stripePlanDetails, stripeSync } = res.data;
+
+        queryClient.setQueriesData<ApiPaginatedResponse<AdminFetchAllPlansResponse>>(
+          { queryKey: ['plans'] },
+          (oldData) => {
+            if (!oldData || !oldData.items) return oldData;
+
+            return {
+              ...oldData,
+              items: oldData.items.map((plan) =>
+                plan._id === planId
+                  ? {
+                      ...plan,
+                      stripePlanDetails,
+                      stripeSync,
+                    }
+                  : plan,
+              ),
+            };
+          },
+        );
+      }
+    },
+    onError: (error) => {
+      if (appConfig.isDevelopment) {
+        console.error('Error in resyncPlanWithStripe:', error);
+      }
+    },
+  });
 
   return {
-    changePlanStatus,
+    changePlanBlockStatus: changePlanBlockStatusMutation.mutateAsync,
+    changeBlockStatusPlanId: changePlanBlockStatusMutation.isPending
+      ? changePlanBlockStatusMutation.variables?.planId
+      : null,
+    resyncPlanWithStripe: resyncStripeMutation.mutateAsync,
+    resyncingPlanId: resyncStripeMutation.isPending ? resyncStripeMutation.variables?.planId : null,
   };
 };

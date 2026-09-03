@@ -120,7 +120,6 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
                   />
                 )}
 
-                {/* Subroutes only render when sidebar is open and expanded */}
                 {hasSubroutes && isExpanded && isSidebarOpen && (
                   <div className="border-l border-border pl-2">
                     {subRoutes.map((subRoute) => {

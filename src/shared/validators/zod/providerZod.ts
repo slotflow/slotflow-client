@@ -5,7 +5,7 @@ import {
   serviceDescriptionRegex,
 } from './regex';
 import z from 'zod';
-import { ServiceType, ServiceCategory, SubscriptionValidity } from '@/shared/types/enums';
+import { ServiceType, ServiceCategory } from '@/shared/types/enums';
 
 export const providerCreateServiceDetailsZodSchema = z.object({
   _id: z.string(),
@@ -127,9 +127,3 @@ export const QueryZodSchema = z.object({
 });
 
 export type QueryFormType = z.infer<typeof QueryZodSchema>;
-
-export const planDurationZodSchema = z.object({
-  planDuration: z.nativeEnum(SubscriptionValidity),
-});
-
-export type PlanDurationFormType = z.infer<typeof planDurationZodSchema>;

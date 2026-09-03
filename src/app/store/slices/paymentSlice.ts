@@ -1,6 +1,6 @@
 import { PaymentSlice } from '@/shared/types/slice';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PaymentProcessStatus, PaymentProcessType } from '@/shared/types/enums';
+import { BillingCycle, PaymentProcessStatus, PaymentProcessType } from '@/shared/types/enums';
 
 const initialState: PaymentSlice = {
   type: PaymentProcessType.NULL,
@@ -35,7 +35,11 @@ const paymentSlice = createSlice({
     },
     setSubscriptionPaymentData: (
       state,
-      action: PayloadAction<{ planId: string; planDuration: number; isTrialPlan: boolean } | null>,
+      action: PayloadAction<{
+        planId: string;
+        billingCycle: BillingCycle;
+        isTrialPlan: boolean;
+      } | null>,
     ) => {
       state.type = PaymentProcessType.SUBSCRIPTION;
       state.subscriptionData = action.payload;

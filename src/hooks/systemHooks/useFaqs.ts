@@ -1,53 +1,22 @@
 import { useEffect } from 'react';
-import { appConfig } from '@/config/env';
 import { getFaqs } from '@/services/apis/contentful';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/app/store/appStore';
-import { appendFaqs, setFaqTotal, setFaqLoading } from '@/app/store/slices/appSlice';
+import { GetFaqsParams } from '@/shared/types/api/contentful';
 
-interface UseFaqsProps {
-  limit: number;
-  skip: number;
-}
-
-const useFaqs = ({ limit, skip }: UseFaqsProps) => {
+const useFaqs = ({ limit, skip, category }: GetFaqsParams) => {
   const dispatch = useDispatch<AppDispatch>();
-
-  const faqs = useSelector((state: RootState) => state.app.faqs);
-  const faqLoading = useSelector((state: RootState) => state.app.faqLoading);
-  const faqTotal = useSelector((state: RootState) => state.app.faqTotal);
+  const faqData = useSelector((state: RootState) => state.cms.faqData);
 
   useEffect(() => {
-    if (faqs.length >= skip + limit) {
-      return;
-    }
-
-    const fetchFaqs = async () => {
-      try {
-        dispatch(setFaqLoading(true));
-        const response = await getFaqs({
-          limit,
-          skip,
-        });
-
-        dispatch(appendFaqs(response.faqs));
-        dispatch(setFaqTotal(response.total));
-      } catch (error) {
-        if (appConfig.isDevelopment) {
-          console.error('Faqs fetching error : ', error);
-        }
-      } finally {
-        dispatch(setFaqLoading(false));
-      }
-    };
-
-    void fetchFaqs();
-  }, [limit, skip, dispatch, faqs.length]);
+    dispatch(getFaqs({ limit, skip, category }));
+  }, [dispatch, limit, skip, category]);
 
   return {
-    faqs,
-    faqLoading,
-    faqTotal,
+    faqs: faqData?.faqs ?? [],
+    faqLoading: faqData?.loading ?? false,
+    faqTotal: faqData?.total ?? 0,
+    faqError: faqData?.error ?? null,
   };
 };
 

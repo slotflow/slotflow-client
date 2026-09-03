@@ -50,7 +50,7 @@ const AdminDashboardStats = () => {
             </SelectTrigger>
             <SelectContent>
               {adminOverviewTabs.map((tab) => (
-                <SelectItem key={tab.value} value={tab.value}>
+                <SelectItem key={tab.value} value={tab.value} className="cursor-pointer">
                   {tab.label}
                 </SelectItem>
               ))}
@@ -67,7 +67,7 @@ const AdminDashboardStats = () => {
                   <TabsTrigger
                     key={tab.value}
                     value={tab.value}
-                    className="data-[state=active]:bg-white dark:data-[state=active]:bg-indigo-500 data-[state=active]:shadow-sm rounded-lg transition-all duration-200"
+                    className="cursor-pointer data-[state=active]:bg-white dark:data-[state=active]:bg-indigo-500 data-[state=active]:shadow-sm rounded-lg transition-all duration-200"
                   >
                     {tab.label}
                   </TabsTrigger>
