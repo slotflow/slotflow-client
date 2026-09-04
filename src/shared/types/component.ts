@@ -26,6 +26,7 @@ import {
   type FieldValues,
   type UseFormRegister,
   type RegisterOptions,
+  UseFormSetValue,
 } from 'react-hook-form';
 import {
   ProviderFetchMyProfileDetailsResponse,
@@ -437,9 +438,10 @@ export interface FilterCompHeaderProps {
 }
 
 // Create plan form component props interface
-export interface CreatePlanFormProps {
+export interface PlanFormProps {
   onClose: () => void;
   formRef: React.RefObject<HTMLDivElement | null>;
+  planIdToEdit?: string | null;
 }
 
 // Create service form component props interface
@@ -507,6 +509,7 @@ export interface SelectFieldProps<T extends FieldValues, K> {
   placeholder?: string;
   error?: FieldError | string;
   register: UseFormRegister<T>;
+  setValue: UseFormSetValue<T>;
   required?: boolean;
   defaultValue?: string | number | boolean;
   infoText?: string;
@@ -692,6 +695,7 @@ export interface AvailabilityDataSelectionFieldsProps {
   isModeSelected: (mode: ServiceMode) => boolean;
   toggleMode: (mode: ServiceMode) => void;
   isAvailable: boolean;
+  setValue: UseFormSetValue<ProviderServiceAvailabilityFormType>;
 }
 
 // CreateServiceAvailabilityFooter component props interface

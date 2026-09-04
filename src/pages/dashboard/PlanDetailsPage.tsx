@@ -36,11 +36,13 @@ const PlanDetailsPage = () => {
       const res = await adminFetchPlanDetails(planId!);
       return res.data;
     },
-    queryKey: ['plan', planId],
+    queryKey: ['planDetails', planId],
     staleTime: 60 * 60 * 1000,
     refetchOnWindowFocus: false,
     enabled: !!planId,
   });
+
+  console.log('data : ', data);
 
   const handleAdminChangePlanStatus = async () => {
     if (!data) return;
@@ -219,7 +221,7 @@ const PlanDetailsPage = () => {
                 <DataShimmer w="w-20" h="h-7" />
               ) : (
                 <>
-                  {data!.maxBookingPerMonth.toLocaleString()}
+                  {data!.maxBookingPerMonth}
                   <span className="text-xs font-normal text-slate-500"> /mo</span>
                 </>
               )}

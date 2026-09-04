@@ -6,9 +6,9 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Input } from '../ui/input';
-import { FieldValues } from 'react-hook-form';
 import FormLabelWithInfo from './FormLabelWithInfo';
 import { SelectFieldProps } from '@/shared/types/component';
+import { FieldValues, Path, PathValue } from 'react-hook-form';
 
 const SelectField = <T extends FieldValues, K>({
   id,
@@ -17,6 +17,7 @@ const SelectField = <T extends FieldValues, K>({
   placeholder = 'Select an option',
   error,
   register,
+  setValue,
   required = false,
   defaultValue,
   infoText,
@@ -24,15 +25,14 @@ const SelectField = <T extends FieldValues, K>({
   const reg = register(id);
 
   // FULLY TYPE-SAFE PARSER — NO ANY
-  const parseValue = (value: string): string | number | boolean => {
-    if (value === 'true') return true;
-    if (value === 'false') return false;
-
-    if (!isNaN(Number(value)) && value.trim() !== '') {
-      return Number(value);
+  const parseValue = (val: string): string | number | boolean => {
+    if (val === 'true') return true;
+    if (val === 'false') return false;
+    if (!isNaN(Number(val)) && val.trim() !== '') {
+      return Number(val);
     }
-
-    return value;
+    console.log('parsed value : ', val);
+    return val;
   };
 
   return (
@@ -50,7 +50,11 @@ const SelectField = <T extends FieldValues, K>({
         defaultValue={defaultValue !== undefined ? String(defaultValue) : undefined}
         onValueChange={(val) => {
           const parsedValue = parseValue(val);
-
+          setValue(id as Path<T>, parsedValue as PathValue<T, Path<T>>, {
+            shouldValidate: true,
+            shouldDirty: true,
+            shouldTouch: true,
+          });
           reg.onChange({
             target: { name: reg.name, value: parsedValue },
           });

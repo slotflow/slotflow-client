@@ -1,9 +1,9 @@
 import { toast } from 'react-toastify';
 import { useEffect, useRef, useState } from 'react';
+import PlanForm from '@/components/form/Admin/PlanForm';
 import { useAdminPlan } from '@/hooks/adminHooks/usePlan';
 import { adminFetchAllPlans } from '@/services/apis/plan';
 import { slideIn } from '@/shared/utils/helper/gsapAnimationSlide';
-import CreatePlanForm from '@/components/form/Admin/CreatePlanForm';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
 import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
 import AdminPlansTableColumns from '@/components/table/tableColumns/AdminPlansTableColumn';
@@ -14,13 +14,23 @@ import {
 } from '@/shared/types/api/plan';
 
 const AdminPlansPage = () => {
-  const [showForm, setShowForm] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
+  const [showForm, setShowForm] = useState(false);
+  const [selectedPlanIdToEdit, setSelectedPlanIdToEdit] = useState<string | null>(null);
 
+  const { handleNavigateToPlanDetailPage } = useRoleBasedNavigation();
   const { changePlanBlockStatus, resyncPlanWithStripe, changeBlockStatusPlanId, resyncingPlanId } =
     useAdminPlan();
 
-  const { handleNavigateToPlanDetailPage } = useRoleBasedNavigation();
+  const handleOpenEditForm = (planId: string) => {
+    setSelectedPlanIdToEdit(planId);
+    setShowForm(true);
+  };
+
+  const handleCloseForm = () => {
+    setSelectedPlanIdToEdit(null);
+    setShowForm(false);
+  };
 
   const handleAdminChangePlanStatus = async (data: ChangePlanBlockStatusRequest) => {
     const res = await changePlanBlockStatus(data);
@@ -44,6 +54,7 @@ const AdminPlansPage = () => {
     handleAdminChangePlanStatus,
     handleResyncStripe,
     handleNavigateToPlanDetailPage,
+    handleOpenEditForm,
     changeBlockStatusPlanId,
     resyncingPlanId,
   );
@@ -70,7 +81,11 @@ const AdminPlansPage = () => {
       />
       {showForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 overflow-y-scroll">
-          <CreatePlanForm onClose={() => setShowForm(false)} formRef={formRef} />
+          <PlanForm
+            onClose={handleCloseForm}
+            formRef={formRef}
+            planIdToEdit={selectedPlanIdToEdit}
+          />
         </div>
       )}
     </div>

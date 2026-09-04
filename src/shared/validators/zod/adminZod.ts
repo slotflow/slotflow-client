@@ -26,8 +26,8 @@ export const adminCreatePlanZodSchema = z.object({
         .min(1, 'Feature must be at least 1 character')
         .max(50, 'Feature cannot exceed 50 characters'),
     )
-    .min(5, 'At least one feature is required')
-    .max(15, 'Maximum 10 features allowed'),
+    .min(5, 'At least five feature is required')
+    .max(15, 'Maximum ten features allowed'),
   maxBookingPerMonth: z
     .number({
       invalid_type_error: 'Maximum booking must be a number',

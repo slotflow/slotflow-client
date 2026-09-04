@@ -160,6 +160,7 @@ const ProviderServiceAvailabilityForm = ({
             isModeSelected={isModeSelected}
             toggleMode={toggleMode}
             isAvailable={watched.isAvailable}
+            setValue={setValue}
           />
 
           {watched.isAvailable && (

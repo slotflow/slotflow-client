@@ -173,6 +173,7 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
             label="Category"
             options={serviceCategoryOptions}
             register={register}
+            setValue={setValue}
             error={errors.serviceCategory}
             required
           />
@@ -182,6 +183,7 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
             label="Service"
             options={services}
             register={register}
+            setValue={setValue}
             error={errors.serviceId}
             required
           />
@@ -242,6 +244,7 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
             label="Service Type"
             options={serviceTypeOptions}
             register={register}
+            setValue={setValue}
             error={errors.serviceType}
             required
           />
@@ -272,6 +275,7 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
             label="Booking Type"
             options={groupOptions}
             register={register}
+            setValue={setValue}
             error={errors.isGroupService}
             required
           />

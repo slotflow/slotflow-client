@@ -13,6 +13,7 @@ const AvailabilityDataSelectionFields = ({
   isModeSelected,
   toggleMode,
   isAvailable,
+  setValue,
 }: AvailabilityDataSelectionFieldsProps) => {
   return (
     <>
@@ -21,6 +22,7 @@ const AvailabilityDataSelectionFields = ({
           label="Select Day"
           id="day"
           register={register}
+          setValue={setValue}
           options={daysOfWeekOptions}
           required
         />
@@ -28,6 +30,7 @@ const AvailabilityDataSelectionFields = ({
           label="Select Availability"
           id="isAvailable"
           register={register}
+          setValue={setValue}
           options={isAvailableOptions}
           required
         />
@@ -36,6 +39,7 @@ const AvailabilityDataSelectionFields = ({
             label="Select Duration"
             id="duration"
             register={register}
+            setValue={setValue}
             options={serviceDurationsOptions}
             required
           />

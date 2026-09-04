@@ -27,6 +27,30 @@ export type CreatePlanRequest = Pick<
   | 'trialDays'
 >;
 
+// response type of create plan api
+export type CreatePlanResponse = Omit<Plan, 'createdAt' | 'updatedAt'>;
+
+// request type of update plan api
+export type UpdatePlanRequest = Partial<
+  Pick<
+    Plan,
+    | 'planName'
+    | 'description'
+    | 'monthlyPrice'
+    | 'yearlyPrice'
+    | 'features'
+    | 'maxBookingPerMonth'
+    | 'adVisibility'
+    | 'hasTrial'
+    | 'trialDays'
+  >
+> & {
+  planId: Plan['_id'];
+};
+
+// response type of update plan api
+export type UpdatePlanResponse = Omit<Plan, 'createdAt' | 'updatedAt'>;
+
 // request type of change plan block status api
 export type ChangePlanBlockStatusRequest = {
   planId: Plan['_id'];

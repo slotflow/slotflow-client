@@ -1598,16 +1598,16 @@ export const planDurations: OptionType<number>[] = [
   { label: '1 Year', value: 365 },
 ];
 
-// Planduration options
-export const adVisibility: OptionType<boolean>[] = [
-  { label: 'Ad Visisble', value: true },
-  { label: 'Ad Not Visible', value: false },
-];
-
 // admin provider verification boolean options
 export const verificationOptions: OptionType<boolean>[] = [
   { label: 'Verified', value: true },
   { label: 'Rejected', value: false },
+];
+
+// common boolean selection options
+export const booleanOptions: OptionType<boolean>[] = [
+  { label: 'Yes', value: true },
+  { label: 'No', value: false },
 ];
 
 // Status text mapper

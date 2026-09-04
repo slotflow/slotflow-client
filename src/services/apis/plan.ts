@@ -6,6 +6,9 @@ import {
 } from '../../shared/types/common';
 import {
   CreatePlanRequest,
+  UpdatePlanRequest,
+  UpdatePlanResponse,
+  CreatePlanResponse,
   ResyncPlanStripeRequest,
   ResyncPlanStripeResponse,
   ProviderFetchPlansResponse,
@@ -14,8 +17,8 @@ import {
   AdminFetchPlanDetailsResponse,
 } from '../../shared/types/api/plan';
 import { axiosInstance } from '@/lib/axios';
-import { buildQueryParams } from '../../shared/utils/helper/buildQueryParams';
 import { Plan } from '@/shared/types/entity/planInterface';
+import { buildQueryParams } from '../../shared/utils/helper/buildQueryParams';
 
 export const adminFetchAllPlans: ApiFetchFunction<
   AdminFetchAllPlansResponse,
@@ -26,8 +29,18 @@ export const adminFetchAllPlans: ApiFetchFunction<
   return response.data.data;
 };
 
-export const createPlan = async (formData: CreatePlanRequest): Promise<ApiBaseResponse> => {
+export const createPlan = async (
+  formData: CreatePlanRequest,
+): Promise<ApiBaseResponse<CreatePlanResponse>> => {
   const response = await axiosInstance.post('/plans', formData);
+  console.log('response : ', response);
+  return response.data;
+};
+
+export const updatePlan = async (
+  formData: UpdatePlanRequest,
+): Promise<ApiBaseResponse<UpdatePlanResponse>> => {
+  const response = await axiosInstance.patch(`/plans/${formData.planId}`, formData);
   return response.data;
 };
 

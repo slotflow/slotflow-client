@@ -40,6 +40,7 @@ const RejectproviderForm = ({ onClose, formRef }: RejectproviderFormProps) => {
     handleSubmit,
     reset,
     setFocus,
+    setValue,
     formState: { errors, isSubmitting, isValid },
   } = useForm<AdminRejectProviderFormType>({
     resolver: zodResolver(adminRejectProviderZodSchema),
@@ -113,6 +114,7 @@ const RejectproviderForm = ({ onClose, formRef }: RejectproviderFormProps) => {
             label="Address Verification"
             options={verificationOptions}
             register={register}
+            setValue={setValue}
             error={errors.isAddressVerified?.message}
           />
 
@@ -121,6 +123,7 @@ const RejectproviderForm = ({ onClose, formRef }: RejectproviderFormProps) => {
             label="Service Details Verification"
             options={verificationOptions}
             register={register}
+            setValue={setValue}
             error={errors.isServiceDetailsVerified?.message}
           />
 
@@ -129,6 +132,7 @@ const RejectproviderForm = ({ onClose, formRef }: RejectproviderFormProps) => {
             label="Availability Verification"
             options={verificationOptions}
             register={register}
+            setValue={setValue}
             error={errors.isAvailabilityVerified?.message}
           />
 
@@ -137,6 +141,7 @@ const RejectproviderForm = ({ onClose, formRef }: RejectproviderFormProps) => {
             label="Proofs Verification"
             options={verificationOptions}
             register={register}
+            setValue={setValue}
             error={errors.isProofsVerified?.message}
           />
 

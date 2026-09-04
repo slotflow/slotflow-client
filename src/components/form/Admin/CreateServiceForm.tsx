@@ -121,6 +121,7 @@ const CreateServiceForm = ({ onClose, formRef }: CreateServiceFormProps) => {
             label="Service Category"
             options={serviceCategoryOptions}
             register={register}
+            setValue={setValue}
             error={errors.serviceCategory}
           />
 

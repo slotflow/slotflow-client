@@ -99,7 +99,7 @@ const DynamicStringListField = ({
         </div>
 
         <div className="space-y-2 overflow-y-auto pr-1">
-          {values.map((value, index) => {
+          {values?.map((value, index) => {
             const fieldError = errors[index];
 
             return (

@@ -31,6 +31,7 @@ const AdminPlansTableColumns = (
   handleAdminChangePlanStatus: (data: ChangePlanBlockStatusRequest) => void,
   handleresyncPlanStripe: (data: ResyncPlanStripeRequest) => void,
   handleNavigateToPlanDetailPage: (planId: Plan['_id']) => void,
+  handleOpenEditForm: (planId: string) => void,
   changeBlockStatusPlanId: string | null,
   resyncingPlanId: string | null,
 ): ColumnDef<AdminFetchAllPlansResponse>[] => [
@@ -190,16 +191,16 @@ const AdminPlansTableColumns = (
             </DropdownMenuItem>
             {plan.stripeSync === StripeSyncStatus.PENDING && (
               <DropdownMenuItem onClick={() => handleresyncPlanStripe({ planId: plan._id })}>
-                <RefreshCw /> Sync
+                <RefreshCw className="w-3.5 h-3.5" /> Sync
               </DropdownMenuItem>
             )}
             {/* // TODO implement */}
-            <DropdownMenuItem>
-              <Edit />
+            <DropdownMenuItem onClick={() => handleOpenEditForm(plan._id)}>
+              <Edit className="w-3.5 h-3.5" />
               Edit
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => handleNavigateToPlanDetailPage(plan._id)}>
-              <ReceiptText />
+              <ReceiptText className="w-3.5 h-3.5" />
               Details
             </DropdownMenuItem>
           </DropdownMenuContent>
