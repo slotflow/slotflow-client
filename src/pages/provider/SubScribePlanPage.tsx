@@ -8,6 +8,7 @@ import { ArrowLeft, Sparkles, ShieldCheck } from 'lucide-react';
 import DataFetchingError from '../../components/error/DataFetchingError';
 import BillingCycleToggle from '../../components/plan/BillingCycleToggle';
 import ProviderPlanCardShimmer from '../../components/shimmers/ProviderPlanCardShimmer';
+import { QUERY_KEYS } from '@/shared/utils/constants';
 
 const SubScribePlanPage = () => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const SubScribePlanPage = () => {
       const res = await providerFetchPlans();
       return res.data?.items;
     },
-    queryKey: ['plans'],
+    queryKey: [QUERY_KEYS.PLANS],
     staleTime: 60 * 60 * 1000,
     refetchOnWindowFocus: false,
   });

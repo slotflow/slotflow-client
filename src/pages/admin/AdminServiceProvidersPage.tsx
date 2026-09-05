@@ -14,6 +14,7 @@ import PaginatedDataTable from '@/components/table/PaginatedDataTable';
 import { fetchServiceProvidersForAdmin } from '@/services/apis/providerProfile';
 import RejectproviderForm from '@/components/form/Admin/RejectproviderForm';
 import AdminProvidersTableColumns from '@/components/table/tableColumns/AdminProvidersTableColumn';
+import { QUERY_KEYS } from '@/shared/utils/constants';
 
 const AdminServiceProvidersPage = () => {
   const navigate = useNavigate();
@@ -81,7 +82,7 @@ const AdminServiceProvidersPage = () => {
     <div className="p-4">
       <PaginatedDataTable<AdminFetchAllProvidersResponse>
         fetchApiFunction={fetchServiceProvidersForAdmin}
-        queryKey="providers"
+        queryKey={[QUERY_KEYS.PROVIDERS]}
         column={columns}
         columnsCount={6}
       />

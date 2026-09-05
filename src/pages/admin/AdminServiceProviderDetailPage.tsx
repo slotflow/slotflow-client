@@ -3,7 +3,7 @@ import { Role } from '@/shared/types/enums';
 import { useParams } from 'react-router-dom';
 import ReviewsPage from '../dashboard/ReviewsPage';
 import { fetchPayments } from '@/services/apis/payment';
-import { providerTabs } from '@/shared/utils/constants';
+import { providerTabs, QUERY_KEYS } from '@/shared/utils/constants';
 import { fetchAddressByUserId } from '@/services/apis/address';
 import AddressListing from '@/components/profile/AddressListing';
 import ProfileListing from '@/components/profile/ProfileListing';
@@ -34,7 +34,7 @@ const AdminServiceProviderDetailPage = () => {
           {(tab === 0 && (
             <ProfileListing
               fetchApiFunction={() => fetchProviderDetailsForAdmin(providerId)}
-              queryKey="providerProfile"
+              queryKey={[QUERY_KEYS.PROVIDER_PROFILE]}
               userOrProviderId={providerId}
               adminLookingProvider
               shimmerRow={8}
@@ -44,14 +44,14 @@ const AdminServiceProviderDetailPage = () => {
               <AddressListing
                 userOrProviderId={providerId}
                 fetchApiFunction={() => fetchAddressByUserId(providerId)}
-                queryKey="providerAddress"
+                queryKey={[QUERY_KEYS.PROVIDER_ADDRESS]}
               />
             )) ||
             (tab === 2 && (
               <ProviderServiceDetails
                 providerId={providerId}
                 fetchApiFunction={() => fetchProviderServiceByProviderId(providerId)}
-                queryKey="providerService"
+                queryKey={[QUERY_KEYS.PROVIDER_SERVICE]}
               />
             )) ||
             (tab === 3 && (

@@ -8,6 +8,7 @@ import { AdminfetchAllUsersResponse } from '@/shared/types/api/user';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
 import { AdminChangeUserStatusRequest } from '@/shared/types/api/user';
 import AdminUsersTableColumns from '@/components/table/tableColumns/AdminUsersTableColumn';
+import { QUERY_KEYS } from '@/shared/utils/constants';
 
 const AdminUsersPage = () => {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ const AdminUsersPage = () => {
     <div className="p-4">
       <PaginatedDataTable<AdminfetchAllUsersResponse>
         fetchApiFunction={fetchUsers}
-        queryKey="users"
+        queryKey={[QUERY_KEYS.USERS]}
         column={column}
         columnsCount={6}
       />

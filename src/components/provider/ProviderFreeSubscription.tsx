@@ -11,6 +11,7 @@ import {
   setPaymentSelectionOpen,
   setSubscriptionPaymentData,
 } from '@/app/store/slices/paymentSlice';
+import { QUERY_KEYS } from '@/shared/utils/constants';
 
 const ProviderFreeSubscription = () => {
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ const ProviderFreeSubscription = () => {
         toast.error('Failed to subscribe trial, please try again.');
       }
 
-      queryClient.invalidateQueries({ queryKey: ['subscriptions'] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.SUBSCRIPTIONS] });
     } catch {
       setPaymentLoading(false);
     } finally {

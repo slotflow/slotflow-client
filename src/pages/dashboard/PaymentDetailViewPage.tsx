@@ -18,6 +18,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { fetchPaymentDetails } from '@/services/apis/payment';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import ProfileDetailsShimmer from '@/components/shimmers/DataFieldShimmer';
+import { QUERY_KEYS } from '@/shared/utils/constants';
 
 const PaymentDetailViewPage = () => {
   const { paymentId } = useParams<{ paymentId: string }>();
@@ -27,7 +28,7 @@ const PaymentDetailViewPage = () => {
       const res = await fetchPaymentDetails(paymentId!);
       return res.data;
     },
-    queryKey: ['payment', paymentId],
+    queryKey: [QUERY_KEYS.PAYMENT, paymentId],
     staleTime: 60 * 60 * 1000,
     refetchOnWindowFocus: false,
     enabled: !!paymentId,

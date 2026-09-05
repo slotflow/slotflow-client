@@ -13,6 +13,7 @@ import {
   AppointmentsStatsMapForAdmin,
   subscriptionStatsMapForAdmin,
   revenueAndPaymentsStatsMapForAdmin,
+  QUERY_KEYS,
 } from '@/shared/utils/constants';
 import {
   Select,
@@ -88,7 +89,7 @@ const AdminDashboardStats = () => {
                 endDate: dateRange?.to,
               })
             }
-            queryKey="dashboardUsersStats"
+            queryKey={[QUERY_KEYS.DASHBOARD_USERS_STATS]}
             statsMap={userStatsMapForAdmin}
             dependencies={dateRange}
             shimmerCount={2}
@@ -105,7 +106,7 @@ const AdminDashboardStats = () => {
                 endDate: dateRange?.to,
               })
             }
-            queryKey="dashboardProvidersStats"
+            queryKey={[QUERY_KEYS.DASHBOARD_PROVIDERS_STATS]}
             statsMap={providerStatsMapForAdmin}
             dependencies={dateRange}
             shimmerCount={7}
@@ -122,7 +123,7 @@ const AdminDashboardStats = () => {
                 endDate: dateRange?.to,
               })
             }
-            queryKey="dashboardSubscriptionStats"
+            queryKey={[QUERY_KEYS.DASHBOARD_SUBSCRIPTION_STATS]}
             statsMap={subscriptionStatsMapForAdmin}
             dependencies={dateRange}
             shimmerCount={6}
@@ -139,7 +140,7 @@ const AdminDashboardStats = () => {
                 endDate: dateRange?.to,
               })
             }
-            queryKey="dashboardRevenueStats"
+            queryKey={[QUERY_KEYS.DASHBOARD_REVENUE_STATS]}
             dependencies={dateRange}
             statsMap={revenueAndPaymentsStatsMapForAdmin}
             shimmerCount={9}
@@ -156,7 +157,7 @@ const AdminDashboardStats = () => {
                 endDate: dateRange?.to,
               })
             }
-            queryKey="dashboardAppointmentsStats"
+            queryKey={[QUERY_KEYS.DASHBOARD_APPOINTMENTS_STATS]}
             statsMap={AppointmentsStatsMapForAdmin}
             dependencies={dateRange}
             shimmerCount={5}

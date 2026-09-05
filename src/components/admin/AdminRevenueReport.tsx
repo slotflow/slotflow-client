@@ -4,6 +4,7 @@ import { DateRange } from 'react-day-picker';
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import { Calendar } from '@/components/ui/calendar';
+import { QUERY_KEYS } from '@/shared/utils/constants';
 import { DataTable } from '@/components/ui/data-table';
 import TableShimmer from '@/components/shimmers/TableShimmer';
 import { OnChangeFn, PaginationState } from '@tanstack/react-table';
@@ -36,7 +37,7 @@ const AdminRevenueReport = () => {
         limit: pagination.pageSize,
       }),
     queryKey: [
-      'revenue',
+      QUERY_KEYS.REVENUE,
       dateRange?.from,
       dateRange?.to,
       pagination.pageIndex,

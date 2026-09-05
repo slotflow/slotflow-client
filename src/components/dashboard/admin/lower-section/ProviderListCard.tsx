@@ -10,10 +10,11 @@ import { Briefcase } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import DashboardDataCard from '../../DashboardDataCard';
 import { fetchServiceProvidersForAdmin } from '@/services/apis/providerProfile';
+import { QUERY_KEYS } from '@/shared/utils/constants';
 
 const ProviderListCard = () => {
   const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: ['admin-latest-providers'],
+    queryKey: [QUERY_KEYS.ADMIN_LATEST_PROVIDERS],
     queryFn: () =>
       fetchServiceProvidersForAdmin({ limit: 5, sortBy: 'createdAt', sortOrder: 'desc' }),
   });

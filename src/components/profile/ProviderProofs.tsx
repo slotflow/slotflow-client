@@ -7,6 +7,7 @@ import { ProviderProofsProps } from '@/shared/types/component';
 import noImage from '../../assets/defaultImages/imagePlaceholder.png';
 import ProfileDetailsShimmer from '@/components/shimmers/DataFieldShimmer';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { QUERY_KEYS } from '@/shared/utils/constants';
 
 const ProviderProofs = ({ providerId, fetchApiFunction }: ProviderProofsProps) => {
   const { data, isLoading, isError, error } = useQuery({
@@ -14,7 +15,7 @@ const ProviderProofs = ({ providerId, fetchApiFunction }: ProviderProofsProps) =
       const res = await fetchApiFunction(providerId);
       return res.data;
     },
-    queryKey: ['providerProofs', providerId],
+    queryKey: [QUERY_KEYS.PROVIDER_PROOFS, providerId],
     refetchOnWindowFocus: false,
     staleTime: 1000 * 60 * 60,
     gcTime: 1000 * 60 * 60,

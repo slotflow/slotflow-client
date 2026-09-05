@@ -9,7 +9,11 @@ import {
 import { Role } from '@/shared/types/enums';
 import DashboardStats from '../DashboardStats';
 import { ProviderDashboardStatsProps } from '@/shared/types/component';
-import { revenueStatsMapForProvider, statsMapForProvider } from '@/shared/utils/constants';
+import {
+  QUERY_KEYS,
+  revenueStatsMapForProvider,
+  statsMapForProvider,
+} from '@/shared/utils/constants';
 
 const ProviderDashboardStats = ({ dateRange }: ProviderDashboardStatsProps) => {
   return (
@@ -21,7 +25,7 @@ const ProviderDashboardStats = ({ dateRange }: ProviderDashboardStatsProps) => {
             endDate: dateRange.to,
           })
         }
-        queryKey="dashboardStats"
+        queryKey={[QUERY_KEYS.DASHBOARD_STATS]}
         dependencies={dateRange}
         statsMap={statsMapForProvider}
         shimmerCount={6}
@@ -34,7 +38,7 @@ const ProviderDashboardStats = ({ dateRange }: ProviderDashboardStatsProps) => {
             endDate: dateRange.to,
           })
         }
-        queryKey="dashboardRevenueStats"
+        queryKey={[QUERY_KEYS.DASHBOARD_REVENUE_STATS]}
         dependencies={dateRange}
         statsMap={revenueStatsMapForProvider}
         shimmerCount={5}

@@ -51,7 +51,7 @@ const ProfileListing = ({
       const res = await fetchApiFunction(userOrProviderId);
       return res.data;
     },
-    queryKey: [queryKey, userOrProviderId],
+    queryKey: [...queryKey, userOrProviderId],
     staleTime: 60 * 60 * 1000,
     refetchOnWindowFocus: false,
   });

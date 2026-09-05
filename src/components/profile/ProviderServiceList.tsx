@@ -37,7 +37,7 @@ const ProviderServiceList = ({
       const res = await fetchApiFunction(providerId);
       return res.data;
     },
-    queryKey: [queryKey, providerId],
+    queryKey: [...queryKey, providerId],
     staleTime: 1 * 60 * 1000,
     refetchOnWindowFocus: false,
   });

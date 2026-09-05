@@ -6,7 +6,7 @@ import DataFetchingError from '@/components/error/DataFetchingError';
 import { Wallet, TrendingUp, TrendingDown, Info } from 'lucide-react';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
 import { FetchCreditTransactionsResponse } from '@/shared/types/api/credit';
-import { creditAccountChartLineLinearConfig } from '@/shared/utils/constants';
+import { creditAccountChartLineLinearConfig, QUERY_KEYS } from '@/shared/utils/constants';
 import { fetchCreditAccountDetails, fetchCreditTransactions } from '@/services/apis/credit';
 import CreditTransactionTableColumn from '@/components/table/tableColumns/CreditTransactionTableColumn';
 
@@ -16,7 +16,7 @@ const CreditPage = () => {
   const startDate = dayjs().subtract(1, 'month').toDate();
 
   const { data, isLoading, error, isError } = useQuery({
-    queryKey: ['credit-details'],
+    queryKey: [QUERY_KEYS.CREDIT_DETAILS],
     queryFn: async () => {
       const res = await fetchCreditAccountDetails({
         startDate,
@@ -104,7 +104,7 @@ const CreditPage = () => {
             })
           }
           columnsCount={5}
-          queryKey="credit-transactions"
+          queryKey={[QUERY_KEYS.CREDIT_TRANSACTIONS]}
         />
       </div>
     </div>

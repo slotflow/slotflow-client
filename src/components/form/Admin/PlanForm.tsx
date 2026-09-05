@@ -3,6 +3,7 @@ import FormField from '../FormField';
 import { toast } from 'react-toastify';
 import { appConfig } from '@/config/env';
 import { useForm } from 'react-hook-form';
+import ToggleField from '../ToggleField';
 import { Loader2, X } from 'lucide-react';
 import { FormButton } from '../FormButton';
 import SelectField from '../SelectFieldNew';
@@ -12,11 +13,11 @@ import { useQuery } from '@tanstack/react-query';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PlanFormProps } from '@/shared/types/component';
 import { useAdminPlan } from '@/hooks/adminHooks/usePlan';
+import { planNameOptions } from '@/shared/utils/constants';
 import { UpdatePlanRequest } from '@/shared/types/api/plan';
 import { adminFetchPlanDetails } from '@/services/apis/plan';
 import DynamicStringListField from '../DynamicStringListFields';
 import { slideOut } from '@/shared/utils/helper/gsapAnimationSlide';
-import { booleanOptions, planNameOptions } from '@/shared/utils/constants';
 import {
   AdminCreatePlanFormType,
   adminCreatePlanZodSchema,
@@ -60,15 +61,6 @@ const PlanForm = ({ onClose, formRef, planIdToEdit }: PlanFormProps) => {
         },
   });
 
-  const handleCloseForm = () => {
-    slideOut(formRef.current, {
-      onComplete: () => {
-        reset();
-        onClose();
-      },
-    });
-  };
-
   useEffect(() => {
     if (isEditMode && planData && !isDirty) {
       reset({
@@ -88,6 +80,16 @@ const PlanForm = ({ onClose, formRef, planIdToEdit }: PlanFormProps) => {
   const features = watch('features');
   const hasTrial = watch('hasTrial');
   const trialDays = watch('trialDays');
+  const adVisibility = watch('adVisibility');
+
+  const handleClosePlanForm = () => {
+    slideOut(formRef.current, {
+      onComplete: () => {
+        reset();
+        onClose();
+      },
+    });
+  };
 
   const onSubmit = async (data: AdminCreatePlanFormType) => {
     try {
@@ -143,7 +145,7 @@ const PlanForm = ({ onClose, formRef, planIdToEdit }: PlanFormProps) => {
 
         <button
           type="button"
-          onClick={handleCloseForm}
+          onClick={handleClosePlanForm}
           disabled={isSubmitting}
           className="cursor-pointer p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50"
           aria-label="Close form"
@@ -186,22 +188,21 @@ const PlanForm = ({ onClose, formRef, planIdToEdit }: PlanFormProps) => {
                   readOnly={false}
                   required={true}
                 />
-                <SelectField<AdminCreatePlanFormType, boolean>
+                <ToggleField<AdminCreatePlanFormType>
                   id="adVisibility"
-                  label="Advertisement Visibility"
+                  label={`Advertisement ${adVisibility ? 'Enabled' : 'Disabled'}`}
+                  description="Provider profile advertisement."
                   control={control}
+                  disabled={isSubmitting}
                   error={errors.adVisibility?.message}
-                  options={booleanOptions}
-                  required
                 />
-
-                <SelectField<AdminCreatePlanFormType, boolean>
+                <ToggleField<AdminCreatePlanFormType>
                   id="hasTrial"
-                  label="Enable 14-Day Free Trial?"
+                  label={`Trial Availability ${hasTrial ? 'Enabled' : 'Disabled'}`}
+                  description="Plan trial availability."
                   control={control}
+                  disabled={isSubmitting}
                   error={errors.hasTrial?.message}
-                  options={booleanOptions}
-                  required
                 />
                 {hasTrial && (
                   <FormField<AdminCreatePlanFormType>
@@ -292,7 +293,7 @@ const PlanForm = ({ onClose, formRef, planIdToEdit }: PlanFormProps) => {
               variant="destructive"
               type="button"
               disabled={isSubmitting}
-              onClick={handleCloseForm}
+              onClick={handleClosePlanForm}
               className="cursor-pointer w-full sm:w-auto min-w-[100px]"
             >
               Cancel
@@ -300,7 +301,15 @@ const PlanForm = ({ onClose, formRef, planIdToEdit }: PlanFormProps) => {
 
             <div className="w-full sm:w-auto min-w-[120px]">
               <FormButton
-                text={isSubmitting ? 'Saving' : isEditMode ? 'Update Plan' : 'Save'}
+                text={
+                  isSubmitting
+                    ? isEditMode
+                      ? 'Updating...'
+                      : 'Saving...'
+                    : isEditMode
+                      ? 'Update Plan'
+                      : 'Save'
+                }
                 loading={isSubmitting}
                 disabled={isSubmitting || !isValid}
                 title={isEditMode ? 'Update' : 'Save'}

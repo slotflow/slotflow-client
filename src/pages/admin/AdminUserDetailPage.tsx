@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ReviewsPage from '../dashboard/ReviewsPage';
-import { userTabs } from '@/shared/utils/constants';
+import { QUERY_KEYS, userTabs } from '@/shared/utils/constants';
 import { fetchAddressByUserId } from '@/services/apis/address';
 import { fetchUserProfileDetails } from '@/services/apis/user';
 import ProfileListing from '@/components/profile/ProfileListing';
@@ -23,7 +23,7 @@ const AdminUserDetailPage = () => {
           {(tab === 0 && (
             <ProfileListing
               fetchApiFunction={() => fetchUserProfileDetails(userId)}
-              queryKey="userProfile"
+              queryKey={[QUERY_KEYS.USER_PROFILE]}
               userOrProviderId={userId}
               adminLookingUser
               shimmerRow={8}
@@ -32,7 +32,7 @@ const AdminUserDetailPage = () => {
             (tab === 1 && (
               <AddressListing
                 fetchApiFunction={() => fetchAddressByUserId(userId)}
-                queryKey=""
+                queryKey={[QUERY_KEYS.USER_ADDRESS]}
                 userOrProviderId={userId}
               />
             )) ||

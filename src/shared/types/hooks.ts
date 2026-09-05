@@ -20,19 +20,23 @@ import { Plan } from './entity/planInterface';
 import { Subscription } from './entity/subscription';
 import { Availability } from './entity/serviceAvailability';
 import { ToggleReviewBlockStatusRequest } from './api/review';
-import { ChangeServiceBlockStatusRequest } from './api/service';
 import { UseFormGetValues, UseFormSetValue } from 'react-hook-form';
 import { HearAboutUsOptionValue, Role, ServiceMode } from './enums';
 import { AdminRejectProviderModalState, ApiBaseResponse } from './common';
 import { changeAppointmentStatusRequest, ValidateRoomId } from './api/booking';
 import { AdminChangeUserStatusRequest, PreBoardingResponse } from './api/user';
+import {
+  ChangeServiceBlockStatusRequest,
+  ChangeServiceBlockStatusResponse,
+  CreateServiceRequest,
+  UpdateServiceRequest,
+  UpdateServiceResponse,
+} from './api/service';
 
 // Admin plan hook return type interface
 export interface UseAdminPlanReturn {
   createPlan: (data: CreatePlanRequest) => Promise<ApiBaseResponse<CreatePlanResponse>>;
-  isCreatingPlan: boolean;
   updatePlan: (data: UpdatePlanRequest) => Promise<ApiBaseResponse<UpdatePlanResponse>>;
-  isUpdatingPlan: boolean;
   changePlanBlockStatus: (data: ChangePlanBlockStatusRequest) => Promise<ApiBaseResponse>;
   resyncPlanWithStripe: (
     data: ResyncPlanStripeRequest,
@@ -55,7 +59,12 @@ export interface UseAdminProviderReturn {
 
 // Admin service hook return type interface
 export interface UseAdminServiceReturn {
-  changeServiceStatus: (data: ChangeServiceBlockStatusRequest) => Promise<ApiBaseResponse>;
+  changeServiceBlockStatus: (
+    data: ChangeServiceBlockStatusRequest,
+  ) => Promise<ApiBaseResponse<ChangeServiceBlockStatusResponse>>;
+  changeBlockStatusServiceId: string | null;
+  updateService: (data: UpdateServiceRequest) => Promise<ApiBaseResponse<UpdateServiceResponse>>;
+  createService: (data: CreateServiceRequest) => Promise<ApiBaseResponse>;
 }
 
 // Admin user hook return type interface

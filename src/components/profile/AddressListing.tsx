@@ -17,8 +17,8 @@ import MapPreview from '../map/MapPreview';
 import { SelectSeparator } from '../ui/select';
 import { useQuery } from '@tanstack/react-query';
 import { RootState } from '@/app/store/appStore';
+import AddressForm from '../form/Common/AddressForm';
 import { AnimatePresence, motion } from 'framer-motion';
-import AddressForm from '../form/CommonForms/AddressForm';
 import DataFetchingError from '../error/DataFetchingError';
 import { defaultButtonClassName } from '@/shared/utils/constants';
 import DataFieldShimmer from '@/components/shimmers/DataFieldShimmer';
@@ -40,7 +40,7 @@ const AddressListing = ({
       const res = await fetchApiFunction(userOrProviderId);
       return res.data;
     },
-    queryKey: [queryKey, userOrProviderId],
+    queryKey: [...queryKey, userOrProviderId],
     refetchOnWindowFocus: false,
     staleTime: 1000 * 60 * 60,
     gcTime: 1000 * 60 * 60,

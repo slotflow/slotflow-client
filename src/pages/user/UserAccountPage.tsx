@@ -6,6 +6,7 @@ import { userFetchMyProfileDetails } from '@/services/apis/user';
 import AddressListing from '@/components/profile/AddressListing';
 import ProfileListing from '@/components/profile/ProfileListing';
 import DataFetchingError from '@/components/error/DataFetchingError';
+import { QUERY_KEYS } from '@/shared/utils/constants';
 
 const UserAccountPage = () => {
   const { authUser } = useSelector((state: RootState) => state.auth);
@@ -19,13 +20,15 @@ const UserAccountPage = () => {
       profile={
         <ProfileListing
           fetchApiFunction={userFetchMyProfileDetails}
-          queryKey="userProfile"
+          queryKey={[QUERY_KEYS.USER_PROFILE]}
           shimmerRow={5}
           userSelf
         />
       }
       role={authUser.role}
-      address={<AddressListing fetchApiFunction={fetchMyAddress} queryKey="userAddress" />}
+      address={
+        <AddressListing fetchApiFunction={fetchMyAddress} queryKey={[QUERY_KEYS.USER_ADDRESS]} />
+      }
     />
   );
 };

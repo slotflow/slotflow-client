@@ -34,7 +34,7 @@ const PaginatedDataTable = <T, Q extends object = {}>({
 
   const { data, isLoading, isError, error } = useQuery({
     queryFn: () => fetchApiFunction(finalQueryParams),
-    queryKey: [queryKey, pagination.pageIndex, pagination.pageSize, queryParams],
+    queryKey: [...queryKey, pagination.pageIndex, pagination.pageSize, queryParams],
     staleTime: 60 * 60 * 1000,
     refetchOnWindowFocus: false,
   });

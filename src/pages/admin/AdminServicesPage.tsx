@@ -1,21 +1,33 @@
-import { FetchServicesResponse, ChangeServiceBlockStatusRequest } from '@/shared/types/api/service';
 import { toast } from 'react-toastify';
 import { useEffect, useRef, useState } from 'react';
+import { QUERY_KEYS } from '@/shared/utils/constants';
 import { fetchServices } from '@/services/apis/service';
 import { useAdminService } from '@/hooks/adminHooks/useService';
 import { slideIn } from '@/shared/utils/helper/gsapAnimationSlide';
+import EditServiceForm from '@/components/form/Admin/EditServiceForm';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
 import CreateServiceForm from '@/components/form/Admin/CreateServiceForm';
+import { FetchServicesResponse, ChangeServiceBlockStatusRequest } from '@/shared/types/api/service';
 import AdminAppServicesTableColumns from '@/components/table/tableColumns/AdminAppServicesTableColumn';
 
 const AdminServicesPage = () => {
-  const [showForm, setShowForm] = useState(false);
-  const formRef = useRef<HTMLDivElement>(null);
+  const editFormRef = useRef<HTMLDivElement>(null);
+  const createFormRef = useRef<HTMLDivElement>(null);
+  const [showEditForm, setShowEditForm] = useState(false);
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [selectedServiceToEdit, setSelectedServiceToEdit] = useState<FetchServicesResponse | null>(
+    null,
+  );
 
-  const { changeServiceStatus } = useAdminService();
+  const { changeServiceBlockStatus, changeBlockStatusServiceId } = useAdminService();
+
+  const handleOpenServiceEditForm = (service: FetchServicesResponse) => {
+    setSelectedServiceToEdit(service);
+    setShowEditForm(true);
+  };
 
   const handleAdminChangeServiceStatus = async (data: ChangeServiceBlockStatusRequest) => {
-    const res = await changeServiceStatus(data);
+    const res = await changeServiceBlockStatus(data);
     if (res.success) {
       toast.success(res.message);
     } else {
@@ -23,32 +35,48 @@ const AdminServicesPage = () => {
     }
   };
 
-  const column = AdminAppServicesTableColumns(handleAdminChangeServiceStatus);
+  const column = AdminAppServicesTableColumns(
+    handleAdminChangeServiceStatus,
+    handleOpenServiceEditForm,
+    changeBlockStatusServiceId,
+  );
 
   useEffect(() => {
-    if (showForm && formRef.current) {
-      slideIn(formRef.current);
+    if (showCreateForm && createFormRef.current) {
+      slideIn(createFormRef.current);
     }
-  }, [showForm]);
+    if (showEditForm && editFormRef.current) {
+      slideIn(editFormRef.current);
+    }
+  }, [showCreateForm, showEditForm]);
 
   return (
     <div className="p-4">
       <PaginatedDataTable<FetchServicesResponse>
         fetchApiFunction={fetchServices}
-        queryKey="appServices"
+        queryKey={[QUERY_KEYS.APP_SERVICES]}
         column={column}
         columnsCount={5}
         actionButtons={[
           {
             actionLabel: 'Create New Service',
-            onActionClick: () => setShowForm(true),
+            onActionClick: () => setShowCreateForm(true),
           },
         ]}
       />
 
-      {showForm && (
+      {showCreateForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <CreateServiceForm onClose={() => setShowForm(false)} formRef={formRef} />
+          <CreateServiceForm onClose={() => setShowCreateForm(false)} formRef={createFormRef} />
+        </div>
+      )}
+      {showEditForm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <EditServiceForm
+            onClose={() => setShowEditForm(false)}
+            formRef={editFormRef}
+            serviceToEdit={selectedServiceToEdit}
+          />
         </div>
       )}
     </div>

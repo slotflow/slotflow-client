@@ -5,7 +5,7 @@ import StatCard from '@/components/common/StatsCard';
 import ChartLineLinear from '@/components/chart/ChartLineLinear';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
-import { referralChartLineLinearConfig } from '@/shared/utils/constants';
+import { QUERY_KEYS, referralChartLineLinearConfig } from '@/shared/utils/constants';
 import { fetchReferralDetails, fetchReferrals } from '@/services/apis/referral';
 import ReferralTableColumn from '@/components/table/tableColumns/ReferralTableColumn';
 
@@ -15,7 +15,7 @@ const ReferralPage = () => {
   const startDate = dayjs().subtract(1, 'month').toDate();
 
   const { data, isLoading, error, isError } = useQuery({
-    queryKey: ['referal-details'],
+    queryKey: [QUERY_KEYS.REFERRAL_DETAILS],
     queryFn: async () => {
       const res = await fetchReferralDetails({
         startDate,
@@ -100,7 +100,7 @@ const ReferralPage = () => {
         column={column}
         columnsCount={4}
         fetchApiFunction={fetchReferrals}
-        queryKey="referrals"
+        queryKey={[QUERY_KEYS.REFERRALS]}
       />
     </div>
   );

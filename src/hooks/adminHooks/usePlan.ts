@@ -8,24 +8,36 @@ import {
   ChangePlanBlockStatusRequest,
 } from '@/shared/types/api/plan';
 import { appConfig } from '@/config/env';
+import { QUERY_KEYS } from '@/shared/utils/constants';
 import { UseAdminPlanReturn } from '@/shared/types/hooks';
 import { ApiPaginatedResponse } from '@/shared/types/common';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
-  changePlanBlockStatus,
   createPlan,
-  resyncPlanStripe,
   updatePlan,
+  resyncPlanStripe,
+  changePlanBlockStatus,
 } from '@/services/apis/plan';
 
+/**
+ * Custom hook for managing admin plan API interactions and React Query cache state.
+ *
+ * @returns  An object containing admin plan management functions and varibales.
+ */
 export const useAdminPlan = (): UseAdminPlanReturn => {
   const queryClient = useQueryClient();
 
+  /**
+   * Updates a plan's block status
+   *
+   * @param data is the request payload
+   * @returns
+   */
   const changePlanBlockStatusMutation = useMutation({
     mutationFn: (data: ChangePlanBlockStatusRequest) => changePlanBlockStatus(data),
     onSuccess: (res) => {
       if (res.success) {
-        queryClient.invalidateQueries({ queryKey: ['plans'] });
+        queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.PLANS] });
       }
     },
     onError: (error) => {
@@ -35,6 +47,12 @@ export const useAdminPlan = (): UseAdminPlanReturn => {
     },
   });
 
+  /**
+   * Resync the plan details with stripe product
+   *
+   * @param data is the request payload
+   * @returns update the plans cache with resynced data
+   */
   const resyncStripeMutation = useMutation({
     mutationFn: (data: ResyncPlanStripeRequest) => resyncPlanStripe(data),
     onSuccess: (res) => {
@@ -42,7 +60,7 @@ export const useAdminPlan = (): UseAdminPlanReturn => {
         const { planId, stripePlanDetails, stripeSync } = res.data;
 
         queryClient.setQueriesData<ApiPaginatedResponse<AdminFetchAllPlansResponse>>(
-          { queryKey: ['plans'] },
+          { queryKey: [QUERY_KEYS.PLANS] },
           (oldData) => {
             if (!oldData || !oldData.items) return oldData;
 
@@ -69,22 +87,28 @@ export const useAdminPlan = (): UseAdminPlanReturn => {
     },
   });
 
+  /**
+   * update the plans list cache
+   *  if plan is editing it will update only that specific plan in the list
+   * or isEdit is false we update the list by appending the created plan
+   *
+   * @param planData is the request payload
+   * @param isEdit boolean value to check the plan is editing or creting
+   */
   const updatePlansListCache = (planData: AdminFetchAllPlansResponse, isEdit: boolean) => {
-    console.log('planData : ', planData);
     const hasCache = queryClient
       .getQueriesData<ApiPaginatedResponse<AdminFetchAllPlansResponse>>({
-        queryKey: ['plans'],
+        queryKey: [QUERY_KEYS.PLANS],
       })
       .some(([, data]) => Boolean(data && data.items));
 
     if (!hasCache) {
-      console.log('fetching plans');
       queryClient.invalidateQueries({ queryKey: ['plans'] });
       return;
     }
 
     queryClient.setQueriesData<ApiPaginatedResponse<AdminFetchAllPlansResponse>>(
-      { queryKey: ['plans'] },
+      { queryKey: [QUERY_KEYS.PLANS] },
       (oldData) => {
         if (!oldData || !oldData.items) return oldData;
 
@@ -106,6 +130,11 @@ export const useAdminPlan = (): UseAdminPlanReturn => {
     );
   };
 
+  /**
+   * update plan with only changed fields and call the cache updating function
+   *
+   * @param data is the request payload
+   */
   const updatePlanMutation = useMutation({
     mutationFn: (data: UpdatePlanRequest) => updatePlan(data),
     onSuccess: (res) => {
@@ -131,11 +160,16 @@ export const useAdminPlan = (): UseAdminPlanReturn => {
     },
     onError: (error) => {
       if (appConfig.isDevelopment) {
-        console.error('Error in updatePlan:', error);
+        console.error('Error in updatePlanMutation:', error);
       }
     },
   });
 
+  /**
+   * creating a new plan and calls the cache updating function
+   *
+   * @param data is the request payload
+   */
   const createPlanMutation = useMutation({
     mutationFn: (data: CreatePlanRequest) => createPlan(data),
     onSuccess: (res) => {
@@ -162,16 +196,14 @@ export const useAdminPlan = (): UseAdminPlanReturn => {
     },
     onError: (error) => {
       if (appConfig.isDevelopment) {
-        console.error('Error in createPlan:', error);
+        console.error('Error in createPlanMutation:', error);
       }
     },
   });
 
   return {
     createPlan: createPlanMutation.mutateAsync,
-    isCreatingPlan: createPlanMutation.isPending,
     updatePlan: updatePlanMutation.mutateAsync,
-    isUpdatingPlan: updatePlanMutation.isPending,
     changePlanBlockStatus: changePlanBlockStatusMutation.mutateAsync,
     changeBlockStatusPlanId: changePlanBlockStatusMutation.isPending
       ? changePlanBlockStatusMutation.variables?.planId

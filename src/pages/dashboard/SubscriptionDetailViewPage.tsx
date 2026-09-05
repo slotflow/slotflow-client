@@ -14,6 +14,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import { fetchSubscriptionDetails } from '@/services/apis/subscription';
 import ProfileDetailsShimmer from '@/components/shimmers/DataFieldShimmer';
+import { QUERY_KEYS } from '@/shared/utils/constants';
 
 const SubscriptionDetailViewPage = () => {
   const { subscriptionId } = useParams<{ subscriptionId: string }>();
@@ -23,7 +24,7 @@ const SubscriptionDetailViewPage = () => {
       const res = await fetchSubscriptionDetails(subscriptionId!);
       return res.data;
     },
-    queryKey: ['subcription', subscriptionId],
+    queryKey: [QUERY_KEYS.SUBSCRIPTION, subscriptionId],
     staleTime: 60 * 60 * 1000,
     refetchOnWindowFocus: false,
     enabled: !!subscriptionId,

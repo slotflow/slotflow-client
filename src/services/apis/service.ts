@@ -6,8 +6,11 @@ import {
 import {
   CreateServiceRequest,
   FetchServicesResponse,
+  UpdateServiceRequest,
+  UpdateServiceResponse,
   ChangeServiceBlockStatusRequest,
   FetchServicesByCategoryResponse,
+  ChangeServiceBlockStatusResponse,
 } from '../../shared/types/api/service';
 import { axiosInstance } from '@/lib/axios';
 import { ServiceCategory } from '../../shared/types/enums';
@@ -27,12 +30,18 @@ export const createService = async (data: CreateServiceRequest): Promise<ApiBase
   return response.data;
 };
 
+export const updateService = async (
+  data: UpdateServiceRequest,
+): Promise<ApiBaseResponse<UpdateServiceResponse>> => {
+  const response = await axiosInstance.patch(`/services/${data._id}`, data);
+  return response.data;
+};
+
 export const changeServiceBlockStatus = async (
   data: ChangeServiceBlockStatusRequest,
-): Promise<ApiBaseResponse> => {
-  const response = await axiosInstance.patch(`/services/${data.serviceId}`, {
-    blockStatus: data.isBlocked,
-  });
+): Promise<ApiBaseResponse<ChangeServiceBlockStatusResponse>> => {
+  console.log('blocking');
+  const response = await axiosInstance.patch(`/services/${data._id}/block`, data);
   return response.data;
 };
 

@@ -19,7 +19,7 @@ import { setBookingPyamentData } from '@/app/store/slices/paymentSlice';
 import AvailablityFetchingError from '../error/AvailabilityFetchingError';
 import { EventSocketEnum, SlotEngageRequest } from '@/shared/types/socket';
 import { ProviderServiceAvailabilityProps } from '@/shared/types/component';
-import { defaultButtonClassName, STATUS_PRESETS } from '@/shared/utils/constants';
+import { defaultButtonClassName, QUERY_KEYS, STATUS_PRESETS } from '@/shared/utils/constants';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import ProviderAvailabilityShimmer from '@/components/shimmers/ProviderAvailabilityShimmer';
 import ProviderServiceAvailabilityForm from '../form/provider/ProviderSerivceAvailabilityForm';
@@ -54,7 +54,7 @@ const ProviderServiceAvailability = ({
         return res.data;
       }
     },
-    queryKey: ['providerServiceAvailability', date, providerId],
+    queryKey: [QUERY_KEYS.PROVIDER_SERVICE_AVAILABILITY, date, providerId],
     staleTime: 1 * 60 * 1000,
     refetchOnWindowFocus: false,
     enabled: !!date,

@@ -11,6 +11,7 @@ import DataFetchingError from '@/components/error/DataFetchingError';
 import UserViewProviderCard from '@/components/user/UserViewProviderCard';
 import { UserFetchServiceProvidersResponse } from '@/shared/types/api/user';
 import { fetchServiceProvidersForUser } from '@/services/apis/providerService';
+import { QUERY_KEYS } from '@/shared/utils/constants';
 
 /**
  * TODO implement the search
@@ -26,7 +27,7 @@ const UserListProvidersCardsPage = () => {
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError, error } =
     useInfiniteQuery({
-      queryKey: ['providers', providerCardsfFlter],
+      queryKey: [QUERY_KEYS.PROVIDERS, providerCardsfFlter],
       queryFn: async ({ pageParam = 0 }) => {
         const res = await fetchServiceProvidersForUser({
           ...providerCardsfFlter,

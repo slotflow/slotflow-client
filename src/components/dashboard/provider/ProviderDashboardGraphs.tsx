@@ -6,6 +6,7 @@ import {
   completionBreakdownChartConfig,
   newVsReturningUsersChartConfig,
   appointmentsOverTimeChartConfig,
+  QUERY_KEYS,
 } from '@/shared/utils/constants';
 import { useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
@@ -38,7 +39,7 @@ const ProviderDashboardGraphs = ({ dateRange }: ProviderDashboardGraphsProps) =>
     isError: isGraphError,
     error: graphError,
   } = useQuery({
-    queryKey: ['providerDashboardGraph', subscriptionPlan, dateRange],
+    queryKey: [QUERY_KEYS.PROVIDER_DASHBOARD_GRAPH, subscriptionPlan, dateRange],
     queryFn: async () => {
       const res = await providerFetchDashboardGraphData(subscriptionPlan, dateRange);
       return res.data;

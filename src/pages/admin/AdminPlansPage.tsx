@@ -1,5 +1,6 @@
 import { toast } from 'react-toastify';
 import { useEffect, useRef, useState } from 'react';
+import { QUERY_KEYS } from '@/shared/utils/constants';
 import PlanForm from '@/components/form/Admin/PlanForm';
 import { useAdminPlan } from '@/hooks/adminHooks/usePlan';
 import { adminFetchAllPlans } from '@/services/apis/plan';
@@ -22,12 +23,12 @@ const AdminPlansPage = () => {
   const { changePlanBlockStatus, resyncPlanWithStripe, changeBlockStatusPlanId, resyncingPlanId } =
     useAdminPlan();
 
-  const handleOpenEditForm = (planId: string) => {
+  const handleOpenPlanEditForm = (planId: string) => {
     setSelectedPlanIdToEdit(planId);
     setShowForm(true);
   };
 
-  const handleCloseForm = () => {
+  const handleClosePlanForm = () => {
     setSelectedPlanIdToEdit(null);
     setShowForm(false);
   };
@@ -54,7 +55,7 @@ const AdminPlansPage = () => {
     handleAdminChangePlanStatus,
     handleResyncStripe,
     handleNavigateToPlanDetailPage,
-    handleOpenEditForm,
+    handleOpenPlanEditForm,
     changeBlockStatusPlanId,
     resyncingPlanId,
   );
@@ -69,7 +70,7 @@ const AdminPlansPage = () => {
     <div className="p-3">
       <PaginatedDataTable<AdminFetchAllPlansResponse>
         fetchApiFunction={adminFetchAllPlans}
-        queryKey="plans"
+        queryKey={[QUERY_KEYS.PLANS]}
         column={column}
         columnsCount={9}
         actionButtons={[
@@ -82,7 +83,7 @@ const AdminPlansPage = () => {
       {showForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 overflow-y-scroll">
           <PlanForm
-            onClose={handleCloseForm}
+            onClose={handleClosePlanForm}
             formRef={formRef}
             planIdToEdit={selectedPlanIdToEdit}
           />

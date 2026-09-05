@@ -13,6 +13,7 @@ import {
   providerFetchMyProofs,
   providerFetchMyProfileDetails,
 } from '@/services/apis/providerProfile';
+import { QUERY_KEYS } from '@/shared/utils/constants';
 
 const ProviderAccountPage = () => {
   const { authUser } = useSelector((state: RootState) => state.auth);
@@ -26,7 +27,7 @@ const ProviderAccountPage = () => {
       const res = await providerFetchServiceDetails();
       return res.data;
     },
-    queryKey: ['providerService'],
+    queryKey: [QUERY_KEYS.PROVIDER_SERVICE],
     staleTime: 1 * 60 * 1000,
     refetchOnWindowFocus: false,
   });
@@ -40,7 +41,7 @@ const ProviderAccountPage = () => {
       const res = await providerFetchMyProfileDetails();
       return res.data;
     },
-    queryKey: ['providerProfile'],
+    queryKey: [QUERY_KEYS.PROVIDER_PROFILE],
     staleTime: 1 * 60 * 1000,
     refetchOnWindowFocus: false,
   });
@@ -62,7 +63,9 @@ const ProviderAccountPage = () => {
         data: providerProfile,
       }}
       role={authUser.role}
-      address={<AddressListing fetchApiFunction={fetchMyAddress} queryKey="userAddress" />}
+      address={
+        <AddressListing fetchApiFunction={fetchMyAddress} queryKey={[QUERY_KEYS.USER_ADDRESS]} />
+      }
       availability={<ProviderServiceAvailability role={Role.PROVIDER} />}
       proofs={<ProviderProofs fetchApiFunction={providerFetchMyProofs} />}
     />

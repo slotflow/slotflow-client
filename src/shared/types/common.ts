@@ -67,7 +67,7 @@ export interface PaginatedDataTableProps<T, Q extends object = {}> {
   fetchApiFunction: (
     queryParams?: FetchFunctionBaseQueryParams & Q,
   ) => Promise<ApiPaginatedResponse<T>>;
-  queryKey: string;
+  queryKey: string[];
   column: ColumnDef<T>[];
   columnsCount: number;
   pageSize?: number;

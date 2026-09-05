@@ -13,6 +13,7 @@ import DataFetchingError from '@/components/error/DataFetchingError';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
 import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
 import BookingsTableColumn from '@/components/table/tableColumns/BookingsTableColumn';
+import { QUERY_KEYS } from '@/shared/utils/constants';
 
 const ListBookingsPage = () => {
   const authUser = useSelector((state: RootState) => state.auth.authUser);
@@ -82,7 +83,7 @@ const ListBookingsPage = () => {
         fetchApiFunction={(params) => fetchBookings({ ...params })}
         columnsCount={6}
         column={columns}
-        queryKey="bookings"
+        queryKey={[QUERY_KEYS.BOOKINGS]}
       />
     </div>
   );

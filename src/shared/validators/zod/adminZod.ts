@@ -65,6 +65,20 @@ export const adminCreateServiceZodSchema = z.object({
 
 export type AdminCreateServiceFormType = z.infer<typeof adminCreateServiceZodSchema>;
 
+// Admin Edit Service Schema
+export const adminEditServiceZodSchema = z.object({
+  serviceName: z
+    .string()
+    .trim()
+    .min(4, 'Service name must be at least 4 characters')
+    .max(50, 'Service name cannot exceed 50 characters')
+    .regex(appServiceNameRegex, 'Service name can only contain letters, numbers, and spaces'),
+  serviceCategory: z.nativeEnum(ServiceCategory),
+  isBlocked: z.boolean(),
+});
+
+export type AdminEditServiceFormType = z.infer<typeof adminEditServiceZodSchema>;
+
 // Admin Create Service Schema
 export const adminRejectProviderZodSchema = z.object({
   verificationRejectionReason: z

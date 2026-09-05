@@ -24,6 +24,7 @@ import { adminFetchPlanDetails } from '@/services/apis/plan';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import { formatNumberToPrice } from '@/shared/utils/helper/formatter';
 import { Plan, StripeSyncStatus } from '@/shared/types/entity/planInterface';
+import { QUERY_KEYS } from '@/shared/utils/constants';
 
 const PlanDetailsPage = () => {
   const navigate = useNavigate();
@@ -36,20 +37,18 @@ const PlanDetailsPage = () => {
       const res = await adminFetchPlanDetails(planId!);
       return res.data;
     },
-    queryKey: ['planDetails', planId],
+    queryKey: [QUERY_KEYS.PLAN_DETAILS, planId],
     staleTime: 60 * 60 * 1000,
     refetchOnWindowFocus: false,
     enabled: !!planId,
   });
-
-  console.log('data : ', data);
 
   const handleAdminChangePlanStatus = async () => {
     if (!data) return;
     const res = await changePlanBlockStatus({ planId: data._id, isBlocked: data.isBlocked });
     if (res.success) {
       toast.success(res.message);
-      queryClient.invalidateQueries({ queryKey: ['plan', planId] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.PLAN, planId] });
     } else {
       toast.error(res.message);
     }
@@ -60,7 +59,7 @@ const PlanDetailsPage = () => {
     const res = await resyncPlanWithStripe({ planId: data._id });
     if (res.success) {
       toast.success(res.message);
-      queryClient.invalidateQueries({ queryKey: ['plan', planId] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.PLAN, planId] });
     } else {
       toast.error(res.message);
     }

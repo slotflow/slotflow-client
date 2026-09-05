@@ -12,10 +12,11 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchPayments } from '@/services/apis/payment';
 import DashboardDataCard from '../../DashboardDataCard';
 import { formatNumberToPrice } from '@/shared/utils/helper/formatter';
+import { QUERY_KEYS } from '@/shared/utils/constants';
 
 const PaymentListCard = () => {
   const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: ['admin-latest-payments'],
+    queryKey: [QUERY_KEYS.ADMIN_LATEST_PAYMENTS],
     queryFn: () => fetchPayments({ limit: 5, sortBy: 'createdAt', sortOrder: 'desc' }),
   });
 

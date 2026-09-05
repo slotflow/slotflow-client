@@ -12,6 +12,7 @@ import FeatureLocked from '@/components/app/FeatureLocked';
 import { fetchCalendarEvents } from '@/services/apis/google';
 import CalendarShimmer from '@/components/shimmers/CalendarShimmer';
 import DataFetchingError from '@/components/error/DataFetchingError';
+import { QUERY_KEYS } from '@/shared/utils/constants';
 
 const CalendarPage = () => {
   const navigate = useNavigate();
@@ -47,7 +48,7 @@ const CalendarPage = () => {
       const res = await fetchCalendarEvents();
       return res.data;
     },
-    queryKey: ['calendarEvents'],
+    queryKey: [QUERY_KEYS.CALENDAR_EVENTS],
     staleTime: 60 * 60 * 1000,
     refetchOnWindowFocus: false,
     enabled: Boolean(authUser?.googleConnected && canUseCalendar),

@@ -53,6 +53,7 @@ import { ProviderServiceAvailabilityFormType } from '../validators/zod/providerZ
 import { FetchReviewsResponse, ToggleReviewBlockStatusRequest } from './api/review';
 import { Column, ColumnDef, OnChangeFn, PaginationState } from '@tanstack/react-table';
 import { FetchProvidersProofsResponse, UpdateFileDataRequest } from './api/commonApiInterface';
+import { FetchServicesResponse } from './api/service';
 
 // Provider service availability component props interface
 export interface ProviderServiceAvailabilityProps {
@@ -67,7 +68,7 @@ export interface ProviderServiceListProps {
   fetchApiFunction: (
     providerId?: User['_id'],
   ) => Promise<ApiBaseResponse<FetchProviderServiceResponse>>;
-  queryKey: string;
+  queryKey: string[];
   canUpdate?: boolean;
 }
 
@@ -396,7 +397,7 @@ export interface DashboardDataCardProps {
 // Dashboard stats component props interface
 export interface DashboardStatsProps<T extends Record<string, number>> {
   queryFunction(): Promise<ApiBaseResponse<T>>;
-  queryKey: string;
+  queryKey: string[];
   statsMap: Array<statsMapIntrface<T>>;
   plan?: string;
   shimmerCount: number;
@@ -448,6 +449,12 @@ export interface PlanFormProps {
 export interface CreateServiceFormProps {
   onClose: () => void;
   formRef: React.RefObject<HTMLDivElement | null>;
+}
+
+export interface EditServiceFormProps {
+  onClose: () => void;
+  formRef: React.RefObject<HTMLDivElement | null>;
+  serviceToEdit: FetchServicesResponse | null;
 }
 
 // Reject provider form component props interface
@@ -616,7 +623,7 @@ export interface UserOrProviderAddressDetailsComponentProps {
   fetchApiFunction: (
     userOrProviderId?: string,
   ) => Promise<ApiBaseResponse<FetchMyAddressResponse> | ApiBaseResponse<FetchAddressResponse>>;
-  queryKey: string;
+  queryKey: string[];
   isUserLookingProvider?: boolean;
   canUpdate?: boolean;
 }
@@ -643,7 +650,7 @@ export interface UserOrProviderProfileDetailsComponentProps {
       | AdminFetchUserProfileDetailsResponse
     >
   >;
-  queryKey: string;
+  queryKey: string[];
   adminLookingProvider?: boolean;
   adminLookingUser?: boolean;
   providerSelf?: boolean;

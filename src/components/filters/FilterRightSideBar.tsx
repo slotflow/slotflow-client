@@ -16,6 +16,7 @@ import { toggleFilterSideBar } from '@/app/store/slices/appSlice';
 import { setProviderCardsFilter } from '@/app/store/slices/userSlice';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { BookCheck, ChartBarStacked, IndianRupee, Locate, SlidersHorizontal } from 'lucide-react';
+import { QUERY_KEYS } from '@/shared/utils/constants';
 
 const FilterRightSideBar = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -53,7 +54,7 @@ const FilterRightSideBar = () => {
       const res = await fetchServicesByCategory(filters.categories);
       return res.data;
     },
-    queryKey: ['appServices', filters.categories],
+    queryKey: [QUERY_KEYS.APP_SERVICES, filters.categories],
     staleTime: 5 * 60 * 1000,
     refetchOnWindowFocus: false,
     retry: false,
