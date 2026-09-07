@@ -1,6 +1,6 @@
 import { Plan } from '../entity/planInterface';
 
-// response type of admin fetch all plans api
+// Fetch all plans ( by admin )
 export type AdminFetchAllPlansResponse = Pick<
   Plan,
   | '_id'
@@ -13,7 +13,7 @@ export type AdminFetchAllPlansResponse = Pick<
   | 'stripeSync'
 >;
 
-// request type of create plan api
+// Create plan
 export type CreatePlanRequest = Pick<
   Plan,
   | 'planName'
@@ -26,11 +26,9 @@ export type CreatePlanRequest = Pick<
   | 'hasTrial'
   | 'trialDays'
 >;
-
-// response type of create plan api
 export type CreatePlanResponse = Omit<Plan, 'createdAt' | 'updatedAt'>;
 
-// request type of update plan api
+// Update plan
 export type UpdatePlanRequest = Partial<
   Pick<
     Plan,
@@ -47,33 +45,28 @@ export type UpdatePlanRequest = Partial<
 > & {
   planId: Plan['_id'];
 };
-
-// response type of update plan api
 export type UpdatePlanResponse = Omit<Plan, 'createdAt' | 'updatedAt'>;
 
-// request type of change plan block status api
+// Change plan block status
 export type ChangePlanBlockStatusRequest = {
   planId: Plan['_id'];
-  isBlocked: Plan['isBlocked'];
-};
+} & Pick<Plan, 'isBlocked'>;
+export type ChangePlanBlockStatusResponse = Pick<Plan, '_id' | 'isBlocked'>;
 
-// response type of provider fetch plans api
+// Fetch plans ( by provider )
 export type ProviderFetchPlansResponse = Pick<
   Plan,
   '_id' | 'planName' | 'monthlyPrice' | 'yearlyPrice' | 'features' | 'description'
 >;
 
-// request type of resync plan stripe
+// Resync plan with stripe
 export type ResyncPlanStripeRequest = {
   planId: Plan['_id'];
 };
+export type ResyncPlanStripeResponse = Pick<Plan, '_id' | 'stripePlanDetails' | 'stripeSync'>;
 
-// request type of resync plan stripe
-export type ResyncPlanStripeResponse = {
+// Plan details
+export interface AdminFetchPlanDetailsRequest {
   planId: Plan['_id'];
-  stripePlanDetails: Plan['stripePlanDetails'];
-  stripeSync: Plan['stripeSync'];
-};
-
-// response type for plan details
+}
 export type AdminFetchPlanDetailsResponse = Omit<Plan, 'createdAt' | 'updatedAt'>;

@@ -9,7 +9,9 @@ import BoardingLayoutWrapper from './BoardingLayoutWrapper.tsx';
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
 import ProviderDashboardPage from '@/pages/provider/ProviderDashboardPage.tsx';
 import ProviderDashboardGraphsPage from '@/pages/provider/ProviderDashboardGraphsPage.tsx';
-import PlanDetailsPage from '@/pages/dashboard/PlanDetailsPage.tsx';
+import AdminPlanDetailsPage from '@/pages/admin/AdminPlanDetailsPage.tsx';
+import SandboxPage from '@/pages/admin/SandboxPage.tsx';
+import DashboardDataCardSample from '@/pages/sandbox/DashboardDataCardSample.tsx';
 
 const FAQPage = lazy(() => import('@/pages/landing/FAQPage.tsx'));
 const AuthLayout = lazy(() => import('@/layouts/AuthLayout.tsx'));
@@ -217,7 +219,7 @@ export const appRouter = createBrowserRouter([
       },
       {
         path: 'plans/:planId',
-        element: <PlanDetailsPage />,
+        element: <AdminPlanDetailsPage />,
         handle: {
           title: 'Plan Details',
         },
@@ -256,6 +258,22 @@ export const appRouter = createBrowserRouter([
         handle: {
           title: 'Grafana Dashboard',
         },
+      },
+      {
+        path: 'test-sandbox',
+        element: <SandboxPage />,
+        handle: {
+          title: 'Grafana Dashboard',
+        },
+        children: [
+          {
+            path: 'dashboard-data-card',
+            element: <DashboardDataCardSample />,
+            handle: {
+              title: 'Dashboard Data Card',
+            },
+          },
+        ],
       },
       {
         path: '*',

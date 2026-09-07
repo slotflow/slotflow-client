@@ -5,36 +5,38 @@ import {
   Check,
   Layers,
   Calendar,
+  RotateCw,
   Sparkles,
   ArrowLeft,
   RefreshCw,
   CreditCard,
   ShieldAlert,
-  CheckCircle2,
   CircleCheck,
+  CheckCircle2,
 } from 'lucide-react';
 import { toast } from 'react-toastify';
-import { queryClient } from '@/lib/queryClient';
 import { useQuery } from '@tanstack/react-query';
+import { QUERY_KEYS } from '@/shared/utils/constants';
 import CopyableId from '@/components/common/CopyField';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAdminPlan } from '@/hooks/adminHooks/usePlan';
+import StatusBadge from '@/components/common/StatusBadge';
 import DataShimmer from '@/components/shimmers/DataShimmer';
 import { adminFetchPlanDetails } from '@/services/apis/plan';
 import DataFetchingError from '@/components/error/DataFetchingError';
-import { formatNumberToPrice } from '@/shared/utils/helper/formatter';
+import DashboardDataCard from '@/components/common/DashboardDataCard';
 import { Plan, StripeSyncStatus } from '@/shared/types/entity/planInterface';
-import { QUERY_KEYS } from '@/shared/utils/constants';
 
-const PlanDetailsPage = () => {
+const AdminPlanDetailsPage = () => {
   const navigate = useNavigate();
   const { planId } = useParams<{ planId: Plan['_id'] }>();
 
-  const { changePlanBlockStatus, resyncPlanWithStripe, resyncingPlanId } = useAdminPlan();
+  const { changePlanBlockStatus, resyncPlanWithStripe, resyncingPlanId, changeBlockStatusPlanId } =
+    useAdminPlan();
 
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading, isError, error, refetch, isFetching } = useQuery({
     queryFn: async () => {
-      const res = await adminFetchPlanDetails(planId!);
+      const res = await adminFetchPlanDetails({ planId: planId! });
       return res.data;
     },
     queryKey: [QUERY_KEYS.PLAN_DETAILS, planId],
@@ -43,25 +45,12 @@ const PlanDetailsPage = () => {
     enabled: !!planId,
   });
 
-  const handleAdminChangePlanStatus = async () => {
-    if (!data) return;
-    const res = await changePlanBlockStatus({ planId: data._id, isBlocked: data.isBlocked });
-    if (res.success) {
-      toast.success(res.message);
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.PLAN, planId] });
+  const handleRefetch = async () => {
+    const { isSuccess } = await refetch();
+    if (isSuccess) {
+      toast.success('Plan details refreshed successfully');
     } else {
-      toast.error(res.message);
-    }
-  };
-
-  const handleResyncStripe = async () => {
-    if (!data) return;
-    const res = await resyncPlanWithStripe({ planId: data._id });
-    if (res.success) {
-      toast.success(res.message);
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.PLAN, planId] });
-    } else {
-      toast.error(res.message);
+      toast.error('Failed to refresh plan details');
     }
   };
 
@@ -112,29 +101,33 @@ const PlanDetailsPage = () => {
                 </div>
               ) : (
                 <>
-                  {!data?.isBlocked ? (
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-950/50 dark:text-emerald-400 dark:border-emerald-800">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                      Active
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200 dark:bg-rose-950/50 dark:text-rose-400 dark:border-rose-800">
-                      <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
-                      Blocked
-                    </span>
-                  )}
+                  <StatusBadge
+                    type={
+                      changeBlockStatusPlanId === data?._id
+                        ? 'updating'
+                        : !data?.isBlocked
+                          ? 'active'
+                          : 'blocked'
+                    }
+                  />
 
-                  {data?.stripeSync === StripeSyncStatus.SYNCED ? (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200 dark:bg-muted/20 dark:text-slate-300 dark:border-border">
-                      <CheckCircle2 className="w-3 h-3 text-emerald-500" />
-                      Stripe Synced
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-950/50 dark:text-amber-400 dark:border-amber-800">
-                      <Clock className="w-3 h-3 text-amber-500" />
-                      Sync Pending
-                    </span>
-                  )}
+                  <StatusBadge
+                    type={
+                      resyncingPlanId === data?._id
+                        ? 'updating'
+                        : !data?.stripeSync
+                          ? 'pending'
+                          : 'verified'
+                    }
+                    label={!data?.stripeSync ? 'Sync Pending' : 'Stripe Synced'}
+                    icon={
+                      !data?.stripeSync ? (
+                        <Clock className="w-3 h-3 text-amber-500" />
+                      ) : (
+                        <CheckCircle2 className="w-3 h-3 text-emerald-500" />
+                      )
+                    }
+                  />
                 </>
               )}
             </div>
@@ -147,17 +140,29 @@ const PlanDetailsPage = () => {
 
           <div className="flex items-center gap-2 self-start sm:self-auto">
             <button
-              disabled={isLoading || data?.stripeSync == StripeSyncStatus.SYNCED}
-              onClick={handleResyncStripe}
-              className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border border-slate-200 dark:border-border bg-white dark:bg-muted/20 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-muted/30 shadow-sm transition-all cursor-pointer"
+              disabled={isLoading || isFetching}
+              onClick={handleRefetch}
+              className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border border-slate-200 dark:border-border bg-white dark:bg-muted/20 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-muted/30 shadow-sm transition-all cursor-pointer disabled:opacity-50"
             >
-              <RefreshCw
-                className={`w-3.5 h-3.5 text-slate-500 ${resyncingPlanId && 'animate-spin'}`}
-              />
-              Re-sync Stripe
+              <RotateCw className={`w-3.5 h-3.5 text-slate-500 ${isFetching && 'animate-spin'}`} />
+              Refetch
             </button>
+            {data?.stripeSync === StripeSyncStatus.PENDING && (
+              <button
+                disabled={isLoading}
+                onClick={() => resyncPlanWithStripe({ planId: planId! })}
+                className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border border-slate-200 dark:border-border bg-white dark:bg-muted/20 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-muted/30 shadow-sm transition-all cursor-pointer"
+              >
+                <RefreshCw
+                  className={`w-3.5 h-3.5 text-slate-500 ${resyncingPlanId && 'animate-spin'}`}
+                />
+                Re-sync Stripe
+              </button>
+            )}
             <button
-              onClick={handleAdminChangePlanStatus}
+              onClick={() =>
+                changePlanBlockStatus({ planId: planId!, isBlocked: !(data?.isBlocked ?? false) })
+              }
               className={`inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border shadow-sm transition-all cursor-pointer ${
                 data?.isBlocked
                   ? 'bg-emerald-600 hover:bg-emerald-700 text-white border-transparent'
@@ -176,72 +181,39 @@ const PlanDetailsPage = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="p-5 rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/20 shadow-sm space-y-2">
-            <div className="flex items-center justify-between text-xs font-medium text-slate-500">
-              <span>Monthly Rate</span>
-              <CreditCard className="w-4 h-4 text-slate-400" />
-            </div>
-            <div className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
-              {isLoading ? (
-                <DataShimmer w="w-24" h="h-7" />
-              ) : (
-                <>
-                  {formatNumberToPrice(data!.monthlyPrice)}
-                  <span className="text-xs font-normal text-slate-500"> /mo</span>
-                </>
-              )}
-            </div>
-          </div>
+          <DashboardDataCard
+            label="Monthly Rate"
+            icon={CreditCard}
+            value={data?.monthlyPrice}
+            price
+            suffix=" /mo"
+            isLoading={isLoading}
+          />
 
-          <div className="p-5 rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/20 shadow-sm space-y-2">
-            <div className="flex items-center justify-between text-xs font-medium text-slate-500">
-              <span>Yearly Rate</span>
-              <Calendar className="w-4 h-4 text-slate-400" />
-            </div>
-            <div className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
-              {isLoading ? (
-                <DataShimmer w="w-24" h="h-7" />
-              ) : (
-                <>
-                  {formatNumberToPrice(data!.yearlyPrice)}
-                  <span className="text-xs font-normal text-slate-500"> /yr</span>
-                </>
-              )}
-            </div>
-          </div>
+          <DashboardDataCard
+            label="Yearly Rate"
+            icon={Calendar}
+            value={data?.yearlyPrice}
+            price
+            suffix=" /yr"
+            isLoading={isLoading}
+          />
 
-          <div className="p-5 rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/20 shadow-sm space-y-2">
-            <div className="flex items-center justify-between text-xs font-medium text-slate-500">
-              <span>Max Bookings</span>
-              <Layers className="w-4 h-4 text-slate-400" />
-            </div>
-            <div className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
-              {isLoading ? (
-                <DataShimmer w="w-20" h="h-7" />
-              ) : (
-                <>
-                  {data!.maxBookingPerMonth}
-                  <span className="text-xs font-normal text-slate-500"> /mo</span>
-                </>
-              )}
-            </div>
-          </div>
+          <DashboardDataCard
+            label="Max Bookings"
+            icon={Layers}
+            value={data?.maxBookingPerMonth}
+            suffix=" /mo"
+            isLoading={isLoading}
+          />
 
-          <div className="p-5 rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/20 shadow-sm space-y-2">
-            <div className="flex items-center justify-between text-xs font-medium text-slate-500">
-              <span>Trial Window</span>
-              <Sparkles className="w-4 h-4 text-slate-400" />
-            </div>
-            <div className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
-              {isLoading ? (
-                <DataShimmer w="w-20" h="h-7" />
-              ) : data!.hasTrial ? (
-                `${data!.trialDays} Days`
-              ) : (
-                'Disabled'
-              )}
-            </div>
-          </div>
+          <DashboardDataCard
+            label="Trial Window"
+            icon={Sparkles}
+            value={data?.hasTrial ? `${data.trialDays} Days` : 'Disabled'}
+            status={data?.hasTrial}
+            isLoading={isLoading}
+          />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -396,4 +368,4 @@ const PlanDetailsPage = () => {
   );
 };
 
-export default PlanDetailsPage;
+export default AdminPlanDetailsPage;

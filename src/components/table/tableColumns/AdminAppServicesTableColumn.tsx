@@ -8,12 +8,13 @@ import {
 } from '../../ui/dropdown-menu';
 import { Button } from '../../ui/button';
 import { ColumnDef } from '@tanstack/react-table';
+import StatusBadge from '@/components/common/StatusBadge';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
-import { Ban, CircleCheck, Edit, MoreHorizontal, Layers } from 'lucide-react';
+import { Ban, CircleCheck, Edit, MoreHorizontal } from 'lucide-react';
 import { FetchServicesResponse, ChangeServiceBlockStatusRequest } from '@/shared/types/api/service';
 
 const AdminAppServicesTableColumns = (
-  handleAdminChangeServiceStatus: (data: ChangeServiceBlockStatusRequest) => void,
+  changeServiceBlockStatus: (data: ChangeServiceBlockStatusRequest) => void,
   handleOpenServiceEditForm: (service: FetchServicesResponse) => void,
   changeBlockStatusServiceId: string | null,
 ): ColumnDef<FetchServicesResponse>[] => [
@@ -40,12 +41,7 @@ const AdminAppServicesTableColumns = (
     header: ({ column }) => <DataTableColumnHeader column={column} title="Category" />,
     cell: ({ row }) => {
       const category = row.original.serviceCategory;
-      return (
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-xs font-medium bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700">
-          <Layers className="w-3 h-3 text-slate-500" />
-          {category}
-        </span>
-      );
+      return <StatusBadge type="normal" label={category} />;
     },
   },
   {
@@ -56,25 +52,10 @@ const AdminAppServicesTableColumns = (
       const isThisRowUpdating = changeBlockStatusServiceId === row.original._id;
 
       if (isThisRowUpdating) {
-        return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-950/40 dark:text-amber-400 dark:border-amber-800">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping" />
-            Updating...
-          </span>
-        );
+        return <StatusBadge type="updating" />;
       }
 
-      return !isBlocked ? (
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-400 dark:border-emerald-800">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-          Active
-        </span>
-      ) : (
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-rose-50 text-rose-700 border border-rose-200 dark:bg-rose-950/40 dark:text-rose-400 dark:border-rose-800">
-          <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
-          Blocked
-        </span>
-      );
+      return !isBlocked ? <StatusBadge type="active" /> : <StatusBadge type="blocked" />;
     },
   },
   {
@@ -96,9 +77,9 @@ const AdminAppServicesTableColumns = (
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() =>
-                handleAdminChangeServiceStatus({
-                  isBlocked: service.isBlocked,
-                  _id: service._id,
+                changeServiceBlockStatus({
+                  isBlocked: !service.isBlocked,
+                  serviceId: service._id,
                 })
               }
             >

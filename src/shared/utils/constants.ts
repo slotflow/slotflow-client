@@ -65,6 +65,8 @@ import {
   LayoutDashboard,
   MessageSquareText,
   PictureInPicture2,
+  TestTube,
+  Component,
 } from 'lucide-react';
 import {
   Route,
@@ -90,6 +92,7 @@ import {
   MapDotLitLocationsCoordinates,
   ProviderApprovalMessageInterface,
   gsapBigSvgYDirectionAnimationInterface,
+  VerificationStatusConfig,
 } from '../types/common';
 import { OptionType } from '../types/common';
 import {
@@ -161,6 +164,8 @@ export enum RouteNames {
   SECURITY = 'Security',
   STATS = 'Stats',
   GRAPHS = 'Grpahs',
+  TESTSANDBOX = 'Test Sandbox',
+  DASHBOARDDATACARD = 'Dashboard-data-card',
 }
 
 // route for sidebar
@@ -319,6 +324,20 @@ export const sidebarRoutes: Route[] = [
         name: RouteNames.SECURITY,
         icon: LockIcon,
         roles: [Role.USER, Role.PROVIDER],
+      },
+    ],
+  },
+  {
+    path: 'test-sandbox',
+    name: RouteNames.TESTSANDBOX,
+    icon: TestTube,
+    roles: [Role.ADMIN],
+    subroutes: [
+      {
+        path: 'dashboard-data-card',
+        name: RouteNames.DASHBOARDDATACARD,
+        icon: Component,
+        roles: [Role.ADMIN],
       },
     ],
   },
@@ -2093,3 +2112,31 @@ export const QUERY_KEYS = {
   PROVIDER_DASHBOARD_GRAPH: 'provider-dashboard-graph',
   PROVIDER_SERVICE_AVAILABILITY: 'provider-service-availability',
 } as const;
+
+//
+export const VERIFICATION_STATUS_CONFIG: Record<string, VerificationStatusConfig> = {
+  [AdminVerificationStatus.REQUESTED]: {
+    type: 'pending',
+    label: 'Requested',
+  },
+  [AdminVerificationStatus.UNDER_REVIEW]: {
+    type: 'pending',
+    label: 'Under Review',
+  },
+  [AdminVerificationStatus.APPROVED]: {
+    type: 'verified',
+    label: 'Approved',
+  },
+  [AdminVerificationStatus.REJECTED]: {
+    type: 'unverified',
+    label: 'Rejected',
+  },
+  [AdminVerificationStatus.RESUBMITTED]: {
+    type: 'pending',
+    label: 'Re-submitted',
+  },
+  [AdminVerificationStatus.NOT_REQUESTED]: {
+    type: 'standard',
+    label: 'Not Requested',
+  },
+};

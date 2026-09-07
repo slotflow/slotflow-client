@@ -1,18 +1,13 @@
-import { toast } from 'react-toastify';
 import { useEffect, useRef, useState } from 'react';
 import { QUERY_KEYS } from '@/shared/utils/constants';
 import PlanForm from '@/components/form/Admin/PlanForm';
 import { useAdminPlan } from '@/hooks/adminHooks/usePlan';
 import { adminFetchAllPlans } from '@/services/apis/plan';
 import { slideIn } from '@/shared/utils/helper/gsapAnimationSlide';
+import { AdminFetchAllPlansResponse } from '@/shared/types/api/plan';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
 import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
 import AdminPlansTableColumns from '@/components/table/tableColumns/AdminPlansTableColumn';
-import {
-  ResyncPlanStripeRequest,
-  AdminFetchAllPlansResponse,
-  ChangePlanBlockStatusRequest,
-} from '@/shared/types/api/plan';
 
 const AdminPlansPage = () => {
   const formRef = useRef<HTMLDivElement>(null);
@@ -33,27 +28,9 @@ const AdminPlansPage = () => {
     setShowForm(false);
   };
 
-  const handleAdminChangePlanStatus = async (data: ChangePlanBlockStatusRequest) => {
-    const res = await changePlanBlockStatus(data);
-    if (res.success) {
-      toast.success(res.message);
-    } else {
-      toast.error(res.message);
-    }
-  };
-
-  const handleResyncStripe = async (data: ResyncPlanStripeRequest) => {
-    const res = await resyncPlanWithStripe(data);
-    if (res.success) {
-      toast.success(res.message);
-    } else {
-      toast.error(res.message);
-    }
-  };
-
   const column = AdminPlansTableColumns(
-    handleAdminChangePlanStatus,
-    handleResyncStripe,
+    changePlanBlockStatus,
+    resyncPlanWithStripe,
     handleNavigateToPlanDetailPage,
     handleOpenPlanEditForm,
     changeBlockStatusPlanId,

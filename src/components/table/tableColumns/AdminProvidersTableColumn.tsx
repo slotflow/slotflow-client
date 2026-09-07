@@ -1,4 +1,14 @@
 import {
+  X,
+  Ban,
+  Check,
+  Award,
+  ShieldX,
+  ReceiptText,
+  CheckCircle2,
+  MoreHorizontal,
+} from 'lucide-react';
+import {
   DropdownMenu,
   DropdownMenuItem,
   DropdownMenuLabel,
@@ -8,77 +18,96 @@ import {
 } from '../../ui/dropdown-menu';
 import { Button } from '../../ui/button';
 import {
+  AdminApproveProviderRequest,
   AdminFetchAllProvidersResponse,
   AdminChangeProviderTrustTagRequest,
   AdminChangeProviderBlockStatusRequest,
 } from '@/shared/types/api/providerProfile';
-import { MoreHorizontal } from 'lucide-react';
-import { ColumnDef } from '@tanstack/react-table';
 import { User } from '@/shared/types/entity/user';
+import { ColumnDef } from '@tanstack/react-table';
+import StatusBadge from '@/components/common/StatusBadge';
 import { AdminVerificationStatus } from '@/shared/types/enums';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
-import { AdminRejectProviderModalState } from '@/shared/types/common';
+import { VERIFICATION_STATUS_CONFIG } from '@/shared/utils/constants';
 
 const AdminProvidersTableColumns = (
-  handleAdminApproveProvider: (providerId: User['_id']) => void,
-  handleProviderRejectModal: (data: AdminRejectProviderModalState) => void,
-  hanldeAdminChangeProviderBlockStatus: (data: AdminChangeProviderBlockStatusRequest) => void,
+  approveProvider: (data: AdminApproveProviderRequest) => void,
+  approvingProviderId: string | null | undefined,
+  changeProviderBlockStatus: (data: AdminChangeProviderBlockStatusRequest) => void,
+  changeBlockStatusProviderId: string | null | undefined,
+  changeProviderSlotflowTrustTag: (data: AdminChangeProviderTrustTagRequest) => void,
+  changeTrustTagProviderId: string | null | undefined,
   handleGetProviderDetailPage: (providerId: User['_id']) => void,
-  handleAdminChangeProviderSlotflowTrustTag: (data: AdminChangeProviderTrustTagRequest) => void,
+  handleProviderRejectOpen: (data: { providerId: User['_id'] }) => void,
 ): ColumnDef<AdminFetchAllProvidersResponse>[] => [
+  {
+    accessorKey: 'slNo',
+    header: 'Sl No',
+    cell: ({ row }) => (
+      <span className="font-mono text-xs text-slate-500 font-medium">
+        {String(row.index + 1).padStart(2, '0')}
+      </span>
+    ),
+  },
   {
     accessorKey: 'username',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Username" />,
+    cell: ({ row }) => (
+      <span className="font-semibold text-slate-900 dark:text-slate-100">
+        {row.original.username}
+      </span>
+    ),
   },
   {
     accessorKey: 'email',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Email" />,
+    cell: ({ row }) => (
+      <span className="font-medium text-slate-600 dark:text-slate-400 text-xs">
+        {row.original.email}
+      </span>
+    ),
   },
   {
     accessorKey: 'isBlocked',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Account Status" />,
     cell: ({ row }) => {
       const isBlocked = row.original.isBlocked;
-      if (isBlocked) {
-        return <span className="text-red-500 font-semibold">Blocked</span>;
-      } else {
-        return <span className="text-green-500 font-semibold">Active</span>;
+      const isThisRowUpdating = changeBlockStatusProviderId === row.original._id;
+
+      if (isThisRowUpdating) {
+        return <StatusBadge type="updating" />;
       }
+
+      return !isBlocked ? <StatusBadge type="active" /> : <StatusBadge type="blocked" />;
     },
   },
   {
     accessorKey: 'isAdminVerified',
-    header: 'Admin Verication',
+    header: 'Admin Verification',
     cell: ({ row }) => {
       const isVerified = row.original.isAdminVerified;
-      if (isVerified) {
-        return <span className="text-green-500 font-semibold">Verified</span>;
-      } else {
-        return <span className="text-red-500 font-semibold">Pending</span>;
+      const isThisRowUpdating = approvingProviderId === row.original._id;
+
+      if (isThisRowUpdating) {
+        return <StatusBadge type="updating" />;
       }
+
+      return isVerified ? <StatusBadge type="verified" /> : <StatusBadge type="pending" />;
     },
   },
   {
     accessorKey: 'adminVerificationStatus',
-    header: 'Verication Status',
+    header: 'Verification Status',
     cell: ({ row }) => {
       const status = row.original.adminVerificationStatus;
-      switch (status) {
-        case AdminVerificationStatus.REQUESTED:
-          return <span className="font-semibold">Requested By Provider</span>;
-        case AdminVerificationStatus.UNDER_REVIEW:
-          return <span className="text-yellow-500 font-semibold">Under Review</span>;
-        case AdminVerificationStatus.APPROVED:
-          return <span className="text-green-500 font-semibold">Approved</span>;
-        case AdminVerificationStatus.REJECTED:
-          return <span className="text-red-500 font-semibold">Rejected</span>;
-        case AdminVerificationStatus.RESUBMITTED:
-          return <span className="font-semibold">ReSubmitted By Provider</span>;
-        case AdminVerificationStatus.NOT_REQUESTED:
-          return <span className="text-gray-500 font-semibold">Not Requested</span>;
-        default:
-          return <span>{status}</span>;
+      const config = VERIFICATION_STATUS_CONFIG[status];
+      const isThisRowUpdating = approvingProviderId === row.original._id;
+
+      if (isThisRowUpdating) {
+        return <StatusBadge type="updating" />;
       }
+
+      return <StatusBadge type={config.type} label={config.label} />;
     },
   },
   {
@@ -86,11 +115,17 @@ const AdminProvidersTableColumns = (
     header: ({ column }) => <DataTableColumnHeader column={column} title="Slotflow Trusted" />,
     cell: ({ row }) => {
       const isTrusted = row.original.trustedBySlotflow;
-      if (isTrusted) {
-        return <span className="text-green-500 font-semibold">Verified</span>;
-      } else {
-        return <span className="text-red-500 font-semibold">Pending</span>;
+      const isThisRowUpdating = changeTrustTagProviderId === row.original._id;
+
+      if (isThisRowUpdating) {
+        return <StatusBadge type="updating" />;
       }
+
+      return isTrusted ? (
+        <StatusBadge type="verified" label="Trusted" />
+      ) : (
+        <StatusBadge type="standard" label="Standard" />
+      );
     },
   },
   {
@@ -99,6 +134,12 @@ const AdminProvidersTableColumns = (
     id: 'actions',
     cell: ({ row }) => {
       const provider = row.original;
+      const canApproveOrReject =
+        !provider.isAdminVerified &&
+        (provider.adminVerificationStatus === AdminVerificationStatus.REQUESTED ||
+          provider.adminVerificationStatus === AdminVerificationStatus.RESUBMITTED ||
+          provider.adminVerificationStatus === AdminVerificationStatus.UNDER_REVIEW);
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -110,48 +151,65 @@ const AdminProvidersTableColumns = (
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => handleGetProviderDetailPage(provider._id)}>
+            <DropdownMenuItem
+              onClick={() => handleGetProviderDetailPage(provider._id)}
+              className="cursor-pointer"
+            >
+              <ReceiptText className="w-3.5 h-3.5" />
               Details
             </DropdownMenuItem>
-            {!provider.isAdminVerified &&
-              (provider.adminVerificationStatus === AdminVerificationStatus.REQUESTED ||
-                provider.adminVerificationStatus === AdminVerificationStatus.RESUBMITTED ||
-                provider.adminVerificationStatus === AdminVerificationStatus.UNDER_REVIEW) && (
-                <DropdownMenuItem onClick={() => handleAdminApproveProvider(provider._id)}>
+
+            {canApproveOrReject && (
+              <>
+                <DropdownMenuItem
+                  onClick={() => approveProvider({ providerId: provider._id })}
+                  className="cursor-pointer text-emerald-600 focus:text-emerald-600"
+                >
+                  <Check className="w-3.5 h-3.5" />
                   Approve
                 </DropdownMenuItem>
-              )}
-            {!provider.isAdminVerified &&
-              (provider.adminVerificationStatus === AdminVerificationStatus.REQUESTED ||
-                provider.adminVerificationStatus === AdminVerificationStatus.RESUBMITTED ||
-                provider.adminVerificationStatus === AdminVerificationStatus.UNDER_REVIEW) && (
                 <DropdownMenuItem
-                  onClick={() =>
-                    handleProviderRejectModal({ modalState: true, providerId: provider._id })
-                  }
+                  onClick={() => handleProviderRejectOpen({ providerId: provider._id })}
+                  className="cursor-pointer text-rose-600 focus:text-rose-600"
                 >
+                  <X className="w-3.5 h-3.5" />
                   Reject
                 </DropdownMenuItem>
-              )}
+              </>
+            )}
+
             <DropdownMenuItem
               onClick={() =>
-                hanldeAdminChangeProviderBlockStatus({
-                  isBlocked: provider.isBlocked,
+                changeProviderBlockStatus({
+                  isBlocked: !provider.isBlocked,
                   providerId: provider._id,
                 })
               }
+              className="cursor-pointer"
             >
+              {provider.isBlocked ? (
+                <CheckCircle2 className="w-3.5 h-3.5" />
+              ) : (
+                <Ban className="w-3.5 h-3.5" />
+              )}
               {provider.isBlocked ? 'Unblock' : 'Block'}
             </DropdownMenuItem>
+
             <DropdownMenuItem
               onClick={() =>
-                handleAdminChangeProviderSlotflowTrustTag({
+                changeProviderSlotflowTrustTag({
                   providerId: provider._id,
-                  trustedBySlotflow: provider.trustedBySlotflow,
+                  trustedBySlotflow: !provider.trustedBySlotflow,
                 })
               }
+              className="cursor-pointer"
             >
-              {provider.trustedBySlotflow ? 'Remove Tag' : 'Give Tag'}
+              {provider.trustedBySlotflow ? (
+                <ShieldX className="w-3.5 h-3.5 text-rose-500" />
+              ) : (
+                <Award className="w-3.5 h-3.5 text-blue-500" />
+              )}
+              {provider.trustedBySlotflow ? 'Remove Trust Tag' : 'Give Trust Tag'}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

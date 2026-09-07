@@ -1,63 +1,48 @@
 import {
-  UpdatePlanRequest,
-  CreatePlanRequest,
-  UpdatePlanResponse,
-  CreatePlanResponse,
-  ResyncPlanStripeRequest,
-  AdminFetchAllPlansResponse,
-  ChangePlanBlockStatusRequest,
-} from '@/shared/types/api/plan';
-import { appConfig } from '@/config/env';
-import { QUERY_KEYS } from '@/shared/utils/constants';
-import { UseAdminPlanReturn } from '@/shared/types/hooks';
-import { ApiPaginatedResponse } from '@/shared/types/common';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import {
   createPlan,
   updatePlan,
   resyncPlanStripe,
   changePlanBlockStatus,
 } from '@/services/apis/plan';
+import {
+  UpdatePlanRequest,
+  CreatePlanRequest,
+  UpdatePlanResponse,
+  CreatePlanResponse,
+  ResyncPlanStripeRequest,
+  ResyncPlanStripeResponse,
+  AdminFetchAllPlansResponse,
+  ChangePlanBlockStatusRequest,
+  ChangePlanBlockStatusResponse,
+} from '@/shared/types/api/plan';
+import { toast } from 'react-toastify';
+import { appConfig } from '@/config/env';
+import { QUERY_KEYS } from '@/shared/utils/constants';
+import { UseAdminPlanReturn } from '@/shared/types/hooks';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { handleMutationError } from '@/shared/utils/helper/handleMutationError';
+import { ApiBaseResponse, ApiError, ApiPaginatedResponse } from '@/shared/types/common';
 
-/**
- * Custom hook for managing admin plan API interactions and React Query cache state.
- *
- * @returns  An object containing admin plan management functions and varibales.
- */
+// Custom hook for managing admin plan API interactions and React Query cache state
 export const useAdminPlan = (): UseAdminPlanReturn => {
   const queryClient = useQueryClient();
 
-  /**
-   * Updates a plan's block status
-   *
-   * @param data is the request payload
-   * @returns
-   */
-  const changePlanBlockStatusMutation = useMutation({
-    mutationFn: (data: ChangePlanBlockStatusRequest) => changePlanBlockStatus(data),
-    onSuccess: (res) => {
-      if (res.success) {
-        queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.PLANS] });
+  // Admin updates a plan's block status
+  const changePlanBlockStatusMutation = useMutation<
+    ApiBaseResponse<ChangePlanBlockStatusResponse>,
+    ApiError,
+    ChangePlanBlockStatusRequest
+  >({
+    mutationFn: (data) => {
+      if (!data.planId || data.isBlocked === undefined || data.isBlocked === null) {
+        throw new Error('Provider details are missing. Please refresh the page.');
       }
+      return changePlanBlockStatus(data);
     },
-    onError: (error) => {
-      if (appConfig.isDevelopment) {
-        console.error('Error in changePlanStatus:', error);
-      }
-    },
-  });
-
-  /**
-   * Resync the plan details with stripe product
-   *
-   * @param data is the request payload
-   * @returns update the plans cache with resynced data
-   */
-  const resyncStripeMutation = useMutation({
-    mutationFn: (data: ResyncPlanStripeRequest) => resyncPlanStripe(data),
     onSuccess: (res) => {
       if (res.success && res.data) {
-        const { planId, stripePlanDetails, stripeSync } = res.data;
+        toast.success(res.message);
+        const { _id, isBlocked } = res.data;
 
         queryClient.setQueriesData<ApiPaginatedResponse<AdminFetchAllPlansResponse>>(
           { queryKey: [QUERY_KEYS.PLANS] },
@@ -67,7 +52,57 @@ export const useAdminPlan = (): UseAdminPlanReturn => {
             return {
               ...oldData,
               items: oldData.items.map((plan) =>
-                plan._id === planId
+                plan._id === _id
+                  ? {
+                      ...plan,
+                      isBlocked: isBlocked,
+                    }
+                  : plan,
+              ),
+            };
+          },
+        );
+
+        queryClient.setQueryData<UpdatePlanResponse>([QUERY_KEYS.PLAN_DETAILS, _id], (oldData) => {
+          if (!oldData) return oldData;
+          return {
+            ...oldData,
+            isBlocked: isBlocked,
+          };
+        });
+      }
+    },
+    onError: (error: ApiError) => {
+      handleMutationError(error, 'Could not change plan block status.');
+    },
+  });
+
+  // Admin resync the plan details with stripe product
+  const resyncStripeMutation = useMutation<
+    ApiBaseResponse<ResyncPlanStripeResponse>,
+    ApiError,
+    ResyncPlanStripeRequest
+  >({
+    mutationFn: (data) => {
+      if (!data.planId) {
+        throw new Error('Plan details are missing. Please refresh the page.');
+      }
+      return resyncPlanStripe(data);
+    },
+    onSuccess: (res) => {
+      if (res.success && res.data) {
+        toast.success(res.message);
+        const { _id, stripePlanDetails, stripeSync } = res.data;
+
+        queryClient.setQueriesData<ApiPaginatedResponse<AdminFetchAllPlansResponse>>(
+          { queryKey: [QUERY_KEYS.PLANS] },
+          (oldData) => {
+            if (!oldData || !oldData.items) return oldData;
+
+            return {
+              ...oldData,
+              items: oldData.items.map((plan) =>
+                plan._id === _id
                   ? {
                       ...plan,
                       stripePlanDetails,
@@ -81,18 +116,15 @@ export const useAdminPlan = (): UseAdminPlanReturn => {
       }
     },
     onError: (error) => {
-      if (appConfig.isDevelopment) {
-        console.error('Error in resyncPlanWithStripe:', error);
-      }
+      handleMutationError(error, 'Could not resync plan with stripe.');
     },
   });
 
   /**
-   * update the plans list cache
+   * Update the plans list cache
    *  if plan is editing it will update only that specific plan in the list
    * or isEdit is false we update the list by appending the created plan
    *
-   * @param planData is the request payload
    * @param isEdit boolean value to check the plan is editing or creting
    */
   const updatePlansListCache = (planData: AdminFetchAllPlansResponse, isEdit: boolean) => {
@@ -130,16 +162,26 @@ export const useAdminPlan = (): UseAdminPlanReturn => {
     );
   };
 
-  /**
-   * update plan with only changed fields and call the cache updating function
-   *
-   * @param data is the request payload
-   */
-  const updatePlanMutation = useMutation({
-    mutationFn: (data: UpdatePlanRequest) => updatePlan(data),
+  // Admin Update plan with only changed fields and call the cache updating function
+  const updatePlanMutation = useMutation<
+    ApiBaseResponse<UpdatePlanResponse>,
+    ApiError,
+    UpdatePlanRequest
+  >({
+    mutationFn: (data) => {
+      if (!data.planId) {
+        throw new Error('Plan details are missing. Please refresh the page.');
+      }
+      return updatePlan(data);
+    },
     onSuccess: (res) => {
       if (res.success && res.data) {
+        toast.success(res.message);
         const updatedPlan = res.data;
+
+        queryClient.setQueryData<UpdatePlanResponse>([QUERY_KEYS.PLAN_DETAILS, updatedPlan._id], {
+          ...updatedPlan,
+        });
 
         const tablePlan: AdminFetchAllPlansResponse = {
           _id: updatedPlan._id,
@@ -152,29 +194,31 @@ export const useAdminPlan = (): UseAdminPlanReturn => {
           stripeSync: updatedPlan.stripeSync,
         };
 
-        queryClient.setQueryData<UpdatePlanResponse>(['planDetails', updatedPlan._id], {
-          ...updatedPlan,
-        });
         updatePlansListCache(tablePlan, true);
       }
     },
     onError: (error) => {
-      if (appConfig.isDevelopment) {
-        console.error('Error in updatePlanMutation:', error);
-      }
+      handleMutationError(error, 'Could not update plan.');
     },
   });
 
-  /**
-   * creating a new plan and calls the cache updating function
-   *
-   * @param data is the request payload
-   */
-  const createPlanMutation = useMutation({
-    mutationFn: (data: CreatePlanRequest) => createPlan(data),
+  // Admin Creating a new plan and calls the cache updating function
+  const createPlanMutation = useMutation<
+    ApiBaseResponse<CreatePlanResponse>,
+    ApiError,
+    CreatePlanRequest
+  >({
+    mutationFn: (data) => {
+      return createPlan(data);
+    },
     onSuccess: (res) => {
       if (res.success && res.data) {
+        toast.success(res.message);
         const createdPlan = res.data;
+
+        queryClient.setQueryData<CreatePlanResponse>([QUERY_KEYS.PLAN_DETAILS, createdPlan._id], {
+          ...createdPlan,
+        });
 
         const tablePlan: AdminFetchAllPlansResponse = {
           _id: createdPlan._id,
@@ -186,10 +230,6 @@ export const useAdminPlan = (): UseAdminPlanReturn => {
           isBlocked: createdPlan.isBlocked,
           stripeSync: createdPlan.stripeSync,
         };
-
-        queryClient.setQueryData<CreatePlanResponse>(['planDetails', createdPlan._id], {
-          ...createdPlan,
-        });
 
         updatePlansListCache(tablePlan, false);
       }
@@ -204,11 +244,11 @@ export const useAdminPlan = (): UseAdminPlanReturn => {
   return {
     createPlan: createPlanMutation.mutateAsync,
     updatePlan: updatePlanMutation.mutateAsync,
-    changePlanBlockStatus: changePlanBlockStatusMutation.mutateAsync,
+    changePlanBlockStatus: changePlanBlockStatusMutation.mutate,
     changeBlockStatusPlanId: changePlanBlockStatusMutation.isPending
       ? changePlanBlockStatusMutation.variables?.planId
       : null,
-    resyncPlanWithStripe: resyncStripeMutation.mutateAsync,
+    resyncPlanWithStripe: resyncStripeMutation.mutate,
     resyncingPlanId: resyncStripeMutation.isPending ? resyncStripeMutation.variables?.planId : null,
   };
 };

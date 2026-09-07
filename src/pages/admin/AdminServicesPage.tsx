@@ -1,13 +1,12 @@
-import { toast } from 'react-toastify';
 import { useEffect, useRef, useState } from 'react';
 import { QUERY_KEYS } from '@/shared/utils/constants';
 import { fetchServices } from '@/services/apis/service';
 import { useAdminService } from '@/hooks/adminHooks/useService';
 import { slideIn } from '@/shared/utils/helper/gsapAnimationSlide';
+import { FetchServicesResponse } from '@/shared/types/api/service';
 import EditServiceForm from '@/components/form/Admin/EditServiceForm';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
 import CreateServiceForm from '@/components/form/Admin/CreateServiceForm';
-import { FetchServicesResponse, ChangeServiceBlockStatusRequest } from '@/shared/types/api/service';
 import AdminAppServicesTableColumns from '@/components/table/tableColumns/AdminAppServicesTableColumn';
 
 const AdminServicesPage = () => {
@@ -26,17 +25,8 @@ const AdminServicesPage = () => {
     setShowEditForm(true);
   };
 
-  const handleAdminChangeServiceStatus = async (data: ChangeServiceBlockStatusRequest) => {
-    const res = await changeServiceBlockStatus(data);
-    if (res.success) {
-      toast.success(res.message);
-    } else {
-      toast.error(res.message);
-    }
-  };
-
   const column = AdminAppServicesTableColumns(
-    handleAdminChangeServiceStatus,
+    changeServiceBlockStatus,
     handleOpenServiceEditForm,
     changeBlockStatusServiceId,
   );

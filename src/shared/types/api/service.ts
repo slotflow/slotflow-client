@@ -1,34 +1,30 @@
 import { Service } from '../entity/appService';
 
-// response type of admin fetch all app services api
+// fetch all app services response
 export type FetchServicesResponse = Pick<
   Service,
   '_id' | 'serviceName' | 'isBlocked' | 'serviceCategory'
 >;
 
-// request type of admin create app service api
+// Create app service request
 export interface CreateServiceRequest {
   serviceCategory: Service['serviceCategory'];
   serviceNames: string[];
 }
 
-// request type of admin change app service block status api
-export type ChangeServiceBlockStatusRequest = Pick<Service, '_id' | 'isBlocked'>;
-
-// response type of admin change app service block status api
-export type ChangeServiceBlockStatusResponse = {
+// Change app service block status request and response
+export type ChangeServiceBlockStatusRequest = {
   serviceId: Service['_id'];
-  isBlocked: Service['isBlocked'];
-};
+} & Pick<Service, 'isBlocked'>;
+export type ChangeServiceBlockStatusResponse = Pick<Service, '_id' | 'isBlocked'>;
 
-// response type of user fetch app services by category api
+// Fetch app services by category response
 export type FetchServicesByCategoryResponse = Pick<Service, '_id' | 'serviceName'>;
 
 // Update serivce request and response
-export type UpdateServiceRequest = Pick<
-  Service,
-  '_id' | 'serviceCategory' | 'isBlocked' | 'serviceName'
->;
+export type UpdateServiceRequest = {
+  serviceId: Service['_id'];
+} & Pick<Service, 'serviceCategory' | 'isBlocked' | 'serviceName'>;
 export type UpdateServiceResponse = Pick<
   Service,
   '_id' | 'serviceCategory' | 'isBlocked' | 'serviceName'

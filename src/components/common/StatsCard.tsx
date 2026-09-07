@@ -4,6 +4,7 @@ import { LineChart, Line, ResponsiveContainer } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Info, XCircle, TrendingUp, LoaderCircle, CheckCircle2, TrendingDown } from 'lucide-react';
 
+// USED FOR CREDIT AND DEBIT
 const StatCard = ({
   title,
   isLoading,

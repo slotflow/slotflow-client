@@ -5,10 +5,10 @@ import { RootState } from '@/app/store/appStore';
 import { Booking } from '@/shared/types/entity/booking';
 import { Payment } from '@/shared/types/entity/payment';
 import { validateRoomId } from '@/services/apis/booking';
+import { Plan } from '@/shared/types/entity/planInterface';
 import { ValidateRoomId } from '@/shared/types/api/booking';
 import { Subscription } from '@/shared/types/entity/subscription';
 import { useRoleBasedNavigationReturn } from '@/shared/types/hooks';
-import { Plan } from '@/shared/types/entity/planInterface';
 
 export const useRoleBasedNavigation = (): useRoleBasedNavigationReturn => {
   const navigate = useNavigate();
@@ -67,11 +67,16 @@ export const useRoleBasedNavigation = (): useRoleBasedNavigationReturn => {
     navigate(`/admin/plans/${planId}`);
   };
 
+  const handleGetProviderDetailPage = (providerId: string) => {
+    navigate(`/admin/service-providers/${providerId}`);
+  };
+
   return {
     handleAdminGetProviderDetailPage,
     handleGetPaymentDetailsPage,
     JoinCallHandler,
     handleNavigateToBookingsDetailPage,
     handleNavigateToPlanDetailPage,
+    handleGetProviderDetailPage,
   };
 };

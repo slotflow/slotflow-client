@@ -15,9 +15,10 @@ import {
   AdminFetchAllPlansResponse,
   ChangePlanBlockStatusRequest,
   AdminFetchPlanDetailsResponse,
+  AdminFetchPlanDetailsRequest,
+  ChangePlanBlockStatusResponse,
 } from '../../shared/types/api/plan';
 import { axiosInstance } from '@/lib/axios';
-import { Plan } from '@/shared/types/entity/planInterface';
 import { buildQueryParams } from '../../shared/utils/helper/buildQueryParams';
 
 export const adminFetchAllPlans: ApiFetchFunction<
@@ -46,7 +47,7 @@ export const updatePlan = async (
 
 export const changePlanBlockStatus = async (
   data: ChangePlanBlockStatusRequest,
-): Promise<ApiBaseResponse> => {
+): Promise<ApiBaseResponse<ChangePlanBlockStatusResponse>> => {
   const response = await axiosInstance.patch(`/plans/${data.planId}/block`, {
     blockStatus: data.isBlocked,
   });
@@ -63,13 +64,13 @@ export const providerFetchPlans = async (): Promise<
 export const resyncPlanStripe = async (
   data: ResyncPlanStripeRequest,
 ): Promise<ApiBaseResponse<ResyncPlanStripeResponse>> => {
-  const response = await axiosInstance.post(`/plans${data.planId}/resync`);
+  const response = await axiosInstance.post(`/plans/${data.planId}/resync`);
   return response.data;
 };
 
 export const adminFetchPlanDetails = async (
-  planId: Plan['_id'],
+  data: AdminFetchPlanDetailsRequest,
 ): Promise<ApiBaseResponse<AdminFetchPlanDetailsResponse>> => {
-  const response = await axiosInstance.get(`/plans/${planId}`);
+  const response = await axiosInstance.get(`/plans/${data.planId}`);
   return response.data;
 };

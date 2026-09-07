@@ -3,10 +3,10 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { RefreshCw, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { DashboardDataCardProps } from '@/shared/types/component';
+import { RecentActivityTableCardProps } from '@/shared/types/component';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-const DashboardDataCard = ({
+const RecentActivityTableCard = ({
   title,
   icon: Icon,
   isLoading,
@@ -16,7 +16,7 @@ const DashboardDataCard = ({
   className,
   empty,
   emptyMessage = 'No data available',
-}: DashboardDataCardProps) => {
+}: RecentActivityTableCardProps) => {
   return (
     <Card
       className={cn(
@@ -116,4 +116,4 @@ const DashboardDataCard = ({
   );
 };
 
-export default DashboardDataCard;
+export default RecentActivityTableCard;

@@ -9,10 +9,10 @@ import {
 import { format } from 'date-fns';
 import { DollarSign } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-import { fetchPayments } from '@/services/apis/payment';
-import DashboardDataCard from '../../DashboardDataCard';
-import { formatNumberToPrice } from '@/shared/utils/helper/formatter';
 import { QUERY_KEYS } from '@/shared/utils/constants';
+import { fetchPayments } from '@/services/apis/payment';
+import { formatNumberToPrice } from '@/shared/utils/helper/formatter';
+import RecentActivityTableCard from '@/components/dashboard/RecentActivityTableCard';
 
 const PaymentListCard = () => {
   const { data, isLoading, isError, refetch } = useQuery({
@@ -23,7 +23,7 @@ const PaymentListCard = () => {
   const payments = data?.items || [];
 
   return (
-    <DashboardDataCard
+    <RecentActivityTableCard
       title="Recent Payments"
       icon={DollarSign}
       isLoading={isLoading}
@@ -75,7 +75,7 @@ const PaymentListCard = () => {
           </TableBody>
         </Table>
       </div>
-    </DashboardDataCard>
+    </RecentActivityTableCard>
   );
 };
 

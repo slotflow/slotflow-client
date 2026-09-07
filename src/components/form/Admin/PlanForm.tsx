@@ -1,7 +1,5 @@
 import { useEffect } from 'react';
 import FormField from '../FormField';
-import { toast } from 'react-toastify';
-import { appConfig } from '@/config/env';
 import { useForm } from 'react-hook-form';
 import ToggleField from '../ToggleField';
 import { Loader2, X } from 'lucide-react';
@@ -29,7 +27,7 @@ const PlanForm = ({ onClose, formRef, planIdToEdit }: PlanFormProps) => {
 
   const { data: planDetailResponse, isLoading: isFetchingPlan } = useQuery({
     queryKey: ['planDetails', planIdToEdit],
-    queryFn: () => adminFetchPlanDetails(planIdToEdit!),
+    queryFn: () => adminFetchPlanDetails({ planId: planIdToEdit! }),
     enabled: Boolean(planIdToEdit),
   });
 
@@ -92,37 +90,30 @@ const PlanForm = ({ onClose, formRef, planIdToEdit }: PlanFormProps) => {
   };
 
   const onSubmit = async (data: AdminCreatePlanFormType) => {
-    try {
-      let res;
-      if (isEditMode && planIdToEdit) {
-        const changedFields = Object.fromEntries(
-          (Object.keys(dirtyFields) as Array<keyof AdminCreatePlanFormType>).map((key) => [
-            key,
-            data[key],
-          ]),
-        ) as Partial<AdminCreatePlanFormType>;
+    if (isEditMode && planIdToEdit) {
+      const changedFields = Object.fromEntries(
+        (Object.keys(dirtyFields) as Array<keyof AdminCreatePlanFormType>).map((key) => [
+          key,
+          data[key],
+        ]),
+      ) as Partial<AdminCreatePlanFormType>;
 
-        const payload: UpdatePlanRequest = {
-          planId: planIdToEdit,
-          ...changedFields,
-        };
-        res = await updatePlan(payload);
-      } else {
-        res = await createPlan(data);
-      }
+      const payload: UpdatePlanRequest = {
+        planId: planIdToEdit,
+        ...changedFields,
+      };
 
-      if (res.success) {
-        toast.success(res.message);
+      const res = await updatePlan(payload);
+      if (res?.success) {
         reset();
         onClose();
-      } else {
-        toast.error(res.message);
       }
-    } catch (error) {
-      if (appConfig.isDevelopment) {
-        console.error('An error occurred while saving plan: ', error);
+    } else {
+      const res = await createPlan(data);
+      if (res?.success) {
+        reset();
+        onClose();
       }
-      toast.error('Something went wrong');
     }
   };
 

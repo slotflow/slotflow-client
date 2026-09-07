@@ -1,4 +1,5 @@
 import jsPDF from 'jspdf';
+import { AxiosError } from 'axios';
 import { User } from './entity/user';
 import { Review } from './entity/review';
 import { LucideIcon } from 'lucide-react';
@@ -35,6 +36,18 @@ interface RouteInterface {
 export interface Route extends RouteInterface {
   subroutes?: RouteInterface[];
 }
+
+// Matches your Express errorHandler output:
+export interface BackendApiErrorResponse {
+  success: boolean;
+  message: string;
+  errorCode: string;
+  errors?: unknown;
+  stack?: string;
+}
+
+// Exact error type entering catch/onError blocks
+export type ApiError = AxiosError<BackendApiErrorResponse>;
 
 // Gsap animation object interface
 export interface gsapBigSvgYDirectionAnimationInterface {
@@ -545,4 +558,41 @@ export interface PlanFields {
   yearlyPrice: number;
   featuresList: string[];
   isPopular: boolean;
+}
+
+//
+export type StatusBadgeType =
+  | 'active'
+  | 'blocked'
+  | 'verified'
+  | 'unverified'
+  | 'pending'
+  | 'standard'
+  | 'updating'
+  | 'normal' //remove
+  | 'trusted';
+
+//
+export interface StatusBadgeProps {
+  type: StatusBadgeType;
+  label?: string;
+  icon?: React.ReactNode;
+  className?: string;
+}
+
+//
+export interface VerificationStatusConfig {
+  label: string;
+  type: StatusBadgeType;
+}
+
+//
+export interface DashboardDataCardProps {
+  label: string;
+  icon: LucideIcon;
+  value?: string | number;
+  status?: 'verified' | 'unverified' | 'normal' | boolean;
+  price?: boolean;
+  suffix?: string;
+  isLoading?: boolean;
 }

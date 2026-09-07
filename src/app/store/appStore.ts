@@ -3,7 +3,6 @@ import cmsReducer from './slices/cmsSlice';
 import authReducer from './slices/authSlice';
 import chatReducer from './slices/chatSlice';
 import userReducer from './slices/userSlice';
-import adminReducer from './slices/adminSlice';
 import videoReducer from './slices/videoSlice';
 import paymentReducer from './slices/paymentSlice';
 import localStorage from 'redux-persist/lib/storage';
@@ -23,7 +22,6 @@ const persistConfig = {
 const rootReducers = {
   auth: authReducer,
   app: appReducer,
-  admin: adminReducer,
   user: userReducer,
   provider: providerReducer,
   chat: chatReducer,

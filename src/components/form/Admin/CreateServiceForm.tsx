@@ -1,7 +1,5 @@
 import { X } from 'lucide-react';
-import { toast } from 'react-toastify';
 import SelectField from '../SelectField';
-import { appConfig } from '@/config/env';
 import { useForm } from 'react-hook-form';
 import { FormButton } from '../FormButton';
 import { Button } from '@/components/ui/button';
@@ -50,32 +48,21 @@ const CreateServiceForm = ({ onClose, formRef }: CreateServiceFormProps) => {
   };
 
   const onSubmit = async (data: AdminCreateServiceFormType): Promise<void> => {
-    try {
-      const normalizedNames = data.serviceNames
-        .map((serviceName) => serviceName.trim())
-        .filter(Boolean);
+    const normalizedNames = data.serviceNames
+      .map((serviceName) => serviceName.trim())
+      .filter(Boolean);
 
-      const res = await createService({
-        serviceCategory: data.serviceCategory,
-        serviceNames: normalizedNames,
+    const res = await createService({
+      serviceCategory: data.serviceCategory,
+      serviceNames: normalizedNames,
+    });
+    if (res.success) {
+      const initialNames = [''];
+      reset({
+        serviceNames: initialNames,
+        serviceCategory: undefined,
       });
-
-      if (res.success) {
-        toast.success(res.message);
-        const initialNames = [''];
-        reset({
-          serviceNames: initialNames,
-          serviceCategory: undefined,
-        });
-        handleCloseForm();
-      } else {
-        toast.error(res.message);
-      }
-    } catch (error) {
-      if (appConfig.isDevelopment) {
-        console.log('Error while saving services:', error);
-      }
-      toast.error('Something went wrong while creating services');
+      handleCloseForm();
     }
   };
 

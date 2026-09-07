@@ -1,7 +1,7 @@
 import { User } from '../entity/user';
 import { ProviderProfile } from '../entity/providerProfile';
 
-// response type of provider fetch self profile details api
+// Fetch self profile details ( by provider )
 export type ProviderFetchMyProfileDetailsResponse = Pick<
   ProviderProfile,
   | 'isAdminVerified'
@@ -17,16 +17,16 @@ export type ProviderFetchMyProfileDetailsResponse = Pick<
     'username' | 'email' | 'isBlocked' | 'phone' | 'createdAt' | 'updatedAt' | 'referralCode'
   >;
 
-// response type of provider submit detials for review api
+// Submit detials for review ( by provider )
 export type ProviderSubmitDetailsResponse = Pick<ProviderProfile, 'adminVerificationStatus'>;
 
-// request type of provider fetch dashboard stats data api
+// Fetch dashboard stats data ( by provider )
 export interface ProviderFetchDashboardStatsDataRequest {
   startDate?: Date;
   endDate?: Date;
 }
 
-// response type of provider fetch dashboard stats data api
+// Fetch dashboard stats data ( by provider )
 export interface ProviderFetchDashboardStatsDataResponse extends Record<string, number> {
   totalAppointments: number;
   completedAppointments: number;
@@ -36,13 +36,13 @@ export interface ProviderFetchDashboardStatsDataResponse extends Record<string, 
   todaysAppointments: number;
 }
 
-// request type of provider fetch dashboard revenue stats data api
+// Fetch dashboard revenue stats data ( by provider )
 export interface ProviderFetchDashboardRevenueStatsDataRequest {
   startDate?: Date;
   endDate?: Date;
 }
 
-// response type of provider fetch dashboard revenue stats data api
+// Fetch dashboard revenue stats data ( by provider )
 export interface ProviderFetchDashboardRevenueStatsDataResponse extends Record<string, number> {
   totalSubscriptionPaidAmount: number;
   totalEarnings: number;
@@ -50,7 +50,7 @@ export interface ProviderFetchDashboardRevenueStatsDataResponse extends Record<s
   pendingPayout: number;
 }
 
-// response type of provider fetch dashboard graph data api
+// Fetch dashboard graph data ( by provider )
 export interface ProviderDashboardGraphResponse {
   appointmentsOvertimeChartData: Array<{
     date: string;
@@ -88,7 +88,7 @@ export interface ProviderDashboardGraphResponse {
   }>;
 }
 
-// response type of admin fetch provider profile details api
+// Fetch provider profile details ( by admin )
 export type AdminFetchProviderProfileDetailsResponse = Pick<
   ProviderProfile,
   | 'isAdminVerified'
@@ -101,18 +101,18 @@ export type AdminFetchProviderProfileDetailsResponse = Pick<
 > &
   Pick<User, '_id' | 'username' | 'email' | 'isBlocked' | 'phone' | 'createdAt' | 'profileImage'>;
 
-// response type of user fetch provider profile details api
+// Fetch provider profile details ( by user )
 export type UserFetchProviderProfileDetailsResponse = Pick<ProviderProfile, 'trustedBySlotflow'> &
   Pick<User, 'username' | 'profileImage'>;
 
-// response type of admin fetch all providers api
+// Fetch all providers ( by admin )
 export type AdminFetchAllProvidersResponse = Pick<
   ProviderProfile,
   'isAdminVerified' | 'trustedBySlotflow' | 'adminVerificationStatus'
 > &
   Pick<User, '_id' | 'username' | 'email' | 'isBlocked'>;
 
-// request type of admin reject provider api
+// Reject provider ( by admin )
 export type AdminRejectProviderRequest = Pick<
   ProviderProfile,
   | 'verificationRejectionReason'
@@ -123,15 +123,29 @@ export type AdminRejectProviderRequest = Pick<
 > & {
   providerId: User['_id'];
 };
+export type AdminRejectProviderResponse = Pick<User, '_id'> &
+  Pick<
+    ProviderProfile,
+    'isAddressVerified' | 'isServiceDetailsVerified' | 'isAvailabilityVerified' | 'isProofsVerified'
+  >;
 
-// request type of admin change provider block status api
+// Change provider block status ( by admin )
 export type AdminChangeProviderBlockStatusRequest = {
   providerId: User['_id'];
   isBlocked: User['isBlocked'];
 };
+export type AdminChangeProviderBlockStatusResponse = Pick<User, '_id' | 'isBlocked'>;
 
-// request type of admin change provider trust tag api
+// Change provider trust tag ( by admin )
 export type AdminChangeProviderTrustTagRequest = {
   providerId: User['_id'];
-  trustedBySlotflow: ProviderProfile['trustedBySlotflow'];
-};
+} & Pick<ProviderProfile, 'trustedBySlotflow'>;
+export type AdminChangeProviderTrustTagResponse = Pick<User, '_id'> &
+  Pick<ProviderProfile, 'trustedBySlotflow'>;
+
+// Approve provider ( by admin )
+export interface AdminApproveProviderRequest {
+  providerId: User['_id'];
+}
+export type AdminApproveProviderResponse = Pick<User, '_id'> &
+  Pick<ProviderProfile, 'isAdminVerified' | 'adminVerificationStatus'>;

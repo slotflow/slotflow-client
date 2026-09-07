@@ -60,6 +60,7 @@ export interface ProviderServiceAvailabilityProps {
   role: Role;
   providerId?: string;
   canUpdate?: boolean;
+  showHeading?: boolean;
 }
 
 // Provider Service list and details showing component props interface
@@ -70,6 +71,7 @@ export interface ProviderServiceListProps {
   ) => Promise<ApiBaseResponse<FetchProviderServiceResponse>>;
   queryKey: string[];
   canUpdate?: boolean;
+  showHeading?: boolean;
 }
 
 // DateSelect component interface
@@ -382,7 +384,7 @@ export interface ProviderDashboardStatsProps {
 }
 
 // Dashboard data card component props interface
-export interface DashboardDataCardProps {
+export interface RecentActivityTableCardProps {
   title: string;
   icon: LucideIcon;
   isLoading: boolean;
@@ -461,6 +463,7 @@ export interface EditServiceFormProps {
 export interface RejectproviderFormProps {
   onClose: () => void;
   formRef: React.RefObject<HTMLDivElement | null>;
+  rejectProviderData: { providerId: User['_id'] };
 }
 
 // Address form component props interface
@@ -618,7 +621,7 @@ export interface ProviderPlanCardProps {
 }
 
 // UserOrProviderAddressDetails component props interface
-export interface UserOrProviderAddressDetailsComponentProps {
+export interface UserOrProviderAddressDetailsProps {
   userOrProviderId?: string;
   fetchApiFunction: (
     userOrProviderId?: string,
@@ -626,6 +629,7 @@ export interface UserOrProviderAddressDetailsComponentProps {
   queryKey: string[];
   isUserLookingProvider?: boolean;
   canUpdate?: boolean;
+  showHeading?: boolean;
 }
 
 // ProfileHorizontalTabs component props interface
@@ -644,8 +648,6 @@ export interface UserOrProviderProfileDetailsComponentProps {
   ) => Promise<
     ApiBaseResponse<
       | AdminFetchProviderProfileDetailsResponse
-      | ProviderFetchMyProfileDetailsResponse
-      | UserFetchProviderProfileDetailsResponse
       | UserFetchMyProfileDetailsResponse
       | AdminFetchUserProfileDetailsResponse
     >
@@ -653,9 +655,7 @@ export interface UserOrProviderProfileDetailsComponentProps {
   queryKey: string[];
   adminLookingProvider?: boolean;
   adminLookingUser?: boolean;
-  providerSelf?: boolean;
   userSelf?: boolean;
-  userLookingProvider?: boolean;
   setProfileImage?: (image: string) => void;
   shimmerRow: number;
   setSelectedUserData?: (data: {
@@ -814,6 +814,8 @@ export interface DataFieldProps {
   onRadioChange?: (value: string) => void;
   tags?: boolean;
   isImage?: boolean;
+  isLoading?: boolean;
+  shimmerWidth?: string;
 }
 
 // Animated counter props

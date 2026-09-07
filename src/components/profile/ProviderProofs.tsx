@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
+import { QUERY_KEYS } from '@/shared/utils/constants';
 import { ImageUpscale, Minimize2 } from 'lucide-react';
 import DataFetchingError from '../error/DataFetchingError';
 import { ProviderProofsProps } from '@/shared/types/component';
 import noImage from '../../assets/defaultImages/imagePlaceholder.png';
 import ProfileDetailsShimmer from '@/components/shimmers/DataFieldShimmer';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { QUERY_KEYS } from '@/shared/utils/constants';
 
 const ProviderProofs = ({ providerId, fetchApiFunction }: ProviderProofsProps) => {
   const { data, isLoading, isError, error } = useQuery({

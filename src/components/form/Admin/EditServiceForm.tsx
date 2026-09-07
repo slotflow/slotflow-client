@@ -2,7 +2,6 @@ import { X } from 'lucide-react';
 import FormField from '../FormField';
 import { toast } from 'react-toastify';
 import ToggleField from '../ToggleField';
-import { appConfig } from '@/config/env';
 import { FormButton } from '../FormButton';
 import SelectField from '../SelectFieldNew';
 import { Button } from '@/components/ui/button';
@@ -54,31 +53,21 @@ const EditServiceForm = ({ onClose, formRef, serviceToEdit }: EditServiceFormPro
   };
 
   const onSubmit = async (data: AdminEditServiceFormType): Promise<void> => {
-    try {
-      if (!serviceToEdit?._id) {
-        toast.error('Failed to fetch service for updating.');
-        return;
-      }
+    if (!serviceToEdit?._id) {
+      toast.error('Failed to fetch service for updating.');
+      return;
+    }
 
-      const res = await updateService({
-        _id: serviceToEdit._id,
-        serviceCategory: data.serviceCategory,
-        serviceName: data.serviceName,
-        isBlocked: data.isBlocked,
-      });
+    const res = await updateService({
+      serviceId: serviceToEdit._id,
+      serviceCategory: data.serviceCategory,
+      serviceName: data.serviceName,
+      isBlocked: data.isBlocked,
+    });
 
-      if (res.success) {
-        toast.success(res.message || 'Service updated successfully');
-        reset();
-        handleCloseForm();
-      } else {
-        toast.error(res.message);
-      }
-    } catch (error) {
-      if (appConfig.isDevelopment) {
-        console.error('Error while saving service:', error);
-      }
-      toast.error('Something went wrong while updating service');
+    if (res.success) {
+      reset();
+      handleCloseForm();
     }
   };
 

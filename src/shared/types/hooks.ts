@@ -6,10 +6,24 @@ import {
   ResyncPlanStripeRequest,
   ResyncPlanStripeResponse,
   ChangePlanBlockStatusRequest,
+  ChangePlanBlockStatusResponse,
 } from './api/plan';
 import {
+  CreateServiceRequest,
+  UpdateServiceRequest,
+  UpdateServiceResponse,
+  ChangeServiceBlockStatusRequest,
+  ChangeServiceBlockStatusResponse,
+} from './api/service';
+import {
+  AdminRejectProviderRequest,
+  AdminRejectProviderResponse,
+  AdminApproveProviderRequest,
+  AdminApproveProviderResponse,
   AdminChangeProviderTrustTagRequest,
+  AdminChangeProviderTrustTagResponse,
   AdminChangeProviderBlockStatusRequest,
+  AdminChangeProviderBlockStatusResponse,
 } from './api/providerProfile';
 import { AuthUser } from './slice';
 import { User } from './entity/user';
@@ -17,54 +31,91 @@ import { Review } from './entity/review';
 import { Payment } from './entity/payment';
 import { Booking } from './entity/booking';
 import { Plan } from './entity/planInterface';
+import { ApiBaseResponse, ApiError } from './common';
 import { Subscription } from './entity/subscription';
 import { Availability } from './entity/serviceAvailability';
 import { ToggleReviewBlockStatusRequest } from './api/review';
 import { UseFormGetValues, UseFormSetValue } from 'react-hook-form';
 import { HearAboutUsOptionValue, Role, ServiceMode } from './enums';
-import { AdminRejectProviderModalState, ApiBaseResponse } from './common';
 import { changeAppointmentStatusRequest, ValidateRoomId } from './api/booking';
 import { AdminChangeUserStatusRequest, PreBoardingResponse } from './api/user';
-import {
-  ChangeServiceBlockStatusRequest,
-  ChangeServiceBlockStatusResponse,
-  CreateServiceRequest,
-  UpdateServiceRequest,
-  UpdateServiceResponse,
-} from './api/service';
+import { UseMutateAsyncFunction, UseMutateFunction } from '@tanstack/react-query';
 
 // Admin plan hook return type interface
 export interface UseAdminPlanReturn {
-  createPlan: (data: CreatePlanRequest) => Promise<ApiBaseResponse<CreatePlanResponse>>;
-  updatePlan: (data: UpdatePlanRequest) => Promise<ApiBaseResponse<UpdatePlanResponse>>;
-  changePlanBlockStatus: (data: ChangePlanBlockStatusRequest) => Promise<ApiBaseResponse>;
-  resyncPlanWithStripe: (
-    data: ResyncPlanStripeRequest,
-  ) => Promise<ApiBaseResponse<ResyncPlanStripeResponse>>;
-  changeBlockStatusPlanId: string | null;
-  resyncingPlanId: string | null;
+  createPlan: UseMutateAsyncFunction<
+    ApiBaseResponse<CreatePlanResponse>,
+    ApiError,
+    CreatePlanRequest
+  >;
+
+  updatePlan: UseMutateAsyncFunction<
+    ApiBaseResponse<UpdatePlanResponse>,
+    ApiError,
+    UpdatePlanRequest
+  >;
+
+  changePlanBlockStatus: UseMutateFunction<
+    ApiBaseResponse<ChangePlanBlockStatusResponse>,
+    ApiError,
+    ChangePlanBlockStatusRequest
+  >;
+  changeBlockStatusPlanId: string | null | undefined;
+
+  resyncPlanWithStripe: UseMutateFunction<
+    ApiBaseResponse<ResyncPlanStripeResponse>,
+    ApiError,
+    ResyncPlanStripeRequest
+  >;
+  resyncingPlanId: string | null | undefined;
 }
 
 // Admin provider hook return type interface
 export interface UseAdminProviderReturn {
-  approveProviderHandler: (providerId: User['_id']) => Promise<ApiBaseResponse>;
-  changeProviderBlockStatusHandler: (
-    data: AdminChangeProviderBlockStatusRequest,
-  ) => Promise<ApiBaseResponse>;
-  changeProviderSlotflowTrustTag: (
-    data: AdminChangeProviderTrustTagRequest,
-  ) => Promise<ApiBaseResponse>;
-  handleProviderRejectModal: (data: AdminRejectProviderModalState) => void;
+  approveProvider: UseMutateFunction<
+    ApiBaseResponse<AdminApproveProviderResponse>,
+    ApiError,
+    AdminApproveProviderRequest
+  >;
+  approvingProviderId: string | null | undefined;
+
+  changeProviderSlotflowTrustTag: UseMutateFunction<
+    ApiBaseResponse<AdminChangeProviderTrustTagResponse>,
+    ApiError,
+    AdminChangeProviderTrustTagRequest
+  >;
+  changeTrustTagProviderId: string | null | undefined;
+
+  changeProviderBlockStatus: UseMutateFunction<
+    ApiBaseResponse<AdminChangeProviderBlockStatusResponse>,
+    ApiError,
+    AdminChangeProviderBlockStatusRequest
+  >;
+  changeBlockStatusProviderId: string | null | undefined;
+
+  rejectProvider: UseMutateAsyncFunction<
+    ApiBaseResponse<AdminRejectProviderResponse>,
+    ApiError,
+    AdminRejectProviderRequest
+  >;
+  rejectingProviderId: string | null | undefined;
 }
 
 // Admin service hook return type interface
 export interface UseAdminServiceReturn {
-  changeServiceBlockStatus: (
-    data: ChangeServiceBlockStatusRequest,
-  ) => Promise<ApiBaseResponse<ChangeServiceBlockStatusResponse>>;
+  changeServiceBlockStatus: UseMutateFunction<
+    ApiBaseResponse<ChangeServiceBlockStatusResponse>,
+    ApiError,
+    ChangeServiceBlockStatusRequest
+  >;
   changeBlockStatusServiceId: string | null;
-  updateService: (data: UpdateServiceRequest) => Promise<ApiBaseResponse<UpdateServiceResponse>>;
-  createService: (data: CreateServiceRequest) => Promise<ApiBaseResponse>;
+
+  updateService: UseMutateAsyncFunction<
+    ApiBaseResponse<UpdateServiceResponse>,
+    ApiError,
+    UpdateServiceRequest
+  >;
+  createService: UseMutateAsyncFunction<ApiBaseResponse, ApiError, CreateServiceRequest>;
 }
 
 // Admin user hook return type interface
@@ -127,6 +178,7 @@ export interface useRoleBasedNavigationReturn {
   JoinCallHandler: (data: ValidateRoomId) => Promise<{ success: boolean; message: string }>;
   handleNavigateToBookingsDetailPage: (appointmentId: Booking['_id']) => void;
   handleNavigateToPlanDetailPage: (planId: Plan['_id']) => void;
+  handleGetProviderDetailPage: (providerId: User['_id']) => void;
 }
 
 // Add availability hook parameter type interface

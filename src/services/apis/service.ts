@@ -33,7 +33,7 @@ export const createService = async (data: CreateServiceRequest): Promise<ApiBase
 export const updateService = async (
   data: UpdateServiceRequest,
 ): Promise<ApiBaseResponse<UpdateServiceResponse>> => {
-  const response = await axiosInstance.patch(`/services/${data._id}`, data);
+  const response = await axiosInstance.patch(`/services/${data.serviceId}`, data);
   return response.data;
 };
 
@@ -41,7 +41,7 @@ export const changeServiceBlockStatus = async (
   data: ChangeServiceBlockStatusRequest,
 ): Promise<ApiBaseResponse<ChangeServiceBlockStatusResponse>> => {
   console.log('blocking');
-  const response = await axiosInstance.patch(`/services/${data._id}/block`, data);
+  const response = await axiosInstance.patch(`/services/${data.serviceId}/block`, data);
   return response.data;
 };
 

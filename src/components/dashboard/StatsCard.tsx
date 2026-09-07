@@ -26,8 +26,7 @@ const StatsCard = ({
     >
       <Card
         className={cn(
-          'h-full overflow-hidden transition-all duration-300 border border-border',
-          'backdrop-blur-xl shadow-sm hover:shadow-md',
+          'h-full overflow-hidden transition-all duration-300 border border-border backdrop-blur-xl shadow-sm hover:shadow-md p-0',
           !isShow && 'grayscale-[0.5] opacity-90',
         )}
       >

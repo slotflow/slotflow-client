@@ -10,6 +10,7 @@ export const setupAxiosInterceptors = () => {
     },
     (error) => {
       const status = error.response?.status;
+      console.log('status : ', status);
       const message = error.response?.data?.message || 'Unexpected Error';
       if (!error.response) {
         toast.error('Unable to connect to the server. Please try again.');

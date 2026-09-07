@@ -1,46 +1,29 @@
 import { X } from 'lucide-react';
 import FormField from '../FormField';
 import { toast } from 'react-toastify';
-import SelectField from '../SelectField';
-import { appConfig } from '@/config/env';
+import ToggleField from '../ToggleField';
 import { useForm } from 'react-hook-form';
 import { FormButton } from '../FormButton';
 import { Button } from '@/components/ui/button';
-import { RootState } from '@/app/store/appStore';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useDispatch, useSelector } from 'react-redux';
-import { useQueryClient } from '@tanstack/react-query';
-import { AppDispatch } from 'recharts/types/state/store';
-import { AdminVerificationStatus } from '@/shared/types/enums';
-import { verificationOptions } from '@/shared/utils/constants';
+import { useAdminProvider } from '@/hooks/adminHooks/useProvider';
 import { RejectproviderFormProps } from '@/shared/types/component';
 import { slideOut } from '@/shared/utils/helper/gsapAnimationSlide';
-import { adminRejectProvider } from '@/services/apis/providerProfile';
-import { setAdminVerificationState } from '@/app/store/slices/authSlice';
 import { handleFormError } from '@/shared/utils/helper/formErrorCatcher';
 import {
   AdminRejectProviderFormType,
   adminRejectProviderZodSchema,
 } from '@/shared/validators/zod/adminZod';
 
-const RejectproviderForm = ({ onClose, formRef }: RejectproviderFormProps) => {
-  const dispatch = useDispatch<AppDispatch>();
-  const queryClient = useQueryClient();
-
-  const { rejectProviderId } = useSelector((state: RootState) => state.admin);
-
-  const handleCloseForm = () => {
-    slideOut(formRef.current, {
-      onComplete: onClose,
-    });
-  };
+const RejectproviderForm = ({ onClose, formRef, rejectProviderData }: RejectproviderFormProps) => {
+  const { rejectProvider } = useAdminProvider();
 
   const {
     register,
     handleSubmit,
     reset,
     setFocus,
-    setValue,
+    control,
     formState: { errors, isSubmitting, isValid },
   } = useForm<AdminRejectProviderFormType>({
     resolver: zodResolver(adminRejectProviderZodSchema),
@@ -54,27 +37,26 @@ const RejectproviderForm = ({ onClose, formRef }: RejectproviderFormProps) => {
     },
   });
 
-  const onSubmit = async (data: AdminRejectProviderFormType) => {
-    try {
-      if (!rejectProviderId) {
-        toast.error('Provider is not selected');
-        return;
-      }
+  const handleCloseForm = () => {
+    slideOut(formRef.current, {
+      onComplete: onClose,
+    });
+  };
 
-      const res = await adminRejectProvider({ providerId: rejectProviderId, ...data });
-      if (res.success) {
-        toast.success(res.message);
-        reset();
-        handleCloseForm();
-        dispatch(setAdminVerificationState(AdminVerificationStatus.REJECTED));
-        queryClient.invalidateQueries({ queryKey: ['providers'] });
-      } else {
-        toast.error(res.message);
-      }
-    } catch (error) {
-      if (appConfig.isDevelopment) {
-        console.log('Error while rejecting provider : ', error);
-      }
+  const onSubmit = async (data: AdminRejectProviderFormType) => {
+    if (!rejectProviderData) {
+      toast.error('Provider is not selected');
+      return;
+    }
+
+    const res = await rejectProvider({
+      providerId: rejectProviderData.providerId,
+      ...data,
+    });
+
+    if (res?.success) {
+      reset();
+      handleCloseForm();
     }
   };
 
@@ -109,39 +91,39 @@ const RejectproviderForm = ({ onClose, formRef }: RejectproviderFormProps) => {
         className="flex flex-col min-h-0 flex-1 pt-6"
       >
         <div className="flex-1 min-h-0 overflow-y-auto pr-2 space-y-5 scrollbar-thin scrollbar-thumb-zinc-300 dark:scrollbar-thumb-zinc-700">
-          <SelectField<AdminRejectProviderFormType, boolean>
+          <ToggleField<AdminRejectProviderFormType>
             id="isAddressVerified"
             label="Address Verification"
-            options={verificationOptions}
-            register={register}
-            setValue={setValue}
+            description="Mark whether the provider's physical address is verified."
+            control={control}
+            disabled={isSubmitting}
             error={errors.isAddressVerified?.message}
           />
 
-          <SelectField<AdminRejectProviderFormType, boolean>
+          <ToggleField<AdminRejectProviderFormType>
             id="isServiceDetailsVerified"
             label="Service Details Verification"
-            options={verificationOptions}
-            register={register}
-            setValue={setValue}
+            description="Mark whether the provided service details meet criteria."
+            control={control}
+            disabled={isSubmitting}
             error={errors.isServiceDetailsVerified?.message}
           />
 
-          <SelectField<AdminRejectProviderFormType, boolean>
+          <ToggleField<AdminRejectProviderFormType>
             id="isAvailabilityVerified"
             label="Availability Verification"
-            options={verificationOptions}
-            register={register}
-            setValue={setValue}
+            description="Mark whether working schedule and availability are approved."
+            control={control}
+            disabled={isSubmitting}
             error={errors.isAvailabilityVerified?.message}
           />
 
-          <SelectField<AdminRejectProviderFormType, boolean>
+          <ToggleField<AdminRejectProviderFormType>
             id="isProofsVerified"
             label="Proofs Verification"
-            options={verificationOptions}
-            register={register}
-            setValue={setValue}
+            description="Mark whether uploaded ID and documentation are verified."
+            control={control}
+            disabled={isSubmitting}
             error={errors.isProofsVerified?.message}
           />
 

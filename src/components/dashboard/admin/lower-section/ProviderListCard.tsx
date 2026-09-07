@@ -8,9 +8,9 @@ import {
 } from '@/components/ui/table';
 import { Briefcase } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-import DashboardDataCard from '../../DashboardDataCard';
-import { fetchServiceProvidersForAdmin } from '@/services/apis/providerProfile';
 import { QUERY_KEYS } from '@/shared/utils/constants';
+import { fetchServiceProvidersForAdmin } from '@/services/apis/providerProfile';
+import RecentActivityTableCard from '@/components/dashboard/RecentActivityTableCard';
 
 const ProviderListCard = () => {
   const { data, isLoading, isError, refetch } = useQuery({
@@ -22,7 +22,7 @@ const ProviderListCard = () => {
   const providers = data?.items || [];
 
   return (
-    <DashboardDataCard
+    <RecentActivityTableCard
       title="Latest Providers"
       icon={Briefcase}
       isLoading={isLoading}
@@ -73,7 +73,7 @@ const ProviderListCard = () => {
           </TableBody>
         </Table>
       </div>
-    </DashboardDataCard>
+    </RecentActivityTableCard>
   );
 };
 

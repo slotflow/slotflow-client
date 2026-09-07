@@ -9,8 +9,8 @@ import {
 import { User as UserIcon } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchUsers } from '@/services/apis/user';
-import DashboardDataCard from '../../DashboardDataCard';
 import { QUERY_KEYS } from '@/shared/utils/constants';
+import RecentActivityTableCard from '@/components/dashboard/RecentActivityTableCard';
 
 const UserListCard = () => {
   const { data, isLoading, isError, refetch } = useQuery({
@@ -21,7 +21,7 @@ const UserListCard = () => {
   const users = data?.items || [];
 
   return (
-    <DashboardDataCard
+    <RecentActivityTableCard
       title="Latest Users"
       icon={UserIcon}
       isLoading={isLoading}
@@ -72,7 +72,7 @@ const UserListCard = () => {
           </TableBody>
         </Table>
       </div>
-    </DashboardDataCard>
+    </RecentActivityTableCard>
   );
 };
 

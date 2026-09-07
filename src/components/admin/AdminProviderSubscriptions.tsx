@@ -1,14 +1,14 @@
 import { memo } from 'react';
+import { QUERY_KEYS } from '@/shared/utils/constants';
 import PaginatedDataTable from '../table/PaginatedDataTable';
 import { fetchSubscriptions } from '@/services/apis/subscription';
 import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
 import { AdminFetchProviderSubscriptionsProps } from '@/shared/types/component';
 import ProvidersSubscriptionsTableColumns from '../table/tableColumns/ProviderSubscriptionsTableColumn';
 import {
-  FetchProviderSubscriptionsResponse,
   FetchSubscriptionsQueryParams,
+  FetchProviderSubscriptionsResponse,
 } from '@/shared/types/api/subscription';
-import { QUERY_KEYS } from '@/shared/utils/constants';
 
 const AdminProviderSubscriptions = memo(({ providerId }: AdminFetchProviderSubscriptionsProps) => {
   const { handleAdminGetProviderDetailPage } = useRoleBasedNavigation();

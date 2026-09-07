@@ -1,4 +1,14 @@
 import {
+  X,
+  Ban,
+  Check,
+  Edit,
+  RefreshCw,
+  CircleCheck,
+  ReceiptText,
+  MoreHorizontal,
+} from 'lucide-react';
+import {
   DropdownMenu,
   DropdownMenuItem,
   DropdownMenuLabel,
@@ -6,34 +16,25 @@ import {
   DropdownMenuContent,
   DropdownMenuSeparator,
 } from '../../ui/dropdown-menu';
-import { Button } from '../../ui/button';
-import { ColumnDef } from '@tanstack/react-table';
-import { DataTableColumnHeader } from '../DataTableColumnHeader';
-import {
-  Ban,
-  Check,
-  CircleCheck,
-  Edit,
-  MoreHorizontal,
-  ReceiptText,
-  RefreshCw,
-  X,
-} from 'lucide-react';
-import { formatNumberToPrice } from '@/shared/utils/helper/formatter';
-import { Plan, StripeSyncStatus } from '@/shared/types/entity/planInterface';
 import {
   ResyncPlanStripeRequest,
   AdminFetchAllPlansResponse,
   ChangePlanBlockStatusRequest,
 } from '@/shared/types/api/plan';
+import { Button } from '../../ui/button';
+import { ColumnDef } from '@tanstack/react-table';
+import StatusBadge from '@/components/common/StatusBadge';
+import { DataTableColumnHeader } from '../DataTableColumnHeader';
+import { formatNumberToPrice } from '@/shared/utils/helper/formatter';
+import { Plan, StripeSyncStatus } from '@/shared/types/entity/planInterface';
 
 const AdminPlansTableColumns = (
-  handleAdminChangePlanStatus: (data: ChangePlanBlockStatusRequest) => void,
-  handleresyncPlanStripe: (data: ResyncPlanStripeRequest) => void,
+  changePlanBlockStatus: (data: ChangePlanBlockStatusRequest) => void,
+  resyncPlanWithStripe: (data: ResyncPlanStripeRequest) => void,
   handleNavigateToPlanDetailPage: (planId: Plan['_id']) => void,
   handleOpenPlanEditForm: (planId: string) => void,
-  changeBlockStatusPlanId: string | null,
-  resyncingPlanId: string | null,
+  changeBlockStatusPlanId: string | null | undefined,
+  resyncingPlanId: string | null | undefined,
 ): ColumnDef<AdminFetchAllPlansResponse>[] => [
   {
     accessorKey: 'slNo',
@@ -57,9 +58,7 @@ const AdminPlansTableColumns = (
     accessorKey: 'maxBookingPerMonth',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Max Booking" />,
     cell: ({ row }) => (
-      <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700">
-        {row.original.maxBookingPerMonth} / mo
-      </span>
+      <StatusBadge type="standard" label={`${row.original.maxBookingPerMonth} / mo`} />
     ),
   },
   {
@@ -110,25 +109,10 @@ const AdminPlansTableColumns = (
       const isThisRowUpdating = changeBlockStatusPlanId === row.original._id;
 
       if (isThisRowUpdating) {
-        return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-950/40 dark:text-amber-400 dark:border-amber-800">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping" />
-            Updating...
-          </span>
-        );
+        return <StatusBadge type="updating" label="Updating" />;
       }
 
-      return !isBlocked ? (
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-400 dark:border-emerald-800">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-          Active
-        </span>
-      ) : (
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-rose-50 text-rose-700 border border-rose-200 dark:bg-rose-950/40 dark:text-rose-400 dark:border-rose-800">
-          <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
-          Blocked
-        </span>
-      );
+      return !isBlocked ? <StatusBadge type="active" /> : <StatusBadge type="blocked" />;
     },
   },
   {
@@ -139,24 +123,13 @@ const AdminPlansTableColumns = (
       const isThisRowResyncing = resyncingPlanId === row.original._id;
 
       if (isThisRowResyncing) {
-        return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-950/40 dark:text-amber-400 dark:border-amber-800">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-            Syncing...
-          </span>
-        );
+        return <StatusBadge type="updating" label="Syncing" />;
       }
 
       return syncStatus === StripeSyncStatus.SYNCED ? (
-        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700">
-          <Check className="w-3 h-3 text-emerald-500 stroke-[3]" />
-          Synced
-        </span>
+        <StatusBadge type="verified" label="Synced" />
       ) : (
-        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-rose-50 text-rose-700 border border-rose-200 dark:bg-rose-950/40 dark:text-rose-400 dark:border-rose-800">
-          <X className="w-3 h-3 text-rose-500 stroke-[3]" />
-          Pending
-        </span>
+        <StatusBadge type="pending" />
       );
     },
   },
@@ -179,7 +152,7 @@ const AdminPlansTableColumns = (
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() =>
-                handleAdminChangePlanStatus({ isBlocked: plan.isBlocked, planId: plan._id })
+                changePlanBlockStatus({ isBlocked: !plan.isBlocked, planId: plan._id })
               }
             >
               {plan.isBlocked ? (
@@ -190,7 +163,7 @@ const AdminPlansTableColumns = (
               {plan.isBlocked ? 'Unblock' : 'Block'}
             </DropdownMenuItem>
             {plan.stripeSync === StripeSyncStatus.PENDING && (
-              <DropdownMenuItem onClick={() => handleresyncPlanStripe({ planId: plan._id })}>
+              <DropdownMenuItem onClick={() => resyncPlanWithStripe({ planId: plan._id })}>
                 <RefreshCw className="w-3.5 h-3.5" /> Sync
               </DropdownMenuItem>
             )}

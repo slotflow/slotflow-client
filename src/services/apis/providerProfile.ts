@@ -19,6 +19,11 @@ import {
   AdminFetchProviderProfileDetailsResponse,
   ProviderFetchDashboardRevenueStatsDataRequest,
   ProviderFetchDashboardRevenueStatsDataResponse,
+  AdminApproveProviderRequest,
+  AdminApproveProviderResponse,
+  AdminChangeProviderTrustTagResponse,
+  AdminChangeProviderBlockStatusResponse,
+  AdminRejectProviderResponse,
 } from '../../shared/types/api/providerProfile';
 import {
   UpdateFileDataRequest,
@@ -136,15 +141,17 @@ export const fetchServiceProvidersForAdmin: ApiFetchFunction<
 };
 
 // admin approve provider
-export const adminApproveProvider = async (providerId: string): Promise<ApiBaseResponse> => {
-  const response = await axiosInstance.patch(`/providers/${providerId}/approve`);
+export const adminApproveProvider = async (
+  data: AdminApproveProviderRequest,
+): Promise<ApiBaseResponse<AdminApproveProviderResponse>> => {
+  const response = await axiosInstance.patch(`/providers/${data.providerId}/approve`);
   return response.data;
 };
 
 // admin reject provider
 export const adminRejectProvider = async (
   data: AdminRejectProviderRequest,
-): Promise<ApiBaseResponse> => {
+): Promise<ApiBaseResponse<AdminRejectProviderResponse>> => {
   const { providerId, ...payload } = data;
   const response = await axiosInstance.patch(`/providers/${providerId}/reject`, { ...payload });
   return response.data;
@@ -153,7 +160,7 @@ export const adminRejectProvider = async (
 // admin change provider block status
 export const adminChangeProviderBlockStatus = async (
   data: AdminChangeProviderBlockStatusRequest,
-): Promise<ApiBaseResponse> => {
+): Promise<ApiBaseResponse<AdminChangeProviderBlockStatusResponse>> => {
   const response = await axiosInstance.patch(`/providers/${data.providerId}/block`, {
     blockStatus: data.isBlocked,
   });
@@ -163,7 +170,7 @@ export const adminChangeProviderBlockStatus = async (
 // admin change provider trust tag
 export const adminChangeProviderTrustTag = async (
   data: AdminChangeProviderTrustTagRequest,
-): Promise<ApiBaseResponse> => {
+): Promise<ApiBaseResponse<AdminChangeProviderTrustTagResponse>> => {
   const response = await axiosInstance.patch(`/providers/${data.providerId}/trust-tag`, {
     trustTag: data.trustedBySlotflow,
   });

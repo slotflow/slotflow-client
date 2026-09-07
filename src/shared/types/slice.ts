@@ -94,17 +94,6 @@ export interface appState {
   boardingSteps: number;
 }
 
-// admin slice
-export interface AdminState {
-  rejectProviderId: string | null;
-  isProviderRejectModalOpen: boolean;
-}
-
-export interface SetProviderRejectModalType {
-  modalState: boolean;
-  providerId: User['_id'] | null;
-}
-
 // Proof data type for provider slice
 export interface SetProofDataProps {
   file: string | null;

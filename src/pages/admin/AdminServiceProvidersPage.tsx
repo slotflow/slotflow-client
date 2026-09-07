@@ -1,82 +1,54 @@
-import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
-import { useEffect, useRef } from 'react';
-import {
-  AdminFetchAllProvidersResponse,
-  AdminChangeProviderTrustTagRequest,
-  AdminChangeProviderBlockStatusRequest,
-} from '@/shared/types/api/providerProfile';
-import { useNavigate } from 'react-router-dom';
-import { RootState } from '@/app/store/appStore';
+import { User } from '@/shared/types/entity/user';
+import { useEffect, useRef, useState } from 'react';
+import { QUERY_KEYS } from '@/shared/utils/constants';
 import { useAdminProvider } from '@/hooks/adminHooks/useProvider';
 import { slideIn } from '@/shared/utils/helper/gsapAnimationSlide';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
-import { fetchServiceProvidersForAdmin } from '@/services/apis/providerProfile';
+import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
 import RejectproviderForm from '@/components/form/Admin/RejectproviderForm';
+import { fetchServiceProvidersForAdmin } from '@/services/apis/providerProfile';
+import { AdminFetchAllProvidersResponse } from '@/shared/types/api/providerProfile';
 import AdminProvidersTableColumns from '@/components/table/tableColumns/AdminProvidersTableColumn';
-import { QUERY_KEYS } from '@/shared/utils/constants';
 
 const AdminServiceProvidersPage = () => {
-  const navigate = useNavigate();
-  const { isProviderRejectModalOpen } = useSelector((state: RootState) => state.admin);
+  const formRef = useRef<HTMLDivElement>(null);
+  const [rejectProvider, setRejectProvider] = useState<{ providerId: User['_id'] } | null>(null);
 
   const {
-    approveProviderHandler,
-    handleProviderRejectModal,
-    changeProviderBlockStatusHandler,
+    approveProvider,
+    approvingProviderId,
     changeProviderSlotflowTrustTag,
+    changeProviderBlockStatus,
+    changeBlockStatusProviderId,
+    changeTrustTagProviderId,
   } = useAdminProvider();
 
-  const handleAdminApproveProvider = async (providerId: string) => {
-    const res = await approveProviderHandler(providerId);
-    if (res.success) {
-      toast.success(res.message);
-    } else {
-      toast.error(res.message);
-    }
+  const { handleGetProviderDetailPage } = useRoleBasedNavigation();
+
+  const handleProviderRejectClose = () => {
+    setRejectProvider(null);
   };
 
-  const handleAdminChangeProviderBlockStatus = async (
-    data: AdminChangeProviderBlockStatusRequest,
-  ) => {
-    const res = await changeProviderBlockStatusHandler(data);
-    if (res.success) {
-      toast.success(res.message);
-    } else {
-      toast.error(res.message);
-    }
-  };
-
-  const handleAdminChangeProviderSlotflowTrustTag = async (
-    data: AdminChangeProviderTrustTagRequest,
-  ) => {
-    const res = await changeProviderSlotflowTrustTag(data);
-    if (res.success) {
-      toast.success(res.message);
-    } else {
-      toast.error(res.message);
-    }
-  };
-
-  const handleGetProviderDetailPage = (providerId: string) => {
-    navigate(`/admin/service-providers/${providerId}`);
+  const handleProviderRejectOpen = (data: { providerId: User['_id'] }) => {
+    setRejectProvider(data);
   };
 
   const columns = AdminProvidersTableColumns(
-    handleAdminApproveProvider,
-    handleProviderRejectModal,
-    handleAdminChangeProviderBlockStatus,
+    approveProvider,
+    approvingProviderId,
+    changeProviderBlockStatus,
+    changeBlockStatusProviderId,
+    changeProviderSlotflowTrustTag,
+    changeTrustTagProviderId,
     handleGetProviderDetailPage,
-    handleAdminChangeProviderSlotflowTrustTag,
+    handleProviderRejectOpen,
   );
 
-  const formRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
-    if (isProviderRejectModalOpen && formRef.current) {
+    if (rejectProvider && formRef.current) {
       slideIn(formRef.current);
     }
-  }, [isProviderRejectModalOpen]);
+  }, [rejectProvider]);
 
   return (
     <div className="p-4">
@@ -86,13 +58,12 @@ const AdminServiceProvidersPage = () => {
         column={columns}
         columnsCount={6}
       />
-      {isProviderRejectModalOpen && (
+      {rejectProvider && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
           <RejectproviderForm
-            onClose={() => {
-              handleProviderRejectModal({ modalState: false, providerId: null });
-            }}
+            onClose={handleProviderRejectClose}
             formRef={formRef}
+            rejectProviderData={rejectProvider}
           />
         </div>
       )}
