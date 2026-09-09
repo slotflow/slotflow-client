@@ -17,7 +17,7 @@ import {
 } from '@/shared/types/api/plan';
 import { toast } from 'react-toastify';
 import { appConfig } from '@/config/env';
-import { QUERY_KEYS } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants';
 import { UseAdminPlanReturn } from '@/shared/types/hooks';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { handleMutationError } from '@/shared/utils/helper/handleMutationError';
@@ -45,7 +45,7 @@ export const useAdminPlan = (): UseAdminPlanReturn => {
         const { _id, isBlocked } = res.data;
 
         queryClient.setQueriesData<ApiPaginatedResponse<AdminFetchAllPlansResponse>>(
-          { queryKey: [QUERY_KEYS.PLANS] },
+          { queryKey: [queryKeys.PLANS] },
           (oldData) => {
             if (!oldData || !oldData.items) return oldData;
 
@@ -63,7 +63,7 @@ export const useAdminPlan = (): UseAdminPlanReturn => {
           },
         );
 
-        queryClient.setQueryData<UpdatePlanResponse>([QUERY_KEYS.PLAN_DETAILS, _id], (oldData) => {
+        queryClient.setQueryData<UpdatePlanResponse>([queryKeys.PLAN_DETAILS, _id], (oldData) => {
           if (!oldData) return oldData;
           return {
             ...oldData,
@@ -95,7 +95,7 @@ export const useAdminPlan = (): UseAdminPlanReturn => {
         const { _id, stripePlanDetails, stripeSync } = res.data;
 
         queryClient.setQueriesData<ApiPaginatedResponse<AdminFetchAllPlansResponse>>(
-          { queryKey: [QUERY_KEYS.PLANS] },
+          { queryKey: [queryKeys.PLANS] },
           (oldData) => {
             if (!oldData || !oldData.items) return oldData;
 
@@ -130,7 +130,7 @@ export const useAdminPlan = (): UseAdminPlanReturn => {
   const updatePlansListCache = (planData: AdminFetchAllPlansResponse, isEdit: boolean) => {
     const hasCache = queryClient
       .getQueriesData<ApiPaginatedResponse<AdminFetchAllPlansResponse>>({
-        queryKey: [QUERY_KEYS.PLANS],
+        queryKey: [queryKeys.PLANS],
       })
       .some(([, data]) => Boolean(data && data.items));
 
@@ -140,7 +140,7 @@ export const useAdminPlan = (): UseAdminPlanReturn => {
     }
 
     queryClient.setQueriesData<ApiPaginatedResponse<AdminFetchAllPlansResponse>>(
-      { queryKey: [QUERY_KEYS.PLANS] },
+      { queryKey: [queryKeys.PLANS] },
       (oldData) => {
         if (!oldData || !oldData.items) return oldData;
 
@@ -179,7 +179,7 @@ export const useAdminPlan = (): UseAdminPlanReturn => {
         toast.success(res.message);
         const updatedPlan = res.data;
 
-        queryClient.setQueryData<UpdatePlanResponse>([QUERY_KEYS.PLAN_DETAILS, updatedPlan._id], {
+        queryClient.setQueryData<UpdatePlanResponse>([queryKeys.PLAN_DETAILS, updatedPlan._id], {
           ...updatedPlan,
         });
 
@@ -216,7 +216,7 @@ export const useAdminPlan = (): UseAdminPlanReturn => {
         toast.success(res.message);
         const createdPlan = res.data;
 
-        queryClient.setQueryData<CreatePlanResponse>([QUERY_KEYS.PLAN_DETAILS, createdPlan._id], {
+        queryClient.setQueryData<CreatePlanResponse>([queryKeys.PLAN_DETAILS, createdPlan._id], {
           ...createdPlan,
         });
 

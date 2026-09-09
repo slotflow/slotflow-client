@@ -19,7 +19,7 @@ import AvailablityFetchingError from '../error/AvailabilityFetchingError';
 import { EventSocketEnum, SlotEngageRequest } from '@/shared/types/socket';
 import { ProviderServiceAvailabilityProps } from '@/shared/types/component';
 import ProviderAvailabilityShimmer from '@/components/shimmers/ProviderAvailabilityShimmer';
-import { defaultButtonClassName, QUERY_KEYS, STATUS_PRESETS } from '@/shared/utils/constants';
+import { defaultButtonClassName, queryKeys, STATUS_PRESETS } from '@/shared/utils/constants';
 import ProviderServiceAvailabilityForm from '../form/provider/ProviderSerivceAvailabilityForm';
 import {
   fetchEngagedSlots,
@@ -53,9 +53,7 @@ const ProviderServiceAvailability = ({
         return res.data;
       }
     },
-    queryKey: [QUERY_KEYS.PROVIDER_SERVICE_AVAILABILITY, date, providerId],
-    staleTime: 1 * 60 * 1000,
-    refetchOnWindowFocus: false,
+    queryKey: [queryKeys.SERVICE_AVAILABILITY, date, providerId],
     enabled: !!date,
   });
 

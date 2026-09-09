@@ -49,8 +49,6 @@ const ChatSidebar: React.FC<ChatSideBarProps> = ({ getUsers }) => {
       return res.data;
     },
     queryKey: ['chatUsers'],
-    staleTime: 1 * 60 * 1000,
-    refetchOnWindowFocus: false,
   });
 
   const [showOnlineOnly, setShowOnlineOnly] = useState(false);

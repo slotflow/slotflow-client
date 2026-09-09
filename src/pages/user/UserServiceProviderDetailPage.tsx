@@ -9,7 +9,7 @@ import DataFetchingError from '@/components/error/DataFetchingError';
 import { fetchProviderDetailsForUser } from '@/services/apis/providerProfile';
 import { fetchProviderServiceByProviderId } from '@/services/apis/providerService';
 import ProviderServiceAvailability from '@/components/profile/ProviderServiceAvailability';
-import { QUERY_KEYS } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants';
 
 const UserServiceProviderDetailPage = () => {
   const { providerId } = useParams<{ providerId: string }>();
@@ -23,9 +23,7 @@ const UserServiceProviderDetailPage = () => {
       const res = await fetchProviderDetailsForUser(providerId!);
       return res.data;
     },
-    queryKey: [QUERY_KEYS.PROVIDER_PROFILE, providerId],
-    staleTime: 60 * 60 * 1000,
-    refetchOnWindowFocus: false,
+    queryKey: [queryKeys.PROFILE, providerId],
   });
 
   const {
@@ -37,9 +35,7 @@ const UserServiceProviderDetailPage = () => {
       const res = await fetchProviderServiceByProviderId(providerId!);
       return res.data;
     },
-    queryKey: [QUERY_KEYS.PROVIDER_SERVICE, providerId],
-    staleTime: 60 * 60 * 1000,
-    refetchOnWindowFocus: false,
+    queryKey: [queryKeys.SERVICE, providerId],
   });
 
   if (!providerId) return <DataFetchingError message={'Provider Profile fetching error'} />;
@@ -65,7 +61,7 @@ const UserServiceProviderDetailPage = () => {
         <AddressListing
           userOrProviderId={providerId}
           fetchApiFunction={() => fetchAddressByUserId(providerId)}
-          queryKey={[QUERY_KEYS.PROVIDER_ADDRESS]}
+          queryKey={[queryKeys.ADDRESS]}
           isUserLookingProvider
         />
       }

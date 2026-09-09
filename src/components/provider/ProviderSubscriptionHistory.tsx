@@ -6,7 +6,7 @@ import {
   FetchProviderSubscriptionsResponse,
   FetchSubscriptionsQueryParams,
 } from '@/shared/types/api/subscription';
-import { QUERY_KEYS } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants';
 
 const ProviderSubscriptionHistory = () => {
   const { handleAdminGetProviderDetailPage } = useRoleBasedNavigation();
@@ -16,7 +16,7 @@ const ProviderSubscriptionHistory = () => {
   return (
     <PaginatedDataTable<FetchProviderSubscriptionsResponse, FetchSubscriptionsQueryParams>
       fetchApiFunction={fetchSubscriptions}
-      queryKey={[QUERY_KEYS.SUBSCRIPTIONS]}
+      queryKey={[queryKeys.SUBSCRIPTIONS]}
       column={column}
       columnsCount={5}
     />

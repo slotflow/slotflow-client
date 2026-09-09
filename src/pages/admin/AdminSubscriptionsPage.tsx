@@ -1,4 +1,4 @@
-import { QUERY_KEYS } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants';
 import { fetchSubscriptions } from '@/services/apis/subscription';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
 import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
@@ -14,7 +14,7 @@ const AdminSubscriptionsPage = () => {
     <div className="p-4">
       <PaginatedDataTable<FetchProviderSubscriptionsResponse>
         fetchApiFunction={fetchSubscriptions}
-        queryKey={[QUERY_KEYS.SUBSCRIPTIONS]}
+        queryKey={[queryKeys.SUBSCRIPTIONS]}
         column={column}
         columnsCount={6}
       />

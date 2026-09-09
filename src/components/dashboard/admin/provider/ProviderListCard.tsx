@@ -8,13 +8,13 @@ import {
 } from '@/components/ui/table';
 import { Briefcase } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-import { QUERY_KEYS } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants';
 import { fetchServiceProvidersForAdmin } from '@/services/apis/providerProfile';
 import RecentActivityTableCard from '@/components/dashboard/RecentActivityTableCard';
 
 const ProviderListCard = () => {
   const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: [QUERY_KEYS.ADMIN_LATEST_PROVIDERS],
+    queryKey: [queryKeys.LATEST_PROVIDERS],
     queryFn: () =>
       fetchServiceProvidersForAdmin({ limit: 5, sortBy: 'createdAt', sortOrder: 'desc' }),
   });

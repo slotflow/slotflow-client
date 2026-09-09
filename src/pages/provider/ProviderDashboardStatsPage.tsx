@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { DateRange } from 'react-day-picker';
-import DataFilter from '@/components/filters/DataFilter';
+import DateFilter from '@/components/filters/DateFilter';
 import ProviderDashboardStats from '@/components/dashboard/provider/ProviderDashboardStats';
 
 const ProviderDashboardStatsPage = () => {
@@ -11,7 +11,7 @@ const ProviderDashboardStatsPage = () => {
 
   return (
     <div className="w-full">
-      <DataFilter dateRange={dateRange} setDateRange={setDateRange} />
+      <DateFilter dateRange={dateRange} setDateRange={setDateRange} />
       <ProviderDashboardStats dateRange={dateRange as DateRange} />
     </div>
   );

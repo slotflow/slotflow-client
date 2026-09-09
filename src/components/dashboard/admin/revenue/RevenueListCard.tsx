@@ -9,14 +9,14 @@ import {
 import { format } from 'date-fns';
 import { DollarSign } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-import { QUERY_KEYS } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants';
 import { fetchPayments } from '@/services/apis/payment';
 import { formatNumberToPrice } from '@/shared/utils/helper/formatter';
 import RecentActivityTableCard from '@/components/dashboard/RecentActivityTableCard';
 
-const PaymentListCard = () => {
+const RevenueListCard = () => {
   const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: [QUERY_KEYS.ADMIN_LATEST_PAYMENTS],
+    queryKey: [queryKeys.LATEST_PAYMENTS],
     queryFn: () => fetchPayments({ limit: 5, sortBy: 'createdAt', sortOrder: 'desc' }),
   });
 
@@ -79,4 +79,4 @@ const PaymentListCard = () => {
   );
 };
 
-export default PaymentListCard;
+export default RevenueListCard;

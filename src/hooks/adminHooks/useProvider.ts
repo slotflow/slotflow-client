@@ -19,7 +19,7 @@ import {
   AdminFetchProviderProfileDetailsResponse,
 } from '@/shared/types/api/providerProfile';
 import { AppDispatch } from '@/app/store/appStore';
-import { QUERY_KEYS } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants';
 import { UseAdminProviderReturn } from '@/shared/types/hooks';
 import { AdminVerificationStatus } from '@/shared/types/enums';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -48,7 +48,7 @@ export const useAdminProvider = (): UseAdminProviderReturn => {
         toast.success(res.message);
         const { _id, adminVerificationStatus, isAdminVerified } = res.data;
         queryClient.setQueriesData<ApiPaginatedResponse<AdminFetchAllProvidersResponse>>(
-          { queryKey: [QUERY_KEYS.PROVIDERS] },
+          { queryKey: [queryKeys.PROVIDERS] },
           (oldData) => {
             if (!oldData || !oldData.items) return oldData;
 
@@ -68,7 +68,7 @@ export const useAdminProvider = (): UseAdminProviderReturn => {
         );
 
         queryClient.setQueryData<AdminFetchProviderProfileDetailsResponse>(
-          [QUERY_KEYS.PROVIDER_PROFILE, _id],
+          [queryKeys.PROFILE, _id],
           (oldProvider) => {
             if (!oldProvider) return oldProvider;
 
@@ -108,7 +108,7 @@ export const useAdminProvider = (): UseAdminProviderReturn => {
         const { _id, trustedBySlotflow } = res.data;
 
         queryClient.setQueriesData<ApiPaginatedResponse<AdminFetchAllProvidersResponse>>(
-          { queryKey: [QUERY_KEYS.PROVIDERS] },
+          { queryKey: [queryKeys.PROVIDERS] },
           (oldData) => {
             if (!oldData || !oldData.items) return oldData;
 
@@ -127,7 +127,7 @@ export const useAdminProvider = (): UseAdminProviderReturn => {
         );
 
         queryClient.setQueryData<AdminFetchProviderProfileDetailsResponse>(
-          [QUERY_KEYS.PROVIDER_PROFILE, _id],
+          [queryKeys.PROFILE, _id],
           (oldProvider) => {
             if (!oldProvider) return oldProvider;
 
@@ -162,7 +162,7 @@ export const useAdminProvider = (): UseAdminProviderReturn => {
         const { _id, isBlocked } = res.data;
 
         queryClient.setQueriesData<ApiPaginatedResponse<AdminFetchAllProvidersResponse>>(
-          { queryKey: [QUERY_KEYS.PROVIDERS] },
+          { queryKey: [queryKeys.PROVIDERS] },
           (oldData) => {
             if (!oldData || !oldData.items) return oldData;
             return {
@@ -180,7 +180,7 @@ export const useAdminProvider = (): UseAdminProviderReturn => {
         );
 
         queryClient.setQueryData<AdminFetchProviderProfileDetailsResponse>(
-          [QUERY_KEYS.PROVIDER_PROFILE, _id],
+          [queryKeys.PROFILE, _id],
           (oldProvider) => {
             if (!oldProvider) return oldProvider;
 
@@ -216,7 +216,7 @@ export const useAdminProvider = (): UseAdminProviderReturn => {
         } = res.data;
         dispatch(setAdminVerificationState(AdminVerificationStatus.REJECTED));
         queryClient.setQueriesData<ApiPaginatedResponse<AdminFetchAllProvidersResponse>>(
-          { queryKey: [QUERY_KEYS.PROVIDERS] },
+          { queryKey: [queryKeys.PROVIDERS] },
           (oldData) => {
             if (!oldData || !oldData.items) return oldData;
 
@@ -236,7 +236,7 @@ export const useAdminProvider = (): UseAdminProviderReturn => {
         );
 
         queryClient.setQueryData<AdminFetchProviderProfileDetailsResponse>(
-          [QUERY_KEYS.PROVIDER_PROFILE, _id],
+          [queryKeys.PROFILE, _id],
           (oldProvider) => {
             if (!oldProvider) return oldProvider;
 

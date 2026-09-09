@@ -13,10 +13,10 @@ export interface CreateServiceRequest {
 }
 
 // Change app service block status request and response
-export type ChangeServiceBlockStatusRequest = {
+export type AdminChangeServiceBlockStatusRequest = {
   serviceId: Service['_id'];
 } & Pick<Service, 'isBlocked'>;
-export type ChangeServiceBlockStatusResponse = Pick<Service, '_id' | 'isBlocked'>;
+export type AdminChangeServiceBlockStatusResponse = Pick<Service, '_id' | 'isBlocked'>;
 
 // Fetch app services by category response
 export type FetchServicesByCategoryResponse = Pick<Service, '_id' | 'serviceName'>;

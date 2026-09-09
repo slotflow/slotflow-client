@@ -3,9 +3,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/app/store/appStore';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
-import { Activity, LockIcon, TrendingUp } from 'lucide-react';
 import { DashboardCardOneProps } from '@/shared/types/component';
 import { formatNumberToPrice } from '@/shared/utils/helper/formatter';
+import { Activity, LockIcon, TrendingDown, TrendingUp } from 'lucide-react';
 
 const StatsCard = ({
   title,
@@ -13,7 +13,7 @@ const StatsCard = ({
   icon: Icon,
   price,
   isShow = true,
-  trend = '+12% from last month',
+  trend = '+12',
 }: DashboardCardOneProps) => {
   const isDark = !useSelector((store: RootState) => store.app.lightTheme);
 
@@ -26,11 +26,11 @@ const StatsCard = ({
     >
       <Card
         className={cn(
-          'h-full overflow-hidden transition-all duration-300 border border-border backdrop-blur-xl shadow-sm hover:shadow-md p-0',
+          'rounded-md h-full overflow-hidden transition-all duration-300 border border-border backdrop-blur-xl shadow-sm hover:shadow-md p-0',
           !isShow && 'grayscale-[0.5] opacity-90',
         )}
       >
-        <CardContent className="p-6">
+        <CardContent className="p-2">
           <div className="flex items-start justify-between">
             <div className="space-y-4 flex-1">
               <div className="flex items-center gap-2">
@@ -52,19 +52,47 @@ const StatsCard = ({
                 </span>
               </div>
 
-              <div className="space-y-1">
+              <div className="space-y-1 flex flex-row justify-between">
                 <h3 className="text-2xl font-bold tracking-tight text-foreground">
                   {price ? formatNumberToPrice(value ?? 0) : (value?.toLocaleString() ?? 0)}
                 </h3>
 
                 {isShow && (
                   <div className="flex items-center gap-1.5">
-                    <div className="flex items-center text-xs font-semibold text-emerald-600 dark:text-emerald-400">
-                      <TrendingUp size={12} className="mr-1" />
-                      {trend.split(' ')[0]}
+                    <div className="flex items-center text-xs font-semibold">
+                      {(() => {
+                        const numericTrend =
+                          typeof trend === 'number' ? trend : parseFloat(trend) || 0;
+                        const isNegative = numericTrend < 0;
+
+                        return (
+                          <div className="flex items-center text-xs font-semibold">
+                            {isNegative ? (
+                              <TrendingDown
+                                size={12}
+                                className="mr-1 text-rose-600 dark:text-rose-400"
+                              />
+                            ) : (
+                              <TrendingUp
+                                size={12}
+                                className="mr-1 text-emerald-600 dark:text-emerald-400"
+                              />
+                            )}
+                            <span
+                              className={
+                                isNegative
+                                  ? 'text-rose-600 dark:text-rose-400'
+                                  : 'text-emerald-600 dark:text-emerald-400'
+                              }
+                            >
+                              {trend}%
+                            </span>
+                          </div>
+                        );
+                      })()}
                     </div>
 
-                    <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">
+                    <span className="text-[12px] text-muted-foreground font-medium uppercase tracking-wider">
                       growth
                     </span>
                   </div>

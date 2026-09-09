@@ -20,9 +20,10 @@ import {
 import * as React from 'react';
 import { Input } from './input';
 import { Button } from './button';
-import { defaultButtonClassName } from '@/shared/utils/constants';
 import { DataTableProps } from '@/shared/types/component';
+import { defaultButtonClassName } from '@/shared/utils/constants';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './table';
+import { RotateCw } from 'lucide-react';
 
 export function DataTable<TData, TValue>({
   columns,
@@ -31,6 +32,8 @@ export function DataTable<TData, TValue>({
   onPaginationChange,
   pagination: controlledPagination,
   actionButtons,
+  isFetching,
+  refetch,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
@@ -87,20 +90,39 @@ export function DataTable<TData, TValue>({
           className="max-w-sm"
         />
         <DropdownMenu>
-          <div className="ml-auto space-x-2">
+          <div className="ml-auto space-x-2 flex">
             {actionButtons?.map((btn) => (
               <Button
                 key={btn.actionLabel}
                 title={btn?.actionLabel}
                 variant="default"
-                className="cursor-pointer hover:bg-(--mainColor) hover:text-white transition-colors border-(--mainColor)"
+                className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border border-slate-200 dark:border-border bg-white dark:bg-muted/20 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-muted/30 shadow-sm transition-all cursor-pointer disabled:opacity-50"
                 onClick={btn?.onActionClick}
               >
                 {btn?.actionLabel}
               </Button>
             ))}
+            {refetch && (
+              <Button
+                key="refetch"
+                disabled={isFetching}
+                title="refetch"
+                variant="secondary"
+                className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border border-slate-200 dark:border-border bg-white dark:bg-muted/20 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-muted/30 shadow-sm transition-all cursor-pointer disabled:opacity-50"
+                onClick={() => refetch()}
+              >
+                <RotateCw
+                  className={`w-3.5 h-3.5 text-slate-500 ${isFetching && 'animate-spin'}`}
+                />
+                Refetch
+              </Button>
+            )}
             <DropdownMenuTrigger asChild>
-              <Button title="Columns" variant="secondary" className={defaultButtonClassName}>
+              <Button
+                title="Columns"
+                variant="secondary"
+                className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border border-slate-200 dark:border-border bg-white dark:bg-muted/20 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-muted/30 shadow-sm transition-all cursor-pointer disabled:opacity-50"
+              >
                 Columns
               </Button>
             </DropdownMenuTrigger>

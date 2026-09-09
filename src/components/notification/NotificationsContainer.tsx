@@ -9,7 +9,7 @@ import { fetchNotifications } from '@/services/apis/notification';
 import NotificationCardShimmer from '../shimmers/NotificationCardShimmer';
 import { toggleNotificationContainer } from '@/app/store/slices/appSlice';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { QUERY_KEYS } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants';
 
 const NotificationsContainer = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -24,7 +24,7 @@ const NotificationsContainer = () => {
     hasNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: [QUERY_KEYS.NOTIFICATIONS],
+    queryKey: [queryKeys.NOTIFICATIONS],
     queryFn: ({ pageParam = 1 }) => fetchNotifications({ page: pageParam, limit: 10 }),
     getNextPageParam: (lastPage) => {
       if (

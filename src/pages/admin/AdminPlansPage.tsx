@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { QUERY_KEYS } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants';
 import PlanForm from '@/components/form/Admin/PlanForm';
 import { useAdminPlan } from '@/hooks/adminHooks/usePlan';
 import { adminFetchAllPlans } from '@/services/apis/plan';
@@ -47,7 +47,7 @@ const AdminPlansPage = () => {
     <div className="p-3">
       <PaginatedDataTable<AdminFetchAllPlansResponse>
         fetchApiFunction={adminFetchAllPlans}
-        queryKey={[QUERY_KEYS.PLANS]}
+        queryKey={[queryKeys.PLANS]}
         column={column}
         columnsCount={9}
         actionButtons={[

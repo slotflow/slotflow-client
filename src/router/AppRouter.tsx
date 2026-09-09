@@ -12,6 +12,7 @@ import ProviderDashboardGraphsPage from '@/pages/provider/ProviderDashboardGraph
 import AdminPlanDetailsPage from '@/pages/admin/AdminPlanDetailsPage.tsx';
 import SandboxPage from '@/pages/admin/SandboxPage.tsx';
 import DashboardDataCardSample from '@/pages/sandbox/DashboardDataCardSample.tsx';
+import ChartsDemo from '@/pages/sandbox/ChartsDemo.tsx';
 
 const FAQPage = lazy(() => import('@/pages/landing/FAQPage.tsx'));
 const AuthLayout = lazy(() => import('@/layouts/AuthLayout.tsx'));
@@ -271,6 +272,13 @@ export const appRouter = createBrowserRouter([
             element: <DashboardDataCardSample />,
             handle: {
               title: 'Dashboard Data Card',
+            },
+          },
+          {
+            path: 'charts-demo',
+            element: <ChartsDemo />,
+            handle: {
+              title: 'Charts Demo',
             },
           },
         ],

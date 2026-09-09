@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { useQuery } from '@tanstack/react-query';
-import { QUERY_KEYS } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants';
 import CopyableId from '@/components/common/CopyField';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAdminPlan } from '@/hooks/adminHooks/usePlan';
@@ -39,9 +39,7 @@ const AdminPlanDetailsPage = () => {
       const res = await adminFetchPlanDetails({ planId: planId! });
       return res.data;
     },
-    queryKey: [QUERY_KEYS.PLAN_DETAILS, planId],
-    staleTime: 60 * 60 * 1000,
-    refetchOnWindowFocus: false,
+    queryKey: [queryKeys.PLAN_DETAILS, planId],
     enabled: !!planId,
   });
 

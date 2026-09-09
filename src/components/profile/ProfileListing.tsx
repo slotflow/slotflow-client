@@ -47,8 +47,6 @@ const ProfileListing = ({
       return res.data;
     },
     queryKey: [...queryKey, userOrProviderId],
-    staleTime: 60 * 60 * 1000,
-    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {

@@ -8,7 +8,7 @@ import { fetchMyAddress } from '@/services/apis/address';
 import ProviderServiceList from '../profile/ProviderServiceList';
 import { providerFetchServiceDetails } from '@/services/apis/providerService';
 import ProviderServiceAvailability from '../profile/ProviderServiceAvailability';
-import { QUERY_KEYS } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants';
 
 const AccountSettings = () => {
   const authUser = useSelector((state: RootState) => state.auth.authUser);
@@ -19,14 +19,14 @@ const AccountSettings = () => {
       <UserInfo />
       <AddressListing
         fetchApiFunction={fetchMyAddress}
-        queryKey={[QUERY_KEYS.MY_ADDRESS]}
+        queryKey={[queryKeys.MY_ADDRESS]}
         canUpdate={true}
       />
       {authUser?.role === Role.PROVIDER && (
         <>
           <ProviderServiceList
             fetchApiFunction={providerFetchServiceDetails}
-            queryKey={[QUERY_KEYS.PROVIDER_SERVICE]}
+            queryKey={[queryKeys.SERVICE]}
             canUpdate={true}
           />
           <ProviderServiceAvailability role={Role.PROVIDER} canUpdate={true} />

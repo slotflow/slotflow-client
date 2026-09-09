@@ -40,9 +40,6 @@ const AddressListing = ({
       return res.data;
     },
     queryKey: [...queryKey, userOrProviderId],
-    refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 60,
-    gcTime: 1000 * 60 * 60,
   });
 
   if (isError) {

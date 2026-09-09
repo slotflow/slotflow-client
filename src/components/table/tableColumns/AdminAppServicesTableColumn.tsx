@@ -11,10 +11,13 @@ import { ColumnDef } from '@tanstack/react-table';
 import StatusBadge from '@/components/common/StatusBadge';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
 import { Ban, CircleCheck, Edit, MoreHorizontal } from 'lucide-react';
-import { FetchServicesResponse, ChangeServiceBlockStatusRequest } from '@/shared/types/api/service';
+import {
+  FetchServicesResponse,
+  AdminChangeServiceBlockStatusRequest,
+} from '@/shared/types/api/service';
 
 const AdminAppServicesTableColumns = (
-  changeServiceBlockStatus: (data: ChangeServiceBlockStatusRequest) => void,
+  changeServiceBlockStatus: (data: AdminChangeServiceBlockStatusRequest) => void,
   handleOpenServiceEditForm: (service: FetchServicesResponse) => void,
   changeBlockStatusServiceId: string | null,
 ): ColumnDef<FetchServicesResponse>[] => [

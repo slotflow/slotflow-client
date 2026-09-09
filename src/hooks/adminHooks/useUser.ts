@@ -1,28 +1,76 @@
-import { appConfig } from '@/config/env';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UseAdminUserReturn } from '@/shared/types/hooks';
 import { changeUserBlockStatus } from '@/services/apis/user';
-import { AdminChangeUserStatusRequest } from '@/shared/types/api/user';
+import {
+  AdminChangeUserBlockStatusRequest,
+  AdminChangeUserBlockStatusResponse,
+  AdminfetchAllUsersResponse,
+  AdminFetchUserProfileDetailsResponse,
+} from '@/shared/types/api/user';
+import { ApiBaseResponse, ApiError, ApiPaginatedResponse } from '@/shared/types/common';
+import { toast } from 'react-toastify';
+import { queryKeys } from '@/shared/utils/constants';
+import { handleMutationError } from '@/shared/utils/helper/handleMutationError';
 
 export const useAdminUser = (): UseAdminUserReturn => {
   const queryClient = useQueryClient();
 
-  const changeUserStatus = async (data: AdminChangeUserStatusRequest) => {
-    try {
-      const res = await changeUserBlockStatus(data);
-      if (res.success) {
-        queryClient.invalidateQueries({ queryKey: ['users'] });
+  const changeUserBlockStatusMutation = useMutation<
+    ApiBaseResponse<AdminChangeUserBlockStatusResponse>,
+    ApiError,
+    AdminChangeUserBlockStatusRequest
+  >({
+    mutationFn: (data) => {
+      if (!data.userId || data.isBlocked === undefined || data.isBlocked === null) {
+        throw new Error('Provider details are missing. Please refresh the page.');
       }
-      return res;
-    } catch (error) {
-      if (appConfig.isDevelopment) {
-        console.log('Error in handleAdminChangeUserBlockStatus: ', error);
+      return changeUserBlockStatus(data);
+    },
+    onSuccess: (res) => {
+      if (res.success && res.data) {
+        toast.success(res.message);
+        const { _id, isBlocked } = res.data;
+
+        queryClient.setQueriesData<ApiPaginatedResponse<AdminfetchAllUsersResponse>>(
+          { queryKey: [queryKeys.USERS] },
+          (oldData) => {
+            if (!oldData || !oldData.items) return oldData;
+            return {
+              ...oldData,
+              items: oldData.items.map((user) =>
+                user._id === _id
+                  ? {
+                      ...user,
+                      isBlocked: isBlocked,
+                    }
+                  : user,
+              ),
+            };
+          },
+        );
+
+        queryClient.setQueryData<AdminFetchUserProfileDetailsResponse>(
+          [queryKeys.PROFILE, _id],
+          (oldUser) => {
+            if (!oldUser) return oldUser;
+
+            return {
+              ...oldUser,
+              isBlocked: isBlocked,
+            };
+          },
+        );
       }
-      return { success: false, message: 'Please try again' };
-    }
-  };
+    },
+    onError: (error: ApiError) => {
+      handleMutationError(error, 'Could not change user blocks status.');
+    },
+  });
 
   return {
-    changeUserStatus,
+    changeUserBlockStatus: changeUserBlockStatusMutation.mutate,
+    changeBlockStatusUserId: changeUserBlockStatusMutation.isPending
+      ? changeUserBlockStatusMutation.variables.userId
+      : null,
   };
 };

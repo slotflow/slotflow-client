@@ -2,17 +2,17 @@ import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
-import { DataFilterProps } from '@/shared/types/component';
+import { DateFilterProps } from '@/shared/types/component';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
-const DataFilter = ({
+const DateFilter = ({
   dateRange,
   setDateRange,
   title = 'Timeframe Analysis',
   description = 'Filtering data by selected date range',
-}: DataFilterProps) => {
+}: DateFilterProps) => {
   return (
-    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 p-4 rounded-2xl border border-border shadow-sm backdrop-blur-sm bg-background/80">
+    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-2 p-4 rounded-md border border-border shadow-sm backdrop-blur-sm bg-background/80">
       <div className="flex items-center gap-2">
         <div className="p-2 bg-primary/10 rounded-lg">
           <CalendarIcon className="w-5 h-5 text-primary" />
@@ -29,7 +29,7 @@ const DataFilter = ({
           <PopoverTrigger asChild>
             <Button
               variant="outline"
-              className="w-full sm:w-[280px] justify-start text-left font-normal hover:border-primary hover:bg-muted transition-all duration-200 shadow-sm px-4 h-11 border-border"
+              className="cursor-pointer w-full sm:w-[280px] justify-start text-left font-normal hover:border-primary hover:bg-muted transition-all duration-200 shadow-sm px-4 h-11 border-border"
             >
               <CalendarIcon className="mr-2 h-4 w-4 text-muted-foreground" />
 
@@ -63,4 +63,4 @@ const DataFilter = ({
   );
 };
 
-export default DataFilter;
+export default DateFilter;

@@ -10,12 +10,13 @@ import {
   UserUpdateUserInfoRequest,
   UserUpdateUserInfoResponse,
   AdminfetchAllUsersResponse,
-  AdminChangeUserStatusRequest,
+  AdminChangeUserBlockStatusRequest,
   UserUpdateProfileImageRequest,
   UserUpdateProfileImageResponse,
   CheckStripeAccountStatusResponse,
   UserFetchMyProfileDetailsResponse,
   AdminFetchUserProfileDetailsResponse,
+  AdminChangeUserBlockStatusResponse,
 } from '../../shared/types/api/user';
 import { axiosInstance } from '@/lib/axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
@@ -76,8 +77,8 @@ export const fetchUsers: ApiFetchFunction<
 
 // admin changing user block status
 export const changeUserBlockStatus = async (
-  data: AdminChangeUserStatusRequest,
-): Promise<ApiBaseResponse> => {
+  data: AdminChangeUserBlockStatusRequest,
+): Promise<ApiBaseResponse<AdminChangeUserBlockStatusResponse>> => {
   const response = await axiosInstance.patch(`/users/${data.userId}/block`, {
     blockStatus: data.isBlocked,
   });

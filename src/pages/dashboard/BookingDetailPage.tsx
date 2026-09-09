@@ -20,7 +20,7 @@ import { fetchBookingDetails } from '@/services/apis/booking';
 import { formatDateWithTime } from '@/shared/utils/helper/formatter';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import DetailsShimmer from '@/components/shimmers/DataFieldShimmer';
-import { QUERY_KEYS } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants';
 
 const BookingDetailPage = () => {
   const { bookingId } = useParams<{ bookingId: Booking['_id'] }>();
@@ -30,9 +30,7 @@ const BookingDetailPage = () => {
       const res = await fetchBookingDetails(bookingId!);
       return res.data;
     },
-    queryKey: [QUERY_KEYS.BOOKING, bookingId],
-    staleTime: 60 * 60 * 1000,
-    refetchOnWindowFocus: false,
+    queryKey: [queryKeys.BOOKING, bookingId],
     enabled: !!bookingId,
   });
 

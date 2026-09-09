@@ -3,12 +3,12 @@ import {
   UpdateServiceRequest,
   FetchServicesResponse,
   UpdateServiceResponse,
-  ChangeServiceBlockStatusRequest,
-  ChangeServiceBlockStatusResponse,
+  AdminChangeServiceBlockStatusRequest,
+  AdminChangeServiceBlockStatusResponse,
 } from '@/shared/types/api/service';
 import { toast } from 'react-toastify';
 import { appConfig } from '@/config/env';
-import { QUERY_KEYS } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants';
 import { UseAdminServiceReturn } from '@/shared/types/hooks';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ApiBaseResponse, ApiError, ApiPaginatedResponse } from '@/shared/types/common';
@@ -19,9 +19,9 @@ export const useAdminService = (): UseAdminServiceReturn => {
 
   // Admin change servic'es block status and syncs the React Query cache.
   const changeBlockStatusMutation = useMutation<
-    ApiBaseResponse<ChangeServiceBlockStatusResponse>,
+    ApiBaseResponse<AdminChangeServiceBlockStatusResponse>,
     ApiError,
-    ChangeServiceBlockStatusRequest
+    AdminChangeServiceBlockStatusRequest
   >({
     mutationFn: changeServiceBlockStatus,
     onSuccess: (res, serviceData) => {
@@ -30,18 +30,18 @@ export const useAdminService = (): UseAdminServiceReturn => {
         // Fallback to invalidation if no service list is cached
         const hasCache = queryClient
           .getQueriesData<ApiPaginatedResponse<FetchServicesResponse>>({
-            queryKey: [QUERY_KEYS.APP_SERVICES],
+            queryKey: [queryKeys.APP_SERVICES],
           })
           .some(([, data]) => Boolean(data?.items));
 
         if (!hasCache) {
-          queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.APP_SERVICES] });
+          queryClient.invalidateQueries({ queryKey: [queryKeys.APP_SERVICES] });
           return;
         }
 
         // Direct cache update to avoid full table re-fetches
         queryClient.setQueriesData<ApiPaginatedResponse<FetchServicesResponse>>(
-          { queryKey: [QUERY_KEYS.APP_SERVICES] },
+          { queryKey: [queryKeys.APP_SERVICES] },
           (oldData) => {
             if (!oldData?.items) return oldData;
 
@@ -71,17 +71,17 @@ export const useAdminService = (): UseAdminServiceReturn => {
   const updateServicesListCache = (serviceData: FetchServicesResponse) => {
     const hasCache = queryClient
       .getQueriesData<ApiPaginatedResponse<FetchServicesResponse>>({
-        queryKey: [QUERY_KEYS.APP_SERVICES],
+        queryKey: [queryKeys.APP_SERVICES],
       })
       .some(([, data]) => Boolean(data && data.items));
 
     if (!hasCache) {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.APP_SERVICES] });
+      queryClient.invalidateQueries({ queryKey: [queryKeys.APP_SERVICES] });
       return;
     }
 
     queryClient.setQueriesData<ApiPaginatedResponse<FetchServicesResponse>>(
-      { queryKey: [QUERY_KEYS.APP_SERVICES] },
+      { queryKey: [queryKeys.APP_SERVICES] },
       (oldData) => {
         if (!oldData?.items) return oldData;
 

@@ -1,4 +1,4 @@
-import { QUERY_KEYS } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants';
 import PaginatedDataTable from '../table/PaginatedDataTable';
 import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
 import PaymentsTableColumn from '../table/tableColumns/PaymentsTableColumn';
@@ -15,7 +15,7 @@ const AdminUserOrProviderPayments = ({
   return (
     <PaginatedDataTable<FetchPaymentsResponse, FetchPaymentsQueryParams>
       fetchApiFunction={(queryParams) => fetchFunction({ providerId, ...queryParams })}
-      queryKey={[QUERY_KEYS.PAYMENTS, providerId]}
+      queryKey={[queryKeys.PAYMENTS, providerId]}
       column={column}
       columnsCount={7}
       queryParams={{ providerId }}

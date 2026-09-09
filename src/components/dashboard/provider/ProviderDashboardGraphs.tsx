@@ -6,7 +6,7 @@ import {
   completionBreakdownChartConfig,
   newVsReturningUsersChartConfig,
   appointmentsOverTimeChartConfig,
-  QUERY_KEYS,
+  queryKeys,
 } from '@/shared/utils/constants';
 import { useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
@@ -23,7 +23,7 @@ import BarChartHorizontal from '../../chart/BarChartHorizontal';
 import LineChartHorizontal from '../../chart/LineChartHorizontal';
 import { ProviderDashboardGraphsProps } from '@/shared/types/component';
 import { providerFetchDashboardGraphData } from '@/services/apis/providerProfile';
-import PieChartCompletionBreakdown from '../../chart/PieChartCompletionBreakdown';
+import PieChartRounded from '@/components/chart/PieChartRounded';
 
 const ProviderDashboardGraphs = ({ dateRange }: ProviderDashboardGraphsProps) => {
   const user = useSelector((store: RootState) => store.auth.authUser);
@@ -39,13 +39,11 @@ const ProviderDashboardGraphs = ({ dateRange }: ProviderDashboardGraphsProps) =>
     isError: isGraphError,
     error: graphError,
   } = useQuery({
-    queryKey: [QUERY_KEYS.PROVIDER_DASHBOARD_GRAPH, subscriptionPlan, dateRange],
+    queryKey: [queryKeys.DASHBOARD_GRAPH, subscriptionPlan, dateRange],
     queryFn: async () => {
       const res = await providerFetchDashboardGraphData(subscriptionPlan, dateRange);
       return res.data;
     },
-    staleTime: 60 * 60 * 1000,
-    refetchOnWindowFocus: false,
     enabled: subscriptionPlan !== PlanName.NO_SUBSCRIPTION,
   });
 
@@ -136,7 +134,7 @@ const ProviderDashboardGraphs = ({ dateRange }: ProviderDashboardGraphsProps) =>
             minimumPlan={PlanName.ENTERPRISE}
           />
 
-          <PieChartCompletionBreakdown
+          <PieChartRounded
             title="Appointment Completion Breakdown"
             description="Completed, Missed, and Cancelled Appointments"
             chartData={graphData.completionBreakdownChartData}

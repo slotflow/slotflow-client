@@ -1,63 +1,119 @@
-// response type of admin fetch dashboard user stats data
-export interface AdminFetchDashboardUserStatsDataResponse extends Record<string, number> {
-  totalUsers: number;
-  blockedUsers: number;
-}
+import { StatMetric } from '../common';
+import { DateRange } from 'react-day-picker';
+import { Role } from '../enums';
 
-// response type of the admin fetch dashboard provider stats data
-export interface AdminFetchDashboardProviderStatsDataResponse extends Record<string, number> {
-  totalProviders: number;
-  adminVerifiedProviders: number;
-  blockedProviders: number;
-  addressAddedProviders: number;
-  serviceAddedProviders: number;
-  availabilityAddedProviders: number;
-  slotflowTrustedProviders: number;
-}
-
-// response type of the admin fetch dashboard subscription stats data
-export interface AdminFetchDashboardSubscriptionStatsDataResponse extends Record<string, number> {
-  activeSubscriptions: number;
-  expiredSubscriptions: number;
-  subscriptionsByFreePlan: number;
-  subscriptionsByStarterPlan: number;
-  subscriptionsByProfessionalPlan: number;
-  subscriptionsByEnterprisePlan: number;
-}
-
-// response type of the admin fetch dashboard revenue stats data
+// request type of the admin fetch dashboard stats data
 export interface AdminStatsDataRequest extends Record<string, Date | undefined> {
   startDate?: Date;
   endDate?: Date;
 }
 
+// response type of admin fetch dashboard user stats data
+export interface AdminFetchDashboardUserStatsDataResponse extends Record<
+  string,
+  StatMetric | undefined
+> {
+  totalUsers: StatMetric;
+  blockedUsers?: StatMetric;
+  NewUsers?: StatMetric;
+  ReturningUsers?: StatMetric;
+}
+
+// response type of the admin fetch dashboard provider stats data
+export interface AdminFetchDashboardProviderStatsDataResponse extends Record<
+  string,
+  StatMetric | undefined
+> {
+  totalProviders: StatMetric;
+  adminVerifiedProviders: StatMetric;
+  blockedProviders: StatMetric;
+  slotflowTrustedProviders: StatMetric;
+}
+
+// response type of the admin fetch dashboard subscription stats data
+export interface AdminFetchDashboardSubscriptionStatsDataResponse extends Record<
+  string,
+  StatMetric | undefined
+> {
+  activeSubscriptions: StatMetric;
+  expiredSubscriptions: StatMetric;
+  subscriptionsByFreePlan: StatMetric;
+  subscriptionsByStarterPlan: StatMetric;
+  subscriptionsByProfessionalPlan: StatMetric;
+  subscriptionsByEnterprisePlan: StatMetric;
+}
+
 // response type of the admin fetch dashboard revenue stats data
 export interface AdminFetchDashboardRevenueAndPaymentsStatsDataResponse extends Record<
   string,
-  number
+  StatMetric | undefined
 > {
-  totalRevenue: number;
-  totalRevenueViaSubscriptions: number;
-  revenueByStripe: number;
-  revenueByRazorpay: number;
-  revenueByPaypal: number;
-  totalRevenueViaAppointments: number;
-  totalRefundsIssued: number;
-  totalFailedPayments: number;
-  totalPayoutsToProviders: number;
+  totalRevenue: StatMetric;
+  totalRevenueViaSubscriptions: StatMetric;
+  totalRevenueViaAppointments: StatMetric;
+  totalRefundsIssued: StatMetric;
+  totalFailedPayments: StatMetric;
+  totalPayoutsToProviders: StatMetric;
 }
 
 // response type of the admin fetch dashboard appointments stats data
-export interface AdminFetchDashboardAppointmentStatsDataResponse extends Record<string, number> {
-  totalAppointments: number;
-  completedAppointments: number;
-  cancelledAppointments: number;
-  missedAppointments: number;
-  rejectedAppointments: number;
+export interface AdminFetchDashboardAppointmentStatsDataResponse extends Record<
+  string,
+  StatMetric | undefined
+> {
+  totalAppointments: StatMetric;
+  completedAppointments: StatMetric;
+  cancelledAppointments: StatMetric;
+  missedAppointments: StatMetric;
+  rejectedAppointments: StatMetric;
 }
 
-// response type for the admin fetch dashboard graph data
-export interface AdminDashboardGraphResponse {
+// analytics ai
+export interface AnalyticsAiRequest {
+  dateRange: DateRange;
+  entity: string;
+}
+export interface AnalyticsAiResponse {
+  aiResponse: string;
+}
+
+// admin dashboard user chart data
+export type AdminDashboardUserChartDataRequest = {
+  startDate?: Date;
+  endDate?: Date;
+  role: Role;
+};
+export interface AdminDashboardUserChartDataResponse extends Record<
+  string,
+  string | number | undefined
+> {
+  date: string;
+  newUsers: number;
+  returningUsers: number;
+}
+
+// admin dashboard revenue chart data
+export interface AdminDashboardRevenueChartDataResponse extends Record<
+  string,
+  string | number | undefined
+> {
+  date: string;
+  totalRevenue: number;
+  totalRefunds: number;
+  netRevenue: number;
+}
+
+// admin dashboard subscription chart data
+export interface AdminDashboardSubscriptionChartDataResponse extends Record<
+  string,
+  string | number | undefined
+> {
+  status: string;
+  value: number;
+}
+
+// admin dashboard appointments charts data
+export interface AdminGetBookingGraphDataResponse {
   appointmentsOvertimeChartData: Array<{
     date: string;
     completed: number;

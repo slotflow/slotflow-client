@@ -9,28 +9,33 @@ import {
   FileCheck,
   ArrowLeft,
   CircleCheck,
+  Award,
+  XCircle,
+  CheckCircle2,
+  Clock,
+  ShieldCheck,
+  ShieldAlert,
 } from 'lucide-react';
 import { toast } from 'react-toastify';
-import { useEffect, useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import ReviewsPage from '../dashboard/ReviewsPage';
+import { useEffect, useRef, useState } from 'react';
 import { fetchPayments } from '@/services/apis/payment';
 import { useNavigate, useParams } from 'react-router-dom';
 import StatusBadge from '@/components/common/StatusBadge';
 import DataShimmer from '@/components/shimmers/DataShimmer';
 import { fetchAddressByUserId } from '@/services/apis/address';
+import TabNavigation from '@/components/common/TabNavigation';
 import ProviderProofs from '@/components/profile/ProviderProofs';
-import ProfileListing from '@/components/profile/ProfileListing';
 import AddressListing from '@/components/profile/AddressListing';
 import { useAdminProvider } from '@/hooks/adminHooks/useProvider';
 import { slideIn } from '@/shared/utils/helper/gsapAnimationSlide';
-import { providerTabs, QUERY_KEYS } from '@/shared/utils/constants';
+import { providerTabs, queryKeys } from '@/shared/utils/constants';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import { AdminVerificationStatus, Role } from '@/shared/types/enums';
-import RejectproviderForm from '@/components/form/Admin/RejectproviderForm';
-import ProfileTabNavigation from '@/components/profile/ProfileTabNavigation';
-import ProviderServiceDetails from '@/components/profile/ProviderServiceList';
 import DashboardDataCard from '@/components/common/DashboardDataCard';
+import RejectproviderForm from '@/components/form/Admin/RejectproviderForm';
+import ProviderServiceDetails from '@/components/profile/ProviderServiceList';
 import { fetchProviderServiceByProviderId } from '@/services/apis/providerService';
 import AdminProviderSubscriptions from '@/components/admin/AdminProviderSubscriptions';
 import AdminUserOrProviderPayments from '@/components/admin/AdminUserOrProviderPayments';
@@ -39,13 +44,15 @@ import {
   adminFetchProviderProofs,
   fetchProviderDetailsForAdmin,
 } from '@/services/apis/providerProfile';
+import { TabItem } from '@/shared/types/common';
+import { Tabs, TabsContent } from '@/components/ui/tabs';
 
 const AdminServiceProviderDetailPage = () => {
   const navigate = useNavigate();
-  const [tab, setTab] = useState<number>(0);
   const formRef = useRef<HTMLDivElement>(null);
   const { providerId } = useParams<{ providerId: string }>();
   const [rejectFormOpen, setRejectFormOpen] = useState<boolean>(false);
+  const [selectedTab, setSelectedTab] = useState<TabItem['value']>(providerTabs[0].value);
 
   useEffect(() => {
     if (rejectFormOpen && formRef.current) {
@@ -70,21 +77,20 @@ const AdminServiceProviderDetailPage = () => {
     isFetching,
     refetch,
   } = useQuery({
-    queryKey: [QUERY_KEYS.PROVIDER_PROFILE, providerId],
+    queryKey: [queryKeys.PROFILE, providerId],
     queryFn: async () => {
       const res = await fetchProviderDetailsForAdmin(providerId!);
       return res.data;
     },
     enabled: !!providerId,
-    staleTime: 5 * 60 * 1000,
   });
 
   const handleRefetch = async () => {
     const { isSuccess } = await refetch();
     if (isSuccess) {
-      toast.success('Plan details refreshed successfully');
+      toast.success('Provider details refreshed successfully');
     } else {
-      toast.error('Failed to refresh plan details');
+      toast.error('Failed to refresh details');
     }
   };
 
@@ -108,7 +114,7 @@ const AdminServiceProviderDetailPage = () => {
     <>
       <div className="p-4 h-full space-y-8 min-h-screen font-sans">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-border pb-6">
-          <div className="space-y-1">
+          <div className="space-y-3">
             <div className="flex items-center gap-2 text-xs text-slate-500 font-medium">
               <button
                 onClick={() => navigate(-1)}
@@ -124,92 +130,129 @@ const AdminServiceProviderDetailPage = () => {
               )}
             </div>
 
-            <div className="flex items-center gap-3 flex-wrap">
-              <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
-                {isLoading ? (
-                  <DataShimmer w="w-48" h="h-8" />
-                ) : (
-                  provider?.username || 'Provider Details'
-                )}
-              </h1>
-
+            <div className="flex items-center gap-4">
               {isLoading ? (
-                <div className="flex gap-2">
-                  <DataShimmer w="w-20" h="h-5" className="rounded-full" />
-                  <DataShimmer w="w-20" h="h-5" className="rounded-full" />
-                </div>
+                <DataShimmer w="w-16" h="h-16" className="rounded-full" />
               ) : (
-                <>
-                  <StatusBadge
-                    type={
-                      changeBlockStatusProviderId === providerId
-                        ? 'updating'
-                        : provider?.isBlocked
-                          ? 'blocked'
-                          : 'active'
-                    }
-                    label={
-                      changeBlockStatusProviderId
-                        ? 'Updating'
-                        : provider?.isBlocked
-                          ? 'Blocked'
-                          : 'Active'
-                    }
-                  />
-                  <StatusBadge
-                    type={
-                      approvingProviderId === providerId
-                        ? 'updating'
-                        : provider?.isAdminVerified
-                          ? 'verified'
-                          : 'unverified'
-                    }
-                    label={
-                      approvingProviderId
-                        ? 'Updating'
-                        : provider?.isAdminVerified
-                          ? ' Verified Provider'
-                          : 'Pending Verification'
-                    }
-                  />
-                  <StatusBadge
-                    type={
-                      changeTrustTagProviderId === providerId
-                        ? 'updating'
-                        : provider?.trustedBySlotflow
-                          ? 'trusted'
-                          : 'pending'
-                    }
-                    label={
-                      changeTrustTagProviderId
-                        ? 'Updating'
-                        : provider?.trustedBySlotflow
-                          ? 'Trusted Provider'
-                          : 'Pending Trust Tag'
-                    }
-                  />
-                </>
+                <div className="relative">
+                  {provider?.profileImage ? (
+                    <img
+                      src={provider.profileImage}
+                      alt={provider?.username || 'Provider Avatar'}
+                      className="w-16 h-16 rounded-full object-cover border-2 border-slate-200 dark:border-border shadow-sm"
+                    />
+                  ) : (
+                    <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-800 border-2 border-slate-200 dark:border-border flex items-center justify-center text-xl font-bold text-slate-600 dark:text-slate-300 shadow-sm">
+                      {provider?.username?.charAt(0)?.toUpperCase() || 'P'}
+                    </div>
+                  )}
+                  {provider?.trustedBySlotflow && (
+                    <div
+                      className="absolute -bottom-1 -right-1 bg-amber-500 text-white p-1 rounded-full border-2 border-white dark:border-slate-900"
+                      title="Slotflow Trusted Provider"
+                    >
+                      <Award className="w-3.5 h-3.5" />
+                    </div>
+                  )}
+                </div>
               )}
-            </div>
 
-            {isLoading ? (
-              <DataShimmer w="w-64" h="h-4" className="mt-2" />
-            ) : (
-              <div className="flex items-center gap-4 text-xs text-slate-500 pt-1">
-                {provider?.email && (
-                  <span className="flex items-center gap-1">
-                    <Mail className="w-3.5 h-3.5" /> {provider.email}
-                  </span>
-                )}
-                {provider?.phone && (
-                  <span className="flex items-center gap-1">
-                    <Phone className="w-3.5 h-3.5" /> {provider.phone}
-                  </span>
+              <div className="space-y-1">
+                <div className="flex items-center gap-3 flex-wrap">
+                  <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
+                    {isLoading ? (
+                      <DataShimmer w="w-48" h="h-8" />
+                    ) : (
+                      provider?.username || 'Provider Details'
+                    )}
+                  </h1>
+
+                  {isLoading ? (
+                    <div className="flex gap-2">
+                      <DataShimmer w="w-20" h="h-5" className="rounded-full" />
+                      <DataShimmer w="w-20" h="h-5" className="rounded-full" />
+                    </div>
+                  ) : (
+                    <>
+                      <StatusBadge
+                        type={
+                          changeBlockStatusProviderId === providerId
+                            ? 'updating'
+                            : provider?.isBlocked
+                              ? 'blocked'
+                              : 'active'
+                        }
+                        label={
+                          changeBlockStatusProviderId === providerId
+                            ? 'Updating'
+                            : provider?.isBlocked
+                              ? 'Blocked'
+                              : 'Active'
+                        }
+                      />
+                      <StatusBadge
+                        type={
+                          approvingProviderId === providerId
+                            ? 'updating'
+                            : provider?.isAdminVerified
+                              ? 'verified'
+                              : 'unverified'
+                        }
+                        label={
+                          approvingProviderId === providerId
+                            ? 'Updating'
+                            : provider?.isAdminVerified
+                              ? 'Verified Provider'
+                              : 'Pending Verification'
+                        }
+                      />
+                      <StatusBadge
+                        type={
+                          changeTrustTagProviderId === providerId
+                            ? 'updating'
+                            : provider?.trustedBySlotflow
+                              ? 'trusted'
+                              : 'pending'
+                        }
+                        label={
+                          changeTrustTagProviderId === providerId
+                            ? 'Updating'
+                            : provider?.trustedBySlotflow
+                              ? 'Trusted Provider'
+                              : 'Pending Trust Tag'
+                        }
+                      />
+                    </>
+                  )}
+                </div>
+
+                {isLoading ? (
+                  <DataShimmer w="w-64" h="h-4" className="mt-2" />
+                ) : (
+                  <div className="flex items-center gap-4 text-xs text-slate-500 pt-1 flex-wrap">
+                    {provider?.email && (
+                      <span className="flex items-center gap-1">
+                        <Mail className="w-3.5 h-3.5" /> {provider.email}
+                      </span>
+                    )}
+                    {provider?.phone && (
+                      <span className="flex items-center gap-1">
+                        <Phone className="w-3.5 h-3.5" /> {provider.phone}
+                      </span>
+                    )}
+                    {provider?.createdAt && (
+                      <span className="flex items-center gap-1">
+                        <Clock className="w-3.5 h-3.5" /> Joined{' '}
+                        {new Date(provider.createdAt).toLocaleDateString()}
+                      </span>
+                    )}
+                  </div>
                 )}
               </div>
-            )}
+            </div>
           </div>
-          <div className="flex items-center gap-2 self-start sm:self-auto">
+
+          <div className="flex items-center gap-2 self-start sm:self-auto flex-wrap">
             <button
               disabled={isLoading || isFetching}
               onClick={handleRefetch}
@@ -218,6 +261,7 @@ const AdminServiceProviderDetailPage = () => {
               <RotateCw className={`w-3.5 h-3.5 text-slate-500 ${isFetching && 'animate-spin'}`} />
               Refetch
             </button>
+
             <button
               disabled={isLoading || isFetching}
               onClick={() =>
@@ -232,7 +276,6 @@ const AdminServiceProviderDetailPage = () => {
                   : 'bg-white dark:bg-muted/20 text-rose-600 border-slate-200 dark:border-border hover:bg-rose-50 dark:hover:bg-rose-950/30'
               }`}
             >
-              {' '}
               {provider?.isBlocked ? (
                 <CircleCheck className="w-3.5 h-3.5" />
               ) : (
@@ -240,6 +283,7 @@ const AdminServiceProviderDetailPage = () => {
               )}
               {provider?.isBlocked ? 'Unblock Provider' : 'Block Provider'}
             </button>
+
             <button
               disabled={isLoading || isFetching}
               onClick={() =>
@@ -250,46 +294,37 @@ const AdminServiceProviderDetailPage = () => {
               }
               className={`inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border shadow-sm transition-all cursor-pointer ${
                 provider?.trustedBySlotflow
-                  ? 'bg-emerald-600 hover:bg-emerald-700 text-white border-transparent'
-                  : 'bg-white dark:bg-muted/20 text-rose-600 border-slate-200 dark:border-border hover:bg-rose-50 dark:hover:bg-rose-950/30'
+                  ? 'bg-amber-600 hover:bg-amber-700 text-white border-transparent'
+                  : 'bg-white dark:bg-muted/20 text-amber-600 border-slate-200 dark:border-border hover:bg-amber-50 dark:hover:bg-amber-950/30'
               }`}
             >
-              {' '}
               {provider?.trustedBySlotflow ? (
-                <CircleCheck className="w-3.5 h-3.5" />
+                <ShieldAlert className="w-3.5 h-3.5" />
               ) : (
-                <Ban className="w-3.5 h-3.5" />
+                <ShieldCheck className="w-3.5 h-3.5" />
               )}
               {provider?.trustedBySlotflow ? 'Revoke Tag' : 'Give Tag'}
             </button>
+
             {provider?.adminVerificationStatus === AdminVerificationStatus.REQUESTED && (
               <button
                 disabled={isLoading || isFetching}
                 onClick={() => setRejectFormOpen(!rejectFormOpen)}
-                className={`inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border shadow-sm transition-all cursor-pointer 'bg-white dark:bg-muted/20 text-rose-600 border-slate-200 dark:border-border hover:bg-rose-50 dark:hover:bg-rose-950/30'
-                  }`}
+                className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border shadow-sm transition-all cursor-pointer bg-white dark:bg-muted/20 text-rose-600 border-slate-200 dark:border-border hover:bg-rose-50 dark:hover:bg-rose-950/30"
               >
-                {' '}
+                <XCircle className="w-3.5 h-3.5" />
                 Reject Provider
               </button>
             )}
+
             {!isLoading && !provider?.isAdminVerified && (
               <button
                 disabled={isLoading || isFetching}
                 onClick={() => approveProvider({ providerId: providerId })}
-                className={`inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border shadow-sm transition-all cursor-pointer ${
-                  !provider?.isAdminVerified
-                    ? 'bg-emerald-600 hover:bg-emerald-700 text-white border-transparent'
-                    : 'bg-white dark:bg-muted/20 text-rose-600 border-slate-200 dark:border-border hover:bg-rose-50 dark:hover:bg-rose-950/30'
-                }`}
+                className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border shadow-sm transition-all cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white border-transparent"
               >
-                {' '}
-                {provider?.isAdminVerified ? (
-                  <CircleCheck className="w-3.5 h-3.5" />
-                ) : (
-                  <Ban className="w-3.5 h-3.5" />
-                )}
-                {!provider?.isAdminVerified ? 'Approve' : ''}
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                Approve Provider
               </button>
             )}
           </div>
@@ -323,45 +358,56 @@ const AdminServiceProviderDetailPage = () => {
         </div>
 
         <div className="space-y-6">
-          <ProfileTabNavigation isAdmin={true} setTab={setTab} tab={tab} tabArray={providerTabs} />
+          <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
+            <TabNavigation
+              isAdmin={true}
+              tab={selectedTab}
+              setTab={setSelectedTab}
+              tabArray={providerTabs}
+            />
 
-          {tab === 0 && (
-            <ProfileListing
-              fetchApiFunction={() => fetchProviderDetailsForAdmin(providerId)}
-              queryKey={[QUERY_KEYS.PROVIDER_PROFILE]}
-              userOrProviderId={providerId}
-              adminLookingProvider
-              shimmerRow={8}
-            />
-          )}
-          {tab === 1 && (
-            <AddressListing
-              userOrProviderId={providerId}
-              fetchApiFunction={() => fetchAddressByUserId(providerId)}
-              queryKey={[QUERY_KEYS.PROVIDER_ADDRESS]}
-            />
-          )}
-          {tab === 2 && (
-            <ProviderServiceDetails
-              providerId={providerId}
-              fetchApiFunction={() => fetchProviderServiceByProviderId(providerId)}
-              queryKey={[QUERY_KEYS.PROVIDER_SERVICE]}
-            />
-          )}
-          {tab === 3 && <ProviderServiceAvailability providerId={providerId} role={Role.ADMIN} />}
-          {tab === 4 && <ReviewsPage providerId={providerId} isPage={false} />}
-          {tab === 5 && <AdminProviderSubscriptions providerId={providerId} />}
-          {tab === 6 && (
-            <AdminUserOrProviderPayments providerId={providerId} fetchFunction={fetchPayments} />
-          )}
-          {tab === 7 && (
-            <ProviderProofs
-              fetchApiFunction={() => adminFetchProviderProofs(providerId)}
-              providerId={providerId}
-            />
-          )}
+            <TabsContent value="address">
+              <AddressListing
+                userOrProviderId={providerId}
+                fetchApiFunction={() => fetchAddressByUserId(providerId)}
+                queryKey={[queryKeys.ADDRESS]}
+              />
+            </TabsContent>
+
+            <TabsContent value="service">
+              <ProviderServiceDetails
+                providerId={providerId}
+                fetchApiFunction={() => fetchProviderServiceByProviderId(providerId)}
+                queryKey={[queryKeys.SERVICE]}
+              />
+            </TabsContent>
+
+            <TabsContent value="availability">
+              <ProviderServiceAvailability providerId={providerId} role={Role.ADMIN} />
+            </TabsContent>
+
+            <TabsContent value="reviews">
+              <ReviewsPage providerId={providerId} isPage={false} />
+            </TabsContent>
+
+            <TabsContent value="subscriptions">
+              <AdminProviderSubscriptions providerId={providerId} />
+            </TabsContent>
+
+            <TabsContent value="payments">
+              <AdminUserOrProviderPayments providerId={providerId} fetchFunction={fetchPayments} />
+            </TabsContent>
+
+            <TabsContent value="proofs">
+              <ProviderProofs
+                fetchApiFunction={() => adminFetchProviderProofs(providerId)}
+                providerId={providerId}
+              />
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
+
       {rejectFormOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
           <RejectproviderForm

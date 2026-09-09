@@ -1,6 +1,6 @@
 import { User } from '@/shared/types/entity/user';
 import { useEffect, useRef, useState } from 'react';
-import { QUERY_KEYS } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants';
 import { useAdminProvider } from '@/hooks/adminHooks/useProvider';
 import { slideIn } from '@/shared/utils/helper/gsapAnimationSlide';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
@@ -54,7 +54,7 @@ const AdminServiceProvidersPage = () => {
     <div className="p-4">
       <PaginatedDataTable<AdminFetchAllProvidersResponse>
         fetchApiFunction={fetchServiceProvidersForAdmin}
-        queryKey={[QUERY_KEYS.PROVIDERS]}
+        queryKey={[queryKeys.PROVIDERS]}
         column={columns}
         columnsCount={6}
       />

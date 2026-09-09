@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { QUERY_KEYS } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants';
 import PaginatedDataTable from '../table/PaginatedDataTable';
 import { fetchSubscriptions } from '@/services/apis/subscription';
 import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
@@ -18,7 +18,7 @@ const AdminProviderSubscriptions = memo(({ providerId }: AdminFetchProviderSubsc
   return (
     <PaginatedDataTable<FetchProviderSubscriptionsResponse, FetchSubscriptionsQueryParams>
       fetchApiFunction={fetchSubscriptions}
-      queryKey={[QUERY_KEYS.PROVIDER_SUBSCRIPTION]}
+      queryKey={[queryKeys.SUBSCRIPTION]}
       column={column}
       columnsCount={7}
       queryParams={{ providerId }}

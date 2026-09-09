@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
-import { QUERY_KEYS } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants';
 import { ImageUpscale, Minimize2 } from 'lucide-react';
 import DataFetchingError from '../error/DataFetchingError';
 import { ProviderProofsProps } from '@/shared/types/component';
@@ -15,10 +15,7 @@ const ProviderProofs = ({ providerId, fetchApiFunction }: ProviderProofsProps) =
       const res = await fetchApiFunction(providerId);
       return res.data;
     },
-    queryKey: [QUERY_KEYS.PROVIDER_PROOFS, providerId],
-    refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 60,
-    gcTime: 1000 * 60 * 60,
+    queryKey: [queryKeys.PROOFS, providerId],
   });
 
   const [expandIdentity, setExpandIdentity] = useState(false);

@@ -3,6 +3,7 @@ import {
   FaqFields,
   TimeRange,
   OptionType,
+  PlanFields,
   BlogArticle,
   BaseChartData,
   ApiBaseResponse,
@@ -12,7 +13,8 @@ import {
   NotificationChannel,
   ApiPaginatedResponse,
   FetchFunctionBaseQueryParams,
-  PlanFields,
+  StatMetric,
+  DashboardItem,
 } from './common';
 import {
   UserFetchServiceProvidersResponse,
@@ -23,10 +25,10 @@ import {
   Control,
   type Path,
   FieldError,
+  UseFormSetValue,
   type FieldValues,
   type UseFormRegister,
   type RegisterOptions,
-  UseFormSetValue,
 } from 'react-hook-form';
 import {
   ProviderFetchMyProfileDetailsResponse,
@@ -42,18 +44,20 @@ import { RouteNames } from '../utils/constants';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { ChartConfig } from '@/components/ui/chart';
 import * as RPNInput from 'react-phone-number-input';
-import { BillingCycle, PlanName, Role, ServiceMode } from './enums';
+import { FetchServicesResponse } from './api/service';
 import { Location } from '@/shared/types/entity/address';
 import { Dispatch, ReactNode, SetStateAction } from 'react';
 import { Availability } from './entity/serviceAvailability';
+import { BillingCycle, PlanName, Role, ServiceMode } from './enums';
 import { FetchProviderServiceResponse } from './api/providerService';
+import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 import { FetchAddressResponse, FetchMyAddressResponse } from './api/address';
 import { FetchPaymentsQueryParams, FetchPaymentsResponse } from './api/payment';
 import { ProviderServiceAvailabilityFormType } from '../validators/zod/providerZod';
 import { FetchReviewsResponse, ToggleReviewBlockStatusRequest } from './api/review';
 import { Column, ColumnDef, OnChangeFn, PaginationState } from '@tanstack/react-table';
 import { FetchProvidersProofsResponse, UpdateFileDataRequest } from './api/commonApiInterface';
-import { FetchServicesResponse } from './api/service';
+import { AnalyticsAiResponse } from './api/adminDashboard';
 
 // Provider service availability component props interface
 export interface ProviderServiceAvailabilityProps {
@@ -87,6 +91,8 @@ export interface ChartHeaderProps {
   onValueChange?: (value: TimeRange) => void;
   value?: string;
   showDatePicker?: boolean;
+  isLoading?: boolean;
+  onReload?: () => void;
 }
 
 //  Chart Common Interface
@@ -100,11 +106,14 @@ export interface ChartComponentProps<T extends { date: string }> {
   dataKeyFour: string;
   nameKey: string;
   chartConfig: ChartConfig;
-  isLocked: boolean;
-  minimumPlan: PlanName;
   footerTextOne?: string;
   footerTextTwo?: string;
   chartContainerClassName?: string;
+  isLocked?: boolean;
+  minimumPlan?: PlanName;
+  isLoading?: boolean;
+  isError?: boolean;
+  onReload?: () => void;
 }
 
 // AreaGroupChart compoenent props type
@@ -119,6 +128,9 @@ export type AreaGroupChartProps = Pick<
   | 'chartConfig'
   | 'isLocked'
   | 'minimumPlan'
+  | 'isError'
+  | 'isLoading'
+  | 'onReload'
 >;
 
 // BarChartHorizontal compoenent props type
@@ -133,6 +145,9 @@ export type BarChartHorizontalProps = Pick<
   | 'chartConfig'
   | 'isLocked'
   | 'minimumPlan'
+  | 'isError'
+  | 'isLoading'
+  | 'onReload'
 >;
 
 // BarChartStacked compoenent props type
@@ -147,6 +162,9 @@ export type BarChartStackedProps = Pick<
   | 'chartConfig'
   | 'isLocked'
   | 'minimumPlan'
+  | 'isError'
+  | 'isLoading'
+  | 'onReload'
 >;
 
 // BarChartVertical compoenent props type
@@ -160,6 +178,9 @@ export type BarChartVerticalProps = Pick<
   | 'chartConfig'
   | 'isLocked'
   | 'minimumPlan'
+  | 'isError'
+  | 'isLoading'
+  | 'onReload'
 >;
 
 // ChartLineMultiple compoenent props type
@@ -173,6 +194,9 @@ export type ChartLineMultipleProps = Pick<
   | 'chartConfig'
   | 'isLocked'
   | 'minimumPlan'
+  | 'isError'
+  | 'isLoading'
+  | 'onReload'
 >;
 
 // LineChartHorizontal compoenent props type
@@ -186,6 +210,9 @@ export type LineChartHorizontalProps = Pick<
   | 'chartConfig'
   | 'isLocked'
   | 'minimumPlan'
+  | 'isError'
+  | 'isLoading'
+  | 'onReload'
 >;
 
 // ChartLineLinear compoenent props type
@@ -204,23 +231,13 @@ export type ChartLineLinearProps = Pick<
       | 'dataKeyTwo'
       | 'dataKeyThree'
       | 'dataKeyFour'
+      | 'isLocked'
+      | 'minimumPlan'
+      | 'isError'
+      | 'isLoading'
+      | 'onReload'
     >
   >;
-
-// PieChartCompletionBreakdown compoenent props type
-interface CompletionBreakdownData {
-  status: string;
-  value: number;
-}
-export interface CompletionChartProps {
-  title: string;
-  description: string;
-  chartData: CompletionBreakdownData[];
-  dataKey: string;
-  chartConfig: ChartConfig;
-  nameKey: string;
-  isLocked: boolean;
-}
 
 // RadialChart compoenent props type
 export type ChartDataItem = Record<string, string | number>;
@@ -233,8 +250,11 @@ export interface RadialChartInterface<T extends ChartDataItem> {
   dataKeyOne: keyof T;
   dataKeyTwo: keyof T;
   chartConfig: ChartConfig;
-  isLocked: boolean;
-  minimumPlan: PlanName;
+  isLocked?: boolean;
+  minimumPlan?: PlanName;
+  isError?: boolean;
+  isLoading?: boolean;
+  onReload?: () => void;
 }
 
 // Admin fetch provider payments compoenent props interface
@@ -336,18 +356,24 @@ export interface RoleSelectCardProps {
 
 // Chart overlay component props interface
 export interface ChartOverlayProps {
-  stringOne: string;
+  stringOne: PlanName;
   chartTitle: string;
 }
 
 // Horizontal chart for admin component props interface
-export interface HorizontalChartForAdminReactProps {
+export interface HorizontalChartProps {
   chartData: { name: string; value: number }[];
-  isLOading: boolean;
+  title: string;
+  description: string;
+  isLocked?: boolean;
+  minimumPlan?: PlanName;
+  isError?: boolean;
+  isLoading?: boolean;
+  onReload?: () => void;
 }
 
 // Completion chart component props interface
-export interface CompletionChartProps {
+export interface PieChartRoundedProps {
   title: string;
   description: string;
   chartData: {
@@ -357,8 +383,11 @@ export interface CompletionChartProps {
   dataKey: string;
   chartConfig: ChartConfig;
   nameKey: string;
-  isLocked: boolean;
-  minimumPlan: PlanName;
+  isLocked?: boolean;
+  minimumPlan?: PlanName;
+  isError?: boolean;
+  isLoading?: boolean;
+  onReload?: () => void;
 }
 
 // Chat bubble profile image component props interface
@@ -397,7 +426,7 @@ export interface RecentActivityTableCardProps {
 }
 
 // Dashboard stats component props interface
-export interface DashboardStatsProps<T extends Record<string, number>> {
+export interface DashboardStatsProps<T extends Record<string, StatMetric | undefined>> {
   queryFunction(): Promise<ApiBaseResponse<T>>;
   queryKey: string[];
   statsMap: Array<statsMapIntrface<T>>;
@@ -425,7 +454,7 @@ export interface dataFetchingError {
 }
 
 // Data filter component props interface
-export interface DataFilterProps {
+export interface DateFilterProps {
   dateRange: DateRange | undefined;
   setDateRange: (range: DateRange) => void;
   title?: string;
@@ -754,6 +783,10 @@ export interface DataTableProps<TData, TValue> {
     actionLabel?: string;
     onActionClick?: () => void;
   }[];
+  isFetching?: boolean;
+  refetch?: (
+    options?: RefetchOptions | undefined,
+  ) => Promise<QueryObserverResult<ApiPaginatedResponse<TData>, Error>>;
 }
 
 // Data table column header props interface
@@ -913,7 +946,7 @@ export interface BlogLatestInsightsProps {
 }
 
 // Stats card props
-export interface StatCardProps {
+export interface MetricCProps {
   title: string;
   isLoading: boolean;
   isError: boolean;
@@ -1151,4 +1184,67 @@ export interface DataShimmerProps {
   w?: string;
   h?: string;
   className?: string;
+}
+
+//
+export interface AdminDashboardUserDataProps {
+  dateRange: DateRange;
+}
+
+//
+export interface AdminDashboardProviderDataProps {
+  dateRange: DateRange;
+}
+
+//
+export interface AdminDashboardAppointmentsDataProps {
+  dateRange: DateRange;
+}
+
+//
+export interface AdminDashboardSubscriptionDataProps {
+  dateRange: DateRange;
+}
+
+//
+export interface AdminDashboardRevenueDataProps {
+  dateRange: DateRange;
+}
+
+//
+export interface ReorderableProps {
+  initialItems: DashboardItem[];
+}
+
+//
+export interface DataAnalysisProps {
+  badgeText?: string;
+  badgeIcon?: LucideIcon;
+  title: string;
+  queryKey: string | readonly unknown[];
+  fetchFn: () => Promise<ApiBaseResponse<AnalyticsAiResponse>>;
+}
+
+//
+export interface UserDataChartProps {
+  dateRange: DateRange;
+}
+
+export interface ProviderDataChartProps {
+  dateRange: DateRange;
+}
+
+//
+export interface RevenueDataChartProps {
+  dateRange: DateRange;
+}
+
+//
+export interface UseAppointmentsDataChartsProps {
+  dateRange: DateRange;
+}
+
+//
+export interface SubscriptionDataChartProps {
+  dateRange: DateRange;
 }

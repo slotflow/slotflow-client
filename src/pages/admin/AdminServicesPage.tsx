@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { QUERY_KEYS } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants';
 import { fetchServices } from '@/services/apis/service';
 import { useAdminService } from '@/hooks/adminHooks/useService';
 import { slideIn } from '@/shared/utils/helper/gsapAnimationSlide';
@@ -44,7 +44,7 @@ const AdminServicesPage = () => {
     <div className="p-4">
       <PaginatedDataTable<FetchServicesResponse>
         fetchApiFunction={fetchServices}
-        queryKey={[QUERY_KEYS.APP_SERVICES]}
+        queryKey={[queryKeys.APP_SERVICES]}
         column={column}
         columnsCount={5}
         actionButtons={[

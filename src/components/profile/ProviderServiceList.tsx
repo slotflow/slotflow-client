@@ -40,8 +40,6 @@ const ProviderServiceList = ({
       return res.data;
     },
     queryKey: [...queryKey, providerId],
-    staleTime: 60 * 60 * 1000,
-    refetchOnWindowFocus: false,
   });
 
   if (isError) {

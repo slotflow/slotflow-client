@@ -20,7 +20,7 @@ const AdminRevenueTableColumn = (): ColumnDef<AdminFetchRevenueReportRow>[] => [
     cell: ({ row }) => {
       const paymentFor = row.original.paymentFor;
       switch (paymentFor) {
-        case PaymentFor.PROVIDER_SUBSCRIPTION:
+        case PaymentFor.SUBSCRIPTION:
           return <span className="text-yellow-500 font-semibold">Provider Subscription</span>;
         case PaymentFor.APPOINTMENT_BOOKING:
           return <span className="text-green-500 font-semibold">Appointment Booking</span>;

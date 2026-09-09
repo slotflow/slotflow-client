@@ -3,7 +3,7 @@ import { FetchPaymentsResponse } from '@/shared/types/api/payment';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
 import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
 import PaymentsTableColumn from '@/components/table/tableColumns/PaymentsTableColumn';
-import { QUERY_KEYS } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants';
 
 const ListPaymentsPage = () => {
   const { handleGetPaymentDetailsPage } = useRoleBasedNavigation();
@@ -13,7 +13,7 @@ const ListPaymentsPage = () => {
     <div className="p-4">
       <PaginatedDataTable<FetchPaymentsResponse>
         fetchApiFunction={fetchPayments}
-        queryKey={[QUERY_KEYS.PAYMENTS]}
+        queryKey={[queryKeys.PAYMENTS]}
         column={column}
         columnsCount={7}
       />

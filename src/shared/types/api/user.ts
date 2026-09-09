@@ -25,13 +25,11 @@ export type UserFetchMyProfileDetailsResponse = Pick<
 export interface UserUpdateProfileImageRequest {
   s3FileKey: string;
 }
-
 // response type of the user profile image updating api
 export type UserUpdateProfileImageResponse = User['profileImage'];
 
 // request type of the user update userInfo api
 export type UserUpdateUserInfoRequest = Pick<User, 'username' | 'phone'>;
-
 // response type of the user update userInfo api
 export type UserUpdateUserInfoResponse = UserUpdateUserInfoRequest;
 
@@ -40,7 +38,6 @@ export type UserFetchServiceProvidersRequest = Partial<ProviderCardsFilters> & {
   skip: number;
   limit: number;
 };
-
 // response type of the user fetching service providers for the dashboard fetching api
 export interface UserFetchServiceProvidersResponse {
   _id: string;
@@ -63,15 +60,15 @@ export interface UserFetchServiceProvidersResponse {
 export type AdminfetchAllUsersResponse = Pick<User, '_id' | 'username' | 'email' | 'isBlocked'>;
 
 // request type of the changeUserBlockStatus api
-export type AdminChangeUserStatusRequest = {
+export type AdminChangeUserBlockStatusRequest = {
   userId: User['_id'];
-  isBlocked: User['isBlocked'];
-};
+} & Pick<User, 'isBlocked'>;
+export type AdminChangeUserBlockStatusResponse = Pick<User, '_id' | 'isBlocked'>;
 
 // response type of admin fetch user profile details
 export type AdminFetchUserProfileDetailsResponse = Pick<
   User,
-  'username' | 'phone' | 'profileImage' | 'isBlocked' | 'email'
+  'username' | 'phone' | 'profileImage' | 'isBlocked' | 'email' | 'createdAt'
 >;
 
 // return type for the provider fetch users for the chat side bar

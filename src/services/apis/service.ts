@@ -8,9 +8,9 @@ import {
   FetchServicesResponse,
   UpdateServiceRequest,
   UpdateServiceResponse,
-  ChangeServiceBlockStatusRequest,
+  AdminChangeServiceBlockStatusRequest,
   FetchServicesByCategoryResponse,
-  ChangeServiceBlockStatusResponse,
+  AdminChangeServiceBlockStatusResponse,
 } from '../../shared/types/api/service';
 import { axiosInstance } from '@/lib/axios';
 import { ServiceCategory } from '../../shared/types/enums';
@@ -38,8 +38,8 @@ export const updateService = async (
 };
 
 export const changeServiceBlockStatus = async (
-  data: ChangeServiceBlockStatusRequest,
-): Promise<ApiBaseResponse<ChangeServiceBlockStatusResponse>> => {
+  data: AdminChangeServiceBlockStatusRequest,
+): Promise<ApiBaseResponse<AdminChangeServiceBlockStatusResponse>> => {
   console.log('blocking');
   const response = await axiosInstance.patch(`/services/${data.serviceId}/block`, data);
   return response.data;

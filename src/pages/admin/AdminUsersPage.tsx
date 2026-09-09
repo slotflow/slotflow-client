@@ -1,41 +1,26 @@
-import React from 'react';
-import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
 import { fetchUsers } from '@/services/apis/user';
-import { User } from '@/shared/types/entity/user';
+import { queryKeys } from '@/shared/utils/constants';
 import { useAdminUser } from '@/hooks/adminHooks/useUser';
 import { AdminfetchAllUsersResponse } from '@/shared/types/api/user';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
-import { AdminChangeUserStatusRequest } from '@/shared/types/api/user';
+import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
 import AdminUsersTableColumns from '@/components/table/tableColumns/AdminUsersTableColumn';
-import { QUERY_KEYS } from '@/shared/utils/constants';
 
 const AdminUsersPage = () => {
-  const navigate = useNavigate();
+  const { changeUserBlockStatus, changeBlockStatusUserId } = useAdminUser();
+  const { handleGetUserDetailPage } = useRoleBasedNavigation();
 
-  const { changeUserStatus } = useAdminUser();
-
-  const handleAdminChangeUserBlockStatus = async (data: AdminChangeUserStatusRequest) => {
-    const res = await changeUserStatus(data);
-    if (res.success) {
-      toast.success(res.message);
-    } else {
-      toast.error(res.message);
-    }
-  };
-
-  const handleGetUserDetailPage = (e: React.MouseEvent<HTMLDivElement>, userId: User['_id']) => {
-    e.preventDefault();
-    navigate(`/admin/users/${userId}`);
-  };
-
-  const column = AdminUsersTableColumns(handleAdminChangeUserBlockStatus, handleGetUserDetailPage);
+  const column = AdminUsersTableColumns(
+    changeUserBlockStatus,
+    changeBlockStatusUserId,
+    handleGetUserDetailPage,
+  );
 
   return (
     <div className="p-4">
       <PaginatedDataTable<AdminfetchAllUsersResponse>
         fetchApiFunction={fetchUsers}
-        queryKey={[QUERY_KEYS.USERS]}
+        queryKey={[queryKeys.USERS]}
         column={column}
         columnsCount={6}
       />

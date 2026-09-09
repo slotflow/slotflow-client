@@ -32,16 +32,14 @@ const PaginatedDataTable = <T, Q extends object = {}>({
     limit: pagination.pageSize,
   } as FetchFunctionBaseQueryParams & Q;
 
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading, isError, error, isFetching, refetch } = useQuery({
     queryFn: () => fetchApiFunction(finalQueryParams),
     queryKey: [...queryKey, pagination.pageIndex, pagination.pageSize, queryParams],
-    staleTime: 60 * 60 * 1000,
-    refetchOnWindowFocus: false,
   });
 
   return (
     <div className={`${parentDivCalssName || ''}`}>
-      {isLoading ? (
+      {isLoading || isFetching ? (
         <div className="mt-2">
           <TableShimmer columnsCount={columnsCount} />
         </div>
@@ -53,6 +51,8 @@ const PaginatedDataTable = <T, Q extends object = {}>({
           pagination={pagination}
           onPaginationChange={handlePaginationChange}
           actionButtons={actionButtons}
+          isFetching={isFetching}
+          refetch={refetch}
         />
       ) : isError && error ? (
         <DataFetchingError message={(error as Error).message} className="min-h-full" />

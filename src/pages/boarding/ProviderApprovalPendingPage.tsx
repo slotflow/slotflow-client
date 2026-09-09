@@ -45,7 +45,7 @@ const ProviderApprovalPendingPage = () => {
     {
       label: 'Address Verification',
       verified: authUser?.isAddressVerified,
-      redirect: redirectPaths.PROVIDER_ADDRESS,
+      redirect: redirectPaths.ADDRESS,
     },
     {
       label: 'Service Details Verification',
@@ -60,7 +60,7 @@ const ProviderApprovalPendingPage = () => {
     {
       label: 'Proofs Verification',
       verified: authUser?.isProofsVerified,
-      redirect: redirectPaths.PROVIDER_PROOFS,
+      redirect: redirectPaths.PROOFS,
     },
   ];
 

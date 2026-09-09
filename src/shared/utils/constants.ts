@@ -4,7 +4,6 @@ import {
   Zap,
   Star,
   User,
-  Home,
   Mail,
   Clock,
   Users,
@@ -42,7 +41,6 @@ import {
   Calendar1,
   UserCheck,
   Hourglass,
-  Briefcase,
   RotateCcw,
   Handshake,
   CircleHelp,
@@ -51,15 +49,12 @@ import {
   CreditCard,
   BadgeCheck,
   LayoutGrid,
-  DollarSign,
-  WalletCards,
   Wallet2Icon,
   CheckCircle,
   ShieldCheck,
   MessageCircle,
   CalendarClock,
   MessageSquare,
-  WalletMinimal,
   CalendarCheck,
   CircleCheckBig,
   LayoutDashboard,
@@ -78,7 +73,6 @@ import {
   DayMapInterface,
   NotificationType,
   statsMapIntrface,
-  CommonTabInterface,
   HearAboutUsOptions,
   NotificationChannel,
   PlanFeatureInterface,
@@ -93,6 +87,7 @@ import {
   ProviderApprovalMessageInterface,
   gsapBigSvgYDirectionAnimationInterface,
   VerificationStatusConfig,
+  TabItem,
 } from '../types/common';
 import { OptionType } from '../types/common';
 import {
@@ -166,6 +161,7 @@ export enum RouteNames {
   GRAPHS = 'Grpahs',
   TESTSANDBOX = 'Test Sandbox',
   DASHBOARDDATACARD = 'Dashboard-data-card',
+  CHARTSDEMO = 'Charts-demo',
 }
 
 // route for sidebar
@@ -339,36 +335,13 @@ export const sidebarRoutes: Route[] = [
         icon: Component,
         roles: [Role.ADMIN],
       },
+      {
+        path: 'charts-demo',
+        name: RouteNames.CHARTSDEMO,
+        icon: Component,
+        roles: [Role.ADMIN],
+      },
     ],
-  },
-];
-
-// Settings Page Tabs
-export const settingsTabs: CommonTabInterface[] = [
-  {
-    value: 'notifications',
-    label: 'Notifications',
-    icon: Mail,
-  },
-  {
-    value: 'account',
-    label: 'Account',
-    icon: Shield,
-  },
-  {
-    value: 'integrations',
-    label: 'Integrations',
-    icon: CreditCard,
-  },
-  {
-    value: 'security',
-    label: 'Security',
-    icon: LockIcon,
-  },
-  {
-    value: 'subscription',
-    label: 'Subscription',
-    icon: CreditCard,
   },
 ];
 
@@ -448,21 +421,20 @@ export const navigation: HeaderCompoenentNavsProps[] = [
 ];
 
 // Tabs for provider profile showing in admin side and provider side
-export const providerTabs: { tabName: string; admin: boolean; user: boolean }[] = [
-  { tabName: 'Details', admin: true, user: true },
-  { tabName: 'Address', admin: true, user: true },
-  { tabName: 'Service', admin: true, user: true },
-  { tabName: 'Availability', admin: true, user: true },
-  { tabName: 'Reviews', admin: true, user: true },
-  { tabName: 'Subscriptions', admin: true, user: false },
-  { tabName: 'Payments', admin: true, user: false },
-  { tabName: 'Proofs', admin: true, user: false },
+export const providerTabs: TabItem[] = [
+  { tabName: 'Address', value: 'address', admin: true, user: true },
+  { tabName: 'Service', value: 'service', admin: true, user: true },
+  { tabName: 'Availability', value: 'availability', admin: true, user: true },
+  { tabName: 'Reviews', value: 'reviews', admin: true, user: true },
+  { tabName: 'Subscriptions', value: 'subscriptions', admin: true, user: false },
+  { tabName: 'Payments', value: 'payments', admin: true, user: false },
+  { tabName: 'Proofs', value: 'proofs', admin: true, user: false },
 ];
 
-export const userTabs: { tabName: string; admin: boolean; user: boolean }[] = [
-  { tabName: 'Details', admin: true, user: true },
-  { tabName: 'Address', admin: true, user: true },
-  { tabName: 'Reviews', admin: true, user: true },
+// Tabs for user profile showing in admin side and user side
+export const userTabs: TabItem[] = [
+  { tabName: 'Address', value: 'address', admin: true, user: true },
+  { tabName: 'Reviews', value: 'reviews', admin: true, user: true },
 ];
 
 // Provider service availability component day map
@@ -1187,6 +1159,16 @@ export const userStatsMapForAdmin: StatsMapForAdminInterface[] = [
     key: 'blockedUsers',
     icon: UserX,
   },
+  {
+    title: 'New Users',
+    key: 'newUsers',
+    icon: UserPlus,
+  },
+  {
+    title: 'Returning Users',
+    key: 'returningUsers',
+    icon: UserCheck,
+  },
 ];
 
 // Provider status map for admin
@@ -1210,21 +1192,6 @@ export const providerStatsMapForAdmin: StatsMapForAdminInterface[] = [
     title: 'Blocked Providers',
     key: 'blockedProviders',
     icon: UserX,
-  },
-  {
-    title: 'Address Added Providers',
-    key: 'addressAddedProviders',
-    icon: MapPin,
-  },
-  {
-    title: 'Service Added Providers',
-    key: 'serviceAddedProviders',
-    icon: Briefcase,
-  },
-  {
-    title: 'Availability Added Providers',
-    key: 'availabilityAddedProviders',
-    icon: CalendarClock,
   },
 ];
 
@@ -1274,24 +1241,6 @@ export const revenueAndPaymentsStatsMapForAdmin: StatsMapForAdminInterface[] = [
     title: 'Revenue via Subscriptions',
     key: 'totalRevenueViaSubscriptions',
     icon: Receipt,
-    price: true,
-  },
-  {
-    title: 'Revenue via stripe',
-    key: 'revenueByStripe',
-    icon: Wallet2Icon,
-    price: true,
-  },
-  {
-    title: 'Revenue via razorpay',
-    key: 'revenueByRazorpay',
-    icon: WalletCards,
-    price: true,
-  },
-  {
-    title: 'Revenue via paypal',
-    key: 'revenueByPaypal',
-    icon: WalletMinimal,
     price: true,
   },
   {
@@ -1454,27 +1403,12 @@ export const termsAndConditionsContent: string[] = [
 ];
 
 // Admin dashboard overview tabs
-export const adminOverviewTabs: CommonTabInterface[] = [
-  { value: 'users', label: 'Users', icon: Users },
-  { value: 'providers', label: 'Providers', icon: UserCheck },
-  { value: 'subscriptions', label: 'Subscriptions', icon: CreditCard },
-  { value: 'revenue', label: 'Revenue', icon: DollarSign },
-  { value: 'appointments', label: 'Appointments', icon: CalendarCheck },
-];
-
-// Profile tabs list
-export const profileTabs: CommonTabInterface[] = [
-  { value: 'tab1', label: 'Profile', icon: User, role: [Role.PROVIDER, Role.USER] },
-  { value: 'tab2', label: 'Address', icon: Home, role: [Role.PROVIDER, Role.USER] },
-  { value: 'tab3', label: 'Service', icon: Briefcase, role: [Role.PROVIDER] },
-  { value: 'tab4', label: 'Availability', icon: Clock, role: [Role.PROVIDER] },
-  { value: 'tab5', label: 'Profile Preview', icon: User, role: [Role.PROVIDER] },
-];
-
-// Advertisement visibility select field options
-export const adVisibilityOptions: OptionType<boolean>[] = [
-  { label: 'Ad Visible', value: true },
-  { label: 'No Ad Visibility', value: false },
+export const adminDashboardTabs: TabItem[] = [
+  { tabName: 'Users', value: 'users', admin: true, user: false },
+  { tabName: 'Providers', value: 'providers', admin: true, user: false },
+  { tabName: 'Subscriptions', value: 'subscriptions', admin: true, user: false },
+  { tabName: 'Revenue', value: 'revenue', admin: true, user: false },
+  { tabName: 'Appointments', value: 'appointments', admin: true, user: false },
 ];
 
 // Service type options
@@ -2071,46 +2005,62 @@ export const NOTIFICATION_TYPE = {
 } as const satisfies Record<string, NotificationType>;
 
 //
-export const QUERY_KEYS = {
-  PLAN: 'plan',
+export const queryKeys = {
   PLANS: 'plans',
   USERS: 'users',
-  REVENUE: 'revenue',
   REVIEWS: 'reviews',
-  BOOKING: 'booking',
   BOOKINGS: 'bookings',
-  PAYMENT: 'payment',
   PAYMENTS: 'payments',
   PROVIDERS: 'providers',
   REFERRALS: 'REFERRALS',
   SUBSCRIPTIONS: 'subscriptions',
-  SUBSCRIPTION: 'subscription',
   NOTIFICATIONS: 'notifications',
   APP_SERVICES: 'app-services',
+
+  PLAN: 'plan',
+  REVENUE: 'revenue',
+  BOOKING: 'booking',
+  PAYMENT: 'payment',
+
   PLAN_DETAILS: 'plan-details',
   REFERRAL_DETAILS: 'referral-details',
-  MY_ADDRESS: 'my-address',
   CREDIT_DETAILS: 'credit-details',
+
+  USER_ENGAGEMENT_AI_RES: 'user-engagement-ai-res',
+  PROVIDER_ENGAGEMENT_AI_RES: 'provider-engagement-ai-res',
+  SUBSCRIPTION_USAGE_AI_RES: 'subscription-usage-ai-res',
+  REVENUE_STATS_AI_RES: 'revenue-stats-ai-res',
+  APPOINTMENT_AI_RES: 'appointment-ai-res',
+
   CREDIT_TRANSACTIONS: 'credit-transactions',
   CALENDAR_EVENTS: 'calendar-events',
-  PROVIDER_SERVICE: 'provider-service',
-  PROVIDER_ADDRESS: 'provider-address',
-  USER_ADDRESS: 'user-address',
-  PROVIDER_PROFILE: 'provider-profile',
-  USER_PROFILE: 'user-profile',
+
+  PROFILE: 'profile',
+  ADDRESS: 'address',
+  SERVICE: 'service',
+  PROOFS: 'proofs',
+  SUBSCRIPTION: 'subscription',
+  SERVICE_AVAILABILITY: 'service-availability',
+
   DASHBOARD_STATS: 'dashboard-stats',
-  PROVIDER_PROOFS: 'provider-proofs',
-  PROVIDER_SUBSCRIPTION: 'provider-subscription',
+  DASHBOARD_GRAPH: 'dashboard-graph',
   DASHBOARD_USERS_STATS: 'dashboard-users-stats',
   DASHBOARD_PROVIDERS_STATS: 'dashboard-providers-stats',
   DASHBOARD_SUBSCRIPTION_STATS: 'dashboard-subscription-stats',
   DASHBOARD_REVENUE_STATS: 'dashboard-revenue-stats',
   DASHBOARD_APPOINTMENTS_STATS: 'dashboard-appointments-stats',
-  ADMIN_LATEST_PAYMENTS: 'admin-latest-payments',
-  ADMIN_LATEST_PROVIDERS: 'admin-latest-providers',
-  ADMIN_LATEST_USERS: 'admin-latest-users',
-  PROVIDER_DASHBOARD_GRAPH: 'provider-dashboard-graph',
-  PROVIDER_SERVICE_AVAILABILITY: 'provider-service-availability',
+
+  LATEST_USERS: 'latest-users',
+  LATEST_PROVIDERS: 'latest-providers',
+  LATEST_SUBSCRIPTIONS: 'latest-subscriptions',
+  LATEST_PAYMENTS: 'latest-payments',
+  LATEST_APPOINTMENTS: 'latest-appointments',
+
+  DASHBOARD_USERS_CHART: 'dashboard-users-chart',
+  DASHBOARD_PROVIDERS_CHART: 'dashboard-providers-chart',
+  DASHBOARD_APPOINTMENTS_CHART: 'dashboard-appointments-chart',
+  DASHBOARD_REVENUE_CHART: 'dashboard-revenue-chart',
+  DASHBOARD_SUBSCRPITION_CHART: 'dashboard-subscription-chart',
 } as const;
 
 //
@@ -2140,3 +2090,12 @@ export const VERIFICATION_STATUS_CONFIG: Record<string, VerificationStatusConfig
     label: 'Not Requested',
   },
 };
+
+//
+export const AiResponseEntities = {
+  USER: 'user',
+  PROVIDER: 'provider',
+  SUBSCRIPTION: 'subscription',
+  REVENUE: 'revenue',
+  APPOINTMENTS: 'appointments',
+} as const;

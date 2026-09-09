@@ -20,7 +20,7 @@ const RecentActivityTableCard = ({
   return (
     <Card
       className={cn(
-        'overflow-hidden border-slate-200/60 dark:border-slate-800/60 backdrop-blur-xl transition-all duration-300 hover:shadow-md h-full flex flex-col',
+        'rounded-md overflow-hidden border-slate-200/60 dark:border-slate-800/60 backdrop-blur-xl transition-all duration-300 hover:shadow-md h-full flex flex-col',
         className,
       )}
     >
@@ -34,13 +34,13 @@ const RecentActivityTableCard = ({
           </CardTitle>
         </div>
         <Button
-          variant="ghost"
-          size="icon"
+          variant="secondary"
           onClick={onReload}
           disabled={isLoading}
-          className="h-8 w-8 text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+          className="cursor-pointer text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
         >
           <RefreshCw className={cn('h-4 w-4', isLoading && 'animate-spin')} />
+          Refetch
         </Button>
       </CardHeader>
 
@@ -56,11 +56,7 @@ const RecentActivityTableCard = ({
             >
               {[...Array(5)].map((_, i) => (
                 <div key={i} className="flex items-center gap-4">
-                  <Skeleton className="h-10 w-10 rounded-full" />
-                  <div className="space-y-2 flex-1">
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-3 w-2/3" />
-                  </div>
+                  <Skeleton className="h-10 w-full" />
                 </div>
               ))}
             </motion.div>

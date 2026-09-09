@@ -32,6 +32,7 @@ export const SandboxPage = () => {
             className="px-3 py-2 text-xs font-medium rounded-lg border border-slate-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             <option value="dashboard-data-card">DashboardDataCard</option>
+            <option value="charts-demo">Charts</option>
           </select>
         </div>
       </div>

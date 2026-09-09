@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { Role } from '@/shared/types/enums';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '@/app/store/appStore';
+import { User } from '@/shared/types/entity/user';
 import { Booking } from '@/shared/types/entity/booking';
 import { Payment } from '@/shared/types/entity/payment';
 import { validateRoomId } from '@/services/apis/booking';
@@ -71,6 +72,10 @@ export const useRoleBasedNavigation = (): useRoleBasedNavigationReturn => {
     navigate(`/admin/service-providers/${providerId}`);
   };
 
+  const handleGetUserDetailPage = (userId: User['_id']) => {
+    navigate(`/admin/users/${userId}`);
+  };
+
   return {
     handleAdminGetProviderDetailPage,
     handleGetPaymentDetailsPage,
@@ -78,5 +83,6 @@ export const useRoleBasedNavigation = (): useRoleBasedNavigationReturn => {
     handleNavigateToBookingsDetailPage,
     handleNavigateToPlanDetailPage,
     handleGetProviderDetailPage,
+    handleGetUserDetailPage,
   };
 };

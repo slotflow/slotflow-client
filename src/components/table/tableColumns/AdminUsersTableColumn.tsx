@@ -6,35 +6,61 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from '../../ui/dropdown-menu';
-import { AdminfetchAllUsersResponse, AdminChangeUserStatusRequest } from '@/shared/types/api/user';
 import { Button } from '../../ui/button';
-import { MoreHorizontal } from 'lucide-react';
 import { ColumnDef } from '@tanstack/react-table';
 import { User } from '@/shared/types/entity/user';
+import StatusBadge from '@/components/common/StatusBadge';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
+import { Ban, CheckCircle2, MoreHorizontal, ReceiptText } from 'lucide-react';
+import {
+  AdminfetchAllUsersResponse,
+  AdminChangeUserBlockStatusRequest,
+} from '@/shared/types/api/user';
 
 const AdminUsersTableColumns = (
-  handleAdminChangeUserBlockStatus: (data: AdminChangeUserStatusRequest) => void,
-  handleGetUserDetailPage: (e: React.MouseEvent<HTMLDivElement>, userId: User['_id']) => void,
+  changeUserBlockStatus: (data: AdminChangeUserBlockStatusRequest) => void,
+  changeBlockStatusUserId: string | null | undefined,
+  handleGetUserDetailPage: (userId: User['_id']) => void,
 ): ColumnDef<AdminfetchAllUsersResponse>[] => [
+  {
+    accessorKey: 'slNo',
+    header: 'Sl No',
+    cell: ({ row }) => (
+      <span className="font-mono text-xs text-slate-500 font-medium">
+        {String(row.index + 1).padStart(2, '0')}
+      </span>
+    ),
+  },
   {
     accessorKey: 'username',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Username" />,
+    cell: ({ row }) => (
+      <span className="font-semibold text-slate-900 dark:text-slate-100">
+        {row.original.username}
+      </span>
+    ),
   },
   {
     accessorKey: 'email',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Email" />,
+    cell: ({ row }) => (
+      <span className="font-medium text-slate-600 dark:text-slate-400 text-xs">
+        {row.original.email}
+      </span>
+    ),
   },
   {
     accessorKey: 'isBlocked',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Account Status" />,
     cell: ({ row }) => {
       const isBlocked = row.original.isBlocked;
-      if (isBlocked) {
-        return <span className="text-red-500 font-semibold">Blocked</span>;
-      } else {
-        return <span className="text-green-500 font-semibold">Active</span>;
+      const isThisRowUpdating = changeBlockStatusUserId === row.original._id;
+
+      if (isThisRowUpdating) {
+        return <StatusBadge type="updating" />;
       }
+
+      return !isBlocked ? <StatusBadge type="active" /> : <StatusBadge type="blocked" />;
     },
   },
   {
@@ -55,17 +81,23 @@ const AdminUsersTableColumns = (
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={(e: React.MouseEvent<HTMLDivElement>) =>
-                handleGetUserDetailPage(e, user._id)
-              }
+              onClick={() => handleGetUserDetailPage(user._id)}
+              className="cursor-pointer"
             >
+              <ReceiptText className="w-3.5 h-3.5" />
               Details
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() =>
-                handleAdminChangeUserBlockStatus({ isBlocked: user.isBlocked, userId: user._id })
+                changeUserBlockStatus({ isBlocked: !user.isBlocked, userId: user._id })
               }
+              className="cursor-pointer"
             >
+              {user.isBlocked ? (
+                <CheckCircle2 className="w-3.5 h-3.5" />
+              ) : (
+                <Ban className="w-3.5 h-3.5" />
+              )}
               {user.isBlocked ? 'Unblock' : 'Block'}
             </DropdownMenuItem>
           </DropdownMenuContent>

@@ -17,7 +17,7 @@ import { ApiPaginatedResponse } from '@/shared/types/common';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import ReviewCardsShimmer from '@/components/shimmers/ReviewCardsShimmer';
 import { FetchReviewsResponse, ToggleReviewBlockStatusRequest } from '@/shared/types/api/review';
-import { QUERY_KEYS } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants';
 
 const ReviewsPage = ({ isPage = true, providerId, userId }: ReviewsPageProps) => {
   const limit = 10;
@@ -26,7 +26,7 @@ const ReviewsPage = ({ isPage = true, providerId, userId }: ReviewsPageProps) =>
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError } =
     useInfiniteQuery<ApiPaginatedResponse<FetchReviewsResponse>>({
-      queryKey: [QUERY_KEYS.REVIEWS],
+      queryKey: [queryKeys.REVIEWS],
       queryFn: ({ pageParam = 1, ...queryParams }) =>
         fetchReviews({ ...queryParams, page: pageParam as number, limit, providerId, userId }),
       getNextPageParam: (lastPage) => {

@@ -1,169 +1,61 @@
-import {
-  adminFetchDashboardUserStatsData,
-  adminFetchDashboardRevenueStatsData,
-  adminFetchDashboardProviderStatsData,
-  adminFetchDashboardAppointmentStatsData,
-  adminFetchDashboardSubscriptionStatsData,
-} from '@/services/apis/admin';
 import { useState } from 'react';
-import {
-  adminOverviewTabs,
-  userStatsMapForAdmin,
-  providerStatsMapForAdmin,
-  AppointmentsStatsMapForAdmin,
-  subscriptionStatsMapForAdmin,
-  revenueAndPaymentsStatsMapForAdmin,
-  QUERY_KEYS,
-} from '@/shared/utils/constants';
-import {
-  Select,
-  SelectItem,
-  SelectValue,
-  SelectTrigger,
-  SelectContent,
-} from '@/components/ui/select';
-import {
-  AdminFetchDashboardUserStatsDataResponse,
-  AdminFetchDashboardProviderStatsDataResponse,
-  AdminFetchDashboardAppointmentStatsDataResponse,
-  AdminFetchDashboardSubscriptionStatsDataResponse,
-  AdminFetchDashboardRevenueAndPaymentsStatsDataResponse,
-} from '@/shared/types/api/adminDashboard';
+import { adminDashboardTabs } from '@/shared/utils/constants';
 import { DateRange } from 'react-day-picker';
-import DataFilter from '@/components/filters/DataFilter';
-import DashboardStats from '@/components/dashboard/DashboardStats';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { TabItem } from '@/shared/types/common';
+import DateFilter from '@/components/filters/DateFilter';
+import { Tabs, TabsContent } from '@/components/ui/tabs';
+import TabNavigation from '@/components/common/TabNavigation';
+import AdminDashboardUserData from './user/AdminDashboardUserData';
+import AdminDashboardRevenueData from './revenue/AdminDashboardRevenueData';
+import AdminDashboardProviderData from './provider/AdminDashboardProviderData';
+import AdminDashboardAppointmentsData from './appointment/AdminDashboardAppointmentsData';
+import AdminDashboardSubscriptionData from './subscription/AdminDashboardSubscriptionData';
 
 const AdminDashboardStats = () => {
-  const [selectedTab, setSelectedTab] = useState(adminOverviewTabs[0].value);
-  const [dateRange, setDateRange] = useState<DateRange>({
-    from: new Date(),
-    to: new Date(),
+  const [selectedTab, setSelectedTab] = useState<TabItem['value']>(adminDashboardTabs[0].value);
+  const [dateRange, setDateRange] = useState<DateRange>(() => {
+    const today = new Date();
+    const oneMonthAgo = new Date(today);
+    oneMonthAgo.setMonth(today.getMonth() - 1);
+
+    return {
+      from: oneMonthAgo,
+      to: today,
+    };
   });
 
   return (
     <div className="w-full">
-      <div className="mb-6">
-        <div className="md:hidden mb-4">
-          <Select value={selectedTab} onValueChange={setSelectedTab}>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select Category" />
-            </SelectTrigger>
-            <SelectContent>
-              {adminOverviewTabs.map((tab) => (
-                <SelectItem key={tab.value} value={tab.value} className="cursor-pointer">
-                  {tab.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div className="hidden md:block">
-          <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-            <TabsList className="grid grid-cols-5 gap-2 w-full rounded-xl">
-              {adminOverviewTabs
-                .filter((tab) => tab.value !== 'today')
-                .map((tab) => (
-                  <TabsTrigger
-                    key={tab.value}
-                    value={tab.value}
-                    className="cursor-pointer data-[state=active]:bg-white dark:data-[state=active]:bg-indigo-500 data-[state=active]:shadow-sm rounded-lg transition-all duration-200"
-                  >
-                    {tab.label}
-                  </TabsTrigger>
-                ))}
-            </TabsList>
-          </Tabs>
-        </div>
+      <div className="mb-2">
+        <TabNavigation
+          setTab={setSelectedTab}
+          tab={selectedTab}
+          isAdmin
+          tabArray={adminDashboardTabs}
+        />
       </div>
 
-      <DataFilter dateRange={dateRange} setDateRange={setDateRange} />
+      <DateFilter dateRange={dateRange} setDateRange={setDateRange} />
 
-      <Tabs value={selectedTab} onValueChange={setSelectedTab}>
-        <TabsContent value="users">
-          <DashboardStats<AdminFetchDashboardUserStatsDataResponse>
-            queryFunction={() =>
-              adminFetchDashboardUserStatsData({
-                startDate: dateRange?.from,
-                endDate: dateRange?.to,
-              })
-            }
-            queryKey={[QUERY_KEYS.DASHBOARD_USERS_STATS]}
-            statsMap={userStatsMapForAdmin}
-            dependencies={dateRange}
-            shimmerCount={2}
-            heading=""
-            role="ADMIN"
-          />
+      <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
+        <TabsContent value={adminDashboardTabs[0].value}>
+          <AdminDashboardUserData dateRange={dateRange} />
         </TabsContent>
 
-        <TabsContent value="providers">
-          <DashboardStats<AdminFetchDashboardProviderStatsDataResponse>
-            queryFunction={() =>
-              adminFetchDashboardProviderStatsData({
-                startDate: dateRange?.from,
-                endDate: dateRange?.to,
-              })
-            }
-            queryKey={[QUERY_KEYS.DASHBOARD_PROVIDERS_STATS]}
-            statsMap={providerStatsMapForAdmin}
-            dependencies={dateRange}
-            shimmerCount={7}
-            heading=""
-            role="ADMIN"
-          />
+        <TabsContent value={adminDashboardTabs[1].value}>
+          <AdminDashboardProviderData dateRange={dateRange} />
         </TabsContent>
 
-        <TabsContent value="subscriptions">
-          <DashboardStats<AdminFetchDashboardSubscriptionStatsDataResponse>
-            queryFunction={() =>
-              adminFetchDashboardSubscriptionStatsData({
-                startDate: dateRange?.from,
-                endDate: dateRange?.to,
-              })
-            }
-            queryKey={[QUERY_KEYS.DASHBOARD_SUBSCRIPTION_STATS]}
-            statsMap={subscriptionStatsMapForAdmin}
-            dependencies={dateRange}
-            shimmerCount={6}
-            heading=""
-            role="ADMIN"
-          />
+        <TabsContent value={adminDashboardTabs[2].value}>
+          <AdminDashboardSubscriptionData dateRange={dateRange} />
         </TabsContent>
 
-        <TabsContent value="revenue">
-          <DashboardStats<AdminFetchDashboardRevenueAndPaymentsStatsDataResponse>
-            queryFunction={() =>
-              adminFetchDashboardRevenueStatsData({
-                startDate: dateRange?.from,
-                endDate: dateRange?.to,
-              })
-            }
-            queryKey={[QUERY_KEYS.DASHBOARD_REVENUE_STATS]}
-            dependencies={dateRange}
-            statsMap={revenueAndPaymentsStatsMapForAdmin}
-            shimmerCount={9}
-            heading=""
-            role="ADMIN"
-          />
+        <TabsContent value={adminDashboardTabs[3].value}>
+          <AdminDashboardRevenueData dateRange={dateRange} />
         </TabsContent>
 
-        <TabsContent value="appointments">
-          <DashboardStats<AdminFetchDashboardAppointmentStatsDataResponse>
-            queryFunction={() =>
-              adminFetchDashboardAppointmentStatsData({
-                startDate: dateRange?.from,
-                endDate: dateRange?.to,
-              })
-            }
-            queryKey={[QUERY_KEYS.DASHBOARD_APPOINTMENTS_STATS]}
-            statsMap={AppointmentsStatsMapForAdmin}
-            dependencies={dateRange}
-            shimmerCount={5}
-            heading=""
-            role="ADMIN"
-          />
+        <TabsContent value={adminDashboardTabs[4].value}>
+          <AdminDashboardAppointmentsData dateRange={dateRange} />
         </TabsContent>
       </Tabs>
     </div>

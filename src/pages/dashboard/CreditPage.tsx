@@ -1,12 +1,12 @@
 import dayjs from 'dayjs';
 import { useQuery } from '@tanstack/react-query';
-import StatCard from '@/components/common/StatsCard';
+import MetricCard from '@/components/common/MetricCard';
 import ChartLineLinear from '@/components/chart/ChartLineLinear';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import { Wallet, TrendingUp, TrendingDown, Info } from 'lucide-react';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
 import { FetchCreditTransactionsResponse } from '@/shared/types/api/credit';
-import { creditAccountChartLineLinearConfig, QUERY_KEYS } from '@/shared/utils/constants';
+import { creditAccountChartLineLinearConfig, queryKeys } from '@/shared/utils/constants';
 import { fetchCreditAccountDetails, fetchCreditTransactions } from '@/services/apis/credit';
 import CreditTransactionTableColumn from '@/components/table/tableColumns/CreditTransactionTableColumn';
 
@@ -16,7 +16,7 @@ const CreditPage = () => {
   const startDate = dayjs().subtract(1, 'month').toDate();
 
   const { data, isLoading, error, isError } = useQuery({
-    queryKey: [QUERY_KEYS.CREDIT_DETAILS],
+    queryKey: [queryKeys.CREDIT_DETAILS],
     queryFn: async () => {
       const res = await fetchCreditAccountDetails({
         startDate,
@@ -24,15 +24,13 @@ const CreditPage = () => {
       });
       return res.data;
     },
-    staleTime: 60 * 60 * 1000,
-    refetchOnWindowFocus: false,
   });
 
   return (
     <div className="container p-4 space-y-6">
       <div className="grid gap-2 grid-col-1 md:grid-cols-2">
         <div className="grid gap-2 grid-cols-2">
-          <StatCard
+          <MetricCard
             title="Balance Credits"
             isLoading={isLoading}
             isError={isError}
@@ -44,7 +42,7 @@ const CreditPage = () => {
             chartData={data?.balanceCredits?.chartData ?? []}
             bgColour="bg-gradient-to-r from-violet-700 to-indigo-600"
           />
-          <StatCard
+          <MetricCard
             title="Account Status"
             isLoading={isLoading}
             isError={isError}
@@ -52,7 +50,7 @@ const CreditPage = () => {
             data={data?.isActive ?? false}
             Icon={Info}
           />
-          <StatCard
+          <MetricCard
             title="Total Credits"
             isLoading={isLoading}
             isError={isError}
@@ -63,7 +61,7 @@ const CreditPage = () => {
             days={data?.totalCredits?.days}
             chartData={data?.totalCredits?.chartData ?? []}
           />
-          <StatCard
+          <MetricCard
             title="Spent Credits"
             isLoading={isLoading}
             isError={isError}
@@ -104,7 +102,7 @@ const CreditPage = () => {
             })
           }
           columnsCount={5}
-          queryKey={[QUERY_KEYS.CREDIT_TRANSACTIONS]}
+          queryKey={[queryKeys.CREDIT_TRANSACTIONS]}
         />
       </div>
     </div>

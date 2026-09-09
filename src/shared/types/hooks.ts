@@ -12,8 +12,8 @@ import {
   CreateServiceRequest,
   UpdateServiceRequest,
   UpdateServiceResponse,
-  ChangeServiceBlockStatusRequest,
-  ChangeServiceBlockStatusResponse,
+  AdminChangeServiceBlockStatusRequest,
+  AdminChangeServiceBlockStatusResponse,
 } from './api/service';
 import {
   AdminRejectProviderRequest,
@@ -38,7 +38,11 @@ import { ToggleReviewBlockStatusRequest } from './api/review';
 import { UseFormGetValues, UseFormSetValue } from 'react-hook-form';
 import { HearAboutUsOptionValue, Role, ServiceMode } from './enums';
 import { changeAppointmentStatusRequest, ValidateRoomId } from './api/booking';
-import { AdminChangeUserStatusRequest, PreBoardingResponse } from './api/user';
+import {
+  AdminChangeUserBlockStatusRequest,
+  AdminChangeUserBlockStatusResponse,
+  PreBoardingResponse,
+} from './api/user';
 import { UseMutateAsyncFunction, UseMutateFunction } from '@tanstack/react-query';
 
 // Admin plan hook return type interface
@@ -104,9 +108,9 @@ export interface UseAdminProviderReturn {
 // Admin service hook return type interface
 export interface UseAdminServiceReturn {
   changeServiceBlockStatus: UseMutateFunction<
-    ApiBaseResponse<ChangeServiceBlockStatusResponse>,
+    ApiBaseResponse<AdminChangeServiceBlockStatusResponse>,
     ApiError,
-    ChangeServiceBlockStatusRequest
+    AdminChangeServiceBlockStatusRequest
   >;
   changeBlockStatusServiceId: string | null;
 
@@ -120,7 +124,12 @@ export interface UseAdminServiceReturn {
 
 // Admin user hook return type interface
 export interface UseAdminUserReturn {
-  changeUserStatus: (data: AdminChangeUserStatusRequest) => Promise<ApiBaseResponse>;
+  changeUserBlockStatus: UseMutateFunction<
+    ApiBaseResponse<AdminChangeUserBlockStatusResponse>,
+    ApiError,
+    AdminChangeUserBlockStatusRequest
+  >;
+  changeBlockStatusUserId: string | null | undefined;
 }
 
 // Is mobile hook return type interface
@@ -179,6 +188,7 @@ export interface useRoleBasedNavigationReturn {
   handleNavigateToBookingsDetailPage: (appointmentId: Booking['_id']) => void;
   handleNavigateToPlanDetailPage: (planId: Plan['_id']) => void;
   handleGetProviderDetailPage: (providerId: User['_id']) => void;
+  handleGetUserDetailPage: (userId: User['_id']) => void;
 }
 
 // Add availability hook parameter type interface

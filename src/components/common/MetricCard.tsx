@@ -1,11 +1,10 @@
 import { Badge } from '../ui/badge';
-import { StatCardProps } from '@/shared/types/component';
+import { MetricCProps } from '@/shared/types/component';
 import { LineChart, Line, ResponsiveContainer } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Info, XCircle, TrendingUp, LoaderCircle, CheckCircle2, TrendingDown } from 'lucide-react';
 
-// USED FOR CREDIT AND DEBIT
-const StatCard = ({
+const MetricCard = ({
   title,
   isLoading,
   isError,
@@ -17,7 +16,7 @@ const StatCard = ({
   chartData = [],
   bgColour,
   main,
-}: StatCardProps) => {
+}: MetricCProps) => {
   const isPositive = (percentage ?? 0) >= 0;
 
   return (
@@ -117,4 +116,4 @@ const StatCard = ({
   );
 };
 
-export default StatCard;
+export default MetricCard;

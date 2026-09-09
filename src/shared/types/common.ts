@@ -319,14 +319,6 @@ export interface MapDotLitLocationsCoordinates {
   end: { lat: number; lng: number };
 }
 
-// Tab item interface
-export interface TabItem {
-  value: string;
-  label: string;
-  icon?: React.ElementType;
-  role?: string[];
-}
-
 // Review form values interface
 export type ReviewFormValues = Pick<Review, 'reviewText' | 'rating'>;
 
@@ -595,4 +587,33 @@ export interface DashboardDataCardProps {
   price?: boolean;
   suffix?: string;
   isLoading?: boolean;
+}
+
+//
+export interface TabItem {
+  tabName: string;
+  value: string;
+  admin?: boolean;
+  user?: boolean;
+}
+
+//
+export interface TabNavigationProps {
+  isAdmin?: boolean;
+  tab: string;
+  setTab: (value: string) => void;
+  tabArray: TabItem[];
+}
+
+//
+export interface StatMetric {
+  value: number;
+  trend: string;
+}
+
+//
+export interface DashboardItem {
+  id: string;
+  colSpan: string;
+  component: React.ReactNode;
 }

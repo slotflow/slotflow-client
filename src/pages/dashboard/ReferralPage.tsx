@@ -1,11 +1,11 @@
 import dayjs from 'dayjs';
 import { Users } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-import StatCard from '@/components/common/StatsCard';
+import MetricCard from '@/components/common/MetricCard';
 import ChartLineLinear from '@/components/chart/ChartLineLinear';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
-import { QUERY_KEYS, referralChartLineLinearConfig } from '@/shared/utils/constants';
+import { queryKeys, referralChartLineLinearConfig } from '@/shared/utils/constants';
 import { fetchReferralDetails, fetchReferrals } from '@/services/apis/referral';
 import ReferralTableColumn from '@/components/table/tableColumns/ReferralTableColumn';
 
@@ -15,7 +15,7 @@ const ReferralPage = () => {
   const startDate = dayjs().subtract(1, 'month').toDate();
 
   const { data, isLoading, error, isError } = useQuery({
-    queryKey: [QUERY_KEYS.REFERRAL_DETAILS],
+    queryKey: [queryKeys.REFERRAL_DETAILS],
     queryFn: async () => {
       const res = await fetchReferralDetails({
         startDate,
@@ -23,15 +23,13 @@ const ReferralPage = () => {
       });
       return res.data;
     },
-    staleTime: 60 * 60 * 1000,
-    refetchOnWindowFocus: false,
   });
 
   return (
     <div className="container p-4 space-y-6">
       <div className="grid gap-2 grid-col-1 md:grid-cols-2">
         <div className="grid gap-2 grid-cols-2">
-          <StatCard
+          <MetricCard
             title="Total Referrals"
             isLoading={isLoading}
             isError={isError}
@@ -43,7 +41,7 @@ const ReferralPage = () => {
             chartData={data?.totalReferrals?.chartData ?? []}
             bgColour="bg-gradient-to-r from-violet-700 to-indigo-600"
           />
-          <StatCard
+          <MetricCard
             title="Completed Referrals"
             isLoading={isLoading}
             isError={isError}
@@ -54,7 +52,7 @@ const ReferralPage = () => {
             days={data?.completedReferrals?.days}
             chartData={data?.completedReferrals?.chartData ?? []}
           />
-          <StatCard
+          <MetricCard
             title="Pending Referrals"
             isLoading={isLoading}
             isError={isError}
@@ -65,7 +63,7 @@ const ReferralPage = () => {
             days={data?.pendingReferrals?.days}
             chartData={data?.pendingReferrals?.chartData ?? []}
           />
-          <StatCard
+          <MetricCard
             title="Rewarded Referrals"
             isLoading={isLoading}
             isError={isError}
@@ -100,7 +98,7 @@ const ReferralPage = () => {
         column={column}
         columnsCount={4}
         fetchApiFunction={fetchReferrals}
-        queryKey={[QUERY_KEYS.REFERRALS]}
+        queryKey={[queryKeys.REFERRALS]}
       />
     </div>
   );
