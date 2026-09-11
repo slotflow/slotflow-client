@@ -1,28 +1,29 @@
-import { useState } from 'react';
 import {
   Tag,
   Hash,
   Video,
   Users,
   Layers,
+  XCircle,
   FileText,
   Notebook,
   UserPlus,
   Briefcase,
   LayoutGrid,
   IndianRupee,
-  ClipboardList,
   CheckCircle2,
-  XCircle,
   ExternalLink,
+  ClipboardList,
 } from 'lucide-react';
+import { useState } from 'react';
 import { Button } from '../ui/button';
 import DataField from '../app/DataField';
+import { SelectSeparator } from '../ui/select';
 import { useQuery } from '@tanstack/react-query';
 import { AnimatePresence, motion } from 'framer-motion';
 import DataFetchingError from '../error/DataFetchingError';
-import { defaultButtonClassName } from '@/shared/utils/constants';
 import { ProviderServiceListProps } from '@/shared/types/component';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import ProviderServiceForm from '../form/provider/ProviderServiceForm';
 
 const ProviderServiceList = ({
@@ -47,38 +48,32 @@ const ProviderServiceList = ({
   }
 
   return (
-    <div className="space-y-6 pb-8 sm:pb-12">
+    <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
       {(showHeading || canUpdate) && (
-        <div className="flex items-center justify-between gap-4 py-1">
-          <div>
-            {showHeading && (
-              <h3 className="text-base font-bold text-slate-900 dark:text-slate-50 flex items-center gap-2">
-                <LayoutGrid className="w-4 h-4 text-indigo-500" /> Service Details
-              </h3>
-            )}
-          </div>
-
+        <CardHeader className="flex justify-between items-center">
+          {showHeading && (
+            <CardTitle className="flex flex-row space-x-2"> <LayoutGrid className="w-4 h-4 text-indigo-500" /> <span>Service</span></CardTitle>
+          )}
           {canUpdate && (
             <Button
-              title={showForm ? 'Cancel Update' : 'Update Service'}
-              variant={showForm ? 'destructive' : 'default'}
-              className={defaultButtonClassName}
+              title="Update Service"
+              variant={showForm ? 'destructive' : 'secondary'}
+              className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border border-slate-200 dark:border-border bg-white dark:bg-muted/20 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-muted/30 shadow-sm transition-all cursor-pointer disabled:opacity-50"
               onClick={(e) => {
                 e.preventDefault();
                 setShowForm(!showForm);
               }}
             >
-              {showForm ? 'Cancel Update' : 'Update Service'}
+              {showForm ? 'Cancel' : 'Update'}
             </Button>
           )}
-        </div>
+        </CardHeader>
       )}
 
-      {/* Primary Service Profile Information */}
-      <div className="p-6 rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm space-y-4">
-        <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2 border-b border-slate-100 dark:border-border/60 pb-3">
-          <Briefcase className="w-4 h-4 text-indigo-500" /> Primary Information
-        </h4>
+      <CardContent>
+        <span className="mb-4 text-xs font-medium text-slate-500 dark:text-slate-400 block">
+          Primary Information
+        </span>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <DataField
@@ -127,13 +122,10 @@ const ProviderServiceList = ({
             />
           </div>
         </div>
-      </div>
 
-      {/* Experience & Requirements Card */}
-      <div className="p-6 rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm space-y-4">
-        <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2 border-b border-slate-100 dark:border-border/60 pb-3">
-          <Briefcase className="w-4 h-4 text-indigo-500" /> Experience & Requirements
-        </h4>
+        <span className="my-4 text-xs font-medium text-slate-500 dark:text-slate-400 block">
+          Primary Information
+        </span>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <DataField
@@ -208,13 +200,10 @@ const ProviderServiceList = ({
             </div>
           )}
         </div>
-      </div>
 
-      {/* Links, Demos & Tags Section */}
-      <div className="p-6 rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm space-y-4">
-        <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2 border-b border-slate-100 dark:border-border/60 pb-3">
-          <Hash className="w-4 h-4 text-indigo-500" /> Media & Search Tags
-        </h4>
+        <span className="my-4 text-xs font-medium text-slate-500 dark:text-slate-400 block">
+          Media & Search Tags
+        </span>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <DataField
@@ -278,9 +267,8 @@ const ProviderServiceList = ({
             />
           </div>
         </div>
-      </div>
+      </CardContent>
 
-      {/* Animated Update Form */}
       <AnimatePresence initial={false}>
         {showForm && (
           <motion.div
@@ -291,13 +279,14 @@ const ProviderServiceList = ({
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             style={{ overflow: 'hidden' }}
           >
-            <div className="p-6 rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
+            <SelectSeparator />
+            <CardContent className="space-y-2 mt-4">
               <ProviderServiceForm isUpdating={true} heading="Update Service Details" />
-            </div>
+            </CardContent>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </Card>
   );
 };
 

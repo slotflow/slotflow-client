@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '@/shared/utils/constants';
 import PieChartRounded from '@/components/chart/PieChartRounded';
 import { SubscriptionDataChartProps } from '@/shared/types/component';
-import { subscriptionChartConfig } from '@/shared/utils/chartConstants';
+import { subscriptionChartConfig } from '@/shared/utils/constants/chartConstants';
 import { adminFetchDashboardSubscriptionChartData } from '@/services/apis/admin';
 
 const SubscriptionDataChart = ({ dateRange }: SubscriptionDataChartProps) => {

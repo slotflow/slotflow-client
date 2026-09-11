@@ -2,7 +2,8 @@ import { Card } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { useNavigate } from 'react-router-dom';
-import { blogCTAItems, redirectPaths } from '@/shared/utils/constants';
+import { redirectPaths } from '@/shared/utils/constants';
+import { blogCTAItems } from '@/shared/utils/constants/landingConstants';
 
 const BlogCTA = () => {
   const navigate = useNavigate();

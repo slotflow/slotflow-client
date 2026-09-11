@@ -1,9 +1,9 @@
-import { Outlet } from 'react-router-dom';
+import ProviderDashboard from '@/components/dashboard/provider/ProviderDashboard';
 
 const ProviderDashboardPage = () => {
   return (
     <div className="p-4">
-      <Outlet />
+      <ProviderDashboard />
     </div>
   );
 };

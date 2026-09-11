@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   Map,
   Globe,
@@ -10,17 +9,17 @@ import {
   MapPinned,
   MapPinPlus,
 } from 'lucide-react';
+import { useState } from 'react';
 import { Button } from '../ui/button';
 import DataField from '../app/DataField';
-import { useSelector } from 'react-redux';
 import MapPreview from '../map/MapPreview';
+import { SelectSeparator } from '../ui/select';
 import { useQuery } from '@tanstack/react-query';
-import { RootState } from '@/app/store/appStore';
 import AddressForm from '../form/Common/AddressForm';
 import { AnimatePresence, motion } from 'framer-motion';
 import DataFetchingError from '../error/DataFetchingError';
 import DataShimmer from '@/components/shimmers/DataShimmer';
-import { defaultButtonClassName } from '@/shared/utils/constants';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { UserOrProviderAddressDetailsProps } from '@/shared/types/component';
 
 const AddressListing = ({
@@ -30,9 +29,9 @@ const AddressListing = ({
   isUserLookingProvider = false,
   canUpdate = false,
   showHeading = false,
+  isShowPreview = false,
 }: UserOrProviderAddressDetailsProps) => {
   const [showForm, setShowForm] = useState<boolean>(false);
-  const isShowPreview = useSelector((state: RootState) => state.provider.isShowPreview);
 
   const { data, isLoading, isError, error } = useQuery({
     queryFn: async () => {
@@ -47,106 +46,96 @@ const AddressListing = ({
   }
 
   return (
-    <div className="space-y-6 pb-8 sm:pb-12">
+    <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
       {(showHeading || canUpdate) && (
-        <div className="flex items-center justify-between gap-4 py-1">
-          <div>
-            {showHeading && (
-              <h3 className="text-base font-bold text-slate-900 dark:text-slate-50 flex items-center gap-2">
-                <Map className="w-4 h-4 text-indigo-500" /> Address Details
-              </h3>
-            )}
-          </div>
-
+        <CardHeader className="flex justify-between items-center">
+          {showHeading && (
+            <CardTitle className="flex flex-row space-x-2"> <Map className="w-4 h-4 text-indigo-500" /> <span>Address</span></CardTitle>
+          )}
           {canUpdate && (
             <Button
-              title="Update Address"
-              variant={showForm ? 'destructive' : 'default'}
-              className={defaultButtonClassName}
+              title="Update Password"
+              variant={showForm ? 'destructive' : 'secondary'}
+              className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border border-slate-200 dark:border-border bg-white dark:bg-muted/20 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-muted/30 shadow-sm transition-all cursor-pointer disabled:opacity-50"
               onClick={(e) => {
                 e.preventDefault();
                 setShowForm(!showForm);
               }}
             >
-              {showForm ? 'Cancel Update' : 'Update Address'}
+              {showForm ? 'Cancel' : 'Update'}
             </Button>
           )}
-        </div>
+        </CardHeader>
       )}
+      {(!isShowPreview || isUserLookingProvider) && (
+        <>
+          <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="md:col-span-2">
+              <DataField
+                label="Address Line"
+                value={data?.addressLine}
+                Icon={MapPin}
+                isLoading={isLoading}
+                shimmerWidth="w-48"
+              />
+            </div>
 
-      <div className="p-6 rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm space-y-4">
-        <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2 border-b border-slate-100 dark:border-border/60 pb-3">
-          <MapPin className="w-4 h-4 text-indigo-500" /> Location Details
-        </h4>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="md:col-span-2">
             <DataField
-              label="Address Line"
-              value={data?.addressLine}
-              Icon={MapPin}
+              label="Landmark"
+              value={data?.landmark}
+              Icon={MapPinPlus}
               isLoading={isLoading}
-              shimmerWidth="w-48"
+              shimmerWidth="w-28"
             />
-          </div>
 
-          <DataField
-            label="Landmark"
-            value={data?.landmark}
-            Icon={MapPinPlus}
-            isLoading={isLoading}
-            shimmerWidth="w-28"
-          />
+            <DataField
+              label="Place"
+              value={data?.place}
+              Icon={Map}
+              isLoading={isLoading}
+              shimmerWidth="w-28"
+            />
 
-          <DataField
-            label="Place"
-            value={data?.place}
-            Icon={Map}
-            isLoading={isLoading}
-            shimmerWidth="w-28"
-          />
+            <DataField
+              label="City"
+              value={data?.city}
+              Icon={Building}
+              isLoading={isLoading}
+              shimmerWidth="w-24"
+            />
 
-          <DataField
-            label="City"
-            value={data?.city}
-            Icon={Building}
-            isLoading={isLoading}
-            shimmerWidth="w-24"
-          />
+            <DataField
+              label="District"
+              value={data?.district}
+              Icon={Landmark}
+              isLoading={isLoading}
+              shimmerWidth="w-28"
+            />
 
-          <DataField
-            label="District"
-            value={data?.district}
-            Icon={Landmark}
-            isLoading={isLoading}
-            shimmerWidth="w-28"
-          />
+            <DataField
+              label="State"
+              value={data?.state}
+              Icon={MapPinned}
+              isLoading={isLoading}
+              shimmerWidth="w-28"
+            />
 
-          <DataField
-            label="State"
-            value={data?.state}
-            Icon={MapPinned}
-            isLoading={isLoading}
-            shimmerWidth="w-28"
-          />
+            <DataField
+              label="Pincode"
+              value={data?.pincode}
+              Icon={Mail}
+              isLoading={isLoading}
+              shimmerWidth="w-20"
+            />
 
-          <DataField
-            label="Pincode"
-            value={data?.pincode}
-            Icon={Mail}
-            isLoading={isLoading}
-            shimmerWidth="w-20"
-          />
+            <DataField
+              label="Country"
+              value={data?.country}
+              Icon={Globe}
+              isLoading={isLoading}
+              shimmerWidth="w-24"
+            />
 
-          <DataField
-            label="Country"
-            value={data?.country}
-            Icon={Globe}
-            isLoading={isLoading}
-            shimmerWidth="w-24"
-          />
-
-          {!isShowPreview && !isUserLookingProvider && (
             <DataField
               label="Phone"
               value={data?.phone}
@@ -155,28 +144,24 @@ const AddressListing = ({
               isLoading={isLoading}
               shimmerWidth="w-28"
             />
-          )}
-        </div>
-      </div>
-
-      {(isLoading || data?.location?.coordinates) && (
-        <div className="p-6 rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm space-y-4">
-          <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2 border-b border-slate-100 dark:border-border/60 pb-3">
-            <Globe className="w-4 h-4 text-indigo-500" /> Map Location
-          </h4>
-
-          {isLoading ? (
-            <div className="w-full h-52 rounded-lg overflow-hidden border border-slate-100 dark:border-border">
-              <DataShimmer w="w-full" h="h-full" />
-            </div>
-          ) : (
-            data?.location?.coordinates && (
-              <MapPreview lat={data.location.coordinates[1]} lon={data.location.coordinates[0]} />
-            )
-          )}
-        </div>
+          </CardContent>
+          <CardContent>
+            {(isLoading || data?.location?.coordinates) && (
+              <div className="col-span-2">
+                {isLoading ? (
+                  <div className="w-full h-52 rounded-lg overflow-hidden border border-slate-100 dark:border-border">
+                    <DataShimmer w="w-full" h="h-full" />
+                  </div>
+                ) : (
+                  data?.location?.coordinates && (
+                    <MapPreview lat={data.location.coordinates[1]} lon={data.location.coordinates[0]} />
+                  )
+                )}
+              </div>
+            )}
+          </CardContent>
+        </>
       )}
-
       <AnimatePresence initial={false}>
         {showForm && (
           <motion.div
@@ -187,13 +172,14 @@ const AddressListing = ({
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             style={{ overflow: 'hidden' }}
           >
-            <div className="p-6 rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
+            <SelectSeparator />
+            <CardContent className="space-y-2 mt-4">
               <AddressForm isUpdating={true} heading="Update Address" />
-            </div>
+            </CardContent>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </Card>
   );
 };
 

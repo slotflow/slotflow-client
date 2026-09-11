@@ -39,10 +39,10 @@ export const signin = createAsyncThunk<ApiBaseResponse<SigninResponse>, SigninRe
   },
 );
 
-export const signout = createAsyncThunk<ApiBaseResponse>('auth/signOut', async () => {
+export const signout = async (): Promise<ApiBaseResponse> => {
   const response = await axiosInstance.post('/auth/signout');
   return response.data;
-});
+};
 
 export const verifyEmail = createAsyncThunk<ApiBaseResponse, VerifyEmailRequest>(
   'auth/verifyEmail',

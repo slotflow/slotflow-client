@@ -1,60 +1,15 @@
 import { useState } from 'react';
-import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
 import { usePreBoarding } from '@/hooks/usePreboarding';
-import { redirectPaths } from '@/shared/utils/constants';
-import { AppDispatch, RootState } from '@/app/store/appStore';
-import { updateBoardingStep } from '@/app/store/slices/appSlice';
-import { HearAboutUsOptionValue, Role } from '@/shared/types/enums';
+import { HearAboutUsOptionValue } from '@/shared/types/enums';
 import ReferralCodeCard from '@/components/boarding/hearAboutUs/ReferralCodeCard';
 import HearAboutUsButtons from '@/components/boarding/hearAboutUs/HearAboutUsButtons';
 import HearAboutUsOptions from '@/components/boarding/hearAboutUs/HearAboutUsOptionCard';
 
 const HearAboutUsPage = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
-  const { submitPreBoardingHandler } = usePreBoarding();
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [referralCode, setReferralCode] = useState<string | null>(null);
-  const { authUser, preboardingData } = useSelector((state: RootState) => state.auth);
   const [selectedOption, setSelectedOption] = useState<HearAboutUsOptionValue | null>(null);
-
-  const handleSubmit = async () => {
-    console.log('submitting');
-    if (!selectedOption || !preboardingData.selectedRole) {
-      toast.error('Please select the required fields before submitting.');
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      const res = await submitPreBoardingHandler({
-        authUser,
-        selectedRole: preboardingData.selectedRole,
-        selectedOption,
-        referralCode,
-      });
-      console.log('res : ', res);
-
-      if (!res.success || !res.data) {
-        toast.error(res.message || 'An error occurred while submitting the form.');
-        return;
-      }
-
-      toast.success(res.message);
-
-      navigate(
-        preboardingData.selectedRole === Role.PROVIDER
-          ? redirectPaths.ONBOARDING_ADDRESS
-          : redirectPaths.USER_HOME,
-      );
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  const { submitPreBoarding, hearAboutUsHandler, isPreboardingSubmitting } = usePreBoarding();
 
   return (
     <>
@@ -82,13 +37,15 @@ const HearAboutUsPage = () => {
         )}
       </AnimatePresence>
       <HearAboutUsButtons
-        isSubmitting={isSubmitting}
-        disabled={isSubmitting || !selectedOption}
-        onPrevious={() => {
-          dispatch(updateBoardingStep(2));
-          navigate(redirectPaths.PRE_BOARDING_ROLE);
+        isSubmitting={isPreboardingSubmitting}
+        disabled={isPreboardingSubmitting || !selectedOption}
+        onPrevious={hearAboutUsHandler}
+        onSubmit={() => {
+          submitPreBoarding({
+            selectedOption,
+            referralCode,
+          })
         }}
-        onSubmit={handleSubmit}
       />
     </>
   );

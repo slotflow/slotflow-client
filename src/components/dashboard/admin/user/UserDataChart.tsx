@@ -1,9 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
-import { UserDataChartProps } from '@/shared/types/component';
-import BarChartHorizontal from '@/components/chart/BarChartHorizontal';
-import { fetchRoleBasedChartData } from '@/services/apis/admin';
-import { newVsReturningUsersChartConfig, queryKeys } from '@/shared/utils/constants';
 import { Role } from '@/shared/types/enums';
+import { useQuery } from '@tanstack/react-query';
+import { queryKeys } from '@/shared/utils/constants';
+import { UserDataChartProps } from '@/shared/types/component';
+import { fetchRoleBasedChartData } from '@/services/apis/admin';
+import BarChartHorizontal from '@/components/chart/BarChartHorizontal';
+import { usersRetensionChartConfig } from '@/shared/utils/constants/chartConstants';
 
 const UserDataChart = ({ dateRange }: UserDataChartProps) => {
   const { data, isLoading, isError } = useQuery({
@@ -26,7 +27,7 @@ const UserDataChart = ({ dateRange }: UserDataChartProps) => {
       dataKeyOne="date"
       dataKeyTwo="newUsers"
       dataKeyThree="returningUsers"
-      chartConfig={newVsReturningUsersChartConfig}
+      chartConfig={usersRetensionChartConfig}
       isError={isError}
       isLoading={isLoading}
     />

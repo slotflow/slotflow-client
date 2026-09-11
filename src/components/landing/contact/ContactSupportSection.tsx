@@ -2,8 +2,8 @@ import { ArrowRight } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { AppDispatch } from '@/app/store/appStore';
-import { contactSupportOptions } from '@/shared/utils/constants';
 import { toggleLiveChatBubble } from '@/app/store/slices/appSlice';
+import { contactSupportOptions } from '@/shared/utils/constants/landingConstants';
 
 const ContactSupportSection = () => {
   const navigate = useNavigate();

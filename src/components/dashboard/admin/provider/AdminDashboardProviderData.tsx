@@ -6,13 +6,11 @@ import ProviderListCard from './ProviderListCard';
 import DashboardStats from '../../DashboardStats';
 import ProviderDataChart from './ProviderDataChart';
 import { DashboardItem } from '@/shared/types/common';
+import { aiResponseEntities, queryKeys } from '@/shared/utils/constants';
 import { AdminDashboardProviderDataProps } from '@/shared/types/component';
+import { providerStatsMapForAdmin } from '@/shared/utils/constants/statsConstats';
 import { AdminFetchDashboardProviderStatsDataResponse } from '@/shared/types/api/adminDashboard';
-import { AiResponseEntities, providerStatsMapForAdmin, queryKeys } from '@/shared/utils/constants';
-import {
-  adminFetchDashboardProviderStatsData,
-  adminfFetchAnalyticsInsight,
-} from '@/services/apis/admin';
+import { fetchAnalyticsInsight, adminFetchDashboardProviderStatsData } from '@/services/apis/admin';
 
 export default function AdminDashboardProviderData({ dateRange }: AdminDashboardProviderDataProps) {
   const initialItems: DashboardItem[] = [
@@ -45,7 +43,7 @@ export default function AdminDashboardProviderData({ dateRange }: AdminDashboard
           badgeIcon={Briefcase}
           title="Provider Performance & Growth"
           fetchFn={() =>
-            adminfFetchAnalyticsInsight({ dateRange, entity: AiResponseEntities.PROVIDER })
+            fetchAnalyticsInsight({ dateRange, entity: aiResponseEntities.PROVIDER })
           }
           queryKey={queryKeys.PROVIDER_ENGAGEMENT_AI_RES}
         />

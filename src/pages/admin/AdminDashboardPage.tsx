@@ -1,9 +1,9 @@
-import AdminDashboardStats from '@/components/dashboard/admin/AdminDashboardStats';
+import AdminDashboard from '@/components/dashboard/admin/AdminDashboard';
 
 const AdminDashboardPage = () => {
   return (
     <div className="p-4">
-      <AdminDashboardStats />
+      <AdminDashboard />
     </div>
   );
 };

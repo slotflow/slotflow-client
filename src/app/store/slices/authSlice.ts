@@ -1,5 +1,5 @@
+import { signin } from '@/services/apis/auth';
 import { userUpdateInfo } from '@/services/apis/user';
-import { signin, signout } from '@/services/apis/auth';
 import { createAddress } from '@/services/apis/address';
 import { ApiBaseResponse } from '@/shared/types/common';
 import { SigninResponse } from '@/shared/types/api/auth';
@@ -22,8 +22,6 @@ const initialState: AuthState = {
   subscriptionUpdating: false,
   preboardingData: {
     selectedRole: null,
-    hearAboutUsOption: null,
-    referralCode: null,
   },
 };
 
@@ -108,14 +106,6 @@ const authSlice = createSlice({
         },
       )
       .addCase(signin.rejected, () => {});
-
-    // Sign Out Api
-    builder
-      .addCase(signout.pending, () => {})
-      .addCase(signout.fulfilled, (state) => {
-        state.authUser = null;
-      })
-      .addCase(signout.rejected, () => {});
 
     builder
       .addCase(createAddress.pending, (state) => {

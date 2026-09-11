@@ -1,12 +1,12 @@
 import React from 'react';
 import { Button } from '../ui/button';
-import ReviewStatus from './ReviewStatus';
 import { Role } from '@/shared/types/enums';
+import StatusBadge from '../common/StatusBadge';
 import ReviewUserProfile from './ReviewUserProfile';
-import { ShieldCheck, ShieldX, Trash } from 'lucide-react';
 import { ReviewCardProps } from '@/shared/types/component';
 import noProfile from '../../assets/defaultImages/avatar.png';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { Loader2, ShieldAlert, ShieldBan, ShieldCheck, ShieldX, Trash } from 'lucide-react';
 
 const ReviewCard = ({
   review,
@@ -14,6 +14,8 @@ const ReviewCard = ({
   handleDeleteReview,
   handleReportReview,
   handleChangeReviewBlockStatus,
+  isChangingBlockStatus,
+  isChangingReportStatus
 }: ReviewCardProps) => {
   return (
     <Card className="border rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-200">
@@ -48,18 +50,30 @@ const ReviewCard = ({
         {role !== Role.USER && (
           <div className="grid grid-cols-2 gap-4 mt-4 border-t pt-4">
             <div className="flex items-center">
-              {review.reported ? (
-                <ReviewStatus status="Reported" isNot icon={ShieldX} />
+              {isChangingReportStatus ? (
+                <StatusBadge type="updating" />
+              ) : review.reported ? (
+                <StatusBadge
+                  label="Reported"
+                  type="unverified"
+                  icon={<ShieldX className="w-3.5 h-3.5" />}
+                />
               ) : (
-                <ReviewStatus status="Not reported" icon={ShieldCheck} />
+                <StatusBadge
+                  label="Not Reported"
+                  type="verified"
+                  icon={<ShieldCheck className="w-3.5 h-3.5" />}
+                />
               )}
             </div>
 
             <div className="flex items-center">
-              {review.isBlocked ? (
-                <ReviewStatus status="Blocked" isNot icon={ShieldX} />
+              {isChangingBlockStatus ? (
+                <StatusBadge type="updating" />
+              ) : review.isBlocked ? (
+                <StatusBadge type="blocked" />
               ) : (
-                <ReviewStatus status="Not Blocked" icon={ShieldCheck} />
+                <StatusBadge type="active" />
               )}
             </div>
           </div>
@@ -73,10 +87,10 @@ const ReviewCard = ({
               size="sm"
               className="cursor-pointer bg-[var(--background)] border"
               onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-                handleDeleteReview(e, review._id)
+                handleDeleteReview(review._id)
               }
             >
-              <Trash className="text-red-500" /> Delete
+              <Trash className="w-3.5 h-3.5 mr-1 text-red-500" /> Delete
             </Button>
           )}
 
@@ -87,13 +101,24 @@ const ReviewCard = ({
               size="sm"
               className="cursor-pointer"
               onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-                handleReportReview(e, review._id)
+                handleReportReview(review._id)
               }
             >
-              {review.reported ? (
-                <ReviewStatus status="Unreport" icon={ShieldCheck} />
+              {isChangingReportStatus ? (
+                <>
+                  <Loader2 className="w-3.5 h-3.5 animate-spin mr-1" />
+                  Updating...
+                </>
+              ) : review.reported ? (
+                <>
+                  <ShieldCheck className="w-3.5 h-3.5 mr-1 text-green-600" />
+                  Unreport
+                </>
               ) : (
-                <ReviewStatus status="Report" isNot icon={ShieldX} />
+                <>
+                  <ShieldAlert className="w-3.5 h-3.5 mr-1 text-yellow-500" />
+                  Report
+                </>
               )}
             </Button>
           )}
@@ -105,16 +130,27 @@ const ReviewCard = ({
               size="sm"
               className="cursor-pointer"
               onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-                handleChangeReviewBlockStatus(e, {
+                handleChangeReviewBlockStatus({
                   reviewId: review._id,
-                  isblocked: review.isBlocked,
+                  isBlocked: review.isBlocked,
                 })
               }
             >
-              {review.isBlocked ? (
-                <ReviewStatus status="Unblock" icon={ShieldCheck} />
+              {isChangingBlockStatus ? (
+                <>
+                  <Loader2 className="w-3.5 h-3.5 animate-spin mr-1" />
+                  Updating...
+                </>
+              ) : review.isBlocked ? (
+                <>
+                  <ShieldCheck className="w-3.5 h-3.5 mr-1 text-green-600" />
+                  Unblock
+                </>
               ) : (
-                <ReviewStatus status="Block" icon={ShieldX} />
+                <>
+                  <ShieldBan className="w-3.5 h-3.5 mr-1 text-red-500" />
+                  Block
+                </>
               )}
             </Button>
           )}

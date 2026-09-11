@@ -1,15 +1,15 @@
+import { Button } from '@/components/ui/button';
 import ChartHeader from './chartAddons/ChartHeader';
+import { Skeleton } from '@/components/ui/skeleton';
 import ChartOverlay from './chartAddons/ChartOverlay';
-import { chartConfig } from '@/shared/utils/constants';
 import { AlertCircle, TrendingUp } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { HorizontalChartProps } from '@/shared/types/component';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import ChartDataNotAvailable from './chartAddons/ChartDataNotAvailable';
+import { horizontalChartConfig } from '@/shared/utils/constants/chartConstants';
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from 'recharts';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
-import { motion, AnimatePresence } from 'framer-motion';
 
 const HorizontalChart = ({
   chartData,
@@ -104,7 +104,7 @@ const HorizontalChart = ({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              <ChartContainer config={chartConfig} className="min-h-[200px]">
+              <ChartContainer config={horizontalChartConfig} className="min-h-[200px]">
                 <BarChart
                   accessibilityLayer
                   data={chartData}

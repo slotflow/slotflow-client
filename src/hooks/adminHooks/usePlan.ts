@@ -16,7 +16,6 @@ import {
   ChangePlanBlockStatusResponse,
 } from '@/shared/types/api/plan';
 import { toast } from 'react-toastify';
-import { appConfig } from '@/config/env';
 import { queryKeys } from '@/shared/utils/constants';
 import { UseAdminPlanReturn } from '@/shared/types/hooks';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -235,9 +234,7 @@ export const useAdminPlan = (): UseAdminPlanReturn => {
       }
     },
     onError: (error) => {
-      if (appConfig.isDevelopment) {
-        console.error('Error in createPlanMutation:', error);
-      }
+      handleMutationError(error, 'Could not update plan.');
     },
   });
 

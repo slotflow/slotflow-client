@@ -1,5 +1,6 @@
 import { User } from '../entity/user';
 import { ProviderProfile } from '../entity/providerProfile';
+import { StatMetric } from '../common';
 
 // Fetch self profile details ( by provider )
 export type ProviderFetchMyProfileDetailsResponse = Pick<
@@ -27,13 +28,13 @@ export interface ProviderFetchDashboardStatsDataRequest {
 }
 
 // Fetch dashboard stats data ( by provider )
-export interface ProviderFetchDashboardStatsDataResponse extends Record<string, number> {
-  totalAppointments: number;
-  completedAppointments: number;
-  missedAppointments: number;
-  cancelledAppointmentsByUser: number;
-  rejectedAppointmentsByProvider: number;
-  todaysAppointments: number;
+export interface ProviderFetchDashboardBookingStatsDataResponse extends Record<string, StatMetric | undefined> {
+  totalAppointments: StatMetric;
+  completedAppointments: StatMetric;
+  missedAppointments: StatMetric;
+  cancelledAppointmentsByUser: StatMetric;
+  rejectedAppointmentsByProvider: StatMetric;
+  todaysAppointments: StatMetric;
 }
 
 // Fetch dashboard revenue stats data ( by provider )
@@ -43,11 +44,11 @@ export interface ProviderFetchDashboardRevenueStatsDataRequest {
 }
 
 // Fetch dashboard revenue stats data ( by provider )
-export interface ProviderFetchDashboardRevenueStatsDataResponse extends Record<string, number> {
-  totalSubscriptionPaidAmount: number;
-  totalEarnings: number;
-  totalPayoutsMade: number;
-  pendingPayout: number;
+export interface ProviderFetchDashboardRevenueStatsDataResponse extends Record<string, StatMetric | undefined> {
+  totalSubscriptionPaidAmount: StatMetric;
+  totalEarnings: StatMetric;
+  totalPayoutsMade: StatMetric;
+  pendingPayout: StatMetric;
 }
 
 // Fetch dashboard graph data ( by provider )

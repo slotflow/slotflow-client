@@ -18,7 +18,7 @@ const NotificationSettingsItem = ({
         <p className="text-sm leading-5 text-muted-foreground">{description}</p>
       </div>
 
-      <Switch checked={checked} onCheckedChange={(enabled) => onChange(channel, type, enabled)} />
+      <Switch className="cursor-pointer" checked={checked} onCheckedChange={(enabled) => onChange(channel, type, enabled)} />
     </div>
   );
 };

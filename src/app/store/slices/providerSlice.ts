@@ -12,7 +12,6 @@ const initialState: ProviderState = {
     file: null,
     isLoading: false,
   },
-  isShowPreview: false,
 };
 
 const providerSlice = createSlice({
@@ -56,15 +55,11 @@ const providerSlice = createSlice({
       if (file !== undefined) state.serviceProof.file = file;
       if (isLoading !== undefined) state.serviceProof.isLoading = isLoading;
     },
-    setIsShowPreview: (state) => {
-      state.isShowPreview = !state.isShowPreview;
-    },
   },
 });
 
 export const {
   addAvailability,
-  setIsShowPreview,
   removeAvailability,
   setProviderServiceProofs,
   setProviderIdentityProofs,

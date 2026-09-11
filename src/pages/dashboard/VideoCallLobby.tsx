@@ -1,30 +1,15 @@
-import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { RootState } from '@/app/store/appStore';
+import { useJVideoCall } from '@/hooks/useJVideoCall';
 import { Mic, MicOff, Video, VideoOff } from 'lucide-react';
-import { useVideoCallLobby } from '@/hooks/useJoinVideoCallLoby';
 
 const LobbyPage = () => {
+
   const { roomId } = useParams();
   const { isCameraOn, isMicOn } = useSelector((state: RootState) => state.video);
-
-  const { videoRef, toggleCamera, toggleMic, videoCallJoinHandler } = useVideoCallLobby({
-    roomId: roomId!,
-    isCameraOn,
-    isMicOn,
-  });
-
-  // function to handle join video call
-  const handleJoinVideoCall = async () => {
-    const res = await videoCallJoinHandler();
-    if (!res.success) {
-      toast.error(res.message);
-    } else {
-      toast.success(res.message);
-    }
-  };
+  const { videoRef, toggleCamera, toggleMic, videoCallJoin } = useJVideoCall();
 
   return (
     <div className="grid grid-cols-12 h-screen">
@@ -73,7 +58,11 @@ const LobbyPage = () => {
         <p className="mb-6">Check your camera and microphone before joining the meeting.</p>
         <Button
           title="Join Now"
-          onClick={handleJoinVideoCall}
+          onClick={() => videoCallJoin({
+            joined: true,
+            videoCallRoomId: roomId!,
+            joinedTime: new Date(),
+          })}
           className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white border-[var(--mainColor)]"
         >
           Join Now

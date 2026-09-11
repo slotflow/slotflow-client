@@ -6,26 +6,35 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
-import { MoreHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
-import { PaymentFor } from '@/shared/types/enums';
+import { MoreHorizontal, Eye } from 'lucide-react';
 import { Payment } from '@/shared/types/entity/payment';
+import StatusBadge from '@/components/common/StatusBadge';
+import { PaymentFor, PaymentStatus } from '@/shared/types/enums';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
 import { FetchPaymentsResponse } from '@/shared/types/api/payment';
 import { formateDate, formatNumberToPrice } from '@/shared/utils/helper/formatter';
 
-// for admin side, provider side and user side view of payments table
 const PaymentsTableColumn = (
   handleGetPaymentDetailsPage: (paymentId: Payment['_id']) => void,
 ): ColumnDef<FetchPaymentsResponse>[] => [
+  {
+    accessorKey: 'slNo',
+    header: 'Sl No',
+    cell: ({ row }) => (
+      <span className="font-mono text-xs text-muted-foreground font-medium">
+        {String(row.index + 1).padStart(2, '0')}
+      </span>
+    ),
+  },
   {
     accessorKey: 'createdAt',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Paid on" />,
     cell: ({ row }) => {
       const createdAt = row.getValue('createdAt') as Date;
       const formattedDate = formateDate(createdAt);
-      return <span>{formattedDate}</span>;
+      return <span className="font-medium text-slate-700 dark:text-slate-300">{formattedDate}</span>;
     },
   },
   {
@@ -33,15 +42,23 @@ const PaymentsTableColumn = (
     header: ({ column }) => <DataTableColumnHeader column={column} title="Total" />,
     cell: ({ row }) => {
       const amount = row.original.totalAmount;
-      return <span>{formatNumberToPrice(amount) || amount}</span>;
+      return (
+        <span className="font-semibold text-emerald-600 dark:text-emerald-400">
+          {formatNumberToPrice(amount) || amount}
+        </span>
+      );
     },
   },
   {
     accessorKey: 'discountAmount',
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Discont" />,
+    header: ({ column }) => <DataTableColumnHeader column={column} title="Discount" />,
     cell: ({ row }) => {
       const disAmount = row.original.discountAmount;
-      return <span>{formatNumberToPrice(disAmount) || disAmount}</span>;
+      return (
+        <span className="font-medium text-amber-600 dark:text-amber-400">
+          {formatNumberToPrice(disAmount) || disAmount}
+        </span>
+      );
     },
   },
   {
@@ -51,25 +68,46 @@ const PaymentsTableColumn = (
       const paymentFor = row.original.paymentFor;
       switch (paymentFor) {
         case PaymentFor.SUBSCRIPTION:
-          return <span className="text-yellow-500 font-semibold">Provider Subscription</span>;
+          return <StatusBadge type="pending" label="Provider Subscription" />;
         case PaymentFor.APPOINTMENT_BOOKING:
-          return <span className="text-green-500 font-semibold">Appointment Booking</span>;
+          return <StatusBadge type="active" label="Appointment Booking" />;
         case PaymentFor.PROVIDER_PAYOUT:
-          return <span className="text-red-500 font-semibold">Provider Payout</span>;
+          return <StatusBadge type="blocked" label="Provider Payout" />;
         case PaymentFor.CANCEL_BOOKING:
-          return <span className="text-orange-500 font-semibold">Cancel Booking</span>;
+          return <StatusBadge type="updating" label="Cancel Booking" />;
         default:
-          return <span>{paymentFor}</span>;
+          return <StatusBadge type="standard" label={paymentFor} />;
       }
     },
   },
   {
     accessorKey: 'paymentMethod',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Method" />,
+    cell: ({ row }) => {
+      const method = row.original.paymentMethod;
+      return <StatusBadge type="standard" label={method} />;
+    },
   },
   {
     accessorKey: 'paymentStatus',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
+    cell: ({ row }) => {
+      const status = row.original.paymentStatus;
+      switch (status) {
+        case PaymentStatus.PAID:
+          return <StatusBadge type="verified" label="Paid" />;
+        case PaymentStatus.PENDING:
+          return <StatusBadge type="pending" label="Pending" />;
+        case PaymentStatus.FAILED:
+          return <StatusBadge type="blocked" label="Failed" />;
+        case PaymentStatus.CANCELLED:
+          return <StatusBadge type="blocked" label="Cancelled" />;
+        case PaymentStatus.REFUNDED:
+          return <StatusBadge type="updating" label="Refunded" />;
+        default:
+          return <StatusBadge type="standard" label={status} />;
+      }
+    },
   },
   {
     accessorKey: 'actions',
@@ -80,15 +118,16 @@ const PaymentsTableColumn = (
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button title="Open Menu" variant="ghost" className="h-8 w-8 p-0 cursor-pointer">
+            <Button title="Open Menu" variant="ghost" className="h-8 w-8 p-0 cursor-pointer hover:bg-muted">
               <span className="sr-only">Open menu</span>
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent align="end" className="rounded-xl">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => handleGetPaymentDetailsPage(payment._id)}>
+            <DropdownMenuItem onClick={() => handleGetPaymentDetailsPage(payment._id)} className="cursor-pointer gap-2">
+              <Eye className="w-3.5 h-3.5 text-muted-foreground" />
               Details
             </DropdownMenuItem>
           </DropdownMenuContent>

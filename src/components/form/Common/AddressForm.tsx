@@ -13,6 +13,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Location } from '@/shared/types/entity/address';
+import { redirectPaths } from '@/shared/utils/constants';
 import { CountryDropdown } from '../../ui/country-dropdown';
 import { AddressFormProps } from '@/shared/types/component';
 import LocationPicker from '@/components/map/LocationPicker';
@@ -23,11 +24,6 @@ import {
   CreateAddressFormType,
   createAddressZodSchema,
 } from '@/shared/validators/zod/commonZodFields';
-import {
-  addAddressGoogleMapLinkInfo,
-  addAddressGoogleMapLinkInfoHeading,
-  redirectPaths,
-} from '@/shared/utils/constants';
 
 const AddressForm = ({ isUpdating = false, heading }: AddressFormProps) => {
   const navigate = useNavigate();
@@ -264,8 +260,11 @@ const AddressForm = ({ isUpdating = false, heading }: AddressFormProps) => {
             <LocationPicker onLocationSelect={handleLocationSelect} />
             <AlertBox
               icon={Info}
-              heading={addAddressGoogleMapLinkInfoHeading}
-              message={addAddressGoogleMapLinkInfo}
+              heading='Select Your Exact Location'
+              message='Use the map to select your exact location.  
+Click on the map to drop a marker at your address.  
+This helps us provide accurate location based services and ensures more precise search results.  
+Your selected location will also be used to automatically fill address details wherever possible.'
             />
           </div>
         </div>

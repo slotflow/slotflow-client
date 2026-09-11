@@ -57,6 +57,7 @@ const UpdateUserInfoForm = ({ onClose }: UpdateUserInfoFormProps) => {
     <Submitting />
   ) : (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-4">
+      <h4 className="text-xl lg:text-2xl font-semibold text-start">Update Info</h4>
       <FormField<UserInfoFormType>
         label="Username"
         id="username"

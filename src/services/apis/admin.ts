@@ -23,7 +23,7 @@ export const adminFetchDashboardUserStatsData = async (
   payload: AdminStatsDataRequest,
 ): Promise<ApiBaseResponse<AdminFetchDashboardUserStatsDataResponse>> => {
   const query = buildQueryParams(payload);
-  const response = await axiosInstance.get(`/admin-dashboard/users?${query}`);
+  const response = await axiosInstance.get(`/admin-dashboard/analytics/users-stats?${query}`);
   return response.data;
 };
 
@@ -31,7 +31,7 @@ export const adminFetchDashboardProviderStatsData = async (
   payload: AdminStatsDataRequest,
 ): Promise<ApiBaseResponse<AdminFetchDashboardProviderStatsDataResponse>> => {
   const query = buildQueryParams(payload);
-  const response = await axiosInstance.get(`/admin-dashboard/providers?${query}`);
+  const response = await axiosInstance.get(`/admin-dashboard/analytics/providers-stats?${query}`);
   return response.data;
 };
 
@@ -39,7 +39,7 @@ export const adminFetchDashboardSubscriptionStatsData = async (
   payload: AdminStatsDataRequest,
 ): Promise<ApiBaseResponse<AdminFetchDashboardSubscriptionStatsDataResponse>> => {
   const query = buildQueryParams(payload);
-  const response = await axiosInstance.get(`/admin-dashboard/subscriptions?${query}`);
+  const response = await axiosInstance.get(`/admin-dashboard/analytics/subscriptions-stats?${query}`);
   return response.data;
 };
 
@@ -47,7 +47,7 @@ export const adminFetchDashboardAppointmentStatsData = async (
   payload: AdminStatsDataRequest,
 ): Promise<ApiBaseResponse<AdminFetchDashboardAppointmentStatsDataResponse>> => {
   const query = buildQueryParams(payload);
-  const response = await axiosInstance.get(`/admin-dashboard/bookings?${query}`);
+  const response = await axiosInstance.get(`/admin-dashboard/analytics/bookings-stats?${query}`);
   return response.data;
 };
 
@@ -103,7 +103,7 @@ export const adminFetchDashboardSubscriptionChartData = async (
 // AI  Trend response
 // TODO IMPLEMENT
 // admin dashboard [ different entities ] data ai anakytics fetching from ai service
-export const adminfFetchAnalyticsInsight = async (
+export const fetchAnalyticsInsight = async (
   payload: AnalyticsAiRequest,
 ): Promise<ApiBaseResponse<AnalyticsAiResponse>> => {
   // const query = buildQueryParams(payload);

@@ -22,8 +22,22 @@ export interface FetchReviewsResponse extends Pick<
   providerId: Pick<User, 'username' | 'profileImage'>;
 }
 
-// request type of toggle review block status api
-export interface ToggleReviewBlockStatusRequest {
+// change review block status
+export interface ChangeReviewBlockStatusRequest {
   reviewId: Review['_id'];
-  isblocked: Review['isBlocked'];
+  isBlocked: Review['isBlocked'];
+}
+export type ChangeReviewBlockStatusResponse = Pick<Review, "_id" | "isBlocked">; 
+
+
+// report review
+export interface ReportReviewRequest {
+  reviewId: Review['_id'];
+}
+export type ReportReviewResponse = Pick<Review, "_id" | "reported">; 
+
+
+// delete review
+export interface DeleteReviewRequest {
+  reviewId: Review["_id"];
 }

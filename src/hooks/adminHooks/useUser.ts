@@ -1,16 +1,16 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { UseAdminUserReturn } from '@/shared/types/hooks';
-import { changeUserBlockStatus } from '@/services/apis/user';
 import {
+  AdminfetchAllUsersResponse,
   AdminChangeUserBlockStatusRequest,
   AdminChangeUserBlockStatusResponse,
-  AdminfetchAllUsersResponse,
   AdminFetchUserProfileDetailsResponse,
 } from '@/shared/types/api/user';
-import { ApiBaseResponse, ApiError, ApiPaginatedResponse } from '@/shared/types/common';
 import { toast } from 'react-toastify';
 import { queryKeys } from '@/shared/utils/constants';
+import { UseAdminUserReturn } from '@/shared/types/hooks';
+import { changeUserBlockStatus } from '@/services/apis/user';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { handleMutationError } from '@/shared/utils/helper/handleMutationError';
+import { ApiBaseResponse, ApiError, ApiPaginatedResponse } from '@/shared/types/common';
 
 export const useAdminUser = (): UseAdminUserReturn => {
   const queryClient = useQueryClient();

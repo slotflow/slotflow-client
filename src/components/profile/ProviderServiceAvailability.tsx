@@ -3,6 +3,7 @@ import DataField from '../app/DataField';
 import { useDispatch } from 'react-redux';
 import { Role } from '@/shared/types/enums';
 import { useEffect, useState } from 'react';
+import { SelectSeparator } from '../ui/select';
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import TimeSlotLegend from '../app/TimeSlotLegend';
@@ -13,13 +14,14 @@ import { AnimatePresence, motion } from 'framer-motion';
 import DataFetchingError from '../error/DataFetchingError';
 import getBooleanStatusComponent from '../app/GetBooleanStatus';
 import { Slot } from '@/shared/types/entity/serviceAvailability';
+import { queryKeys, statsPresents } from '@/shared/utils/constants';
 import { CalendarDays, Clock, Settings2, Timer } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { setBookingPyamentData } from '@/app/store/slices/paymentSlice';
 import AvailablityFetchingError from '../error/AvailabilityFetchingError';
 import { EventSocketEnum, SlotEngageRequest } from '@/shared/types/socket';
 import { ProviderServiceAvailabilityProps } from '@/shared/types/component';
 import ProviderAvailabilityShimmer from '@/components/shimmers/ProviderAvailabilityShimmer';
-import { defaultButtonClassName, queryKeys, STATUS_PRESETS } from '@/shared/utils/constants';
 import ProviderServiceAvailabilityForm from '../form/provider/ProviderSerivceAvailabilityForm';
 import {
   fetchEngagedSlots,
@@ -130,41 +132,36 @@ const ProviderServiceAvailability = ({
   };
 
   return (
-    <div className="space-y-6 pb-8 sm:pb-12">
+    <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
       {(showHeading || canUpdate) && (
-        <div className="flex items-center justify-between gap-4 py-1">
-          <div>
-            {showHeading && (
-              <h3 className="text-base font-bold text-slate-900 dark:text-slate-50 flex items-center gap-2">
-                <CalendarDays className="w-4 h-4 text-indigo-500" /> Service Availability
-              </h3>
-            )}
-          </div>
-
+        <CardHeader className="flex justify-between items-center">
+          {showHeading && (
+            <CardTitle className="flex flex-row space-x-2"> <CalendarDays className="w-4 h-4 text-indigo-500" /> <span>Service Availability</span></CardTitle>
+          )}
           {canUpdate && (
             <Button
-              title={showForm ? 'Cancel Update' : 'Update Availability'}
-              variant={showForm ? 'destructive' : 'default'}
-              className={defaultButtonClassName}
+              title="Update Service"
+              variant={showForm ? 'destructive' : 'secondary'}
+              className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border border-slate-200 dark:border-border bg-white dark:bg-muted/20 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-muted/30 shadow-sm transition-all cursor-pointer disabled:opacity-50"
               onClick={(e) => {
                 e.preventDefault();
                 setShowForm(!showForm);
               }}
             >
-              {showForm ? 'Cancel' : 'Update Availability'}
+              {showForm ? 'Cancel' : 'Update'}
             </Button>
           )}
-        </div>
+        </CardHeader>
       )}
 
-      <div className="p-6 rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+      <CardContent>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-2 items-start">
           <div className="md:col-span-5 lg:col-span-4 flex justify-center md:justify-start self-start h-fit">
             <Calendar
               mode="single"
               selected={date}
               onSelect={setDate}
-              className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-slate-900/50 p-3 shadow-xs h-fit"
+              className="rounded-xl border dark:border-border p-3 shadow-xs h-fit"
             />
           </div>
 
@@ -199,7 +196,7 @@ const ProviderServiceAvailability = ({
                   label="Availability Status"
                   value={getBooleanStatusComponent(
                     data?.isAvailable,
-                    STATUS_PRESETS.availabilityStatus,
+                    statsPresents.availabilityStatus,
                   )}
                   Icon={CalendarDays}
                   isLoading={isLoading}
@@ -207,7 +204,7 @@ const ProviderServiceAvailability = ({
                 />
 
                 <DataField
-                  label="Start Time"
+                  label="Available From"
                   value={data?.startTime}
                   Icon={Clock}
                   isLoading={isLoading}
@@ -215,7 +212,7 @@ const ProviderServiceAvailability = ({
                 />
 
                 <DataField
-                  label="End Time"
+                  label="Available Until"
                   value={data?.endTime}
                   Icon={Clock}
                   isLoading={isLoading}
@@ -243,7 +240,7 @@ const ProviderServiceAvailability = ({
                 />
               </div>
 
-              <div className="space-y-4 pt-4 border-t border-slate-100 dark:border-border/60">
+              <div className="space-y-4 pt-4 border-t border-gray-100 dark:border-border/60">
                 <TimeSlotLegend
                   role={role}
                   showAdvanceNotice={Boolean(data && data.slots.length > 0)}
@@ -257,7 +254,7 @@ const ProviderServiceAvailability = ({
                     {
                       label: 'Unavailable Slot',
                       className:
-                        'bg-slate-50 border-slate-200 text-slate-400 dark:bg-slate-900/40 dark:border-slate-800 dark:text-slate-600',
+                        'bg-gray-50 border-gray-200 text-gray-400 dark:bg-gray-900/40 dark:border-gray-800 dark:text-gray-600',
                     },
                     {
                       label: 'Occupied Slot',
@@ -279,7 +276,7 @@ const ProviderServiceAvailability = ({
                         if (isOccupied) {
                           return 'bg-amber-50/50 border-amber-200 text-amber-700 dark:bg-amber-950/20 dark:border-amber-900/50 dark:text-amber-400 opacity-90 cursor-not-allowed';
                         }
-                        return 'bg-slate-50 border-slate-200 text-slate-400 dark:bg-slate-900/30 dark:border-slate-800 dark:text-slate-600 cursor-not-allowed';
+                        return 'bg-gray-50 border-gray-200 text-gray-400 dark:bg-gray-900/30 dark:border-gray-800 dark:text-gray-600 cursor-not-allowed';
                       };
 
                       const commonClasses = `text-xs font-semibold text-center border rounded-lg py-2.5 px-3 transition-all duration-150 flex items-center justify-center ${getSlotStyles()}`;
@@ -294,9 +291,8 @@ const ProviderServiceAvailability = ({
                             e.stopPropagation();
                             handleBookAnAppoint(slot._id, slot.time, slot.available && !isOccupied);
                           }}
-                          className={`${commonClasses} ${
-                            slot.available && !isOccupied ? 'cursor-pointer active:scale-95' : ''
-                          }`}
+                          className={`${commonClasses} ${slot.available && !isOccupied ? 'cursor-pointer active:scale-95' : ''
+                            }`}
                         >
                           {slot.time}
                         </Button>
@@ -307,7 +303,7 @@ const ProviderServiceAvailability = ({
                       );
                     })
                   ) : (
-                    <p className="col-span-full py-4 text-xs font-medium text-slate-500 text-center">
+                    <p className="col-span-full py-4 text-xs font-medium text-gray-500 text-center">
                       No slots available for this date
                     </p>
                   )}
@@ -316,7 +312,7 @@ const ProviderServiceAvailability = ({
             </div>
           )}
         </div>
-      </div>
+      </CardContent>
 
       <AnimatePresence initial={false}>
         {showForm && (
@@ -328,16 +324,17 @@ const ProviderServiceAvailability = ({
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             style={{ overflow: 'hidden' }}
           >
-            <div className="p-6 rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
+            <SelectSeparator />
+            <CardContent className="space-y-2 mt-4">
               <ProviderServiceAvailabilityForm
                 isUpdating={true}
                 heading="Update Service Availability"
               />
-            </div>
+            </CardContent>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </Card>
   );
 };
 

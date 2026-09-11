@@ -1,11 +1,12 @@
 import dayjs from 'dayjs';
 import { Users } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
+import { queryKeys } from '@/shared/utils/constants';
 import MetricCard from '@/components/common/MetricCard';
 import ChartLineLinear from '@/components/chart/ChartLineLinear';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
-import { queryKeys, referralChartLineLinearConfig } from '@/shared/utils/constants';
+import { referralChartConfig } from '@/shared/utils/constants/chartConstants';
 import { fetchReferralDetails, fetchReferrals } from '@/services/apis/referral';
 import ReferralTableColumn from '@/components/table/tableColumns/ReferralTableColumn';
 
@@ -39,7 +40,7 @@ const ReferralPage = () => {
             percentage={data?.totalReferrals?.percentage}
             days={data?.totalReferrals?.days}
             chartData={data?.totalReferrals?.chartData ?? []}
-            bgColour="bg-gradient-to-r from-violet-700 to-indigo-600"
+            bgColour="bg-gradient-to-r from-violet-500 to-indigo-400"
           />
           <MetricCard
             title="Completed Referrals"
@@ -73,7 +74,7 @@ const ReferralPage = () => {
             percentage={data?.rewardedReferrals?.percentage}
             days={data?.rewardedReferrals?.days}
             chartData={data?.rewardedReferrals?.chartData ?? []}
-            bgColour="bg-gradient-to-r from-violet-700 to-indigo-600"
+            bgColour="bg-gradient-to-r from-violet-500 to-indigo-400"
           />
         </div>
         <div>
@@ -84,7 +85,7 @@ const ReferralPage = () => {
               title="Referrals chart"
               description="Detailed chart view of the referrals"
               chartData={data?.chartData ?? []}
-              chartConfig={referralChartLineLinearConfig}
+              chartConfig={referralChartConfig}
               dataKeyOne="totalReferrals"
               dataKeyTwo="completedReferrals"
               dataKeyThree="pendingReferrals"

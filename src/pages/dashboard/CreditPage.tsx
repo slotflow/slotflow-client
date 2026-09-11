@@ -1,12 +1,13 @@
 import dayjs from 'dayjs';
 import { useQuery } from '@tanstack/react-query';
+import { queryKeys } from '@/shared/utils/constants';
 import MetricCard from '@/components/common/MetricCard';
 import ChartLineLinear from '@/components/chart/ChartLineLinear';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import { Wallet, TrendingUp, TrendingDown, Info } from 'lucide-react';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
 import { FetchCreditTransactionsResponse } from '@/shared/types/api/credit';
-import { creditAccountChartLineLinearConfig, queryKeys } from '@/shared/utils/constants';
+import { creditAccountChartConfig } from '@/shared/utils/constants/chartConstants';
 import { fetchCreditAccountDetails, fetchCreditTransactions } from '@/services/apis/credit';
 import CreditTransactionTableColumn from '@/components/table/tableColumns/CreditTransactionTableColumn';
 
@@ -40,7 +41,7 @@ const CreditPage = () => {
             percentage={data?.balanceCredits?.percentage}
             days={data?.balanceCredits?.days}
             chartData={data?.balanceCredits?.chartData ?? []}
-            bgColour="bg-gradient-to-r from-violet-700 to-indigo-600"
+            bgColour="bg-gradient-to-r from-violet-500 to-indigo-400"
           />
           <MetricCard
             title="Account Status"
@@ -71,7 +72,7 @@ const CreditPage = () => {
             percentage={data?.spentCredits?.percentage}
             days={data?.spentCredits?.days}
             chartData={data?.spentCredits?.chartData ?? []}
-            bgColour="bg-gradient-to-r from-violet-700 to-indigo-600"
+           bgColour="bg-gradient-to-r from-violet-500 to-indigo-400"
           />
         </div>
         <div>
@@ -82,7 +83,7 @@ const CreditPage = () => {
               title="Credits chart"
               description="Detailed chart view of the credits"
               chartData={data?.chartData ?? []}
-              chartConfig={creditAccountChartLineLinearConfig}
+              chartConfig={creditAccountChartConfig}
               dataKeyOne="totalCredits"
               dataKeyTwo="spentCredits"
               dataKeyThree="balanceCredits"

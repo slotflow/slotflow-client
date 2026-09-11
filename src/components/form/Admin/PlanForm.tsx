@@ -11,15 +11,12 @@ import { useQuery } from '@tanstack/react-query';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PlanFormProps } from '@/shared/types/component';
 import { useAdminPlan } from '@/hooks/adminHooks/usePlan';
-import { planNameOptions } from '@/shared/utils/constants';
 import { UpdatePlanRequest } from '@/shared/types/api/plan';
 import { adminFetchPlanDetails } from '@/services/apis/plan';
 import DynamicStringListField from '../DynamicStringListFields';
 import { slideOut } from '@/shared/utils/helper/gsapAnimationSlide';
-import {
-  AdminCreatePlanFormType,
-  adminCreatePlanZodSchema,
-} from '@/shared/validators/zod/adminZod';
+import { planNameOptions } from '@/shared/utils/constants/planConstants';
+import { AdminCreatePlanFormType, adminCreatePlanZodSchema } from '@/shared/validators/zod/adminZod';
 
 const PlanForm = ({ onClose, formRef, planIdToEdit }: PlanFormProps) => {
   const isEditMode = Boolean(planIdToEdit);

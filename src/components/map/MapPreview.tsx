@@ -31,7 +31,7 @@ const MapPreview = ({ lat, lon }: MapPreviewProps) => {
   const googleMapsUrl = `https://www.google.com/maps?q=${lat},${lon}`;
 
   return (
-    <div className="p-2 z-40">
+    <div className="z-40">
       <div
         ref={mapRef}
         className="rounded-xl overflow-hidden shadow-sm"
@@ -46,7 +46,7 @@ const MapPreview = ({ lat, lon }: MapPreviewProps) => {
           title="Open in Google Maps"
           variant="default"
           asChild
-          className="flex items-center gap-2 cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
+          className="cursor-pinter"
         >
           <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">
             <img src={googleMap} className="h-4 w-4 object-contain" />

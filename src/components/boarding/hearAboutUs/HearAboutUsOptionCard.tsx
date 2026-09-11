@@ -1,6 +1,6 @@
 import { Card } from '@/components/ui/card';
 import { HearAboutUsOptionValue } from '@/shared/types/enums';
-import { hearAboutUsOptions } from '@/shared/utils/constants';
+import { hearAboutUsOptions } from '@/shared/utils/constants/boardingConstants';
 
 interface HearAboutUsOptionsProps {
   setSelectedOption: (value: HearAboutUsOptionValue | null) => void;

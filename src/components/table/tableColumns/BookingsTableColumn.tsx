@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  ValidateRoomId,
+  ValidateRoomIdRequest,
   FetchBookingsResponse,
-  changeAppointmentStatusRequest,
+  ChangeAppointmentStatusRequest,
 } from '@/shared/types/api/booking';
 import {
   DropdownMenu,
@@ -15,6 +15,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { ColumnDef } from '@tanstack/react-table';
 import { Booking } from '@/shared/types/entity/booking';
+import StatusBadge from '@/components/common/StatusBadge';
 import { checkJoin } from '@/shared/utils/helper/checkJoin';
 import { formateDate } from '@/shared/utils/helper/formatter';
 import { AppointmentStatus, Role } from '@/shared/types/enums';
@@ -22,7 +23,7 @@ import { DataTableColumnHeader } from '../DataTableColumnHeader';
 import { Check, MoreHorizontal, NotebookPen, ReceiptText, VideoIcon, X } from 'lucide-react';
 
 const BookingsTableColumn = (
-  handleJoinCall: (data: ValidateRoomId) => void,
+  JoinCallLobby: (data: ValidateRoomIdRequest) => void,
   handleNavigateToBookingsDetailPage: (appointmentId: Booking['_id']) => void,
   role: Role,
   handleReviewAddFormToggle?: (
@@ -31,141 +32,162 @@ const BookingsTableColumn = (
     providerId: string,
   ) => void,
   handleUserCancelBooking?: (bookingId: Booking['_id']) => void,
-  handleChangeAppointmentStatus?: (data: changeAppointmentStatusRequest) => void,
+  changeAppointmentStatus?: (data: ChangeAppointmentStatusRequest) => void,
+  statusChangingAppointmentId?: string | null,
 ): ColumnDef<FetchBookingsResponse>[] => [
-  {
-    accessorKey: 'appointmentDate',
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Date" />,
-    cell: ({ row }) => {
-      const createdAt = row.getValue('appointmentDate') as Date;
-      const formattedDate = formateDate(createdAt);
-      return <span>{formattedDate}</span>;
+    {
+      accessorKey: 'slNo',
+      header: 'Sl No',
+      cell: ({ row }) => (
+        <span className="font-mono text-xs text-muted-foreground font-medium">
+          {String(row.index + 1).padStart(2, '0')}
+        </span>
+      ),
     },
-  },
-  {
-    accessorKey: 'appointmentStatus',
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
-    cell: ({ row }) => {
-      const status = row.original.appointmentStatus;
-      switch (status) {
-        case AppointmentStatus.BOOKED:
-          return <span className="text-yellow-500 font-semibold">Pending Confirmation</span>;
-        case AppointmentStatus.CANCELLED:
-          return <span className="text-red-500 font-semibold">Cancelled</span>;
-        case AppointmentStatus.CONFIRMED:
-          return <span className="text-green-500 font-semibold">Confirmed</span>;
-        case AppointmentStatus.REJECTED_BY_PROVIDER:
-          return <span className="text-red-500 font-semibold">Rejected By Provider</span>;
-        case AppointmentStatus.NOT_ATTENDED:
-          return <span className="text-orange-500 font-semibold">Not Attended</span>;
-        case AppointmentStatus.COMPLETED:
-          return <span className="text-indigo-500 font-semibold">Completed 🎉</span>;
-        default:
-          return <span>{status}</span>;
-      }
+    {
+      accessorKey: 'appointmentDate',
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Date" />,
+      cell: ({ row }) => {
+        const createdAt = row.getValue('appointmentDate') as Date;
+        const formattedDate = formateDate(createdAt);
+        return <span className="font-medium text-slate-700 dark:text-slate-300">{formattedDate}</span>;
+      },
     },
-  },
-  {
-    accessorKey: 'appointmentTime',
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Slot" />,
-  },
-  {
-    accessorKey: 'createdAt',
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Paid on" />,
-    cell: ({ row }) => {
-      const createdAt = row.getValue('createdAt') as Date;
-      const formattedDate = formateDate(createdAt);
-      return <span>{formattedDate}</span>;
+    {
+      accessorKey: 'appointmentStatus',
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
+      cell: ({ row }) => {
+        const status = row.original.appointmentStatus;
+        const isThisRowUpdating = statusChangingAppointmentId === row.original._id;
+        if (isThisRowUpdating) {
+          return <StatusBadge type="updating" label="Updating" />;
+        }
+        switch (status) {
+          case AppointmentStatus.BOOKED:
+            return <StatusBadge type="pending" label="Pending Confirmation" />;
+          case AppointmentStatus.CANCELLED:
+            return <StatusBadge type="blocked" label="Cancelled" />;
+          case AppointmentStatus.CONFIRMED:
+            return <StatusBadge type="active" label="Confirmed" />;
+          case AppointmentStatus.REJECTED_BY_PROVIDER:
+            return <StatusBadge type="blocked" label="Rejected By Provider" />;
+          case AppointmentStatus.NOT_ATTENDED:
+            return <StatusBadge type="updating" label="Not Attended" />;
+          case AppointmentStatus.COMPLETED:
+            return <StatusBadge type="verified" label="Completed 🎉" />;
+          default:
+            return <StatusBadge type="standard" label={status} />;
+        }
+      },
     },
-  },
-  {
-    accessorKey: 'actions',
-    header: 'Actions',
-    id: 'actions',
-    cell: ({ row }) => {
-      const booking = row.original;
-      const canJoin = checkJoin(booking.appointmentDate);
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button title="Open Menu" variant="ghost" className="h-8 w-8 p-0 cursor-pointer">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            {booking.appointmentStatus === AppointmentStatus.CONFIRMED && canJoin && (
-              <DropdownMenuItem
-                onClick={() =>
-                  handleJoinCall({ appointmentId: booking._id, roomId: booking.videoCallRoomId })
-                }
-                className="flex items-center gap-2"
-              >
-                <VideoIcon /> Join
-              </DropdownMenuItem>
-            )}
-            {role === Role.PROVIDER &&
-              handleChangeAppointmentStatus &&
-              booking.appointmentStatus === AppointmentStatus.BOOKED && (
-                <>
-                  <DropdownMenuItem
-                    onClick={() =>
-                      handleChangeAppointmentStatus({
-                        appointmentId: booking._id,
-                        appointmentStatus: AppointmentStatus.CONFIRMED,
-                      })
-                    }
-                    className="flex items-center gap-2"
-                  >
-                    {<Check className="w-4 h-4" />}
-                    <span>Confirm</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() =>
-                      handleChangeAppointmentStatus({
-                        appointmentId: booking._id,
-                        appointmentStatus: AppointmentStatus.REJECTED_BY_PROVIDER,
-                      })
-                    }
-                    className="flex items-center gap-2"
-                  >
-                    {<X className="w-4 h-4" />}
-                    <span>Reject</span>
-                  </DropdownMenuItem>
-                </>
-              )}
-            {role === Role.USER &&
-              handleUserCancelBooking &&
-              booking.appointmentStatus === AppointmentStatus.BOOKED && (
-                <DropdownMenuItem onClick={() => handleUserCancelBooking(booking._id)}>
-                  Cancel
-                </DropdownMenuItem>
-              )}
-            {role === Role.USER &&
-              handleReviewAddFormToggle &&
-              booking.appointmentStatus === AppointmentStatus.COMPLETED && (
+    {
+      accessorKey: 'appointmentTime',
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Slot" />,
+      cell: ({ row }) => {
+        const slot = row.getValue('appointmentTime') as string;
+        return <StatusBadge type="standard" label={slot} />;
+      },
+    },
+    {
+      accessorKey: 'createdAt',
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Paid on" />,
+      cell: ({ row }) => {
+        const createdAt = row.getValue('createdAt') as Date;
+        const formattedDate = formateDate(createdAt);
+        return <span className="font-medium text-slate-700 dark:text-slate-300">{formattedDate}</span>;
+      },
+    },
+    {
+      accessorKey: 'actions',
+      header: 'Actions',
+      id: 'actions',
+      cell: ({ row }) => {
+        const booking = row.original;
+        const canJoin = checkJoin(booking.appointmentDate);
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button title="Open Menu" variant="ghost" className="h-8 w-8 p-0 cursor-pointer hover:bg-muted">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="rounded-xl">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              {booking.appointmentStatus === AppointmentStatus.CONFIRMED && canJoin && (
                 <DropdownMenuItem
-                  onClick={(e: React.MouseEvent<HTMLDivElement>) =>
-                    handleReviewAddFormToggle(e, booking._id, booking.serviceProviderId)
+                  onClick={() =>
+                    JoinCallLobby({ appointmentId: booking._id, roomId: booking.videoCallRoomId })
                   }
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-2 cursor-pointer"
                 >
-                  <NotebookPen /> Add Review
+                  <VideoIcon className="w-3.5 h-3.5" /> Join
                 </DropdownMenuItem>
               )}
-            <DropdownMenuItem
-              className="flex items-center gap-2"
-              onClick={() => handleNavigateToBookingsDetailPage(booking._id)}
-            >
-              <ReceiptText /> Details
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+              {role === Role.PROVIDER &&
+                changeAppointmentStatus &&
+                booking.appointmentStatus === AppointmentStatus.BOOKED && (
+                  <>
+                    <DropdownMenuItem
+                      onClick={() =>
+                        changeAppointmentStatus({
+                          appointmentId: booking._id,
+                          appointmentStatus: AppointmentStatus.CONFIRMED,
+                        })
+                      }
+                      className="flex items-center gap-2 cursor-pointer"
+                    >
+                      <Check className="w-3.5 h-3.5" />
+                      <span>Confirm</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() =>
+                        changeAppointmentStatus({
+                          appointmentId: booking._id,
+                          appointmentStatus: AppointmentStatus.REJECTED_BY_PROVIDER,
+                        })
+                      }
+                      className="flex items-center gap-2 cursor-pointer text-destructive focus:text-destructive"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                      <span>Reject</span>
+                    </DropdownMenuItem>
+                  </>
+                )}
+              {role === Role.USER &&
+                handleUserCancelBooking &&
+                booking.appointmentStatus === AppointmentStatus.BOOKED && (
+                  <DropdownMenuItem
+                    onClick={() => handleUserCancelBooking(booking._id)}
+                    className="flex items-center gap-2 cursor-pointer text-destructive focus:text-destructive"
+                  >
+                    <X className="w-3.5 h-3.5" /> Cancel
+                  </DropdownMenuItem>
+                )}
+              {role === Role.USER &&
+                handleReviewAddFormToggle &&
+                booking.appointmentStatus === AppointmentStatus.COMPLETED && (
+                  <DropdownMenuItem
+                    onClick={(e: React.MouseEvent<HTMLDivElement>) =>
+                      handleReviewAddFormToggle(e, booking._id, booking.serviceProviderId)
+                    }
+                    className="flex items-center gap-2 cursor-pointer"
+                  >
+                    <NotebookPen className="w-3.5 h-3.5" /> Add Review
+                  </DropdownMenuItem>
+                )}
+              <DropdownMenuItem
+                className="flex items-center gap-2 cursor-pointer"
+                onClick={() => handleNavigateToBookingsDetailPage(booking._id)}
+              >
+                <ReceiptText className="w-3.5 h-3.5" /> Details
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        );
+      },
     },
-  },
-];
+  ];
 
 export default BookingsTableColumn;

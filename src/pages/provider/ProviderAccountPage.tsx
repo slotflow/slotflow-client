@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Role } from '@/shared/types/enums';
 import { useQuery } from '@tanstack/react-query';
@@ -17,6 +18,11 @@ import { queryKeys } from '@/shared/utils/constants';
 
 const ProviderAccountPage = () => {
   const { authUser } = useSelector((state: RootState) => state.auth);
+  const [isShowPreview, setIsShowPreview] = useState<boolean>(false);
+
+  const handleIsShowPreview = () => {
+    setIsShowPreview(!isShowPreview);
+  }
 
   const {
     data: providerService,
@@ -59,9 +65,22 @@ const ProviderAccountPage = () => {
         data: providerProfile,
       }}
       role={authUser.role}
-      address={<AddressListing fetchApiFunction={fetchMyAddress} queryKey={[queryKeys.ADDRESS]} />}
-      availability={<ProviderServiceAvailability role={Role.PROVIDER} />}
-      proofs={<ProviderProofs fetchApiFunction={providerFetchMyProofs} />}
+      address={<AddressListing
+        fetchApiFunction={fetchMyAddress}
+        queryKey={[queryKeys.ADDRESS]}
+        isShowPreview={isShowPreview}
+      />
+      }
+      availability={<ProviderServiceAvailability
+        role={Role.PROVIDER}
+      />
+      }
+      proofs={<ProviderProofs
+        fetchApiFunction={providerFetchMyProofs}
+      />
+      }
+      isShowPreview={isShowPreview}
+      handleIsShowPreview={handleIsShowPreview}
     />
   );
 };

@@ -175,8 +175,7 @@ const IntegrationsListing = () => {
   if (!authUser) return null;
 
   return (
-    <div className="max-w-5xl mx-auto">
-      <div className="grid grid-cols-1 gap-4">
+    <div className="max-w-5xl mx-auto space-y-3">
         {listData?.map((item, index) => (
           <IntegrationCard
             key={index}
@@ -192,7 +191,6 @@ const IntegrationsListing = () => {
             isLoading={item.isLoading}
           />
         ))}
-      </div>
     </div>
   );
 };

@@ -1,11 +1,12 @@
 import { Badge } from '@/components/ui/badge';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { redirectPaths } from '@/shared/utils/constants';
 import MoveUpward from '@/components/animation/MoveUpward';
 import { AnimatedTooltip } from '@/components/ui/animated-tooltip';
 import AnimatedCounter from '@/components/animation/AnimatedCounter';
 import SplitTextReveal from '@/components/animation/SplitTextReveal';
-import { heroPeople, redirectPaths } from '@/shared/utils/constants';
+import { heroPeople} from '@/shared/utils/constants/landingConstants';
 import { ArrowRight, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
 
 const LandingHeroContent = () => {

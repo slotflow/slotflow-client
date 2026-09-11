@@ -49,7 +49,7 @@ export const changePlanBlockStatus = async (
   data: ChangePlanBlockStatusRequest,
 ): Promise<ApiBaseResponse<ChangePlanBlockStatusResponse>> => {
   const response = await axiosInstance.patch(`/plans/${data.planId}/block`, {
-    blockStatus: data.isBlocked,
+    isBlocked: data.isBlocked,
   });
   return response.data;
 };

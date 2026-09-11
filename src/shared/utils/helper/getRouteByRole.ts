@@ -1,6 +1,6 @@
 import { Role } from '../../types/enums';
 import { Route } from '../../types/common';
-import { sidebarRoutes } from '../constants';
+import { sidebarRoutes } from '../constants/routeConstants';
 
 export const getRoutesByRole = (role: Role): Route[] => {
   if (!role) return [];

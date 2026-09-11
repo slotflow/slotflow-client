@@ -1,8 +1,8 @@
-import { ONBOARDING_CONFIG } from '../constants';
 import { OnboardingStep } from '../../types/common';
+import { onboardingConfig } from '../constants/boardingConstants';
 
 export const getOnboardingMetadata = (pathname: string): OnboardingStep | undefined => {
-  if (ONBOARDING_CONFIG[pathname]) return ONBOARDING_CONFIG[pathname];
-  const baseKey = Object.keys(ONBOARDING_CONFIG).find((key) => pathname.startsWith(key));
-  return baseKey ? ONBOARDING_CONFIG[baseKey] : undefined;
+  if (onboardingConfig[pathname]) return onboardingConfig[pathname];
+  const baseKey = Object.keys(onboardingConfig).find((key) => pathname.startsWith(key));
+  return baseKey ? onboardingConfig[baseKey] : undefined;
 };

@@ -1,7 +1,7 @@
 import { ChartConfig } from '@/components/ui/chart';
 
 // admin dashboard user chart config
-export const adminDashboardUsersChartConfig = {
+export const usersRetensionChartConfig = {
   newUsers: {
     label: 'New Users',
     color: 'hsl(var(--chart-1))',
@@ -13,7 +13,7 @@ export const adminDashboardUsersChartConfig = {
 } satisfies ChartConfig;
 
 // admin dashboard provider chart config
-export const newVsReturningProvidersChartConfig = {
+export const providersRetensionChartConfig = {
   newUsers: {
     label: 'New Providers',
     color: 'hsl(var(--chart-1',
@@ -25,7 +25,7 @@ export const newVsReturningProvidersChartConfig = {
 } satisfies ChartConfig;
 
 // admin dadhboard appointments overtime chrt config
-export const appointmentsOvertimeChartDataConfig: ChartConfig = {
+export const appointmentsOvertimeChartConfig: ChartConfig = {
   completed: {
     label: 'Completed',
     color: '#10b981',
@@ -41,7 +41,7 @@ export const appointmentsOvertimeChartDataConfig: ChartConfig = {
 };
 
 // admin dashboard peak booking hours chart config
-export const peakBookingHoursChartDataConfig: ChartConfig = {
+export const peakBookingHoursChartConfig: ChartConfig = {
   hour: {
     label: 'Hours',
     color: '#6366f1',
@@ -53,7 +53,7 @@ export const peakBookingHoursChartDataConfig: ChartConfig = {
 };
 
 // admin dashboard appointments mode chart config
-export const appointmentModeChartDataConfig: ChartConfig = {
+export const usersChartConfig: ChartConfig = {
   newUsers: {
     label: 'New Users',
     color: '#6366f1',
@@ -171,3 +171,62 @@ export const subscriptionChartConfig: ChartConfig = {
     color: '#6b7280',
   },
 };
+
+// appointment mode chart config
+export const appointmentModeChartConfig = {
+  online: {
+    label: 'Online',
+    color: '#3b82f6',
+  },
+  offline: {
+    label: 'Offline',
+    color: '#10b981',
+  },
+};
+
+// credit data chart config
+export const creditAccountChartConfig: ChartConfig = {
+  totalCredits: {
+    label: 'Total Credits',
+    color: 'var(--mainColor)',
+  },
+  spentCredits: {
+    label: 'Spent Credits',
+    color: 'var(--mainColor)',
+  },
+  balanceCredits: {
+    label: 'Balance Credits',
+    color: 'var(--mainColor)',
+  },
+};
+
+// referral data chart config
+export const referralChartConfig: ChartConfig = {
+  totalReferrals: {
+    label: 'Total Referrals',
+    color: 'var(--mainColor)',
+  },
+  completedReferrals: {
+    label: 'Completed Referrals',
+    color: 'var(--mainColor)',
+  },
+  pendingReferrals: {
+    label: 'Pending Referrals',
+    color: 'var(--mainColor)',
+  },
+  rewardedReferrals: {
+    label: 'Rewarded Referrals',
+    color: 'var(--mainColor)',
+  },
+};
+
+// horizontal chart config
+export const horizontalChartConfig = {
+  value: {
+    label: 'Value',
+    color: 'var(--chart-2)',
+  },
+  label: {
+    color: 'var(--background)',
+  },
+} satisfies ChartConfig;

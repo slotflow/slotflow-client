@@ -1,47 +1,29 @@
-import { useState } from 'react';
 import { Button } from '../ui/button';
-import { toast } from 'react-toastify';
-import { appConfig } from '@/config/env';
 import { LoaderCircle } from 'lucide-react';
 import { ConfirmDeleteProps } from '@/shared/types/component';
 
 const ConfirmAlert = ({
   message,
-  entityId,
   deleteHandler,
+  isDeleting,
   closeToast,
-  errorMessage,
-  successMessage,
   btnTitle,
   btnText,
 }: ConfirmDeleteProps) => {
-  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleDelete = async () => {
-    try {
-      setLoading(true);
-      const res = await deleteHandler(entityId);
-      if (res.success) {
-        toast.success(res.message || successMessage);
-      } else {
-        toast.error(res.message || errorMessage);
-      }
-    } catch (error) {
-      if (appConfig.isDevelopment) {
-        console.log('Error in deleteReviewHandler ', error);
-      }
-      toast.error(errorMessage);
-    } finally {
-      setLoading(false);
-      closeToast?.();
-    }
+  const handleDelete = () => {
+    deleteHandler({
+      onSuccess: () => {
+        closeToast?.();
+      },
+    });
   };
 
   return (
     <div className="flex flex-col gap-2">
       <p>{message}</p>
       <div className="flex gap-2">
-        {loading ? (
+        {isDeleting ? (
           <div className="flex justify-center items-center">
             <LoaderCircle className="animate-spin" />
           </div>

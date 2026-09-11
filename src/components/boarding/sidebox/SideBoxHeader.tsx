@@ -1,39 +1,14 @@
-import { useState } from 'react';
-import { toast } from 'react-toastify';
-import { appConfig } from '@/config/env';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { RootState } from '@/app/store/appStore';
 import { LoaderCircle, LogOut } from 'lucide-react';
 import ThemeToggler from '@/components/common/ThemeToggler';
 import { useSignout } from '@/hooks/systemHooks/useSignout';
-import { defaultButtonClassName, redirectPaths } from '@/shared/utils/constants';
+import { defaultButtonClassName } from '@/shared/utils/constants';
 
 const SideBoxHeader = () => {
-  const navigate = useNavigate();
-  const { signoutHandler } = useSignout();
+  const { userSignout, isSigningOut } = useSignout();
   const user = useSelector((store: RootState) => store.auth.authUser);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const handleSignout = async () => {
-    setIsLoading(true);
-    try {
-      const res = await signoutHandler();
-      if (res.success) {
-        toast.success(res.message);
-        navigate(redirectPaths.LOGIN);
-      } else {
-        toast.error(res.message);
-      }
-    } catch (error) {
-      if (appConfig.isDevelopment) {
-        console.error('Error during signout:', error);
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   return (
     <div className="flex items-center justify-between">
@@ -49,11 +24,11 @@ const SideBoxHeader = () => {
           <Button
             title="Logout"
             variant="default"
-            onClick={handleSignout}
+            onClick={userSignout}
             className={defaultButtonClassName}
-            disabled={isLoading}
+            disabled={isSigningOut}
           >
-            {isLoading ? (
+            {isSigningOut ? (
               <LoaderCircle className="animate-spin w-4 h-4" />
             ) : (
               <LogOut className="w-4 h-4" />

@@ -5,22 +5,16 @@ import DataAnalysis from '../../DataAnalyisis';
 import DashboardStats from '../../DashboardStats';
 import { DashboardItem } from '@/shared/types/common';
 import { useAppointmentsDataCharts } from './AppointmentsDataCharts';
+import { queryKeys, aiResponseEntities } from '@/shared/utils/constants';
 import { AdminDashboardAppointmentsDataProps } from '@/shared/types/component';
+import { AppointmentsStatsMapForAdmin } from '@/shared/utils/constants/statsConstats';
 import { AdminFetchDashboardAppointmentStatsDataResponse } from '@/shared/types/api/adminDashboard';
-import {
-  AiResponseEntities,
-  AppointmentsStatsMapForAdmin,
-  queryKeys,
-} from '@/shared/utils/constants';
-import {
-  adminFetchDashboardAppointmentStatsData,
-  adminfFetchAnalyticsInsight,
-} from '@/services/apis/admin';
+import { adminFetchDashboardAppointmentStatsData, fetchAnalyticsInsight } from '@/services/apis/admin';
 
 export default function AdminDashboardAppointmentsData({
   dateRange,
 }: AdminDashboardAppointmentsDataProps) {
-  const chartDashboardItems = useAppointmentsDataCharts({ dateRange });
+  const charts = useAppointmentsDataCharts({ dateRange });
 
   const initialItems: DashboardItem[] = [
     {
@@ -51,13 +45,13 @@ export default function AdminDashboardAppointmentsData({
           badgeIcon={Briefcase}
           title="Appointments Performance & Growth"
           fetchFn={() =>
-            adminfFetchAnalyticsInsight({ dateRange, entity: AiResponseEntities.APPOINTMENTS })
+            fetchAnalyticsInsight({ dateRange, entity: aiResponseEntities.APPOINTMENTS })
           }
           queryKey={queryKeys.APPOINTMENT_AI_RES}
         />
       ),
     },
-    ...chartDashboardItems,
+    ...charts,
   ];
 
   return <Reorderable initialItems={initialItems} />;

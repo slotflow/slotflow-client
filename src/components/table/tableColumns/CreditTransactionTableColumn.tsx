@@ -3,12 +3,21 @@ import {
   CreditTransactionSource,
   CreditTransactionStatus,
 } from '@/shared/types/enums';
-import { Badge } from '@/components/ui/badge';
 import { ColumnDef } from '@tanstack/react-table';
+import StatusBadge from '@/components/common/StatusBadge';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
 import { FetchCreditTransactionsResponse } from '@/shared/types/api/credit';
 
 const CreditTransactionTableColumn = (): ColumnDef<FetchCreditTransactionsResponse>[] => [
+  {
+    accessorKey: 'slNo',
+    header: 'Sl No',
+    cell: ({ row }) => (
+      <span className="font-mono text-xs text-muted-foreground font-medium">
+        {String(row.index + 1).padStart(2, '0')}
+      </span>
+    ),
+  },
   {
     accessorKey: 'type',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Type" />,
@@ -16,22 +25,11 @@ const CreditTransactionTableColumn = (): ColumnDef<FetchCreditTransactionsRespon
       const type = row.original.type;
       switch (type) {
         case CreditTransactionType.CREDIT:
-          return (
-            <Badge
-              variant="outline"
-              className="text-green-500 font-semibold bg-green-50 border-green-50"
-            >
-              Credit
-            </Badge>
-          );
+          return <StatusBadge type="verified" label="Credit" />;
         case CreditTransactionType.DEBIT:
-          return (
-            <Badge variant="outline" className="text-red-500 font-semibold bg-red-50 border-red-50">
-              Debit
-            </Badge>
-          );
+          return <StatusBadge type="blocked" label="Debit" />;
         default:
-          return <span>{type}</span>;
+          return <StatusBadge type="standard" label={type} />;
       }
     },
   },
@@ -40,7 +38,18 @@ const CreditTransactionTableColumn = (): ColumnDef<FetchCreditTransactionsRespon
     header: ({ column }) => <DataTableColumnHeader column={column} title="Credits" />,
     cell: ({ row }) => {
       const credits = row.original.credits;
-      return <span>{credits}</span>;
+      const isCredit = row.original.type === CreditTransactionType.CREDIT;
+      return (
+        <span
+          className={`font-semibold ${
+            isCredit
+              ? 'text-emerald-600 dark:text-emerald-400'
+              : 'text-rose-600 dark:text-rose-400'
+          }`}
+        >
+          {isCredit ? `+${credits}` : `-${credits}`}
+        </span>
+      );
     },
   },
   {
@@ -48,7 +57,11 @@ const CreditTransactionTableColumn = (): ColumnDef<FetchCreditTransactionsRespon
     header: ({ column }) => <DataTableColumnHeader column={column} title="Balance" />,
     cell: ({ row }) => {
       const balanceAfter = row.original.balanceAfter;
-      return <span>{balanceAfter}</span>;
+      return (
+        <span className="font-medium text-slate-700 dark:text-slate-300">
+          {balanceAfter}
+        </span>
+      );
     },
   },
   {
@@ -58,22 +71,11 @@ const CreditTransactionTableColumn = (): ColumnDef<FetchCreditTransactionsRespon
       const status = row.original.status;
       switch (status) {
         case CreditTransactionStatus.SUCCESS:
-          return (
-            <Badge
-              variant="outline"
-              className="text-green-500 font-semibold bg-green-50 border-green-50"
-            >
-              Success
-            </Badge>
-          );
+          return <StatusBadge type="verified" label="Success" />;
         case CreditTransactionStatus.FAILED:
-          return (
-            <Badge variant="outline" className="text-red-500 font-semibold bg-red-50 border-red-50">
-              Failed
-            </Badge>
-          );
+          return <StatusBadge type="blocked" label="Failed" />;
         default:
-          return <span>{status}</span>;
+          return <StatusBadge type="standard" label={status} />;
       }
     },
   },
@@ -84,17 +86,17 @@ const CreditTransactionTableColumn = (): ColumnDef<FetchCreditTransactionsRespon
       const source = row.original.source;
       switch (source) {
         case CreditTransactionSource.ADMIN:
-          return <span className="text-indigo-500 font-semibold">Admin</span>;
+          return <StatusBadge type="standard" label="Admin" />;
         case CreditTransactionSource.BOOKING_DISCOUNT:
-          return <span className="text-blue-800 font-semibold">Booking Discount</span>;
+          return <StatusBadge type="active" label="Booking Discount" />;
         case CreditTransactionSource.PROMOTION:
-          return <span className="text-green-800 font-semibold">Promotion</span>;
+          return <StatusBadge type="verified" label="Promotion" />;
         case CreditTransactionSource.REFERRAL:
-          return <span className="text-yellow-800 font-semibold">Referral</span>;
+          return <StatusBadge type="pending" label="Referral" />;
         case CreditTransactionSource.SUBSCRIPTION_DISCOUNT:
-          return <span className="text-purple-800 font-semibold">Subscription Discount</span>;
+          return <StatusBadge type="updating" label="Subscription Discount" />;
         default:
-          return <span>{source}</span>;
+          return <StatusBadge type="standard" label={source} />;
       }
     },
   },

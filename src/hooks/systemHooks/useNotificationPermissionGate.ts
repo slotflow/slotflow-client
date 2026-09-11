@@ -1,5 +1,7 @@
 import { appConfig } from '@/config/env';
 import { RootState } from '@/app/store/appStore';
+import { ApiError } from '@/shared/types/common';
+import { useMutation } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCallback, useEffect, useMemo } from 'react';
 import { getFcmToken } from '@/shared/utils/helper/getToken';
@@ -9,6 +11,7 @@ import { getDeviceId } from '@/shared/utils/helper/getDeviceId';
 import { PermissionStatus, Platform } from '@/shared/types/enums';
 import { useNotificationPermissionGateReturn } from '@/shared/types/hooks';
 import { updateNotificationPreference } from '@/app/store/slices/authSlice';
+import { handleMutationError } from '@/shared/utils/helper/handleMutationError';
 import { requestNotificationPermission } from '@/shared/utils/helper/requestNotificationPermission';
 
 export const useNotificationPermissionGate = (): useNotificationPermissionGateReturn => {
@@ -16,9 +19,7 @@ export const useNotificationPermissionGate = (): useNotificationPermissionGateRe
   const authUser = useSelector((state: RootState) => state.auth.authUser);
 
   const shouldAskPermission = useMemo(() => {
-    if (typeof window === 'undefined') return false;
-    if (!('Notification' in window)) return false;
-
+    if (typeof window === 'undefined' || !('Notification' in window)) return false;
     return (
       Notification.permission === PermissionStatus.DEFAULT &&
       authUser?.isLoggedIn === true &&
@@ -26,30 +27,59 @@ export const useNotificationPermissionGate = (): useNotificationPermissionGateRe
     );
   }, [authUser]);
 
+  const enableNotificationMutation = useMutation({
+    mutationFn: async () => {
+      const deviceId = getDeviceId();
+      const fcmToken = await getFcmToken();
+
+      if (!deviceId || !fcmToken) {
+        throw new Error('Device or FCM token generation failed.');
+      }
+
+      // Step 1: Register Device
+      await registerDevice({
+        deviceId,
+        fcmToken,
+        platform: Platform.WEB,
+      });
+
+      // Step 2: Update Server Preference
+      return await userSetPushNotification(true);
+    },
+    onSuccess: (res) => {
+      dispatch(updateNotificationPreference(res.success));
+    },
+    onError: (error: ApiError) => {
+      dispatch(updateNotificationPreference(false));
+      handleMutationError(error, 'Failed to enable push notifications.');
+    },
+  });
+
+  const disableNotificationMutation = useMutation({
+    mutationFn: async () => {
+      return await userSetPushNotification(false);
+    },
+    onSuccess: () => {
+      dispatch(updateNotificationPreference(false));
+    },
+    onError: (error: ApiError) => {
+      if (appConfig.isDevelopment) {
+        console.error('Failed to update push notification preference', error);
+      }
+    },
+  });
+
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    if (!('Notification' in window)) return;
-    if (!authUser?.isLoggedIn) return;
+    if (typeof window === 'undefined' || !('Notification' in window)) return;
 
-    if (Notification.permission === PermissionStatus.DENIED) {
-      const updateServer = async () => {
-        try {
-          const res = await userSetPushNotification(false);
-          if (res.success) {
-            dispatch(updateNotificationPreference(true));
-          } else {
-            dispatch(updateNotificationPreference(false));
-          }
-        } catch (error) {
-          if (appConfig.isDevelopment) {
-            console.error('Failed to update push notification preference', error);
-          }
-        }
-      };
-
-      updateServer();
+    if (
+      authUser?.isLoggedIn &&
+      Notification.permission === PermissionStatus.DENIED &&
+      !disableNotificationMutation.isPending
+    ) {
+      disableNotificationMutation.mutate();
     }
-  }, [authUser, dispatch]);
+  }, [authUser?.isLoggedIn]);
 
   const askPermission = useCallback(async () => {
     if (!shouldAskPermission) return;
@@ -57,36 +87,11 @@ export const useNotificationPermissionGate = (): useNotificationPermissionGateRe
     const permission = await requestNotificationPermission();
 
     if (permission === PermissionStatus.GRANTED) {
-      const deviceId = getDeviceId();
-      if (appConfig.isDevelopment) {
-        console.log('deviceId : ', deviceId);
-      }
-      const fcmToken = await getFcmToken();
-      if (appConfig.isDevelopment) {
-        console.log('fcmToken : ', fcmToken);
-      }
-
-      if (!deviceId || !fcmToken) return;
-
-      await registerDevice({
-        deviceId,
-        fcmToken,
-        platform: Platform.WEB,
-      });
-
-      const res = await userSetPushNotification(true);
-      if (res.success) {
-        dispatch(updateNotificationPreference(true));
-      } else {
-        dispatch(updateNotificationPreference(false));
-      }
-      return;
+      enableNotificationMutation.mutate();
+    } else if (permission === PermissionStatus.DENIED) {
+      disableNotificationMutation.mutate();
     }
-
-    if (permission === PermissionStatus.DENIED) {
-      dispatch(updateNotificationPreference(false));
-    }
-  }, [shouldAskPermission, dispatch]);
+  }, [shouldAskPermission, enableNotificationMutation, disableNotificationMutation]);
 
   useEffect(() => {
     askPermission();

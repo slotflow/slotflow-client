@@ -1,89 +1,111 @@
-import { useVideoCallLobbyParams, useVideoCallLobbyReturn } from '@/shared/types/hooks';
 import {
   setMic,
   setCamera,
   startVideoCallTimer,
   updateVideoCallTimer,
 } from '@/app/store/slices/videoSlice';
+import { toast } from 'react-toastify';
 import { appConfig } from '@/config/env';
 import { useNavigate } from 'react-router-dom';
-import { joinOrLeft } from '@/services/apis/booking';
+import { useMutation } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
+import { useVideoCallReturn } from '@/shared/types/hooks';
 import { MediaTrackKind, Role } from '@/shared/types/enums';
 import { AppDispatch, RootState } from '@/app/store/appStore';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { JoinRoomCallbackRequest } from '@/shared/types/api/booking';
+import { ApiBaseResponse, ApiError } from '@/shared/types/common';
+import { joinOrLeft, validateRoomId } from '@/services/apis/booking';
 import { connectVideoSocket } from '@/services/socket/videoSocketThunk';
 import { toggleMediaTrack } from '@/shared/utils/helper/toggleMediaTrack';
+import { handleMutationError } from '@/shared/utils/helper/handleMutationError';
+import { JoinRoomCallbackRequest, JoinRoomCallbackResponse, ValidateRoomIdRequest } from '@/shared/types/api/booking';
 
-export const useVideoCallLobby = ({
-  roomId,
-  isCameraOn,
-  isMicOn,
-}: useVideoCallLobbyParams): useVideoCallLobbyReturn => {
+export const useJVideoCall = (): useVideoCallReturn => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
   const streamRef = useRef<MediaStream | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
+  const { isCameraOn, isMicOn } = useSelector((state: RootState) => state.video);
+  const { authUser } = useSelector((state: RootState) => state.auth);
 
   const { authUser: user } = useSelector((state: RootState) => state.auth);
-  const { isVideoCallTimerRunning, videoCallRoomId, videoCallRemainingTime } = useSelector(
+  const { isVideoCallTimerRunning, videoCallRoomId: savedRoomId, videoCallRemainingTime } = useSelector(
     (state: RootState) => state.video,
   );
 
-  const videoCallJoinHandler = async () => {
-    if (!user || !roomId) {
-      return { success: false, message: 'Something went wrong, please truy again' };
-    }
+  const videoCallJoinMutation = useMutation<
+    ApiBaseResponse<JoinRoomCallbackResponse>,
+    ApiError,
+    JoinRoomCallbackRequest
+  >({
+    mutationFn: async (data) => {
+      if (!user || data.videoCallRoomId) {
+        throw new Error('Data is missing. Please refresh.');
+      }
 
-    const currentTime = new Date();
+      return await joinOrLeft({
+        joined: true,
+        joinedTime: new Date(),
+        videoCallRoomId: data.videoCallRoomId,
+      });
+    },
 
-    const data: JoinRoomCallbackRequest = {
-      joined: true,
-      joinedTime: currentTime,
-      videoCallRoomId: roomId,
-    };
-
-    try {
-      const res = await joinOrLeft(data);
-      if (res.success) {
-        if (!res.data) {
-          return { success: false, message: 'Something went wrong' };
-        } else {
-          const totalDurationInSec = res.data.duration * 60;
-          dispatch(connectVideoSocket());
-
-          const remainingTime =
-            roomId === videoCallRoomId && videoCallRemainingTime > 0
-              ? videoCallRemainingTime
-              : totalDurationInSec;
-
+    onSuccess: (res) => {
+      if (res.success && res.data) {
+        const { duration, videoCallRoomId } = res.data;
+        const totalDurationInSec = duration * 60;
+        dispatch(connectVideoSocket());
+        if (savedRoomId === videoCallRoomId) {
+          const remainingTime = videoCallRemainingTime > 0 ? videoCallRemainingTime : totalDurationInSec;
           dispatch(
             startVideoCallTimer({
               remainingTime,
-              roomId,
-            }),
+              roomId: videoCallRoomId,
+            })
           );
-          navigate(
-            `/${user.role === Role.PROVIDER ? 'provider' : 'user'}/video-call-room/${roomId}`,
-          );
-          return { success: true, message: 'Welcome to meet' };
+          toast.success(res.message || 'Welcome to meet');
+          const rolePath = user?.role === Role.PROVIDER ? 'provider' : 'user';
+          navigate(`/${rolePath}/video-call-room/${videoCallRoomId}`);
         }
       } else {
-        return {
-          success: res.success || false,
-          message: res.message || 'Unable to join, please try again',
-        };
+        toast.error(res.message || 'Unable to join, please try again');
       }
-    } catch (error) {
-      if (appConfig.isDevelopment) {
-        console.error('Join room error:', error);
+    },
+
+    onError: (error: ApiError) => {
+      handleMutationError(error, 'Unable to join video call. Please try again.');
+    },
+  });
+
+
+  const JoinCallLobbyMutation = useMutation<
+    ApiBaseResponse,
+    ApiError,
+    ValidateRoomIdRequest
+  >({
+    mutationFn: async (data: ValidateRoomIdRequest) => {
+      return await validateRoomId(data);
+    },
+    onSuccess: (res, variables) => {
+      if (res.success) {
+        toast.success(res.message || 'Redirecting to video call...');
+        if (authUser?.role === Role.PROVIDER) {
+          navigate(`/provider/video-call-lobby/${variables.roomId}`);
+        } else if (authUser?.role === Role.USER) {
+          navigate(`/user/video-call-lobby/${variables.roomId}`);
+        }
+      } else {
+        toast.error(res.message || 'Invalid Room ID');
       }
-      return { success: false, message: 'Please try again' };
-    }
-  };
+    },
+    onError: (error: ApiError) => {
+      handleMutationError(error, 'Invalid Request, please try again after sometimes.');
+    },
+  });
+
+
 
   const getPreview = useCallback(async () => {
     try {
@@ -159,7 +181,9 @@ export const useVideoCallLobby = ({
   }, [isVideoCallTimerRunning, dispatch]);
 
   return {
-    videoCallJoinHandler,
+    videoCallJoin: videoCallJoinMutation.mutate,
+    isJoiningVideoCall: videoCallJoinMutation.isPending,
+    JoinCallLobby: JoinCallLobbyMutation.mutate,
     videoRef,
     toggleCamera,
     toggleMic,

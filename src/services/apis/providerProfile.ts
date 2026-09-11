@@ -14,7 +14,7 @@ import {
   AdminChangeProviderBlockStatusRequest,
   ProviderFetchMyProfileDetailsResponse,
   ProviderFetchDashboardStatsDataRequest,
-  ProviderFetchDashboardStatsDataResponse,
+  ProviderFetchDashboardBookingStatsDataResponse,
   UserFetchProviderProfileDetailsResponse,
   AdminFetchProviderProfileDetailsResponse,
   ProviderFetchDashboardRevenueStatsDataRequest,
@@ -90,9 +90,9 @@ export const providerSubmitDetailsForReview = createAsyncThunk<
 // provider fetch dashboard stats data
 export const providerFetchDashboardStatsData = async (
   payload: ProviderFetchDashboardStatsDataRequest,
-): Promise<ApiBaseResponse<ProviderFetchDashboardStatsDataResponse>> => {
+): Promise<ApiBaseResponse<ProviderFetchDashboardBookingStatsDataResponse>> => {
   const query = buildQueryParams(payload);
-  const response = await axiosInstance.get(`/provider-dashboard/?${query}`);
+  const response = await axiosInstance.get(`/provider-dashboard/analytics/stats?${query}`);
   return response.data;
 };
 
@@ -100,7 +100,7 @@ export const providerFetchDashboardRevenueStatsData = async (
   payload: ProviderFetchDashboardRevenueStatsDataRequest,
 ): Promise<ApiBaseResponse<ProviderFetchDashboardRevenueStatsDataResponse>> => {
   const query = buildQueryParams(payload);
-  const response = await axiosInstance.get(`/payments/revenue?${query}`);
+  const response = await axiosInstance.get(`/payments/analytics/revenue-chart?${query}`);
   return response.data;
 };
 
@@ -162,7 +162,7 @@ export const adminChangeProviderBlockStatus = async (
   data: AdminChangeProviderBlockStatusRequest,
 ): Promise<ApiBaseResponse<AdminChangeProviderBlockStatusResponse>> => {
   const response = await axiosInstance.patch(`/providers/${data.providerId}/block`, {
-    blockStatus: data.isBlocked,
+    isBlocked: data.isBlocked,
   });
   return response.data;
 };

@@ -16,8 +16,8 @@ const BookAppointmentCard = ({ isLoading, isError, data }: BookAppointmentCardPr
   };
 
   return (
-    <Card className="border shadow-sm rounded-xl overflow-hidden">
-      <div className="bg-primary/5 border-b p-6 flex flex-col justify-center items-center text-center">
+    <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
+      <div className="bg-primary/5 p-6 flex flex-col justify-center items-center text-center">
         <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
           Standard Rate
         </span>

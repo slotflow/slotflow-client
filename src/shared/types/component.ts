@@ -40,7 +40,6 @@ import { LucideIcon } from 'lucide-react';
 import { SetProofDataProps } from './slice';
 import { DateRange } from 'react-day-picker';
 import { Plan } from './entity/planInterface';
-import { RouteNames } from '../utils/constants';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { ChartConfig } from '@/components/ui/chart';
 import * as RPNInput from 'react-phone-number-input';
@@ -48,13 +47,14 @@ import { FetchServicesResponse } from './api/service';
 import { Location } from '@/shared/types/entity/address';
 import { Dispatch, ReactNode, SetStateAction } from 'react';
 import { Availability } from './entity/serviceAvailability';
+import { RouteNames } from '../utils/constants/routeConstants';
 import { BillingCycle, PlanName, Role, ServiceMode } from './enums';
 import { FetchProviderServiceResponse } from './api/providerService';
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 import { FetchAddressResponse, FetchMyAddressResponse } from './api/address';
 import { FetchPaymentsQueryParams, FetchPaymentsResponse } from './api/payment';
 import { ProviderServiceAvailabilityFormType } from '../validators/zod/providerZod';
-import { FetchReviewsResponse, ToggleReviewBlockStatusRequest } from './api/review';
+import { FetchReviewsResponse, ChangeReviewBlockStatusRequest } from './api/review';
 import { Column, ColumnDef, OnChangeFn, PaginationState } from '@tanstack/react-table';
 import { FetchProvidersProofsResponse, UpdateFileDataRequest } from './api/commonApiInterface';
 import { AnalyticsAiResponse } from './api/adminDashboard';
@@ -86,7 +86,7 @@ export interface DateSelectProps {
 
 // Chart Header component interface
 export interface ChartHeaderProps {
-  title: string;
+  title?: string;
   description?: string;
   onValueChange?: (value: TimeRange) => void;
   value?: string;
@@ -97,8 +97,6 @@ export interface ChartHeaderProps {
 
 //  Chart Common Interface
 export interface ChartComponentProps<T extends { date: string }> {
-  title: string;
-  description: string;
   chartData: T[];
   dataKeyOne: string;
   dataKeyTwo: string;
@@ -106,6 +104,8 @@ export interface ChartComponentProps<T extends { date: string }> {
   dataKeyFour: string;
   nameKey: string;
   chartConfig: ChartConfig;
+  title?: string;
+  description?: string;
   footerTextOne?: string;
   footerTextTwo?: string;
   chartContainerClassName?: string;
@@ -315,11 +315,9 @@ export interface AlertProps {
 // confirm delete alert component props
 export interface ConfirmDeleteProps {
   message: string;
-  entityId: string;
-  deleteHandler: (entityId: string) => Promise<ApiBaseResponse>;
+  deleteHandler: (options?: { onSuccess?: () => void }) => void;
+  isDeleting: boolean;
   closeToast: () => void;
-  errorMessage: string;
-  successMessage: string;
   btnTitle: string;
   btnText: string;
 }
@@ -357,7 +355,7 @@ export interface RoleSelectCardProps {
 // Chart overlay component props interface
 export interface ChartOverlayProps {
   stringOne: PlanName;
-  chartTitle: string;
+  chartTitle?: string;
 }
 
 // Horizontal chart for admin component props interface
@@ -659,14 +657,7 @@ export interface UserOrProviderAddressDetailsProps {
   isUserLookingProvider?: boolean;
   canUpdate?: boolean;
   showHeading?: boolean;
-}
-
-// ProfileHorizontalTabs component props interface
-export interface ProfileHorizontalTabsComponentProps {
-  isAdmin: boolean;
-  tab: number;
-  setTab: (index: number) => void;
-  tabArray: { tabName: string; admin: boolean; user: boolean }[];
+  isShowPreview?: boolean;
 }
 
 // UserOrProviderProfileDetails component props interface
@@ -703,12 +694,11 @@ export interface ProviderProofsProps {
 export interface ReviewCardProps {
   review: FetchReviewsResponse;
   role: Role;
-  handleDeleteReview: (e: React.MouseEvent<HTMLButtonElement>, reviewId: string) => void;
-  handleReportReview: (e: React.MouseEvent<HTMLButtonElement>, reviewId: string) => void;
-  handleChangeReviewBlockStatus: (
-    e: React.MouseEvent<HTMLButtonElement>,
-    data: ToggleReviewBlockStatusRequest,
-  ) => void;
+  handleDeleteReview: (reviewId: string) => void;
+  handleReportReview: (reviewId: string) => void;
+  isChangingReportStatus: boolean;
+  handleChangeReviewBlockStatus: (data: ChangeReviewBlockStatusRequest) => void;
+  isChangingBlockStatus: boolean;
 }
 
 // ReviewStatus component props interface
@@ -1052,6 +1042,8 @@ export interface ProviderProfileTopCardProps {
   categoryName: string;
   trusted: boolean;
   role: Role;
+  isShowPreview: boolean;
+  handleIsShowPreview: () => void;
 }
 
 // Requirements Card props
@@ -1067,6 +1059,7 @@ export interface ServiceCardProps {
   isError?: boolean;
   data?: FetchProviderServiceResponse;
   isUserLookingProvider?: boolean;
+  isShowPreview?: boolean;
 }
 
 // Provider Profile props
@@ -1089,6 +1082,8 @@ export interface ProviderProfileProps {
     isError?: boolean;
     data?: ProviderFetchMyProfileDetailsResponse | UserFetchProviderProfileDetailsResponse;
   };
+  isShowPreview: boolean;
+  handleIsShowPreview: () => void;
 }
 
 // TOC props

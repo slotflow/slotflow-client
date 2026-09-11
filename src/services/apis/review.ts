@@ -1,11 +1,14 @@
 import {
+  DeleteReviewRequest,
   CreateReviewRequest,
+  ReportReviewRequest,
+  ReportReviewResponse,
   FetchReviewsResponse,
   FetchReviewsQueryParams,
-  ToggleReviewBlockStatusRequest,
+  ChangeReviewBlockStatusRequest,
+  ChangeReviewBlockStatusResponse,
 } from '../../shared/types/api/review';
 import { axiosInstance } from '@/lib/axios';
-import { Review } from '../../shared/types/entity/review';
 import { buildQueryParams } from '../../shared/utils/helper/buildQueryParams';
 import { ApiBaseResponse, ApiFetchFunction } from '../../shared/types/common';
 
@@ -22,21 +25,19 @@ export const fetchReviews: ApiFetchFunction<FetchReviewsResponse, FetchReviewsQu
   return response.data.data;
 };
 
-export const deleteReview = async (reviewId: Review['_id']): Promise<ApiBaseResponse> => {
-  const response = await axiosInstance.delete(`/reviews/${reviewId}/block`);
+export const deleteReview = async (payload: DeleteReviewRequest): Promise<ApiBaseResponse> => {
+  const response = await axiosInstance.delete(`/reviews/${payload.reviewId}/block`);
   return response.data;
 };
 
-export const toggleReviewBlockStatus = async (
-  payload: ToggleReviewBlockStatusRequest,
-): Promise<ApiBaseResponse> => {
+export const changeReviewBlockStatus = async (payload: ChangeReviewBlockStatusRequest): Promise<ApiBaseResponse<ChangeReviewBlockStatusResponse>> => {
   const response = await axiosInstance.patch(`reviews/${payload.reviewId}`, {
-    blockStatus: payload.isblocked,
+    isBlocked: payload.isBlocked,
   });
   return response.data;
 };
 
-export const reportReview = async (reviewId: Review['_id']): Promise<ApiBaseResponse> => {
-  const response = await axiosInstance.patch(`/reviews/${reviewId}/report`);
+export const reportReview = async (payload: ReportReviewRequest): Promise<ApiBaseResponse<ReportReviewResponse>> => {
+  const response = await axiosInstance.patch(`/reviews/${payload.reviewId}/report`);
   return response.data;
 };

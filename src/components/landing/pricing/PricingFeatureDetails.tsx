@@ -8,12 +8,11 @@ import {
   TableHeader,
 } from '@/components/ui/table';
 import { BillingCycle } from '@/shared/types/enums';
-import { planFeatures } from '@/shared/utils/constants';
 import { CheckIcon, MinusIcon, Clock3Icon } from 'lucide-react';
 import { formatNumberToPrice } from '@/shared/utils/helper/formatter';
+import { PLAN_TIERS, planFeatures } from '@/shared/utils/constants/planConstants';
 import { PlanFeatureValueProps, PricingFeatureDetailsProps } from '@/shared/types/component';
 
-export const PLAN_TIERS = ['trial', 'starter', 'professional', 'enterprise'] as const;
 export type PlanTier = (typeof PLAN_TIERS)[number];
 
 const PricingFeatureDetails = ({

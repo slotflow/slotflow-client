@@ -1,5 +1,5 @@
 import { PlanName } from '../../types/enums';
-import { planChartAccess } from '../../utils/constants';
+import { planChartAccess } from '../../utils/constants/planConstants';
 
 export const graphView = (plan: string, chartKey: string) => {
   if (!plan || plan === '' || plan === PlanName.NO_SUBSCRIPTION) return false;

@@ -1,12 +1,12 @@
 import { useSelector } from 'react-redux';
 import { RootState } from '@/app/store/appStore';
+import { queryKeys } from '@/shared/utils/constants';
 import UserProfile from '@/components/user/UserProfile';
 import { fetchMyAddress } from '@/services/apis/address';
 import { userFetchMyProfileDetails } from '@/services/apis/user';
 import AddressListing from '@/components/profile/AddressListing';
 import ProfileListing from '@/components/profile/ProfileListing';
 import DataFetchingError from '@/components/error/DataFetchingError';
-import { queryKeys } from '@/shared/utils/constants';
 
 const UserAccountPage = () => {
   const { authUser } = useSelector((state: RootState) => state.auth);

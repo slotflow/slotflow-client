@@ -30,7 +30,7 @@ export const fetchPayments: ApiFetchFunction<
   return response.data.data;
 };
 
-// admin fetch revenue report
+// admin fetch revenue report [ why we do not use ApiFetchFunction here because the return type is different]
 export const fetchRevenueReportForAdmin = async (
   payload: AdmminFetchRevenueReportRequest,
 ): Promise<AdminFetchRevenueReportResponse> => {

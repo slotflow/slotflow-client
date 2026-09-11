@@ -28,7 +28,7 @@ const AVAILABLE_ICONS = {
   Users,
 };
 
-export const DashboardDataCardSample = () => {
+export const DashboardDataCardDemo = () => {
   const [label, setLabel] = useState<string>('Monthly Subscription');
   const [iconName, setIconName] = useState<keyof typeof AVAILABLE_ICONS>('CreditCard');
   const [value, setValue] = useState<string>('49.99');
@@ -256,4 +256,4 @@ export const DashboardDataCardSample = () => {
   );
 };
 
-export default DashboardDataCardSample;
+export default DashboardDataCardDemo;

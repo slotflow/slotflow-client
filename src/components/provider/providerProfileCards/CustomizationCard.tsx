@@ -23,7 +23,7 @@ const CustomizationCard = () => {
   };
 
   return (
-    <Card className="border shadow-sm rounded-xl">
+    <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
       <CardHeader>
         <CardTitle className="text-lg font-semibold flex items-center gap-2">
           <Edit className="w-5 h-5 text-primary" />

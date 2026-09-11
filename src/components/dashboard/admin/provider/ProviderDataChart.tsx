@@ -4,7 +4,7 @@ import { queryKeys } from '@/shared/utils/constants';
 import { fetchRoleBasedChartData } from '@/services/apis/admin';
 import { ProviderDataChartProps } from '@/shared/types/component';
 import BarChartHorizontal from '@/components/chart/BarChartHorizontal';
-import { newVsReturningProvidersChartConfig } from '@/shared/utils/chartConstants';
+import { providersRetensionChartConfig } from '@/shared/utils/constants/chartConstants';
 
 const ProviderDataChart = ({ dateRange }: ProviderDataChartProps) => {
   const { data, isLoading, isError } = useQuery({
@@ -26,7 +26,7 @@ const ProviderDataChart = ({ dateRange }: ProviderDataChartProps) => {
       dataKeyOne="date"
       dataKeyTwo="newUsers"
       dataKeyThree="returningUsers"
-      chartConfig={newVsReturningProvidersChartConfig}
+      chartConfig={providersRetensionChartConfig}
       isError={isError}
       isLoading={isLoading}
     />

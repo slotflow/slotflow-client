@@ -76,8 +76,6 @@ export interface AuthState {
   subscriptionUpdating: boolean;
   preboardingData: {
     selectedRole: Role | null;
-    hearAboutUsOption: HearAboutUsOptionValue | null;
-    referralCode: string | null;
   };
 }
 
@@ -105,7 +103,6 @@ export interface ProviderState {
   availabilities: Availability[] | null;
   identityProof: SetProofDataProps;
   serviceProof: SetProofDataProps;
-  isShowPreview: boolean;
 }
 
 export interface SetProofDataProps {

@@ -1,4 +1,3 @@
-import { toast } from 'react-toastify';
 import {
   DropdownMenu,
   DropdownMenuItem,
@@ -11,7 +10,6 @@ import { Role } from '@/shared/types/enums';
 import { useNavigate } from 'react-router-dom';
 import { AuthUser } from '@/shared/types/slice';
 import { useDispatch, useSelector } from 'react-redux';
-import { redirectPaths } from '@/shared/utils/constants';
 import { toggleTheme } from '@/app/store/slices/appSlice';
 import { useSignout } from '@/hooks/systemHooks/useSignout';
 import { AppDispatch, RootState } from '@/app/store/appStore';
@@ -24,8 +22,8 @@ interface SidebarDropDownProps {
 
 export const SidebarDropDown = ({ isSidebarOpen, basePath }: SidebarDropDownProps) => {
   const navigate = useNavigate();
+  const { userSignout } = useSignout();
   const dispatch = useDispatch<AppDispatch>();
-  const { signoutHandler } = useSignout();
 
   const themeMode: boolean = useSelector((store: RootState) => store.app.lightTheme);
   const user: Partial<AuthUser> | null = useSelector((store: RootState) => store.auth?.authUser);
@@ -33,16 +31,6 @@ export const SidebarDropDown = ({ isSidebarOpen, basePath }: SidebarDropDownProp
   if (!user?.isLoggedIn || !user.role) {
     return null;
   }
-
-  const handleSignout = async () => {
-    const res = await signoutHandler();
-    if (res.success) {
-      toast.success(res.message);
-      navigate(redirectPaths.LOGIN);
-    } else {
-      toast.error(res.message);
-    }
-  };
 
   const changeTheme = (): void => {
     dispatch(toggleTheme());
@@ -149,7 +137,7 @@ export const SidebarDropDown = ({ isSidebarOpen, basePath }: SidebarDropDownProp
 
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem onClick={handleSignout} className="text-red-500 focus:text-red-500">
+          <DropdownMenuItem onClick={userSignout} className="text-red-500 focus:text-red-500">
             <LogOut />
             <span>Logout</span>
           </DropdownMenuItem>

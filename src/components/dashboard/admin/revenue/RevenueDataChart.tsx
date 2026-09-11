@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '@/shared/utils/constants';
 import { RevenueDataChartProps } from '@/shared/types/component';
 import AreaGroupedChart from '@/components/chart/AreaGroupedChart';
-import { revenueChartConfig } from '@/shared/utils/chartConstants';
+import { revenueChartConfig } from '@/shared/utils/constants/chartConstants';
 import { adminFetchDashboardRevenueChartData } from '@/services/apis/admin';
 
 export const RevenueDataChart = ({ dateRange }: RevenueDataChartProps) => {

@@ -7,8 +7,8 @@ import { Booking } from './entity/booking';
 import React, { ChangeEvent } from 'react';
 import { Message } from './entity/message';
 import { Plan } from './entity/planInterface';
-import { RouteNames } from '../utils/constants';
 import { ColumnDef } from '@tanstack/react-table';
+import { RouteNames } from '../utils/constants/routeConstants';
 import { HearAboutUsOptionValue, PlanName, Role, ServiceCategory } from './enums';
 
 // Common Response interface
@@ -48,15 +48,6 @@ export interface BackendApiErrorResponse {
 
 // Exact error type entering catch/onError blocks
 export type ApiError = AxiosError<BackendApiErrorResponse>;
-
-// Gsap animation object interface
-export interface gsapBigSvgYDirectionAnimationInterface {
-  y: number;
-  duration: number;
-  yoyo: boolean;
-  repeat: number;
-  ease: string;
-}
 
 // Header compoenent Navs Array Interface
 export interface HeaderCompoenentNavsProps {
@@ -576,6 +567,7 @@ export interface StatusBadgeProps {
 export interface VerificationStatusConfig {
   label: string;
   type: StatusBadgeType;
+  desc: string;
 }
 
 //

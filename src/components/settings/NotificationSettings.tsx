@@ -1,11 +1,11 @@
-import { Card, CardTitle, CardHeader, CardContent, CardDescription } from '../ui/card';
 import { useSelector } from 'react-redux';
 import { Role } from '@/shared/types/enums';
 import { RootState } from '@/app/store/appStore';
 import { handleNotificationChange } from '@/services/apis/notification';
 import { NotificationType, NotificationChannel } from '@/shared/types/common';
 import NotificationSettingsItem from '../notification/NotificationSettingsItem';
-import { NOTIFICATION_CHANNEL, NOTIFICATION_TYPE } from '@/shared/utils/constants';
+import { notificationChannel, notificationType } from '@/shared/utils/constants';
+import { Card, CardTitle, CardHeader, CardContent, CardDescription } from '../ui/card';
 
 const NotificationSettings = () => {
   const authUser = useSelector((state: RootState) => state.auth.authUser);
@@ -37,10 +37,9 @@ const NotificationSettings = () => {
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
-      <Card>
+      <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
         <CardHeader>
           <CardTitle className="text-base">Email notifications</CardTitle>
-
           <CardDescription>
             Choose which notifications you want to receive by email.
           </CardDescription>
@@ -50,11 +49,11 @@ const NotificationSettings = () => {
           <NotificationSettingsItem
             title="Appointment updates"
             description="Receive emails when an appointment is booked, rescheduled, cancelled, or completed."
-            channel={NOTIFICATION_CHANNEL.EMAIL}
-            type={NOTIFICATION_TYPE.APPOINTMENT_UPDATES}
+            channel={notificationChannel.EMAIL}
+            type={notificationType.APPOINTMENT_UPDATES}
             checked={getNotificationPreference(
-              NOTIFICATION_CHANNEL.EMAIL,
-              NOTIFICATION_TYPE.APPOINTMENT_UPDATES,
+              notificationChannel.EMAIL,
+              notificationType.APPOINTMENT_UPDATES,
             )}
             onChange={handleNotificationToggle}
           />
@@ -62,11 +61,11 @@ const NotificationSettings = () => {
           <NotificationSettingsItem
             title="Appointment reminders"
             description="Receive reminders about upcoming appointments."
-            channel={NOTIFICATION_CHANNEL.EMAIL}
-            type={NOTIFICATION_TYPE.APPOINTMENT_REMINDERS}
+            channel={notificationChannel.EMAIL}
+            type={notificationType.APPOINTMENT_REMINDERS}
             checked={getNotificationPreference(
-              NOTIFICATION_CHANNEL.EMAIL,
-              NOTIFICATION_TYPE.APPOINTMENT_REMINDERS,
+              notificationChannel.EMAIL,
+              notificationType.APPOINTMENT_REMINDERS,
             )}
             onChange={handleNotificationToggle}
           />
@@ -74,11 +73,11 @@ const NotificationSettings = () => {
           <NotificationSettingsItem
             title="Payment notifications"
             description="Get notified about payments, refunds, and payment-related activity."
-            channel={NOTIFICATION_CHANNEL.EMAIL}
-            type={NOTIFICATION_TYPE.PAYMENT_NOTIFICATIONS}
+            channel={notificationChannel.EMAIL}
+            type={notificationType.PAYMENT_NOTIFICATIONS}
             checked={getNotificationPreference(
-              NOTIFICATION_CHANNEL.EMAIL,
-              NOTIFICATION_TYPE.PAYMENT_NOTIFICATIONS,
+              notificationChannel.EMAIL,
+              notificationType.PAYMENT_NOTIFICATIONS,
             )}
             onChange={handleNotificationToggle}
           />
@@ -86,11 +85,11 @@ const NotificationSettings = () => {
           <NotificationSettingsItem
             title="Account activity"
             description="Receive important updates about your account and security."
-            channel={NOTIFICATION_CHANNEL.EMAIL}
-            type={NOTIFICATION_TYPE.ACCOUNT_ACTIVITY}
+            channel={notificationChannel.EMAIL}
+            type={notificationType.ACCOUNT_ACTIVITY}
             checked={getNotificationPreference(
-              NOTIFICATION_CHANNEL.EMAIL,
-              NOTIFICATION_TYPE.ACCOUNT_ACTIVITY,
+              notificationChannel.EMAIL,
+              notificationType.ACCOUNT_ACTIVITY,
             )}
             onChange={handleNotificationToggle}
           />
@@ -98,17 +97,17 @@ const NotificationSettings = () => {
           <NotificationSettingsItem
             title="Promotional updates"
             description="Show product announcements, new features, and special offers."
-            channel={NOTIFICATION_CHANNEL.EMAIL}
-            type={NOTIFICATION_TYPE.PROMOTIONAL_UPDATES}
+            channel={notificationChannel.EMAIL}
+            type={notificationType.PROMOTIONAL_UPDATES}
             checked={getNotificationPreference(
-              NOTIFICATION_CHANNEL.EMAIL,
-              NOTIFICATION_TYPE.PROMOTIONAL_UPDATES,
+              notificationChannel.EMAIL,
+              notificationType.PROMOTIONAL_UPDATES,
             )}
             onChange={handleNotificationToggle}
           />
         </CardContent>
       </Card>
-      <Card>
+      <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
         <CardHeader>
           <CardTitle className="text-base">Push notifications</CardTitle>
 
@@ -120,11 +119,11 @@ const NotificationSettings = () => {
             <NotificationSettingsItem
               title="New appointments"
               description="Get notified instantly when a new appointment is booked."
-              channel={NOTIFICATION_CHANNEL.PUSH}
-              type={NOTIFICATION_TYPE.NEW_APPOINTMENTS}
+              channel={notificationChannel.PUSH}
+              type={notificationType.NEW_APPOINTMENTS}
               checked={getNotificationPreference(
-                NOTIFICATION_CHANNEL.PUSH,
-                NOTIFICATION_TYPE.NEW_APPOINTMENTS,
+                notificationChannel.PUSH,
+                notificationType.NEW_APPOINTMENTS,
               )}
               onChange={handleNotificationToggle}
             />
@@ -133,11 +132,11 @@ const NotificationSettings = () => {
           <NotificationSettingsItem
             title="Appointment reminders"
             description="Receive reminders before an upcoming appointment."
-            channel={NOTIFICATION_CHANNEL.PUSH}
-            type={NOTIFICATION_TYPE.APPOINTMENT_REMINDERS}
+            channel={notificationChannel.PUSH}
+            type={notificationType.APPOINTMENT_REMINDERS}
             checked={getNotificationPreference(
-              NOTIFICATION_CHANNEL.PUSH,
-              NOTIFICATION_TYPE.APPOINTMENT_REMINDERS,
+              notificationChannel.PUSH,
+              notificationType.APPOINTMENT_REMINDERS,
             )}
             onChange={handleNotificationToggle}
           />
@@ -145,11 +144,11 @@ const NotificationSettings = () => {
           <NotificationSettingsItem
             title="Appointment changes"
             description="Get notified when an appointment is rescheduled or cancelled."
-            channel={NOTIFICATION_CHANNEL.PUSH}
-            type={NOTIFICATION_TYPE.APPOINTMENT_CHANGES}
+            channel={notificationChannel.PUSH}
+            type={notificationType.APPOINTMENT_CHANGES}
             checked={getNotificationPreference(
-              NOTIFICATION_CHANNEL.PUSH,
-              NOTIFICATION_TYPE.APPOINTMENT_CHANGES,
+              notificationChannel.PUSH,
+              notificationType.APPOINTMENT_CHANGES,
             )}
             onChange={handleNotificationToggle}
           />
@@ -157,20 +156,19 @@ const NotificationSettings = () => {
           <NotificationSettingsItem
             title="Payment activity"
             description="Receive alerts for successful payments, refunds, and failures."
-            channel={NOTIFICATION_CHANNEL.PUSH}
-            type={NOTIFICATION_TYPE.PAYMENT_ACTIVITY}
+            channel={notificationChannel.PUSH}
+            type={notificationType.PAYMENT_ACTIVITY}
             checked={getNotificationPreference(
-              NOTIFICATION_CHANNEL.PUSH,
-              NOTIFICATION_TYPE.PAYMENT_ACTIVITY,
+              notificationChannel.PUSH,
+              notificationType.PAYMENT_ACTIVITY,
             )}
             onChange={handleNotificationToggle}
           />
         </CardContent>
       </Card>
-      <Card>
+      <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
         <CardHeader>
           <CardTitle className="text-base">In-app notifications</CardTitle>
-
           <CardDescription>Choose which notifications appear inside SlotFlow.</CardDescription>
         </CardHeader>
 
@@ -178,11 +176,11 @@ const NotificationSettings = () => {
           <NotificationSettingsItem
             title="Appointments"
             description="Show updates about bookings, cancellations, and rescheduled appointments."
-            channel={NOTIFICATION_CHANNEL.IN_APP}
-            type={NOTIFICATION_TYPE.APPOINTMENT_UPDATES}
+            channel={notificationChannel.IN_APP}
+            type={notificationType.APPOINTMENT_UPDATES}
             checked={getNotificationPreference(
-              NOTIFICATION_CHANNEL.IN_APP,
-              NOTIFICATION_TYPE.APPOINTMENT_UPDATES,
+              notificationChannel.IN_APP,
+              notificationType.APPOINTMENT_UPDATES,
             )}
             onChange={handleNotificationToggle}
           />
@@ -190,11 +188,11 @@ const NotificationSettings = () => {
           <NotificationSettingsItem
             title="Payments"
             description="Show payment and transaction updates."
-            channel={NOTIFICATION_CHANNEL.IN_APP}
-            type={NOTIFICATION_TYPE.PAYMENT_ACTIVITY}
+            channel={notificationChannel.IN_APP}
+            type={notificationType.PAYMENT_ACTIVITY}
             checked={getNotificationPreference(
-              NOTIFICATION_CHANNEL.IN_APP,
-              NOTIFICATION_TYPE.PAYMENT_ACTIVITY,
+              notificationChannel.IN_APP,
+              notificationType.PAYMENT_ACTIVITY,
             )}
             onChange={handleNotificationToggle}
           />
@@ -202,11 +200,11 @@ const NotificationSettings = () => {
           <NotificationSettingsItem
             title="System updates"
             description="Show important updates about SlotFlow and your account."
-            channel={NOTIFICATION_CHANNEL.IN_APP}
-            type={NOTIFICATION_TYPE.SYSTEM_UPDATES}
+            channel={notificationChannel.IN_APP}
+            type={notificationType.SYSTEM_UPDATES}
             checked={getNotificationPreference(
-              NOTIFICATION_CHANNEL.IN_APP,
-              NOTIFICATION_TYPE.SYSTEM_UPDATES,
+              notificationChannel.IN_APP,
+              notificationType.SYSTEM_UPDATES,
             )}
             onChange={handleNotificationToggle}
           />
@@ -214,11 +212,11 @@ const NotificationSettings = () => {
           <NotificationSettingsItem
             title="Promotional updates"
             description="Show product announcements, new features, and special offers."
-            channel={NOTIFICATION_CHANNEL.IN_APP}
-            type={NOTIFICATION_TYPE.PROMOTIONAL_UPDATES}
+            channel={notificationChannel.IN_APP}
+            type={notificationType.PROMOTIONAL_UPDATES}
             checked={getNotificationPreference(
-              NOTIFICATION_CHANNEL.IN_APP,
-              NOTIFICATION_TYPE.PROMOTIONAL_UPDATES,
+              notificationChannel.IN_APP,
+              notificationType.PROMOTIONAL_UPDATES,
             )}
             onChange={handleNotificationToggle}
           />

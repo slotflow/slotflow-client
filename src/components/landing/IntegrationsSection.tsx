@@ -3,7 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import MoveUpward from '../animation/MoveUpward';
 import SplitTextReveal from '../animation/SplitTextReveal';
 import IntegrationCard from './integration/IntegrationCard';
-import { landingPageIntegrations } from '@/shared/utils/constants';
+import { landingPageIntegrations } from '@/shared/utils/constants/landingConstants';
 
 const IntegrationsSection = () => {
   return (

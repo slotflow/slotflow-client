@@ -1,8 +1,7 @@
 import {
   redirectPaths,
   blockBackStatuses,
-  onboardingContent,
-  verificationStatusTextMap,
+  adminVerificationStatusConfig,
 } from '@/shared/utils/constants';
 import { toast } from 'react-toastify';
 import { appConfig } from '@/config/env';
@@ -16,6 +15,7 @@ import { AppDispatch, RootState } from '@/app/store/appStore';
 import { AdminVerificationStatus } from '@/shared/types/enums';
 import { Check, LoaderCircle, TriangleAlert, X } from 'lucide-react';
 import { providerSubmitDetailsForReview } from '@/services/apis/providerProfile';
+import { onboardingContent } from '@/shared/utils/constants/boardingConstants';
 
 const ProviderApprovalPendingPage = () => {
   const navigate = useNavigate();
@@ -91,7 +91,7 @@ const ProviderApprovalPendingPage = () => {
           <div>
             <p className="text-sm text-muted-foreground">Overall Status</p>
             <p className="text-lg font-semibold">
-              {verificationStatusTextMap[adminStatus ?? 'NOT_REQUESTED']}
+              {adminVerificationStatusConfig[adminStatus ?? AdminVerificationStatus.NOT_REQUESTED].desc}
             </p>
           </div>
 
@@ -155,33 +155,33 @@ const ProviderApprovalPendingPage = () => {
 
       {(adminStatus === AdminVerificationStatus.NOT_REQUESTED ||
         adminStatus === AdminVerificationStatus.REJECTED) && (
-        <Card className="mt-2">
-          <CardContent className="p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <p className="text-sm text-muted-foreground max-w-md">
-              {onboardingContent.profileApproval.description2}
-            </p>
+          <Card className="mt-2">
+            <CardContent className="p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+              <p className="text-sm text-muted-foreground max-w-md">
+                {onboardingContent.profileApproval.description2}
+              </p>
 
-            <Button
-              onClick={handleSubmit}
-              disabled={isSubmitting}
-              className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
-            >
-              {isSubmitting ? (
-                <>
-                  <LoaderCircle className="animate-spin size-4 mr-2" />
-                  {adminStatus === AdminVerificationStatus.REJECTED
-                    ? 'Resubmitting...'
-                    : 'Submitting...'}
-                </>
-              ) : adminStatus === AdminVerificationStatus.REJECTED ? (
-                'Resubmit for Review'
-              ) : (
-                'Submit for Review'
-              )}
-            </Button>
-          </CardContent>
-        </Card>
-      )}
+              <Button
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+                className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
+              >
+                {isSubmitting ? (
+                  <>
+                    <LoaderCircle className="animate-spin size-4 mr-2" />
+                    {adminStatus === AdminVerificationStatus.REJECTED
+                      ? 'Resubmitting...'
+                      : 'Submitting...'}
+                  </>
+                ) : adminStatus === AdminVerificationStatus.REJECTED ? (
+                  'Resubmit for Review'
+                ) : (
+                  'Submit for Review'
+                )}
+              </Button>
+            </CardContent>
+          </Card>
+        )}
 
       {isBackBlocked && (
         <div className="text-center text-sm text-muted-foreground mt-2">

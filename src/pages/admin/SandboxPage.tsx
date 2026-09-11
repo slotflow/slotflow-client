@@ -20,21 +20,6 @@ export const SandboxPage = () => {
             Select a component from the dropdown to preview sample usage and interactive states.
           </p>
         </div>
-
-        <div className="flex items-center gap-3">
-          <label htmlFor="component-select" className="text-xs font-semibold text-slate-500">
-            Select Component:
-          </label>
-          <select
-            id="component-select"
-            value={currentTab}
-            onChange={handleSelectComponent}
-            className="px-3 py-2 text-xs font-medium rounded-lg border border-slate-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          >
-            <option value="dashboard-data-card">DashboardDataCard</option>
-            <option value="charts-demo">Charts</option>
-          </select>
-        </div>
       </div>
 
       <div className="pt-2">

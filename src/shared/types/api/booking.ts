@@ -35,7 +35,7 @@ export interface FetchBookingDetailsResponse extends Pick<
 }
 
 // request type of the validate room id api
-export interface ValidateRoomId {
+export interface ValidateRoomIdRequest {
   appointmentId: Booking['_id'];
   roomId: Booking['videoCallRoomId'];
 }
@@ -51,21 +51,29 @@ export type BookAnAppointmentRequest = {
 // response interface of the book an appointment api
 export type BookAppointmentResponse = string;
 
-// request type of the join room callback api
+// join video call
 export interface JoinRoomCallbackRequest {
   videoCallRoomId: Booking['videoCallRoomId'];
   joined: boolean;
   joinedTime?: Date;
   leftCallTime?: Date;
 }
-
-// response interface of the join room callback api
 export interface JoinRoomCallbackResponse {
   duration: number;
+  videoCallRoomId: Booking['videoCallRoomId'];
 }
 
-// request type of the provider change booking appointment status api
-export interface changeAppointmentStatusRequest {
+
+// provider change booking appointment status
+export interface ChangeAppointmentStatusRequest {
   appointmentId: Booking['_id'];
   appointmentStatus: Booking['appointmentStatus'];
 }
+export type ChangeAppointmentStatusResponse = Pick<Booking, "_id" | "appointmentStatus">;
+
+
+// cancel booking
+export interface CancelBookingRequest {
+  bookingId: Booking["_id"];
+}
+export type CancelBookingResponse = Pick<Booking, "_id" | "appointmentStatus">

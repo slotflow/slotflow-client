@@ -1,10 +1,11 @@
 import {
   completionChartConfig,
   topBookingDaysChartConfig,
-  appointmentModeChartDataConfig,
-  peakBookingHoursChartDataConfig,
-  appointmentsOvertimeChartDataConfig,
-} from '@/shared/utils/chartConstants';
+  usersChartConfig,
+  peakBookingHoursChartConfig,
+  appointmentsOvertimeChartConfig,
+  usersRetensionChartConfig,
+} from '@/shared/utils/constants/chartConstants';
 import { useQuery } from '@tanstack/react-query';
 import { DashboardItem } from '@/shared/types/common';
 import RadialChart from '@/components/chart/RadialChart';
@@ -15,7 +16,7 @@ import BarChartHorizontal from '@/components/chart/BarChartHorizontal';
 import LineChartHorizontal from '@/components/chart/LineChartHorizontal';
 import { UseAppointmentsDataChartsProps } from '@/shared/types/component';
 import { adminFetchDashboardBookingChartData } from '@/services/apis/admin';
-import { newVsReturningUsersChartConfig, queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants';
 
 export const useAppointmentsDataCharts = ({
   dateRange,
@@ -57,7 +58,7 @@ export const useAppointmentsDataCharts = ({
           dataKeyOne="completed"
           dataKeyTwo="missed"
           dataKeyThree="cancelled"
-          chartConfig={appointmentsOvertimeChartDataConfig}
+          chartConfig={appointmentsOvertimeChartConfig}
           isLoading={isLoading}
           isError={isError}
         />
@@ -73,7 +74,7 @@ export const useAppointmentsDataCharts = ({
           chartData={graphData.peakBookingHoursChartData}
           dataKeyOne="hours"
           dataKeyTwo="bookings"
-          chartConfig={peakBookingHoursChartDataConfig}
+          chartConfig={peakBookingHoursChartConfig}
           isLoading={isLoading}
           isError={isError}
         />
@@ -89,7 +90,7 @@ export const useAppointmentsDataCharts = ({
           chartData={graphData.appointmentModeChartData}
           dataKeyOne="offline"
           dataKeyTwo="online"
-          chartConfig={appointmentModeChartDataConfig}
+          chartConfig={usersChartConfig}
           isLoading={isLoading}
           isError={isError}
         />
@@ -122,7 +123,7 @@ export const useAppointmentsDataCharts = ({
           dataKeyOne="date"
           dataKeyTwo="newUsers"
           dataKeyThree="returningUsers"
-          chartConfig={newVsReturningUsersChartConfig}
+          chartConfig={usersRetensionChartConfig}
           isLoading={isLoading}
           isError={isError}
         />

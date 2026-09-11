@@ -80,7 +80,7 @@ export const changeUserBlockStatus = async (
   data: AdminChangeUserBlockStatusRequest,
 ): Promise<ApiBaseResponse<AdminChangeUserBlockStatusResponse>> => {
   const response = await axiosInstance.patch(`/users/${data.userId}/block`, {
-    blockStatus: data.isBlocked,
+    isBlocked: data.isBlocked,
   });
   return response.data;
 };

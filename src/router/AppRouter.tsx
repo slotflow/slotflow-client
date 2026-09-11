@@ -4,15 +4,15 @@ import RoleLayout from './RoleLayout.tsx';
 import { Role } from '@/shared/types/enums.ts';
 import OnBoardingGuard from './OnBoardingGuard.tsx';
 import { ProtectedRoute } from './ProtectedRoutes.tsx';
-import { RouteNames } from '@/shared/utils/constants.ts';
 import BoardingLayoutWrapper from './BoardingLayoutWrapper.tsx';
+import { RouteNames } from '@/shared/utils/constants/routeConstants.ts';
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
-import ProviderDashboardPage from '@/pages/provider/ProviderDashboardPage.tsx';
-import ProviderDashboardGraphsPage from '@/pages/provider/ProviderDashboardGraphsPage.tsx';
-import AdminPlanDetailsPage from '@/pages/admin/AdminPlanDetailsPage.tsx';
-import SandboxPage from '@/pages/admin/SandboxPage.tsx';
-import DashboardDataCardSample from '@/pages/sandbox/DashboardDataCardSample.tsx';
-import ChartsDemo from '@/pages/sandbox/ChartsDemo.tsx';
+
+const ProviderDashboardPage = lazy(() => import('@/pages/provider/ProviderDashboardPage.tsx'));
+const AdminPlanDetailsPage = lazy(() => import('@/pages/admin/AdminPlanDetailsPage.tsx'));
+const SandboxPage = lazy(() => import('@/pages/admin/SandboxPage.tsx'));
+const DashboardDataCardDemo = lazy(() => import('@/pages/sandbox/DashboardDataCardDemo.tsx'));
+const ChartsDemo = lazy(() => import('@/pages/sandbox/ChartsDemo.tsx'));
 
 const FAQPage = lazy(() => import('@/pages/landing/FAQPage.tsx'));
 const AuthLayout = lazy(() => import('@/layouts/AuthLayout.tsx'));
@@ -64,9 +64,6 @@ const PaymentDetailViewPage = lazy(() => import('@/pages/dashboard/PaymentDetail
 const NotificationSettings = lazy(() => import('@/components/settings/NotificationSettings.tsx'));
 const ProviderAddAddressPage = lazy(() => import('@/pages/boarding/ProviderCreateAddressPage.tsx'));
 const AdminServiceProvidersPage = lazy(() => import('@/pages/admin/AdminServiceProvidersPage.tsx'));
-const ProviderDashboardStatsPage = lazy(
-  () => import('@/pages/provider/ProviderDashboardStatsPage.tsx'),
-);
 const UserListProvidersCardsPage = lazy(
   () => import('@/pages/user/UserListProvidersCardsPage.tsx'),
 );
@@ -269,7 +266,7 @@ export const appRouter = createBrowserRouter([
         children: [
           {
             path: 'dashboard-data-card',
-            element: <DashboardDataCardSample />,
+            element: <DashboardDataCardDemo />,
             handle: {
               title: 'Dashboard Data Card',
             },
@@ -522,29 +519,6 @@ export const appRouter = createBrowserRouter([
             handle: {
               title: 'Dashboard',
             },
-            children: [
-              {
-                index: true,
-                element: <Navigate to="stats" replace />,
-                handle: {
-                  title: 'Stats',
-                },
-              },
-              {
-                path: 'stats',
-                element: <ProviderDashboardStatsPage />,
-                handle: {
-                  title: 'Stats',
-                },
-              },
-              {
-                path: 'graphs',
-                element: <ProviderDashboardGraphsPage />,
-                handle: {
-                  title: 'Graphs',
-                },
-              },
-            ],
           },
           {
             path: 'profile',

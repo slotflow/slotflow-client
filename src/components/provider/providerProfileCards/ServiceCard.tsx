@@ -1,29 +1,21 @@
-import { Hash, Users, Layers, UserPlus, Briefcase } from 'lucide-react';
-import { useSelector } from 'react-redux';
 import NoData from '@/components/common/NoData';
-import { RootState } from '@/app/store/appStore';
 import DataField from '@/components/app/DataField';
+import { Card, CardContent } from '@/components/ui/card';
 import { ServiceCardProps } from '@/shared/types/component';
+import { Hash, Users, Layers, UserPlus } from 'lucide-react';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import DataFieldShimmer from '@/components/shimmers/DataFieldShimmer';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const ServiceCard = ({
   isLoading,
   isError,
   data,
   isUserLookingProvider = false,
+  isShowPreview = false,
 }: ServiceCardProps) => {
-  const isShowPreview = useSelector((state: RootState) => state.provider.isShowPreview);
 
   return (
-    <Card>
-      <CardHeader className="border-b pb-4 flex items-center justify-between">
-        <CardTitle className="text-lg font-semibold flex items-center gap-2">
-          <Briefcase className="w-5 h-5 text-primary" />
-          Service Details
-        </CardTitle>
-      </CardHeader>
+    <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
       <CardContent>
         {isLoading ? (
           <DataFieldShimmer row={5} />

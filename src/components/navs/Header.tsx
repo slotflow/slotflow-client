@@ -4,8 +4,9 @@ import { Menu, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import ThemeToggler from '../common/ThemeToggler';
 import { AnimatePresence, motion } from 'framer-motion';
-import { navigation, redirectPaths } from '@/shared/utils/constants';
+import { redirectPaths } from '@/shared/utils/constants';
 import logo from '../../assets/logos/company/slotflowLogoTransparent.png';
+import { headerLinks } from '@/shared/utils/constants/landingConstants';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const Header = () => {
           </h4>
 
           <div className="ml-10 hidden items-center gap-8 md:flex">
-            {navigation.map((item) => (
+            {headerLinks.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
@@ -45,7 +46,7 @@ const Header = () => {
             title="Login"
             variant="ghost"
             onClick={() => navigate(redirectPaths.LOGIN)}
-            className="hidden sm:flex rounded-lg border border-[var(--mainColor)] bg-[var(--mainColor)] px-4 py-2 text-sm font-semibold text-white transition hover:text-[var(--mainColor)] hover:opacity-90"
+            className="cursor-pointer hidden sm:flex rounded-lg border border-[var(--mainColor)] bg-[var(--mainColor)] px-4 py-2 text-sm font-semibold text-white transition hover:text-[var(--mainColor)] hover:opacity-90"
           >
             Login
           </Button>
@@ -54,7 +55,7 @@ const Header = () => {
             title="Sign Up"
             variant="ghost"
             onClick={() => navigate(redirectPaths.REGISTER)}
-            className="ml-2 hidden md:flex rounded-lg border border-[var(--mainColor)] px-4 py-2 text-sm font-semibold text-[var(--mainColor)] transition hover:bg-[var(--mainColor)] hover:text-white"
+            className="cursor-pointer ml-2 hidden md:flex rounded-lg border border-[var(--mainColor)] px-4 py-2 text-sm font-semibold text-[var(--mainColor)] transition hover:bg-[var(--mainColor)] hover:text-white"
           >
             Sign Up
           </Button>
@@ -103,7 +104,7 @@ const Header = () => {
                 }}
                 className="flex flex-col p-3"
               >
-                {navigation.map((item) => (
+                {headerLinks.map((item) => (
                   <motion.a
                     key={item.name}
                     href={item.href}

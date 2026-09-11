@@ -9,6 +9,11 @@ import {
   ChangePlanBlockStatusResponse,
 } from './api/plan';
 import {
+  PreBoardingResponse,
+  AdminChangeUserBlockStatusRequest,
+  AdminChangeUserBlockStatusResponse,
+} from './api/user';
+import {
   CreateServiceRequest,
   UpdateServiceRequest,
   UpdateServiceResponse,
@@ -25,25 +30,18 @@ import {
   AdminChangeProviderBlockStatusRequest,
   AdminChangeProviderBlockStatusResponse,
 } from './api/providerProfile';
-import { AuthUser } from './slice';
 import { User } from './entity/user';
-import { Review } from './entity/review';
 import { Payment } from './entity/payment';
 import { Booking } from './entity/booking';
 import { Plan } from './entity/planInterface';
 import { ApiBaseResponse, ApiError } from './common';
 import { Subscription } from './entity/subscription';
 import { Availability } from './entity/serviceAvailability';
-import { ToggleReviewBlockStatusRequest } from './api/review';
+import { HearAboutUsOptionValue, ServiceMode } from './enums';
 import { UseFormGetValues, UseFormSetValue } from 'react-hook-form';
-import { HearAboutUsOptionValue, Role, ServiceMode } from './enums';
-import { changeAppointmentStatusRequest, ValidateRoomId } from './api/booking';
-import {
-  AdminChangeUserBlockStatusRequest,
-  AdminChangeUserBlockStatusResponse,
-  PreBoardingResponse,
-} from './api/user';
 import { UseMutateAsyncFunction, UseMutateFunction } from '@tanstack/react-query';
+import { ReportReviewRequest, ReportReviewResponse, ChangeReviewBlockStatusRequest, ChangeReviewBlockStatusResponse, DeleteReviewRequest } from './api/review';
+import { CancelBookingRequest, CancelBookingResponse, ChangeAppointmentStatusRequest, ChangeAppointmentStatusResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, ValidateRoomIdRequest } from './api/booking';
 
 // Admin plan hook return type interface
 export interface UseAdminPlanReturn {
@@ -150,24 +148,34 @@ export interface useModalAnimationReturn {
 
 // Notification permission gate hook return type interface
 export interface useNotificationPermissionGateReturn {
-  askPermission: () => Promise<void>;
+  askPermission: () => void;
 }
 
 // Signout hook return type interface
 export interface useSignoutReturn {
-  signoutHandler: () => Promise<ApiBaseResponse>;
-}
-
-// Video call lobby hook parameter type interface
-export interface useVideoCallLobbyParams {
-  roomId: string;
-  isCameraOn: boolean;
-  isMicOn: boolean;
+  userSignout: UseMutateFunction<
+    ApiBaseResponse,
+    ApiError,
+    void
+  >;
+  isSigningOut: boolean;
 }
 
 // Video call lobby hook return type interface
-export interface useVideoCallLobbyReturn {
-  videoCallJoinHandler: () => Promise<{ success: boolean; message: string }>;
+export interface useVideoCallReturn {
+  videoCallJoin: UseMutateFunction<
+    ApiBaseResponse<JoinRoomCallbackResponse>,
+    ApiError,
+    JoinRoomCallbackRequest
+  >;
+  isJoiningVideoCall: boolean;
+
+  JoinCallLobby: UseMutateFunction<
+    ApiBaseResponse,
+    ApiError,
+    ValidateRoomIdRequest
+  >;
+
   videoRef: React.RefObject<HTMLVideoElement | null>;
   toggleCamera: () => void;
   toggleMic: () => void;
@@ -175,16 +183,32 @@ export interface useVideoCallLobbyReturn {
 
 // Review hook return type interface
 export interface useReviewReturn {
-  reportReviewHandler: (reviewId: Review['_id']) => Promise<ApiBaseResponse>;
-  toggleBlockStatusHandler: (data: ToggleReviewBlockStatusRequest) => Promise<ApiBaseResponse>;
-  deleteReviewHandler: (reviewId: Review['_id']) => Promise<ApiBaseResponse>;
+  reportReview: UseMutateFunction<
+    ApiBaseResponse<ReportReviewResponse>,
+    ApiError,
+    ReportReviewRequest
+  >;
+  isChangingReportStatus: boolean;
+
+  changeReviewBlockStatus: UseMutateFunction<
+    ApiBaseResponse<ChangeReviewBlockStatusResponse>,
+    ApiError,
+    ChangeReviewBlockStatusRequest
+  >;
+  isChangingBlockStatus: boolean;
+
+  deleteReview: UseMutateFunction<
+    ApiBaseResponse,
+    ApiError,
+    DeleteReviewRequest
+  >;
+  isDeleting: boolean;
 }
 
 // Role based navigation hook return type interface
 export interface useRoleBasedNavigationReturn {
   handleAdminGetProviderDetailPage: (subscriptionId: Subscription['_id']) => void;
   handleGetPaymentDetailsPage: (paymentId: Payment['_id']) => void;
-  JoinCallHandler: (data: ValidateRoomId) => Promise<{ success: boolean; message: string }>;
   handleNavigateToBookingsDetailPage: (appointmentId: Booking['_id']) => void;
   handleNavigateToPlanDetailPage: (planId: Plan['_id']) => void;
   handleGetProviderDetailPage: (providerId: User['_id']) => void;
@@ -235,23 +259,35 @@ export interface UseBookingCustomHookReturn {
     bookingId: string,
     providerId: string,
   ) => void;
-  changeAppointmentStatusHandler: (
-    data: changeAppointmentStatusRequest,
-  ) => Promise<ApiBaseResponse>;
-  cancelBookingHandler: (bookingId: Booking['_id']) => Promise<ApiBaseResponse>;
+
+  changeAppointmentStatus: UseMutateFunction<
+    ApiBaseResponse<ChangeAppointmentStatusResponse>,
+    ApiError,
+    ChangeAppointmentStatusRequest
+  >;
+  statusChangingAppointmentId: string | null;
+
+  cancelBooking: UseMutateFunction<
+    ApiBaseResponse<CancelBookingResponse>,
+    ApiError,
+    CancelBookingRequest
+  >;
+  isCancelling: boolean;
 }
 
 // preboarding hook return interface
 export interface UsePreBoardingReturn {
-  submitPreBoardingHandler: (
-    data: SubmitPreBoardingHandlerProps,
-  ) => Promise<ApiBaseResponse<PreBoardingResponse>>;
+  submitPreBoarding: UseMutateFunction<
+    ApiBaseResponse<PreBoardingResponse>,
+    ApiError,
+    SubmitPreBoardingHandlerProps
+  >;
+  isPreboardingSubmitting: boolean;
+  hearAboutUsHandler: () => void;
 }
 
 // preboarding hook props
 export interface SubmitPreBoardingHandlerProps {
-  authUser: AuthUser | null;
-  selectedRole: Role;
-  selectedOption: HearAboutUsOptionValue;
+  selectedOption: HearAboutUsOptionValue | null;
   referralCode: string | null;
 }

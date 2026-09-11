@@ -1,4 +1,3 @@
-import React from 'react';
 import { toast } from 'react-toastify';
 import { ArrowDown } from 'lucide-react';
 import { useSelector } from 'react-redux';
@@ -7,6 +6,7 @@ import { useReview } from '@/hooks/useReview';
 import { Button } from '@/components/ui/button';
 import NoData from '@/components/common/NoData';
 import { RootState } from '@/app/store/appStore';
+import { queryKeys } from '@/shared/utils/constants';
 import { Review } from '@/shared/types/entity/review';
 import { fetchReviews } from '@/services/apis/review';
 import ReviewCard from '@/components/review/ReviewCard';
@@ -14,15 +14,14 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import ConfirmAlert from '@/components/alert/ConfirmAlert';
 import { ReviewsPageProps } from '@/shared/types/component';
 import { ApiPaginatedResponse } from '@/shared/types/common';
+import { FetchReviewsResponse } from '@/shared/types/api/review';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import ReviewCardsShimmer from '@/components/shimmers/ReviewCardsShimmer';
-import { FetchReviewsResponse, ToggleReviewBlockStatusRequest } from '@/shared/types/api/review';
-import { queryKeys } from '@/shared/utils/constants';
 
 const ReviewsPage = ({ isPage = true, providerId, userId }: ReviewsPageProps) => {
   const limit = 10;
   const { authUser } = useSelector((state: RootState) => state.auth);
-  const { reportReviewHandler, toggleBlockStatusHandler, deleteReviewHandler } = useReview();
+  const { reportReview, changeReviewBlockStatus, deleteReview, isDeleting, isChangingBlockStatus, isChangingReportStatus } = useReview();
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError } =
     useInfiniteQuery<ApiPaginatedResponse<FetchReviewsResponse>>({
@@ -36,43 +35,14 @@ const ReviewsPage = ({ isPage = true, providerId, userId }: ReviewsPageProps) =>
       initialPageParam: 1,
     });
 
-  const handleChangeReviewBlockStatus = async (
-    e: React.MouseEvent<HTMLButtonElement>,
-    data: ToggleReviewBlockStatusRequest,
-  ) => {
-    e.preventDefault();
-    const res = await toggleBlockStatusHandler(data);
-    if (res.success) {
-      toast.success(res.message);
-    } else {
-      toast.error(res.message);
-    }
-  };
-
-  const handleReportReview = async (
-    e: React.MouseEvent<HTMLButtonElement>,
-    reviewId: Review['_id'],
-  ) => {
-    e.preventDefault();
-    const res = await reportReviewHandler(reviewId);
-    if (res.success) {
-      toast.success(res.message);
-    } else {
-      toast.error(res.message);
-    }
-  };
-
-  const handleDeleteReview = (e: React.MouseEvent<HTMLButtonElement>, reviewId: Review['_id']) => {
-    e.preventDefault();
+  const handleDeleteReview = (reviewId: Review['_id']) => {
     toast(
       ({ closeToast }) => (
         <ConfirmAlert
           message="Are you sure you want to delete this review?"
-          entityId={reviewId}
-          deleteHandler={deleteReviewHandler}
+          deleteHandler={(options) => deleteReview({ reviewId }, options)}
+          isDeleting={isDeleting}
           closeToast={closeToast}
-          errorMessage="Review deleting failed"
-          successMessage="Review deleted successfully"
           btnTitle="Delete review button"
           btnText="Delete"
         />
@@ -98,9 +68,11 @@ const ReviewsPage = ({ isPage = true, providerId, userId }: ReviewsPageProps) =>
               key={review._id}
               review={review}
               role={authUser?.role as Role}
-              handleDeleteReview={handleDeleteReview}
-              handleReportReview={handleReportReview}
-              handleChangeReviewBlockStatus={handleChangeReviewBlockStatus}
+              handleDeleteReview={() => handleDeleteReview(review._id)}
+              handleReportReview={() => reportReview({ reviewId: review._id })}
+              handleChangeReviewBlockStatus={() => changeReviewBlockStatus({ reviewId: review._id, isBlocked: review.isBlocked })}
+              isChangingBlockStatus={isChangingBlockStatus}
+              isChangingReportStatus={isChangingReportStatus}
             />
           ))}
         </div>

@@ -4,11 +4,8 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
 import { Share2, ShieldCheck } from 'lucide-react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Card, CardContent } from '@/components/ui/card';
-import { AppDispatch, RootState } from '@/app/store/appStore';
 import { getInitials } from '@/shared/utils/helper/getInitials';
-import { setIsShowPreview } from '@/app/store/slices/providerSlice';
 import { ProviderProfileTopCardProps } from '@/shared/types/component';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
@@ -20,12 +17,12 @@ const ProviderProfileTopCard = ({
   categoryName,
   trusted,
   role,
+  isShowPreview = false,
+  handleIsShowPreview,
 }: ProviderProfileTopCardProps) => {
-  const dispatch = useDispatch<AppDispatch>();
-  const isShowPreview = useSelector((state: RootState) => state.provider.isShowPreview);
 
   return (
-    <Card className="overflow-hidden border shadow-sm rounded-xl">
+    <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
       <div className="h-32 bg-muted/50 relative" />
       <CardContent className="-mt-16 px-6 pb-6 relative z-10">
         <div className="flex flex-col md:flex-row items-center md:items-end justify-between gap-6 text-center md:text-left">
@@ -77,7 +74,7 @@ const ProviderProfileTopCard = ({
             </div>
           </div>
           <div className="flex flex-col items-end">
-            <Button variant="outline" size="sm" className="h-9 gap-1.5">
+            <Button variant="outline" size="sm" className="cursor-pointer h-9 gap-1.5">
               <Share2 className="w-4 h-4" />
               Share Profile
             </Button>
@@ -87,7 +84,8 @@ const ProviderProfileTopCard = ({
                 <Switch
                   id="preview-mode"
                   checked={isShowPreview}
-                  onCheckedChange={() => dispatch(setIsShowPreview())}
+                  className="cursor-pointer"
+                  onCheckedChange={() => handleIsShowPreview()}
                 />
               </div>
             )}

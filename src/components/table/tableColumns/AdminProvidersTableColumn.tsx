@@ -28,7 +28,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import StatusBadge from '@/components/common/StatusBadge';
 import { AdminVerificationStatus } from '@/shared/types/enums';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
-import { VERIFICATION_STATUS_CONFIG } from '@/shared/utils/constants';
+import { adminVerificationStatusConfig } from '@/shared/utils/constants';
 
 const AdminProvidersTableColumns = (
   approveProvider: (data: AdminApproveProviderRequest) => void,
@@ -100,7 +100,7 @@ const AdminProvidersTableColumns = (
     header: 'Verification Status',
     cell: ({ row }) => {
       const status = row.original.adminVerificationStatus;
-      const config = VERIFICATION_STATUS_CONFIG[status];
+      const config = adminVerificationStatusConfig[status];
       const isThisRowUpdating = approvingProviderId === row.original._id;
 
       if (isThisRowUpdating) {

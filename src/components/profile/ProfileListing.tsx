@@ -17,7 +17,7 @@ import { useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
 import { RootState } from '@/app/store/appStore';
 import DataShimmer from '@/components/shimmers/DataShimmer';
-import { STATUS_PRESETS } from '@/shared/utils/constants';
+import { statsPresents } from '@/shared/utils/constants';
 import DataFetchingError from '../error/DataFetchingError';
 import getBooleanStatusComponent from '../app/GetBooleanStatus';
 import { UserOrProviderProfileDetailsComponentProps } from '@/shared/types/component';
@@ -175,14 +175,14 @@ const ProfileListing = ({
                 label="Admin Verified"
                 value={getBooleanStatusComponent(
                   d?.isAdminVerified,
-                  STATUS_PRESETS.verificationStatus,
+                  statsPresents.verificationStatus,
                 )}
                 isLoading={isLoading}
                 shimmerWidth="w-16"
               />
               <DataField
                 label="Slotflow Trust Badge"
-                value={getBooleanStatusComponent(d?.trustedBySlotflow, STATUS_PRESETS.trustStatus)}
+                value={getBooleanStatusComponent(d?.trustedBySlotflow, statsPresents.trustStatus)}
                 isLoading={isLoading}
                 shimmerWidth="w-16"
               />
@@ -199,7 +199,7 @@ const ProfileListing = ({
               label="Address"
               value={getBooleanStatusComponent(
                 d?.isAddressVerified,
-                STATUS_PRESETS.verificationStatus,
+                statsPresents.verificationStatus,
               )}
               Icon={MapPin}
               isLoading={isLoading}
@@ -209,7 +209,7 @@ const ProfileListing = ({
               label="Service Details"
               value={getBooleanStatusComponent(
                 d?.isServiceDetailsVerified,
-                STATUS_PRESETS.verificationStatus,
+                statsPresents.verificationStatus,
               )}
               Icon={Briefcase}
               isLoading={isLoading}
@@ -219,7 +219,7 @@ const ProfileListing = ({
               label="Availability"
               value={getBooleanStatusComponent(
                 d?.isAvailabilityVerified,
-                STATUS_PRESETS.verificationStatus,
+                statsPresents.verificationStatus,
               )}
               Icon={Clock}
               isLoading={isLoading}
@@ -229,7 +229,7 @@ const ProfileListing = ({
               label="Documents/Proofs"
               value={getBooleanStatusComponent(
                 d?.isProofsVerified,
-                STATUS_PRESETS.verificationStatus,
+                statsPresents.verificationStatus,
               )}
               Icon={FileCheck}
               isLoading={isLoading}
@@ -287,7 +287,7 @@ const ProfileListing = ({
           <div className="md:col-span-2">
             <DataField
               label="Account Status"
-              value={getBooleanStatusComponent(d?.isBlocked, STATUS_PRESETS.accountStatus)}
+              value={getBooleanStatusComponent(d?.isBlocked, statsPresents.accountStatus)}
               Icon={Shield}
               isLoading={isLoading}
               shimmerWidth="w-20"

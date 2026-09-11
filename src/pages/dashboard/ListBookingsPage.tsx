@@ -1,50 +1,45 @@
 import {
-  ValidateRoomId,
   FetchBookingsResponse,
-  changeAppointmentStatusRequest,
 } from '@/shared/types/api/booking';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/app/store/appStore';
 import { useBooking } from '@/hooks/useUserBooking';
+import { queryKeys } from '@/shared/utils/constants';
 import { fetchBookings } from '@/services/apis/booking';
 import ConfirmAlert from '@/components/alert/ConfirmAlert';
+import { useJVideoCall } from '@/hooks/useJVideoCall';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
 import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
 import BookingsTableColumn from '@/components/table/tableColumns/BookingsTableColumn';
-import { queryKeys } from '@/shared/utils/constants';
 
 const ListBookingsPage = () => {
+  
   const authUser = useSelector((state: RootState) => state.auth.authUser);
 
-  const { JoinCallHandler, handleNavigateToBookingsDetailPage } = useRoleBasedNavigation();
+  const {
+    handleNavigateToBookingsDetailPage
+  } = useRoleBasedNavigation();
 
-  const { handleReviewAddFormToggle, changeAppointmentStatusHandler, cancelBookingHandler } =
-    useBooking();
+  const {
+    handleReviewAddFormToggle,
+    changeAppointmentStatus,
+    statusChangingAppointmentId,
+    cancelBooking,
+    isCancelling
+  } = useBooking();
 
-  // function to handle change appointment status by provider
-  const handleChangeAppointmentStatus = async (data: changeAppointmentStatusRequest) => {
-    const res = await changeAppointmentStatusHandler(data);
-    if (res.success) {
-      toast.success(res.message);
-    } else {
-      toast.error(res.message);
-    }
-  };
+  const { JoinCallLobby } = useJVideoCall();
 
-  // function to handle user cancel booking
   const handleUserCancelBooking = async (bookingId: string) => {
-    // need to add the confirm alert
     toast(
       ({ closeToast }) => (
         <ConfirmAlert
           message="Are you sure you want to cancel this booking?"
-          entityId={bookingId}
-          deleteHandler={cancelBookingHandler}
+          deleteHandler={(options) => cancelBooking({ bookingId }, options)}
+          isDeleting={isCancelling}
           closeToast={closeToast}
-          errorMessage="Booking canceling failed"
-          successMessage="Review deleted successfully"
           btnTitle="Cancel booking button"
           btnText="Cancel"
         />
@@ -53,29 +48,19 @@ const ListBookingsPage = () => {
     );
   };
 
-  const handleJoinCall = async (data: ValidateRoomId) => {
-    const result = await JoinCallHandler(data);
-    if (!result.success) {
-      toast.error(result.message);
-    } else {
-      toast.success(result.message);
-    }
-  };
-
   if (!authUser) {
     return <DataFetchingError message="No user found" />;
   }
 
   const columns = BookingsTableColumn(
-    handleJoinCall,
+    JoinCallLobby,
     handleNavigateToBookingsDetailPage,
     authUser.role,
     handleReviewAddFormToggle,
     handleUserCancelBooking,
-    handleChangeAppointmentStatus,
+    changeAppointmentStatus,
+    statusChangingAppointmentId
   );
-
-  // can implement a custom filter and pass as query params
 
   return (
     <div className="p-4">

@@ -1,13 +1,16 @@
 import {
-  ValidateRoomId,
+  ValidateRoomIdRequest,
+  CancelBookingRequest,
   FetchBookingsResponse,
+  CancelBookingResponse,
   BookAppointmentResponse,
   JoinRoomCallbackRequest,
   BookAnAppointmentRequest,
   FetchBookingsQueryParams,
   JoinRoomCallbackResponse,
   FetchBookingDetailsResponse,
-  changeAppointmentStatusRequest,
+  ChangeAppointmentStatusRequest,
+  ChangeAppointmentStatusResponse,
 } from '../../shared/types/api/booking';
 import { axiosInstance } from '@/lib/axios';
 import { Booking } from '../../shared/types/entity/booking';
@@ -41,9 +44,9 @@ export const fetchBookingDetails = async (
 };
 
 // validate joinRoom
-export const validateRoomId = async (data: ValidateRoomId): Promise<ApiBaseResponse> => {
+export const validateRoomId = async (payload: ValidateRoomIdRequest): Promise<ApiBaseResponse> => {
   const response = await axiosInstance.get(
-    `/bookings/${data.appointmentId}/access?roomId=${data.roomId}`,
+    `/bookings/${payload.appointmentId}/access?roomId=${payload.roomId}`,
   );
   return response.data;
 };
@@ -55,27 +58,25 @@ export const checkBookingConfirmed = async (): Promise<ApiBaseResponse<boolean>>
 };
 
 // cancel booking
-export const cancelBooking = async (bookingId: Booking['_id']): Promise<ApiBaseResponse> => {
-  const response = await axiosInstance.patch(`/bookings/${bookingId}/cancel`);
+export const cancelBooking = async (payload: CancelBookingRequest): Promise<ApiBaseResponse<CancelBookingResponse>> => {
+  const response = await axiosInstance.patch(`/bookings/${payload.bookingId}/cancel`);
   return response.data;
 };
 
 // join or left online room
 export const joinOrLeft = async (
-  data: JoinRoomCallbackRequest,
+  payload: JoinRoomCallbackRequest,
 ): Promise<ApiBaseResponse<JoinRoomCallbackResponse>> => {
-  const response = await axiosInstance.patch(`/bookings/${data.videoCallRoomId}/join-left`, {
-    joined: data.joined,
-    joinedTime: data.joinedTime,
-    leftCallTime: data.leftCallTime,
+  const response = await axiosInstance.patch(`/bookings/${payload.videoCallRoomId}/join-left`, {
+    joined: payload.joined,
+    joinedTime: payload.joinedTime,
+    leftCallTime: payload.leftCallTime,
   });
   return response.data;
 };
 
 // change appointment status
-export const changeAppointmentStatus = async (
-  data: changeAppointmentStatusRequest,
-): Promise<ApiBaseResponse> => {
-  const response = await axiosInstance.patch(`/bookings/${data.appointmentId}/change-status`, data);
+export const changeAppointmentStatus = async (payload: ChangeAppointmentStatusRequest): Promise<ApiBaseResponse<ChangeAppointmentStatusResponse>> => {
+  const response = await axiosInstance.patch(`/bookings/${payload.appointmentId}/change-status`, payload);
   return response.data;
 };

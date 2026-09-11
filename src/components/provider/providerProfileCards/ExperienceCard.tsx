@@ -1,17 +1,10 @@
-import { Briefcase } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 import { ExperienceCardProps } from '@/shared/types/component';
 import DataFetchingError from '@/components/error/DataFetchingError';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const ExperienceCard = ({ isLoading, isError, data }: ExperienceCardProps) => {
   return (
-    <Card className="border shadow-sm rounded-xl">
-      <CardHeader>
-        <CardTitle className="text-lg font-semibold flex items-center gap-2">
-          <Briefcase className="w-5 h-5 text-primary" />
-          Experience & About
-        </CardTitle>
-      </CardHeader>
+    <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
       <CardContent className="space-y-4">
         {isLoading ? (
           <>

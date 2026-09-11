@@ -1,7 +1,5 @@
 import { Star } from 'lucide-react';
-import { useSelector } from 'react-redux';
 import { Role } from '@/shared/types/enums';
-import { RootState } from '@/app/store/appStore';
 import ServiceCard from './providerProfileCards/ServiceCard';
 import { ProviderProfileProps } from '@/shared/types/component';
 import ExperienceCard from './providerProfileCards/ExperienceCard';
@@ -22,8 +20,9 @@ const ProviderProfile = ({
   proofs,
   service,
   profile,
+  isShowPreview,
+  handleIsShowPreview
 }: ProviderProfileProps) => {
-  const isShowPreview = useSelector((state: RootState) => state.provider.isShowPreview);
 
   return (
     <div className="w-full p-4">
@@ -37,6 +36,8 @@ const ProviderProfile = ({
             categoryName={service.data?.serviceId.serviceName || ''}
             trusted={profile.data?.trustedBySlotflow || false}
             role={role}
+            isShowPreview={isShowPreview}
+            handleIsShowPreview={handleIsShowPreview}
           />
 
           <ServiceCard
@@ -65,7 +66,7 @@ const ProviderProfile = ({
 
           {!isShowPreview && proofs}
 
-          <Card className="border shadow-sm rounded-xl">
+          <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
             <CardHeader className="border-b pb-4">
               <CardTitle className="text-lg font-semibold flex items-center gap-2">
                 <Star className="w-5 h-5 text-primary" />

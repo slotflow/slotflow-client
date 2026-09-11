@@ -6,17 +6,11 @@ import RevenueListCard from './RevenueListCard';
 import DashboardStats from '../../DashboardStats';
 import { DashboardItem } from '@/shared/types/common';
 import { RevenueDataChart } from './RevenueDataChart';
+import { queryKeys, aiResponseEntities } from '@/shared/utils/constants';
 import { AdminDashboardRevenueDataProps } from '@/shared/types/component';
-import {
-  adminFetchDashboardRevenueStatsData,
-  adminfFetchAnalyticsInsight,
-} from '@/services/apis/admin';
+import { revenueAndPaymentsStatsMapForAdmin } from '@/shared/utils/constants/statsConstats';
+import { fetchAnalyticsInsight, adminFetchDashboardRevenueStatsData } from '@/services/apis/admin';
 import { AdminFetchDashboardRevenueAndPaymentsStatsDataResponse } from '@/shared/types/api/adminDashboard';
-import {
-  AiResponseEntities,
-  queryKeys,
-  revenueAndPaymentsStatsMapForAdmin,
-} from '@/shared/utils/constants';
 
 export default function AdminDashboardRevenueData({ dateRange }: AdminDashboardRevenueDataProps) {
   const initialItems: DashboardItem[] = [
@@ -48,7 +42,7 @@ export default function AdminDashboardRevenueData({ dateRange }: AdminDashboardR
           badgeIcon={DollarSign}
           title="Revenue Analysis"
           fetchFn={() =>
-            adminfFetchAnalyticsInsight({ dateRange, entity: AiResponseEntities.REVENUE })
+            fetchAnalyticsInsight({ dateRange, entity: aiResponseEntities.REVENUE })
           }
           queryKey={queryKeys.REVENUE_STATS_AI_RES}
         />

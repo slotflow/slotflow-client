@@ -8,15 +8,12 @@ import SubscriptionsListCard from './SubscriptionsListCard';
 import SubscriptionDataChart from './SubscriptionDataChart';
 import { AdminDashboardSubscriptionDataProps } from '@/shared/types/component';
 import { AdminFetchDashboardSubscriptionStatsDataResponse } from '@/shared/types/api/adminDashboard';
-import {
-  AiResponseEntities,
-  queryKeys,
-  subscriptionStatsMapForAdmin,
-} from '@/shared/utils/constants';
+import { aiResponseEntities, queryKeys } from '@/shared/utils/constants';
 import {
   adminFetchDashboardSubscriptionStatsData,
-  adminfFetchAnalyticsInsight,
+  fetchAnalyticsInsight,
 } from '@/services/apis/admin';
+import { subscriptionStatsMapForAdmin } from '@/shared/utils/constants/statsConstats';
 
 export default function AdminDashboardSubscriptionData({
   dateRange,
@@ -50,7 +47,7 @@ export default function AdminDashboardSubscriptionData({
           badgeIcon={CreditCard}
           title="Subscription Trends"
           fetchFn={() =>
-            adminfFetchAnalyticsInsight({ dateRange, entity: AiResponseEntities.SUBSCRIPTION })
+            fetchAnalyticsInsight({ dateRange, entity: aiResponseEntities.SUBSCRIPTION })
           }
           queryKey={queryKeys.SUBSCRIPTION_USAGE_AI_RES}
         />

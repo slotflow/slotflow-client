@@ -1,17 +1,9 @@
-import gsap from 'gsap';
-import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import error404 from '../../assets/svgs/error404.svg';
-import { gsapBigSvgYDirectionAnimation } from '@/shared/utils/constants';
 
 const Error404Page = () => {
-  const errorRef = useRef(null);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    gsap.to(errorRef.current, gsapBigSvgYDirectionAnimation);
-  }, []);
 
   return (
     <section
