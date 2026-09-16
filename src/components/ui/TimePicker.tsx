@@ -1,10 +1,11 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { format } from 'date-fns';
 import { Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { dateFormats } from '@/shared/utils/constants';
+import { formatDate } from '@/shared/utils/helper/formatter';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 interface TimePickerProps {
   value: Date;
@@ -50,13 +51,12 @@ export const TimePicker: React.FC<TimePickerProps> = ({ value, onChange }) => {
           )}
         >
           <Clock className="mr-2 h-4 w-4" />
-          {value ? format(value, 'hh:mm aa') : <span>hh:mm aa</span>}
+          {value ? formatDate(value, dateFormats.TIME_12H_LOWER) : <span>hh:mm aa</span>}
         </Button>
       </PopoverTrigger>
 
       <PopoverContent className="w-auto p-0">
         <div className="flex flex-col sm:flex-row sm:h-[300px] divide-y sm:divide-y-0 sm:divide-x">
-          {/* Hour Picker */}
           <ScrollArea className="w-64 sm:w-auto">
             <div className="flex sm:flex-col p-2">
               {hours.map((hour) => (
@@ -75,7 +75,6 @@ export const TimePicker: React.FC<TimePickerProps> = ({ value, onChange }) => {
             <ScrollBar orientation="horizontal" className="sm:hidden" />
           </ScrollArea>
 
-          {/* Minute Picker */}
           <ScrollArea className="w-64 sm:w-auto">
             <div className="flex sm:flex-col p-2">
               {minutes.map((minute) => (
@@ -94,7 +93,6 @@ export const TimePicker: React.FC<TimePickerProps> = ({ value, onChange }) => {
             <ScrollBar orientation="horizontal" className="sm:hidden" />
           </ScrollArea>
 
-          {/* AM/PM Picker */}
           <ScrollArea>
             <div className="flex sm:flex-col p-2">
               {['AM', 'PM'].map((ampm) => (

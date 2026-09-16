@@ -1,4 +1,6 @@
-import { format, subDays } from 'date-fns';
+import { subDays } from 'date-fns';
+import { formatDate } from './formatter';
+import { dateFormats } from '../constants';
 import { TimeRange } from '../../types/common';
 
 export function filterChartDataHelper<T extends { date: string }>(
@@ -8,7 +10,7 @@ export function filterChartDataHelper<T extends { date: string }>(
   if (!Array.isArray(data)) return [];
 
   const today = new Date();
-  const formattedToday = format(today, 'yyyy-MM-dd');
+  const formattedToday = formatDate(today, dateFormats.ISO_DATE);
   const referenceDate = new Date(formattedToday);
 
   let daysToSubtract = 7;

@@ -14,7 +14,7 @@ import StatusBadge from '@/components/common/StatusBadge';
 import { PaymentFor, PaymentStatus } from '@/shared/types/enums';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
 import { FetchPaymentsResponse } from '@/shared/types/api/payment';
-import { formateDate, formatNumberToPrice } from '@/shared/utils/helper/formatter';
+import { formatDate, formatNumberToPrice } from '@/shared/utils/helper/formatter';
 
 const PaymentsTableColumn = (
   handleGetPaymentDetailsPage: (paymentId: Payment['_id']) => void,
@@ -33,7 +33,7 @@ const PaymentsTableColumn = (
     header: ({ column }) => <DataTableColumnHeader column={column} title="Paid on" />,
     cell: ({ row }) => {
       const createdAt = row.getValue('createdAt') as Date;
-      const formattedDate = formateDate(createdAt);
+      const formattedDate = formatDate(createdAt);
       return <span className="font-medium text-slate-700 dark:text-slate-300">{formattedDate}</span>;
     },
   },

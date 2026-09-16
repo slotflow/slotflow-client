@@ -17,7 +17,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Booking } from '@/shared/types/entity/booking';
 import StatusBadge from '@/components/common/StatusBadge';
 import { checkJoin } from '@/shared/utils/helper/checkJoin';
-import { formateDate } from '@/shared/utils/helper/formatter';
+import { formatDate } from '@/shared/utils/helper/formatter';
 import { AppointmentStatus, Role } from '@/shared/types/enums';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
 import { Check, MoreHorizontal, NotebookPen, ReceiptText, VideoIcon, X } from 'lucide-react';
@@ -49,7 +49,7 @@ const BookingsTableColumn = (
       header: ({ column }) => <DataTableColumnHeader column={column} title="Date" />,
       cell: ({ row }) => {
         const createdAt = row.getValue('appointmentDate') as Date;
-        const formattedDate = formateDate(createdAt);
+        const formattedDate = formatDate(createdAt);
         return <span className="font-medium text-slate-700 dark:text-slate-300">{formattedDate}</span>;
       },
     },
@@ -93,7 +93,7 @@ const BookingsTableColumn = (
       header: ({ column }) => <DataTableColumnHeader column={column} title="Paid on" />,
       cell: ({ row }) => {
         const createdAt = row.getValue('createdAt') as Date;
-        const formattedDate = formateDate(createdAt);
+        const formattedDate = formatDate(createdAt);
         return <span className="font-medium text-slate-700 dark:text-slate-300">{formattedDate}</span>;
       },
     },

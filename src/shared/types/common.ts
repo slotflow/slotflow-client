@@ -7,6 +7,7 @@ import { Booking } from './entity/booking';
 import React, { ChangeEvent } from 'react';
 import { Message } from './entity/message';
 import { Plan } from './entity/planInterface';
+import { dateFormats } from '../utils/constants';
 import { ColumnDef } from '@tanstack/react-table';
 import { RouteNames } from '../utils/constants/routeConstants';
 import { HearAboutUsOptionValue, PlanName, Role, ServiceCategory } from './enums';
@@ -609,3 +610,7 @@ export interface DashboardItem {
   colSpan: string;
   component: React.ReactNode;
 }
+
+//
+export type DateInput = Date | string | number | null | undefined;
+export type DateFormatPattern = typeof dateFormats[keyof typeof dateFormats] | (string & {});

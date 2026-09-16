@@ -3,7 +3,7 @@ import StatusBadge from '@/components/common/StatusBadge';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
 import { PaymentFor, PaymentGateway } from '@/shared/types/enums';
 import { AdminFetchRevenueReportRow } from '@/shared/types/api/payment';
-import { formateDate, formatNumberToPrice } from '@/shared/utils/helper/formatter';
+import { formatDate, formatNumberToPrice } from '@/shared/utils/helper/formatter';
 
 const AdminRevenueTableColumn = (): ColumnDef<AdminFetchRevenueReportRow>[] => [
   {
@@ -20,7 +20,7 @@ const AdminRevenueTableColumn = (): ColumnDef<AdminFetchRevenueReportRow>[] => [
     header: ({ column }) => <DataTableColumnHeader column={column} title="Paid on" />,
     cell: ({ row }) => {
       const createdAt = row.getValue('createdAt') as Date;
-      const formattedDate = formateDate(createdAt);
+      const formattedDate = formatDate(createdAt);
       return <span className="font-medium text-slate-700 dark:text-slate-300">{formattedDate}</span>;
     },
   },

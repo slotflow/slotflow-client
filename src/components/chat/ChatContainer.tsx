@@ -5,10 +5,11 @@ import { socket } from '@/lib/socketService';
 import { useEffect, useRef, useState } from 'react';
 import { getMessages } from '@/services/apis/message';
 import { useDispatch, useSelector } from 'react-redux';
+import { dateFormats } from '@/shared/utils/constants';
 import { SocketDataInterface } from '@/shared/types/common';
+import { formatDate } from '@/shared/utils/helper/formatter';
 import ChatBubbleProfileImage from './ChatBubbleProfileImage';
 import { AppDispatch, RootState } from '@/app/store/appStore';
-import { formatTo24HourTime } from '@/shared/utils/helper/formatter';
 import NoChatSelectedSShimmer from '@/components/shimmers/NoChatSelectedSShimmer';
 import { connectChatSocket, disconnectChatSocket } from '@/services/socket/chatSocketThunk';
 
@@ -97,7 +98,7 @@ const ChatContainer = () => {
                 )}
                 {message.text && <p className="text-[13px] md:text-[15px]">{message.text}</p>}
                 <time className="text-[10px] opacity-50 ml-auto">
-                  {formatTo24HourTime(message.createdAt)}
+                  {formatDate(message.createdAt, dateFormats.TIME_12H_LOWER)}
                 </time>
               </div>
 

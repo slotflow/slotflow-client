@@ -1,8 +1,9 @@
-import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
+import { dateFormats } from '@/shared/utils/constants';
 import { DateFilterProps } from '@/shared/types/component';
+import { formatDate } from '@/shared/utils/helper/formatter';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 const DateFilter = ({
@@ -35,7 +36,7 @@ const DateFilter = ({
 
               {dateRange?.from && dateRange?.to ? (
                 <span className="text-foreground">
-                  {format(dateRange.from, 'LLL dd')} - {format(dateRange.to, 'LLL dd, y')}
+                  {formatDate(dateRange.from, dateFormats.RANGE_MONTH_DAY)} - {formatDate(dateRange.to, dateFormats.RANGE_FULL)}
                 </span>
               ) : (
                 <span className="text-muted-foreground">Pick a custom range</span>

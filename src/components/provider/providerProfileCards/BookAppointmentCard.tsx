@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card, CardContent } from '@/components/ui/card';
 import { defaultBtnClass } from '@/shared/utils/constants';
-import { formateDate } from '@/shared/utils/helper/formatter';
+import { formatDate } from '@/shared/utils/helper/formatter';
 import { AppDispatch, RootState } from '@/app/store/appStore';
 import { BookAppointmentCardProps } from '@/shared/types/component';
 import { setPaymentSelectionOpen } from '@/app/store/slices/paymentSlice';
@@ -44,7 +44,7 @@ const BookAppointmentCard = ({ isLoading, isError, data }: BookAppointmentCardPr
           </p>
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Date</span>
-            <span className="font-medium text-foreground">{formateDate(bookingData.date)}</span>
+            <span className="font-medium text-foreground">{formatDate(bookingData.date)}</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Time</span>

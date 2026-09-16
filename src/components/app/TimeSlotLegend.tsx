@@ -1,6 +1,6 @@
 import { Role } from '@/shared/types/enums';
 import { Button } from '@/components/ui/button';
-import { formateDate } from '@/shared/utils/helper/formatter';
+import { formatDate } from '@/shared/utils/helper/formatter';
 import { TimeSlotLegendProps } from '@/shared/types/component';
 
 const TimeSlotLegend = ({
@@ -29,7 +29,7 @@ const TimeSlotLegend = ({
       </div>
 
       <span className="my-4 text-xs font-medium text-slate-500 dark:text-slate-400 block">
-        Available Time Slots {date && ` - ${formateDate(date)}`}
+        Available Time Slots {date && ` - ${formatDate(date)}`}
       </span>
       {role === Role.USER && showAdvanceNotice && (
         <p className="text-sm text-muted-foreground">

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { BlogHeroProps } from '@/shared/types/component';
 import SplitTextReveal from '../animation/SplitTextReveal';
 import AnimatedCounter from '../animation/AnimatedCounter';
-import { formateDate } from '@/shared/utils/helper/formatter';
+import { formatDate } from '@/shared/utils/helper/formatter';
 import { BookOpen, ArrowRight, CalendarDays } from 'lucide-react';
 
 const BlogHero = ({
@@ -100,7 +100,7 @@ const BlogHero = ({
                 <div className="flex items-center gap-6 text-sm text-muted-foreground">
                   <div className="flex items-center gap-2">
                     <CalendarDays className="h-4 w-4" />
-                    {formateDate(featuredDate)}
+                    {formatDate(featuredDate)}
                   </div>
                   <div className="flex items-center gap-2">
                     <BookOpen className="h-4 w-4" />

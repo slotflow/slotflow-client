@@ -1,6 +1,8 @@
 import { useCallback } from 'react';
 import { ServiceMode } from '@/shared/types/enums';
-import { addMinutes, format, isBefore, isEqual } from 'date-fns';
+import { dateFormats } from '@/shared/utils/constants';
+import { addMinutes, isBefore, isEqual } from 'date-fns';
+import { formatDate } from '@/shared/utils/helper/formatter';
 import { UseAddAvailabilityProps, UseAddAvailabilityReturn } from '@/shared/types/hooks';
 
 export const useAddAvailability = ({
@@ -33,10 +35,10 @@ export const useAddAvailability = ({
     let start: string | undefined;
     let end: string | undefined;
     if (vals.startTime) {
-      start = format(vals.startTime, 'hh:mm a');
+      start = formatDate(vals.startTime, dateFormats.TIME_12H);
     }
     if (vals.endTime) {
-      end = format(vals.endTime, 'hh:mm a');
+      end = formatDate(vals.endTime, dateFormats.TIME_12H);
     }
 
     const data = {
@@ -67,7 +69,7 @@ export const useAddAvailability = ({
     const maxEntries = Math.floor((24 * 60) / Math.max(intervalMinutes, 1));
     let count = 0;
     while ((isBefore(current, end) || isEqual(current, end)) && count < maxEntries) {
-      const formatted = format(current, 'hh:mm a');
+      const formatted = formatDate(current, dateFormats.TIME_12H);
       slots.push(formatted);
       current = addMinutes(current, intervalMinutes);
       count++;

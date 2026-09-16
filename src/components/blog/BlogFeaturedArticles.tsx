@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { formateDate } from '@/shared/utils/helper/formatter';
+import { formatDate } from '@/shared/utils/helper/formatter';
 import { BlogFeaturedArticlesProps } from '@/shared/types/component';
 
 const BlogFeaturedArticles = ({ featuredArticles }: BlogFeaturedArticlesProps) => {
@@ -56,7 +56,7 @@ const BlogFeaturedArticles = ({ featuredArticles }: BlogFeaturedArticlesProps) =
                   </div>
                 </div>
                 <div className="text-right text-sm text-muted-foreground">
-                  <p>{formateDate(new Date(featuredArticles[0]?.createdAt))}</p>
+                  <p>{formatDate(new Date(featuredArticles[0]?.createdAt))}</p>
                   <p>{featuredArticles[0]?.readTime}</p>
                 </div>
               </div>

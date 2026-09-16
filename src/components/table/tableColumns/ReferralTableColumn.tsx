@@ -1,7 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { ReferralStatus } from '@/shared/types/enums';
 import StatusBadge from '@/components/common/StatusBadge';
-import { formateDate } from '@/shared/utils/helper/formatter';
+import { formatDate } from '@/shared/utils/helper/formatter';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
 import { FetchReferralsResponse } from '@/shared/types/api/referral';
 
@@ -20,7 +20,7 @@ const ReferralTableColumn = (): ColumnDef<FetchReferralsResponse>[] => [
     header: ({ column }) => <DataTableColumnHeader column={column} title="Referred on" />,
     cell: ({ row }) => {
       const createdAt = row.getValue('createdAt') as Date;
-      const formattedDate = formateDate(createdAt);
+      const formattedDate = formatDate(createdAt);
       return <span className="font-medium text-slate-700 dark:text-slate-300">{formattedDate}</span>;
     },
   },
@@ -49,7 +49,7 @@ const ReferralTableColumn = (): ColumnDef<FetchReferralsResponse>[] => [
       if (!completedAt) {
         return <span className="text-muted-foreground text-xs italic">Not Completed</span>;
       }
-      const formattedDate = formateDate(completedAt);
+      const formattedDate = formatDate(completedAt);
       return <span className="font-medium text-slate-700 dark:text-slate-300">{formattedDate}</span>;
     },
   },

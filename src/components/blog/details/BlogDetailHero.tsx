@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Badge } from '../../ui/badge';
 import { Separator } from '../../ui/separator';
 import { CalendarDays, Clock3 } from 'lucide-react';
-import { formateDate } from '@/shared/utils/helper/formatter';
+import { formatDate } from '@/shared/utils/helper/formatter';
 import { BlogDetailHeroProps } from '@/shared/types/component';
 import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar';
 
@@ -57,7 +57,7 @@ const BlogDetailHero = ({
             <Separator orientation="vertical" className="hidden h-10 bg-white/20 lg:block" />
             <div className="flex items-center gap-3 dark:text-white/80 text-black/80">
               <CalendarDays className="h-5 w-5" />
-              <span>{formateDate(new Date(createdAt))}</span>
+              <span>{formatDate(createdAt)}</span>
             </div>
             <Separator orientation="vertical" className="hidden h-10 bg-white/20 lg:block" />
             <div className="flex items-center gap-3 dark:text-white/80 text-black/80">

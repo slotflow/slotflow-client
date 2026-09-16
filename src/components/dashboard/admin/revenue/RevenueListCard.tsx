@@ -6,12 +6,11 @@ import {
   TableHead,
   TableHeader,
 } from '@/components/ui/table';
-import { format } from 'date-fns';
 import { DollarSign } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '@/shared/utils/constants';
 import { fetchPayments } from '@/services/apis/payment';
-import { formatNumberToPrice } from '@/shared/utils/helper/formatter';
+import { formatDate, formatNumberToPrice } from '@/shared/utils/helper/formatter';
 import RecentActivityTableCard from '@/components/dashboard/RecentActivityTableCard';
 
 const RevenueListCard = () => {
@@ -68,7 +67,7 @@ const RevenueListCard = () => {
                   {formatNumberToPrice(payment.totalAmount)}
                 </TableCell>
                 <TableCell className="text-[10px] text-slate-400 py-3 px-4 text-right">
-                  {format(new Date(payment.createdAt), 'MMM dd, HH:mm')}
+                  {formatDate(payment.createdAt.toDateString())}
                 </TableCell>
               </TableRow>
             ))}

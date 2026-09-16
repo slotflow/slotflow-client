@@ -16,11 +16,11 @@ import { useQuery } from '@tanstack/react-query';
 import DataField from '@/components/app/DataField';
 import { Booking } from '@/shared/types/entity/booking';
 import { Card, CardContent } from '@/components/ui/card';
+import { formatDate } from '@/shared/utils/helper/formatter';
 import { fetchBookingDetails } from '@/services/apis/booking';
-import { formatDateWithTime } from '@/shared/utils/helper/formatter';
-import DataFetchingError from '@/components/error/DataFetchingError';
+import { dateFormats, queryKeys } from '@/shared/utils/constants';
 import DetailsShimmer from '@/components/shimmers/DataFieldShimmer';
-import { queryKeys } from '@/shared/utils/constants';
+import DataFetchingError from '@/components/error/DataFetchingError';
 
 const BookingDetailPage = () => {
   const { bookingId } = useParams<{ bookingId: Booking['_id'] }>();
@@ -116,7 +116,7 @@ const BookingDetailPage = () => {
                     <DataField
                       key={index}
                       label={track.appointmentStatus}
-                      value={track.time ? formatDateWithTime(track.time) : 'No time recorded'}
+                      value={track.time ? formatDate(track.time, dateFormats.WITH_TIME) : 'No time recorded'}
                       Icon={Info}
                     />
                   );

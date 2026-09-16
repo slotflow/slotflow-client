@@ -1,15 +1,8 @@
-import { format } from 'date-fns';
+import { format, isValid } from 'date-fns';
+import { dateFormats } from '../constants';
+import { DateFormatPattern, DateInput } from '@/shared/types/common';
 
-// Format timestamp to 24 hour
-export function formatTo24HourTime(date: string) {
-  return new Date(date).toLocaleTimeString('en-US', {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true,
-  });
-}
-
-// Format number to price
+// Formats a numeric value into an INR currency string (e.g., ₹1,250.00).
 export const formatNumberToPrice = (amount: number, decimal = 2): string => {
   return new Intl.NumberFormat('en-IN', {
     style: 'currency',
@@ -18,22 +11,23 @@ export const formatNumberToPrice = (amount: number, decimal = 2): string => {
   }).format(amount);
 };
 
-// Format date for infoDisplayCompoenent
-export const formateDate = (date: Date | string | number | null | undefined): string => {
-  if (!date) {
-    return 'N/A';
-  }
+// Formats dates safely with fallback to 'N/A' on null or invalid values.
+export const formatDate = (
+  date: DateInput,
+  pattern: DateFormatPattern = dateFormats.SHORT
+): string => {
+  if (!date) return 'N/A';
 
   const parsedDate = date instanceof Date ? date : new Date(date);
 
-  if (Number.isNaN(parsedDate.getTime())) {
+  if (!isValid(parsedDate)) {
     return 'N/A';
   }
 
-  return format(parsedDate, 'dd MMM yyyy');
+  return format(parsedDate, pattern);
 };
 
-// Time formating function for otp page
+// Formats total seconds into a MM:SS digital countdown string (e.g., 01:30).
 export const formatTime = (seconds: number): string => {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;
@@ -42,23 +36,7 @@ export const formatTime = (seconds: number): string => {
   return `${formattedMinutes}:${formattedSeconds}`;
 };
 
-// Formate date for infoDisplayCompoenent
-export const formatDateWithTime = (dateString: string) => {
-  return new Date(dateString).toLocaleString('en-US', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: true,
-  });
-};
-
-// Formating function for boolean value formatBoolean
-export const formatBoolean = (val: boolean) => (val ? 'Yes' : 'No');
-
-// format duration
+// Formats a total minute duration into a human-readable string (e.g., 1 hour 30 minutes).
 export const formatDuration = (minutes?: number) => {
   if (!minutes) return '';
 

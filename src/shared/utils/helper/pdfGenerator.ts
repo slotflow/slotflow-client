@@ -1,7 +1,7 @@
 import jsPDF from 'jspdf';
-import { format } from 'date-fns';
 import { toast } from 'react-toastify';
 import autoTable from 'jspdf-autotable';
+import { formatDate } from '@fullcalendar/core/index.js';
 import { JsPDFWithAutoTable } from '@/shared/types/common';
 import logo from '../../../assets/logos/company/slotfloFullLogo.png';
 import { AdminFetchRevenueReportRow } from '@/shared/types/api/payment';
@@ -26,7 +26,7 @@ export const exportToPDF = async (
       doc.setFontSize(10);
       doc.setFont('helvetica', 'normal');
       doc.setTextColor(0, 0, 0);
-      const today = format(new Date(), 'dd MMM yyyy');
+      const today = formatDate(new Date());
       doc.text(`Date: ${today}`, pageWidth - 14, 15, { align: 'right' });
 
       doc.setDrawColor(0);
@@ -48,7 +48,7 @@ export const exportToPDF = async (
   doc.line((pageWidth - titleWidth) / 2, titleY + 2, (pageWidth + titleWidth) / 2, titleY + 2);
 
   const body = data.map((row, index) => {
-    const formattedDate = row.createdAt ? format(new Date(row.createdAt), 'dd MMM yyyy') : 'N/A';
+    const formattedDate = row.createdAt ? formatDate(row.createdAt) : 'N/A';
 
     return [
       index + 1,

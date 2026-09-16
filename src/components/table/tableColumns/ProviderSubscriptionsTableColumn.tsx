@@ -15,7 +15,7 @@ import { Button } from '../../ui/button';
 import { ColumnDef } from '@tanstack/react-table';
 import StatusBadge from '@/components/common/StatusBadge';
 import { SubscriptionStatus } from '@/shared/types/enums';
-import { formateDate } from '@/shared/utils/helper/formatter';
+import { formatDate } from '@/shared/utils/helper/formatter';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
 import { Subscription } from '@/shared/types/entity/subscription';
 import { FetchProviderSubscriptionsResponse } from '@/shared/types/api/subscription';
@@ -46,7 +46,7 @@ const ProvidersSubscriptionsTableColumns = (
     header: ({ column }) => <DataTableColumnHeader column={column} title="Start Date" />,
     cell: ({ row }) => {
       const startDate = row.getValue('startDate') as Date;
-      const formattedDate = formateDate(startDate);
+      const formattedDate = formatDate(startDate);
       return (
         <span className="inline-flex items-center gap-1.5 font-medium text-slate-700 dark:text-slate-300 text-xs">
           <Calendar className="w-3.5 h-3.5 text-slate-400" />
@@ -60,7 +60,7 @@ const ProvidersSubscriptionsTableColumns = (
     header: ({ column }) => <DataTableColumnHeader column={column} title="Expires on" />,
     cell: ({ row }) => {
       const endDate = row.getValue('endDate') as Date;
-      const formattedDate = formateDate(endDate);
+      const formattedDate = formatDate(endDate);
       return (
         <span className="inline-flex items-center gap-1.5 font-medium text-slate-700 dark:text-slate-300 text-xs">
           <Calendar className="w-3.5 h-3.5 text-slate-400" />

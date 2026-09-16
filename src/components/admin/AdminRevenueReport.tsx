@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { format } from 'date-fns';
 import { DateRange } from 'react-day-picker';
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
@@ -7,6 +6,7 @@ import { Calendar } from '@/components/ui/calendar';
 import { queryKeys } from '@/shared/utils/constants';
 import { DataTable } from '@/components/ui/data-table';
 import DashboardDataCard from '../common/DashboardDataCard';
+import { formatDate } from '@/shared/utils/helper/formatter';
 import TableShimmer from '@/components/shimmers/TableShimmer';
 import { OnChangeFn, PaginationState } from '@tanstack/react-table';
 import { fetchRevenueReportForAdmin } from '@/services/apis/payment';
@@ -71,7 +71,7 @@ const AdminRevenueReport = () => {
                 <CalendarIcon className="h-3.5 w-3.5 text-muted-foreground" />
                 {dateRange?.from && dateRange?.to ? (
                   <span className="font-semibold">
-                    {format(dateRange.from, 'MMM dd, yyyy')} - {format(dateRange.to, 'MMM dd, yyyy')}
+                    {formatDate(dateRange.from)} - {formatDate(dateRange.to)}
                   </span>
                 ) : (
                   <span>Select Date Range</span>

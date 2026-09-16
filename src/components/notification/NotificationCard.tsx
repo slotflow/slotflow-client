@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { formateDate } from '@/shared/utils/helper/formatter';
+import { formatDate } from '@/shared/utils/helper/formatter';
 import { NotificationCardProps } from '@/shared/types/component';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
@@ -25,7 +25,7 @@ const NotificationCard = ({ title, body, isRead, createdAt }: NotificationCardPr
         {body}
         <div className="flex justify-end w-full mt-2.5">
           <span className="text-[10px] text-gray-400 font-medium uppercase whitespace-nowrap">
-            {formateDate(createdAt)}
+            {formatDate(createdAt)}
           </span>
         </div>
       </AlertDescription>

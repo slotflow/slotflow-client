@@ -1,6 +1,6 @@
 import * as XLSX from 'xlsx';
-import { format } from 'date-fns';
 import { toast } from 'react-toastify';
+import { formatDate } from '@fullcalendar/core/index.js';
 import { AdminFetchRevenueReportRow } from '../../types/api/payment';
 
 type ExcelRow = {
@@ -21,7 +21,7 @@ export const exportToExcel = (
 
   const formattedData: ExcelRow[] = data.map((row, index) => ({
     '#': index + 1,
-    Date: row.createdAt ? format(new Date(row.createdAt), 'dd MMM yyyy') : 'N/A',
+    Date: row.createdAt ? formatDate(row.createdAt) : 'N/A',
     'Initial Amount': `₹ ${row.initialAmount?.toFixed(2) ?? '0.00'}`,
     Discount: `₹ ${row.discountAmount?.toFixed(2) ?? '0.00'}`,
     'Total Amount': `₹ ${row.totalAmount?.toFixed(2) ?? '0.00'}`,

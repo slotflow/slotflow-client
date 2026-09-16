@@ -9,13 +9,13 @@ import {
 import { Briefcase } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '@/shared/utils/constants';
-import { formateDate } from '@/shared/utils/helper/formatter';
+import { formatDate } from '@/shared/utils/helper/formatter';
 import { fetchSubscriptions } from '@/services/apis/subscription';
 import RecentActivityTableCard from '@/components/dashboard/RecentActivityTableCard';
 
 const SubscriptionsListCard = () => {
   const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: [queryKeys.ADMLATEST_PROVIDERS],
+    queryKey: [queryKeys.LATEST_PROVIDERS],
     queryFn: () => fetchSubscriptions({ limit: 5, sortBy: 'createdAt', sortOrder: 'desc' }),
   });
 
@@ -69,7 +69,7 @@ const SubscriptionsListCard = () => {
                   {provider.subscriptionStatus}
                 </TableCell>
                 <TableCell className="text-xs text-slate-500 dark:text-slate-400 py-3 px-4 truncate max-w-[150px]">
-                  {formateDate(provider.endDate)}
+                  {formatDate(provider.endDate)}
                 </TableCell>
               </TableRow>
             ))}

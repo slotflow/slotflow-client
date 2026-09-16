@@ -1,14 +1,13 @@
+import { Button } from '../ui/button';
 import React, { useState } from 'react';
 import {
-  formateDate,
-  formatBoolean,
+  formatDate,
   formatDuration,
 } from '@/shared/utils/helper/formatter';
-import { Check, Copy } from 'lucide-react';
+import { Check, Copy, X } from 'lucide-react';
 import { DataFieldProps } from '@/shared/types/component';
 import DataShimmer from '@/components/shimmers/DataShimmer';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Button } from '../ui/button';
 
 const DataField = ({
   label,
@@ -80,7 +79,15 @@ const DataField = ({
   if (value === null || value === undefined || (typeof value === 'string' && !value.trim())) {
     displayValue = <span className="text-slate-400">N/A</span>;
   } else if (isBoolean) {
-    displayValue = formatBoolean(value as boolean);
+    displayValue = value ? (
+      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+        <Check className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+      </span>
+    ) : (
+      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium bg-rose-50 text-rose-700 dark:bg-rose-950/50 dark:text-rose-400 border border-rose-200 dark:border-rose-800">
+        <X className="w-3 h-3 text-rose-600 dark:text-rose-400" />
+      </span>
+    );
   } else if (isPrice) {
     displayValue = `₹ ${value} INR`;
   } else if (canCopy && typeof value === 'string') {
@@ -105,7 +112,7 @@ const DataField = ({
       </div>
     );
   } else if (isDate) {
-    displayValue = formateDate(value as Date);
+    displayValue = formatDate(value as Date);
   } else if (link && typeof value === 'string') {
     displayValue = (
       <a
