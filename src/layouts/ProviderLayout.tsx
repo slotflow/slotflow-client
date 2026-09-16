@@ -7,14 +7,13 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import PaymentSelection from '@/components/payment/PaymentSelection';
 import { planAccessMap } from '@/shared/utils/constants/planConstants';
 import { getRoutesByRole } from '@/shared/utils/helper/getRouteByRole';
-import ProviderFreeSubscription from '@/components/provider/ProviderFreeSubscription';
 import NotificationsContainer from '@/components/notification/NotificationsContainer';
 
 const ProviderLayout = () => {
   const navigate = useNavigate();
   const pathname = useLocation().pathname;
   const authUser = useSelector((store: RootState) => store.auth.authUser);
-  const { isOpen, subscriptionData } = useSelector((store: RootState) => store.payment);
+  const { isPaymentModalOpen, subscriptionData } = useSelector((store: RootState) => store.payment);
 
   const planName = authUser?.providerSubscription;
   const allowedRouteNames = planName
@@ -60,10 +59,9 @@ const ProviderLayout = () => {
   return (
     <MainLayout routes={providerRoutes} filteredRoutes={accessibleRoutes}>
       <Outlet />
-      {isOpen && !subscriptionData?.isTrialPlan && authUser?.role === Role.PROVIDER && (
+      {isPaymentModalOpen && subscriptionData && authUser?.role === Role.PROVIDER && (
         <PaymentSelection />
       )}
-      {subscriptionData?.isTrialPlan && <ProviderFreeSubscription />}
       <NotificationsContainer />
     </MainLayout>
   );

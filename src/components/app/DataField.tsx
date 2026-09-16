@@ -8,6 +8,7 @@ import { Check, Copy } from 'lucide-react';
 import { DataFieldProps } from '@/shared/types/component';
 import DataShimmer from '@/components/shimmers/DataShimmer';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Button } from '../ui/button';
 
 const DataField = ({
   label,
@@ -88,7 +89,9 @@ const DataField = ({
         <code className="px-2 py-1 bg-slate-100 dark:bg-muted/20 border border-slate-200 dark:border-border rounded font-mono text-xs text-slate-800 dark:text-slate-200 break-all">
           {value}
         </code>
-        <button
+        <Button
+        size='icon'
+        variant='ghost'
           onClick={handleCopy}
           className="p-1 rounded text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer shrink-0"
           title="Copy ID"
@@ -98,7 +101,7 @@ const DataField = ({
           ) : (
             <Copy className="w-3.5 h-3.5" />
           )}
-        </button>
+        </Button>
       </div>
     );
   } else if (isDate) {

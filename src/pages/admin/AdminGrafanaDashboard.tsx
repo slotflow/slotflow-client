@@ -17,7 +17,7 @@ const AdminGrafanaDashboard = () => {
   url.searchParams.set('kiosk', 'true');
 
   return (
-    <div style={{ height: '100vh', width: '100%' }} className="p-4">
+    <div style={{ height: '100vh', width: '100%' }}>
       <iframe
         src={url.toString()}
         width="100%"

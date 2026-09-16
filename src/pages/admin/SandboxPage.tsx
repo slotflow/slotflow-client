@@ -12,7 +12,7 @@ export const SandboxPage = () => {
   };
 
   return (
-    <div className="p-4 mx-auto space-y-6 bg-slate-50 dark:bg-zinc-950 min-h-screen text-slate-900 dark:text-slate-50">
+    <div className="mx-auto space-y-6 bg-slate-50 dark:bg-zinc-950 min-h-screen text-slate-900 dark:text-slate-50">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b pb-6 border-slate-200 dark:border-zinc-800">
         <div>
           <h1 className="text-2xl font-bold">Component Test Sandbox</h1>

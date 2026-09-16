@@ -1,6 +1,8 @@
 import { X } from 'lucide-react';
 import { useEffect } from 'react';
+import { Button } from '../ui/button';
 import { useDispatch, useSelector } from 'react-redux';
+import { closeBtnClass } from '@/shared/utils/constants';
 import { AppDispatch, RootState } from '@/app/store/appStore';
 import { setLastMessage, setSelectedUser } from '@/app/store/slices/chatSlice';
 
@@ -28,7 +30,7 @@ const ChatHeader = () => {
     dispatch(setSelectedUser(null));
   };
 
-  useEffect(() => {}, [selectedUser]);
+  useEffect(() => { }, [selectedUser]);
 
   return (
     <div className="p-2 md:p-3 border-b border-base-300 shadow-md">
@@ -50,9 +52,14 @@ const ChatHeader = () => {
             </p>
           </div>
         </div>
-        <button onClick={handleCloseChat} className="cursor-pointer">
+        <Button
+          size="icon"
+          variant="ghost"
+          className={closeBtnClass}
+          onClick={handleCloseChat}
+        >
           <X />
-        </button>
+        </Button>
       </div>
     </div>
   );

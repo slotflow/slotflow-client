@@ -45,7 +45,7 @@ export const useReview = (): useReviewReturn => {
           }
         );
       } else {
-        toast.error(res.message || 'Failed to report review.');
+        toast.error(res.message || 'Could not report review, please try again.');
       }
     },
     onError: (error: ApiError) => {
@@ -88,7 +88,7 @@ export const useReview = (): useReviewReturn => {
           }
         );
       } else {
-        toast.error(res.message || 'Failed to change review block status.');
+        toast.error(res.message || 'Could not change review block status.');
       }
     },
     onError: (error: ApiError) => {
@@ -125,7 +125,7 @@ export const useReview = (): useReviewReturn => {
           }
         );
       } else {
-        toast.error(res.message || 'Failed to delete review.');
+        toast.error(res.message || 'Could not delete review, please try again.');
       }
     },
     onError: (error: ApiError) => {

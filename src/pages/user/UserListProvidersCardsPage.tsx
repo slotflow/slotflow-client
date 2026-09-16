@@ -75,7 +75,7 @@ const UserListProvidersCardsPage = () => {
   }, [selectedCategories, dispatch, data]);
 
   return (
-    <div className="p-2 min-h-full flex flex-col">
+    <div className="min-h-full flex flex-col">
       <div className="flex justify-between items-center">
         <div className="relative w-full max-w-md flex space-x-2">
           <div className="relative w-full max-w-xl">

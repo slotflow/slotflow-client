@@ -10,7 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ServiceCategory } from '@/shared/types/enums';
 import { useAdminService } from '@/hooks/adminHooks/useService';
 import { EditServiceFormProps } from '@/shared/types/component';
-import { serviceCategoryOptions } from '@/shared/utils/constants';
+import { closeBtnClass, serviceCategoryOptions } from '@/shared/utils/constants';
 import { slideOut } from '@/shared/utils/helper/gsapAnimationSlide';
 import { handleFormError } from '@/shared/utils/helper/formErrorCatcher';
 import {
@@ -85,16 +85,17 @@ const EditServiceForm = ({ onClose, formRef, serviceToEdit }: EditServiceFormPro
             Modify service details and availability status.
           </p>
         </div>
-
-        <button
+        <Button
           type="button"
+          size='icon'
+          variant='ghost'
           onClick={handleCloseForm}
           disabled={isSubmitting}
-          className="cursor-pointer p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50"
+          className={closeBtnClass}
           aria-label="Close form"
         >
           <X className="w-5 h-5" />
-        </button>
+        </Button>
       </div>
 
       <form

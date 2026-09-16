@@ -11,11 +11,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FileUploaderProps } from '@/shared/types/component';
 import { getUploadUrl, uploadToS3 } from '@/services/apis/s3';
-import { defaultButtonClassName } from '@/shared/utils/constants';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { ArrowUp, Check, Info, LoaderCircle, X } from 'lucide-react';
 import noImage from '../../../assets/defaultImages/imagePlaceholder.png';
 import { ImageFileFormType, imageFileZodeSchema } from '@/shared/validators/zod/providerZod';
+import { actionBtnClass, closeBtnClass, destructiveBtnClass } from '@/shared/utils/constants';
 
 const FileUploader = ({
   folderName,
@@ -131,7 +131,7 @@ const FileUploader = ({
       <Card className="rounded-2xl shadow-md">
         <CardContent className="p-6 space-y-4">
           <Label className="text-sm font-medium">
-            {title} <span className="text-red-500">*</span>
+            {title}
           </Label>
           {!data.file ? (
             <Input
@@ -162,7 +162,7 @@ const FileUploader = ({
                   title="Remove file"
                   variant="ghost"
                   size="icon"
-                  className="text-red-500 hover:bg-red-100 hover:text-red-600"
+                  className={closeBtnClass}
                   disabled={data.isLoading}
                   onClick={() => {
                     setSelectedImage(null);
@@ -223,7 +223,7 @@ const FileUploader = ({
               title="Delete File"
               type="button"
               variant="destructive"
-              className="cursor-pointer"
+              className={destructiveBtnClass}
               onClick={handleDeleteFile}
             >
               Delete File
@@ -234,7 +234,7 @@ const FileUploader = ({
                 title="Upload"
                 variant="secondary"
                 disabled={isSubmitting || !isValid}
-                className={defaultButtonClassName}
+                className={actionBtnClass}
                 type="submit"
               >
                 {isSubmitting ? 'Uploading' : 'Upload File'}

@@ -69,7 +69,7 @@ const AdminPlanDetailsPage = () => {
   }
 
   return (
-    <div className="p-4 h-full">
+    <div className="h-full">
       <div className="space-y-8 min-h-screen font-sans">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-border pb-6">
           <div className="space-y-1">

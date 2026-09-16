@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { DashboardDataCardProps } from '@/shared/types/common';
 import DashboardDataCard from '@/components/common/DashboardDataCard';
+import { Button } from '@/components/ui/button';
 
 const AVAILABLE_ICONS = {
   CreditCard,
@@ -105,12 +106,12 @@ export const DashboardDataCardDemo = () => {
             <Sliders className="w-4 h-4 text-indigo-500" />
             <h2 className="text-sm font-bold">Interactive Component Playground</h2>
           </div>
-          <button
+          <Button
             onClick={() => setIsLoading((prev) => !prev)}
             className="px-3 py-1.5 text-xs font-semibold rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white transition-all shadow-sm"
           >
             Toggle Loading ({isLoading ? 'ON' : 'OFF'})
-          </button>
+          </Button>
         </div>
 
         <div className="p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">

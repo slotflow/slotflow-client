@@ -155,6 +155,7 @@ const OtpVerificatioForm = () => {
                 loading={isSubmitting}
                 disabled={isSubmitting || !isValid}
                 title="Verify Otp"
+                className='w-full'
               />
             </form>
 

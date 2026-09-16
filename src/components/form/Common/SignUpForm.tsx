@@ -120,6 +120,7 @@ const SignUpForm = () => {
                   loading={isSubmitting}
                   disabled={isSubmitting || !isValid}
                   title="Sign up"
+                  className='w-full'
                 />
               </fieldset>
             </form>

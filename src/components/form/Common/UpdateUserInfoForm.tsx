@@ -1,6 +1,6 @@
 import FormField from '.././FormField';
 import { toast } from 'react-toastify';
-import { Button } from '../../ui/button';
+import { FormButton } from '../FormButton';
 import { PhoneInput } from '.././phone-input';
 import Submitting from '../../common/Submitting';
 import { userUpdateInfo } from '@/services/apis/user';
@@ -8,7 +8,6 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/app/store/appStore';
-import { defaultButtonClassName } from '@/shared/utils/constants';
 import { UpdateUserInfoFormProps } from '@/shared/types/component';
 import { UserInfoFormType, userInfoZodSchema } from '@/shared/validators/zod/commonZodFields';
 
@@ -92,14 +91,12 @@ const UpdateUserInfoForm = ({ onClose }: UpdateUserInfoFormProps) => {
         )}
       />
       <div className="flex space-y-2 justify-end">
-        <Button
-          variant="default"
-          className={defaultButtonClassName}
+        <FormButton 
+          loading={isSubmitting}
+          text={isSubmitting ? 'Updating' : 'Update'}
+          title='Update user info'
           disabled={isSubmitting || !isValid}
-          title="Update"
-        >
-          {isSubmitting ? 'Updating' : 'Update'}
-        </Button>
+        />
       </div>
     </form>
   );

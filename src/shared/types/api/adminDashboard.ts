@@ -1,6 +1,6 @@
+import { Role } from '../enums';
 import { StatMetric } from '../common';
 import { DateRange } from 'react-day-picker';
-import { Role } from '../enums';
 
 // request type of the admin fetch dashboard stats data
 export interface AdminStatsDataRequest extends Record<string, Date | undefined> {

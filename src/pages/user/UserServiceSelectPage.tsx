@@ -7,9 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useDispatch, useSelector } from 'react-redux';
 import { ServiceCategory } from '@/shared/types/enums';
+import { actionBtnClass } from '@/shared/utils/constants';
 import MoveUpward from '@/components/animation/MoveUpward';
 import { AppDispatch, RootState } from '@/app/store/appStore';
-import { defaultButtonClassName } from '@/shared/utils/constants';
 import { pushServiceCategory } from '@/app/store/slices/userSlice';
 
 const UserServiceSelectPage = () => {
@@ -42,7 +42,7 @@ const UserServiceSelectPage = () => {
   );
 
   return (
-    <div className="p-2 min-h-full flex flex-col">
+    <div className="min-h-full flex flex-col">
       <MoveUpward>
         <div className="mx-auto flex w-full max-w-3xl flex-col items-center space-y-8 py-6 text-center">
           <div className="space-y-3">
@@ -97,7 +97,7 @@ const UserServiceSelectPage = () => {
         <Button
           title="Skip"
           variant="secondary"
-          className={defaultButtonClassName}
+          className={actionBtnClass}
           onClick={handleSubmitSelectedServices}
         >
           Skip
@@ -105,7 +105,7 @@ const UserServiceSelectPage = () => {
         <Button
           title="Next"
           variant="default"
-          className={defaultButtonClassName}
+          className={actionBtnClass}
           onClick={handleSubmitSelectedServices}
         >
           Next

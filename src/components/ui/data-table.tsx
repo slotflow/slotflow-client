@@ -1,7 +1,7 @@
 import {
   DropdownMenu,
-  DropdownMenuContent,
   DropdownMenuTrigger,
+  DropdownMenuContent,
   DropdownMenuCheckboxItem,
 } from './dropdown-menu';
 import {
@@ -20,10 +20,10 @@ import {
 import * as React from 'react';
 import { Input } from './input';
 import { Button } from './button';
+import { actionBtnClass } from '@/shared/utils/constants';
 import { DataTableProps } from '@/shared/types/component';
-import { defaultButtonClassName } from '@/shared/utils/constants';
+import { ChevronLeft, ChevronRight, Columns, RotateCw } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './table';
-import { RotateCw } from 'lucide-react';
 
 export function DataTable<TData, TValue>({
   columns,
@@ -81,8 +81,8 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div>
-      <div className="flex items-center py-4">
+    <>
+      <div className="flex items-center py-2">
         <Input
           placeholder="Filter values"
           value={globalFilter}
@@ -95,9 +95,9 @@ export function DataTable<TData, TValue>({
               <Button
                 key={btn.actionLabel}
                 title={btn?.actionLabel}
-                variant="default"
-                className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border border-slate-200 dark:border-border bg-white dark:bg-muted/20 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-muted/30 shadow-sm transition-all cursor-pointer disabled:opacity-50"
-                onClick={btn?.onActionClick}
+                variant="secondary"
+                size="sm"
+                className={actionBtnClass} onClick={btn?.onActionClick}
               >
                 {btn?.actionLabel}
               </Button>
@@ -108,8 +108,8 @@ export function DataTable<TData, TValue>({
                 disabled={isFetching}
                 title="refetch"
                 variant="secondary"
-                className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border border-slate-200 dark:border-border bg-white dark:bg-muted/20 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-muted/30 shadow-sm transition-all cursor-pointer disabled:opacity-50"
-                onClick={() => refetch()}
+                size="sm"
+                className={actionBtnClass} onClick={() => refetch()}
               >
                 <RotateCw
                   className={`w-3.5 h-3.5 text-slate-500 ${isFetching && 'animate-spin'}`}
@@ -121,8 +121,11 @@ export function DataTable<TData, TValue>({
               <Button
                 title="Columns"
                 variant="secondary"
-                className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border border-slate-200 dark:border-border bg-white dark:bg-muted/20 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-muted/30 shadow-sm transition-all cursor-pointer disabled:opacity-50"
-              >
+                size="sm"
+                className={actionBtnClass}              >
+                <Columns
+                  className={`w-3.5 h-3.5 text-slate-500 ${isFetching && 'animate-spin'}`}
+                />
                 Columns
               </Button>
             </DropdownMenuTrigger>
@@ -147,7 +150,7 @@ export function DataTable<TData, TValue>({
         </DropdownMenu>
       </div>
 
-      <div className="rounded-md border">
+      <div className="rounded-md border mt-2">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -210,25 +213,31 @@ export function DataTable<TData, TValue>({
           <Button
             title="Previous"
             variant="secondary"
-            className={defaultButtonClassName}
+            className={actionBtnClass}
             size="sm"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
+            <ChevronLeft
+              className={`w-3.5 h-3.5 text-slate-500 ${isFetching && 'animate-spin'}`}
+            />
             Previous
           </Button>
           <Button
             title="Next"
             variant="secondary"
-            className={defaultButtonClassName}
+            className={actionBtnClass}
             size="sm"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
             Next
+            <ChevronRight
+              className={`w-3.5 h-3.5 text-slate-500 ${isFetching && 'animate-spin'}`}
+            />
           </Button>
         </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
+import { BillingCycle } from '@/shared/types/enums';
+import { queryKeys } from '@/shared/utils/constants';
 import PlanCard from '../../components/plan/PlanCard';
 import { providerFetchPlans } from '@/services/apis/plan';
-import { BillingCycle, PlanName } from '@/shared/types/enums';
 import { ArrowLeft, Sparkles, ShieldCheck } from 'lucide-react';
 import DataFetchingError from '../../components/error/DataFetchingError';
 import BillingCycleToggle from '../../components/plan/BillingCycleToggle';
 import ProviderPlanCardShimmer from '../../components/shimmers/ProviderPlanCardShimmer';
-import { queryKeys } from '@/shared/utils/constants';
 
 const SubScribePlanPage = () => {
+
   const navigate = useNavigate();
   const [billingCycle, setBillingCycle] = useState<BillingCycle>(BillingCycle.MONTHLY);
 
@@ -52,8 +54,8 @@ const SubScribePlanPage = () => {
 
         <div className="py-4">
           {isLoading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-              {Array.from({ length: 4 }).map((_, index) => (
+            <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+              {Array.from({ length: 3 }).map((_, index) => (
                 <ProviderPlanCardShimmer key={index} />
               ))}
             </div>
@@ -62,14 +64,12 @@ const SubScribePlanPage = () => {
               <DataFetchingError message={(error as Error).message} />
             </div>
           ) : data && data.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 items-stretch justify-center">
+            <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 items-stretch justify-center">
               {data.map((plan) => {
-                const isTrial: boolean = plan?.planName === PlanName.TRIAL;
                 return (
                   <div key={plan._id} className="flex">
                     <PlanCard
                       plan={plan}
-                      isTrial={isTrial}
                       dummy={false}
                       billingCycle={billingCycle}
                     />
@@ -87,13 +87,14 @@ const SubScribePlanPage = () => {
 
       <footer className="max-w-7xl w-full mx-auto pt-16 pb-6 mt-auto">
         <div className="border-t border-border pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-muted-foreground">
-          <button
+          <Button
+            variant='link'
             onClick={() => navigate(-1)}
-            className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-foreground bg-secondary/80 hover:bg-secondary transition-all duration-200 hover:-translate-x-0.5 active:translate-x-0"
+            className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-foreground transition-all duration-200 hover:-translate-x-0.5 active:translate-x-0"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Dashboard</span>
-          </button>
+          </Button>
 
           <div className="flex flex-wrap items-center justify-center gap-6">
             <div className="flex items-center gap-2">

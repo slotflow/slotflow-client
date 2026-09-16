@@ -49,7 +49,7 @@ const ProviderDashboard = () => {
             ),
         },
         {
-            id: 'stats-card-1',
+            id: 'stats-card-2',
             colSpan: 'col-span-12 lg:col-span-6',
             component: <DashboardStats<ProviderFetchDashboardRevenueStatsDataResponse>
                 queryFunction={() =>
@@ -83,10 +83,10 @@ const ProviderDashboard = () => {
         ...charts
     ]
     return (
-        <div className="w-full">
+        <>
             <DateFilter dateRange={dateRange} setDateRange={setDateRange} />
             <Reorderable initialItems={initialItems} />;
-        </div >
+        </>
     )
 }
 

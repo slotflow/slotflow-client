@@ -91,6 +91,7 @@ const ResetPasswordForm = () => {
                 loading={isSubmitting}
                 disabled={isSubmitting || !isValid}
                 title="Update"
+                className='w-full'
               />
             </form>
 

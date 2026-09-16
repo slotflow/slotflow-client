@@ -1,151 +1,80 @@
-import { X, ArrowRight, CreditCard, LockKeyhole, LoaderCircle, ShieldCheck } from 'lucide-react';
-import { useCallback } from 'react';
-import { toast } from 'react-toastify';
 import { motion } from 'framer-motion';
-import { stripeConfig } from '@/config/env';
-import { loadStripe } from '@stripe/stripe-js';
+import { toast } from 'react-toastify';
+import { useCallback, useMemo } from 'react';
 import { RootState } from '@/app/store/appStore';
-import { getEventSocket } from '@/lib/socketService';
 import { useDispatch, useSelector } from 'react-redux';
-import { EventSocketEnum } from '@/shared/types/socket';
 import { Card, CardContent } from '@/components/ui/card';
-import { bookAnAppointment } from '@/services/apis/booking';
+import { useSubscription } from '@/hooks/useSubscription';
+import { useBookingPayment } from '@/hooks/useBookingPayment';
 import paypalLogo from '../../assets/logos/external/paypal.png';
 import stripeLogo from '../../assets/logos/external/stripe.jpeg';
 import razorpayLogo from '../../assets/logos/external/razorpay.png';
-import { setSubscriptionUpdating } from '@/app/store/slices/authSlice';
-import { checkoutForSubscribePlan } from '@/services/apis/subscription';
+import { setPaymentSelectionOpen } from '@/app/store/slices/paymentSlice';
 import { PaymentProcessStatus, PaymentProcessType } from '@/shared/types/enums';
-import { setPaymentProcessStatus, setPaymentSelectionOpen } from '@/app/store/slices/paymentSlice';
+import { X, ArrowRight, CreditCard, LockKeyhole, LoaderCircle, ShieldCheck } from 'lucide-react';
+import { Button } from '../ui/button';
+import { closeBtnClass } from '@/shared/utils/constants';
 
 const PaymentSelection = () => {
+
   const dispatch = useDispatch();
-  const eventSocket = getEventSocket();
-  const { bookingData, subscriptionData, status, type } = useSelector(
-    (state: RootState) => state.payment,
-  );
+  const { subscribePlan } = useSubscription();
+  const { bookAppointment } = useBookingPayment();
+  const { bookingData, subscriptionData, status, type } = useSelector((state: RootState) => state.payment);
+  const isSubscription = type === PaymentProcessType.SUBSCRIPTION;
 
-  const makeStripePayment = useCallback(async () => {
-    const stripePublishKey = stripeConfig.stripePublishableKey;
-
-    if (!stripePublishKey) {
-      toast.error('Stripe key is missing!');
-      return;
-    }
-
-    const stripe = await loadStripe(stripePublishKey);
-
-    if (!stripe) {
-      toast.error('Stripe failed to load!');
-      return;
-    }
-
-    try {
-      if (type === PaymentProcessType.BOOKING) {
-        if (
-          !bookingData?.slotId ||
-          !bookingData?.providerId ||
-          !bookingData?.selectedServiceMode ||
-          !bookingData?.date
-        ) {
-          toast.error('Incomplete booking details.');
-          return;
-        }
-
-        eventSocket.emit(EventSocketEnum.slotEngageRequest, {
-          providerId: bookingData.providerId,
-          date: bookingData.date,
-          slotId: bookingData.slotId,
-        });
-
-        eventSocket.once(EventSocketEnum.slotEngageApproved, async () => {
-          try {
-            const response = await bookAnAppointment(bookingData);
-            const sessionId = response.data;
-
-            if (!sessionId) {
-              toast.error('Failed to create checkout session.');
-              dispatch(setPaymentProcessStatus(PaymentProcessStatus.FAILED));
-              return;
-            }
-
-            dispatch(setPaymentProcessStatus(PaymentProcessStatus.PROCESSING));
-            stripe.redirectToCheckout({ sessionId });
-          } catch {
-            toast.error('Booking payment failed');
-            dispatch(setPaymentProcessStatus(PaymentProcessStatus.FAILED));
-            eventSocket.emit(EventSocketEnum.slotUnlockRequest, {
-              providerId: bookingData.providerId,
-              date: bookingData.date,
-              slotId: bookingData.slotId,
-            });
-          }
-        });
-
-        eventSocket.once(EventSocketEnum.slotEngageRejected, () => {
-          toast.error('Slot already engaged by another user');
-        });
-
+  const makeStripePayment = useCallback(() => {
+    if (type === PaymentProcessType.BOOKING) {
+      if (!bookingData) {
+        toast.error('Booking details are missing.');
         return;
       }
-
-      if (type === PaymentProcessType.SUBSCRIPTION) {
-        if (!subscriptionData?.planId || !subscriptionData?.billingCycle) {
-          toast.error('Subscription details missing');
-          dispatch(setPaymentProcessStatus(PaymentProcessStatus.FAILED));
-          return;
-        }
-        try {
-          const response = await checkoutForSubscribePlan(subscriptionData);
-          const sessionId = response.data;
-
-          if (!sessionId) {
-            toast.error('Failed to create checkout session.');
-            dispatch(setPaymentProcessStatus(PaymentProcessStatus.FAILED));
-            return;
-          }
-
-          dispatch(setSubscriptionUpdating(true));
-          dispatch(setPaymentProcessStatus(PaymentProcessStatus.PROCESSING));
-          stripe.redirectToCheckout({ sessionId });
-        } catch {
-          toast.error('Subscription payment failed.');
-          dispatch(setPaymentProcessStatus(PaymentProcessStatus.FAILED));
-        }
+      bookAppointment(bookingData);
+    } else if (type === PaymentProcessType.SUBSCRIPTION) {
+      if (!subscriptionData) {
+        toast.error('Subscription details are missing.');
+        return;
       }
-    } catch {
-      toast.error('Something went wrong during payment.');
-      dispatch(setPaymentProcessStatus(PaymentProcessStatus.FAILED));
-    } finally {
-      dispatch(setPaymentSelectionOpen(false));
+      subscribePlan(subscriptionData);
     }
-  }, [bookingData, subscriptionData, type, dispatch, eventSocket]);
+  }, [bookingData, subscriptionData, type, bookAppointment, subscribePlan]);
 
-  const paymentGateways = [
-    {
-      name: 'Stripe',
-      img: stripeLogo,
-      text: <h6 className="font-bold italic text-[#635bff]">Stripe</h6>,
-      onClick: makeStripePayment,
-    },
-    {
-      name: 'PayPal',
-      img: paypalLogo,
-      text: (
-        <h6 className="font-bold italic space-x-1">
-          <span className="text-[#002991]">Pay</span>
-          <span className="text-[#60cdff]">Pal</span>
-        </h6>
-      ),
-      onClick: makeStripePayment,
-    },
-    {
-      name: 'Razorpay',
-      img: razorpayLogo,
-      text: <h6 className="font-bold italic text-[#072654]">Razorpay</h6>,
-      onClick: makeStripePayment,
-    },
-  ];
+  const paymentGateways = useMemo(() => {
+    const gateways = [
+      {
+        id: 'stripe',
+        name: 'Stripe',
+        img: stripeLogo,
+        text: <h6 className="font-bold italic text-[#635bff]">Stripe</h6>,
+        onClick: makeStripePayment,
+      },
+      {
+        id: 'paypal',
+        name: 'PayPal',
+        img: paypalLogo,
+        text: (
+          <h6 className="font-bold italic space-x-1">
+            <span className="text-[#002991]">Pay</span>
+            <span className="text-[#60cdff]">Pal</span>
+          </h6>
+        ),
+        onClick: makeStripePayment,
+      },
+      {
+        id: 'razorpay',
+        name: 'Razorpay',
+        img: razorpayLogo,
+        text: <h6 className="font-bold italic text-[#072654]">Razorpay</h6>,
+        onClick: makeStripePayment,
+      },
+    ];
+
+    if (isSubscription) {
+      return gateways.filter((gateway) => gateway.id === 'stripe');
+    }
+
+    return gateways;
+  }, [type, makeStripePayment]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 backdrop-blur-md">
@@ -183,13 +112,15 @@ const PaymentSelection = () => {
         >
           <Card className="overflow-hidden rounded-3xl border border-border/60 bg-[var(--background)] shadow-2xl">
             <div className="relative border-b border-border/60 px-6 pb-5 pt-6">
-              <button
+              <Button
                 type="button"
+                size='icon'
+                variant='ghost'
                 onClick={() => dispatch(setPaymentSelectionOpen(false))}
-                className="cursor-pointer absolute right-5 top-5 flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-all hover:bg-muted hover:text-foreground"
+                className={`absolute right-4 top-4 ${closeBtnClass}`}
               >
                 <X className="h-5 w-5" />
-              </button>
+              </Button>
 
               <div className="flex items-start gap-4 pr-10">
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10">
@@ -200,7 +131,7 @@ const PaymentSelection = () => {
                   <h2 className="text-xl font-bold tracking-tight">Complete Payment</h2>
 
                   <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                    Choose your preferred payment method to continue securely.
+                    {!isSubscription ? 'Choose your preferred payment method to continue securely.' : 'Secure payment through stripe'}
                   </p>
                 </div>
               </div>
@@ -215,18 +146,19 @@ const PaymentSelection = () => {
             </div>
 
             <CardContent className="space-y-5 p-6">
-              <div>
-                <h3 className="text-sm font-semibold text-foreground">Select payment method</h3>
-
-                <p className="mt-1 text-xs text-muted-foreground">
-                  Select one of the available payment providers below.
-                </p>
-              </div>
+              {!isSubscription && (
+                <div>
+                  <h3 className="text-sm font-semibold text-foreground">Select payment method</h3>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    Select one of the available payment providers below.
+                  </p>
+                </div>
+              )}
 
               <div className="space-y-3">
-                {paymentGateways.map((gateway, index) => (
+                {paymentGateways.map((gateway) => (
                   <motion.button
-                    key={index}
+                    key={gateway.id}
                     whileHover={{
                       scale: 1.015,
                       y: -1,

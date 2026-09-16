@@ -48,7 +48,7 @@ const BookingDetailPage = () => {
   ];
 
   return (
-    <div className="p-4">
+    <>
       {isError && error ? (
         <DataFetchingError message={(error as Error).message} />
       ) : isLoading ? (
@@ -130,7 +130,7 @@ const BookingDetailPage = () => {
       ) : (
         <DataFetchingError message="No data found" />
       )}
-    </div>
+    </>
   );
 };
 

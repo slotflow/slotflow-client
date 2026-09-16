@@ -523,6 +523,7 @@ export interface AuthFormsButtonProps {
   loading: boolean;
   disabled?: boolean;
   title: string;
+  className?: string;
 }
 
 // google button props interface
@@ -641,7 +642,6 @@ export interface ProviderPlanCardProps {
     Plan,
     '_id' | 'planName' | 'monthlyPrice' | 'yearlyPrice' | 'description' | 'features'
   >;
-  isTrial?: boolean;
   dummy?: boolean;
   popular?: boolean;
   billingCycle?: BillingCycle;
@@ -1042,8 +1042,8 @@ export interface ProviderProfileTopCardProps {
   categoryName: string;
   trusted: boolean;
   role: Role;
-  isShowPreview: boolean;
-  handleIsShowPreview: () => void;
+  isShowPreview?: boolean;
+  handleIsShowPreview?: () => void;
 }
 
 // Requirements Card props
@@ -1082,8 +1082,8 @@ export interface ProviderProfileProps {
     isError?: boolean;
     data?: ProviderFetchMyProfileDetailsResponse | UserFetchProviderProfileDetailsResponse;
   };
-  isShowPreview: boolean;
-  handleIsShowPreview: () => void;
+  isShowPreview?: boolean;
+  handleIsShowPreview?: () => void;
 }
 
 // TOC props

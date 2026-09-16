@@ -28,7 +28,7 @@ const CreditPage = () => {
   });
 
   return (
-    <div className="container p-4 space-y-6">
+    <div className="space-y-6">
       <div className="grid gap-2 grid-col-1 md:grid-cols-2">
         <div className="grid gap-2 grid-cols-2">
           <MetricCard

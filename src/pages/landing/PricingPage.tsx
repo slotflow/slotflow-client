@@ -69,7 +69,6 @@ const PricingPage = () => {
             {plans.map((plan) => (
               <PlanCard
                 key={plan.planKey}
-                isTrial={true}
                 plan={{
                   ...plan,
                   _id: String(plan.planKey),

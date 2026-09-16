@@ -41,7 +41,7 @@ export interface ValidateRoomIdRequest {
 }
 
 // request type of the book an appointment api
-export type BookAnAppointmentRequest = {
+export type BookAppointmentRequest = {
   providerId: User['_id'];
   slotId: string;
   date: Date;

@@ -65,6 +65,8 @@ export const usePreBoarding = (): UsePreBoardingReturn => {
             selectedRole: null,
           }),
         );
+      } else {
+        toast.error(res.message || 'Failed to preboard, please try again');
       }
     },
 

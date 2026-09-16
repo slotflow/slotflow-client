@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/app/store/appStore';
 import FileUploader from '@/components/form/Common/FileUploader';
 import { setIsProofSubmitted } from '@/app/store/slices/authSlice';
-import { defaultButtonClassName, redirectPaths } from '@/shared/utils/constants';
+import { defaultBtnClass, redirectPaths } from '@/shared/utils/constants';
 
 const ProviderProofSubmissionPage = () => {
   const navigate = useNavigate();
@@ -93,7 +93,7 @@ const ProviderProofSubmissionPage = () => {
             title="Submit proofs"
             variant="default"
             onClick={handleNextutton}
-            className={defaultButtonClassName}
+            className={defaultBtnClass}
             type="button"
             disabled={isSubmitting || !identityProof.file || !serviceProof.file}
           >

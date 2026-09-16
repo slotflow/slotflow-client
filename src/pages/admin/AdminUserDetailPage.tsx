@@ -50,7 +50,7 @@ const AdminUserDetailPage = () => {
 
   if (!userId) {
     return (
-      <div className="p-4 h-full">
+      <div className="h-full">
         <DataFetchingError message="User ID is missing." />
       </div>
     );
@@ -58,14 +58,14 @@ const AdminUserDetailPage = () => {
 
   if (isError && error) {
     return (
-      <div className="p-4 h-full">
+      <div className="h-full">
         <DataFetchingError message={(error as Error).message} />
       </div>
     );
   }
 
   return (
-    <div className="p-4 h-full space-y-8 min-h-screen font-sans">
+    <div className="h-full space-y-8 min-h-screen font-sans">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-border pb-6">
         <div className="space-y-3">
           <div className="flex items-center gap-2 text-xs text-slate-500 font-medium">

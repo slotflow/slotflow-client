@@ -30,6 +30,7 @@ export interface FetchSubscriptionDetailsResponse extends SubscriptionProps {
 
 // response of fetch activated subscription
 export interface SubscriptionActivated {
+  userId: string;
   subscribedPlan: PlanName;
   startDate: Date;
   endDate: Date;
@@ -40,7 +41,10 @@ export interface SubscriptionActivated {
 export type FetchMySubscriptionResponse = SubscriptionActivated;
 
 // request of checkout for subscribe plan
-export interface CheckoutForSubscribePlanRequest {
+export interface SubscribePlanCheckoutRequest {
   planId: Plan['_id'];
   billingCycle: BillingCycle;
+}
+export interface SubscribePlanCheckoutResponse {
+  sessionId: string;
 }

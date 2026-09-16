@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
+import { actionBtnClass } from '@/shared/utils/constants';
 import { FeatureLockedProps } from '@/shared/types/component';
-import { defaultButtonClassName } from '@/shared/utils/constants';
 
 const FeatureLocked = ({
   icon: Icon,
@@ -15,8 +15,8 @@ const FeatureLocked = ({
       {onButtonClick && (
         <Button
           title={buttonText}
-          className={defaultButtonClassName}
           variant="secondary"
+          className={actionBtnClass}
           onClick={onButtonClick}
         >
           {buttonText}

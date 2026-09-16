@@ -15,6 +15,9 @@ export interface Payment {
   paymentIntentId?: string;
   transactionId: string;
   chargeId?: string;
+  stripeCustomerId: string;
+  stripeSubscriptionId?: string;
+  stripeInvoiceId: string;
   gatewayFee: number | null;
   receiptUrl: string | null;
   receiptNumber: string | null;

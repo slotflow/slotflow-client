@@ -10,17 +10,19 @@ import {
   ArrowLeft,
   CircleCheck,
   Award,
-  XCircle,
   CheckCircle2,
   Clock,
   ShieldCheck,
   ShieldAlert,
 } from 'lucide-react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { Role } from '@/shared/types/enums';
+import { TabItem } from '@/shared/types/common';
 import { useQuery } from '@tanstack/react-query';
 import ReviewsPage from '../dashboard/ReviewsPage';
-import { useEffect, useRef, useState } from 'react';
 import { fetchPayments } from '@/services/apis/payment';
+import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { useNavigate, useParams } from 'react-router-dom';
 import StatusBadge from '@/components/common/StatusBadge';
 import DataShimmer from '@/components/shimmers/DataShimmer';
@@ -29,12 +31,9 @@ import TabNavigation from '@/components/common/TabNavigation';
 import ProviderProofs from '@/components/profile/ProviderProofs';
 import AddressListing from '@/components/profile/AddressListing';
 import { useAdminProvider } from '@/hooks/adminHooks/useProvider';
-import { slideIn } from '@/shared/utils/helper/gsapAnimationSlide';
 import { providerTabs, queryKeys } from '@/shared/utils/constants';
 import DataFetchingError from '@/components/error/DataFetchingError';
-import { AdminVerificationStatus, Role } from '@/shared/types/enums';
 import DashboardDataCard from '@/components/common/DashboardDataCard';
-import RejectproviderForm from '@/components/form/Admin/RejectproviderForm';
 import ProviderServiceDetails from '@/components/profile/ProviderServiceList';
 import { fetchProviderServiceByProviderId } from '@/services/apis/providerService';
 import AdminProviderSubscriptions from '@/components/admin/AdminProviderSubscriptions';
@@ -44,21 +43,12 @@ import {
   adminFetchProviderProofs,
   fetchProviderDetailsForAdmin,
 } from '@/services/apis/providerProfile';
-import { TabItem } from '@/shared/types/common';
-import { Tabs, TabsContent } from '@/components/ui/tabs';
+import { Button } from '@/components/ui/button';
 
 const AdminServiceProviderDetailPage = () => {
   const navigate = useNavigate();
-  const formRef = useRef<HTMLDivElement>(null);
   const { providerId } = useParams<{ providerId: string }>();
-  const [rejectFormOpen, setRejectFormOpen] = useState<boolean>(false);
   const [selectedTab, setSelectedTab] = useState<TabItem['value']>(providerTabs[0].value);
-
-  useEffect(() => {
-    if (rejectFormOpen && formRef.current) {
-      slideIn(formRef.current);
-    }
-  }, [rejectFormOpen]);
 
   const {
     changeProviderBlockStatus,
@@ -96,7 +86,7 @@ const AdminServiceProviderDetailPage = () => {
 
   if (!providerId) {
     return (
-      <div className="p-4 h-full">
+      <div className="h-full">
         <DataFetchingError message="Provider ID is missing." />
       </div>
     );
@@ -104,7 +94,7 @@ const AdminServiceProviderDetailPage = () => {
 
   if (isError && error) {
     return (
-      <div className="p-4 h-full">
+      <div className="h-full">
         <DataFetchingError message={(error as Error).message} />
       </div>
     );
@@ -112,7 +102,7 @@ const AdminServiceProviderDetailPage = () => {
 
   return (
     <>
-      <div className="p-4 h-full space-y-8 min-h-screen font-sans">
+      <div className="h-full space-y-8 min-h-screen font-sans">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-border pb-6">
           <div className="space-y-3">
             <div className="flex items-center gap-2 text-xs text-slate-500 font-medium">
@@ -306,17 +296,6 @@ const AdminServiceProviderDetailPage = () => {
               {provider?.trustedBySlotflow ? 'Revoke Tag' : 'Give Tag'}
             </button>
 
-            {provider?.adminVerificationStatus === AdminVerificationStatus.REQUESTED && (
-              <button
-                disabled={isLoading || isFetching}
-                onClick={() => setRejectFormOpen(!rejectFormOpen)}
-                className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border shadow-sm transition-all cursor-pointer bg-white dark:bg-muted/20 text-rose-600 border-slate-200 dark:border-border hover:bg-rose-50 dark:hover:bg-rose-950/30"
-              >
-                <XCircle className="w-3.5 h-3.5" />
-                Reject Provider
-              </button>
-            )}
-
             {!isLoading && !provider?.isAdminVerified && (
               <button
                 disabled={isLoading || isFetching}
@@ -324,7 +303,7 @@ const AdminServiceProviderDetailPage = () => {
                 className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border shadow-sm transition-all cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white border-transparent"
               >
                 <CheckCircle2 className="w-3.5 h-3.5" />
-                Approve Provider
+                Approve
               </button>
             )}
           </div>
@@ -407,16 +386,6 @@ const AdminServiceProviderDetailPage = () => {
           </Tabs>
         </div>
       </div>
-
-      {rejectFormOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <RejectproviderForm
-            onClose={() => setRejectFormOpen(!rejectFormOpen)}
-            formRef={formRef}
-            rejectProviderData={{ providerId: providerId }}
-          />
-        </div>
-      )}
     </>
   );
 };

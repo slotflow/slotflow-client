@@ -1,5 +1,6 @@
 import { Trash } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { closeBtnClass } from '@/shared/utils/constants';
 import { SavedAvailabilitiesProps } from '@/shared/types/component';
 
 const SavedAvailabilities = ({ availabilities, removeAvailability }: SavedAvailabilitiesProps) => {
@@ -27,8 +28,8 @@ const SavedAvailabilities = ({ availabilities, removeAvailability }: SavedAvaila
             )}
             <Button
               title="Delete availability"
-              variant="destructive"
-              className="cursor-pointer transition-colors duration-300 hover:text-white hover:bg-red-500"
+              variant="ghost"
+              className={closeBtnClass}
               onClick={() => removeAvailability(availability.day)}
             >
               <Trash className="size-4" />

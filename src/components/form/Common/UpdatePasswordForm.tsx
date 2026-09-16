@@ -2,11 +2,10 @@ import FormField from '../FormField';
 import { toast } from 'react-toastify';
 import { appConfig } from '@/config/env';
 import { useForm } from 'react-hook-form';
-import { Button } from '@/components/ui/button';
+import { FormButton } from '../FormButton';
 import { updatePassword } from '@/services/apis/user';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Submitting from '@/components/common/Submitting';
-import { defaultButtonClassName } from '@/shared/utils/constants';
 import { UpdatePasswordFormProps } from '@/shared/types/component';
 import {
   UpdatePasswordFormType,
@@ -84,14 +83,12 @@ const UpdatePasswordForm = ({ onClose }: UpdatePasswordFormProps) => {
         error={errors.confirmPassword?.message}
       />
       <div className="flex space-y-2 justify-end">
-        <Button
-          variant="default"
-          className={defaultButtonClassName}
+        <FormButton 
+          loading={isSubmitting}
+          text={isSubmitting ? 'Updating' : 'Update'}
+          title='Update password'
           disabled={isSubmitting || !isValid}
-          title="Update"
-        >
-          {isSubmitting ? 'Updating' : 'Update'}
-        </Button>
+        />
       </div>
     </form>
   );

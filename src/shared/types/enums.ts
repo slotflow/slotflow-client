@@ -271,7 +271,6 @@ export enum PaymentProcessStatus {
 export enum PaymentProcessType {
   BOOKING = 'BOOKING',
   SUBSCRIPTION = 'SUBSCRIPTION',
-  NULL = 'NULL',
 }
 
 export enum StripeAccountStatus {

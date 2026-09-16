@@ -53,6 +53,7 @@ export interface SigninResponse {
     isAvailabilityVerified: boolean;
     isProofsVerified: boolean;
     allowPushNotification: boolean;
+    hasUsedTrial: boolean;
     googleId?: string;
     stripeAccountId?: string;
     stripeAccountStatus: StripeAccountStatus;

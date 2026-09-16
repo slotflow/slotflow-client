@@ -141,7 +141,7 @@ export const fetchServiceProvidersForAdmin: ApiFetchFunction<
 };
 
 // admin approve provider
-export const adminApproveProvider = async (
+export const  adminApproveProvider = async (
   data: AdminApproveProviderRequest,
 ): Promise<ApiBaseResponse<AdminApproveProviderResponse>> => {
   const response = await axiosInstance.patch(`/providers/${data.providerId}/approve`);

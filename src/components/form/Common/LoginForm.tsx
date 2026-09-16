@@ -146,6 +146,7 @@ const LoginForm = () => {
                   loading={isSubmitting}
                   disabled={isSubmitting || !isValid}
                   title="Sign In"
+                  className='w-full'
                 />
               </fieldset>
             </form>

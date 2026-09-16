@@ -17,6 +17,7 @@ import DynamicStringListField from '../DynamicStringListFields';
 import { slideOut } from '@/shared/utils/helper/gsapAnimationSlide';
 import { planNameOptions } from '@/shared/utils/constants/planConstants';
 import { AdminCreatePlanFormType, adminCreatePlanZodSchema } from '@/shared/validators/zod/adminZod';
+import { closeBtnClass } from '@/shared/utils/constants';
 
 const PlanForm = ({ onClose, formRef, planIdToEdit }: PlanFormProps) => {
   const isEditMode = Boolean(planIdToEdit);
@@ -44,16 +45,16 @@ const PlanForm = ({ onClose, formRef, planIdToEdit }: PlanFormProps) => {
     defaultValues: isEditMode
       ? undefined
       : {
-          planName: PlanName.STARTER,
-          description: '',
-          monthlyPrice: 0,
-          yearlyPrice: 0,
-          features: [''],
-          maxBookingPerMonth: 0,
-          adVisibility: false,
-          hasTrial: false,
-          trialDays: 14,
-        },
+        planName: PlanName.STARTER,
+        description: '',
+        monthlyPrice: 0,
+        yearlyPrice: 0,
+        features: [''],
+        maxBookingPerMonth: 0,
+        adVisibility: false,
+        hasTrial: false,
+        trialDays: 14,
+      },
   });
 
   useEffect(() => {
@@ -130,16 +131,17 @@ const PlanForm = ({ onClose, formRef, planIdToEdit }: PlanFormProps) => {
               : 'Configure pricing, limits, and features for this subscription plan.'}
           </p>
         </div>
-
-        <button
+        <Button
           type="button"
+          size='icon'
+          variant='ghost'
           onClick={handleClosePlanForm}
           disabled={isSubmitting}
-          className="cursor-pointer p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50"
+          className={closeBtnClass}
           aria-label="Close form"
         >
           <X className="w-5 h-5" />
-        </button>
+        </Button>
       </div>
 
       {isFetchingPlan ? (
@@ -274,7 +276,6 @@ const PlanForm = ({ onClose, formRef, planIdToEdit }: PlanFormProps) => {
             </div>
           </div>
 
-          {/* Fixed Bottom Footer Action Buttons */}
           <div className="flex flex-col-reverse sm:flex-row items-center justify-end gap-3 pt-6 mt-4 border-t border-zinc-200/60 dark:border-zinc-800 shrink-0">
             <Button
               title="Cancel"

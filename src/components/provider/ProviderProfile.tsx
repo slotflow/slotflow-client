@@ -25,9 +25,9 @@ const ProviderProfile = ({
 }: ProviderProfileProps) => {
 
   return (
-    <div className="w-full p-4">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 space-y-6">
+    <div className="w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
+        <div className="lg:col-span-2 space-y-2">
           <ProviderProfileTopCardProps
             isLoading={profile.isLoading ?? false}
             isError={profile.isError ?? false}
@@ -80,7 +80,7 @@ const ProviderProfile = ({
           </Card>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-2">
           <BookAppointmentCard
             isLoading={service.isLoading}
             isError={service.isError}

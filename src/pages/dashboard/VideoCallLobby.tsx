@@ -9,7 +9,7 @@ const LobbyPage = () => {
 
   const { roomId } = useParams();
   const { isCameraOn, isMicOn } = useSelector((state: RootState) => state.video);
-  const { videoRef, toggleCamera, toggleMic, videoCallJoin } = useJVideoCall();
+  const { videoRef, toggleCamera, toggleMic, videoCallJoin } = useJVideoCall({ initializeMedia: true });
 
   return (
     <div className="grid grid-cols-12 h-screen">

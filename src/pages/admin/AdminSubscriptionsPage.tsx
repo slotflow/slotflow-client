@@ -11,14 +11,12 @@ const AdminSubscriptionsPage = () => {
   const column = ProvidersSubscriptionsTableColumns(handleAdminGetProviderDetailPage);
 
   return (
-    <div className="p-4">
-      <PaginatedDataTable<FetchProviderSubscriptionsResponse>
-        fetchApiFunction={fetchSubscriptions}
-        queryKey={[queryKeys.SUBSCRIPTIONS]}
-        column={column}
-        columnsCount={6}
-      />
-    </div>
+    <PaginatedDataTable<FetchProviderSubscriptionsResponse>
+      fetchApiFunction={fetchSubscriptions}
+      queryKey={[queryKeys.SUBSCRIPTIONS]}
+      column={column}
+      columnsCount={6}
+    />
   );
 };
 

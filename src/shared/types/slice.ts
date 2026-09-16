@@ -22,6 +22,7 @@ import { Message } from './entity/message';
 import { UserViewProviderCardProps } from './component';
 import { ProviderProfile } from './entity/providerProfile';
 import { Availability } from './entity/serviceAvailability';
+import { SubscribePlanCheckoutRequest } from './api/subscription';
 
 // Auth slice state
 export type AuthUser = Pick<
@@ -49,6 +50,7 @@ export type AuthUser = Pick<
     | 'isServiceDetailsVerified'
     | 'verificationRejectionReason'
     | 'adminVerificationStatus'
+    | 'hasUsedTrial'
   > & {
     uid: string;
     isLoggedIn?: boolean;
@@ -145,8 +147,8 @@ export interface chatSliceInitalState {
 
 // payment slice initial state
 export interface PaymentSlice {
-  type: PaymentProcessType;
-  isOpen: boolean;
+  type: PaymentProcessType | null;
+  isPaymentModalOpen: boolean;
   bookingData: {
     providerId: string;
     slotId: string;
@@ -154,11 +156,7 @@ export interface PaymentSlice {
     date: Date;
     selectedServiceMode: string;
   } | null;
-  subscriptionData: {
-    planId: string;
-    billingCycle: BillingCycle;
-    isTrialPlan: boolean;
-  } | null;
+  subscriptionData: SubscribePlanCheckoutRequest | null;
   status: PaymentProcessStatus;
 }
 

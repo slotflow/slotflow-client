@@ -4,9 +4,9 @@ import { RootState } from '@/app/store/appStore';
 import { LoaderCircle, LogOut } from 'lucide-react';
 import ThemeToggler from '@/components/common/ThemeToggler';
 import { useSignout } from '@/hooks/systemHooks/useSignout';
-import { defaultButtonClassName } from '@/shared/utils/constants';
 
 const SideBoxHeader = () => {
+
   const { userSignout, isSigningOut } = useSignout();
   const user = useSelector((store: RootState) => store.auth.authUser);
 
@@ -23,9 +23,8 @@ const SideBoxHeader = () => {
         {user && (
           <Button
             title="Logout"
-            variant="default"
-            onClick={userSignout}
-            className={defaultButtonClassName}
+            variant="outline"
+            onClick={() => userSignout()}
             disabled={isSigningOut}
           >
             {isSigningOut ? (

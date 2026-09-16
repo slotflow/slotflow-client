@@ -10,14 +10,12 @@ const ListPaymentsPage = () => {
   const column = PaymentsTableColumn(handleGetPaymentDetailsPage);
 
   return (
-    <div className="p-4">
-      <PaginatedDataTable<FetchPaymentsResponse>
-        fetchApiFunction={fetchPayments}
-        queryKey={[queryKeys.PAYMENTS]}
-        column={column}
-        columnsCount={7}
-      />
-    </div>
+    <PaginatedDataTable<FetchPaymentsResponse>
+      fetchApiFunction={fetchPayments}
+      queryKey={[queryKeys.PAYMENTS]}
+      column={column}
+      columnsCount={7}
+    />
   );
 };
 

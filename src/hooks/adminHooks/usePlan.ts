@@ -134,7 +134,7 @@ export const useAdminPlan = (): UseAdminPlanReturn => {
       .some(([, data]) => Boolean(data && data.items));
 
     if (!hasCache) {
-      queryClient.invalidateQueries({ queryKey: ['plans'] });
+      queryClient.invalidateQueries({ queryKey: [queryKeys.PLANS] });
       return;
     }
 

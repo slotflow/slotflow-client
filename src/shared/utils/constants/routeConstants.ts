@@ -142,7 +142,7 @@ export const sidebarRoutes: Route[] = [
         path: 'report',
         name: RouteNames.REPORTS,
         icon: BookLock,
-        roles: [Role.ADMIN, Role.PROVIDER],
+        roles: [Role.ADMIN],
     },
 
     {

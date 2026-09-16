@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, LoaderCircle } from 'lucide-react';
-import { defaultButtonClassName } from '@/shared/utils/constants';
+import { defaultBtnClass } from '@/shared/utils/constants';
 
 interface HearAboutUsButtonsProps {
   isSubmitting: boolean;
@@ -18,8 +18,7 @@ const HearAboutUsButtons = ({
   return (
     <div className="mt-8 flex justify-end gap-2">
       <Button
-        variant="secondary"
-        className={defaultButtonClassName}
+        variant="outline"
         onClick={onPrevious}
         disabled={isSubmitting}
       >
@@ -29,7 +28,7 @@ const HearAboutUsButtons = ({
 
       <Button
         variant="default"
-        className={defaultButtonClassName}
+        className={defaultBtnClass}
         onClick={onSubmit}
         disabled={disabled}
       >

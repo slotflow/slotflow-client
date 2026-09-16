@@ -54,7 +54,7 @@ const ReviewsPage = ({ isPage = true, providerId, userId }: ReviewsPageProps) =>
   const reviews = data?.pages.flatMap((page) => (page.items ? page.items : [])) || [];
 
   return (
-    <div className={`${isPage ? 'container p-4 space-y-6' : 'mt-2 md:mt-0'}`}>
+    <div className={`${isPage ? 'space-y-6' : 'mt-2 md:mt-0'}`}>
       {isLoading && <ReviewCardsShimmer />}
 
       {isError && <DataFetchingError message="Data fetching error" />}

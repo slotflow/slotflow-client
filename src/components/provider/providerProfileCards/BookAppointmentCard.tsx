@@ -2,9 +2,9 @@ import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card, CardContent } from '@/components/ui/card';
+import { defaultBtnClass } from '@/shared/utils/constants';
 import { formateDate } from '@/shared/utils/helper/formatter';
 import { AppDispatch, RootState } from '@/app/store/appStore';
-import { defaultButtonClassName } from '@/shared/utils/constants';
 import { BookAppointmentCardProps } from '@/shared/types/component';
 import { setPaymentSelectionOpen } from '@/app/store/slices/paymentSlice';
 
@@ -59,7 +59,7 @@ const BookAppointmentCard = ({ isLoading, isError, data }: BookAppointmentCardPr
       <CardContent className="p-6 space-y-4">
         <Button
           variant="default"
-          className={defaultButtonClassName + ' w-full'}
+          className={defaultBtnClass + ' w-full'}
           disabled={isLoading || isError || !data}
           onClick={handleBookAppointment}
         >

@@ -66,6 +66,7 @@ const UserServiceProviderDetailPage = () => {
         />
       }
       availability={<ProviderServiceAvailability role={Role.USER} providerId={providerId} />}
+      
     />
   );
 };

@@ -44,7 +44,7 @@ const AdminPlansPage = () => {
   }, [showForm]);
 
   return (
-    <div className="p-3">
+    <>
       <PaginatedDataTable<AdminFetchAllPlansResponse>
         fetchApiFunction={adminFetchAllPlans}
         queryKey={[queryKeys.PLANS]}
@@ -66,7 +66,7 @@ const AdminPlansPage = () => {
           />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

@@ -5,6 +5,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { AppDispatch, RootState } from '@/app/store/appStore';
 import { toggleLiveChatBubble } from '@/app/store/slices/appSlice';
 import slotflowAiLogoTransparent from '@/assets/logos/slotflowAi/slotfloAiLogoTransparent.png';
+import { Button } from '@/components/ui/button';
+import { closeBtnClass } from '@/shared/utils/constants';
 
 const LiveChatPopup = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -56,12 +58,14 @@ const LiveChatPopup = () => {
               </div>
             </div>
 
-            <button
+            <Button
+              size='icon'
+              variant='ghost'
               onClick={() => dispatch(toggleLiveChatBubble())}
-              className="rounded-xl p-2 transition hover:bg-muted"
+              className={closeBtnClass}
             >
               <X className="h-5 w-5" />
-            </button>
+            </Button>
           </div>
           <div className="relative flex h-[calc(100%-150px)] min-h-0 flex-col overflow-hidden px-6 py-6">
             <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain pr-1 no-scrollbar">

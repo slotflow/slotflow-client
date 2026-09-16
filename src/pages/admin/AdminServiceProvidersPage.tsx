@@ -51,7 +51,7 @@ const AdminServiceProvidersPage = () => {
   }, [rejectProvider]);
 
   return (
-    <div className="p-4">
+    <>
       <PaginatedDataTable<AdminFetchAllProvidersResponse>
         fetchApiFunction={fetchServiceProvidersForAdmin}
         queryKey={[queryKeys.PROVIDERS]}
@@ -67,7 +67,7 @@ const AdminServiceProvidersPage = () => {
           />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

@@ -108,6 +108,7 @@ export const updatePassword = async (data: UpdatePasswordRequest): Promise<ApiBa
 };
 
 // check stripe account status after success onboarding
+// TODO UPDATE because we are moving the stripe data to the payment service from main backend user entity
 export const checkStripeAccountStatus = async (): Promise<
   ApiBaseResponse<CheckStripeAccountStatusResponse>
 > => {

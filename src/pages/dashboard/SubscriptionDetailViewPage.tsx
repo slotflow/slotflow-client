@@ -48,7 +48,7 @@ const SubscriptionDetailViewPage = () => {
   ];
 
   return (
-    <div className="p-4">
+    <>
       {isError && error ? (
         <DataFetchingError message={(error as Error).message} />
       ) : isLoading ? (
@@ -68,7 +68,7 @@ const SubscriptionDetailViewPage = () => {
       ) : (
         <DataFetchingError message="No data found" />
       )}
-    </div>
+    </>
   );
 };
 

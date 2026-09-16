@@ -41,7 +41,7 @@ const AdminServicesPage = () => {
   }, [showCreateForm, showEditForm]);
 
   return (
-    <div className="p-4">
+    <>
       <PaginatedDataTable<FetchServicesResponse>
         fetchApiFunction={fetchServices}
         queryKey={[queryKeys.APP_SERVICES]}
@@ -69,7 +69,7 @@ const AdminServicesPage = () => {
           />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

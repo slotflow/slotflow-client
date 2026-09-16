@@ -1,8 +1,8 @@
 import TimeField from './TimeField';
 import { Goal } from 'lucide-react';
 import { Button } from '../../ui/button';
+import { actionBtnClass } from '@/shared/utils/constants';
 import { TimeRangeSetterProps } from '@/shared/types/component';
-import { defaultButtonClassName } from '@/shared/utils/constants';
 
 const TimeRangeSetter = ({ control, isSubmitting, onGenerateSlots }: TimeRangeSetterProps) => {
   return (
@@ -20,9 +20,10 @@ const TimeRangeSetter = ({ control, isSubmitting, onGenerateSlots }: TimeRangeSe
           variant="secondary"
           disabled={isSubmitting}
           onClick={onGenerateSlots}
-          className={defaultButtonClassName}
+          className={actionBtnClass}
         >
-          Generate Slots <Goal />
+          <Goal />
+          Generate Slots
         </Button>
       </div>
     </>

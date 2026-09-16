@@ -1,6 +1,8 @@
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 import { RootState } from '@/app/store/appStore';
+import { actionBtnClass } from '@/shared/utils/constants';
 import { ChartOverlayProps } from '@/shared/types/component';
 
 const ChartOverlay = ({ stringOne, chartTitle }: ChartOverlayProps) => {
@@ -17,12 +19,14 @@ const ChartOverlay = ({ stringOne, chartTitle }: ChartOverlayProps) => {
         <div className="text-sm text-muted-foreground mb-4">
           This chart is available on {stringOne} plan and above
         </div>
-        <button
-          className="px-4 py-1 rounded bg-indigo-600 text-white text-sm hover:bg-indigo-700 transition"
+        <Button
+          title='upgrade'
+          variant='secondary'
+          className={actionBtnClass}
           onClick={() => navigate('/provider/upgrade')}
         >
           Upgrade Plan
-        </button>
+        </Button>
       </div>
     </div>
   );

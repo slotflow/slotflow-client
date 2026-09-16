@@ -11,6 +11,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { setBookingPyamentData, setPaymentProcessStatus } from '@/app/store/slices/paymentSlice';
+import { actionBtnClass } from '@/shared/utils/constants';
 
 const UserBookingConfirmPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -101,8 +102,9 @@ const UserBookingConfirmPage = () => {
                   <h3 className="text-xl font-bold">Payment Failed</h3>
                   <Button
                     title="Go to Dashboard"
+                    variant='secondary'
                     onClick={() => navigate('/user/dashboard')}
-                    className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
+                    className={actionBtnClass}
                   >
                     Go to Dashboard
                   </Button>

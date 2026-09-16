@@ -8,7 +8,7 @@ import { ServiceCategory } from '@/shared/types/enums';
 import DynamicStringListField from '../DynamicStringListFields';
 import { useAdminService } from '@/hooks/adminHooks/useService';
 import { CreateServiceFormProps } from '@/shared/types/component';
-import { serviceCategoryOptions } from '@/shared/utils/constants';
+import { closeBtnClass, serviceCategoryOptions } from '@/shared/utils/constants';
 import { slideOut } from '@/shared/utils/helper/gsapAnimationSlide';
 import { handleFormError } from '@/shared/utils/helper/formErrorCatcher';
 import {
@@ -81,15 +81,17 @@ const CreateServiceForm = ({ onClose, formRef }: CreateServiceFormProps) => {
           </p>
         </div>
 
-        <button
+        <Button
           type="button"
+          size='icon'
+          variant='ghost'
           onClick={handleCloseForm}
           disabled={isSubmitting}
-          className="cursor-pointer p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50"
+          className={closeBtnClass}
           aria-label="Close form"
         >
           <X className="w-5 h-5" />
-        </button>
+        </Button>
       </div>
 
       <form

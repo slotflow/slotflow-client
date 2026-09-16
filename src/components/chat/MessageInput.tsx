@@ -6,6 +6,7 @@ import { sendMessage } from '@/services/apis/message';
 import { useDispatch, useSelector } from 'react-redux';
 import { MessageInputProps } from '@/shared/types/component';
 import { AppDispatch, RootState } from '@/app/store/appStore';
+import { Button } from '../ui/button';
 
 const MessageInput = ({ setIsTyping, isTyping, setMessageSenderId }: MessageInputProps) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -102,13 +103,13 @@ const MessageInput = ({ setIsTyping, isTyping, setMessageSenderId }: MessageInpu
               alt="Preview"
               className="w-20 h-20 object-cover rounded-lg border border-zinc-700"
             />
-            <button
+            <Button
               onClick={removeImage}
               className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-base-300 flex items-center justify-center cursor-pointer hover:text-red-500"
               type="button"
             >
               <Trash className="size-3" />
-            </button>
+            </Button>
           </div>
         </div>
       )}

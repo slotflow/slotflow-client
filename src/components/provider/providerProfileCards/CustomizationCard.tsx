@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Button } from '@/components/ui/button';
 import { PlanName } from '@/shared/types/enums';
 import { RootState } from '@/app/store/appStore';
-import { defaultButtonClassName } from '@/shared/utils/constants';
+import { defaultBtnClass } from '@/shared/utils/constants';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const CustomizationCard = () => {
@@ -41,7 +41,7 @@ const CustomizationCard = () => {
         {isPremium ? (
           <Button
             variant="default"
-            className={defaultButtonClassName + ' w-full'}
+            className={defaultBtnClass + ' w-full'}
             onClick={handleProfileCustomization}
           >
             Customize Profile
@@ -49,7 +49,7 @@ const CustomizationCard = () => {
         ) : (
           <Button
             variant="default"
-            className={defaultButtonClassName + ' w-full'}
+            className={defaultBtnClass + ' w-full'}
             onClick={handleUpgradePlan}
           >
             Upgrade Plan

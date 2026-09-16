@@ -1,6 +1,7 @@
+import { Check } from 'lucide-react';
 import { Button } from '../../ui/button';
-import { Check, LoaderCircle } from 'lucide-react';
-import { defaultButtonClassName } from '@/shared/utils/constants';
+import { FormButton } from '@/components/form/FormButton';
+import { actionBtnClass } from '@/shared/utils/constants';
 import { CreateServiceAvailabilityFooterProps } from '@/shared/types/component';
 
 const CreateServiceAvailabilityFooter = ({
@@ -13,6 +14,9 @@ const CreateServiceAvailabilityFooter = ({
   isLoading,
   isAvailable,
 }: CreateServiceAvailabilityFooterProps) => {
+
+  const showSubmit = availabilities?.length === 7;
+
   return (
     <div className="flex flex-col gap-4">
       {((isAvailable && selectedTimeSlots && selectedTimeSlots.length > 0) || !isAvailable) && (
@@ -23,32 +27,27 @@ const CreateServiceAvailabilityFooter = ({
             variant="secondary"
             disabled={isSubmitting}
             onClick={onAddAvailability}
-            className={defaultButtonClassName}
+            className={actionBtnClass}
           >
-            Add Availability <Check />
+            <Check />
+            Add Availability 
           </Button>
         </div>
       )}
-      {availabilities && (
+      {showSubmit && (
         <div className="flex justify-center md:justify-end">
-          <Button
-            title={'Submit'}
-            type="submit"
-            variant="default"
-            disabled={isSubmitting || !isValid || isLoading}
-            className={defaultButtonClassName}
-          >
-            {isSubmitting ? (
-              <>
-                <LoaderCircle className="animate-spin size-4 mr-2" />
-                {isUpdating && isSubmitting ? 'Updating' : 'Submitting'}
-              </>
-            ) : isUpdating ? (
-              'Update'
-            ) : (
-              'Submit'
-            )}
-          </Button>
+          <FormButton
+            loading={isSubmitting}
+            text={isUpdating && isSubmitting
+              ? 'Updating...'
+              : isSubmitting
+                ? 'Submitting...'
+                : isUpdating
+                  ? 'Update'
+                  : 'Submit'}
+            title={isUpdating ? 'Update' : 'Submit'}
+            disabled={!isValid || isSubmitting || isLoading}
+          />
         </div>
       )}
       <div className="mt-10">

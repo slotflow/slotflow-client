@@ -17,14 +17,12 @@ const AdminUsersPage = () => {
   );
 
   return (
-    <div className="p-4">
-      <PaginatedDataTable<AdminfetchAllUsersResponse>
-        fetchApiFunction={fetchUsers}
-        queryKey={[queryKeys.USERS]}
-        column={column}
-        columnsCount={6}
-      />
-    </div>
+    <PaginatedDataTable<AdminfetchAllUsersResponse>
+      fetchApiFunction={fetchUsers}
+      queryKey={[queryKeys.USERS]}
+      column={column}
+      columnsCount={6}
+    />
   );
 };
 

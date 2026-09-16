@@ -1,4 +1,3 @@
-import { toast } from 'react-toastify';
 import {
   ServiceType,
   ServiceCategory,
@@ -6,12 +5,12 @@ import {
   AdminVerificationStatus,
 } from '@/shared/types/enums';
 import {
-  groupOptions,
+  bookingTypeOptions,
   redirectPaths,
   serviceTypeOptions,
   serviceCategoryOptions,
-  defaultButtonClassName,
 } from '@/shared/utils/constants';
+import { toast } from 'react-toastify';
 import {
   providerFetchServiceDetails,
   providerUpdateServiceDetails,
@@ -19,23 +18,22 @@ import {
 } from '@/services/apis/providerService';
 import { appConfig } from '@/config/env';
 import { useForm } from 'react-hook-form';
+import { FormButton } from '../FormButton';
 import { useEffect, useState } from 'react';
-import { LoaderCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
 import TagInput from '@/components/form/TagInput';
 import { OptionType } from '@/shared/types/common';
 import FormField from '@/components/form/FormField';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch, useSelector } from 'react-redux';
-import SelectField from '@/components/form/SelectField';
+import SelectField from '@/components/form/SelectFieldNew';
 import { AppDispatch, RootState } from '@/app/store/appStore';
 import DynamicStringListField from '../DynamicStringListFields';
 import { fetchServicesByCategory } from '@/services/apis/service';
 import { ProviderServiceFormProps } from '@/shared/types/component';
 import {
-  providerCreateServiceDetailsZodSchema,
   ProviderCreateServiceDetailsFormType,
+  providerCreateServiceDetailsZodSchema,
 } from '@/shared/validators/zod/providerZod';
 
 const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFormProps) => {
@@ -50,6 +48,7 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
     setValue,
     watch,
     reset,
+    control,
     formState: { errors, isValid, isSubmitting, isLoading },
   } = useForm<ProviderCreateServiceDetailsFormType>({
     resolver: zodResolver(providerCreateServiceDetailsZodSchema),
@@ -172,9 +171,8 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
             id="serviceCategory"
             label="Category"
             options={serviceCategoryOptions}
-            register={register}
-            setValue={setValue}
-            error={errors.serviceCategory}
+            control={control}
+            error={errors.serviceCategory?.message}
             required
           />
 
@@ -182,9 +180,8 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
             id="serviceId"
             label="Service"
             options={services}
-            register={register}
-            setValue={setValue}
-            error={errors.serviceId}
+            control={control}
+            error={errors.serviceId?.message}
             required
           />
 
@@ -243,10 +240,10 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
             id="serviceType"
             label="Service Type"
             options={serviceTypeOptions}
-            register={register}
-            setValue={setValue}
-            error={errors.serviceType}
+            control={control}
+            error={errors.serviceType?.message}
             required
+            infoText="Is your service a recurring service model or not?"
           />
 
           <DynamicStringListField
@@ -270,14 +267,15 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
           />
         </div>
         <div className="space-y-4 w-full space-x-2 md:pt-6">
+
           <SelectField<ProviderCreateServiceDetailsFormType, boolean>
             id="isGroupService"
             label="Booking Type"
-            options={groupOptions}
-            register={register}
-            setValue={setValue}
-            error={errors.isGroupService}
+            options={bookingTypeOptions}
+            control={control}
+            error={errors.isGroupService?.message}
             required
+            infoText="Is this service intended for individual clients or groups?"
           />
 
           {isGroupService && (
@@ -314,24 +312,18 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
         </div>
       </div>
       <div className="flex justify-center md:justify-end mt-6">
-        <Button
-          title={authUser?.isServiceDetailsAdded ? 'Update' : 'Submit'}
-          type="submit"
-          variant="default"
+        <FormButton
+          loading={isSubmitting}
+          text={isUpdating && isSubmitting
+            ? 'Updating...'
+            : isSubmitting
+              ? 'Submitting...'
+              : isUpdating
+                ? 'Update'
+                : 'Submit'}
+          title={isUpdating ? 'Update' : 'Submit'}
           disabled={!isValid || isSubmitting || isLoading}
-          className={defaultButtonClassName}
-        >
-          {isSubmitting ? (
-            <>
-              <LoaderCircle className="animate-spin size-4 mr-2" />
-              {isUpdating && isSubmitting ? 'Updating' : 'Submitting'}
-            </>
-          ) : isUpdating ? (
-            'Update'
-          ) : (
-            'Submit'
-          )}
-        </Button>
+        />
       </div>
     </form>
   );

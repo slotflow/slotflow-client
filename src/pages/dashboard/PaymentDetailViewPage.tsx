@@ -48,7 +48,7 @@ const PaymentDetailViewPage = () => {
   ];
 
   return (
-    <div className="p-4">
+    <>
       {isError && error ? (
         <DataFetchingError message={(error as Error).message} />
       ) : isLoading ? (
@@ -68,7 +68,7 @@ const PaymentDetailViewPage = () => {
       ) : (
         <DataFetchingError message="No data found" />
       )}
-    </div>
+    </>
   );
 };
 

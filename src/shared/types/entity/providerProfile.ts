@@ -13,10 +13,11 @@ export interface ProviderProfile {
   isProofsVerified: boolean;
   serviceId?: string;
   serviceAvailabilityId?: string;
-  subscription: string[];
+  subscriptions: string[];
   trustedBySlotflow: boolean;
   identityProof?: string;
   serviceProof?: string;
+  hasUsedTrial: boolean;
   createdAt: Date;
   updatedAt: Date;
 }

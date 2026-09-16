@@ -40,8 +40,9 @@ import { Availability } from './entity/serviceAvailability';
 import { HearAboutUsOptionValue, ServiceMode } from './enums';
 import { UseFormGetValues, UseFormSetValue } from 'react-hook-form';
 import { UseMutateAsyncFunction, UseMutateFunction } from '@tanstack/react-query';
+import { SubscribePlanCheckoutResponse, SubscribePlanCheckoutRequest } from './api/subscription';
 import { ReportReviewRequest, ReportReviewResponse, ChangeReviewBlockStatusRequest, ChangeReviewBlockStatusResponse, DeleteReviewRequest } from './api/review';
-import { CancelBookingRequest, CancelBookingResponse, ChangeAppointmentStatusRequest, ChangeAppointmentStatusResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, ValidateRoomIdRequest } from './api/booking';
+import { BookAppointmentRequest, BookAppointmentResponse, CancelBookingRequest, CancelBookingResponse, ChangeAppointmentStatusRequest, ChangeAppointmentStatusResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, ValidateRoomIdRequest } from './api/booking';
 
 // Admin plan hook return type interface
 export interface UseAdminPlanReturn {
@@ -161,7 +162,10 @@ export interface useSignoutReturn {
   isSigningOut: boolean;
 }
 
-// Video call lobby hook return type interface
+// Video call lobby hook props return type interface
+export interface useVideoCallProps {
+  initializeMedia: boolean;
+}
 export interface useVideoCallReturn {
   videoCallJoin: UseMutateFunction<
     ApiBaseResponse<JoinRoomCallbackResponse>,
@@ -290,4 +294,22 @@ export interface UsePreBoardingReturn {
 export interface SubmitPreBoardingHandlerProps {
   selectedOption: HearAboutUsOptionValue | null;
   referralCode: string | null;
+}
+
+// subscription hook props
+export interface UseSubscriptionHookReturn {
+  subscribePlan: UseMutateFunction<
+    ApiBaseResponse<SubscribePlanCheckoutResponse>,
+    ApiError,
+    SubscribePlanCheckoutRequest
+  >;
+}
+
+// booking payment hook
+export interface UseBookingPaymentReturn {
+  bookAppointment: UseMutateFunction<
+    ApiBaseResponse<BookAppointmentResponse>,
+    ApiError,
+    BookAppointmentRequest
+  >;
 }

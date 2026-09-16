@@ -89,7 +89,7 @@ export const serviceTypeOptions: OptionType<ServiceType>[] = [
 ];
 
 // Group options
-export const groupOptions: OptionType<boolean>[] = [
+export const bookingTypeOptions: OptionType<boolean>[] = [
   { label: 'Group', value: true },
   { label: 'Individual', value: false },
 ];
@@ -239,9 +239,27 @@ export const redirectPaths: Record<string, string> = {
   ADMIN_DASHBOARD: '/admin/dashboard',
 };
 
-// Default button className
-export const defaultButtonClassName: string =
-  'cursor-pointer transition-colors duration-300 hover:text-white hover:bg-[var(--mainColor)]';
+// Button classNames
+
+// 1. Primary Page & Form Actions (Submit, Create, Save, Continue)
+export const defaultBtnClass =
+  "cursor-pointer inline-flex items-center justify-center bg-[var(--mainColor)] hover:bg-[var(--mainColorHover)] text-white transition-colors duration-200 disabled:opacity-50";
+// Variant: "default"
+
+// 2. Table Row & Action Bar Buttons (Filter, Export, Secondary Actions)
+export const actionBtnClass =
+  "cursor-pointer inline-flex items-center gap-2 px-3 py-2 font-medium rounded-lg border border-slate-200 dark:border-border bg-white dark:bg-muted/20 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-muted/30 shadow-sm transition-all disabled:opacity-50";
+// Variant: "secondary" (or "outline")
+
+// 4. Irreversible Danger Actions (Delete, Remove, Revoke)
+export const destructiveBtnClass =
+  "cursor-pointer inline-flex items-center gap-2 px-3 py-2 bg-red-600 hover:bg-red-700 text-white font-medium transition-colors shadow-sm disabled:opacity-50";
+// Variant: "destructive"
+
+// 5. Close button with only Cross
+export const closeBtnClass = "cursor-pointer h-9 w-9 rounded-xl text-muted-foreground transition-colors"
+// Variant: "ghost"
+
 
 // Status preset data for the data cards
 export const statsPresents: Record<

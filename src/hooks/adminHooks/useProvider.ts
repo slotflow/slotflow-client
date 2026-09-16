@@ -58,8 +58,8 @@ export const useAdminProvider = (): UseAdminProviderReturn => {
                 provider._id === _id
                   ? {
                       ...provider,
-                      isAdminVerified,
-                      adminVerificationStatus,
+                      isAdminVerified: isAdminVerified,
+                      adminVerificationStatus: adminVerificationStatus,
                     }
                   : provider,
               ),

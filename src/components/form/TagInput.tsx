@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Input } from '../ui/input';
-import { Plus } from 'lucide-react';
+import { Plus, X } from 'lucide-react';
 import { Label } from '../ui/label';
 import { Button } from '../ui/button';
 import { TagInputProps } from '@/shared/types/component';
-import { defaultButtonClassName } from '@/shared/utils/constants';
+import { actionBtnClass, closeBtnClass } from '@/shared/utils/constants';
 
 const TagInput = ({ value, onChange }: TagInputProps) => {
   const [input, setInput] = useState('');
@@ -20,7 +20,7 @@ const TagInput = ({ value, onChange }: TagInputProps) => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full mt-5">
       <Label htmlFor="tags" className="text-sm font-medium">
         Tags
       </Label>
@@ -35,9 +35,9 @@ const TagInput = ({ value, onChange }: TagInputProps) => {
         <Button
           title="Create Tag"
           type="button"
-          variant="outline"
+          variant="secondary"
           onClick={addTag}
-          className={defaultButtonClassName}
+          className={actionBtnClass}
         >
           <Plus className="w-4 h-4" />
         </Button>
@@ -51,13 +51,14 @@ const TagInput = ({ value, onChange }: TagInputProps) => {
           >
             {tag}
             <Button
-              title="Remove"
+              title="Delete tag"
               type="button"
               variant="ghost"
+              size='icon'
               onClick={() => removeTag(tag)}
-              className="text-red-600 font-bold text-xs cursor-pointer"
+              className={closeBtnClass}
             >
-              ×
+              <X className='w-4 h-4' />
             </Button>
           </span>
         ))}

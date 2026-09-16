@@ -3,8 +3,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { BillingCycle, PaymentProcessStatus, PaymentProcessType } from '@/shared/types/enums';
 
 const initialState: PaymentSlice = {
-  type: PaymentProcessType.NULL,
-  isOpen: false,
+  type: null,
+  isPaymentModalOpen: false,
   bookingData: null,
   subscriptionData: null,
   status: PaymentProcessStatus.IDLE,
@@ -28,7 +28,7 @@ const paymentSlice = createSlice({
       state.bookingData = action.payload;
     },
     setPaymentSelectionOpen: (state, action: PayloadAction<boolean>) => {
-      state.isOpen = action.payload;
+      state.isPaymentModalOpen = action.payload;
     },
     setPaymentProcessStatus: (state, action: PayloadAction<PaymentProcessStatus>) => {
       state.status = action.payload;
@@ -38,7 +38,6 @@ const paymentSlice = createSlice({
       action: PayloadAction<{
         planId: string;
         billingCycle: BillingCycle;
-        isTrialPlan: boolean;
       } | null>,
     ) => {
       state.type = PaymentProcessType.SUBSCRIPTION;

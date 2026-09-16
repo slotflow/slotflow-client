@@ -15,7 +15,7 @@ import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
 import BookingsTableColumn from '@/components/table/tableColumns/BookingsTableColumn';
 
 const ListBookingsPage = () => {
-  
+
   const authUser = useSelector((state: RootState) => state.auth.authUser);
 
   const {
@@ -30,7 +30,7 @@ const ListBookingsPage = () => {
     isCancelling
   } = useBooking();
 
-  const { JoinCallLobby } = useJVideoCall();
+  const { JoinCallLobby } = useJVideoCall({ initializeMedia: false });
 
   const handleUserCancelBooking = async (bookingId: string) => {
     toast(
@@ -63,14 +63,12 @@ const ListBookingsPage = () => {
   );
 
   return (
-    <div className="p-4">
-      <PaginatedDataTable<FetchBookingsResponse>
-        fetchApiFunction={(params) => fetchBookings({ ...params })}
-        columnsCount={6}
-        column={columns}
-        queryKey={[queryKeys.BOOKINGS]}
-      />
-    </div>
+    <PaginatedDataTable<FetchBookingsResponse>
+      fetchApiFunction={(params) => fetchBookings({ ...params })}
+      columnsCount={6}
+      column={columns}
+      queryKey={[queryKeys.BOOKINGS]}
+    />
   );
 };
 

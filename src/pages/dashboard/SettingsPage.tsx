@@ -2,9 +2,7 @@ import { Outlet } from 'react-router-dom';
 
 const SettingsPage = () => {
   return (
-    <div className="p-4">
       <Outlet />
-    </div>
   );
 };
 

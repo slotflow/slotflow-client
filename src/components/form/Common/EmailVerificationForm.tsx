@@ -68,6 +68,7 @@ const EmailVerificationForm = () => {
                 loading={isSubmitting}
                 disabled={isSubmitting || !isValid}
                 title="Verify Email"
+                className='w-full'
               />
             </form>
 

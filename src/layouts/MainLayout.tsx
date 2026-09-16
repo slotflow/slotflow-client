@@ -59,6 +59,7 @@ const MainLayout = ({ routes, filteredRoutes, children, rightSidebar }: MainLayo
         stripeCustomerId: rawUser.stripeCustomerId,
 
         allowPushNotification: rawUser.allowPushNotification,
+        hasUsedTrial: rawUser.hasUsedTrial
       };
       dispatch(setAuthUser(authUser));
       window.history.replaceState({}, document.title, window.location.pathname);
@@ -82,7 +83,7 @@ const MainLayout = ({ routes, filteredRoutes, children, rightSidebar }: MainLayo
       )}
       <div className={`flex-1 flex flex-col ${isSidebarOpen ? 'w-[82%]' : 'w-[95%]'}`}>
         {location.pathname !== '/provider/upgrade' && <InfoHeader />}
-        <div className="flex-1 overflow-y-auto no-scrollbar px-2 relative">
+        <div className="flex-1 overflow-y-auto no-scrollbar p-2 relative">
           <Suspense fallback={<LoadingFallback />}>{children}</Suspense>
         </div>
       </div>

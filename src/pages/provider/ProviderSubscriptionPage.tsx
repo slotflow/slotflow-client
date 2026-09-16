@@ -2,9 +2,7 @@ import ProviderSubscriptionHistory from '@/components/provider/ProviderSubscript
 
 const ProviderSubscriptionPage = () => {
   return (
-    <div className="p-4">
-      <ProviderSubscriptionHistory />
-    </div>
+    <ProviderSubscriptionHistory />
   );
 };
 

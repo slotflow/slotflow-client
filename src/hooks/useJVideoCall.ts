@@ -9,7 +9,7 @@ import { appConfig } from '@/config/env';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
-import { useVideoCallReturn } from '@/shared/types/hooks';
+import { useVideoCallProps, useVideoCallReturn } from '@/shared/types/hooks';
 import { MediaTrackKind, Role } from '@/shared/types/enums';
 import { AppDispatch, RootState } from '@/app/store/appStore';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -20,7 +20,7 @@ import { toggleMediaTrack } from '@/shared/utils/helper/toggleMediaTrack';
 import { handleMutationError } from '@/shared/utils/helper/handleMutationError';
 import { JoinRoomCallbackRequest, JoinRoomCallbackResponse, ValidateRoomIdRequest } from '@/shared/types/api/booking';
 
-export const useJVideoCall = (): useVideoCallReturn => {
+export const useJVideoCall = (props: useVideoCallProps): useVideoCallReturn => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
@@ -161,6 +161,10 @@ export const useJVideoCall = (): useVideoCallReturn => {
     });
 
   useEffect(() => {
+    if (!props.initializeMedia) {
+      return;
+    }
+
     getPreview();
 
     return () => {
@@ -169,7 +173,7 @@ export const useJVideoCall = (): useVideoCallReturn => {
         streamRef.current = null;
       }
     };
-  }, [getPreview]);
+  }, [getPreview, props.initializeMedia]);
 
   useEffect(() => {
     if (isVideoCallTimerRunning) {

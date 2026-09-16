@@ -5,7 +5,7 @@ import {
   CancelBookingResponse,
   BookAppointmentResponse,
   JoinRoomCallbackRequest,
-  BookAnAppointmentRequest,
+  BookAppointmentRequest,
   FetchBookingsQueryParams,
   JoinRoomCallbackResponse,
   FetchBookingDetailsResponse,
@@ -19,7 +19,7 @@ import { ApiBaseResponse, ApiFetchFunction } from '../../shared/types/common';
 
 // create checkout session for booking an appointment
 export const bookAnAppointment = async (
-  data: BookAnAppointmentRequest,
+  data: BookAppointmentRequest,
 ): Promise<ApiBaseResponse<BookAppointmentResponse>> => {
   const response = await axiosInstance.post('/bookings', data);
   return response.data;

@@ -1,8 +1,9 @@
 import { axiosInstance } from '@/lib/axios';
 import {
   FetchMySubscriptionResponse,
+  SubscribePlanCheckoutRequest,
   FetchSubscriptionsQueryParams,
-  CheckoutForSubscribePlanRequest,
+  SubscribePlanCheckoutResponse,
   FetchSubscriptionDetailsResponse,
   FetchProviderSubscriptionsResponse,
 } from '../../shared/types/api/subscription';
@@ -28,12 +29,6 @@ export const fetchSubscriptionDetails = async (
   return response.data;
 };
 
-// subscribe to trial plan
-export const subscribeToTrialPlan = async (): Promise<ApiBaseResponse> => {
-  const response = await axiosInstance.post('/subscriptions/trial');
-  return response.data;
-};
-
 // fetch my subscription
 export const fetchMySubscription = async (): Promise<
   ApiBaseResponse<FetchMySubscriptionResponse>
@@ -43,9 +38,9 @@ export const fetchMySubscription = async (): Promise<
 };
 
 // checkout for subscribe plan
-export const checkoutForSubscribePlan = async (
-  data: CheckoutForSubscribePlanRequest,
-): Promise<ApiBaseResponse<string>> => {
-  const response = await axiosInstance.post('/subscriptions/checkout/session', data);
+export const subscribePlanCheckout = async (
+  payload: SubscribePlanCheckoutRequest,
+): Promise<ApiBaseResponse<SubscribePlanCheckoutResponse>> => {
+  const response = await axiosInstance.post('/subscriptions/checkout/session', payload);
   return response.data;
 };

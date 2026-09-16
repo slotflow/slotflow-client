@@ -63,6 +63,8 @@ export const useBooking = (): UseBookingCustomHookReturn => {
             };
           }
         );
+      } else {
+        toast.error(res.message || 'Could not change status, please try again');
       }
     },
     onError: (error: ApiError) => {
@@ -104,6 +106,8 @@ export const useBooking = (): UseBookingCustomHookReturn => {
             };
           }
         );
+      } else {
+        toast.error(res.message || 'Could not cancel booking, please try again.');
       }
     },
     onError: (error: ApiError) => {

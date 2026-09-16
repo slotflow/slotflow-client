@@ -15,6 +15,7 @@ import { StripeAccountStatusUpdatedPayload } from '@/shared/types/api/user';
 export const connectEventSocket = createAsyncThunk<void, void, { state: RootState }>(
   'event/connectSocket',
   async (_, { getState, dispatch }) => {
+
     const { authUser } = getState().auth;
 
     if (!authUser) return;
@@ -40,15 +41,18 @@ export const connectEventSocket = createAsyncThunk<void, void, { state: RootStat
     socket.on(EventSocketEnum.subscriptionActivated, (payload: SubscriptionActivated) => {
       console.log('Subscription activated:', payload);
 
-      const isExpired = new Date(payload.endDate) < new Date();
+      const isOwner = payload.userId === authUser.uid;
+      if (isOwner) {
+        const isExpired = new Date(payload.endDate) < new Date();
 
-      if (isExpired) {
-        toast.error('Your subscription has expired.');
-      } else {
-        toast.success('Subscription Activated!');
+        if (isExpired) {
+          toast.error('Your subscription has expired.');
+        } else {
+          toast.success('Subscription Activated!');
+        }
+
+        dispatch(setSubscription(payload));
       }
-
-      dispatch(setSubscription(payload));
     });
 
     socket.on(

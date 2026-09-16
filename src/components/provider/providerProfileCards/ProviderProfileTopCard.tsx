@@ -78,7 +78,7 @@ const ProviderProfileTopCard = ({
               <Share2 className="w-4 h-4" />
               Share Profile
             </Button>
-            {role === Role.PROVIDER && (
+            {(role === Role.PROVIDER && handleIsShowPreview) && (
               <div className="flex items-center space-x-2 mt-2">
                 <Label htmlFor="airplane-mode">See how your profile looks to customers</Label>
                 <Switch

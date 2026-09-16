@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
+import { Info } from 'lucide-react';
 import FormField from '../FormField';
 import { toast } from 'react-toastify';
-import { Button } from '../../ui/button';
 import { appConfig } from '@/config/env';
+import { FormButton } from '../FormButton';
 import { PhoneInput } from '../phone-input';
 import { countries } from 'country-data-list';
 import { Label } from '@/components/ui/label';
 import { useNavigate } from 'react-router-dom';
-import { Info, LoaderCircle } from 'lucide-react';
 import AlertBox from '@/components/alert/AlertBox';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from 'react-hook-form';
@@ -271,24 +271,18 @@ Your selected location will also be used to automatically fill address details w
       </div>
 
       <div className="flex justify-center md:justify-end mt-4 md:mt-6">
-        <Button
+        <FormButton
+          loading={isSubmitting}
+          text={isUpdating && isSubmitting
+            ? 'Updating...'
+            : isSubmitting
+              ? 'Submitting...'
+              : isUpdating
+                ? 'Update'
+                : 'Submit'}
           title={isUpdating ? 'Update' : 'Submit'}
-          type="submit"
-          variant="default"
-          className="cursor-pointer w-10/12 md:w-auto hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)] flex items-center gap-2"
           disabled={!isValid || isSubmitting || isLoading}
-        >
-          {isSubmitting ? (
-            <>
-              <LoaderCircle className="animate-spin size-4 mr-2" />
-              {isUpdating && isSubmitting ? 'Updating' : 'Submitting'}
-            </>
-          ) : isUpdating ? (
-            'Update'
-          ) : (
-            'Submit'
-          )}
-        </Button>
+        />
       </div>
     </form>
   );

@@ -10,6 +10,7 @@ import ChatSidebarShimmer from '@/components/shimmers/ChatSidebarShimmer';
 import { FetchUsersForChatSidebarResponse } from '@/shared/types/api/user';
 import { setLastMessage, setOnlineUsers, setSelectedUser } from '@/app/store/slices/chatSlice';
 import { ApiBaseResponse, ChatListUserProps, setLatMessageProps } from '@/shared/types/common';
+import { Button } from '../ui/button';
 
 const formatDate = (date: string) => {
   const now = new Date();
@@ -112,7 +113,7 @@ const ChatSidebar: React.FC<ChatSideBarProps> = ({ getUsers }) => {
 
       <div className="overflow-y-auto w-full flex-1">
         {filteredUsers?.map((user: ChatListUserProps) => (
-          <button
+          <Button
             key={user._id}
             onClick={() => dispatch(setSelectedUser(user))}
             className={`
@@ -154,7 +155,7 @@ const ChatSidebar: React.FC<ChatSideBarProps> = ({ getUsers }) => {
                 )}
               </div>
             </div>
-          </button>
+          </Button>
         ))}
 
         {filteredUsers?.length === 0 && (

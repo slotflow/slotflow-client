@@ -10,8 +10,8 @@ import booking from '@/assets/svgs/booking.svg';
 import { Button } from '@/components/ui/button';
 import { AppDispatch } from '@/app/store/appStore';
 import { setBoardingData } from '@/app/store/slices/authSlice';
+import { defaultBtnClass, redirectPaths } from '@/shared/utils/constants';
 import RoleSelectCard from '../../components/boarding/roleSelect/RoleSelectCard';
-import { defaultButtonClassName, redirectPaths } from '@/shared/utils/constants';
 
 const RoleSelectPage = () => {
   const navigate = useNavigate();
@@ -74,7 +74,8 @@ const RoleSelectPage = () => {
           <Button
             onClick={handleContinue}
             disabled={!selectedRole}
-            className={defaultButtonClassName}
+            variant='default'
+            className={defaultBtnClass}
           >
             Continue
             <ChevronRight className="ml-1 h-4 w-4" />
