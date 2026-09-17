@@ -5,7 +5,7 @@ import { queryKeys } from '@/shared/utils/constants';
 import { UseBookingCustomHookReturn } from '@/shared/types/hooks';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toggleReviewCreateForm } from '@/app/store/slices/userSlice';
-import { handleMutationError } from '@/shared/utils/helper/handleMutationError';
+import { handleError } from '@/shared/utils/helper/handleError';
 import { cancelBooking, changeAppointmentStatus } from '@/services/apis/booking';
 import { ApiBaseResponse, ApiError, ApiPaginatedResponse } from '@/shared/types/common';
 import { CancelBookingRequest, CancelBookingResponse, ChangeAppointmentStatusRequest, ChangeAppointmentStatusResponse, FetchBookingsResponse } from '@/shared/types/api/booking';
@@ -68,7 +68,7 @@ export const useBooking = (): UseBookingCustomHookReturn => {
       }
     },
     onError: (error: ApiError) => {
-      handleMutationError(error, 'Failed to update appointment status.');
+      handleError(error, 'Failed to update appointment status.');
     },
   });
 
@@ -111,7 +111,7 @@ export const useBooking = (): UseBookingCustomHookReturn => {
       }
     },
     onError: (error: ApiError) => {
-      handleMutationError(error, 'Failed to cancel booking.');
+      handleError(error, 'Failed to cancel booking.');
     },
   })
 

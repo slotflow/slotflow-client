@@ -9,7 +9,7 @@ import { queryKeys } from '@/shared/utils/constants';
 import { UseAdminUserReturn } from '@/shared/types/hooks';
 import { changeUserBlockStatus } from '@/services/apis/user';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { handleMutationError } from '@/shared/utils/helper/handleMutationError';
+import { handleError } from '@/shared/utils/helper/handleError';
 import { ApiBaseResponse, ApiError, ApiPaginatedResponse } from '@/shared/types/common';
 
 export const useAdminUser = (): UseAdminUserReturn => {
@@ -63,7 +63,7 @@ export const useAdminUser = (): UseAdminUserReturn => {
       }
     },
     onError: (error: ApiError) => {
-      handleMutationError(error, 'Could not change user blocks status.');
+      handleError(error, 'Could not change user blocks status.');
     },
   });
 

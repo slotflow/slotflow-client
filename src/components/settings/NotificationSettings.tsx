@@ -1,15 +1,11 @@
 import { useSelector } from 'react-redux';
-import { Role } from '@/shared/types/enums';
 import { RootState } from '@/app/store/appStore';
 import { handleNotificationChange } from '@/services/apis/notification';
 import { NotificationType, NotificationChannel } from '@/shared/types/common';
 import NotificationSettingsItem from '../notification/NotificationSettingsItem';
 import { notificationChannel, notificationType } from '@/shared/utils/constants';
-import { Card, CardTitle, CardHeader, CardContent, CardDescription } from '../ui/card';
 
 const NotificationSettings = () => {
-  const authUser = useSelector((state: RootState) => state.auth.authUser);
-
   const preferences = useSelector((state: RootState) => state.notification.preferences);
 
   const getNotificationPreference = (
@@ -36,192 +32,142 @@ const NotificationSettings = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-6">
-      <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
-        <CardHeader>
-          <CardTitle className="text-base">Email notifications</CardTitle>
-          <CardDescription>
+    <div className="max-w-5xl mx-auto space-y-6 py-2">
+      <div className="space-y-3">
+        <div className="space-y-1">
+          <h2 className="text-xl font-bold tracking-tight text-foreground">
+            Email Notifications
+          </h2>
+          <p className="text-sm text-muted-foreground">
             Choose which notifications you want to receive by email.
-          </CardDescription>
-        </CardHeader>
-
-        <CardContent className="divide-y">
-          <NotificationSettingsItem
-            title="Appointment updates"
-            description="Receive emails when an appointment is booked, rescheduled, cancelled, or completed."
-            channel={notificationChannel.EMAIL}
-            type={notificationType.APPOINTMENT_UPDATES}
-            checked={getNotificationPreference(
-              notificationChannel.EMAIL,
-              notificationType.APPOINTMENT_UPDATES,
-            )}
-            onChange={handleNotificationToggle}
-          />
-
-          <NotificationSettingsItem
-            title="Appointment reminders"
-            description="Receive reminders about upcoming appointments."
-            channel={notificationChannel.EMAIL}
-            type={notificationType.APPOINTMENT_REMINDERS}
-            checked={getNotificationPreference(
-              notificationChannel.EMAIL,
-              notificationType.APPOINTMENT_REMINDERS,
-            )}
-            onChange={handleNotificationToggle}
-          />
-
-          <NotificationSettingsItem
-            title="Payment notifications"
-            description="Get notified about payments, refunds, and payment-related activity."
-            channel={notificationChannel.EMAIL}
-            type={notificationType.PAYMENT_NOTIFICATIONS}
-            checked={getNotificationPreference(
-              notificationChannel.EMAIL,
-              notificationType.PAYMENT_NOTIFICATIONS,
-            )}
-            onChange={handleNotificationToggle}
-          />
-
-          <NotificationSettingsItem
-            title="Account activity"
-            description="Receive important updates about your account and security."
-            channel={notificationChannel.EMAIL}
-            type={notificationType.ACCOUNT_ACTIVITY}
-            checked={getNotificationPreference(
-              notificationChannel.EMAIL,
-              notificationType.ACCOUNT_ACTIVITY,
-            )}
-            onChange={handleNotificationToggle}
-          />
-
-          <NotificationSettingsItem
-            title="Promotional updates"
-            description="Show product announcements, new features, and special offers."
-            channel={notificationChannel.EMAIL}
-            type={notificationType.PROMOTIONAL_UPDATES}
-            checked={getNotificationPreference(
-              notificationChannel.EMAIL,
-              notificationType.PROMOTIONAL_UPDATES,
-            )}
-            onChange={handleNotificationToggle}
-          />
-        </CardContent>
-      </Card>
-      <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
-        <CardHeader>
-          <CardTitle className="text-base">Push notifications</CardTitle>
-
-          <CardDescription>Manage notifications sent directly to your device.</CardDescription>
-        </CardHeader>
-
-        <CardContent className="divide-y">
-          {authUser?.role === Role.PROVIDER && (
-            <NotificationSettingsItem
-              title="New appointments"
-              description="Get notified instantly when a new appointment is booked."
-              channel={notificationChannel.PUSH}
-              type={notificationType.NEW_APPOINTMENTS}
-              checked={getNotificationPreference(
-                notificationChannel.PUSH,
-                notificationType.NEW_APPOINTMENTS,
-              )}
-              onChange={handleNotificationToggle}
-            />
+          </p>
+        </div>
+        <NotificationSettingsItem
+          title="Account activity"
+          description="Receive emails regarding appointments, payments, password changes, and security updates."
+          channel={notificationChannel.EMAIL}
+          type={notificationType.ACCOUNT_ACTIVITY}
+          checked={getNotificationPreference(
+            notificationChannel.EMAIL,
+            notificationType.ACCOUNT_ACTIVITY,
           )}
+          onChange={handleNotificationToggle}
+        />
 
-          <NotificationSettingsItem
-            title="Appointment reminders"
-            description="Receive reminders before an upcoming appointment."
-            channel={notificationChannel.PUSH}
-            type={notificationType.APPOINTMENT_REMINDERS}
-            checked={getNotificationPreference(
-              notificationChannel.PUSH,
-              notificationType.APPOINTMENT_REMINDERS,
-            )}
-            onChange={handleNotificationToggle}
-          />
+        <NotificationSettingsItem
+          title="System updates"
+          description="Important platform maintenance, policy updates, and service disruptions."
+          channel={notificationChannel.EMAIL}
+          type={notificationType.SYSTEM_UPDATES}
+          checked={getNotificationPreference(
+            notificationChannel.EMAIL,
+            notificationType.SYSTEM_UPDATES,
+          )}
+          onChange={handleNotificationToggle}
+        />
 
-          <NotificationSettingsItem
-            title="Appointment changes"
-            description="Get notified when an appointment is rescheduled or cancelled."
-            channel={notificationChannel.PUSH}
-            type={notificationType.APPOINTMENT_CHANGES}
-            checked={getNotificationPreference(
-              notificationChannel.PUSH,
-              notificationType.APPOINTMENT_CHANGES,
-            )}
-            onChange={handleNotificationToggle}
-          />
+        <NotificationSettingsItem
+          title="Promotional updates"
+          description="Receive news about new features, product announcements, and special offers."
+          channel={notificationChannel.EMAIL}
+          type={notificationType.PROMOTIONAL_UPDATES}
+          checked={getNotificationPreference(
+            notificationChannel.EMAIL,
+            notificationType.PROMOTIONAL_UPDATES,
+          )}
+          onChange={handleNotificationToggle}
+        />
+      </div>
+      <div className="space-y-3">
+        <div className="space-y-1">
+          <h2 className="text-xl font-bold tracking-tight text-foreground">
+            Push Notifications
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            Manage notifications sent directly to your mobile or web browser.
+          </p>
+        </div>
+        <NotificationSettingsItem
+          title="Account activity"
+          description="Get instant alerts for appointment updates, payment confirmations, and account activity."
+          channel={notificationChannel.PUSH}
+          type={notificationType.ACCOUNT_ACTIVITY}
+          checked={getNotificationPreference(
+            notificationChannel.PUSH,
+            notificationType.ACCOUNT_ACTIVITY,
+          )}
+          onChange={handleNotificationToggle}
+        />
 
-          <NotificationSettingsItem
-            title="Payment activity"
-            description="Receive alerts for successful payments, refunds, and failures."
-            channel={notificationChannel.PUSH}
-            type={notificationType.PAYMENT_ACTIVITY}
-            checked={getNotificationPreference(
-              notificationChannel.PUSH,
-              notificationType.PAYMENT_ACTIVITY,
-            )}
-            onChange={handleNotificationToggle}
-          />
-        </CardContent>
-      </Card>
-      <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
-        <CardHeader>
-          <CardTitle className="text-base">In-app notifications</CardTitle>
-          <CardDescription>Choose which notifications appear inside SlotFlow.</CardDescription>
-        </CardHeader>
+        <NotificationSettingsItem
+          title="System updates"
+          description="Real-time alerts for system outages or maintenance schedules."
+          channel={notificationChannel.PUSH}
+          type={notificationType.SYSTEM_UPDATES}
+          checked={getNotificationPreference(
+            notificationChannel.PUSH,
+            notificationType.SYSTEM_UPDATES,
+          )}
+          onChange={handleNotificationToggle}
+        />
 
-        <CardContent>
-          <NotificationSettingsItem
-            title="Appointments"
-            description="Show updates about bookings, cancellations, and rescheduled appointments."
-            channel={notificationChannel.IN_APP}
-            type={notificationType.APPOINTMENT_UPDATES}
-            checked={getNotificationPreference(
-              notificationChannel.IN_APP,
-              notificationType.APPOINTMENT_UPDATES,
-            )}
-            onChange={handleNotificationToggle}
-          />
+        <NotificationSettingsItem
+          title="Promotional updates"
+          description="Get push notifications for feature launches and special updates."
+          channel={notificationChannel.PUSH}
+          type={notificationType.PROMOTIONAL_UPDATES}
+          checked={getNotificationPreference(
+            notificationChannel.PUSH,
+            notificationType.PROMOTIONAL_UPDATES,
+          )}
+          onChange={handleNotificationToggle}
+        />
+      </div>
+      <div className="space-y-3">
+        <div className="space-y-1">
+          <h2 className="text-xl font-bold tracking-tight text-foreground">
+            In-app notifications
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            Choose which notifications appear inside SlotFlow.
+          </p>
+        </div>
+        <NotificationSettingsItem
+          title="Account activity"
+          description="Show updates about bookings, cancellations, payments, and account actions inside the app."
+          channel={notificationChannel.IN_APP}
+          type={notificationType.ACCOUNT_ACTIVITY}
+          checked={getNotificationPreference(
+            notificationChannel.IN_APP,
+            notificationType.ACCOUNT_ACTIVITY,
+          )}
+          onChange={handleNotificationToggle}
+        />
 
-          <NotificationSettingsItem
-            title="Payments"
-            description="Show payment and transaction updates."
-            channel={notificationChannel.IN_APP}
-            type={notificationType.PAYMENT_ACTIVITY}
-            checked={getNotificationPreference(
-              notificationChannel.IN_APP,
-              notificationType.PAYMENT_ACTIVITY,
-            )}
-            onChange={handleNotificationToggle}
-          />
+        <NotificationSettingsItem
+          title="System updates"
+          description="Show important updates about SlotFlow platform performance."
+          channel={notificationChannel.IN_APP}
+          type={notificationType.SYSTEM_UPDATES}
+          checked={getNotificationPreference(
+            notificationChannel.IN_APP,
+            notificationType.SYSTEM_UPDATES,
+          )}
+          onChange={handleNotificationToggle}
+        />
 
-          <NotificationSettingsItem
-            title="System updates"
-            description="Show important updates about SlotFlow and your account."
-            channel={notificationChannel.IN_APP}
-            type={notificationType.SYSTEM_UPDATES}
-            checked={getNotificationPreference(
-              notificationChannel.IN_APP,
-              notificationType.SYSTEM_UPDATES,
-            )}
-            onChange={handleNotificationToggle}
-          />
-
-          <NotificationSettingsItem
-            title="Promotional updates"
-            description="Show product announcements, new features, and special offers."
-            channel={notificationChannel.IN_APP}
-            type={notificationType.PROMOTIONAL_UPDATES}
-            checked={getNotificationPreference(
-              notificationChannel.IN_APP,
-              notificationType.PROMOTIONAL_UPDATES,
-            )}
-            onChange={handleNotificationToggle}
-          />
-        </CardContent>
-      </Card>
+        <NotificationSettingsItem
+          title="Promotional updates"
+          description="Show product announcements, new features, and special offers in-app."
+          channel={notificationChannel.IN_APP}
+          type={notificationType.PROMOTIONAL_UPDATES}
+          checked={getNotificationPreference(
+            notificationChannel.IN_APP,
+            notificationType.PROMOTIONAL_UPDATES,
+          )}
+          onChange={handleNotificationToggle}
+        />
+      </div>
     </div>
   );
 };

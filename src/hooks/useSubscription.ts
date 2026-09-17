@@ -8,7 +8,7 @@ import { UseSubscriptionHookReturn } from "@/shared/types/hooks"
 import { ApiBaseResponse, ApiError } from "@/shared/types/common"
 import { subscribePlanCheckout } from "@/services/apis/subscription"
 import { setSubscriptionUpdating } from "@/app/store/slices/authSlice"
-import { handleMutationError } from "@/shared/utils/helper/handleMutationError"
+import { handleError } from "@/shared/utils/helper/handleError"
 import { SubscribePlanCheckoutRequest, SubscribePlanCheckoutResponse } from "@/shared/types/api/subscription"
 import { setPaymentProcessStatus, setPaymentSelectionOpen, setSubscriptionPaymentData } from "@/app/store/slices/paymentSlice"
 
@@ -48,7 +48,7 @@ export const useSubscription = (): UseSubscriptionHookReturn => {
             }
         },
         onError: (error: ApiError) => {
-            handleMutationError(error, 'Failed to subscribe to trial plan.');
+            handleError(error, 'Failed to subscribe to trial plan.');
             dispatch(setPaymentProcessStatus(PaymentProcessStatus.FAILED));
         },
         onSettled: () => {

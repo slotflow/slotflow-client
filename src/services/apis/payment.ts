@@ -1,9 +1,7 @@
 import {
   FetchPaymentsResponse,
   FetchPaymentsQueryParams,
-  ConnectStripeAccountRequest,
   FetchPaymentDetailsResponse,
-  ConnexctStripeAccountResponse,
   AdmminFetchRevenueReportRequest,
   AdminFetchRevenueReportResponse,
 } from '../../shared/types/api/payment';
@@ -37,12 +35,4 @@ export const fetchRevenueReportForAdmin = async (
   const query = buildQueryParams(payload);
   const response = await axiosInstance.get(`/payments/reports/revenue${query ? `?${query}` : ''}`);
   return response.data.data;
-};
-
-// create stripe account
-export const connectStripeAccount = async (
-  data: ConnectStripeAccountRequest,
-): Promise<ApiBaseResponse<ConnexctStripeAccountResponse>> => {
-  const response = await axiosInstance.post('/payments/stripe/account-link', data);
-  return response.data;
 };

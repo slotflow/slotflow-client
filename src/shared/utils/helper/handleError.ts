@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import { appConfig } from '@/config/env';
 import { ApiError } from '@/shared/types/common';
 
-export const handleMutationError = (
+export const handleError = (
   error: ApiError | unknown,
   fallbackMessage: string = 'Operation failed. Please try again.',
 ) => {

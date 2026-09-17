@@ -17,7 +17,7 @@ import { ApiBaseResponse, ApiError } from '@/shared/types/common';
 import { joinOrLeft, validateRoomId } from '@/services/apis/booking';
 import { connectVideoSocket } from '@/services/socket/videoSocketThunk';
 import { toggleMediaTrack } from '@/shared/utils/helper/toggleMediaTrack';
-import { handleMutationError } from '@/shared/utils/helper/handleMutationError';
+import { handleError } from '@/shared/utils/helper/handleError';
 import { JoinRoomCallbackRequest, JoinRoomCallbackResponse, ValidateRoomIdRequest } from '@/shared/types/api/booking';
 
 export const useJVideoCall = (props: useVideoCallProps): useVideoCallReturn => {
@@ -75,7 +75,7 @@ export const useJVideoCall = (props: useVideoCallProps): useVideoCallReturn => {
     },
 
     onError: (error: ApiError) => {
-      handleMutationError(error, 'Unable to join video call. Please try again.');
+      handleError(error, 'Unable to join video call. Please try again.');
     },
   });
 
@@ -101,7 +101,7 @@ export const useJVideoCall = (props: useVideoCallProps): useVideoCallReturn => {
       }
     },
     onError: (error: ApiError) => {
-      handleMutationError(error, 'Invalid Request, please try again after sometimes.');
+      handleError(error, 'Invalid Request, please try again after sometimes.');
     },
   });
 

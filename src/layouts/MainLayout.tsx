@@ -25,22 +25,18 @@ const MainLayout = ({ routes, filteredRoutes, children, rightSidebar }: MainLayo
     if (!authUserStr) return;
     if (authUserStr) {
       const rawUser = JSON.parse(decodeURIComponent(authUserStr));
-      if (!rawUser || !rawUser.googleId) return;
+      if (!rawUser) return;
       const authUser: AuthUser = {
         uid: rawUser._id,
         username: rawUser.username,
         email: rawUser.email,
-
         role: rawUser.role,
         onboardingStatus: rawUser.onboardingStatus,
         onboardingType: rawUser.onboardingType,
-
         isBlocked: rawUser.isBlocked,
         isLoggedIn: true,
-
         phone: rawUser.phone,
         profileImage: rawUser.profileImage,
-
         isAddressAdded: rawUser.isAddressAdded,
         isServiceDetailsAdded: rawUser.isServiceDetailsAdded,
         isServiceAvailabilityAdded: rawUser.isServiceAvailabilityAdded,
@@ -52,12 +48,7 @@ const MainLayout = ({ routes, filteredRoutes, children, rightSidebar }: MainLayo
         isAdminVerified: rawUser.isAdminVerified,
         providerSubscription: rawUser.providerSubscription,
         verificationRejectionReason: rawUser.verificationRejectionReason,
-        adminVerificationStatus: rawUser.adminVerificationStatus,
-        googleConnected: rawUser.googleConnected,
-
-        stripeAccountStatus: rawUser.stripeAccountStatus,
-        stripeCustomerId: rawUser.stripeCustomerId,
-
+        adminVerificationStatus: rawUser.adminVerificationStatus,        
         allowPushNotification: rawUser.allowPushNotification,
         hasUsedTrial: rawUser.hasUsedTrial
       };

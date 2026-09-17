@@ -7,10 +7,10 @@ import {
   AdminChangeServiceBlockStatusResponse,
 } from '@/shared/types/api/service';
 import { toast } from 'react-toastify';
-import { appConfig } from '@/config/env';
 import { queryKeys } from '@/shared/utils/constants';
 import { UseAdminServiceReturn } from '@/shared/types/hooks';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { handleError } from '@/shared/utils/helper/handleError';
 import { ApiBaseResponse, ApiError, ApiPaginatedResponse } from '@/shared/types/common';
 import { changeServiceBlockStatus, createService, updateService } from '@/services/apis/service';
 
@@ -50,9 +50,9 @@ export const useAdminService = (): UseAdminServiceReturn => {
               items: oldData.items.map((service) =>
                 service._id === serviceData.serviceId
                   ? {
-                      ...service,
-                      isBlocked: res.data?.isBlocked ?? serviceData.isBlocked,
-                    }
+                    ...service,
+                    isBlocked: res.data?.isBlocked ?? serviceData.isBlocked,
+                  }
                   : service,
               ),
             };
@@ -60,10 +60,8 @@ export const useAdminService = (): UseAdminServiceReturn => {
         );
       }
     },
-    onError: (error) => {
-      if (appConfig.isDevelopment) {
-        console.error('Error while changing service status:', error);
-      }
+    onError: (error: ApiError) => {
+      handleError(error, 'Could not block status.');
     },
   });
 
@@ -116,14 +114,10 @@ export const useAdminService = (): UseAdminServiceReturn => {
       if (res.success && res.data) {
         const updatedService = res.data;
         updateServicesListCache(updatedService);
-      } else {
-        toast.error(res.message);
       }
     },
-    onError: (error) => {
-      if (appConfig.isDevelopment) {
-        console.error('Error in updateServiceMutation:', error);
-      }
+    onError: (error: ApiError) => {
+      handleError(error, 'Could not update service.');
     },
   });
 
@@ -136,10 +130,8 @@ export const useAdminService = (): UseAdminServiceReturn => {
         updateServicesListCache(updatedService);
       }
     },
-    onError: (error) => {
-      if (appConfig.isDevelopment) {
-        console.error('Error in createServiceMutation:', error);
-      }
+    onError: (error: ApiError) => {
+      handleError(error, 'Could not create server.');
     },
   });
 

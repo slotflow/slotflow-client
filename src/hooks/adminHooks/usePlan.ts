@@ -19,7 +19,7 @@ import { toast } from 'react-toastify';
 import { queryKeys } from '@/shared/utils/constants';
 import { UseAdminPlanReturn } from '@/shared/types/hooks';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { handleMutationError } from '@/shared/utils/helper/handleMutationError';
+import { handleError } from '@/shared/utils/helper/handleError';
 import { ApiBaseResponse, ApiError, ApiPaginatedResponse } from '@/shared/types/common';
 
 // Custom hook for managing admin plan API interactions and React Query cache state
@@ -72,7 +72,7 @@ export const useAdminPlan = (): UseAdminPlanReturn => {
       }
     },
     onError: (error: ApiError) => {
-      handleMutationError(error, 'Could not change plan block status.');
+      handleError(error, 'Could not change plan block status.');
     },
   });
 
@@ -115,7 +115,7 @@ export const useAdminPlan = (): UseAdminPlanReturn => {
       }
     },
     onError: (error) => {
-      handleMutationError(error, 'Could not resync plan with stripe.');
+      handleError(error, 'Could not resync plan with stripe.');
     },
   });
 
@@ -197,7 +197,7 @@ export const useAdminPlan = (): UseAdminPlanReturn => {
       }
     },
     onError: (error) => {
-      handleMutationError(error, 'Could not update plan.');
+      handleError(error, 'Could not update plan.');
     },
   });
 
@@ -234,7 +234,7 @@ export const useAdminPlan = (): UseAdminPlanReturn => {
       }
     },
     onError: (error) => {
-      handleMutationError(error, 'Could not update plan.');
+      handleError(error, 'Could not update plan.');
     },
   });
 

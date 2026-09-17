@@ -9,7 +9,7 @@ import { ApiBaseResponse, ApiError } from '@/shared/types/common';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AppDispatch, persistAppStore } from '@/app/store/appStore';
 import { disconnectEventSocket } from '@/services/socket/eventSocketThunk';
-import { handleMutationError } from '@/shared/utils/helper/handleMutationError';
+import { handleError } from '@/shared/utils/helper/handleError';
 
 export const useSignout = (): useSignoutReturn => {
 
@@ -36,7 +36,7 @@ export const useSignout = (): useSignoutReturn => {
       }
     },
     onError: (error) => {
-      handleMutationError(error, 'Signout failed.');
+      handleError(error, 'Signout failed.');
     },
   });
 

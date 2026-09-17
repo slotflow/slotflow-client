@@ -2,7 +2,6 @@ import {
   Role,
   PlanName,
   OnboardingStatus,
-  StripeAccountStatus,
   AdminVerificationStatus,
 } from '../enums';
 import { User } from '../entity/user';
@@ -44,7 +43,6 @@ export interface SigninResponse {
     isServiceAvailabilityAdded: boolean;
     isAdminVerified: boolean;
     providerSubscription?: PlanName;
-    googleConnected: boolean;
     isProofSubmitted: { identityProof: boolean; serviceProof: boolean };
     verificationRejectionReason?: string;
     adminVerificationStatus: AdminVerificationStatus;
@@ -54,10 +52,6 @@ export interface SigninResponse {
     isProofsVerified: boolean;
     allowPushNotification: boolean;
     hasUsedTrial: boolean;
-    googleId?: string;
-    stripeAccountId?: string;
-    stripeAccountStatus: StripeAccountStatus;
-    stripeCustomerId?: string;
   };
 }
 

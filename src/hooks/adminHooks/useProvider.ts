@@ -24,7 +24,7 @@ import { UseAdminProviderReturn } from '@/shared/types/hooks';
 import { AdminVerificationStatus } from '@/shared/types/enums';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { setAdminVerificationState } from '@/app/store/slices/authSlice';
-import { handleMutationError } from '@/shared/utils/helper/handleMutationError';
+import { handleError } from '@/shared/utils/helper/handleError';
 import { ApiBaseResponse, ApiError, ApiPaginatedResponse } from '@/shared/types/common';
 
 export const useAdminProvider = (): UseAdminProviderReturn => {
@@ -82,7 +82,7 @@ export const useAdminProvider = (): UseAdminProviderReturn => {
       }
     },
     onError: (error: ApiError) => {
-      handleMutationError(error, 'Could not approve provider.');
+      handleError(error, 'Could not approve provider.');
     },
   });
 
@@ -140,7 +140,7 @@ export const useAdminProvider = (): UseAdminProviderReturn => {
       }
     },
     onError: (error: ApiError) => {
-      handleMutationError(error, 'Could not chage provider trust tag status.');
+      handleError(error, 'Could not chage provider trust tag status.');
     },
   });
 
@@ -193,7 +193,7 @@ export const useAdminProvider = (): UseAdminProviderReturn => {
       }
     },
     onError: (error: ApiError) => {
-      handleMutationError(error, 'Could not change provider blocks status.');
+      handleError(error, 'Could not change provider blocks status.');
     },
   });
 
@@ -254,7 +254,7 @@ export const useAdminProvider = (): UseAdminProviderReturn => {
       }
     },
     onError: (error: ApiError) => {
-      handleMutationError(error, 'Could not reject provider.');
+      handleError(error, 'Could not reject provider.');
     },
   });
 

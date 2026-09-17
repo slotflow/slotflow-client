@@ -1,6 +1,5 @@
 import {
   setSubscription,
-  setStripeAccountStatus,
   setEventSocketConnected,
   setEventSocketDisconnected,
 } from '@/app/store/slices/authSlice';
@@ -11,12 +10,14 @@ import { EventSocketEnum } from '@/shared/types/socket';
 import { SubscriptionActivated } from '@/shared/types/api/subscription';
 import { destroyEventSocket, getEventSocket } from '@/lib/socketService';
 import { StripeAccountStatusUpdatedPayload } from '@/shared/types/api/user';
+import { setStripeAccountStatus } from '@/app/store/slices/integrationSlice';
 
 export const connectEventSocket = createAsyncThunk<void, void, { state: RootState }>(
   'event/connectSocket',
   async (_, { getState, dispatch }) => {
 
     const { authUser } = getState().auth;
+    const { stripeAccountStatus } = getState().integration;
 
     if (!authUser) return;
 
@@ -63,7 +64,7 @@ export const connectEventSocket = createAsyncThunk<void, void, { state: RootStat
         const isOwner = payload.userId === authUser.uid;
 
         if (isOwner) {
-          if (authUser.stripeAccountStatus !== payload.stripeAccountStatus) {
+          if (stripeAccountStatus !== payload.stripeAccountStatus) {
             toast.success('Stripe account status updated!');
             dispatch(setStripeAccountStatus(payload.stripeAccountStatus));
           } else {

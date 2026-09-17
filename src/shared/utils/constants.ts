@@ -314,12 +314,6 @@ export const notificationChannel = {
 } as const satisfies Record<string, NotificationChannel>;
 
 export const notificationType = {
-  APPOINTMENT_UPDATES: 'appointment_updates',
-  APPOINTMENT_REMINDERS: 'appointment_reminders',
-  APPOINTMENT_CHANGES: 'appointment_changes',
-  NEW_APPOINTMENTS: 'new_appointments',
-  PAYMENT_NOTIFICATIONS: 'payment_notifications',
-  PAYMENT_ACTIVITY: 'payment_activity',
   ACCOUNT_ACTIVITY: 'account_activity',
   SYSTEM_UPDATES: 'system_updates',
   PROMOTIONAL_UPDATES: 'promotional_updates',

@@ -49,14 +49,3 @@ export interface AdminFetchRevenueReportResponse {
   currentPage: number;
   totalCount: number;
 }
-
-// request type of connect stripe account api
-export interface ConnectStripeAccountRequest {
-  email: string;
-}
-
-// response type of connect stripe account api
-export interface ConnexctStripeAccountResponse {
-  accountLink: string;
-  accountId: string;
-}

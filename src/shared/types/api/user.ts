@@ -1,7 +1,7 @@
 import { User } from '../entity/user';
 import { ProviderCardsFilters } from '../common';
 import { ProviderProfile } from '../entity/providerProfile';
-import { HearAboutUsOptionValue, Role, StripeAccountStatus } from '../enums';
+import { HearAboutUsOptionValue, Role, PaymentAccountStatus } from '../enums';
 
 // request type for the user preboarding api
 export type PreBoardingRequest = {
@@ -85,10 +85,5 @@ export interface UpdatePasswordRequest {
 // stripe account status updated
 export interface StripeAccountStatusUpdatedPayload {
   userId: string;
-  stripeAccountStatus: StripeAccountStatus;
+  stripeAccountStatus: PaymentAccountStatus;
 }
-
-// response type of check stripe account status api
-export type CheckStripeAccountStatusResponse = {
-  accountStatus: StripeAccountStatus;
-};

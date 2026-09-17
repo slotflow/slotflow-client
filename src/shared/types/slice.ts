@@ -1,12 +1,11 @@
 import {
   Role,
   PlanName,
-  BillingCycle,
   ServiceCategory,
   SubscriptionStatus,
   PaymentProcessType,
   PaymentProcessStatus,
-  HearAboutUsOptionValue,
+  PaymentAccountStatus,
 } from './enums';
 import {
   FaqFields,
@@ -35,9 +34,6 @@ export type AuthUser = Pick<
   | 'onboardingStatus'
   | 'onboardingType'
   | 'isBlocked'
-  | 'googleConnected'
-  | 'stripeAccountStatus'
-  | 'stripeCustomerId'
   | 'allowPushNotification'
   | 'referralCode'
 > &
@@ -199,4 +195,22 @@ export interface CmsState {
     loading: boolean;
     error: string | null;
   } | null;
+}
+
+// integration slice data
+export interface StripeIntegrationData {
+  isConnecting: boolean;
+  status: PaymentAccountStatus | null;
+}
+export interface CommonIntegrationData {
+  isConnecting: boolean;
+  isConnected: boolean;
+}
+export interface SetAllIntegrationsPayload {
+  googleCalendar?: Partial<CommonIntegrationData>;
+  stripe?: Partial<StripeIntegrationData>;
+}
+export interface IntegrationSliceState {
+  googleCalendar: CommonIntegrationData,
+  stripe: StripeIntegrationData
 }

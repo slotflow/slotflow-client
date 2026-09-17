@@ -11,7 +11,7 @@ import { getDeviceId } from '@/shared/utils/helper/getDeviceId';
 import { PermissionStatus, Platform } from '@/shared/types/enums';
 import { useNotificationPermissionGateReturn } from '@/shared/types/hooks';
 import { updateNotificationPreference } from '@/app/store/slices/authSlice';
-import { handleMutationError } from '@/shared/utils/helper/handleMutationError';
+import { handleError } from '@/shared/utils/helper/handleError';
 import { requestNotificationPermission } from '@/shared/utils/helper/requestNotificationPermission';
 
 export const useNotificationPermissionGate = (): useNotificationPermissionGateReturn => {
@@ -51,7 +51,7 @@ export const useNotificationPermissionGate = (): useNotificationPermissionGateRe
     },
     onError: (error: ApiError) => {
       dispatch(updateNotificationPreference(false));
-      handleMutationError(error, 'Failed to enable push notifications.');
+      handleError(error, 'Failed to enable push notifications.');
     },
   });
 

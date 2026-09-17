@@ -8,7 +8,7 @@ import { AppDispatch, RootState } from '@/app/store/appStore';
 import { updateBoardingStep } from '@/app/store/slices/appSlice';
 import { ApiBaseResponse, ApiError } from '@/shared/types/common';
 import { setAuthUser, setBoardingData } from '@/app/store/slices/authSlice';
-import { handleMutationError } from '@/shared/utils/helper/handleMutationError';
+import { handleError } from '@/shared/utils/helper/handleError';
 import { PreBoardingRequest, PreBoardingResponse } from '@/shared/types/api/user';
 import { UsePreBoardingReturn, SubmitPreBoardingHandlerProps } from '@/shared/types/hooks';
 import { AdminVerificationStatus, HearAboutUsOptionValue, Role } from '@/shared/types/enums';
@@ -71,7 +71,7 @@ export const usePreBoarding = (): UsePreBoardingReturn => {
     },
 
     onError: (error: ApiError) => {
-      handleMutationError(error, 'Something went wrong. Please try again.');
+      handleError(error, 'Something went wrong. Please try again.');
     },
   })
 

@@ -10,13 +10,12 @@ import {
   UserUpdateUserInfoRequest,
   UserUpdateUserInfoResponse,
   AdminfetchAllUsersResponse,
-  AdminChangeUserBlockStatusRequest,
   UserUpdateProfileImageRequest,
   UserUpdateProfileImageResponse,
-  CheckStripeAccountStatusResponse,
+  AdminChangeUserBlockStatusRequest,
   UserFetchMyProfileDetailsResponse,
-  AdminFetchUserProfileDetailsResponse,
   AdminChangeUserBlockStatusResponse,
+  AdminFetchUserProfileDetailsResponse,
 } from '../../shared/types/api/user';
 import { axiosInstance } from '@/lib/axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
@@ -104,14 +103,5 @@ export const fetchUsersForChat = async (): Promise<
 // user update password
 export const updatePassword = async (data: UpdatePasswordRequest): Promise<ApiBaseResponse> => {
   const response = await axiosInstance.patch('/users/password', data);
-  return response.data;
-};
-
-// check stripe account status after success onboarding
-// TODO UPDATE because we are moving the stripe data to the payment service from main backend user entity
-export const checkStripeAccountStatus = async (): Promise<
-  ApiBaseResponse<CheckStripeAccountStatusResponse>
-> => {
-  const response = await axiosInstance.get('/users/me/stripe-account-status');
   return response.data;
 };

@@ -35,6 +35,7 @@ export interface SubscriptionActivated {
   startDate: Date;
   endDate: Date;
   subscriptionStatus: SubscriptionStatus;
+  hasUsedTrial: boolean;
 }
 
 // response of fetch my subscription

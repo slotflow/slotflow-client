@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import { queryKeys } from '@/shared/utils/constants';
 import { useReviewReturn } from '@/shared/types/hooks';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { handleMutationError } from '@/shared/utils/helper/handleMutationError';
+import { handleError } from '@/shared/utils/helper/handleError';
 import { ApiBaseResponse, ApiError, ApiPaginatedResponse } from '@/shared/types/common';
 import { deleteReview, reportReview, changeReviewBlockStatus } from '@/services/apis/review';
 import { FetchReviewsResponse, ReportReviewRequest, ReportReviewResponse, ChangeReviewBlockStatusRequest, ChangeReviewBlockStatusResponse, DeleteReviewRequest } from '@/shared/types/api/review';
@@ -49,7 +49,7 @@ export const useReview = (): useReviewReturn => {
       }
     },
     onError: (error: ApiError) => {
-      handleMutationError(error, 'Failed to report review.');
+      handleError(error, 'Failed to report review.');
     },
   })
 
@@ -92,7 +92,7 @@ export const useReview = (): useReviewReturn => {
       }
     },
     onError: (error: ApiError) => {
-      handleMutationError(error, 'Failed to update review block status.');
+      handleError(error, 'Failed to update review block status.');
     },
   });
 
@@ -129,7 +129,7 @@ export const useReview = (): useReviewReturn => {
       }
     },
     onError: (error: ApiError) => {
-      handleMutationError(error, 'Failed to delete review.');
+      handleError(error, 'Failed to delete review.');
     },
 
   });

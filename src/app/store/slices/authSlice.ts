@@ -12,7 +12,7 @@ import { providerCreateServiceDetails } from '@/services/apis/providerService';
 import { providerSubmitDetailsForReview } from '@/services/apis/providerProfile';
 import { createServiceAvailabilities } from '@/services/apis/serviceAvailability';
 import { ProviderSubmitDetailsResponse } from '@/shared/types/api/providerProfile';
-import { AdminVerificationStatus, StripeAccountStatus } from '@/shared/types/enums';
+import { AdminVerificationStatus, PaymentAccountStatus } from '@/shared/types/enums';
 
 const initialState: AuthState = {
   authUser: null,
@@ -40,16 +40,6 @@ const authSlice = createSlice({
     setAuthUserName: (state, action: PayloadAction<string>) => {
       if (state.authUser) {
         state.authUser.username = action.payload;
-      }
-    },
-    setGoogleConnect: (state) => {
-      if (state.authUser) {
-        state.authUser.googleConnected = true;
-      }
-    },
-    setStripeAccountStatus: (state, action: PayloadAction<StripeAccountStatus>) => {
-      if (state.authUser) {
-        state.authUser.stripeAccountStatus = action.payload;
       }
     },
     setIsProofSubmitted: (state) => {
@@ -84,6 +74,7 @@ const authSlice = createSlice({
         state.authUser.subscriptionStartDate = action.payload.startDate;
         state.authUser.subscriptionEndDate = action.payload.endDate;
         state.authUser.subscriptionStatus = action.payload.subscriptionStatus;
+        state.authUser.hasUsedTrial = action.payload.hasUsedTrial;
       }
     },
     setSubscriptionUpdating: (state, action: PayloadAction<boolean>) => {
@@ -178,9 +169,7 @@ export const {
   setAuthUserName,
   setSubscription,
   setBoardingData,
-  setGoogleConnect,
   setIsProofSubmitted,
-  setStripeAccountStatus,
   setSubscriptionUpdating,
   setEventSocketConnected,
   setAdminVerificationState,
