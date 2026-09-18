@@ -101,7 +101,7 @@ export const SidebarDropDown = ({ isSidebarOpen, basePath }: SidebarDropDownProp
 
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem onClick={() => navigate(`${basePath}/profile`)}>
+          <DropdownMenuItem onClick={() => navigate(`${basePath}/settings/account`)}>
             <CreditCard />
             <span>Account</span>
           </DropdownMenuItem>
@@ -137,7 +137,7 @@ export const SidebarDropDown = ({ isSidebarOpen, basePath }: SidebarDropDownProp
 
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem onClick={userSignout} className="text-red-500 focus:text-red-500">
+          <DropdownMenuItem onClick={() => userSignout()} className="text-red-500 focus:text-red-500">
             <LogOut />
             <span>Logout</span>
           </DropdownMenuItem>

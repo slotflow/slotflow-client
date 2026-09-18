@@ -528,7 +528,6 @@ export interface AuthFormsButtonProps {
 
 // google button props interface
 export interface GoogleButtonProps {
-  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   text: string;
   className?: string;
 }
@@ -1106,15 +1105,6 @@ export interface FAQSectionProps {
 export interface UserProfileTopCardProps {
   name: string;
   image: string;
-}
-
-// User Profile props
-export interface UserProfileProps {
-  username: string;
-  profileImage: string;
-  role: Role;
-  address?: React.ReactNode;
-  profile?: React.ReactNode;
 }
 
 // Boarding Layout props

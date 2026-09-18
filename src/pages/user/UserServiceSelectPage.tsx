@@ -34,7 +34,7 @@ const UserServiceSelectPage = () => {
   };
 
   const handleSubmitSelectedServices = async () => {
-    navigate('/user/dashboard');
+    navigate('/user/services');
   };
 
   const filteredCategories = Object.values(ServiceCategory).filter((category) =>

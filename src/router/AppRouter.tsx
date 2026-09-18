@@ -7,6 +7,7 @@ import { ProtectedRoute } from './ProtectedRoutes.tsx';
 import BoardingLayoutWrapper from './BoardingLayoutWrapper.tsx';
 import { RouteNames } from '@/shared/utils/constants/routeConstants.ts';
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
+import AuthCallbackPage from '@/components/form/Common/AuthCallbackPage.tsx';
 
 const ProviderDashboardPage = lazy(() => import('@/pages/provider/ProviderDashboardPage.tsx'));
 const AdminPlanDetailsPage = lazy(() => import('@/pages/admin/AdminPlanDetailsPage.tsx'));
@@ -32,7 +33,6 @@ const CalendarPage = lazy(() => import('@/pages/dashboard/CalendarPage.tsx'));
 const ReferralPage = lazy(() => import('@/pages/dashboard/ReferralPage.tsx'));
 const AdminPlansPage = lazy(() => import('@/pages/admin/AdminPlansPage.tsx'));
 const AdminUsersPage = lazy(() => import('@/pages/admin/AdminUsersPage.tsx'));
-const UserAccountPage = lazy(() => import('@/pages/user/UserAccountPage.tsx'));
 const LoginForm = lazy(() => import('@/components/form/Common/LoginForm.tsx'));
 const VideoCallRoom = lazy(() => import('@/pages/dashboard/VideoCallRoom.tsx'));
 const AdminReportPage = lazy(() => import('@/pages/admin/AdminReportPage.tsx'));
@@ -146,6 +146,7 @@ export const appRouter = createBrowserRouter([
     children: [
       { path: 'login', element: <LoginForm /> },
       { path: 'register', element: <SignUpForm /> },
+      { path: 'callback', element: <AuthCallbackPage /> },
       { path: 'verify/email', element: <EmailVerificationForm /> },
       { path: 'reset/password', element: <ResetPasswordForm /> },
       { path: 'verify/otp', element: <OtpVerificatioForm /> },
@@ -350,13 +351,6 @@ export const appRouter = createBrowserRouter([
             element: <UserServiceProviderDetailPage />,
             handle: {
               title: 'Service Provider Details',
-            },
-          },
-          {
-            path: 'profile',
-            element: <UserAccountPage />,
-            handle: {
-              title: 'Profile',
             },
           },
           {

@@ -1,5 +1,6 @@
 import FormField from '../FormField';
 import { toast } from 'react-toastify';
+import { appConfig } from '@/config/env';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import GoogleButton from '../GoogleButton';
@@ -10,16 +11,15 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { AppDispatch } from '@/app/store/appStore';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { appConfig, serviceConfig } from '@/config/env';
-import { SigninResponse } from '@/shared/types/api/auth';
-import { OnboardingStatus, Role } from '@/shared/types/enums';
-import { redirectPaths } from '../../../shared/utils/constants';
+import { redirectPaths } from '@/shared/utils/constants';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
+import { setForgotPassword } from '@/app/store/slices/appSlice';
 import { LoginFormType, LoginZodSchema } from '@/shared/validators/zod/authZod';
-import { setForgotPassword, updateBoardingStep } from '@/app/store/slices/appSlice';
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+  const { handleAuthLoginNavigation } = useAppNavigation();
 
   const {
     register,
@@ -34,63 +34,11 @@ const LoginForm = () => {
     },
   });
 
-  const handleNavigation = (data: SigninResponse) => {
-    const user = data.user;
-    if (user.role === Role.ADMIN) {
-      navigate('/admin/dashboard', { replace: true });
-      return;
-    }
-
-    if (user.onboardingStatus === OnboardingStatus.NOT_STARTED) {
-      navigate(redirectPaths.PRE_BOARDING_ROLE, { replace: true });
-      return;
-    }
-
-    if (
-      user.onboardingStatus === OnboardingStatus.IN_PROGRESS &&
-      user.onboardingType === Role.PROVIDER
-    ) {
-      dispatch(updateBoardingStep(6));
-      if (!user.isAddressAdded && !user.isAddressVerified) {
-        navigate(redirectPaths.ONBOARDING_ADDRESS, { replace: true });
-      } else if (!user.isServiceDetailsAdded && !user.isServiceDetailsVerified) {
-        navigate(redirectPaths.ONBOARDING_SERVICE, { replace: true });
-      } else if (!user.isServiceAvailabilityAdded && !user.isAvailabilityVerified) {
-        navigate(redirectPaths.ONBOARDING_AVAILABILITY, { replace: true });
-      } else if (!user.isProofSubmitted && !user.isProofsVerified) {
-        navigate(redirectPaths.ONBOARDING_PROOFS, { replace: true });
-      } else if (!user.isAdminVerified) {
-        navigate(redirectPaths.ONBOARDING_PENDING, { replace: true });
-      } else {
-        navigate(redirectPaths.ONBOARDING_ADDRESS, { replace: true }); // fallback
-      }
-      return;
-    }
-
-    if (user.role === Role.USER) {
-      navigate('/user', { replace: true });
-    } else if (user.role === Role.PROVIDER) {
-      navigate('/provider', { replace: true });
-    }
-  };
-
-  const handleGoogleLogin = ({ e }: { e: React.MouseEvent<HTMLButtonElement, MouseEvent> }) => {
-    try {
-      e.preventDefault();
-      window.location.href = `${serviceConfig.apiGatewayUrl + appConfig.version}/auth/google`;
-    } catch (error) {
-      if (appConfig.isDevelopment) {
-        console.error('Google login error:', error);
-      }
-      toast.error('Failed to initiate Google login');
-    }
-  };
-
   const onSubmit = async (data: LoginFormType) => {
     try {
       const res = await dispatch(signin({ ...data })).unwrap();
-      if (res.success) {
-        handleNavigation(res.data as SigninResponse);
+      if (res.success && res.data) {
+        handleAuthLoginNavigation(res.data.user);
         toast.success(res.message);
       } else toast.error(res.message);
     } catch (error) {
@@ -157,7 +105,9 @@ const LoginForm = () => {
               <div className="flex-grow border-t"></div>
             </div>
 
-            <GoogleButton onClick={(e) => handleGoogleLogin({ e })} text="Sign up with Google" />
+            <GoogleButton
+              text="Sign up with Google"
+            />
 
             <p className="mt-10 text-center text-sm text-[var(--textOne)] hover:text-[var(--textOneHover)]">
               New to Slotflow ?

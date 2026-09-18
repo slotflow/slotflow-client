@@ -111,7 +111,7 @@ const ProfileListing = ({
                     ) : d?.createdAt ? (
                       new Date(d.createdAt).toLocaleDateString()
                     ) : (
-                      'N/A'
+                      'Not Available'
                     )}
                   </span>
                 </div>

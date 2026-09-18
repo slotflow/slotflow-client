@@ -309,3 +309,12 @@ export const blogCTAItems: BlogCTAItems[] = [
     subTitle: 'Smart Scheduling',
   },
 ];
+
+//
+export const authCallbackLoadingSteps: string[] = [
+  'Checking your credentials...',
+  'Verifying authentication details...',
+  'Creating a space for you...',
+  'Finalizing your secure session...',
+  'Redirecting you shortly...'
+];

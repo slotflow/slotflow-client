@@ -21,11 +21,11 @@ export const exportToExcel = (
 
   const formattedData: ExcelRow[] = data.map((row, index) => ({
     '#': index + 1,
-    Date: row.createdAt ? formatDate(row.createdAt) : 'N/A',
+    Date: row.createdAt ? formatDate(row.createdAt) : 'Not Available',
     'Initial Amount': `₹ ${row.initialAmount?.toFixed(2) ?? '0.00'}`,
     Discount: `₹ ${row.discountAmount?.toFixed(2) ?? '0.00'}`,
     'Total Amount': `₹ ${row.totalAmount?.toFixed(2) ?? '0.00'}`,
-    'Payment Gateway': row.paymentGateway ?? 'N/A',
+    'Payment Gateway': row.paymentGateway ?? 'Not Available',
   }));
 
   const grandInitial = data.reduce((sum, r) => sum + (r.initialAmount ?? 0), 0);

@@ -6,7 +6,7 @@ import { adminFetchAllPlans } from '@/services/apis/plan';
 import { slideIn } from '@/shared/utils/helper/gsapAnimationSlide';
 import { AdminFetchAllPlansResponse } from '@/shared/types/api/plan';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
-import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 import AdminPlansTableColumns from '@/components/table/tableColumns/AdminPlansTableColumn';
 
 const AdminPlansPage = () => {
@@ -14,7 +14,7 @@ const AdminPlansPage = () => {
   const [showForm, setShowForm] = useState(false);
   const [selectedPlanIdToEdit, setSelectedPlanIdToEdit] = useState<string | null>(null);
 
-  const { handleNavigateToPlanDetailPage } = useRoleBasedNavigation();
+  const { handleNavigateToPlanDetailPage } = useAppNavigation();
   const { changePlanBlockStatus, resyncPlanWithStripe, changeBlockStatusPlanId, resyncingPlanId } =
     useAdminPlan();
 

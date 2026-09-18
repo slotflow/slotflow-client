@@ -1,5 +1,6 @@
 import FormField from '../FormField';
 import { toast } from 'react-toastify';
+import { appConfig } from '@/config/env';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import GoogleButton from '../GoogleButton';
@@ -9,7 +10,6 @@ import { signup } from '@/services/apis/auth';
 import { useNavigate } from 'react-router-dom';
 import { AppDispatch } from '@/app/store/appStore';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { appConfig, serviceConfig } from '@/config/env';
 import { redirectPaths } from '@/shared/utils/constants';
 import { SignupFormType, signupZodSchema } from '@/shared/validators/zod/authZod';
 
@@ -32,18 +32,6 @@ const SignUpForm = () => {
       confirmPassword: '',
     },
   });
-
-  const handleGoogleLogin = ({ e }: { e: React.MouseEvent<HTMLButtonElement, MouseEvent> }) => {
-    try {
-      e.preventDefault();
-      window.location.href = `${serviceConfig.apiGatewayUrl + appConfig.version}/auth/google`;
-    } catch (error) {
-      if (appConfig.isDevelopment) {
-        console.error('Google login error:', error);
-      }
-      toast.error('Failed to initiate Google login');
-    }
-  };
 
   const onSubmit = async (data: SignupFormType) => {
     try {
@@ -131,7 +119,10 @@ const SignUpForm = () => {
               <div className="flex-grow border-t"></div>
             </div>
 
-            <GoogleButton onClick={(e) => handleGoogleLogin({ e })} text={'Sign in with Google'} />
+            <GoogleButton
+              text='Sign in with Google'
+            />
+
 
             <p className="mt-10 text-center text-sm/6 text-[var(--textOne)] hover:text-[var(--textOneHover)]">
               Already a Slotflow member?

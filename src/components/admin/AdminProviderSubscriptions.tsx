@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { queryKeys } from '@/shared/utils/constants';
 import PaginatedDataTable from '../table/PaginatedDataTable';
 import { fetchSubscriptions } from '@/services/apis/subscription';
-import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { AdminFetchProviderSubscriptionsProps } from '@/shared/types/component';
 import ProvidersSubscriptionsTableColumns from '../table/tableColumns/ProviderSubscriptionsTableColumn';
 import {
@@ -11,7 +11,7 @@ import {
 } from '@/shared/types/api/subscription';
 
 const AdminProviderSubscriptions = memo(({ providerId }: AdminFetchProviderSubscriptionsProps) => {
-  const { handleAdminGetProviderDetailPage } = useRoleBasedNavigation();
+  const { handleAdminGetProviderDetailPage } = useAppNavigation();
 
   const column = ProvidersSubscriptionsTableColumns(handleAdminGetProviderDetailPage);
 

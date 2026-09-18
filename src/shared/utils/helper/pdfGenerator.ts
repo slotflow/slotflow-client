@@ -48,12 +48,12 @@ export const exportToPDF = async (
   doc.line((pageWidth - titleWidth) / 2, titleY + 2, (pageWidth + titleWidth) / 2, titleY + 2);
 
   const body = data.map((row, index) => {
-    const formattedDate = row.createdAt ? formatDate(row.createdAt) : 'N/A';
+    const formattedDate = row.createdAt ? formatDate(row.createdAt) : 'Not Available';
 
     return [
       index + 1,
       formattedDate,
-      row.paymentGateway ?? 'N/A',
+      row.paymentGateway ?? 'Not Available',
       row.initialAmount?.toFixed(2) ?? '0.00',
       row.discountAmount?.toFixed(2) ?? '0.00',
       row.totalAmount?.toFixed(2) ?? '0.00',

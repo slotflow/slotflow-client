@@ -3,12 +3,12 @@ import { queryKeys } from '@/shared/utils/constants';
 import { useAdminUser } from '@/hooks/adminHooks/useUser';
 import { AdminfetchAllUsersResponse } from '@/shared/types/api/user';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
-import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 import AdminUsersTableColumns from '@/components/table/tableColumns/AdminUsersTableColumn';
 
 const AdminUsersPage = () => {
   const { changeUserBlockStatus, changeBlockStatusUserId } = useAdminUser();
-  const { handleGetUserDetailPage } = useRoleBasedNavigation();
+  const { handleGetUserDetailPage } = useAppNavigation();
 
   const column = AdminUsersTableColumns(
     changeUserBlockStatus,

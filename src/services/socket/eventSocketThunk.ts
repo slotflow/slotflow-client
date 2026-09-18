@@ -7,17 +7,17 @@ import { toast } from 'react-toastify';
 import { RootState } from '@/app/store/appStore';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { EventSocketEnum } from '@/shared/types/socket';
+import { setStripeData } from '@/app/store/slices/integrationSlice';
 import { SubscriptionActivated } from '@/shared/types/api/subscription';
 import { destroyEventSocket, getEventSocket } from '@/lib/socketService';
 import { StripeAccountStatusUpdatedPayload } from '@/shared/types/api/user';
-import { setStripeAccountStatus } from '@/app/store/slices/integrationSlice';
 
 export const connectEventSocket = createAsyncThunk<void, void, { state: RootState }>(
   'event/connectSocket',
   async (_, { getState, dispatch }) => {
 
     const { authUser } = getState().auth;
-    const { stripeAccountStatus } = getState().integration;
+    const { stripe } = getState().integration;
 
     if (!authUser) return;
 
@@ -64,9 +64,12 @@ export const connectEventSocket = createAsyncThunk<void, void, { state: RootStat
         const isOwner = payload.userId === authUser.uid;
 
         if (isOwner) {
-          if (stripeAccountStatus !== payload.stripeAccountStatus) {
+          if (stripe.status !== payload.stripeAccountStatus) {
             toast.success('Stripe account status updated!');
-            dispatch(setStripeAccountStatus(payload.stripeAccountStatus));
+            dispatch(setStripeData({
+              isConnecting: false,
+              status: payload.stripeAccountStatus
+            }));
           } else {
             toast.info('Stripe account status updated!');
           }

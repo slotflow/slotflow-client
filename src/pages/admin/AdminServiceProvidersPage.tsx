@@ -4,7 +4,7 @@ import { queryKeys } from '@/shared/utils/constants';
 import { useAdminProvider } from '@/hooks/adminHooks/useProvider';
 import { slideIn } from '@/shared/utils/helper/gsapAnimationSlide';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
-import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 import RejectproviderForm from '@/components/form/Admin/RejectproviderForm';
 import { fetchServiceProvidersForAdmin } from '@/services/apis/providerProfile';
 import { AdminFetchAllProvidersResponse } from '@/shared/types/api/providerProfile';
@@ -23,7 +23,7 @@ const AdminServiceProvidersPage = () => {
     changeTrustTagProviderId,
   } = useAdminProvider();
 
-  const { handleGetProviderDetailPage } = useRoleBasedNavigation();
+  const { handleGetProviderDetailPage } = useAppNavigation();
 
   const handleProviderRejectClose = () => {
     setRejectProvider(null);

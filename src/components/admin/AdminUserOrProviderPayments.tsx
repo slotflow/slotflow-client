@@ -1,6 +1,6 @@
 import { queryKeys } from '@/shared/utils/constants';
 import PaginatedDataTable from '../table/PaginatedDataTable';
-import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 import PaymentsTableColumn from '../table/tableColumns/PaymentsTableColumn';
 import { AdminUserOrProviderPaymentsProps } from '@/shared/types/component';
 import { FetchPaymentsQueryParams, FetchPaymentsResponse } from '@/shared/types/api/payment';
@@ -9,7 +9,7 @@ const AdminUserOrProviderPayments = ({
   providerId,
   fetchFunction,
 }: AdminUserOrProviderPaymentsProps) => {
-  const { handleGetPaymentDetailsPage } = useRoleBasedNavigation();
+  const { handleGetPaymentDetailsPage } = useAppNavigation();
   const column = PaymentsTableColumn(handleGetPaymentDetailsPage);
 
   return (

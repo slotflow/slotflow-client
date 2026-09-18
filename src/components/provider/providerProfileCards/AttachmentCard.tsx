@@ -7,6 +7,7 @@ import DataFieldShimmer from '@/components/shimmers/DataFieldShimmer';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const AttachmentCard = ({ isLoading, isError, data }: AttachmentCardProps) => {
+
   return (
     <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
       <CardHeader>
@@ -21,27 +22,25 @@ const AttachmentCard = ({ isLoading, isError, data }: AttachmentCardProps) => {
           <DataFieldShimmer row={2} />
         ) : isError ? (
           <DataFetchingError message="Attachments fetching error" />
-        ) : !data || (!data.demoVideoUrl && !data.portfolioUrl) ? (
-          <IconText text="No Data Found" className="text-red-500" />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {data.portfolioUrl && (
+            {/* {data.portfolioUrl && ( */}
               <DataField
                 label="Portfolio Link"
-                value={data.portfolioUrl}
+                value={data?.portfolioUrl}
                 Icon={ChevronRight}
                 link
               />
-            )}
+            {/* )} */}
 
-            {data.demoVideoUrl && (
+            {/* {data.demoVideoUrl && ( */}
               <DataField
                 label="Demo video Link"
-                value={data.demoVideoUrl}
+                value={data?.demoVideoUrl}
                 Icon={ChevronRight}
                 link
               />
-            )}
+            {/* )} */}
           </div>
         )}
       </CardContent>

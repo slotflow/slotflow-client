@@ -103,10 +103,10 @@ const UserBookingConfirmPage = () => {
                   <Button
                     title="Go to Dashboard"
                     variant='secondary'
-                    onClick={() => navigate('/user/dashboard')}
+                    onClick={() => navigate('/user/bookings')}
                     className={actionBtnClass}
                   >
-                    Go to Dashboard
+                    See Bookings
                   </Button>
                 </motion.div>
               )}

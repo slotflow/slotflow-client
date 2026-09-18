@@ -1,11 +1,26 @@
 import { Button } from '../ui/button';
+import { appConfig, serviceConfig } from '@/config/env';
 import { GoogleButtonProps } from '@/shared/types/component';
+import { handleError } from '@/shared/utils/helper/handleError';
 
-const GoogleButton = ({ onClick, text, className = 'w-full' }: GoogleButtonProps) => {
+const GoogleButton = ({
+  text,
+  className = 'w-full',
+}: GoogleButtonProps) => {
+
+  const handleGoogleLogin = ({ e }: { e: React.MouseEvent<HTMLButtonElement, MouseEvent> }) => {
+    try {
+      e.preventDefault();
+      window.location.href = `${serviceConfig.apiGatewayUrl + appConfig.version}/auth/google`;
+    } catch (error) {
+      handleError(error, `Failed to initiate Google`);
+    }
+  };
+
   return (
     <Button
       title={text}
-      onClick={onClick}
+      onClick={(e) => handleGoogleLogin({ e })}
       variant="default"
       type="button"
       className={`${className} my-2

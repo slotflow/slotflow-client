@@ -16,12 +16,12 @@ export const formatDate = (
   date: DateInput,
   pattern: DateFormatPattern = dateFormats.SHORT
 ): string => {
-  if (!date) return 'N/A';
+  if (!date) return 'Not Available';
 
   const parsedDate = date instanceof Date ? date : new Date(date);
 
   if (!isValid(parsedDate)) {
-    return 'N/A';
+    return 'Not Available';
   }
 
   return format(parsedDate, pattern);

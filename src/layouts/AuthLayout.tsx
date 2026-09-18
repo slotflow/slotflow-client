@@ -17,7 +17,7 @@ const AuthLayout: React.FC = () => {
       if (authUser.role === Role.ADMIN) {
         navigate('/admin/dashboard');
       } else if (authUser.role === Role.USER) {
-        navigate('/user/dashboard');
+        navigate('/user/services');
       } else if (authUser.role === Role.PROVIDER) {
         navigate('/provider/dashboard');
       }

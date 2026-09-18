@@ -43,6 +43,7 @@ import { UseMutateAsyncFunction, UseMutateFunction } from '@tanstack/react-query
 import { SubscribePlanCheckoutResponse, SubscribePlanCheckoutRequest } from './api/subscription';
 import { ReportReviewRequest, ReportReviewResponse, ChangeReviewBlockStatusRequest, ChangeReviewBlockStatusResponse, DeleteReviewRequest } from './api/review';
 import { BookAppointmentRequest, BookAppointmentResponse, CancelBookingRequest, CancelBookingResponse, ChangeAppointmentStatusRequest, ChangeAppointmentStatusResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, ValidateRoomIdRequest } from './api/booking';
+import { AuthUser } from './slice';
 
 // Admin plan hook return type interface
 export interface UseAdminPlanReturn {
@@ -210,13 +211,21 @@ export interface useReviewReturn {
 }
 
 // Role based navigation hook return type interface
-export interface useRoleBasedNavigationReturn {
+export interface useAppNavigationReturn {
   handleAdminGetProviderDetailPage: (subscriptionId: Subscription['_id']) => void;
   handleGetPaymentDetailsPage: (paymentId: Payment['_id']) => void;
   handleNavigateToBookingsDetailPage: (appointmentId: Booking['_id']) => void;
   handleNavigateToPlanDetailPage: (planId: Plan['_id']) => void;
   handleGetProviderDetailPage: (providerId: User['_id']) => void;
   handleGetUserDetailPage: (userId: User['_id']) => void;
+  toLogin: () => void;
+  handleAuthLoginNavigation: (user: AuthUser) => void;
+}
+
+// Auth Callback page custom hook
+export interface UseAuthCallbackReturn {
+    stepIndex: number;
+    error: string | null;
 }
 
 // Add availability hook parameter type interface

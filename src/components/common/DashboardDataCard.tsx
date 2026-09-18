@@ -18,7 +18,7 @@ const DashboardDataCard = ({
     if (value === undefined || value === null) {
       if (isVerified) return 'Verified';
       if (isUnverified) return 'Unverified';
-      return 'N/A';
+      return 'Not Available';
     }
 
     if (price) {

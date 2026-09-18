@@ -11,7 +11,7 @@ import ConfirmAlert from '@/components/alert/ConfirmAlert';
 import { useJVideoCall } from '@/hooks/useJVideoCall';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
-import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 import BookingsTableColumn from '@/components/table/tableColumns/BookingsTableColumn';
 
 const ListBookingsPage = () => {
@@ -20,7 +20,7 @@ const ListBookingsPage = () => {
 
   const {
     handleNavigateToBookingsDetailPage
-  } = useRoleBasedNavigation();
+  } = useAppNavigation();
 
   const {
     handleReviewAddFormToggle,

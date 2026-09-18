@@ -221,7 +221,7 @@ export const storeConstants: Record<string, string> = {
 };
 
 // Redirect paths
-export const redirectPaths: Record<string, string> = {
+export const redirectPaths = {
   LOGIN: '/auth/login',
   REGISTER: '/auth/register',
   VERIFY_EMAIL: '/auth/verify/email',
@@ -237,7 +237,10 @@ export const redirectPaths: Record<string, string> = {
   USER_HOME: '/user',
   PROVIDER_HOME: '/provider',
   ADMIN_DASHBOARD: '/admin/dashboard',
-};
+} as const;
+
+// Standalone routes
+export const standaloneRoutes = ['/provider/upgrade'];
 
 // Button classNames
 

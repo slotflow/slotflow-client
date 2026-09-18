@@ -21,7 +21,7 @@ const UserLayout = () => {
   return (
     <MainLayout
       routes={userRoutes}
-      rightSidebar={location.pathname === '/user/dashboard' ? <FilterRightSideBar /> : null}
+      rightSidebar={location.pathname === '/user/services' ? <FilterRightSideBar /> : null}
     >
       <Outlet />
       {isReviewCreateFormOpen && <ReviewForm />}

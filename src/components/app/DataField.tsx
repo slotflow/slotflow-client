@@ -77,7 +77,7 @@ const DataField = ({
   let displayValue: React.ReactNode;
 
   if (value === null || value === undefined || (typeof value === 'string' && !value.trim())) {
-    displayValue = <span className="text-slate-400">N/A</span>;
+    displayValue = <span className="text-slate-400">Not Available</span>;
   } else if (isBoolean) {
     displayValue = value ? (
       <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
