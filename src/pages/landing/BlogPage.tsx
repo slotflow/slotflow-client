@@ -3,7 +3,7 @@ import { appConfig } from '@/config/env';
 import BlogCTA from '@/components/blog/BlogCTA';
 import BlogHero from '@/components/blog/BlogHero';
 import { useDispatch, useSelector } from 'react-redux';
-import LoadingFallback from '../common/LoadingFallback';
+import LoadingFallbackPage from '../fallbacks/LoadingFallbackPage';
 import MoveUpward from '@/components/animation/MoveUpward';
 import BlogNewsletter from '@/components/blog/BlogNewsletter';
 import { AppDispatch, RootState } from '@/app/store/appStore';
@@ -37,7 +37,7 @@ const BlogPage = () => {
   const isLoading = loadingArticles || loadingCategories || !blogData;
 
   if (isLoading) {
-    return <LoadingFallback />;
+    return <LoadingFallbackPage />;
   }
 
   return (

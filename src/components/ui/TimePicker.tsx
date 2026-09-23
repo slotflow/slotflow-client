@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 import { Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { dateFormats } from '@/shared/utils/constants';
-import { formatDate } from '@/shared/utils/helper/formatter';
+import { formatDate } from '@/shared/utils/helper/formatDate';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 

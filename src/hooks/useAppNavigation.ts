@@ -20,14 +20,15 @@ export const useAppNavigation = (): useAppNavigationReturn => {
 
   const handleAuthLoginNavigation = (user: AuthUser) => {
     if (!user) return;
+    console.log("handleAuthLoginNavigation");
+    console.log("user exist");
 
     // 1. Admin direct redirect
     if (user.role === Role.ADMIN) {
-      navigate('/admin/dashboard', { replace: true });
+      navigate('/dashboard', { replace: true });
       return;
     }
-
-    // 2. Pre boarding redirect
+  
     if (user.onboardingStatus === OnboardingStatus.NOT_STARTED) {
       navigate(redirectPaths.PRE_BOARDING_ROLE, { replace: true });
       return;
@@ -57,52 +58,90 @@ export const useAppNavigation = (): useAppNavigationReturn => {
 
     // 4. Default role-based landing pages
     if (user.role === Role.USER) {
-      navigate('/user', { replace: true });
+      navigate('/services', { replace: true });
     } else if (user.role === Role.PROVIDER) {
-      navigate('/provider', { replace: true });
+      navigate('/dashboard', { replace: true });
     }
   };
 
   const handleAdminGetProviderDetailPage = (subscriptionId: Subscription['_id']) => {
     if (authUser?.role === Role.ADMIN) {
-      navigate(`/admin/subscriptions/${subscriptionId}`);
+      navigate(`/subscriptions/${subscriptionId}`);
     } else if (authUser?.role === Role.PROVIDER) {
-      navigate(`/provider/subscriptions/${subscriptionId}`);
+      navigate(`/subscriptions/${subscriptionId}`);
     }
   };
 
   const handleGetPaymentDetailsPage = (paymentId: Payment['_id']) => {
     if (authUser?.role === Role.ADMIN) {
-      navigate(`/admin/payments/${paymentId}`);
+      navigate(`/payments/${paymentId}`);
     } else if (authUser?.role === Role.PROVIDER) {
-      navigate(`/provider/payments/${paymentId}`);
+      navigate(`/payments/${paymentId}`);
     } else if (authUser?.role === Role.USER) {
-      navigate(`/user/payments/${paymentId}`);
+      navigate(`/payments/${paymentId}`);
     }
   };
 
   const handleNavigateToBookingsDetailPage = (appointmentId: Booking['_id']) => {
     if (authUser?.role === Role.PROVIDER) {
-      navigate(`/provider/bookings/${appointmentId}`);
+      navigate(`/bookings/${appointmentId}`);
     } else if (authUser?.role === Role.USER) {
-      navigate(`/user/bookings/${appointmentId}`);
+      navigate(`/bookings/${appointmentId}`);
     }
   };
 
   const handleNavigateToPlanDetailPage = (planId: Plan['_id']) => {
-    navigate(`/admin/plans/${planId}`);
+    navigate(`/plans/${planId}`);
   };
 
   const handleGetProviderDetailPage = (providerId: string) => {
-    navigate(`/admin/service-providers/${providerId}`);
+    navigate(`/service-providers/${providerId}`);
   };
 
   const handleGetUserDetailPage = (userId: User['_id']) => {
-    navigate(`/admin/users/${userId}`);
+    navigate(`/users/${userId}`);
   };
-  
+
   const toLogin = () => {
     navigate(redirectPaths.LOGIN, { replace: true });
+  }
+
+  const toSettings = () => {
+    if (authUser?.role === Role.PROVIDER) {
+      navigate(redirectPaths.SETTINGS, { replace: true });
+    } else if (authUser?.role === Role.USER) {
+      navigate(redirectPaths.SETTINGS, { replace: true });
+    }
+  }
+
+  const toDashboard = (replace: boolean) => {
+    if (authUser?.role === Role.PROVIDER) {
+      navigate(redirectPaths.DASHBOARD, { replace });
+    } else if (authUser?.role === Role.USER) {
+      navigate(redirectPaths.DASHBOARD, { replace });
+    } else if (authUser?.role === Role.ADMIN) {
+      navigate(redirectPaths.DASHBOARD, { replace })
+    }
+  }
+
+  const toBookings = (replace: boolean) => {
+    if (authUser?.role === Role.PROVIDER) {
+      navigate(redirectPaths.BOOKINGS, { replace });
+    } else if (authUser?.role === Role.USER) {
+      navigate(redirectPaths.BOOKINGS, { replace });
+    }
+  }
+
+  const toIntegrations = (replace: boolean) => {
+    if (authUser?.role === Role.PROVIDER) {
+      navigate(redirectPaths.INTEGRATIONS, { replace });
+    } else if (authUser?.role === Role.USER) {
+      navigate(redirectPaths.INTEGRATIONS, { replace });
+    }
+  }
+
+  const toUpgrade = (replace: boolean) => {
+    navigate(redirectPaths.UPGRADE,{ replace });
   }
 
   return {
@@ -113,6 +152,11 @@ export const useAppNavigation = (): useAppNavigationReturn => {
     handleGetProviderDetailPage,
     handleGetUserDetailPage,
     toLogin,
+    toSettings,
+    toDashboard,
+    toBookings,
+    toIntegrations,
+    toUpgrade,
     handleAuthLoginNavigation
   };
 };

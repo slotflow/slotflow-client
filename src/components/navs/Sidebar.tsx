@@ -16,14 +16,12 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
   const isSidebarOpen: boolean = useSelector((store: RootState) => store.app.isSidebarOpen);
   const user: Partial<AuthUser> | null = useSelector((store: RootState) => store.auth?.authUser);
 
-  const basePath =
-    user?.role === 'ADMIN' ? '/admin' : user?.role === 'PROVIDER' ? '/provider' : '/user';
 
   // Automatically expand parent routes when navigating to a child subroute
   useEffect(() => {
     routes.forEach((route) => {
       if (route.subroutes && route.subroutes.length > 0) {
-        const fullParentPath = `${basePath}/${route.path}`;
+        const fullParentPath = `/${route.path}`;
         const hasActiveSubroute = route.subroutes.some(
           (sub) => location.pathname === `${fullParentPath}/${sub.path}`,
         );
@@ -33,7 +31,7 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
         }
       }
     });
-  }, [location.pathname, routes, basePath]);
+  }, [location.pathname, routes]);
 
   const toggleRoute = (path: string) => {
     setExpandedRoutes((prev) =>
@@ -74,7 +72,7 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
                 ? !filteredRoutes.some((froute) => froute.name === route.name)
                 : false;
 
-            const fullPath = `${basePath}/${route.path}`;
+            const fullPath = `/${route.path}`;
             const subRoutes = route.subroutes ?? [];
             const hasSubroutes = subRoutes.length > 0;
             const isExpanded = expandedRoutes.includes(route.path);
@@ -147,7 +145,7 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
         </nav>
       </div>
 
-      <SidebarDropDown isSidebarOpen={isSidebarOpen} basePath={basePath} />
+      <SidebarDropDown isSidebarOpen={isSidebarOpen} />
     </aside>
   );
 };

@@ -2,14 +2,14 @@ import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import BoardingLayout from '@/layouts/BoardingLayout';
 import { useOnboardingMetadata } from '@/hooks/useOnboardingMetadata';
-import BoardingLoadingFallback from '@/pages/boarding/BoardingLoadingFallback';
+import LoadingFallbackPage from '@/pages/fallbacks/LoadingFallbackPage';
 
 const BoardingLayoutWrapper = () => {
   const metadata = useOnboardingMetadata();
 
   if (!metadata) {
     return (
-      <Suspense fallback={<BoardingLoadingFallback />}>
+      <Suspense fallback={<LoadingFallbackPage />}>
         <Outlet />
       </Suspense>
     );
@@ -21,7 +21,7 @@ const BoardingLayoutWrapper = () => {
       heading={metadata.heading}
       description={metadata.description}
     >
-      <Suspense fallback={<BoardingLoadingFallback />}>
+      <Suspense fallback={<LoadingFallbackPage />}>
         <Outlet />
       </Suspense>
     </BoardingLayout>

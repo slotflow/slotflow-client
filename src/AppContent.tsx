@@ -1,6 +1,7 @@
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import { appRouter } from './router/AppRouter';
+// import { appRouter } from './router/AppRouter';
+import { appRouter } from './router/NewRouter';
 import { queryClient } from './lib/queryClient';
 import { RootState } from '@/app/store/appStore';
 import { RouterProvider } from 'react-router-dom';
@@ -8,7 +9,7 @@ import React, { Suspense, useEffect } from 'react';
 import ThemeSync from './components/app/ThemeSync';
 import { ToastContainer, Bounce } from 'react-toastify';
 import { QueryClientProvider } from '@tanstack/react-query';
-import LoadingFallback from './pages/common/LoadingFallback';
+import LoadingFallbackPage from './pages/fallbacks/LoadingFallbackPage';
 import { onMessageListener } from './shared/utils/helper/onMessageListener';
 
 const AppContent: React.FC = () => {
@@ -34,7 +35,7 @@ const AppContent: React.FC = () => {
       <ThemeSync />
 
       <QueryClientProvider client={queryClient}>
-        <Suspense fallback={<LoadingFallback />}>
+        <Suspense fallback={<LoadingFallbackPage />}>
           <RouterProvider router={appRouter} />
         </Suspense>
       </QueryClientProvider>

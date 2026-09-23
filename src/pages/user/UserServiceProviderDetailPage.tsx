@@ -1,7 +1,7 @@
 import { Role } from '@/shared/types/enums';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import ReviewsPage from '../dashboard/ReviewsPage';
+import ListReviews from '../../containers/dashboard/ListReviews';
 import { fetchAddressByUserId } from '@/services/apis/address';
 import AddressListing from '@/components/profile/AddressListing';
 import ProviderProfile from '@/components/provider/ProviderProfile';
@@ -56,7 +56,7 @@ const UserServiceProviderDetailPage = () => {
         isError: profileIsError,
         data: profileData,
       }}
-      reviews={<ReviewsPage providerId={providerId} isPage={false} />}
+      reviews={<ListReviews providerId={providerId} isPage={false} />}
       address={
         <AddressListing
           userOrProviderId={providerId}

@@ -105,15 +105,15 @@ export const footerLinks = {
   account: [
     {
       name: 'Sign Up',
-      href: '/auth/register',
+      href: '/register',
     },
     {
       name: 'Login',
-      href: '/auth/login',
+      href: '/login',
     },
     {
       name: 'Forgot Password',
-      href: '/auth/verify/email',
+      href: '/verify/email',
     },
   ],
 };

@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { formatDate } from '@/shared/utils/helper/formatter';
+import { formatDate } from '@/shared/utils/helper/formatDate';
 import { NotificationCardProps } from '@/shared/types/component';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 

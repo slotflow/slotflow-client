@@ -1,12 +1,10 @@
 import { Button } from '../ui/button';
 import React, { useState } from 'react';
-import {
-  formatDate,
-  formatDuration,
-} from '@/shared/utils/helper/formatter';
 import { Check, Copy, X } from 'lucide-react';
 import { DataFieldProps } from '@/shared/types/component';
 import DataShimmer from '@/components/shimmers/DataShimmer';
+import { formatDate } from '@/shared/utils/helper/formatDate';
+import { formatDuration } from '@/shared/utils/helper/formatDuration';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 const DataField = ({
@@ -77,7 +75,7 @@ const DataField = ({
   let displayValue: React.ReactNode;
 
   if (value === null || value === undefined || (typeof value === 'string' && !value.trim())) {
-    displayValue = <span className="text-slate-400">Not Available</span>;
+    displayValue = 'Not Available'
   } else if (isBoolean) {
     displayValue = value ? (
       <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
@@ -97,8 +95,8 @@ const DataField = ({
           {value}
         </code>
         <Button
-        size='icon'
-        variant='ghost'
+          size='icon'
+          variant='ghost'
           onClick={handleCopy}
           className="p-1 rounded text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer shrink-0"
           title="Copy ID"

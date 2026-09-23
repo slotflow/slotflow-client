@@ -8,6 +8,7 @@ import PaymentSelection from '@/components/payment/PaymentSelection';
 import { planAccessMap } from '@/shared/utils/constants/planConstants';
 import { getRoutesByRole } from '@/shared/utils/helper/getRouteByRole';
 import NotificationsContainer from '@/components/notification/NotificationsContainer';
+import { redirectPaths } from '@/shared/utils/constants';
 
 const ProviderLayout = () => {
   const navigate = useNavigate();
@@ -26,32 +27,32 @@ const ProviderLayout = () => {
     if (!authUser) return;
 
     if (!authUser.isAddressAdded && !authUser.isAddressVerified) {
-      navigate('/provider/onboarding/address');
+      navigate(redirectPaths.ONBOARDING_ADDRESS);
       return;
     }
-
+    
     if (!authUser.isServiceDetailsAdded && !authUser.isServiceDetailsVerified) {
-      navigate('/provider/onboarding/service');
+      navigate(redirectPaths.ONBOARDING_SERVICE);
       return;
     }
-
+    
     if (!authUser.isServiceAvailabilityAdded && !authUser.isAvailabilityVerified) {
-      navigate('/provider/onboarding/availability');
+      navigate(redirectPaths.ONBOARDING_AVAILABILITY);
       return;
     }
-
+    
     if (!authUser.isProofSubmitted && !authUser.isProofsVerified) {
-      navigate('/provider/onboarding/proofs');
+      navigate(redirectPaths.ONBOARDING_PROOFS);
       return;
     }
-
+    
     if (!authUser.isAdminVerified) {
-      navigate('/provider/onboarding/pending');
+      navigate(redirectPaths.ONBOARDING_PENDING);
       return;
     }
 
     if (authUser.isAdminVerified && (pathname === '/provider' || pathname === '/provider/')) {
-      navigate('/provider/dashboard');
+      navigate('/dashboard');
       return;
     }
   }, [authUser, navigate, pathname]);

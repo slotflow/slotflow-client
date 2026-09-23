@@ -3,7 +3,8 @@ import StatusBadge from '@/components/common/StatusBadge';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
 import { PaymentFor, PaymentGateway } from '@/shared/types/enums';
 import { AdminFetchRevenueReportRow } from '@/shared/types/api/payment';
-import { formatDate, formatNumberToPrice } from '@/shared/utils/helper/formatter';
+import { formatDate } from '@/shared/utils/helper/formatDate';
+import { formatNumberToPrice } from '@/shared/utils/helper/formatNumberToPrice';
 
 const AdminRevenueTableColumn = (): ColumnDef<AdminFetchRevenueReportRow>[] => [
   {
@@ -54,7 +55,7 @@ const AdminRevenueTableColumn = (): ColumnDef<AdminFetchRevenueReportRow>[] => [
         case PaymentGateway.RAZORPAY:
           return <StatusBadge type="active" label="Razorpay" />;
         case PaymentGateway.PAYPAL:
-          return <StatusBadge type="pending" label="PayPal" />;
+          return <StatusBadge type="pending" label="Paypal" />;
         default:
           return <StatusBadge type="standard" label={paymentGateway} />;
       }

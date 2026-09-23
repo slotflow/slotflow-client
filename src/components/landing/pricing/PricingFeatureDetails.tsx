@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/table';
 import { BillingCycle } from '@/shared/types/enums';
 import { CheckIcon, MinusIcon, Clock3Icon } from 'lucide-react';
-import { formatNumberToPrice } from '@/shared/utils/helper/formatter';
+import { formatNumberToPrice } from '@/shared/utils/helper/formatNumberToPrice';
 import { PLAN_TIERS, planFeatures } from '@/shared/utils/constants/planConstants';
 import { PlanFeatureValueProps, PricingFeatureDetailsProps } from '@/shared/types/component';
 

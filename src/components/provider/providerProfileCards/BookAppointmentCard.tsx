@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card, CardContent } from '@/components/ui/card';
 import { defaultBtnClass } from '@/shared/utils/constants';
-import { formatDate } from '@/shared/utils/helper/formatter';
+import { formatDate } from '@/shared/utils/helper/formatDate';
 import { AppDispatch, RootState } from '@/app/store/appStore';
 import { BookAppointmentCardProps } from '@/shared/types/component';
 import { setPaymentSelectionOpen } from '@/app/store/slices/paymentSlice';

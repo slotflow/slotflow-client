@@ -45,22 +45,22 @@ const ProviderApprovalPendingPage = () => {
     {
       label: 'Address Verification',
       verified: authUser?.isAddressVerified,
-      redirect: redirectPaths.ADDRESS,
+      redirect: redirectPaths.ONBOARDING_ADDRESS,
     },
     {
       label: 'Service Details Verification',
       verified: authUser?.isServiceDetailsVerified,
-      redirect: redirectPaths.PROVIDER_SERVICE_DETAILS,
+      redirect: redirectPaths.ONBOARDING_SERVICE,
     },
     {
       label: 'Availability Verification',
       verified: authUser?.isAvailabilityVerified,
-      redirect: redirectPaths.PROVIDER_AVAILABILITY,
+      redirect: redirectPaths.ONBOARDING_AVAILABILITY,
     },
     {
       label: 'Proofs Verification',
       verified: authUser?.isProofsVerified,
-      redirect: redirectPaths.PROOFS,
+      redirect: redirectPaths.ONBOARDING_PROOFS,
     },
   ];
 

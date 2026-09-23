@@ -10,7 +10,8 @@ import { DollarSign } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '@/shared/utils/constants';
 import { fetchPayments } from '@/services/apis/payment';
-import { formatDate, formatNumberToPrice } from '@/shared/utils/helper/formatter';
+import { formatDate } from '@/shared/utils/helper/formatDate';
+import { formatNumberToPrice } from '@/shared/utils/helper/formatNumberToPrice';
 import RecentActivityTableCard from '@/components/dashboard/RecentActivityTableCard';
 
 const RevenueListCard = () => {

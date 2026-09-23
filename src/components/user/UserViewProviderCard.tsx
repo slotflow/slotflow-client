@@ -5,7 +5,7 @@ import { cardGradients } from '@/shared/utils/constants';
 import { Card, CardContent } from '@/components/ui/card';
 import avatar from '../../assets/defaultImages/avatar.png';
 import { UserViewProviderCardProps } from '@/shared/types/component';
-import { formatNumberToPrice } from '@/shared/utils/helper/formatter';
+import { formatNumberToPrice } from '@/shared/utils/helper/formatNumberToPrice';
 
 const UserViewProviderCard = ({ provider, serviceDetails }: UserViewProviderCardProps) => {
   const navigate = useNavigate();

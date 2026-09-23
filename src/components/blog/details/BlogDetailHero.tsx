@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Badge } from '../../ui/badge';
 import { Separator } from '../../ui/separator';
 import { CalendarDays, Clock3 } from 'lucide-react';
-import { formatDate } from '@/shared/utils/helper/formatter';
+import { formatDate } from '@/shared/utils/helper/formatDate';
 import { BlogDetailHeroProps } from '@/shared/types/component';
 import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar';
 

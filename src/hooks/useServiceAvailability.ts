@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { ServiceMode } from '@/shared/types/enums';
 import { dateFormats } from '@/shared/utils/constants';
 import { addMinutes, isBefore, isEqual } from 'date-fns';
-import { formatDate } from '@/shared/utils/helper/formatter';
+import { formatDate } from '@/shared/utils/helper/formatDate';
 import { UseAddAvailabilityProps, UseAddAvailabilityReturn } from '@/shared/types/hooks';
 
 export const useAddAvailability = ({

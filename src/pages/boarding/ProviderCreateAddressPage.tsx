@@ -1,7 +1,7 @@
 import AddressForm from '@/components/form/Common/AddressForm';
 
-const ProviderAddAddressPage = () => {
+const ProviderCreateAddressPage = () => {
   return <AddressForm />;
 };
 
-export default ProviderAddAddressPage;
+export default ProviderCreateAddressPage;

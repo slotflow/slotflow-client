@@ -6,7 +6,7 @@ import { Calendar } from '@/components/ui/calendar';
 import { queryKeys } from '@/shared/utils/constants';
 import { DataTable } from '@/components/ui/data-table';
 import DashboardDataCard from '../common/DashboardDataCard';
-import { formatDate } from '@/shared/utils/helper/formatter';
+import { formatDate } from '@/shared/utils/helper/formatDate';
 import TableShimmer from '@/components/shimmers/TableShimmer';
 import { OnChangeFn, PaginationState } from '@tanstack/react-table';
 import { fetchRevenueReportForAdmin } from '@/services/apis/payment';

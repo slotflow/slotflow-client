@@ -1,5 +1,5 @@
 import { subDays } from 'date-fns';
-import { formatDate } from './formatter';
+import { formatDate } from './formatDate';
 import { dateFormats } from '../constants';
 import { TimeRange } from '../../types/common';
 

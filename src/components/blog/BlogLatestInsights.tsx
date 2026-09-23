@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { formatDate } from '@/shared/utils/helper/formatter';
+import { formatDate } from '@/shared/utils/helper/formatDate';
 import { BlogLatestInsightsProps } from '@/shared/types/component';
 
 const BlogLatestInsights = ({ articles }: BlogLatestInsightsProps) => {

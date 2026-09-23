@@ -48,6 +48,7 @@ export type AuthUser = Pick<
     | 'adminVerificationStatus'
     | 'hasUsedTrial'
   > & {
+    role: Role;
     uid: string;
     isLoggedIn?: boolean;
     isAddressAdded?: boolean;

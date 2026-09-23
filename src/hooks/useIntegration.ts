@@ -5,70 +5,16 @@ import { ApiError } from "@/shared/types/common";
 import { useDispatch, useSelector } from "react-redux";
 import { appConfig, serviceConfig } from "@/config/env";
 import { PaymentAccountStatus } from "@/shared/types/enums";
+import { UseIntegrationReturn } from "@/shared/types/hooks";
 import { handleError } from "@/shared/utils/helper/handleError";
 import { ConnectStripeAccountRequest } from "@/shared/types/api/paymentAccount";
 import { checkStripeAccountStatus, connectStripeAccount } from "@/services/apis/paymentAccount";
-import { setGoogleCalendarConnecting, setGoogleCalendarData, setStripeConnecting, setStripeData } from "@/app/store/slices/integrationSlice";
-
-export interface UseIntegrationReturn {
-    connectStripe: (data: ConnectStripeAccountRequest) => Promise<void>;
-    connectGoogleCalendar: () => void;
-}
+import { setGoogleCalendarConnecting, setStripeConnecting, setStripeData } from "@/app/store/slices/integrationSlice";
 
 export const useIntegration = (): UseIntegrationReturn => {
 
     const dispatch = useDispatch();
     const { stripe, googleCalendar } = useSelector((state: RootState) => state.integration);
-
-    useEffect(() => {
-        const params = new URLSearchParams(window.location.search);
-        const data = params.get('response');
-        if (!data) return;
-
-        try {
-            const response = JSON.parse(decodeURIComponent(data));
-
-            if (!response.success) {
-                toast.error('Connection failed, please try again');
-            } else {
-                if ('googleConnected' in response) {
-                    if (response.googleConnected) {
-                        dispatch(
-                            setGoogleCalendarData({
-                                isConnected: true,
-                                isConnecting: false,
-                            })
-                        );
-                        toast.success('Google Calendar connected successfully');
-                    } else {
-                        dispatch(setGoogleCalendarConnecting(false));
-                        toast.error('Google Calendar connection failed');
-                    }
-                }
-
-                if ('stripeOnboardingStatus' in response) {
-                    if (response.stripeOnboardingStatus === 'success') {
-                        dispatch(
-                            setStripeData({
-                                isConnecting: false,
-                                status: PaymentAccountStatus.PENDING,
-                            })
-                        );
-                        toast.success('Stripe onboarding completed successfully');
-                    } else {
-                        dispatch(setStripeConnecting(false));
-                        toast.error('Stripe onboarding failed or cancelled');
-                    }
-                }
-            }
-        } catch (error) {
-            handleError(error, 'Could not connect');
-        } finally {
-            const url = new URL(window.location.href);
-            url.searchParams.delete('response');
-            window.history.replaceState({}, '', url.toString());
-        }
-    }, [dispatch]);
 
     // connect stripe
     const connectStripe = async (data: ConnectStripeAccountRequest): Promise<void> => {
@@ -145,7 +91,7 @@ export const useIntegration = (): UseIntegrationReturn => {
     useEffect(() => {
         if (stripe.status === PaymentAccountStatus.PENDING) {
             checkStripeStatus();
-            const interval = setInterval(checkStripeStatus, 15000);
+            const interval = setInterval(checkStripeStatus, 30000);
 
             return () => clearInterval(interval);
         }

@@ -16,8 +16,7 @@ const PlanGuard = ({ routeName, children }: PlanGuardProps) => {
   const allowedRoutes = planAccessMap[planName] || [];
 
   if (!allowedRoutes.includes(routeName)) {
-    // return <Navigate to="/provider" replace />;
-    return <Navigate to="/" replace />;
+    return <Navigate to="/dashboard" replace />;
   }
 
   return <>{children}</>;

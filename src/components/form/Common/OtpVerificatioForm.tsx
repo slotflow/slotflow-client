@@ -1,8 +1,8 @@
 import { toast } from 'react-toastify';
+import FormHeading from '../FormHeading';
 import { appConfig } from '@/config/env';
 import { useForm } from 'react-hook-form';
 import { FormButton } from '../FormButton';
-import { FormHeading } from '../FormHeading';
 import { Input } from '@/components/ui/input';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -11,7 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch, useSelector } from 'react-redux';
 import { redirectPaths } from '@/shared/utils/constants';
 import { resendOtp, verifyOtp } from '@/services/apis/auth';
-import { formatTime } from '@/shared/utils/helper/formatter';
+import { formatTime } from '@/shared/utils/helper/formatTime';
 import { AppDispatch, RootState } from '@/app/store/appStore';
 import { VerifyOtpFormType, verifyOtpZodSchema } from '@/shared/validators/zod/authZod';
 
@@ -88,111 +88,112 @@ const OtpVerificatioForm = () => {
   };
 
   return (
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+    <div className="flex min-h-screen flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:px-8 bg-slate-50/50 dark:bg-zinc-950">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="p-8">
-          <FormHeading title="Verify OTP" description="Enter the OTP you have received" />
-          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              <div className="flex justify-between gap-2">
-                {Array.from({ length: 6 }).map((_, i) => (
-                  <React.Fragment key={i}>
-                    <input type="hidden" {...register('otp')} />
-                    <Input
-                      type="text"
-                      maxLength={1}
-                      className="w-12 h-12 text-center text-lg font-medium"
-                      value={otpValue[i] || ''}
-                      onChange={(e) => {
-                        const val = e.target.value.replace(/\D/, '');
+        <div className="backdrop-blur-xl border border-slate-200/80 dark:border-zinc-800 shadow-xl shadow-slate-200/50 dark:shadow-none rounded-2xl p-6 sm:p-8">
+          <FormHeading
+            title="Enter verification code"
+            description="We sent a 6-digit security code to your email. Enter the code below to confirm your identity."
+          />
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <div className="flex justify-between gap-2">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <React.Fragment key={i}>
+                  <input type="hidden" {...register('otp')} />
+                  <Input
+                    type="text"
+                    maxLength={1}
+                    className="w-12 h-12 text-center text-lg font-medium"
+                    value={otpValue[i] || ''}
+                    onChange={(e) => {
+                      const val = e.target.value.replace(/\D/, '');
 
-                        const otpArray = otpValue.padEnd(6, ' ').split('');
-                        otpArray[i] = val;
+                      const otpArray = otpValue.padEnd(6, ' ').split('');
+                      otpArray[i] = val;
 
-                        const newOtp = otpArray.join('').replace(/ /g, '');
-                        setValue('otp', newOtp, { shouldValidate: true });
+                      const newOtp = otpArray.join('').replace(/ /g, '');
+                      setValue('otp', newOtp, { shouldValidate: true });
 
-                        if (val && i < 5) {
-                          document.getElementById(`otp-${i + 1}`)?.focus();
+                      if (val && i < 5) {
+                        document.getElementById(`otp-${i + 1}`)?.focus();
+                      }
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Backspace') {
+                        if (!otpValue[i] && i > 0) {
+                          const prevInput = document.getElementById(`otp-${i - 1}`);
+                          prevInput?.focus();
                         }
-                      }}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Backspace') {
-                          if (!otpValue[i] && i > 0) {
-                            const prevInput = document.getElementById(`otp-${i - 1}`);
-                            prevInput?.focus();
-                          }
+                      }
+                    }}
+                    onPaste={(e) => {
+                      e.preventDefault();
+                      const paste = e.clipboardData
+                        .getData('text')
+                        .replace(/\D/g, '')
+                        .slice(0, 6);
+                      const otpArray = otpValue.split('');
+                      for (let j = 0; j < paste.length; j++) {
+                        otpArray[j] = paste[j];
+                        const input = document.getElementById(`otp-${j}`);
+                        if (input && input instanceof HTMLInputElement) {
+                          input.value = paste[j];
                         }
-                      }}
-                      onPaste={(e) => {
-                        e.preventDefault();
-                        const paste = e.clipboardData
-                          .getData('text')
-                          .replace(/\D/g, '')
-                          .slice(0, 6);
-                        const otpArray = otpValue.split('');
-                        for (let j = 0; j < paste.length; j++) {
-                          otpArray[j] = paste[j];
-                          const input = document.getElementById(`otp-${j}`);
-                          if (input && input instanceof HTMLInputElement) {
-                            input.value = paste[j];
-                          }
-                        }
-                        setValue('otp', otpArray.join(''));
-                        const nextEmptyIndex = paste.length < 6 ? paste.length : 5;
-                        const nextInput = document.getElementById(`otp-${nextEmptyIndex}`);
-                        nextInput?.focus();
-                      }}
-                      id={`otp-${i}`}
-                    />
-                  </React.Fragment>
-                ))}
-              </div>
-              {errors.otp && <p className="text-red-500 text-sm">{errors.otp.message}</p>}
+                      }
+                      setValue('otp', otpArray.join(''));
+                      const nextEmptyIndex = paste.length < 6 ? paste.length : 5;
+                      const nextInput = document.getElementById(`otp-${nextEmptyIndex}`);
+                      nextInput?.focus();
+                    }}
+                    id={`otp-${i}`}
+                  />
+                </React.Fragment>
+              ))}
+            </div>
+            {errors.otp && <p className="text-red-500 text-sm">{errors.otp.message}</p>}
 
-              <FormButton
-                text={isSubmitting ? 'Verifying' : 'Verify'}
-                loading={isSubmitting}
-                disabled={isSubmitting || !isValid}
-                title="Verify Otp"
-                className='w-full'
-              />
-            </form>
+            <FormButton
+              text={isSubmitting ? 'Verifying' : 'Verify'}
+              loading={isSubmitting}
+              disabled={isSubmitting || !isValid}
+              title="Verify Otp"
+              className='w-full'
+            />
+          </form>
 
-            <p className="mt-6 flex justify-between text-xs md:text-sm/6 text-[var(--textTwo)] px-2">
+          <p className="mt-6 flex justify-between text-xs md:text-sm/6 text-[var(--textTwo)] px-2">
+            <span
+              className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
+              onClick={() => navigate(redirectPaths.LOGIN)}
+            >
+              Cancel
+            </span>
+
+            {resentLoading ? (
+              <span className="font-semibold text-[var(--mainColor)]">Sending...</span>
+            ) : otpTimerIsRunning && timeLeft > 0 ? (
+              <span className="text-center text-xs md:text-sm/6 text-[var(--textTwo)]">
+                {formatTime(timeLeft)}
+              </span>
+            ) : (
               <span
                 className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
-                onClick={() => navigate(redirectPaths.LOGIN)}
+                onClick={handleResendOtp}
               >
-                Cancel
+                Resend OTP
               </span>
-
-              {resentLoading ? (
-                <span className="font-semibold text-[var(--mainColor)]">Sending...</span>
-              ) : otpTimerIsRunning && timeLeft > 0 ? (
-                <span className="text-center text-xs md:text-sm/6 text-[var(--textTwo)]">
-                  {formatTime(timeLeft)}
-                </span>
-              ) : (
-                <span
-                  className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
-                  onClick={handleResendOtp}
-                >
-                  Resend OTP
-                </span>
-              )}
-            </p>
-            <Button
-              title="otp not recieved"
-              variant="link"
-              className="block text-xs md:text-sm font-medium text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer px-2"
-              onClick={() => {
-                navigate('/contact');
-              }}
-            >
-              Didn’t receive OTP?
-            </Button>
-          </div>
+            )}
+          </p>
+          <Button
+            title="otp not recieved"
+            variant="link"
+            className="block text-xs md:text-sm font-medium text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer px-2"
+            onClick={() => {
+              navigate('/contact');
+            }}
+          >
+            Didn’t receive OTP?
+          </Button>
         </div>
       </div>
     </div>

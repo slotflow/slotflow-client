@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { BlogHeroProps } from '@/shared/types/component';
 import SplitTextReveal from '../animation/SplitTextReveal';
 import AnimatedCounter from '../animation/AnimatedCounter';
-import { formatDate } from '@/shared/utils/helper/formatter';
+import { formatDate } from '@/shared/utils/helper/formatDate';
 import { BookOpen, ArrowRight, CalendarDays } from 'lucide-react';
 
 const BlogHero = ({

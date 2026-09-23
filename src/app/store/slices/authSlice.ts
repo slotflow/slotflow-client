@@ -5,6 +5,7 @@ import { ApiBaseResponse } from '@/shared/types/common';
 import { SigninResponse } from '@/shared/types/api/auth';
 import { AuthState, AuthUser } from '@/shared/types/slice';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AdminVerificationStatus } from '@/shared/types/enums';
 import { UserUpdateUserInfoResponse } from '@/shared/types/api/user';
 import { UserCreateAddressResponse } from '@/shared/types/api/address';
 import { SubscriptionActivated } from '@/shared/types/api/subscription';
@@ -12,7 +13,6 @@ import { providerCreateServiceDetails } from '@/services/apis/providerService';
 import { providerSubmitDetailsForReview } from '@/services/apis/providerProfile';
 import { createServiceAvailabilities } from '@/services/apis/serviceAvailability';
 import { ProviderSubmitDetailsResponse } from '@/shared/types/api/providerProfile';
-import { AdminVerificationStatus, PaymentAccountStatus } from '@/shared/types/enums';
 
 const initialState: AuthState = {
   authUser: null,

@@ -8,74 +8,71 @@ import BoardingLayoutWrapper from './BoardingLayoutWrapper.tsx';
 import { RouteNames } from '@/shared/utils/constants/routeConstants.ts';
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
 import AuthCallbackPage from '@/components/form/Common/AuthCallbackPage.tsx';
+import IntegrationsCallbackPage from '@/pages/dashboard/IntegrationsCallbackPage.tsx';
+import AdminDashboard from '@/components/dashboard/admin/AdminDashboard.tsx';
+import AdminRevenueReport from '@/components/admin/AdminRevenueReport.tsx';
+import ProviderDashboard from '@/components/dashboard/provider/ProviderDashboard.tsx';
+import ProviderListSubscriptions from '@/containers/provider/ProviderListSubscriptions.tsx';
 
-const ProviderDashboardPage = lazy(() => import('@/pages/provider/ProviderDashboardPage.tsx'));
-const AdminPlanDetailsPage = lazy(() => import('@/pages/admin/AdminPlanDetailsPage.tsx'));
-const SandboxPage = lazy(() => import('@/pages/admin/SandboxPage.tsx'));
-const DashboardDataCardDemo = lazy(() => import('@/pages/sandbox/DashboardDataCardDemo.tsx'));
-const ChartsDemo = lazy(() => import('@/pages/sandbox/ChartsDemo.tsx'));
+const AdminPlanDetailsPage = lazy(() => import('@/containers/admin/AdminPlanDetails.tsx'));
 
 const FAQPage = lazy(() => import('@/pages/landing/FAQPage.tsx'));
 const AuthLayout = lazy(() => import('@/layouts/AuthLayout.tsx'));
 const BlogPage = lazy(() => import('@/pages/landing/BlogPage.tsx'));
 const HelpPage = lazy(() => import('@/pages/landing/HelpPage.tsx'));
-const ChatPage = lazy(() => import('@/pages/dashboard/ChatPage.tsx'));
+const ChatPage = lazy(() => import('@/containers/dashboard/ChatWindow.tsx'));
 const AboutPage = lazy(() => import('@/pages/landing/AboutPage.tsx'));
 const LandingLayout = lazy(() => import('@/layouts/LandingLayout.tsx'));
-const CreditPage = lazy(() => import('@/pages/dashboard/CreditPage.tsx'));
+const CreditPage = lazy(() => import('@/containers/dashboard/CreditDashboard.tsx'));
 const PricingPage = lazy(() => import('@/pages/landing/PricingPage.tsx'));
 const ContactPage = lazy(() => import('@/pages/landing/ContactPage.tsx'));
 const LandingPage = lazy(() => import('@/pages/landing/LandingPage.tsx'));
-const Error404Page = lazy(() => import('@/pages/common/Error404Page.tsx'));
-const ReviewsPage = lazy(() => import('@/pages/dashboard/ReviewsPage.tsx'));
+const Error404Page = lazy(() => import('@/pages/fallbacks/Error404Page.tsx'));
+const ReviewsPage = lazy(() => import('@/containers/dashboard/ListReviews.tsx'));
 const SettingsPage = lazy(() => import('@/pages/dashboard/SettingsPage.tsx'));
-const CalendarPage = lazy(() => import('@/pages/dashboard/CalendarPage.tsx'));
-const ReferralPage = lazy(() => import('@/pages/dashboard/ReferralPage.tsx'));
-const AdminPlansPage = lazy(() => import('@/pages/admin/AdminPlansPage.tsx'));
-const AdminUsersPage = lazy(() => import('@/pages/admin/AdminUsersPage.tsx'));
+const CalendarPage = lazy(() => import('@/containers/dashboard/CalendarView.tsx'));
+const ReferralPage = lazy(() => import('@/containers/dashboard/ReferralDashboard.tsx'));
+const AdminPlansPage = lazy(() => import('@/containers/admin/AdminListPlans.tsx'));
+const AdminUsersPage = lazy(() => import('@/containers/admin/AdminListUsers.tsx'));
 const LoginForm = lazy(() => import('@/components/form/Common/LoginForm.tsx'));
-const VideoCallRoom = lazy(() => import('@/pages/dashboard/VideoCallRoom.tsx'));
-const AdminReportPage = lazy(() => import('@/pages/admin/AdminReportPage.tsx'));
+const VideoCallRoom = lazy(() => import('@/containers/dashboard/VideoCallRoom.tsx'));
 const RoleSelectPage = lazy(() => import('@/pages/boarding/RoleSelectPage.tsx'));
 const SignUpForm = lazy(() => import('@/components/form/Common/SignUpForm.tsx'));
-const VideoCallLoby = lazy(() => import('@/pages/dashboard/VideoCallLobby.tsx'));
+const VideoCallLoby = lazy(() => import('@/containers/dashboard/VideoCallLobby.tsx'));
 const BlogDetailsPage = lazy(() => import('@/pages/landing/BlogDetailsPage.tsx'));
 const HearAboutUsPage = lazy(() => import('@/pages/boarding/HearAboutUsPage.tsx'));
 const LegalHomePage = lazy(() => import('@/pages/landing/legal/LegalHomePage.tsx'));
-const AdminServicesPage = lazy(() => import('@/pages/admin/AdminServicesPage.tsx'));
-const ListPaymentsPage = lazy(() => import('@/pages/dashboard/ListPaymentsPage.tsx'));
-const ListBookingsPage = lazy(() => import('@/pages/dashboard/ListBookingsPage.tsx'));
-const AdminDashboardPage = lazy(() => import('@/pages/admin/AdminDashboardPage.tsx'));
-const SubScribePlanPage = lazy(() => import('@/pages/provider/SubScribePlanPage.tsx'));
-const BookingDetailPage = lazy(() => import('@/pages/dashboard/BookingDetailPage.tsx'));
-const AccountSettings = lazy(() => import('@/components/settings/AccountSettings.tsx'));
-const AdminUserDetailPage = lazy(() => import('@/pages/admin/AdminUserDetailPage.tsx'));
-const SecuritySettings = lazy(() => import('@/components/settings/SecuritySettings.tsx'));
-const ProviderAccountPage = lazy(() => import('@/pages/provider/ProviderAccountPage.tsx'));
+const AdminServicesPage = lazy(() => import('@/containers/admin/AdminListServices.tsx'));
+const ListPaymentsPage = lazy(() => import('@/containers/dashboard/ListPayments.tsx'));
+const ListBookingsPage = lazy(() => import('@/containers/dashboard/ListBookings.tsx'));
+const SubScribePlanPage = lazy(() => import('@/containers/provider/ProviderUpgradePlan.tsx'));
+const BookingDetailPage = lazy(() => import('@/containers/dashboard/BookingDetails.tsx'));
+const AccountSettings = lazy(() => import('@/pages/dashboard/AccountSettingsPage.tsx'));
+const AdminUserDetailPage = lazy(() => import('@/containers/admin/AdminUserDetails.tsx'));
+const SecuritySettings = lazy(() => import('@/components/settings/SecuritySettingsPage.tsx'));
+const ProviderAccountPage = lazy(() => import('@/containers/provider/ProviderProfileWrapper.tsx'));
 const UserServiceSelectPage = lazy(() => import('@/pages/user/UserServiceSelectPage.tsx'));
 const PrivacyPolicyPage = lazy(() => import('@/pages/landing/legal/PrivacyPolicyPage.tsx'));
-const AdminGrafanaDashboard = lazy(() => import('@/pages/admin/AdminGrafanaDashboard.tsx'));
-const UserBookingConfirmPage = lazy(() => import('@/pages/user/UserBookingConfirmPage.tsx'));
+const AdminGrafanaDashboard = lazy(() => import('@/containers/admin/AdminGrafana.tsx'));
+const UserBookingCallbackPage = lazy(() => import('@/pages/user/UserBookingCallbackPage.tsx'));
 const TermsOfServicePage = lazy(() => import('@/pages/landing/legal/TermsOfServicePage.tsx'));
-const AdminSubscriptionsPage = lazy(() => import('@/pages/admin/AdminSubscriptionsPage.tsx'));
+const AdminSubscriptionsPage = lazy(() => import('@/containers/admin/AdminListSubscriptions.tsx'));
 const ResetPasswordForm = lazy(() => import('@/components/form/Common/ResetPasswordForm.tsx'));
-const IntegrationsListing = lazy(() => import('@/components/settings/IntegrationsListing.tsx'));
-const PaymentDetailViewPage = lazy(() => import('@/pages/dashboard/PaymentDetailViewPage.tsx'));
-const NotificationSettings = lazy(() => import('@/components/settings/NotificationSettings.tsx'));
+const IntegrationsSettings = lazy(() => import('@/pages/dashboard/IntegrationsSettingsPage.tsx'));
+const PaymentDetailViewPage = lazy(() => import('@/containers/dashboard/PaymentDetails.tsx'));
+const NotificationSettings = lazy(() => import('@/pages/dashboard/NotificationSettingsPage.tsx'));
 const ProviderAddAddressPage = lazy(() => import('@/pages/boarding/ProviderCreateAddressPage.tsx'));
-const AdminServiceProvidersPage = lazy(() => import('@/pages/admin/AdminServiceProvidersPage.tsx'));
+const AdminServiceProvidersPage = lazy(() => import('@/containers/admin/AdminListProviders.tsx'));
 const UserListProvidersCardsPage = lazy(
   () => import('@/pages/user/UserListProvidersCardsPage.tsx'),
 );
-const ProviderSubscriptionPage = lazy(
-  () => import('@/pages/provider/ProviderSubscriptionPage.tsx'),
-);
+
 const OtpVerificatioForm = lazy(() => import('@/components/form/Common/OtpVerificatioForm.tsx'));
 const ProviderProofSubmitionPage = lazy(
   () => import('@/pages/boarding/ProviderProofSubmitionPage.tsx'),
 );
 const SubscriptionDetailViewPage = lazy(
-  () => import('@/pages/dashboard/SubscriptionDetailViewPage.tsx'),
+  () => import('@/containers/dashboard/SubscriptionDetails.tsx'),
 );
 const UserServiceProviderDetailPage = lazy(
   () => import('@/pages/user/UserServiceProviderDetailPage.tsx'),
@@ -87,10 +84,10 @@ const EmailVerificationForm = lazy(
   () => import('@/components/form/Common/EmailVerificationForm.tsx'),
 );
 const AdminServiceProviderDetailPage = lazy(
-  () => import('@/pages/admin/AdminServiceProviderDetailPage.tsx'),
+  () => import('@/containers/admin/AdminProviderDetails.tsx'),
 );
-const ProviderSubscriptionConfirmPage = lazy(
-  () => import('@/pages/provider/ProviderSubscriptionConfirmPage.tsx'),
+const ProviderSubscriptionCallbackPage = lazy(
+  () => import('@/pages/dashboard/ProviderSubscriptionCallbackPage.tsx'),
 );
 const ProviderCreateServiceDetailsPage = lazy(
   () => import('@/pages/boarding/ProviderCreateServiceDetailsPage.tsx'),
@@ -160,126 +157,103 @@ export const appRouter = createBrowserRouter([
       </ProtectedRoute>
     ),
     children: [
-      {
+      { // Done
         path: 'dashboard',
-        element: <AdminDashboardPage />,
+        element: <AdminDashboard />,
         handle: {
           title: 'Overview',
         },
       },
-      {
+      { // Done
         path: 'report',
-        element: <AdminReportPage />,
+        element: <AdminRevenueReport />,
         handle: {
           title: 'Reports',
         },
       },
-      {
-        path: 'service-providers',
+      { // Done
+        path: 'service-providers', 
         element: <AdminServiceProvidersPage />,
         handle: {
           title: 'Service Providers',
         },
       },
-      {
+      { // Done
         path: 'service-providers/:providerId',
         element: <AdminServiceProviderDetailPage />,
         handle: {
           title: 'Service Provider Details',
         },
       },
-      {
+      { // Done
         path: 'users',
         element: <AdminUsersPage />,
         handle: {
           title: 'Users',
         },
       },
-      {
+      { // Done
         path: 'users/:userId',
         element: <AdminUserDetailPage />,
         handle: {
           title: 'User Details',
         },
       },
-      {
+      { // Done
         path: 'services',
         element: <AdminServicesPage />,
         handle: {
           title: 'Services',
         },
       },
-      {
+      { // Done
         path: 'plans',
         element: <AdminPlansPage />,
         handle: {
           title: 'Plans',
         },
       },
-      {
+      { // Done
         path: 'plans/:planId',
         element: <AdminPlanDetailsPage />,
         handle: {
           title: 'Plan Details',
         },
       },
-      {
+      { // Done
         path: 'subscriptions',
         element: <AdminSubscriptionsPage />,
         handle: {
           title: 'Subscriptions',
         },
       },
-      {
+      { // Done
         path: 'subscriptions/:subscriptionId',
         element: <SubscriptionDetailViewPage />,
         handle: {
           title: 'Subscription Details',
         },
       },
-      {
+      { // Done
         path: 'payments',
         element: <ListPaymentsPage />,
         handle: {
           title: 'Payments',
         },
       },
-      {
+      { // Done
         path: 'payments/:paymentId',
         element: <PaymentDetailViewPage />,
         handle: {
           title: 'Payment Details',
         },
       },
-      {
+      { // Done
         path: 'grafana-dashboard',
         element: <AdminGrafanaDashboard />,
         handle: {
           title: 'Grafana Dashboard',
         },
-      },
-      {
-        path: 'test-sandbox',
-        element: <SandboxPage />,
-        handle: {
-          title: 'Grafana Dashboard',
-        },
-        children: [
-          {
-            path: 'dashboard-data-card',
-            element: <DashboardDataCardDemo />,
-            handle: {
-              title: 'Dashboard Data Card',
-            },
-          },
-          {
-            path: 'charts-demo',
-            element: <ChartsDemo />,
-            handle: {
-              title: 'Charts Demo',
-            },
-          },
-        ],
       },
       {
         path: '*',
@@ -332,84 +306,84 @@ export const appRouter = createBrowserRouter([
           </OnBoardingGuard>
         ),
         children: [
-          {
+          { // Done using services
             index: true,
             element: <UserServiceSelectPage />,
+            handle: {
+              title: 'Service Categories',
+            },
+          },
+          { // Done
+            path: 'services', // moving to service-providers route
+            element: <UserListProvidersCardsPage />,
             handle: {
               title: 'Services',
             },
           },
-          {
-            path: 'services',
-            element: <UserListProvidersCardsPage />,
-            handle: {
-              title: 'Dashboard',
-            },
-          },
-          {
+          { // Done
             path: 'providerProfile/:providerId',
             element: <UserServiceProviderDetailPage />,
             handle: {
               title: 'Service Provider Details',
             },
           },
-          {
+          { // Done
             path: 'bookings',
             element: <ListBookingsPage />,
             handle: {
               title: 'Bookings',
             },
           },
-          {
+          { // Done
             path: 'bookings/:bookingId',
             element: <BookingDetailPage />,
             handle: {
               title: 'Booking Details',
             },
           },
-          {
+          { // Done
             path: 'payments',
             element: <ListPaymentsPage />,
             handle: {
               title: 'Payments',
             },
           },
-          {
+          { // Done
             path: 'payments/:paymentId',
             element: <PaymentDetailViewPage />,
             handle: {
               title: 'Payment Details',
             },
           },
-          {
+          { // Done
             path: 'chat',
             element: <ChatPage />,
             handle: {
               title: 'Chat',
             },
           },
-          {
+          { // Done
             path: 'video-call-lobby/:roomId',
             element: <VideoCallLoby />,
             handle: {
               title: 'Video Call Lobby',
             },
           },
-          {
+          { // Done
             path: 'video-call-room?status',
             element: <VideoCallRoom />,
             handle: {
               title: 'Video Call',
             },
           },
-          {
+          { // Done
             path: 'calendar',
             element: <CalendarPage />,
             handle: {
               title: 'Calendar',
             },
           },
-          {
+          { // Done
             path: 'reviews',
             element: <ReviewsPage />,
             handle: {
@@ -446,9 +420,16 @@ export const appRouter = createBrowserRouter([
               },
               {
                 path: 'integrations',
-                element: <IntegrationsListing />,
+                element: <IntegrationsSettings />,
                 handle: {
                   title: 'Integrations',
+                },
+              },
+              {
+                path: 'integrations/callback',
+                element: <IntegrationsCallbackPage />,
+                handle: {
+                  title: 'Checking status',
                 },
               },
               {
@@ -460,23 +441,23 @@ export const appRouter = createBrowserRouter([
               },
             ],
           },
-          {
+          { // Done
             path: 'credits',
             element: <CreditPage />,
             handle: {
               title: 'Credits',
             },
           },
-          {
+          { // Done
             path: 'referrals',
             element: <ReferralPage />,
             handle: {
               title: 'Referrals',
             },
           },
-          {
+          { // Done
             path: 'booking/confirm',
-            element: <UserBookingConfirmPage />,
+            element: <UserBookingCallbackPage />,
             handle: {
               title: 'Confirm Booking',
             },
@@ -507,21 +488,21 @@ export const appRouter = createBrowserRouter([
           </OnBoardingGuard>
         ),
         children: [
-          {
+          { // Done
             path: 'dashboard',
-            element: <ProviderDashboardPage />,
+            element: <ProviderDashboard />,
             handle: {
               title: 'Dashboard',
             },
           },
-          {
+          { // Done
             path: 'profile',
             element: <ProviderAccountPage />,
             handle: {
               title: 'Profile',
             },
           },
-          {
+          { // Done
             path: 'reviews',
             element: (
               <PlanGuard routeName={RouteNames.REVIEWS}>
@@ -532,7 +513,7 @@ export const appRouter = createBrowserRouter([
               title: 'Reviews',
             },
           },
-          {
+          { // Done
             path: 'bookings',
             element: (
               <PlanGuard routeName={RouteNames.BOOKINGS}>
@@ -543,32 +524,32 @@ export const appRouter = createBrowserRouter([
               title: 'Bookings',
             },
           },
-          {
+          { // Done
             path: 'bookings/:bookingId',
             element: <BookingDetailPage />,
             handle: {
               title: 'Booking Details',
             },
           },
-          {
+          { // Done
             path: 'subscriptions',
             element: (
               <PlanGuard routeName={RouteNames.SUBSCRIPTIONS}>
-                <ProviderSubscriptionPage />
+                <ProviderListSubscriptions />
               </PlanGuard>
             ),
             handle: {
               title: 'Subscriptions',
             },
           },
-          {
+          { // Done 
             path: 'subscriptions/:subscriptionId',
             element: <SubscriptionDetailViewPage />,
             handle: {
               title: 'Subscription Details',
             },
           },
-          {
+          { // Done
             path: 'payments',
             element: (
               <PlanGuard routeName={RouteNames.PAYMENTS}>
@@ -579,14 +560,14 @@ export const appRouter = createBrowserRouter([
               title: 'Payments',
             },
           },
-          {
+          { // Done
             path: 'payments/:paymentId',
             element: <PaymentDetailViewPage />,
             handle: {
               title: 'Payment Details',
             },
           },
-          {
+          { // Done
             path: 'chat',
             element: (
               <PlanGuard routeName={RouteNames.CHAT}>
@@ -597,21 +578,21 @@ export const appRouter = createBrowserRouter([
               title: 'Chat',
             },
           },
-          {
+          { // Done
             path: 'video-call-lobby/:roomId',
             element: <VideoCallLoby />,
             handle: {
               title: 'Video Call Lobby',
             },
           },
-          {
+          { // Done
             path: 'video-call-room/:roomId',
             element: <VideoCallRoom />,
             handle: {
               title: 'Video Call',
             },
           },
-          {
+          { // Done
             path: 'calendar',
             element: (
               <PlanGuard routeName={RouteNames.CALENDAR}>
@@ -622,7 +603,7 @@ export const appRouter = createBrowserRouter([
               title: 'Calendar',
             },
           },
-          {
+          { // Done
             path: 'credits',
             element: (
               <PlanGuard routeName={RouteNames.CREDITS}>
@@ -633,7 +614,7 @@ export const appRouter = createBrowserRouter([
               title: 'Credits',
             },
           },
-          {
+          { // Done
             path: 'referrals',
             element: (
               <PlanGuard routeName={RouteNames.REFERRALS}>
@@ -644,7 +625,7 @@ export const appRouter = createBrowserRouter([
               title: 'Referrals',
             },
           },
-          {
+          { // Done
             path: 'settings',
             element: (
               <PlanGuard routeName={RouteNames.SETTINGS}>
@@ -655,35 +636,42 @@ export const appRouter = createBrowserRouter([
               title: 'Settings',
             },
             children: [
-              {
+              { // Done
                 index: true,
                 element: <Navigate to="notifications" replace />,
                 handle: {
                   title: 'Notifincations',
                 },
               },
-              {
+              { // Done
                 path: 'notifications',
                 element: <NotificationSettings />,
                 handle: {
                   title: 'Notifications',
                 },
               },
-              {
+              { // Done
                 path: 'account',
                 element: <AccountSettings />,
                 handle: {
                   title: 'Account',
                 },
               },
-              {
+              { // Done
                 path: 'integrations',
-                element: <IntegrationsListing />,
+                element: <IntegrationsSettings />,
                 handle: {
                   title: 'Integrations',
                 },
               },
-              {
+              { // Done
+                path: 'integrations/callback',
+                element: <IntegrationsCallbackPage />,
+                handle: {
+                  title: 'Checking status',
+                },
+              },
+              { // Done
                 path: 'security',
                 element: <SecuritySettings />,
                 handle: {
@@ -692,16 +680,16 @@ export const appRouter = createBrowserRouter([
               },
             ],
           },
-          {
+          { // Done
             path: `upgrade`,
             element: <SubScribePlanPage />,
             handle: {
               title: `Upgrade Plan`,
             },
           },
-          {
+          { // Done
             path: 'subscription/confirm',
-            element: <ProviderSubscriptionConfirmPage />,
+            element: <ProviderSubscriptionCallbackPage />,
             handle: {
               title: 'Confirm Subscription',
             },

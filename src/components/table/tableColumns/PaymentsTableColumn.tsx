@@ -14,7 +14,9 @@ import StatusBadge from '@/components/common/StatusBadge';
 import { PaymentFor, PaymentStatus } from '@/shared/types/enums';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
 import { FetchPaymentsResponse } from '@/shared/types/api/payment';
-import { formatDate, formatNumberToPrice } from '@/shared/utils/helper/formatter';
+import { formatDate } from '@/shared/utils/helper/formatDate';
+import { formatNumberToPrice } from '@/shared/utils/helper/formatNumberToPrice';
+import { formatString } from '@/shared/utils/helper/formatString';
 
 const PaymentsTableColumn = (
   handleGetPaymentDetailsPage: (paymentId: Payment['_id']) => void,
@@ -93,17 +95,18 @@ const PaymentsTableColumn = (
     header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
     cell: ({ row }) => {
       const status = row.original.paymentStatus;
+      const label = formatString(status);
       switch (status) {
         case PaymentStatus.PAID:
-          return <StatusBadge type="verified" label="Paid" />;
+          return <StatusBadge type="verified" label={label} />;
         case PaymentStatus.PENDING:
-          return <StatusBadge type="pending" label="Pending" />;
+          return <StatusBadge type="pending" label={label} />;
         case PaymentStatus.FAILED:
-          return <StatusBadge type="blocked" label="Failed" />;
+          return <StatusBadge type="blocked" label={label} />;
         case PaymentStatus.CANCELLED:
-          return <StatusBadge type="blocked" label="Cancelled" />;
+          return <StatusBadge type="blocked" label={label} />;
         case PaymentStatus.REFUNDED:
-          return <StatusBadge type="updating" label="Refunded" />;
+          return <StatusBadge type="updating" label={label} />;
         default:
           return <StatusBadge type="standard" label={status} />;
       }

@@ -5,7 +5,7 @@ import { CheckIcon, Flame } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BillingCycle, PlanName } from '@/shared/types/enums';
 import { ProviderPlanCardProps } from '@/shared/types/component';
-import { formatNumberToPrice } from '@/shared/utils/helper/formatter';
+import { formatNumberToPrice } from '@/shared/utils/helper/formatNumberToPrice';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card';
 import { setPaymentSelectionOpen, setSubscriptionPaymentData } from '@/app/store/slices/paymentSlice';
 

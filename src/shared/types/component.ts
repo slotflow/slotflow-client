@@ -1233,3 +1233,29 @@ export interface UseAppointmentsDataChartsProps {
 export interface SubscriptionDataChartProps {
   dateRange: DateRange;
 }
+
+//
+export interface ProviderSubscriptionInfoProps {
+  providerSubscription?: string;
+  subscriptionStartDate?: Date | string;
+  subscriptionEndDate?: Date | string;
+  subscriptionStatus?: string;
+}
+
+// Sandbox interface
+export interface ComponentSandboxSpec<T = any> {
+  id: string;
+  name: string;
+  component: React.ComponentType<T>;
+  defaultProps: T;
+  controls?: {
+    [K in keyof T]?: {
+      type: 'text' | 'number' | 'boolean' | 'select';
+      options?: string[]; // for 'select'
+      label?: string;
+    };
+  };
+}
+export interface SandboxPageProps {
+  specs: ComponentSandboxSpec[];
+}

@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { RootState } from '@/app/store/appStore';
-import LoadingFallback from '../common/LoadingFallback';
+import LoadingFallbackPage from '../fallbacks/LoadingFallbackPage';
 import MoveUpward from '@/components/animation/MoveUpward';
 import BlogNewsletter from '@/components/blog/BlogNewsletter';
 import BlogDetailHero from '@/components/blog/details/BlogDetailHero';
@@ -24,7 +24,7 @@ const BlogDetailsPage = () => {
 
   // Loading state handling
   if (isLoading || !article) {
-    return <LoadingFallback />;
+    return <LoadingFallbackPage />;
   }
 
   return (

@@ -57,7 +57,7 @@ export const usePreBoarding = (): UsePreBoardingReturn => {
           navigate(
             preboardingData.selectedRole === Role.PROVIDER
               ? redirectPaths.ONBOARDING_ADDRESS
-              : redirectPaths.USER_HOME,
+              : redirectPaths.SERVICES,
           );
         }
         dispatch(

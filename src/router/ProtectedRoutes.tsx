@@ -8,7 +8,7 @@ export const ProtectedRoute = ({ allowedRoles, children }: ProtectedRouteProps) 
   const user = useSelector((store: RootState) => store.auth.authUser);
 
   if (!user || !user.role) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   if (!allowedRoles.includes(user?.role as Role)) {

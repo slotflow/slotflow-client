@@ -37,13 +37,14 @@ import { Plan } from './entity/planInterface';
 import { ApiBaseResponse, ApiError } from './common';
 import { Subscription } from './entity/subscription';
 import { Availability } from './entity/serviceAvailability';
-import { HearAboutUsOptionValue, ServiceMode } from './enums';
+import { HearAboutUsOptionValue, Role, ServiceMode } from './enums';
 import { UseFormGetValues, UseFormSetValue } from 'react-hook-form';
 import { UseMutateAsyncFunction, UseMutateFunction } from '@tanstack/react-query';
 import { SubscribePlanCheckoutResponse, SubscribePlanCheckoutRequest } from './api/subscription';
 import { ReportReviewRequest, ReportReviewResponse, ChangeReviewBlockStatusRequest, ChangeReviewBlockStatusResponse, DeleteReviewRequest } from './api/review';
 import { BookAppointmentRequest, BookAppointmentResponse, CancelBookingRequest, CancelBookingResponse, ChangeAppointmentStatusRequest, ChangeAppointmentStatusResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, ValidateRoomIdRequest } from './api/booking';
 import { AuthUser } from './slice';
+import { ConnectStripeAccountRequest } from './api/paymentAccount';
 
 // Admin plan hook return type interface
 export interface UseAdminPlanReturn {
@@ -210,7 +211,7 @@ export interface useReviewReturn {
   isDeleting: boolean;
 }
 
-// Role based navigation hook return type interface
+// application navigation hook return
 export interface useAppNavigationReturn {
   handleAdminGetProviderDetailPage: (subscriptionId: Subscription['_id']) => void;
   handleGetPaymentDetailsPage: (paymentId: Payment['_id']) => void;
@@ -219,7 +220,39 @@ export interface useAppNavigationReturn {
   handleGetProviderDetailPage: (providerId: User['_id']) => void;
   handleGetUserDetailPage: (userId: User['_id']) => void;
   toLogin: () => void;
+  toSettings: () => void;
+  toDashboard: (replace: boolean) => void;
+  toBookings: (replace: boolean) => void;
+  toIntegrations: (replace: boolean) => void;
+  toUpgrade: (replace: boolean) => void;
   handleAuthLoginNavigation: (user: AuthUser) => void;
+}
+
+// useAuth hook return
+export interface UseAuthReturn {
+    user: AuthUser | null;
+    role: Role | null;
+    isLoggedIn: boolean;
+    isUser: boolean;
+    isProvider: boolean;
+    isAdmin: boolean;
+}
+
+// integrations page hook return
+export interface UseIntegrationReturn {
+    connectStripe: (data: ConnectStripeAccountRequest) => Promise<void>;
+    connectGoogleCalendar: () => void;
+}
+
+// subscription callback hook return
+export interface useSubscriptionCallback {
+  status: boolean;
+  subscriptionUpdating: boolean;
+}
+
+// booking callback hook return
+export interface UseBookingCallbackReturn {
+    status: boolean;
 }
 
 // Auth Callback page custom hook

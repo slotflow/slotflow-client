@@ -9,9 +9,9 @@ const FeatureLocked = ({
   onButtonClick,
 }: FeatureLockedProps) => {
   return (
-    <div className="h-full flex flex-col justify-center items-center space-y-3 text-center p-4">
-      {Icon && <Icon className="text-red-500 size-24" />}
-      <h1 className="font-semibold">{message}</h1>
+    <div className="w-full h-full flex-1 flex flex-col justify-center items-center space-y-4 text-center">
+      {Icon && <Icon className="text-red-500 size-20" />}
+      <h1 className="font-semibold text-lg max-w-md text-foreground">{message}</h1>
       {onButtonClick && (
         <Button
           title={buttonText}

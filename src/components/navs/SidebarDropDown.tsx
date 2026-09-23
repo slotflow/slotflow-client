@@ -6,27 +6,27 @@ import {
   DropdownMenuContent,
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
-import { Role } from '@/shared/types/enums';
+import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
-import { AuthUser } from '@/shared/types/slice';
 import { useDispatch, useSelector } from 'react-redux';
+import { redirectPaths } from '@/shared/utils/constants';
 import { toggleTheme } from '@/app/store/slices/appSlice';
 import { useSignout } from '@/hooks/systemHooks/useSignout';
 import { AppDispatch, RootState } from '@/app/store/appStore';
-import { LogOut, Sun, Moon, Settings, Bell, CreditCard } from 'lucide-react';
+import { LogOut, Sun, Moon, Settings, CreditCard } from 'lucide-react';
 
 interface SidebarDropDownProps {
   isSidebarOpen: boolean;
-  basePath: string;
 }
 
-export const SidebarDropDown = ({ isSidebarOpen, basePath }: SidebarDropDownProps) => {
+export const SidebarDropDown = ({ isSidebarOpen }: SidebarDropDownProps) => {
+
   const navigate = useNavigate();
   const { userSignout } = useSignout();
   const dispatch = useDispatch<AppDispatch>();
+  const { isProvider, isAdmin, user } = useAuth();
 
   const themeMode: boolean = useSelector((store: RootState) => store.app.lightTheme);
-  const user: Partial<AuthUser> | null = useSelector((store: RootState) => store.auth?.authUser);
 
   if (!user?.isLoggedIn || !user.role) {
     return null;
@@ -100,33 +100,24 @@ export const SidebarDropDown = ({ isSidebarOpen, basePath }: SidebarDropDownProp
           </DropdownMenuLabel>
 
           <DropdownMenuSeparator />
+          {!isAdmin && (
+            <DropdownMenuItem onClick={() => navigate(`/settings/account`)}>
+              <CreditCard />
+              <span>Account</span>
+            </DropdownMenuItem>
+          )}
 
-          <DropdownMenuItem onClick={() => navigate(`${basePath}/settings/account`)}>
-            <CreditCard />
-            <span>Account</span>
-          </DropdownMenuItem>
-
-          {user.role === Role.PROVIDER && (
-            <DropdownMenuItem onClick={() => navigate('/provider/upgrade')}>
+          {isProvider && (
+            <DropdownMenuItem onClick={() => navigate(redirectPaths.UPGRADE)}>
               <CreditCard />
               <span>Upgrade plan</span>
             </DropdownMenuItem>
           )}
 
-          <DropdownMenuItem onClick={() => navigate(`${basePath}/settings`)}>
-            <Settings />
-            <span>Settings</span>
-          </DropdownMenuItem>
-
-          <DropdownMenuItem onClick={() => navigate(`${basePath}/settings/notifications`)}>
-            <Bell />
-            <span>Notifications</span>
-          </DropdownMenuItem>
-
-          {user.role === Role.PROVIDER && (
-            <DropdownMenuItem onClick={() => navigate('/provider/settings/billing')}>
-              <CreditCard />
-              <span>Billing</span>
+          {!isAdmin && (
+            <DropdownMenuItem onClick={() => navigate(`/settings`)}>
+              <Settings />
+              <span>Settings</span>
             </DropdownMenuItem>
           )}
 

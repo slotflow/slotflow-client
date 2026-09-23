@@ -9,14 +9,10 @@ const OnBoardingGuard = ({ children }: OnbooardingGuardProps) => {
   const { authUser: user, preboardingData } = useSelector((store: RootState) => store.auth);
 
   if (!user) {
-    return <Navigate to="/auth/login" state={{ from: location }} replace />;
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  if (user.role === Role.ADMIN) {
-    return <Navigate to="/admin" replace />;
-  }
-
-  if (user.onboardingStatus === OnboardingStatus.NOT_STARTED) {
+  if (user.role !== Role.ADMIN && user.onboardingStatus === OnboardingStatus.NOT_STARTED) {
     if (!preboardingData.selectedRole) {
       if (location.pathname !== '/preboarding/role') {
         return <Navigate to="/preboarding/role" replace />;

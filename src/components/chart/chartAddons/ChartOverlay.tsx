@@ -2,10 +2,11 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { RootState } from '@/app/store/appStore';
-import { actionBtnClass } from '@/shared/utils/constants';
 import { ChartOverlayProps } from '@/shared/types/component';
+import { actionBtnClass, redirectPaths } from '@/shared/utils/constants';
 
 const ChartOverlay = ({ stringOne, chartTitle }: ChartOverlayProps) => {
+  
   const themeMode = useSelector((store: RootState) => store.app.lightTheme);
   const navigate = useNavigate();
 
@@ -23,7 +24,7 @@ const ChartOverlay = ({ stringOne, chartTitle }: ChartOverlayProps) => {
           title='upgrade'
           variant='secondary'
           className={actionBtnClass}
-          onClick={() => navigate('/provider/upgrade')}
+          onClick={() => navigate(redirectPaths.UPGRADE)}
         >
           Upgrade Plan
         </Button>

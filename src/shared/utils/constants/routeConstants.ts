@@ -5,28 +5,40 @@ import { BookLock, Calendar1, CalendarCheck, Component, CreditCard, Gauge, Hands
 // Route names record
 export enum RouteNames {
     DASHBOARD = 'Dashboard',
-    PROFILE = 'Profile',
+    SERVICES = 'Services',
+    SERVICE_PROVIDERS = 'Service Providers',
+    SERVICE_PROVIDERS_DETAILS = 'Service Providers Details',
+    SUBSCRIPTIONS = 'Subscriptions',
+    SUBSCRIPTION_DETAILS = 'Subscription Details',
     BOOKINGS = 'Bookings',
+    BOOKING_DETAILS = 'Booking Details',
     PAYMENTS = 'Payments',
-    INTEGRATIONS = 'Integrations',
+    PAYMENT_DETAILS = 'Payment Details',
+    CALENDAR = 'Calendar',
     CHAT = 'Chat',
     REVIEWS = 'Reviews',
-    SETTINGS = 'Settings',
-    CALENDAR = 'Calendar',
-    SUBSCRIPTIONS = 'Subscriptions',
-    REPORTS = 'Reports',
-    SERVICE_PROVIDERS = 'Service Providers',
-    USERS = 'Users',
-    SERVICES = 'Services',
-    PLANS = 'Plans',
-    GRAFANA_DASHBOARD = 'Grafana Dashboard',
     CREDITS = 'Credits',
     REFERRALS = 'Referrals',
+    PROFILE = 'Profile',
+    PLANS = 'Plans',
+    PLAN_DETAILS = 'Plan Details',
+    REPORTS = 'Reports',
+    USERS = 'Users',
+    USER_DETAILS = 'User Details',
+    GRAFANA_DASHBOARD = 'Grafana Dashboard',
+    UPGRADE = 'Upgrade Plan',
+    VIDEO_CALL_LOBBY = 'Video Call Lobby',
+    VIDEO_CALL = 'Video Call',
+    SETTINGS = 'Settings',
     NOTIFICATIONS = 'Notifications',
     ACCOUNT = 'Account',
+    INTEGRATIONS = 'Integrations',
     SECURITY = 'Security',
-    STATS = 'Stats',
-    GRAPHS = 'Grpahs',
+
+    SUBSCRIPTION_CALLBACK = 'Subscription Callback',
+    BOOKING_CALLBACK = 'Booking Callback',
+    INTEGRATION_CALLBACK = 'Integration Callback',
+
     TESTSANDBOX = 'Test Sandbox',
     DASHBOARDDATACARD = 'Dashboard-data-card',
     CHARTSDEMO = 'Charts-demo',
@@ -40,32 +52,82 @@ export const sidebarRoutes: Route[] = [
         icon: LayoutDashboard,
         roles: [Role.ADMIN, Role.PROVIDER],
     },
-
     {
         path: 'services',
         name: RouteNames.SERVICES,
         icon: Rows2,
         roles: [Role.ADMIN, Role.USER],
     },
-
     {
-        path: `profile`,
-        name: RouteNames.PROFILE,
-        icon: User,
-        roles: [Role.PROVIDER],
+        path: 'service-providers',
+        name: RouteNames.SERVICE_PROVIDERS,
+        icon: Handshake,
+        roles: [Role.ADMIN, Role.USER],
     },
-
     {
         path: 'subscriptions',
         name: RouteNames.SUBSCRIPTIONS,
         icon: CreditCard,
         roles: [Role.ADMIN, Role.PROVIDER],
     },
-
     {
-        path: 'service-providers',
-        name: RouteNames.SERVICE_PROVIDERS,
+        path: 'bookings',
+        name: RouteNames.BOOKINGS,
+        icon: CalendarCheck,
+        roles: [Role.USER, Role.PROVIDER],
+    },
+    {
+        path: 'payments',
+        name: RouteNames.PAYMENTS,
         icon: Handshake,
+        roles: [Role.USER, Role.PROVIDER, Role.ADMIN],
+    },
+    {
+        path: 'calendar',
+        name: RouteNames.CALENDAR,
+        icon: Calendar1,
+        roles: [Role.USER, Role.PROVIDER],
+    },
+    {
+        path: 'chat',
+        name: RouteNames.CHAT,
+        icon: MessageSquare,
+        roles: [Role.USER, Role.PROVIDER],
+    },
+    {
+        path: 'reviews',
+        name: RouteNames.REVIEWS,
+        icon: Star,
+        roles: [Role.USER, Role.PROVIDER],
+    },
+    {
+        path: 'credits',
+        name: RouteNames.CREDITS,
+        icon: Wallet2Icon,
+        roles: [Role.USER, Role.PROVIDER],
+    },
+    {
+        path: 'referrals',
+        name: RouteNames.REFERRALS,
+        icon: UserPlus,
+        roles: [Role.USER, Role.PROVIDER],
+    },
+    {
+        path: `profile`,
+        name: RouteNames.PROFILE,
+        icon: User,
+        roles: [Role.PROVIDER],
+    },
+    {
+        path: 'report',
+        name: RouteNames.REPORTS,
+        icon: BookLock,
+        roles: [Role.ADMIN],
+    },
+    {
+        path: 'plans',
+        name: RouteNames.PLANS,
+        icon: LayoutGrid,
         roles: [Role.ADMIN],
     },
     {
@@ -74,77 +136,12 @@ export const sidebarRoutes: Route[] = [
         icon: Users,
         roles: [Role.ADMIN],
     },
-
-    {
-        path: 'plans',
-        name: RouteNames.PLANS,
-        icon: LayoutGrid,
-        roles: [Role.ADMIN],
-    },
-
-    {
-        path: 'bookings',
-        name: RouteNames.BOOKINGS,
-        icon: CalendarCheck,
-        roles: [Role.USER, Role.PROVIDER],
-    },
-
-    {
-        path: 'payments',
-        name: RouteNames.PAYMENTS,
-        icon: Handshake,
-        roles: [Role.USER, Role.PROVIDER, Role.ADMIN],
-    },
-
-    {
-        path: 'calendar',
-        name: RouteNames.CALENDAR,
-        icon: Calendar1,
-        roles: [Role.USER, Role.PROVIDER],
-    },
-
-    {
-        path: 'chat',
-        name: RouteNames.CHAT,
-        icon: MessageSquare,
-        roles: [Role.USER, Role.PROVIDER],
-    },
-
-    {
-        path: 'reviews',
-        name: RouteNames.REVIEWS,
-        icon: Star,
-        roles: [Role.USER, Role.PROVIDER],
-    },
-
-    {
-        path: 'credits',
-        name: RouteNames.CREDITS,
-        icon: Wallet2Icon,
-        roles: [Role.USER, Role.PROVIDER],
-    },
-
-    {
-        path: 'referrals',
-        name: RouteNames.REFERRALS,
-        icon: UserPlus,
-        roles: [Role.USER, Role.PROVIDER],
-    },
-
     {
         path: 'grafana-dashboard',
         name: RouteNames.GRAFANA_DASHBOARD,
         icon: Gauge,
         roles: [Role.ADMIN],
     },
-
-    {
-        path: 'report',
-        name: RouteNames.REPORTS,
-        icon: BookLock,
-        roles: [Role.ADMIN],
-    },
-
     {
         path: 'settings',
         name: RouteNames.SETTINGS,

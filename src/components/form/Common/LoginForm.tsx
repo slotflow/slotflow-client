@@ -1,11 +1,11 @@
 import FormField from '../FormField';
 import { toast } from 'react-toastify';
 import { appConfig } from '@/config/env';
+import FormHeading from '../FormHeading';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import GoogleButton from '../GoogleButton';
 import { FormButton } from '../FormButton';
-import { FormHeading } from '../FormHeading';
 import { signin } from '@/services/apis/auth';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -17,6 +17,7 @@ import { setForgotPassword } from '@/app/store/slices/appSlice';
 import { LoginFormType, LoginZodSchema } from '@/shared/validators/zod/authZod';
 
 const LoginForm = () => {
+
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { handleAuthLoginNavigation } = useAppNavigation();
@@ -49,87 +50,78 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+    <div className="flex min-h-screen flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:px-8 bg-slate-50/50 dark:bg-zinc-950">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="p-8">
-          <FormHeading title="Sign in to Slotflow" />
-          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-              <fieldset disabled={isSubmitting} className="space-y-3">
-                <FormField<LoginFormType>
-                  label="Email"
-                  id="email"
-                  placeholder="Enter email"
-                  type="email"
-                  register={register}
-                  error={errors.email?.message}
-                  required={true}
-                />
+        <div className="backdrop-blur-xl border border-slate-200/80 dark:border-zinc-800 shadow-xl shadow-slate-200/50 dark:shadow-none rounded-2xl p-6 sm:p-8">
+          <FormHeading
+            title="Sign in to Slotflow"
+            description="Welcome back! Please enter your details to continue."
+          />
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+            <fieldset disabled={isSubmitting} className="space-y-3">
+              <FormField<LoginFormType>
+                label="Email"
+                id="email"
+                placeholder="Enter email"
+                type="email"
+                register={register}
+                error={errors.email?.message}
+                required={true}
+              />
 
-                <FormField<LoginFormType>
-                  label="Password"
-                  id="password"
-                  placeholder="Enter password"
-                  type="password"
-                  showTogglePassword
-                  register={register}
-                  error={errors.password?.message}
-                  required={true}
-                />
+              <FormField<LoginFormType>
+                label="Password"
+                id="password"
+                placeholder="Enter password"
+                type="password"
+                showTogglePassword
+                register={register}
+                error={errors.password?.message}
+                required={true}
+              />
 
-                <Button
-                  title="Forgot Password"
-                  variant="link"
-                  className="px-0 block text-xs md:text-sm font-medium text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
-                  onClick={() => {
-                    dispatch(setForgotPassword(true));
-                    navigate(redirectPaths.VERIFY_EMAIL);
-                  }}
-                >
-                  Forgot Password ?
-                </Button>
-
-                <FormButton
-                  text={isSubmitting ? 'Signing In' : 'Sign In'}
-                  loading={isSubmitting}
-                  disabled={isSubmitting || !isValid}
-                  title="Sign In"
-                  className='w-full'
-                />
-              </fieldset>
-            </form>
-
-            <div className="flex items-center my-4">
-              <div className="flex-grow border-t"></div>
-              <span className="mx-3 text-sm text-[var(--textTwo)]">OR CONTINUE WITH</span>
-              <div className="flex-grow border-t"></div>
-            </div>
-
-            <GoogleButton
-              text="Sign up with Google"
-            />
-
-            <p className="mt-10 text-center text-sm text-[var(--textOne)] hover:text-[var(--textOneHover)]">
-              New to Slotflow ?
-              <span
-                className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
-                onClick={() => navigate(redirectPaths.REGISTER)}
+              <Button
+                title="Forgot Password"
+                variant="link"
+                className="px-0 block text-xs md:text-sm font-medium text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
+                onClick={() => {
+                  dispatch(setForgotPassword(true));
+                  navigate(redirectPaths.VERIFY_EMAIL);
+                }}
               >
-                {' '}
-                Sign Up
-              </span>
-            </p>
-            <p className="mt-2 text-center text-sm text-[var(--textOne)] hover:text-[var(--textOneHover)]">
-              Back to
-              <span
-                className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
-                onClick={() => navigate('/')}
-              >
-                {' '}
-                Home
-              </span>
-            </p>
+                Forgot Password ?
+              </Button>
+
+              <FormButton
+                text={isSubmitting ? 'Signing In' : 'Sign In'}
+                loading={isSubmitting}
+                disabled={isSubmitting || !isValid}
+                title="Sign In"
+                className='w-full'
+              />
+            </fieldset>
+          </form>
+
+          <div className="flex items-center my-4">
+            <div className="flex-grow border-t"></div>
+            <span className="mx-3 text-sm text-[var(--textTwo)]">OR CONTINUE WITH</span>
+            <div className="flex-grow border-t"></div>
           </div>
+
+          <GoogleButton
+            text="Sign up with Google"
+          />
+
+          <p className="mt-10 text-center text-sm text-[var(--textOne)] hover:text-[var(--textOneHover)]">
+            New to Slotflow ?
+            <span
+              className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
+              onClick={() => navigate(redirectPaths.REGISTER)}
+            >
+              {' '}
+              Sign Up
+            </span>
+          </p>
         </div>
       </div>
     </div>

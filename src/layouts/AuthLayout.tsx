@@ -3,26 +3,32 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Role } from '@/shared/types/enums';
 import { RootState } from '@/app/store/appStore';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import AuthContent from '@/components/auth/AuthContent';
 import SectionHeading from '@/components/common/SectionHeading';
 import FloatingCards from '@/components/auth/AuthRightSide/FloatingCards';
 
 const AuthLayout: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const authUser = useSelector((state: RootState) => state.auth.authUser);
 
   useEffect(() => {
+    console.log("AuthLayout");
     if (authUser?.isLoggedIn) {
-      if (authUser.role === Role.ADMIN) {
-        navigate('/admin/dashboard');
-      } else if (authUser.role === Role.USER) {
-        navigate('/user/services');
-      } else if (authUser.role === Role.PROVIDER) {
-        navigate('/provider/dashboard');
+      console.log("AuthLayout logged in : ",authUser?.isLoggedIn);
+      if (authUser.role === Role.ADMIN && location.pathname !== '/dashboard') {
+        console.log("admin navigating to dashboard");
+        console.log("authUser.role : ",authUser.role);
+        console.log('location.pathname : ',location.pathname);
+        navigate('/dashboard');
+      } else if (authUser.role === Role.USER && location.pathname !== '/services') {
+        navigate('/services');
+      } else if (authUser.role === Role.PROVIDER && location.pathname !== '/dashboard') {
+        navigate('/dashboard');
       }
     }
-  }, [authUser, navigate]);
+  }, [authUser, location.pathname, navigate]);
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-background">

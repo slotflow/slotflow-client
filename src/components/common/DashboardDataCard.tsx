@@ -1,6 +1,6 @@
 import DataShimmer from '../shimmers/DataShimmer';
 import { DashboardDataCardProps } from '@/shared/types/common';
-import { formatNumberToPrice } from '@/shared/utils/helper/formatter';
+import { formatNumberToPrice } from '@/shared/utils/helper/formatNumberToPrice';
 
 const DashboardDataCard = ({
   label,

@@ -92,9 +92,9 @@ export const useJVideoCall = (props: useVideoCallProps): useVideoCallReturn => {
       if (res.success) {
         toast.success(res.message || 'Redirecting to video call...');
         if (authUser?.role === Role.PROVIDER) {
-          navigate(`/provider/video-call-lobby/${variables.roomId}`);
+          navigate(`/video-call-lobby/${variables.roomId}`);
         } else if (authUser?.role === Role.USER) {
-          navigate(`/user/video-call-lobby/${variables.roomId}`);
+          navigate(`/video-call-lobby/${variables.roomId}`);
         }
       } else {
         toast.error(res.message || 'Invalid Room ID');

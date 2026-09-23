@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { dateFormats } from '@/shared/utils/constants';
 import { DateFilterProps } from '@/shared/types/component';
-import { formatDate } from '@/shared/utils/helper/formatter';
+import { formatDate } from '@/shared/utils/helper/formatDate';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 const DateFilter = ({

@@ -25,8 +25,9 @@ import { Button } from '../../ui/button';
 import { ColumnDef } from '@tanstack/react-table';
 import StatusBadge from '@/components/common/StatusBadge';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
-import { formatNumberToPrice } from '@/shared/utils/helper/formatter';
+import { formatNumberToPrice } from '@/shared/utils/helper/formatNumberToPrice';
 import { Plan, StripeSyncStatus } from '@/shared/types/entity/planInterface';
+import { formatString } from '@/shared/utils/helper/formatString';
 
 const AdminPlansTableColumns = (
   changePlanBlockStatus: (data: ChangePlanBlockStatusRequest) => void,
@@ -50,7 +51,7 @@ const AdminPlansTableColumns = (
     header: ({ column }) => <DataTableColumnHeader column={column} title="Plan" />,
     cell: ({ row }) => (
       <span className="font-semibold text-slate-900 dark:text-slate-100">
-        {row.original.planName}
+        {formatString(row.original.planName)}
       </span>
     ),
   },

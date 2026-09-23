@@ -15,10 +15,11 @@ import { Button } from '../../ui/button';
 import { ColumnDef } from '@tanstack/react-table';
 import StatusBadge from '@/components/common/StatusBadge';
 import { SubscriptionStatus } from '@/shared/types/enums';
-import { formatDate } from '@/shared/utils/helper/formatter';
+import { formatDate } from '@/shared/utils/helper/formatDate';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
 import { Subscription } from '@/shared/types/entity/subscription';
 import { FetchProviderSubscriptionsResponse } from '@/shared/types/api/subscription';
+import { formatString } from '@/shared/utils/helper/formatString';
 
 const ProvidersSubscriptionsTableColumns = (
   handleAdminGetProviderDetailPage: (subscriptionId: Subscription['_id']) => void,
@@ -74,20 +75,20 @@ const ProvidersSubscriptionsTableColumns = (
     header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
     cell: ({ row }) => {
       const subscriptionStatus = row.original.subscriptionStatus;
-
+      const label = formatString(subscriptionStatus);
       switch (subscriptionStatus) {
         case SubscriptionStatus.ACTIVE:
-          return <StatusBadge type="active" label="Active" />;
+          return <StatusBadge type="active" label={label} />;
         case SubscriptionStatus.EXPIRED:
-          return <StatusBadge type="standard" label="Expired" />;
+          return <StatusBadge type="standard" label={label} />;
         case SubscriptionStatus.CANCELLED:
-          return <StatusBadge type="blocked" label="Cancelled" />;
+          return <StatusBadge type="blocked" label={label} />;
         case SubscriptionStatus.PENDING:
-          return <StatusBadge type="pending" label="Pending" />;
+          return <StatusBadge type="pending" label={label} />;
         case SubscriptionStatus.PAST_DUE:
-          return <StatusBadge type="updating" label="Past Due" />;
+          return <StatusBadge type="updating" label={label} />;
         case SubscriptionStatus.FAILED:
-          return <StatusBadge type="blocked" label="Failed" />;
+          return <StatusBadge type="blocked" label={label} />;
         default:
           return <StatusBadge type="standard" label={subscriptionStatus} />;
       }

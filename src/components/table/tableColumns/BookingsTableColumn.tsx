@@ -17,7 +17,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Booking } from '@/shared/types/entity/booking';
 import StatusBadge from '@/components/common/StatusBadge';
 import { checkJoin } from '@/shared/utils/helper/checkJoin';
-import { formatDate } from '@/shared/utils/helper/formatter';
+import { formatDate } from '@/shared/utils/helper/formatDate';
 import { AppointmentStatus, Role } from '@/shared/types/enums';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
 import { Check, MoreHorizontal, NotebookPen, ReceiptText, VideoIcon, X } from 'lucide-react';

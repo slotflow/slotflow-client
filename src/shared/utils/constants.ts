@@ -12,6 +12,7 @@ import {
   dataSelectListItemInterface,
 } from '../types/common';
 import { OptionType } from '../types/common';
+import { Variants } from 'framer-motion';
 
 
 // Block Back Statuses
@@ -222,11 +223,11 @@ export const storeConstants: Record<string, string> = {
 
 // Redirect paths
 export const redirectPaths = {
-  LOGIN: '/auth/login',
-  REGISTER: '/auth/register',
-  VERIFY_EMAIL: '/auth/verify/email',
-  RESET_PASSWORD: '/auth/reset/password',
-  VERIFY_OTP: '/auth/verify/otp',
+  LOGIN: '/login',
+  REGISTER: '/register',
+  VERIFY_EMAIL: '/verify/email',
+  RESET_PASSWORD: '/reset/password',
+  VERIFY_OTP: '/verify/otp',
   PRE_BOARDING_ROLE: '/preboarding/role',
   PRE_BOARDING_HEAR_ABOUT_US: '/preboarding/hear-about-us',
   ONBOARDING_ADDRESS: '/onboarding/address',
@@ -234,13 +235,22 @@ export const redirectPaths = {
   ONBOARDING_AVAILABILITY: '/onboarding/availability',
   ONBOARDING_PROOFS: '/onboarding/proofs',
   ONBOARDING_PENDING: '/onboarding/pending',
-  USER_HOME: '/user',
-  PROVIDER_HOME: '/provider',
-  ADMIN_DASHBOARD: '/admin/dashboard',
+  SERVICES: '/services',
+  DASHBOARD: '/dashboard',
+  SERVICE_PROVIDERS: 'service-providers',
+
+  BOOKINGS: '/bookings',
+  SETTINGS: '/settings',
+  UPGRADE: '/upgrade',
+  INTEGRATIONS: '/settings/integrations'
 } as const;
 
-// Standalone routes
-export const standaloneRoutes = ['/provider/upgrade'];
+// Standalone routes to hide the sidebars and headers
+export const standaloneRoutes = [redirectPaths.UPGRADE];
+
+// to show user services page filters
+export const filterShowsRoutes = [redirectPaths.SERVICE_PROVIDERS];
+
 
 // Button classNames
 
@@ -437,3 +447,14 @@ export const dateFormats = {
   RANGE_MONTH_DAY: 'LLL dd',             // Sep 16
   RANGE_FULL: 'LLL dd, yyyy',            // Sep 16, 2026
 } as const;
+
+// motion constant
+export const containerVariants: Variants = {
+  hidden: { opacity: 0, scale: 0.95, y: 15 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
+  },
+};

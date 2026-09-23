@@ -1,9 +1,10 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { ReferralStatus } from '@/shared/types/enums';
 import StatusBadge from '@/components/common/StatusBadge';
-import { formatDate } from '@/shared/utils/helper/formatter';
+import { formatDate } from '@/shared/utils/helper/formatDate';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
 import { FetchReferralsResponse } from '@/shared/types/api/referral';
+import { formatString } from '@/shared/utils/helper/formatString';
 
 const ReferralTableColumn = (): ColumnDef<FetchReferralsResponse>[] => [
   {
@@ -29,13 +30,14 @@ const ReferralTableColumn = (): ColumnDef<FetchReferralsResponse>[] => [
     header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
     cell: ({ row }) => {
       const status = row.original.status;
+      const label = formatString(status);
       switch (status) {
         case ReferralStatus.COMPLETED:
-          return <StatusBadge type="active" label="Completed" />;
+          return <StatusBadge type="active" label={label} />;
         case ReferralStatus.PENDING:
-          return <StatusBadge type="pending" label="Pending" />;
+          return <StatusBadge type="pending" label={label} />;
         case ReferralStatus.REWARDED:
-          return <StatusBadge type="verified" label="Rewarded" />;
+          return <StatusBadge type="verified" label={label} />;
         default:
           return <StatusBadge type="standard" label={status} />;
       }

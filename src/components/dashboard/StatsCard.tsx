@@ -4,7 +4,7 @@ import { RootState } from '@/app/store/appStore';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { DashboardCardOneProps } from '@/shared/types/component';
-import { formatNumberToPrice } from '@/shared/utils/helper/formatter';
+import { formatNumberToPrice } from '@/shared/utils/helper/formatNumberToPrice';
 import { Activity, LockIcon, TrendingDown, TrendingUp } from 'lucide-react';
 
 const StatsCard = ({
