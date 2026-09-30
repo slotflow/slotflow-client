@@ -35,7 +35,7 @@ const SingleTab = ({
       <Icon
         className={`
                     shrink-0
-                    ${isSidebarOpen ? 'w-5 h-5' : 'w-6 h-6'}
+                    ${isSidebarOpen ? 'size-5' : 'w-6 h-6'}
                     ${active && !locked ? 'text-[var(--mainColor)]' : ''}
                 `}
       />
@@ -46,7 +46,7 @@ const SingleTab = ({
         <ChevronDown
           className={`
                         ml-auto
-                        w-4 h-4
+                        size-4
                         transition-transform duration-200
                         ${expanded ? 'rotate-180' : ''}
                     `}

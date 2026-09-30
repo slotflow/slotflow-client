@@ -1,11 +1,11 @@
 import { toast } from 'react-toastify';
 import { appConfig } from '@/config/env';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useMemo } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch, useSelector } from 'react-redux';
-import { redirectPaths } from '@/shared/utils/constants';
+import { Day } from '@/shared/types/enums';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import { AppDispatch, RootState } from '@/app/store/appStore';
 import { useAddAvailability } from '@/hooks/useServiceAvailability';
 import { ProviderServiceAvailabilityFormProps } from '@/shared/types/component';
@@ -18,6 +18,9 @@ import {
   ProviderServiceAvailabilityFormType,
   providerServiceAvailabilityZodSchema,
 } from '@/shared/validators/zod/providerZod';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
+import { formatString } from '@/shared/utils/helper/formatString';
+import { Availability } from '@/shared/types/entity/serviceAvailability';
 import AvailabilityDataSelectionFields from '@/components/serviceAvailability/createServiceAvailabilityPageSplits/AvailabilityDataSelectionFields';
 import CreateServiceAvailabilityFooter from '@/components/serviceAvailability/createServiceAvailabilityPageSplits/CreateServiceAvailabilityFooter';
 
@@ -25,7 +28,7 @@ const ProviderServiceAvailabilityForm = ({
   isUpdating = false,
   heading,
 }: ProviderServiceAvailabilityFormProps) => {
-  const navigate = useNavigate();
+  const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
   const { authUser } = useSelector((state: RootState) => state.auth);
   const { availabilities } = useSelector((store: RootState) => store.provider);
@@ -33,18 +36,18 @@ const ProviderServiceAvailabilityForm = ({
   const {
     control,
     watch,
-    register,
     setValue,
     handleSubmit,
+    reset,
     getValues,
-    formState: { isSubmitting, isValid, isLoading },
+    formState: { isSubmitting, isValid, isLoading, errors },
   } = useForm<ProviderServiceAvailabilityFormType>({
     resolver: zodResolver(providerServiceAvailabilityZodSchema),
     mode: 'onChange',
     defaultValues: {
-      day: '',
+      day: Day.SUNDAY,
       isAvailable: false,
-      duration: 0,
+      duration: 10,
       startTime: new Date(),
       endTime: new Date(),
       modes: [],
@@ -59,6 +62,11 @@ const ProviderServiceAvailabilityForm = ({
   const { handleAddAvailability, generateTimeSlots, isModeSelected, toggleMode, toggleSlot } =
     useAddAvailability({ getValues, setValue });
 
+  const hasAllDays = useMemo(() => {
+    if (!availabilities || availabilities.length < 7) return false;
+    return true;
+  }, [availabilities]);
+
   useEffect(() => {
     if (timeSlots && selectedTimeSlots && selectedTimeSlots.length > 0) {
       const filtered = selectedTimeSlots.filter((t) => timeSlots.includes(t));
@@ -68,20 +76,18 @@ const ProviderServiceAvailabilityForm = ({
     }
   }, [timeSlots, selectedTimeSlots, setValue]);
 
-  // Handle all slots
   const handleAllSlots = (push: boolean) => {
     if (push) {
       if (timeSlots && timeSlots.length > 0) {
         setValue('selectedTimeSlots', timeSlots.slice(), { shouldDirty: true });
       } else {
-        toast.error('Please generate slots');
+        toast.error('Please generate slots first');
       }
     } else {
       setValue('selectedTimeSlots', [], { shouldDirty: true });
     }
   };
 
-  // Add availability
   const onAddAvailability = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const res = handleAddAvailability();
@@ -90,16 +96,25 @@ const ProviderServiceAvailabilityForm = ({
     } else if (res.data) {
       toast.success(res.message);
       dispatch(addAvailability(res.data));
+      reset({
+        day: Day.SUNDAY,
+        isAvailable: false,
+        duration: 10,
+        startTime: new Date(),
+        endTime: new Date(),
+        modes: [],
+        timeSlots: [],
+        selectedTimeSlots: [],
+      });
     }
   };
 
-  // Generate time slots
   const onGenerateSlots = () => {
     const start = getValues('startTime');
     const end = getValues('endTime');
     const duration = getValues('duration');
     if (!start || !end || !duration) {
-      toast.error('Please fill all the fields');
+      toast.error('Please complete time range and duration selections');
       return;
     }
     const res = generateTimeSlots(start, end, duration);
@@ -110,57 +125,58 @@ const ProviderServiceAvailabilityForm = ({
     }
   };
 
-  // Check if all slots are selected
   const allSlotsSelected = useMemo(() => {
     return timeSlots && timeSlots.length > 0 && selectedTimeSlots?.length === timeSlots.length;
   }, [timeSlots, selectedTimeSlots]);
 
-  // Submit availabilities
   const onSubmit = async () => {
-    if (!availabilities || availabilities.length === 0) {
-      toast.info("You didn't add any availability.");
+    if (!hasAllDays || !availabilities) {
+      toast.info('Please specify availability for all 7 days before submitting.');
       return;
     }
     try {
-      if (authUser?.isServiceAvailabilityAdded) {
-        // need to create the service availability updating api
-        const res = await dispatch(createServiceAvailabilities({ data: availabilities })).unwrap();
-        if (res.success) {
-          toast.success(res.message);
-          navigate(redirectPaths.ONBOARDING_PENDING);
-        }
-      } else {
-        const res = await dispatch(createServiceAvailabilities({ data: availabilities })).unwrap();
-        if (res.success) {
-          toast.success(res.message);
-          navigate(redirectPaths.ONBOARDING_PROOFS);
-        }
+      const res = await dispatch(createServiceAvailabilities({ data: availabilities })).unwrap();
+      if (res.success) {
+        toast.success(res.message);
+        goTo(
+          authUser?.isServiceAvailabilityAdded
+            ? redirectPaths.ONBOARDING_PENDING
+            : redirectPaths.ONBOARDING_PROOFS
+        );
       }
     } catch (error) {
       if (appConfig.isDevelopment) {
-        console.log('Something went wrong while submitting availabilities : ', error);
+        console.error('Failed to submit availabilities:', error);
       }
     }
   };
 
-  // remove availability from store
-  const handleRemoveAvailability = (day: string) => {
+  const handleCopyLastAvailability = (targetDay: Day, lastAvailability: Availability) => {
+    const copiedAvailability: Availability = {
+      ...lastAvailability,
+      day: targetDay,
+    };
+    dispatch(addAvailability(copiedAvailability));
+    toast.success(`Copied schedule to ${formatString(targetDay)}`);
+  };
+
+  const handleRemoveAvailability = (day: Day) => {
     if (!day || !availabilities) return;
     dispatch(removeAvailability(day));
-    toast.success('Availability removed');
+    toast.success(`Removed ${formatString(day)} availability`);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {heading && <h4 className="text-xl lg:text-2xl font-semibold text-start">{heading}</h4>}
+        {heading && <h4 className="text-xl lg:text-2xl font-semibold text-start">{heading}</h4>}
+   
       <div className="flex w-full flex-col space-y-6">
-        <div className="space-y-4 w-full space-x-2 pt-6">
+        <div className="space-y-4 w-full pt-4">
           <AvailabilityDataSelectionFields
-            register={register}
+            control={control}
             isModeSelected={isModeSelected}
             toggleMode={toggleMode}
             isAvailable={watched.isAvailable}
-            setValue={setValue}
           />
 
           {watched.isAvailable && (
@@ -184,14 +200,16 @@ const ProviderServiceAvailabilityForm = ({
           <SavedAvailabilities
             availabilities={availabilities}
             removeAvailability={handleRemoveAvailability}
+            onCopyLastAvailability={handleCopyLastAvailability}
           />
         </div>
       </div>
+
       <CreateServiceAvailabilityFooter
         selectedTimeSlots={selectedTimeSlots}
         isSubmitting={isSubmitting}
         onAddAvailability={onAddAvailability}
-        availabilities={availabilities}
+        hasAllDays={hasAllDays}
         isValid={isValid}
         isUpdating={isUpdating}
         isLoading={isLoading}

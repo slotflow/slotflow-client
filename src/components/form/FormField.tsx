@@ -125,7 +125,7 @@ const FormField = <T extends FieldValues>({
           />
         )
       )}
-      {error && <p className="text-[var(--error-color)] text-xs px-2 line-clamp-4">{error}</p>}
+      {error && <p className="text-red-600 text-xs font-semibold px-2 line-clamp-4">{error}</p>}
     </div>
   );
 };

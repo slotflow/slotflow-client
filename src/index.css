@@ -83,18 +83,13 @@ html {
 :root {
   --mainColor: #635bff;
   --mainColorHover: #8680ff;
-  --mainColorTwo: #e7e6ff;
-  --boxBorder: #f2f2f2;
+
   --textOne: #404040;
-  --textOneHover: #0d0d0d;
-  --textTwo: #1a1a1a;
-  --textTwoHover: #333333;
   --background: #ffffff;
   --menuBg: #f2f2f2;
   --menuItemHoverBg: #e6e6e6;
-  --inputBg: #ffffff;
-  --error-color: red;
-  --infoDataLabel: #333333;
+  
+ /*by shadcn*/
   --spotlight-color: #ffffff;
 
   --chart-1: oklch(0.646 0.222 41.116);
@@ -171,18 +166,13 @@ html {
 .dark {
   --mainColor: #635bff;
   --mainColorHover: #8680ff;
-  --mainColorTwo: #ceccff;
-  --boxBorder: #f2f2f2;
+
   --textOne: #bfbfbf;
-  --textOneHover: #e6e6e6;
-  --textTwo: #d9d9d9;
-  --textTwoHover: #ffffff;
   --background: #0d0d0d;
   --menuBg: #0d0d0d;
   --menuItemHoverBg: #333333;
-  --inputBg: #27272a;
-  --error-color: #ff6961;
-  --infoDataLabel: #b3b3b3;
+
+  /*by shadcn*/
   --spotlight-color: #262626;
 
   --chart-1: oklch(0.488 0.243 264.376);

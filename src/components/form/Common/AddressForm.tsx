@@ -7,15 +7,15 @@ import { FormButton } from '../FormButton';
 import { PhoneInput } from '../phone-input';
 import { countries } from 'country-data-list';
 import { Label } from '@/components/ui/label';
-import { useNavigate } from 'react-router-dom';
 import AlertBox from '@/components/alert/AlertBox';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Location } from '@/shared/types/entity/address';
-import { redirectPaths } from '@/shared/utils/constants';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import { CountryDropdown } from '../../ui/country-dropdown';
 import { AddressFormProps } from '@/shared/types/component';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 import LocationPicker from '@/components/map/LocationPicker';
 import { AppDispatch, RootState } from '@/app/store/appStore';
 import { createAddress, fetchMyAddress, updateAddress } from '@/services/apis/address';
@@ -26,7 +26,8 @@ import {
 } from '@/shared/validators/zod/commonZodFields';
 
 const AddressForm = ({ isUpdating = false, heading }: AddressFormProps) => {
-  const navigate = useNavigate();
+
+  const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
   const { authUser } = useSelector((state: RootState) => state.auth);
 
@@ -103,7 +104,7 @@ const AddressForm = ({ isUpdating = false, heading }: AddressFormProps) => {
         if (res.success) {
           if (authUser?.role === Role.PROVIDER) {
             if (authUser?.onboardingStatus !== OnboardingStatus.APPROVED) {
-              navigate(redirectPaths.ONBOARDING_PENDING);
+              goTo(redirectPaths.ONBOARDING_PENDING);
             }
           }
           toast.success(res.message);
@@ -116,9 +117,9 @@ const AddressForm = ({ isUpdating = false, heading }: AddressFormProps) => {
             authUser?.role === Role.PROVIDER
           ) {
             if (authUser?.adminVerificationStatus === AdminVerificationStatus.NOT_REQUESTED) {
-              navigate(redirectPaths.ONBOARDING_SERVICE);
+              goTo(redirectPaths.ONBOARDING_SERVICE);
             } else if (authUser?.adminVerificationStatus === AdminVerificationStatus.REJECTED) {
-              navigate(redirectPaths.ONBOARDING_PENDING);
+              goTo(redirectPaths.ONBOARDING_PENDING);
             }
           }
           toast.success(res.message);
@@ -163,7 +164,7 @@ const AddressForm = ({ isUpdating = false, heading }: AddressFormProps) => {
             rules={{ required: true }}
             render={({ field }) => (
               <div className="space-y-2">
-                <label className="block text-xs md:text-sm font-medium text-[var(--textTwo)] hover:text-[var(--textTwoHover)]">
+                <label className="block text-xs md:text-sm font-medium">
                   Phone
                 </label>
                 <PhoneInput
@@ -252,9 +253,9 @@ const AddressForm = ({ isUpdating = false, heading }: AddressFormProps) => {
           />
         </div>
 
-        <div className="space-y-4 w-full space-x-2 md:pt-6">
-          <div className="flex-1 space-y-4 px-6 md:px-0">
-            <Label className="text-xs md:text-sm" htmlFor="location">
+        <div className="space-y-4 w-full md:pt-6">
+          <div className="flex-1 space-y-4 md:px-0">
+            <Label className="text-sm md:text-sm" htmlFor="location">
               Select Location
             </Label>
             <LocationPicker onLocationSelect={handleLocationSelect} />
@@ -282,6 +283,7 @@ Your selected location will also be used to automatically fill address details w
                 : 'Submit'}
           title={isUpdating ? 'Update' : 'Submit'}
           disabled={!isValid || isSubmitting || isLoading}
+          className='w-full md:w-auto'
         />
       </div>
     </form>

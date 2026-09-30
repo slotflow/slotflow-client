@@ -86,7 +86,7 @@ const ProfileHead = () => {
                   className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-200 cursor-pointer backdrop-blur-[2px]"
                 >
                   <div className="bg-white/90 dark:bg-slate-900/90 text-foreground p-2.5 rounded-full shadow-lg transform translate-y-2 group-hover:translate-y-0 transition-all duration-200">
-                    <Pen className="w-4 h-4" />
+                    <Pen className="size-4" />
                   </div>
                   <span className="text-[11px] font-medium text-white mt-1.5 drop-shadow-sm">
                     Change Photo

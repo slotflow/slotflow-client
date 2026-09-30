@@ -9,18 +9,19 @@ import {
   providerUpdateIdentityProof,
   providerUpdateProofServiceProof,
 } from '@/services/apis/providerProfile';
-import { LoaderCircle } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { Check, LoaderCircle } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { AppDispatch, RootState } from '@/app/store/appStore';
 import FileUploader from '@/components/form/Common/FileUploader';
 import { setIsProofSubmitted } from '@/app/store/slices/authSlice';
-import { defaultBtnClass, redirectPaths } from '@/shared/utils/constants';
 
 const ProviderProofSubmissionPage = () => {
-  const navigate = useNavigate();
+
+  const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
   const { authUser } = useSelector((state: RootState) => state.auth);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -62,7 +63,7 @@ const ProviderProofSubmissionPage = () => {
     e.preventDefault();
     dispatch(setIsProofSubmitted());
     await delay(1000);
-    navigate(redirectPaths.ONBOARDING_PENDING);
+    goTo(redirectPaths.ONBOARDING_PENDING);
     setIsSubmitting(false);
   };
 
@@ -93,20 +94,26 @@ const ProviderProofSubmissionPage = () => {
             title="Submit proofs"
             variant="default"
             onClick={handleNextutton}
-            className={defaultBtnClass}
             type="button"
+            className='w-full md:w-auto'
             disabled={isSubmitting || !identityProof.file || !serviceProof.file}
           >
             {isSubmitting ? (
               <>
-                <LoaderCircle className="animate-spin size-4 mr-2" />
+                <LoaderCircle className="animate-spin size-4" />
                 {authUser?.isProofSubmitted && isSubmitting ? 'Updating' : 'Submitting'}
               </>
             ) : authUser?.isProofSubmitted?.identityProof &&
               authUser?.isProofSubmitted?.serviceProof ? (
-              'Update'
+              <>
+                <Check className="size-4" />
+                Update
+              </>
             ) : (
-              'Submit'
+              <>
+                <Check className="size-4" />
+                Submit
+              </>
             )}
           </Button>
         </div>

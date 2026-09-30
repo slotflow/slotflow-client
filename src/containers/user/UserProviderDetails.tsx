@@ -1,17 +1,17 @@
 import { Role } from '@/shared/types/enums';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import ListReviews from '../../containers/dashboard/ListReviews';
+import ListReviews from '../dashboard/ListReviews';
 import { fetchAddressByUserId } from '@/services/apis/address';
 import AddressListing from '@/components/profile/AddressListing';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import ProviderProfile from '@/components/provider/ProviderProfile';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import { fetchProviderDetailsForUser } from '@/services/apis/providerProfile';
 import { fetchProviderServiceByProviderId } from '@/services/apis/providerService';
 import ProviderServiceAvailability from '@/components/profile/ProviderServiceAvailability';
-import { queryKeys } from '@/shared/utils/constants';
 
-const UserServiceProviderDetailPage = () => {
+const UserProviderDetails = () => {
   const { providerId } = useParams<{ providerId: string }>();
 
   const {
@@ -60,15 +60,18 @@ const UserServiceProviderDetailPage = () => {
       address={
         <AddressListing
           userOrProviderId={providerId}
-          fetchApiFunction={() => fetchAddressByUserId(providerId)}
+          fetchApiFunction={() => fetchAddressByUserId({
+            userId: providerId
+          })}
           queryKey={[queryKeys.ADDRESS]}
           isUserLookingProvider
+          hideAddress
         />
       }
       availability={<ProviderServiceAvailability role={Role.USER} providerId={providerId} />}
-      
+
     />
   );
 };
 
-export default UserServiceProviderDetailPage;
+export default UserProviderDetails;

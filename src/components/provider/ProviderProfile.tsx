@@ -69,7 +69,7 @@ const ProviderProfile = ({
           <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
             <CardHeader className="border-b pb-4">
               <CardTitle className="text-lg font-semibold flex items-center gap-2">
-                <Star className="w-5 h-5 text-primary" />
+                <Star className="size-5 text-primary" />
                 Reviews
               </CardTitle>
               <CardDescription>What clients says about Franklin Shawn</CardDescription>

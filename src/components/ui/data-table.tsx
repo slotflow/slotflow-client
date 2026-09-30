@@ -20,7 +20,6 @@ import {
 import * as React from 'react';
 import { Input } from './input';
 import { Button } from './button';
-import { actionBtnClass } from '@/shared/utils/constants';
 import { DataTableProps } from '@/shared/types/component';
 import { ChevronLeft, ChevronRight, Columns, RotateCw } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './table';
@@ -97,7 +96,7 @@ export function DataTable<TData, TValue>({
                 title={btn?.actionLabel}
                 variant="secondary"
                 size="sm"
-                className={actionBtnClass} onClick={btn?.onActionClick}
+                onClick={btn?.onActionClick}
               >
                 {btn?.actionLabel}
               </Button>
@@ -109,7 +108,7 @@ export function DataTable<TData, TValue>({
                 title="refetch"
                 variant="secondary"
                 size="sm"
-                className={actionBtnClass} onClick={() => refetch()}
+                onClick={() => refetch()}
               >
                 <RotateCw
                   className={`w-3.5 h-3.5 text-slate-500 ${isFetching && 'animate-spin'}`}
@@ -122,7 +121,7 @@ export function DataTable<TData, TValue>({
                 title="Columns"
                 variant="secondary"
                 size="sm"
-                className={actionBtnClass}              >
+                >
                 <Columns
                   className={`w-3.5 h-3.5 text-slate-500 ${isFetching && 'animate-spin'}`}
                 />
@@ -213,7 +212,6 @@ export function DataTable<TData, TValue>({
           <Button
             title="Previous"
             variant="secondary"
-            className={actionBtnClass}
             size="sm"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
@@ -226,7 +224,6 @@ export function DataTable<TData, TValue>({
           <Button
             title="Next"
             variant="secondary"
-            className={actionBtnClass}
             size="sm"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}

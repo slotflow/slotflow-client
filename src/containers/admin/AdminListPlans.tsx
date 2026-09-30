@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import PlanForm from '@/components/form/Admin/PlanForm';
 import { useAdminPlan } from '@/hooks/adminHooks/usePlan';
 import { adminFetchAllPlans } from '@/services/apis/plan';
@@ -14,7 +14,7 @@ const AdminListPlans = () => {
   const [showForm, setShowForm] = useState(false);
   const [selectedPlanIdToEdit, setSelectedPlanIdToEdit] = useState<string | null>(null);
 
-  const { handleNavigateToPlanDetailPage } = useAppNavigation();
+  const { toPlanDetailsPage } = useAppNavigation();
   const { changePlanBlockStatus, resyncPlanWithStripe, changeBlockStatusPlanId, resyncingPlanId } =
     useAdminPlan();
 
@@ -31,7 +31,7 @@ const AdminListPlans = () => {
   const column = AdminPlansTableColumns(
     changePlanBlockStatus,
     resyncPlanWithStripe,
-    handleNavigateToPlanDetailPage,
+    toPlanDetailsPage,
     handleOpenPlanEditForm,
     changeBlockStatusPlanId,
     resyncingPlanId,

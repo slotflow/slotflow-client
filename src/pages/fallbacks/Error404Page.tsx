@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import error404 from '../../assets/svgs/error404.svg';
 
 const Error404Page = () => {
+  
   const navigate = useNavigate();
 
   return (

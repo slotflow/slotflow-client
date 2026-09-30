@@ -122,7 +122,7 @@ const DynamicStringListField = ({
                     <Button
                       type="button"
                       variant="ghost"
-                      size="icon"
+                      size="sm"
                       onClick={() => handleRemove(index)}
                       className="cursor-pointer h-9 w-9 text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
                       title="Remove"
@@ -135,7 +135,7 @@ const DynamicStringListField = ({
                     <Button
                       type="button"
                       variant="outline"
-                      size="icon"
+                      size="sm"
                       onClick={handleAdd}
                       className="cursor-pointer h-9 w-9 border-dashed text-primary hover:bg-primary/10 transition-colors"
                       title="Add"
@@ -146,14 +146,14 @@ const DynamicStringListField = ({
                 </div>
 
                 {fieldError && (
-                  <p className="text-[var(--error-color)] text-xs px-2">{fieldError}</p>
+                  <p className="text-red-600 text-xs font-semibold px-2">{fieldError}</p>
                 )}
               </div>
             );
           })}
         </div>
 
-        {arrayError && <p className="text-[var(--error-color)] text-xs px-2">{arrayError}</p>}
+        {arrayError && <p className="text-red-600 font-semibold text-xs px-2">{arrayError}</p>}
 
         {helperText && <p className="text-xs text-muted-foreground">{helperText}</p>}
       </div>

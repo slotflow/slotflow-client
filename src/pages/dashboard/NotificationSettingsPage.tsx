@@ -3,7 +3,7 @@ import { RootState } from '@/app/store/appStore';
 import { handleNotificationChange } from '@/services/apis/notification';
 import { NotificationType, NotificationChannel } from '@/shared/types/common';
 import NotificationSettingsItem from '../../components/notification/NotificationSettingsItem';
-import { notificationChannel, notificationType } from '@/shared/utils/constants';
+import { notificationChannel, notificationType } from '@/shared/utils/constants/appConstants';
 
 const NotificationSettingsPage = () => {
   

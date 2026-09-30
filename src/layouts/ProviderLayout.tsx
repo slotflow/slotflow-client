@@ -3,15 +3,17 @@ import MainLayout from './MainLayout';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/app/store/appStore';
 import { PlanName, Role } from '@/shared/types/enums';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 import PaymentSelection from '@/components/payment/PaymentSelection';
 import { planAccessMap } from '@/shared/utils/constants/planConstants';
 import { getRoutesByRole } from '@/shared/utils/helper/getRouteByRole';
 import NotificationsContainer from '@/components/notification/NotificationsContainer';
-import { redirectPaths } from '@/shared/utils/constants';
 
 const ProviderLayout = () => {
-  const navigate = useNavigate();
+  
+  const { goTo } = useAppNavigation(); 
   const pathname = useLocation().pathname;
   const authUser = useSelector((store: RootState) => store.auth.authUser);
   const { isPaymentModalOpen, subscriptionData } = useSelector((store: RootState) => store.payment);
@@ -27,35 +29,35 @@ const ProviderLayout = () => {
     if (!authUser) return;
 
     if (!authUser.isAddressAdded && !authUser.isAddressVerified) {
-      navigate(redirectPaths.ONBOARDING_ADDRESS);
+      goTo(redirectPaths.ONBOARDING_ADDRESS);
       return;
     }
     
     if (!authUser.isServiceDetailsAdded && !authUser.isServiceDetailsVerified) {
-      navigate(redirectPaths.ONBOARDING_SERVICE);
+      goTo(redirectPaths.ONBOARDING_SERVICE);
       return;
     }
     
     if (!authUser.isServiceAvailabilityAdded && !authUser.isAvailabilityVerified) {
-      navigate(redirectPaths.ONBOARDING_AVAILABILITY);
+      goTo(redirectPaths.ONBOARDING_AVAILABILITY);
       return;
     }
     
     if (!authUser.isProofSubmitted && !authUser.isProofsVerified) {
-      navigate(redirectPaths.ONBOARDING_PROOFS);
+      goTo(redirectPaths.ONBOARDING_PROOFS);
       return;
     }
     
     if (!authUser.isAdminVerified) {
-      navigate(redirectPaths.ONBOARDING_PENDING);
+      goTo(redirectPaths.ONBOARDING_PENDING);
       return;
     }
 
     if (authUser.isAdminVerified && (pathname === '/provider' || pathname === '/provider/')) {
-      navigate('/dashboard');
+      goTo(redirectPaths.DASHBOARD);
       return;
     }
-  }, [authUser, navigate, pathname]);
+  }, [authUser, goTo, pathname]);
 
   return (
     <MainLayout routes={providerRoutes} filteredRoutes={accessibleRoutes}>

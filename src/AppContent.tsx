@@ -1,7 +1,6 @@
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-// import { appRouter } from './router/AppRouter';
-import { appRouter } from './router/NewRouter';
+import { appRouter } from './router/AppRouter';
 import { queryClient } from './lib/queryClient';
 import { RootState } from '@/app/store/appStore';
 import { RouterProvider } from 'react-router-dom';

@@ -1,11 +1,13 @@
-import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, CalendarDays } from 'lucide-react';
-import { redirectPaths } from '@/shared/utils/constants';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 import SplitTextReveal from '@/components/animation/SplitTextReveal';
 
 const ContactCTA = () => {
-  const navigate = useNavigate();
+
+  const { goTo } = useAppNavigation();
+
   return (
     <section id="cta" className="pb-24 lg:pb-32">
       <div className="mx-auto max-w-7xl px-4 lg:px-0">
@@ -39,15 +41,15 @@ const ContactCTA = () => {
             <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Button
                 className="h-8 lg:h-12 rounded-xl px-8"
-                onClick={() => navigate(redirectPaths.LOGIN)}
+                onClick={() => goTo(redirectPaths.LOGIN)}
               >
                 Login
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
               </Button>
               <Button
                 variant="outline"
                 className="h-8 lg:h-12 rounded-xl px-8"
-                onClick={() => navigate('/pricing')}
+                onClick={() => goTo('/pricing')}
               >
                 View Pricing
               </Button>

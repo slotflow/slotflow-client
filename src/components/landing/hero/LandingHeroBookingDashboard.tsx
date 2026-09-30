@@ -22,7 +22,7 @@ const LandingHeroBookingDashboard = () => {
         <MoveUpward>
           <div className="p-6">
             <div className="flex items-center gap-3 rounded-2xl border bg-muted/40 px-4 py-4">
-              <Search className="h-5 w-5 text-muted-foreground" />
+              <Search className="size-5 text-muted-foreground" />
               <div className="flex-1">
                 <p className="text-sm text-muted-foreground">Search services</p>
                 <p className="font-medium">Hair Salon, Dentist...</p>
@@ -104,7 +104,7 @@ const LandingHeroBookingDashboard = () => {
         <div className="rounded-3xl border bg-background/90 p-5 shadow-xl backdrop-blur-xl">
           <div className="flex items-center gap-3">
             <div className="rounded-full bg-green-500/10 p-3">
-              <ShieldCheck className="h-5 w-5 text-green-600" />
+              <ShieldCheck className="size-5 text-green-600" />
             </div>
             <div>
               <p className="font-semibold">Booking Confirmed</p>

@@ -69,7 +69,7 @@ export const SandboxPage = ({
                     type="checkbox"
                     checked={!!currentProps[propKey]}
                     onChange={(e) => handlePropChange(propKey, e.target.checked)}
-                    className="h-4 w-4"
+                    className="size-4"
                   />
                 )}
                 {control?.type === 'select' && (

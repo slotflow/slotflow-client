@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/table';
 import { Briefcase } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import { formatDate } from '@/shared/utils/helper/formatDate';
 import { fetchSubscriptions } from '@/services/apis/subscription';
 import RecentActivityTableCard from '@/components/dashboard/RecentActivityTableCard';
@@ -69,7 +69,7 @@ const SubscriptionsListCard = () => {
                   {provider.subscriptionStatus}
                 </TableCell>
                 <TableCell className="text-xs text-slate-500 dark:text-slate-400 py-3 px-4 truncate max-w-[150px]">
-                  {formatDate(provider.endDate)}
+                  {formatDate(provider.currentPeriodEnd)}
                 </TableCell>
               </TableRow>
             ))}

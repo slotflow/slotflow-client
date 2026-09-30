@@ -4,15 +4,15 @@ import { stripeClient } from "@/lib/stripe";
 import { AppDispatch } from "@/app/store/appStore";
 import { useMutation } from "@tanstack/react-query";
 import { getEventSocket } from "@/lib/socketService";
-import { EventSocketEnum } from "@/shared/types/socket";
+import { EventSocketEnum } from "@/shared/types/enums";
+import { UseBookingReturn } from "@/shared/types/hooks";
 import { bookAnAppointment } from "@/services/apis/booking";
 import { PaymentProcessStatus } from "@/shared/types/enums";
-import { UseBookingPaymentReturn } from "@/shared/types/hooks";
 import { ApiBaseResponse, ApiError } from "@/shared/types/common";
 import { BookAppointmentRequest, BookAppointmentResponse } from "@/shared/types/api/booking";
-import { setPaymentProcessStatus, setPaymentSelectionOpen } from "@/app/store/slices/paymentSlice";
+import { setBookingData, setPaymentProcessStatus, setPaymentSelectionClose } from "@/app/store/slices/paymentSlice";
 
-export const useBookingPayment = (): UseBookingPaymentReturn => {
+export const useBooking = (): UseBookingReturn => {
 
     const eventSocket = getEventSocket();
     const dispatch = useDispatch<AppDispatch>();
@@ -34,6 +34,7 @@ export const useBookingPayment = (): UseBookingPaymentReturn => {
             }
 
             return new Promise((resolve, reject) => {
+                dispatch(setPaymentProcessStatus(PaymentProcessStatus.PROCESSING));
                 eventSocket.emit(EventSocketEnum.slotEngageRequest, {
                     providerId: data.providerId,
                     date: data.date,
@@ -45,11 +46,6 @@ export const useBookingPayment = (): UseBookingPaymentReturn => {
                         const response = await bookAnAppointment(data);
                         resolve(response);
                     } catch (error) {
-                        eventSocket.emit(EventSocketEnum.slotUnlockRequest, {
-                            providerId: data.providerId,
-                            date: data.date,
-                            slotId: data.slotId,
-                        });
                         reject(error);
                     }
                 });
@@ -60,25 +56,38 @@ export const useBookingPayment = (): UseBookingPaymentReturn => {
             });
         },
         onSuccess: (res) => {
-            const sessionId = res.data;
 
-            if (!sessionId) {
-                toast.error("Failed to create checkout session.");
+            if (res.success && res.data) {
+                const { sessionId } = res.data;
+
+                if (!sessionId) {
+                    toast.error('Failed to create checkout session.');
+                    dispatch(setPaymentProcessStatus(PaymentProcessStatus.FAILED));
+                    return;
+                }
+
+                stripeClient?.redirectToCheckout({ sessionId });
+            } else {
+                toast.error(res.message || 'Could not complete booking.');
                 dispatch(setPaymentProcessStatus(PaymentProcessStatus.FAILED));
-                return;
             }
 
-            dispatch(setPaymentProcessStatus(PaymentProcessStatus.PROCESSING));
-            stripeClient?.redirectToCheckout({ sessionId });
         },
         onError: (error: ApiError | Error) => {
+            const variables: BookAppointmentRequest | undefined = bookAnAppointmentMutation.variables;
+            if (variables?.providerId && variables?.date && variables?.slotId) {
+                eventSocket.emit(EventSocketEnum.slotUnlockRequest, {
+                    providerId: variables.providerId,
+                    date: variables.date,
+                    slotId: variables.slotId,
+                });
+            }
             toast.error(error.message || "Booking payment failed");
             dispatch(setPaymentProcessStatus(PaymentProcessStatus.FAILED));
         },
         onSettled: () => {
-            eventSocket.off(EventSocketEnum.slotEngageApproved);
-            eventSocket.off(EventSocketEnum.slotEngageRejected);
-            dispatch(setPaymentSelectionOpen(false));
+            dispatch(setPaymentSelectionClose());
+            dispatch(setBookingData(null));
         },
     });
 

@@ -24,7 +24,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SelectSeparator } from '@/components/ui/select';
-import FeatureOverlay from '@/components/common/FeatureOverlay';
+import FeatureOverlay from '@/components/app/FeatureOverlay';
 
 export type RoleType = 'Owner' | 'Admin' | 'Manager' | 'Support' | 'Staff';
 
@@ -183,6 +183,9 @@ const TeamStaffAccess = () => {
                         <SelectSeparator />
                         <CardContent className="p-5 pt-4 space-y-5 relative min-h-[300px]">
                             <FeatureOverlay
+                                size='md'
+                                isBlur
+                                isDevMode
                                 title="Team & Permissions Coming Soon"
                                 description="Role-based access control and custom staff permissions will be available in an upcoming update."
                             />
@@ -289,7 +292,7 @@ const TeamStaffAccess = () => {
                                                     <Button
                                                         type="button"
                                                         variant="ghost"
-                                                        size="icon"
+                                                        size="sm"
                                                         onClick={() => handleRemoveMember(member.id)}
                                                         className="size-8 text-muted-foreground hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30"
                                                         title="Remove Member"

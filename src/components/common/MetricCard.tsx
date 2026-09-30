@@ -49,7 +49,7 @@ const MetricCard = ({
               : 'bg-muted/60 text-muted-foreground'
           }`}
         >
-          <Icon className="w-4 h-4" />
+          <Icon className="size-4" />
         </div>
       </div>
 
@@ -57,12 +57,12 @@ const MetricCard = ({
         <div className="space-y-1.5">
           {isLoading ? (
             <div className="flex items-center gap-2 py-1">
-              <LoaderCircle className="w-5 h-5 animate-spin text-muted-foreground" />
+              <LoaderCircle className="size-5 animate-spin text-muted-foreground" />
               <span className="h-4 w-16 rounded bg-muted/60 animate-pulse" />
             </div>
           ) : isError && error ? (
             <div className="flex items-center gap-1.5 text-xs text-destructive">
-              <Info className="w-4 h-4" />
+              <Info className="size-4" />
               <span>Failed to fetch</span>
             </div>
           ) : (

@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { SelectSeparator } from '@/components/ui/select';
 import { ShieldCheck, ShieldAlert, Smartphone, Key, Copy, Check } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import FeatureOverlay from '@/components/common/FeatureOverlay';
+import FeatureOverlay from '@/components/app/FeatureOverlay';
 
 const TwoFactorSetup = () => {
   const [showForm, setShowForm] = useState<boolean>(false);
@@ -88,6 +88,9 @@ const TwoFactorSetup = () => {
             <SelectSeparator />
             <CardContent className="p-5 pt-4 space-y-5 relative min-h-[300px]">
               <FeatureOverlay
+                size='md'
+                isBlur
+                isDevMode
                 title="2FA Authentication Coming Soon"
                 description="Enhanced two-factor security via authenticator apps and SMS keys is currently under development."
               />

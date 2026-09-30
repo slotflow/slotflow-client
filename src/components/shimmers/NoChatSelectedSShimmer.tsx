@@ -1,5 +1,5 @@
-import { shimmerMessages } from '@/shared/utils/constants';
 import { NoChatSelectedSShimmerProps } from '@/shared/types/shimmer';
+import { shimmerMessages } from '@/shared/utils/constants/shimmerConstants';
 
 const NoChatSelectedSShimmer = ({ className }: NoChatSelectedSShimmerProps) => {
   return (

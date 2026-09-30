@@ -5,7 +5,7 @@ import {
   AdminFetchUserProfileDetailsResponse,
 } from '@/shared/types/api/user';
 import { toast } from 'react-toastify';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import { UseAdminUserReturn } from '@/shared/types/hooks';
 import { changeUserBlockStatus } from '@/services/apis/user';
 import { useMutation, useQueryClient } from '@tanstack/react-query';

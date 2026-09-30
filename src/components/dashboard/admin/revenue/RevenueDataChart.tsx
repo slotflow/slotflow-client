@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import { RevenueDataChartProps } from '@/shared/types/component';
 import AreaGroupedChart from '@/components/chart/AreaGroupedChart';
 import { revenueChartConfig } from '@/shared/utils/constants/chartConstants';

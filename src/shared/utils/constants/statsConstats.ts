@@ -5,75 +5,75 @@ import { BadgeCheck, Ban, Banknote, CalendarCheck, CheckCircle, Clock, CreditCar
 
 // Provider Dashboard Stats Cards Data
 export const statsMapForProvider: Array<statsMapIntrface<ProviderFetchDashboardBookingStatsDataResponse>> =
-    [
-        {
-            title: 'Total Appointments',
-            key: 'totalAppointments',
-            icon: CalendarCheck,
-            plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
-        },
-        {
-            title: 'Today’s Appointments',
-            key: 'todaysAppointments',
-            icon: Clock,
-            plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
-        },
-        {
-            title: 'Completed Appointments',
-            key: 'completedAppointments',
-            icon: CheckCircle,
-            plans: [PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
-        },
-        {
-            title: 'Missed Appointments',
-            key: 'missedAppointments',
-            icon: XCircle,
-            plans: [PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
-        },
-        {
-            title: 'Cancelled by User',
-            key: 'cancelledAppointmentsByUser',
-            icon: Ban,
-            plans: [PlanName.ENTERPRISE],
-        },
-        {
-            title: 'Rejected by Provider',
-            key: 'rejectedAppointmentsByProvider',
-            icon: ThumbsDown,
-            plans: [PlanName.ENTERPRISE],
-        },
-    ];
+  [
+    {
+      title: 'Total Appointments',
+      key: 'totalAppointments',
+      icon: CalendarCheck,
+      plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
+    },
+    {
+      title: 'Today’s Appointments',
+      key: 'todaysAppointments',
+      icon: Clock,
+      plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
+    },
+    {
+      title: 'Completed Appointments',
+      key: 'completedAppointments',
+      icon: CheckCircle,
+      plans: [PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
+    },
+    {
+      title: 'Missed Appointments',
+      key: 'missedAppointments',
+      icon: XCircle,
+      plans: [PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
+    },
+    {
+      title: 'Cancelled by User',
+      key: 'cancelledAppointmentsByUser',
+      icon: Ban,
+      plans: [PlanName.ENTERPRISE],
+    },
+    {
+      title: 'Rejected by Provider',
+      key: 'rejectedAppointmentsByProvider',
+      icon: ThumbsDown,
+      plans: [PlanName.ENTERPRISE],
+    },
+  ];
 
 // Revenue status map for provider
 export const revenueStatsMapForProvider = [
-    {
-        title: 'Subscription Payments',
-        key: 'totalSubscriptionPaidAmount',
-        icon: Receipt,
-        price: true,
-        plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
-    },
-    {
-        title: 'Total Earnings',
-        key: 'totalEarnings',
-        icon: Banknote,
-        price: true,
-        plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
-    },
-    {
-        title: 'Total Payouts Made',
-        key: 'totalPayoutsMade',
-        icon: Wallet,
-        price: true,
-        plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
-    },
-    {
-        title: 'Pending Payout',
-        key: 'pendingPayout',
-        icon: Hourglass,
-        price: true,
-        plans: [PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
-    },
+  {
+    title: 'Subscription Payments',
+    key: 'totalSubscriptionPaidAmount',
+    icon: Receipt,
+    price: true,
+    plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
+  },
+  {
+    title: 'Total Earnings',
+    key: 'totalEarnings',
+    icon: Banknote,
+    price: true,
+    plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
+  },
+  {
+    title: 'Total Payouts Made',
+    key: 'totalPayoutsMade',
+    icon: Wallet,
+    price: true,
+    plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
+  },
+  {
+    title: 'Pending Payout',
+    key: 'pendingPayout',
+    icon: Hourglass,
+    price: true,
+    plans: [PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
+  },
 ];
 
 // Admin Dashboard Stats Cards Data

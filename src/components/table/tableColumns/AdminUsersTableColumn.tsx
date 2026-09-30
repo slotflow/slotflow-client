@@ -20,7 +20,7 @@ import {
 const AdminUsersTableColumns = (
   changeUserBlockStatus: (data: AdminChangeUserBlockStatusRequest) => void,
   changeBlockStatusUserId: string | null | undefined,
-  handleGetUserDetailPage: (userId: User['_id']) => void,
+  toUserDetailsPage: (userId: User['_id'], replace?: boolean) => void,
 ): ColumnDef<AdminfetchAllUsersResponse>[] => [
   {
     accessorKey: 'slNo',
@@ -74,14 +74,14 @@ const AdminUsersTableColumns = (
           <DropdownMenuTrigger asChild>
             <Button title="Open Menu" variant="ghost" className="h-8 w-8 p-0 cursor-pointer">
               <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
+              <MoreHorizontal className="size-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() => handleGetUserDetailPage(user._id)}
+              onClick={() => toUserDetailsPage(user._id)}
               className="cursor-pointer"
             >
               <ReceiptText className="w-3.5 h-3.5" />

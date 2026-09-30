@@ -10,13 +10,14 @@ import {
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppNavigation } from '@/hooks/useAppNavigation';
-import { containerVariants } from '@/shared/utils/constants';
 import { useIntegrationsCallback } from '@/hooks/useIntegrationsCallback';
+import { containerVariants } from '@/shared/utils/constants/designConstants';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 
 const IntegrationsCallbackPage = () => {
 
-    const { toIntegrations } = useAppNavigation();
+    const { goTo } = useAppNavigation();
     const { loading, serviceName, success } = useIntegrationsCallback();
 
     return (
@@ -109,12 +110,12 @@ const IntegrationsCallbackPage = () => {
 
                                     <Button
                                         title="Return to Integrations"
-                                        onClick={() => toIntegrations(true)}
+                                        onClick={() => goTo(redirectPaths.INTEGRATIONS)}
                                         className="w-full bg-[var(--mainColor)] text-white hover:bg-[var(--mainColorHover)] shadow-lg shadow-[var(--mainColor)]/20 transition-all duration-300 hover:scale-[1.02]"
                                     >
-                                        <Sliders className="mr-2 h-5 w-5" />
+                                        <Sliders className="mr-2 size-5" />
                                         Back to Integrations
-                                        <ArrowRight className="ml-auto h-4 w-4 opacity-70" />
+                                        <ArrowRight className="ml-auto size-4 opacity-70" />
                                     </Button>
                                 </motion.div>
                             ) : (
@@ -146,7 +147,7 @@ const IntegrationsCallbackPage = () => {
 
                                     <Button
                                         title="Back to Integrations"
-                                        onClick={() => toIntegrations(true)}
+                                        onClick={() => goTo(redirectPaths.INTEGRATIONS)}
                                         className="w-full bg-[var(--mainColor)] text-white hover:bg-[var(--mainColorHover)] shadow-lg shadow-[var(--mainColor)]/20 transition-all duration-300 hover:scale-[1.02]"
                                     >
                                         Back to Integrations

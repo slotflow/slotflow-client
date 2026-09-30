@@ -56,12 +56,12 @@ const BlogDetailHero = ({
             </div>
             <Separator orientation="vertical" className="hidden h-10 bg-white/20 lg:block" />
             <div className="flex items-center gap-3 dark:text-white/80 text-black/80">
-              <CalendarDays className="h-5 w-5" />
+              <CalendarDays className="size-5" />
               <span>{formatDate(createdAt)}</span>
             </div>
             <Separator orientation="vertical" className="hidden h-10 bg-white/20 lg:block" />
             <div className="flex items-center gap-3 dark:text-white/80 text-black/80">
-              <Clock3 className="h-5 w-5" />
+              <Clock3 className="size-5" />
               <span>{readTime}</span>
             </div>
           </div>

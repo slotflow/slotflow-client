@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import DataField from '@/components/app/DataField';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { formatDate } from '@/shared/utils/helper/formatDate';
 import { formatString } from '@/shared/utils/helper/formatString';
@@ -14,13 +15,13 @@ const ProviderSubscriptionInfo = ({
     subscriptionStatus,
 }: ProviderSubscriptionInfoProps) => {
 
-    const { toUpgrade } = useAppNavigation();
+    const { goTo } = useAppNavigation();
 
     return (
         <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
             <CardHeader className="flex justify-between items-center">
                 <CardTitle className="flex flex-row space-x-2 items-center">
-                    <CreditCard className="w-4 h-4 text-indigo-500" />
+                    <CreditCard className="size-4 text-indigo-500" />
                     <span>Subscription Details</span>
                 </CardTitle>
                 <Button
@@ -29,7 +30,7 @@ const ProviderSubscriptionInfo = ({
                     className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border border-slate-200 dark:border-border bg-white dark:bg-muted/20 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-muted/30 shadow-sm transition-all cursor-pointer disabled:opacity-50"
                     onClick={(e) => {
                         e.preventDefault();
-                        toUpgrade(false);
+                        goTo(redirectPaths.UPGRADE);
                     }}
                 >
                     {'Manage Plan'}

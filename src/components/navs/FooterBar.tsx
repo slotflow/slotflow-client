@@ -112,7 +112,7 @@ const Footer = () => {
             className="flex items-center gap-2 transition-colors hover:text-foreground"
           >
             <span>Source Code is available on</span>
-            <Github className="h-4 w-4" />
+            <Github className="size-4" />
             <span>GitHub</span>
           </a>
         </div>

@@ -5,6 +5,7 @@ import {
 } from '@/app/store/slices/chatSlice';
 import { RootState } from '@/app/store/appStore';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { ChatSocketEnum } from '@/shared/types/enums';
 import { Message } from '@/shared/types/entity/message';
 import { getChatSocket, distroyChatSocket } from '@/lib/socketService';
 
@@ -16,11 +17,11 @@ export const connectChatSocket = createAsyncThunk<void, void, { state: RootState
 
     const socket = getChatSocket();
 
-    socket.on('connect', () => {
+    socket.on(ChatSocketEnum.connect, () => {
       dispatch(setSocketConnected({ socketId: socket.id as string }));
     });
 
-    socket.on('newMessage', (newMessage: Message) => {
+    socket.on(ChatSocketEnum.newMessage, (newMessage: Message) => {
       dispatch(addNewMessage(newMessage));
     });
   },

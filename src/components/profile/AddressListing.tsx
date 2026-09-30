@@ -15,6 +15,7 @@ import DataField from '../app/DataField';
 import MapPreview from '../map/MapPreview';
 import { SelectSeparator } from '../ui/select';
 import { useQuery } from '@tanstack/react-query';
+import FeatureOverlay from '../app/FeatureOverlay';
 import AddressForm from '../form/Common/AddressForm';
 import { AnimatePresence, motion } from 'framer-motion';
 import DataFetchingError from '../error/DataFetchingError';
@@ -30,7 +31,9 @@ const AddressListing = ({
   canUpdate = false,
   showHeading = false,
   isShowPreview = false,
+  hideAddress = false,
 }: UserOrProviderAddressDetailsProps) => {
+
   const [showForm, setShowForm] = useState<boolean>(false);
 
   const { data, isLoading, isError, error } = useQuery({
@@ -46,11 +49,22 @@ const AddressListing = ({
   }
 
   return (
-    <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
-      {(showHeading || canUpdate) && (
+    <Card className="relative rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
+      {hideAddress ? (
+        <FeatureOverlay
+          isBlur
+          size='md'
+          icon={MapPin}
+          isDevMode={false}
+          title="Address Protected"
+          description="For privacy and security, the exact location is hidden until your appointment is confirmed. We will send you the full address once confirmed."
+          borderRadius='rounded-xl'
+        />
+      ) : (
+        showHeading || canUpdate) && (
         <CardHeader className="flex justify-between items-center">
           {showHeading && (
-            <CardTitle className="flex flex-row space-x-2"> <Map className="w-4 h-4 text-indigo-500" /> <span>Address</span></CardTitle>
+            <CardTitle className="flex flex-row space-x-2"> <Map className="size-4 text-indigo-500" /> <span>Address</span></CardTitle>
           )}
           {canUpdate && (
             <Button
@@ -162,6 +176,7 @@ const AddressListing = ({
           </CardContent>
         </>
       )}
+
       <AnimatePresence initial={false}>
         {showForm && (
           <motion.div

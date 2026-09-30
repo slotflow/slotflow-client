@@ -73,7 +73,7 @@ const UpdateUserInfoForm = ({ onClose }: UpdateUserInfoFormProps) => {
         rules={{ required: true }}
         render={({ field }) => (
           <div className="space-y-2">
-            <label className="block text-xs md:text-sm font-medium text-[var(--textTwo)] hover:text-[var(--textTwoHover)]">
+            <label className="block text-xs md:text-sm font-medium">
               Phone
             </label>
             <PhoneInput

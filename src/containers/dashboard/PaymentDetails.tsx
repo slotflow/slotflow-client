@@ -18,7 +18,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { fetchPaymentDetails } from '@/services/apis/payment';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import ProfileDetailsShimmer from '@/components/shimmers/DataFieldShimmer';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 
 const PaymentDetails = () => {
   const { paymentId } = useParams<{ paymentId: string }>();
@@ -35,10 +35,8 @@ const PaymentDetails = () => {
   const dataMap = [
     { label: 'Transaction ID', value: data?.transactionId, canCopy: true, Icon: Hash },
     { label: 'Payment Status', value: data?.paymentStatus, Icon: BadgeCheck },
-    { label: 'Payment Method', value: data?.paymentMethod, Icon: CreditCard },
     { label: 'Payment Gateway', value: data?.paymentGateway, Icon: Landmark },
     { label: 'Payment Category', value: data?.paymentFor, Icon: Layers },
-    { label: 'Initial Amount', value: data?.initialAmount, isPrice: true, Icon: IndianRupee },
     { label: 'Discount Amount', value: data?.discountAmount, isPrice: true, Icon: IndianRupee },
     { label: 'Total Amount', value: data?.totalAmount, isPrice: true, Icon: Receipt },
     { label: 'Receipt URL', value: data?.receiptUrl, link: true, Icon: Link },

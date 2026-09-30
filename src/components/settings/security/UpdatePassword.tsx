@@ -6,6 +6,7 @@ import UpdatePasswordForm from '@/components/form/Common/UpdatePasswordForm';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 
 const UpdatePassword = () => {
+  
   const [showForm, setShowForm] = useState<boolean>(false);
 
   return (

@@ -12,8 +12,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SelectSeparator } from '@/components/ui/select';
-import FeatureOverlay from '@/components/common/FeatureOverlay';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import FeatureOverlay from '@/components/app/FeatureOverlay';
 
 export interface SecurityLogEvent {
   id: string;
@@ -164,6 +164,9 @@ const SecurityLog = () => {
             <SelectSeparator />
             <CardContent className="p-5 pt-4 space-y-3 relative min-h-[300px]">
               <FeatureOverlay
+                size='sm'
+                isBlur
+                isDevMode
                 title="Security Audit Logs Coming Soon"
                 description="We are building real-time activity tracking and automated threat detection for your account."
               />

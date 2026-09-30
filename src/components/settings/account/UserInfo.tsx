@@ -5,20 +5,20 @@ import { RootState } from '@/app/store/appStore';
 import DataField from '@/components/app/DataField';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SelectSeparator } from '@/components/ui/select';
-import { statsPresents } from '@/shared/utils/constants';
+import StatusBadge from '@/components/common/StatusBadge';
 import { Mail, Phone, ShieldUser, User } from 'lucide-react';
-import getBooleanStatusComponent from '@/components/app/GetBooleanStatus';
 import UpdateUserInfoForm from '@/components/form/Common/UpdateUserInfoForm';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const UserInfo = () => {
+
   const authUser = useSelector((store: RootState) => store.auth.authUser);
   const [showForm, setShowForm] = useState<boolean>(false);
 
   return (
     <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
       <CardHeader className="flex justify-between items-center">
-        <CardTitle className="flex flex-row space-x-2"> <User className="w-4 h-4 text-indigo-500" /> <span>Profile Info</span></CardTitle>
+        <CardTitle className="flex flex-row space-x-2"> <User className="size-4 text-indigo-500" /> <span>Profile Info</span></CardTitle>
         <Button
           title="Update Password"
           variant={showForm ? 'destructive' : 'secondary'}
@@ -37,7 +37,9 @@ const UserInfo = () => {
         <DataField label="Email" value={authUser?.email} Icon={Mail} />
         <DataField
           label="Account Status"
-          value={getBooleanStatusComponent(authUser?.isBlocked, statsPresents.accountStatus)}
+          value={<StatusBadge
+            type={authUser?.isBlocked ? 'blocked' : "active"}
+          />}
           Icon={ShieldUser}
         />
       </CardContent>

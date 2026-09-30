@@ -202,7 +202,7 @@ const ChartLineLinear = ({
           {footerTextOne && (
             <div className="flex gap-2 leading-none font-medium">
               {footerTextOne}
-              <TrendingUp className="h-4 w-4" />
+              <TrendingUp className="size-4" />
             </div>
           )}
 

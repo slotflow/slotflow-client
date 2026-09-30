@@ -31,7 +31,7 @@ import TabNavigation from '@/components/common/TabNavigation';
 import ProviderProofs from '@/components/profile/ProviderProofs';
 import AddressListing from '@/components/profile/AddressListing';
 import { useAdminProvider } from '@/hooks/adminHooks/useProvider';
-import { providerTabs, queryKeys } from '@/shared/utils/constants';
+import { providerTabs } from '@/shared/utils/constants/tabConstants';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import DashboardDataCard from '@/components/common/DashboardDataCard';
 import ProviderServiceDetails from '@/components/profile/ProviderServiceList';
@@ -43,6 +43,7 @@ import {
   adminFetchProviderProofs,
   fetchProviderDetailsForAdmin,
 } from '@/services/apis/providerProfile';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 
 const AdminProviderDetails = () => {
   const navigate = useNavigate();
@@ -347,7 +348,7 @@ const AdminProviderDetails = () => {
             <TabsContent value="address">
               <AddressListing
                 userOrProviderId={providerId}
-                fetchApiFunction={() => fetchAddressByUserId(providerId)}
+                fetchApiFunction={() => fetchAddressByUserId({ userId: providerId })}
                 queryKey={[queryKeys.ADDRESS]}
               />
             </TabsContent>

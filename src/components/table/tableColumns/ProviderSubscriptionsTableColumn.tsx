@@ -18,11 +18,11 @@ import { SubscriptionStatus } from '@/shared/types/enums';
 import { formatDate } from '@/shared/utils/helper/formatDate';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
 import { Subscription } from '@/shared/types/entity/subscription';
-import { FetchProviderSubscriptionsResponse } from '@/shared/types/api/subscription';
 import { formatString } from '@/shared/utils/helper/formatString';
+import { FetchProviderSubscriptionsResponse } from '@/shared/types/api/subscription';
 
 const ProvidersSubscriptionsTableColumns = (
-  handleAdminGetProviderDetailPage: (subscriptionId: Subscription['_id']) => void,
+  toSubscriptionDetailsPage: (subscriptionId: Subscription['_id'], replace?: boolean) => void,
 ): ColumnDef<FetchProviderSubscriptionsResponse>[] => [
   {
     accessorKey: 'slNo',
@@ -43,11 +43,11 @@ const ProvidersSubscriptionsTableColumns = (
     ),
   },
   {
-    accessorKey: 'startDate',
+    accessorKey: 'currentPeriodStart',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Start Date" />,
     cell: ({ row }) => {
-      const startDate = row.getValue('startDate') as Date;
-      const formattedDate = formatDate(startDate);
+      const currentPeriodStart = row.getValue('currentPeriodStart') as Date;
+      const formattedDate = formatDate(currentPeriodStart);
       return (
         <span className="inline-flex items-center gap-1.5 font-medium text-slate-700 dark:text-slate-300 text-xs">
           <Calendar className="w-3.5 h-3.5 text-slate-400" />
@@ -57,11 +57,11 @@ const ProvidersSubscriptionsTableColumns = (
     },
   },
   {
-    accessorKey: 'endDate',
+    accessorKey: 'currentPeriodEnd',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Expires on" />,
     cell: ({ row }) => {
-      const endDate = row.getValue('endDate') as Date;
-      const formattedDate = formatDate(endDate);
+      const currentPeriodEnd = row.getValue('currentPeriodEnd') as Date;
+      const formattedDate = formatDate(currentPeriodEnd);
       return (
         <span className="inline-flex items-center gap-1.5 font-medium text-slate-700 dark:text-slate-300 text-xs">
           <Calendar className="w-3.5 h-3.5 text-slate-400" />
@@ -83,11 +83,9 @@ const ProvidersSubscriptionsTableColumns = (
           return <StatusBadge type="standard" label={label} />;
         case SubscriptionStatus.CANCELLED:
           return <StatusBadge type="blocked" label={label} />;
-        case SubscriptionStatus.PENDING:
+        case SubscriptionStatus.INCOMPLETE:
           return <StatusBadge type="pending" label={label} />;
         case SubscriptionStatus.PAST_DUE:
-          return <StatusBadge type="updating" label={label} />;
-        case SubscriptionStatus.FAILED:
           return <StatusBadge type="blocked" label={label} />;
         default:
           return <StatusBadge type="standard" label={subscriptionStatus} />;
@@ -105,14 +103,14 @@ const ProvidersSubscriptionsTableColumns = (
           <DropdownMenuTrigger asChild>
             <Button title="Open Menu" variant="ghost" className="h-8 w-8 p-0 cursor-pointer hover:bg-muted">
               <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
+              <MoreHorizontal className="size-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="rounded-xl">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() => handleAdminGetProviderDetailPage(subscription._id)}
+              onClick={() => toSubscriptionDetailsPage(subscription._id)}
               className="cursor-pointer gap-2"
             >
               <ReceiptText className="w-3.5 h-3.5 text-muted-foreground" />

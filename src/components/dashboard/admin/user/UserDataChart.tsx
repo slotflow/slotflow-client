@@ -1,6 +1,6 @@
 import { Role } from '@/shared/types/enums';
 import { useQuery } from '@tanstack/react-query';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import { UserDataChartProps } from '@/shared/types/component';
 import { fetchRoleBasedChartData } from '@/services/apis/admin';
 import BarChartHorizontal from '@/components/chart/BarChartHorizontal';

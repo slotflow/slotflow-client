@@ -28,29 +28,29 @@ const InfoHeader = () => {
         <Button
           title="Toggle Sidebar"
           variant="ghost"
-          size="icon"
+          size="sm"
           className="rounded-md hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer"
           onClick={handleSidebar}
         >
-          <PanelLeft className="w-5 h-5 opacity-80" />
+          <PanelLeft className="size-5 opacity-80" />
         </Button>
 
         <div className="w-px h-6 bg-gray-400/20 hidden sm:block"></div>
       </div>
 
       <div className="flex items-center justify-center w-full">
-        <h1 className="text-sm md:text-base font-semibold tracking-tight">{pageTitle}</h1>
+        <h1 className="text-sm md:text-base text-primary/50 font-semibold tracking-tight">{pageTitle}</h1>
       </div>
 
       <div className="flex items-center justify-end gap-3 md:gap-5 w-full">
         <Button
           title="notifications"
           variant="ghost"
-          size="icon"
+          size="sm"
           className="relative rounded-md hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer"
           onClick={() => dispatch(toggleNotificationContainer())}
         >
-          <Bell className="w-5 h-5 opacity-80" />
+          <Bell className="size-5 opacity-80" />
 
           <span className="absolute top-2.5 right-2.5 size-2 bg-blue-500 rounded-full animate-pulse shadow-[0_0_6px_rgba(59,130,246,0.8)] border border-[var(--menuBg)]"></span>
         </Button>

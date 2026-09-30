@@ -8,7 +8,7 @@ import SubscriptionsListCard from './SubscriptionsListCard';
 import SubscriptionDataChart from './SubscriptionDataChart';
 import { AdminDashboardSubscriptionDataProps } from '@/shared/types/component';
 import { AdminFetchDashboardSubscriptionStatsDataResponse } from '@/shared/types/api/adminDashboard';
-import { aiResponseEntities, queryKeys } from '@/shared/utils/constants';
+import { aiResponseEntities, queryKeys } from '@/shared/utils/constants/appConstants';
 import {
   adminFetchDashboardSubscriptionStatsData,
   fetchAnalyticsInsight,

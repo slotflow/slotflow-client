@@ -7,8 +7,7 @@ const AdminDashboard = lazy(() => import("@/components/dashboard/admin/AdminDash
 const ProviderDashboard = lazy(() => import("@/components/dashboard/provider/ProviderDashboard"));
 
 const DashboardPage = () => {
-    const { isAdmin, isProvider, isUser, user } = useAuth();
-    console.log("user : ",user);
+    const { isAdmin, isProvider, isUser } = useAuth();
 
     const renderRoleDashboard = () => {
         if (isAdmin) return <AdminDashboard />;

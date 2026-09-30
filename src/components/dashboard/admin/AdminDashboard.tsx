@@ -3,13 +3,13 @@ import { DateRange } from 'react-day-picker';
 import { TabItem } from '@/shared/types/common';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import DateFilter from '@/components/filters/DateFilter';
-import { adminDashboardTabs } from '@/shared/utils/constants';
 import TabNavigation from '@/components/common/TabNavigation';
 import AdminDashboardUserData from './user/AdminDashboardUserData';
 import AdminDashboardRevenueData from './revenue/AdminDashboardRevenueData';
 import AdminDashboardProviderData from './provider/AdminDashboardProviderData';
 import AdminDashboardAppointmentsData from './appointment/AdminDashboardAppointmentsData';
 import AdminDashboardSubscriptionData from './subscription/AdminDashboardSubscriptionData';
+import { adminDashboardTabs } from '@/shared/utils/constants/tabConstants';
 
 const AdminDashboard = () => {
   const [selectedTab, setSelectedTab] = useState<TabItem['value']>(adminDashboardTabs[0].value);

@@ -14,7 +14,7 @@ const paymentSlice = createSlice({
   name: 'payment',
   initialState,
   reducers: {
-    setBookingPyamentData: (
+    setBookingData: (
       state,
       action: PayloadAction<{
         providerId: string;
@@ -24,16 +24,22 @@ const paymentSlice = createSlice({
         selectedServiceMode: string;
       } | null>,
     ) => {
-      state.type = PaymentProcessType.BOOKING;
       state.bookingData = action.payload;
     },
-    setPaymentSelectionOpen: (state, action: PayloadAction<boolean>) => {
-      state.isPaymentModalOpen = action.payload;
+    setPaymentSelectionOpen: (state, action: PayloadAction<PaymentProcessType>) => {
+      state.type = action.payload;
+      state.isPaymentModalOpen = true;
+      state.status = PaymentProcessStatus.IDLE;
+    },
+    setPaymentSelectionClose: (state) => {
+      state.type = null;
+      state.isPaymentModalOpen = false;
+      state.status = PaymentProcessStatus.IDLE;
     },
     setPaymentProcessStatus: (state, action: PayloadAction<PaymentProcessStatus>) => {
       state.status = action.payload;
     },
-    setSubscriptionPaymentData: (
+    setSubscriptionData: (
       state,
       action: PayloadAction<{
         planId: string;
@@ -47,10 +53,11 @@ const paymentSlice = createSlice({
 });
 
 export const {
-  setBookingPyamentData,
+  setBookingData,
   setPaymentSelectionOpen,
+  setPaymentSelectionClose,
   setPaymentProcessStatus,
-  setSubscriptionPaymentData,
+  setSubscriptionData,
 } = paymentSlice.actions;
 
 export default paymentSlice.reducer;

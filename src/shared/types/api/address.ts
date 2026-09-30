@@ -17,6 +17,10 @@ export type FetchMyAddressResponse = Pick<
 >;
 
 // response type of user fetch other's address apis
+export interface FetchAddressRequest {
+  userId: string;
+  checkShowStatus?: boolean;
+}
 export type FetchAddressResponse = Pick<
   Address,
   | 'addressLine'

@@ -2,7 +2,6 @@ import { X } from 'lucide-react';
 import { useEffect } from 'react';
 import { Button } from '../ui/button';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeBtnClass } from '@/shared/utils/constants';
 import { AppDispatch, RootState } from '@/app/store/appStore';
 import { setLastMessage, setSelectedUser } from '@/app/store/slices/chatSlice';
 
@@ -53,12 +52,11 @@ const ChatHeader = () => {
           </div>
         </div>
         <Button
-          size="icon"
+          size="sm"
           variant="ghost"
-          className={closeBtnClass}
           onClick={handleCloseChat}
         >
-          <X />
+          <X className="size-4" />
         </Button>
       </div>
     </div>

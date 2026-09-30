@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ShieldCheck, Unlink, Link2 } from 'lucide-react';
 import { SelectSeparator } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import FeatureOverlay from '@/components/common/FeatureOverlay';
+import FeatureOverlay from '@/components/app/FeatureOverlay';
 
 interface SocialProvider {
   id: string;
@@ -102,6 +102,9 @@ const LinkedSocialAccounts = () => {
             <SelectSeparator />
             <CardContent className="p-5 pt-4 space-y-3 relative min-h-[300px]">
               <FeatureOverlay
+                size='md'
+                isBlur
+                isDevMode
                 title="Social SSO Connections Coming Soon"
                 description="Single sign-on options for Google, GitHub, and Apple account linking are on our roadmap."
               />

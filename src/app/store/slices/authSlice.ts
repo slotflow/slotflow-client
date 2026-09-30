@@ -20,6 +20,7 @@ const initialState: AuthState = {
   eventSocketId: null,
   eventSocketIsConnected: false,
   subscriptionUpdating: false,
+  bookingUpdating: false,
   preboardingData: {
     selectedRole: null,
   },
@@ -71,14 +72,17 @@ const authSlice = createSlice({
     setSubscription: (state, action: PayloadAction<SubscriptionActivated>) => {
       if (state.authUser) {
         state.authUser.providerSubscription = action.payload.subscribedPlan;
-        state.authUser.subscriptionStartDate = action.payload.startDate;
-        state.authUser.subscriptionEndDate = action.payload.endDate;
+        state.authUser.subscriptionStartDate = action.payload.currentPeriodStart;
+        state.authUser.subscriptionEndDate = action.payload.currentPeriodEnd;
         state.authUser.subscriptionStatus = action.payload.subscriptionStatus;
         state.authUser.hasUsedTrial = action.payload.hasUsedTrial;
       }
     },
     setSubscriptionUpdating: (state, action: PayloadAction<boolean>) => {
       state.subscriptionUpdating = action.payload;
+    },
+    setBookingUpdating: (state, action: PayloadAction<boolean>) => {
+      state.bookingUpdating = action.payload;
     },
     setBoardingData: (state, action: PayloadAction<Partial<AuthState['preboardingData']>>) => {
       state.preboardingData = { ...state.preboardingData, ...action.payload };
@@ -171,6 +175,7 @@ export const {
   setBoardingData,
   setIsProofSubmitted,
   setSubscriptionUpdating,
+  setBookingUpdating,
   setEventSocketConnected,
   setAdminVerificationState,
   setEventSocketDisconnected,

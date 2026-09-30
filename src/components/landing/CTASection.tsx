@@ -1,12 +1,13 @@
 import { Badge } from '@/components/ui/badge';
-import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { redirectPaths } from '@/shared/utils/constants';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import SplitTextReveal from '../animation/SplitTextReveal';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
 
 const CTASection = () => {
-  const navigate = useNavigate();
+  
+  const { goTo } = useAppNavigation();
 
   return (
     <section id="cta" className="rpy-32 px-4 md:px-0">
@@ -15,7 +16,7 @@ const CTASection = () => {
         <div className="container relative z-10">
           <div className="mx-auto max-w-5xl overflow-hidden rounded-[2rem] px-8 py-20 text-center backdrop-blur-xl md:px-16">
             <Badge variant="secondary" className="rounded-full px-4 py-1.5 hover:border-[#635bff]">
-              <Sparkles className="mr-2 h-4 w-4 text-primary" />
+              <Sparkles className="mr-2 size-4 text-primary" />
               Ready to Get Started?
             </Badge>
 
@@ -49,17 +50,17 @@ const CTASection = () => {
               <Button
                 size="sm"
                 className="h-10 md:h-14 rounded-xl px-8 text-base shadow-lg shadow-primary/20"
-                onClick={() => navigate(redirectPaths.LOGIN)}
+                onClick={() => goTo(redirectPaths.LOGIN)}
               >
                 Book a Service
-                <ArrowRight className="ml-2 h-5 w-5" />
+                <ArrowRight className="ml-2 size-5" />
               </Button>
 
               <Button
                 size="sm"
                 variant="outline"
                 className="h-10 md:h-14 rounded-xl px-8 text-base"
-                onClick={() => navigate(redirectPaths.LOGIN)}
+                onClick={() => goTo(redirectPaths.LOGIN)}
               >
                 Become a Provider
               </Button>
@@ -67,22 +68,22 @@ const CTASection = () => {
 
             <div className="mt-12 flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-primary" />
+                <CheckCircle2 className="size-5 text-primary" />
                 Verified Providers
               </div>
 
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-primary" />
+                <CheckCircle2 className="size-5 text-primary" />
                 Instant Booking
               </div>
 
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-primary" />
+                <CheckCircle2 className="size-5 text-primary" />
                 Secure Payments
               </div>
 
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-primary" />
+                <CheckCircle2 className="size-5 text-primary" />
                 AI Powered Search
               </div>
             </div>

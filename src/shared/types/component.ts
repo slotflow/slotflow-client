@@ -23,6 +23,7 @@ import {
 } from './api/user';
 import {
   Control,
+  ErrorOption,
   type Path,
   FieldError,
   UseFormSetValue,
@@ -48,7 +49,7 @@ import { Location } from '@/shared/types/entity/address';
 import { Dispatch, ReactNode, SetStateAction } from 'react';
 import { Availability } from './entity/serviceAvailability';
 import { RouteNames } from '../utils/constants/routeConstants';
-import { BillingCycle, PlanName, Role, ServiceMode } from './enums';
+import { BillingCycle, Day, PlanName, Role, ServiceMode } from './enums';
 import { FetchProviderServiceResponse } from './api/providerService';
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 import { FetchAddressResponse, FetchMyAddressResponse } from './api/address';
@@ -320,14 +321,6 @@ export interface ConfirmDeleteProps {
   closeToast: () => void;
   btnTitle: string;
   btnText: string;
-}
-
-// Feature locked component props interface
-export interface FeatureLockedProps {
-  icon?: LucideIcon;
-  message: string;
-  buttonText?: string;
-  onButtonClick?: () => void;
 }
 
 // Time slot legend component props interface
@@ -657,30 +650,7 @@ export interface UserOrProviderAddressDetailsProps {
   canUpdate?: boolean;
   showHeading?: boolean;
   isShowPreview?: boolean;
-}
-
-// UserOrProviderProfileDetails component props interface
-export interface UserOrProviderProfileDetailsComponentProps {
-  userOrProviderId?: string;
-  fetchApiFunction: (
-    userOrProviderId?: string,
-  ) => Promise<
-    ApiBaseResponse<
-      | AdminFetchProviderProfileDetailsResponse
-      | UserFetchMyProfileDetailsResponse
-      | AdminFetchUserProfileDetailsResponse
-    >
-  >;
-  queryKey: string[];
-  adminLookingProvider?: boolean;
-  adminLookingUser?: boolean;
-  userSelf?: boolean;
-  setProfileImage?: (image: string) => void;
-  shimmerRow: number;
-  setSelectedUserData?: (data: {
-    selectedUserName: string;
-    selectedUserProfileImage: string | null;
-  }) => void;
+  hideAddress?: boolean;
 }
 
 // ProviderProofs component props interface
@@ -716,11 +686,10 @@ export interface ReviewUserProfileProps {
 
 // AvailabilityDataSelectionFields component props interface
 export interface AvailabilityDataSelectionFieldsProps {
-  register: UseFormRegister<ProviderServiceAvailabilityFormType>;
   isModeSelected: (mode: ServiceMode) => boolean;
   toggleMode: (mode: ServiceMode) => void;
   isAvailable: boolean;
-  setValue: UseFormSetValue<ProviderServiceAvailabilityFormType>;
+  control: Control<ProviderServiceAvailabilityFormType>;
 }
 
 // CreateServiceAvailabilityFooter component props interface
@@ -728,7 +697,8 @@ export interface CreateServiceAvailabilityFooterProps {
   selectedTimeSlots?: string[];
   isSubmitting: boolean;
   onAddAvailability: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  availabilities: Availability[] | null;
+  // availabilities: Availability[] | null;
+  hasAllDays: boolean;
   isValid: boolean;
   isUpdating: boolean;
   isLoading: boolean;
@@ -829,11 +799,8 @@ export interface DataFieldProps {
   link?: boolean;
   isBoolean?: boolean;
   isPrice?: boolean;
-  isRadioGroup?: boolean;
   isTime?: boolean;
   isDate?: boolean;
-  selectedRadioValue?: string | null;
-  onRadioChange?: (value: string) => void;
   tags?: boolean;
   isImage?: boolean;
   isLoading?: boolean;
@@ -1258,4 +1225,20 @@ export interface ComponentSandboxSpec<T = any> {
 }
 export interface SandboxPageProps {
   specs: ComponentSandboxSpec[];
+}
+
+
+//
+export interface HearAboutUsButtonsProps {
+  isSubmitting: boolean;
+  disabled: boolean;
+  onPrevious: () => void;
+  onSubmit: () => void;
+}
+
+//
+export interface EnhancedSavedAvailabilitiesProps {
+  availabilities: Availability[] | null;
+  removeAvailability: (day: Day) => void;
+  onCopyLastAvailability?: (targetDay: Day, lastAvailability: Availability) => void;
 }

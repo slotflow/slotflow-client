@@ -72,7 +72,7 @@ const DataAnalysis = ({
 
         {!isLoading && !isError && !aiInsightText && (
           <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground italic bg-background/50 dark:bg-indigo-950/30 p-3 rounded-xl border border-indigo-500/15 backdrop-blur-sm">
-            <Bot className="w-4 h-4 text-indigo-500 dark:text-indigo-400 shrink-0" />
+            <Bot className="size-4 text-indigo-500 dark:text-indigo-400 shrink-0" />
             <span>No AI analysis available for this selection.</span>
           </div>
         )}

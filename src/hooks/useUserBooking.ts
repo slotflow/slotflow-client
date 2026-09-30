@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/app/store/appStore';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import { UseBookingCustomHookReturn } from '@/shared/types/hooks';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toggleReviewCreateForm } from '@/app/store/slices/userSlice';

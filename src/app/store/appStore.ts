@@ -7,7 +7,7 @@ import videoReducer from './slices/videoSlice';
 import paymentReducer from './slices/paymentSlice';
 import localStorage from 'redux-persist/lib/storage';
 import providerReducer from './slices/providerSlice';
-import { storeConstants } from '@/shared/utils/constants';
+import { storeConstants } from '@/shared/utils/constants/storeConstants';
 import integrationReducer from './slices/integrationSlice';
 import notificationReducer from './slices/notificationSlice';
 import { persistReducer, persistStore } from 'redux-persist';

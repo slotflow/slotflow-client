@@ -1,24 +1,25 @@
 import {
-  redirectPaths,
   blockBackStatuses,
-  adminVerificationStatusConfig,
-} from '@/shared/utils/constants';
+} from '@/shared/utils/constants/statusConstants';
 import { toast } from 'react-toastify';
 import { appConfig } from '@/config/env';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { AuthUser } from '@/shared/types/slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card, CardContent } from '@/components/ui/card';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { AppDispatch, RootState } from '@/app/store/appStore';
 import { AdminVerificationStatus } from '@/shared/types/enums';
 import { Check, LoaderCircle, TriangleAlert, X } from 'lucide-react';
-import { providerSubmitDetailsForReview } from '@/services/apis/providerProfile';
 import { onboardingContent } from '@/shared/utils/constants/boardingConstants';
+import { providerSubmitDetailsForReview } from '@/services/apis/providerProfile';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
+import { adminVerificationStatusConfig } from '@/shared/utils/constants/statusConstants';
 
 const ProviderApprovalPendingPage = () => {
-  const navigate = useNavigate();
+
+  const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
   const authUser: AuthUser | null = useSelector((state: RootState) => state.auth.authUser);
   const adminStatus = authUser?.adminVerificationStatus;
@@ -133,7 +134,7 @@ const ProviderApprovalPendingPage = () => {
                   </span>
 
                   {adminStatus === AdminVerificationStatus.REJECTED && (
-                    <Button size="sm" variant="outline" onClick={() => navigate(row.redirect)}>
+                    <Button size="sm" variant="outline" onClick={() => goTo(row.redirect)}>
                       Update
                     </Button>
                   )}
@@ -164,19 +165,26 @@ const ProviderApprovalPendingPage = () => {
               <Button
                 onClick={handleSubmit}
                 disabled={isSubmitting}
-                className="cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
+                variant="default"
+                className="w-full md:w-auto"
               >
                 {isSubmitting ? (
                   <>
-                    <LoaderCircle className="animate-spin size-4 mr-2" />
+                    <LoaderCircle className="animate-spin size-4" />
                     {adminStatus === AdminVerificationStatus.REJECTED
                       ? 'Resubmitting...'
                       : 'Submitting...'}
                   </>
                 ) : adminStatus === AdminVerificationStatus.REJECTED ? (
-                  'Resubmit for Review'
+                  <>
+                    <Check className="size-4" />
+                    Resubmit for Review
+                  </>
                 ) : (
-                  'Submit for Review'
+                  <>
+                    <Check className="size-4" />
+                    Submit for Review
+                  </>
                 )}
               </Button>
             </CardContent>

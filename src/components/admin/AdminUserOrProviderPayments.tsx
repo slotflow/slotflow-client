@@ -1,4 +1,4 @@
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import PaginatedDataTable from '../table/PaginatedDataTable';
 import { useAppNavigation } from '@/hooks/useAppNavigation';
 import PaymentsTableColumn from '../table/tableColumns/PaymentsTableColumn';
@@ -9,8 +9,9 @@ const AdminUserOrProviderPayments = ({
   providerId,
   fetchFunction,
 }: AdminUserOrProviderPaymentsProps) => {
-  const { handleGetPaymentDetailsPage } = useAppNavigation();
-  const column = PaymentsTableColumn(handleGetPaymentDetailsPage);
+  
+  const { toPaymentDetailsPage } = useAppNavigation();
+  const column = PaymentsTableColumn(toPaymentDetailsPage);
 
   return (
     <PaginatedDataTable<FetchPaymentsResponse, FetchPaymentsQueryParams>

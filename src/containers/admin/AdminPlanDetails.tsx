@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { useQuery } from '@tanstack/react-query';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import CopyableId from '@/components/common/CopyField';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAdminPlan } from '@/hooks/adminHooks/usePlan';
@@ -25,9 +25,11 @@ import DataShimmer from '@/components/shimmers/DataShimmer';
 import { adminFetchPlanDetails } from '@/services/apis/plan';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import DashboardDataCard from '@/components/common/DashboardDataCard';
-import { Plan, StripeSyncStatus } from '@/shared/types/entity/planInterface';
+import { Plan } from '@/shared/types/entity/planInterface';
+import { StripeSyncStatus } from '@/shared/types/enums';
 
 const AdminPlanDetails = () => {
+  
   const navigate = useNavigate();
   const { planId } = useParams<{ planId: Plan['_id'] }>();
 
@@ -254,7 +256,7 @@ const AdminPlanDetails = () => {
                   </div>
                 ) : (
                   <div className="p-4 rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 flex items-start gap-3">
-                    <ShieldAlert className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+                    <ShieldAlert className="size-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
                     <div className="space-y-1">
                       <p className="text-xs font-semibold text-amber-800 dark:text-amber-300">
                         Stripe product not provisioned
@@ -291,7 +293,7 @@ const AdminPlanDetails = () => {
                         key={idx}
                         className="flex items-center gap-2.5 p-2.5 rounded-lg border border-slate-100 dark:border-border bg-slate-50/50 dark:bg-muted/20 text-xs font-medium text-slate-700 dark:text-slate-300"
                       >
-                        <span className="w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                        <span className="size-5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
                           <Check className="w-3 h-3 stroke-[2.5]" />
                         </span>
                         {feature}
@@ -321,11 +323,11 @@ const AdminPlanDetails = () => {
                     <DataShimmer w="w-16" h="h-4" />
                   ) : data?.adVisibility ? (
                     <span className="inline-flex items-center gap-1 font-semibold text-emerald-600 dark:text-emerald-400">
-                      <Check className="w-4 h-4" /> Enabled
+                      <Check className="size-4" /> Enabled
                     </span>
                   ) : (
                     <span className="inline-flex items-center gap-1 font-semibold text-slate-400">
-                      <X className="w-4 h-4" /> Disabled
+                      <X className="size-4" /> Disabled
                     </span>
                   )}
                 </div>
@@ -336,11 +338,11 @@ const AdminPlanDetails = () => {
                     <DataShimmer w="w-20" h="h-4" />
                   ) : data?.hasTrial ? (
                     <span className="inline-flex items-center gap-1 font-semibold text-emerald-600 dark:text-emerald-400">
-                      <Check className="w-4 h-4" /> Yes ({data.trialDays} Days)
+                      <Check className="size-4" /> Yes ({data.trialDays} Days)
                     </span>
                   ) : (
                     <span className="inline-flex items-center gap-1 font-semibold text-slate-400">
-                      <X className="w-4 h-4" /> No
+                      <X className="size-4" /> No
                     </span>
                   )}
                 </div>

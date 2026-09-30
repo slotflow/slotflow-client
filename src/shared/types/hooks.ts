@@ -14,11 +14,12 @@ import {
   AdminChangeUserBlockStatusResponse,
 } from './api/user';
 import {
-  CreateServiceRequest,
+  CreateServicesRequest,
   UpdateServiceRequest,
   UpdateServiceResponse,
   AdminChangeServiceBlockStatusRequest,
   AdminChangeServiceBlockStatusResponse,
+  CreateSservicesResponse,
 } from './api/service';
 import {
   AdminRejectProviderRequest,
@@ -37,7 +38,7 @@ import { Plan } from './entity/planInterface';
 import { ApiBaseResponse, ApiError } from './common';
 import { Subscription } from './entity/subscription';
 import { Availability } from './entity/serviceAvailability';
-import { HearAboutUsOptionValue, Role, ServiceMode } from './enums';
+import { Day, HearAboutUsOptionValue, Role, ServiceMode } from './enums';
 import { UseFormGetValues, UseFormSetValue } from 'react-hook-form';
 import { UseMutateAsyncFunction, UseMutateFunction } from '@tanstack/react-query';
 import { SubscribePlanCheckoutResponse, SubscribePlanCheckoutRequest } from './api/subscription';
@@ -45,6 +46,8 @@ import { ReportReviewRequest, ReportReviewResponse, ChangeReviewBlockStatusReque
 import { BookAppointmentRequest, BookAppointmentResponse, CancelBookingRequest, CancelBookingResponse, ChangeAppointmentStatusRequest, ChangeAppointmentStatusResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, ValidateRoomIdRequest } from './api/booking';
 import { AuthUser } from './slice';
 import { ConnectStripeAccountRequest } from './api/paymentAccount';
+import { VideoRoomParticipant } from './socket';
+import { RefObject } from 'react';
 
 // Admin plan hook return type interface
 export interface UseAdminPlanReturn {
@@ -120,7 +123,11 @@ export interface UseAdminServiceReturn {
     ApiError,
     UpdateServiceRequest
   >;
-  createService: UseMutateAsyncFunction<ApiBaseResponse, ApiError, CreateServiceRequest>;
+  createService: UseMutateAsyncFunction<
+    ApiBaseResponse<CreateSservicesResponse>,
+    ApiError,
+    CreateServicesRequest
+  >;
 }
 
 // Admin user hook return type interface
@@ -164,27 +171,56 @@ export interface useSignoutReturn {
   isSigningOut: boolean;
 }
 
-// Video call lobby hook props return type interface
-export interface useVideoCallProps {
-  initializeMedia: boolean;
-}
-export interface useVideoCallReturn {
-  videoCallJoin: UseMutateFunction<
+// Video call lobby hook return type interface
+export interface useVideoCallLobbyReturn {
+  roomId: string | undefined;
+
+  videoRef: React.RefObject<HTMLVideoElement | null>;
+  isCameraOn: boolean;
+  isMicOn: boolean;
+  toggleCamera: () => void;
+  toggleMic: () => void;
+
+  videoQuality: string;
+  audioLevels: number[];
+  networkStatus: {
+    label: string;
+    color: string;
+  };
+
+  roomUsers: VideoRoomParticipant[];
+
+  handleJoin: () => void;
+  isJoiningVideoCall: boolean;
+  videoCallJoin?: UseMutateFunction<
     ApiBaseResponse<JoinRoomCallbackResponse>,
     ApiError,
     JoinRoomCallbackRequest
   >;
-  isJoiningVideoCall: boolean;
+}
 
+// Video call room return type interface
+export interface UseVideoCallRoomReturn {
+  myVideoRef: RefObject<HTMLVideoElement | null>;
+  remoteVideoRef: RefObject<HTMLVideoElement | null>;
+  remoteStream: MediaStream | null;
+  remoteUserName: string | null;
+  isCameraOn: boolean;
+  isMicOn: boolean;
+  isVideoCallTimerRunning: boolean;
+  formattedTimer: string;
+  toggleCamera: () => void;
+  toggleMic: () => void;
+  handleEndCall: () => Promise<void>;
+}
+
+// Video call lobby actions hook return type interface
+export interface useVideoCallActionsReturn {
   JoinCallLobby: UseMutateFunction<
     ApiBaseResponse,
     ApiError,
     ValidateRoomIdRequest
   >;
-
-  videoRef: React.RefObject<HTMLVideoElement | null>;
-  toggleCamera: () => void;
-  toggleMic: () => void;
 }
 
 // Review hook return type interface
@@ -213,35 +249,43 @@ export interface useReviewReturn {
 
 // application navigation hook return
 export interface useAppNavigationReturn {
-  handleAdminGetProviderDetailPage: (subscriptionId: Subscription['_id']) => void;
-  handleGetPaymentDetailsPage: (paymentId: Payment['_id']) => void;
-  handleNavigateToBookingsDetailPage: (appointmentId: Booking['_id']) => void;
-  handleNavigateToPlanDetailPage: (planId: Plan['_id']) => void;
-  handleGetProviderDetailPage: (providerId: User['_id']) => void;
-  handleGetUserDetailPage: (userId: User['_id']) => void;
-  toLogin: () => void;
-  toSettings: () => void;
-  toDashboard: (replace: boolean) => void;
-  toBookings: (replace: boolean) => void;
-  toIntegrations: (replace: boolean) => void;
-  toUpgrade: (replace: boolean) => void;
+  goTo: (path: string, replace?: boolean) => void;
+  toSubscriptionDetailsPage: (subscriptionId: Subscription['_id'], replace?: boolean) => void;
+  toPaymentDetailsPage: (paymentId: Payment['_id'], replace?: boolean) => void;
+  toBookingsDetailsPage: (appointmentId: Booking['_id'], replace?: boolean) => void;
+  toPlanDetailsPage: (planId: Plan['_id'], replace?: boolean) => void;
+  toProviderDetailsPage: (providerId: User['_id'], replace?: boolean) => void;
+  toUserDetailsPage: (userId: User['_id'], replace?: boolean) => void;
   handleAuthLoginNavigation: (user: AuthUser) => void;
 }
 
 // useAuth hook return
 export interface UseAuthReturn {
-    user: AuthUser | null;
-    role: Role | null;
-    isLoggedIn: boolean;
-    isUser: boolean;
-    isProvider: boolean;
-    isAdmin: boolean;
+  user: AuthUser | null;
+  role: Role | null;
+  isLoggedIn: boolean;
+  isUser: boolean;
+  isProvider: boolean;
+  isAdmin: boolean;
 }
 
 // integrations page hook return
 export interface UseIntegrationReturn {
-    connectStripe: (data: ConnectStripeAccountRequest) => Promise<void>;
-    connectGoogleCalendar: () => void;
+  connectStripe: (data: ConnectStripeAccountRequest) => Promise<void>;
+  connectGoogleCalendar: () => void;
+}
+
+// use copy custom hook return
+export type CopyInput =
+  | string
+  | {
+    title: string;
+    text: string;
+    url: string;
+  };
+export interface UseCopyReturn {
+  copied: boolean;
+  copy: (text: CopyInput) => Promise<boolean>;
 }
 
 // subscription callback hook return
@@ -252,19 +296,20 @@ export interface useSubscriptionCallback {
 
 // booking callback hook return
 export interface UseBookingCallbackReturn {
-    status: boolean;
+  status: boolean;
+  bookingUpdating: boolean;
 }
 
 // Auth Callback page custom hook
 export interface UseAuthCallbackReturn {
-    stepIndex: number;
-    error: string | null;
+  stepIndex: number;
+  error: string | null;
 }
 
 // Add availability hook parameter type interface
 export interface UseAddAvailabilityProps {
   getValues: UseFormGetValues<{
-    day: string;
+    day: Day;
     isAvailable: boolean;
     duration?: number;
     startTime?: Date;
@@ -275,7 +320,7 @@ export interface UseAddAvailabilityProps {
   }>;
   setValue: UseFormSetValue<{
     selectedTimeSlots?: string[];
-    day: string;
+    day: Day;
     isAvailable: boolean;
     duration?: number;
     startTime?: Date;
@@ -348,7 +393,7 @@ export interface UseSubscriptionHookReturn {
 }
 
 // booking payment hook
-export interface UseBookingPaymentReturn {
+export interface UseBookingReturn {
   bookAppointment: UseMutateFunction<
     ApiBaseResponse<BookAppointmentResponse>,
     ApiError,

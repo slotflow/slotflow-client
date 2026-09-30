@@ -4,18 +4,16 @@ export interface SlotEngageRequest {
   slotId: string;
 }
 
-export enum EventSocketEnum {
-  connect = 'connect',
-  reconnect = 'reconnect',
-  disconnect = 'disconnect',
-  subscriptionActivated = 'subscription:activated',
-  providerJoin = 'provider:join',
-  slotEngageRequest = 'slot:engage:request',
-  slotEngageRejected = 'slot:engage:rejected',
-  slotEngageApproved = 'slot:engage:approved',
-  providerLeave = 'provider:leave',
-  slotLocked = 'slot:locked',
-  slotUnlockRequest = 'slot:unlock:request',
-  slotUnlocked = 'slot:unlocked',
-  stripeAccountStatusUpdated = 'stripeAccountStatusUpdated',
-}
+export type VideoRoomParticipant = {
+  id: string;
+  user?: {
+    id?: string;
+    name?: string;
+    profileImage?: string;
+  };
+};
+
+export type VideoRoomStatePayload = {
+  roomId: string;
+  users: VideoRoomParticipant[];
+};

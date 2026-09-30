@@ -1,13 +1,14 @@
+import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { AuthUser } from '@/shared/types/slice';
 import { User } from '@/shared/types/entity/user';
-import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '@/app/store/appStore';
 import { Booking } from '@/shared/types/entity/booking';
 import { Payment } from '@/shared/types/entity/payment';
-import { redirectPaths } from '@/shared/utils/constants';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import { Plan } from '@/shared/types/entity/planInterface';
 import { OnboardingStatus, Role } from '@/shared/types/enums';
-import { AppDispatch, RootState } from '@/app/store/appStore';
 import { useAppNavigationReturn } from '@/shared/types/hooks';
 import { updateBoardingStep } from '@/app/store/slices/appSlice';
 import { Subscription } from '@/shared/types/entity/subscription';
@@ -16,19 +17,16 @@ export const useAppNavigation = (): useAppNavigationReturn => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { authUser } = useSelector((state: RootState) => state.auth);
 
-  const handleAuthLoginNavigation = (user: AuthUser) => {
+  const handleAuthLoginNavigation = useCallback((user: AuthUser) => {
     if (!user) return;
-    console.log("handleAuthLoginNavigation");
-    console.log("user exist");
 
     // 1. Admin direct redirect
     if (user.role === Role.ADMIN) {
       navigate('/dashboard', { replace: true });
       return;
     }
-  
+
     if (user.onboardingStatus === OnboardingStatus.NOT_STARTED) {
       navigate(redirectPaths.PRE_BOARDING_ROLE, { replace: true });
       return;
@@ -58,105 +56,63 @@ export const useAppNavigation = (): useAppNavigationReturn => {
 
     // 4. Default role-based landing pages
     if (user.role === Role.USER) {
-      navigate('/services', { replace: true });
+      navigate(redirectPaths.SERVICES, { replace: true });
     } else if (user.role === Role.PROVIDER) {
-      navigate('/dashboard', { replace: true });
+      navigate(redirectPaths.DASHBOARD, { replace: true });
     }
-  };
+  }, [navigate, dispatch]
+  );
+  
+  const goTo = useCallback((path: string, replace = false) => {
+    navigate(path, { replace });
+  }, [navigate]);
 
-  const handleAdminGetProviderDetailPage = (subscriptionId: Subscription['_id']) => {
-    if (authUser?.role === Role.ADMIN) {
-      navigate(`/subscriptions/${subscriptionId}`);
-    } else if (authUser?.role === Role.PROVIDER) {
-      navigate(`/subscriptions/${subscriptionId}`);
-    }
-  };
+  const toSubscriptionDetailsPage = useCallback(
+    (subscriptionId: Subscription['_id'], replace = false) => {
+      navigate(`${redirectPaths.SUBSCRIPTIONS}/${subscriptionId}`, { replace });
+    },
+    [navigate]
+  );
 
-  const handleGetPaymentDetailsPage = (paymentId: Payment['_id']) => {
-    if (authUser?.role === Role.ADMIN) {
-      navigate(`/payments/${paymentId}`);
-    } else if (authUser?.role === Role.PROVIDER) {
-      navigate(`/payments/${paymentId}`);
-    } else if (authUser?.role === Role.USER) {
-      navigate(`/payments/${paymentId}`);
-    }
-  };
+  const toPaymentDetailsPage = useCallback(
+    (paymentId: Payment['_id'], replace = false) => {
+      navigate(`${redirectPaths.PAYMENTS}/${paymentId}`, { replace });
+    },
+    [navigate]
+  );
 
-  const handleNavigateToBookingsDetailPage = (appointmentId: Booking['_id']) => {
-    if (authUser?.role === Role.PROVIDER) {
-      navigate(`/bookings/${appointmentId}`);
-    } else if (authUser?.role === Role.USER) {
-      navigate(`/bookings/${appointmentId}`);
-    }
-  };
+  const toBookingsDetailsPage = useCallback(
+    (appointmentId: Booking['_id'], replace = false) => {
+      navigate(`${redirectPaths.BOOKINGS}/${appointmentId}`, { replace });
+    }, [navigate]
+  )
 
-  const handleNavigateToPlanDetailPage = (planId: Plan['_id']) => {
-    navigate(`/plans/${planId}`);
-  };
+  const toPlanDetailsPage = useCallback(
+    (planId: Plan['_id'], replace = false) => {
+      navigate(`${redirectPaths.PLANS}/${planId}`, { replace });
+    }, [navigate]
+  )
 
-  const handleGetProviderDetailPage = (providerId: string) => {
-    navigate(`/service-providers/${providerId}`);
-  };
+  const toProviderDetailsPage = useCallback(
+    (providerId: User["_id"], replace = false) => {
+      navigate(`${redirectPaths.SERVICE_PROVIDERS}/${providerId}`, { replace });
+    }, [navigate]
+  )
 
-  const handleGetUserDetailPage = (userId: User['_id']) => {
-    navigate(`/users/${userId}`);
-  };
-
-  const toLogin = () => {
-    navigate(redirectPaths.LOGIN, { replace: true });
-  }
-
-  const toSettings = () => {
-    if (authUser?.role === Role.PROVIDER) {
-      navigate(redirectPaths.SETTINGS, { replace: true });
-    } else if (authUser?.role === Role.USER) {
-      navigate(redirectPaths.SETTINGS, { replace: true });
-    }
-  }
-
-  const toDashboard = (replace: boolean) => {
-    if (authUser?.role === Role.PROVIDER) {
-      navigate(redirectPaths.DASHBOARD, { replace });
-    } else if (authUser?.role === Role.USER) {
-      navigate(redirectPaths.DASHBOARD, { replace });
-    } else if (authUser?.role === Role.ADMIN) {
-      navigate(redirectPaths.DASHBOARD, { replace })
-    }
-  }
-
-  const toBookings = (replace: boolean) => {
-    if (authUser?.role === Role.PROVIDER) {
-      navigate(redirectPaths.BOOKINGS, { replace });
-    } else if (authUser?.role === Role.USER) {
-      navigate(redirectPaths.BOOKINGS, { replace });
-    }
-  }
-
-  const toIntegrations = (replace: boolean) => {
-    if (authUser?.role === Role.PROVIDER) {
-      navigate(redirectPaths.INTEGRATIONS, { replace });
-    } else if (authUser?.role === Role.USER) {
-      navigate(redirectPaths.INTEGRATIONS, { replace });
-    }
-  }
-
-  const toUpgrade = (replace: boolean) => {
-    navigate(redirectPaths.UPGRADE,{ replace });
-  }
+  const toUserDetailsPage = useCallback(
+    (userId: User['_id'], replace = false) => {
+      navigate(`${redirectPaths.USERS}/${userId}`, { replace });
+    }, [navigate]
+  )
 
   return {
-    handleAdminGetProviderDetailPage,
-    handleGetPaymentDetailsPage,
-    handleNavigateToBookingsDetailPage,
-    handleNavigateToPlanDetailPage,
-    handleGetProviderDetailPage,
-    handleGetUserDetailPage,
-    toLogin,
-    toSettings,
-    toDashboard,
-    toBookings,
-    toIntegrations,
-    toUpgrade,
+    goTo,
+    toSubscriptionDetailsPage,
+    toPaymentDetailsPage,
+    toBookingsDetailsPage,
+    toPlanDetailsPage,
+    toProviderDetailsPage,
+    toUserDetailsPage,
     handleAuthLoginNavigation
   };
 };

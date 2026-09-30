@@ -18,7 +18,7 @@ const BoardingLayout = ({ children, pageNumber, heading, description }: Boarding
           exit={{ opacity: 0, x: -50 }}
           transition={{ duration: 0.3 }}
         >
-          <div className="space-y-2">
+          <div className="space-y-2 text-center md:text-left">
             <h1 className="text-2xl font-semibold">{heading}</h1>
             <p className="text-muted-foreground text-sm">{description}</p>
           </div>

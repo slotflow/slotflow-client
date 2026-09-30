@@ -28,7 +28,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import StatusBadge from '@/components/common/StatusBadge';
 import { AdminVerificationStatus } from '@/shared/types/enums';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
-import { adminVerificationStatusConfig } from '@/shared/utils/constants';
+import { adminVerificationStatusConfig } from '@/shared/utils/constants/statusConstants';
 
 const AdminProvidersTableColumns = (
   approveProvider: (data: AdminApproveProviderRequest) => void,
@@ -37,7 +37,7 @@ const AdminProvidersTableColumns = (
   changeBlockStatusProviderId: string | null | undefined,
   changeProviderSlotflowTrustTag: (data: AdminChangeProviderTrustTagRequest) => void,
   changeTrustTagProviderId: string | null | undefined,
-  handleGetProviderDetailPage: (providerId: User['_id']) => void,
+  toProviderDetailsPage: (providerId: User['_id'], replace?: boolean) => void,
   handleProviderRejectOpen: (data: { providerId: User['_id'] }) => void,
 ): ColumnDef<AdminFetchAllProvidersResponse>[] => [
   {
@@ -145,14 +145,14 @@ const AdminProvidersTableColumns = (
           <DropdownMenuTrigger asChild>
             <Button title="Open Menu" variant="ghost" className="h-8 w-8 p-0 cursor-pointer">
               <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
+              <MoreHorizontal className="size-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() => handleGetProviderDetailPage(provider._id)}
+              onClick={() => toProviderDetailsPage(provider._id)}
               className="cursor-pointer"
             >
               <ReceiptText className="w-3.5 h-3.5" />

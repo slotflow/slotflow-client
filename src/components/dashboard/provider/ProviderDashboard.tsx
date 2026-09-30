@@ -9,7 +9,7 @@ import { DashboardItem } from "@/shared/types/common";
 import DateFilter from '@/components/filters/DateFilter';
 import { fetchAnalyticsInsight } from "@/services/apis/admin";
 import { useProviderDashboardCharts } from "./ProviderDashboardGraphs";
-import { aiResponseEntities, queryKeys } from "@/shared/utils/constants";
+import { aiResponseEntities, queryKeys } from "@/shared/utils/constants/appConstants";
 import { revenueStatsMapForProvider, statsMapForProvider } from '@/shared/utils/constants/statsConstats';
 import { providerFetchDashboardRevenueStatsData, providerFetchDashboardStatsData } from "@/services/apis/providerProfile";
 import { ProviderFetchDashboardBookingStatsDataResponse, ProviderFetchDashboardRevenueStatsDataResponse } from "@/shared/types/api/providerProfile";

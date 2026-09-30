@@ -3,7 +3,7 @@ import { useAuth } from "@/hooks/useAuth";
 import LoadingFallbackPage from "../fallbacks/LoadingFallbackPage";
 
 const Error404Page = lazy(() => import("../fallbacks/Error404Page"));
-const UserServiceProviderDetailPage = lazy(() => import("../user/UserServiceProviderDetailPage"));
+const UserProviderDetails = lazy(() => import("../../containers/user/UserProviderDetails"));
 const AdminProviderDetails = lazy(() => import("../../containers/admin/AdminProviderDetails"));
 
 const ServiceProviderDetailsPage = () => {
@@ -11,7 +11,7 @@ const ServiceProviderDetailsPage = () => {
 
     const renderRoleDashboard = () => {
         if (isAdmin) return <AdminProviderDetails />;
-        if (isUser) return <UserServiceProviderDetailPage />;
+        if (isUser) return <UserProviderDetails />;
         return <Error404Page />
     }
 

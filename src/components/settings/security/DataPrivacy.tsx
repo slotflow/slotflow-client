@@ -22,7 +22,7 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SelectSeparator } from '@/components/ui/select';
-import FeatureOverlay from '@/components/common/FeatureOverlay';
+import FeatureOverlay from '@/components/app/FeatureOverlay';
 
 const DataPrivacy = () => {
     const [showForm, setShowForm] = useState<boolean>(false);
@@ -96,9 +96,12 @@ const DataPrivacy = () => {
                     >
                         <SelectSeparator />
                         <CardContent className="p-5 pt-4 space-y-5 relative min-h-[300px]">
-                            <FeatureOverlay 
-                                title="Data Controls Coming Soon" 
-                                description="We are building advanced privacy tools. This module will be live shortly." 
+                            <FeatureOverlay
+                                size='md'
+                                isBlur
+                                isDevMode
+                                title="Data Controls Coming Soon"
+                                description="We are building advanced privacy tools. This module will be live shortly."
                             />
                             <div className="p-3.5 rounded-xl border border-slate-100 dark:border-border/60 bg-slate-50/50 dark:bg-muted/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                                 <div className="space-y-0.5">

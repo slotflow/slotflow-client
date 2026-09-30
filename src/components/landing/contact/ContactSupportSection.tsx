@@ -1,12 +1,14 @@
 import { ArrowRight } from 'lucide-react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { AppDispatch } from '@/app/store/appStore';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { toggleLiveChatBubble } from '@/app/store/slices/appSlice';
 import { contactSupportOptions } from '@/shared/utils/constants/landingConstants';
 
 const ContactSupportSection = () => {
-  const navigate = useNavigate();
+
+  const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
 
   const handleAction = (action: string) => {
@@ -16,11 +18,11 @@ const ContactSupportSection = () => {
         break;
 
       case 'help':
-        navigate('/help');
+        goTo(redirectPaths.HELP);
         break;
 
       case 'faq':
-        navigate('/faq');
+        goTo(redirectPaths.FAQ);
         break;
     }
   };
@@ -54,7 +56,7 @@ const ContactSupportSection = () => {
                 onClick={() => handleAction(item.action)}
               >
                 {item.button}
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="size-4" />
               </button>
             </div>
           ))}

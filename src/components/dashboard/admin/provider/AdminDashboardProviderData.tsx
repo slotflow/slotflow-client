@@ -6,7 +6,7 @@ import ProviderListCard from './ProviderListCard';
 import DashboardStats from '../../DashboardStats';
 import ProviderDataChart from './ProviderDataChart';
 import { DashboardItem } from '@/shared/types/common';
-import { aiResponseEntities, queryKeys } from '@/shared/utils/constants';
+import { aiResponseEntities, queryKeys } from '@/shared/utils/constants/appConstants';
 import { AdminDashboardProviderDataProps } from '@/shared/types/component';
 import { providerStatsMapForAdmin } from '@/shared/utils/constants/statsConstats';
 import { AdminFetchDashboardProviderStatsDataResponse } from '@/shared/types/api/adminDashboard';

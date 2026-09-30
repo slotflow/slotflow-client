@@ -73,6 +73,7 @@ export interface AuthState {
   eventSocketId: string | null;
   eventSocketIsConnected: boolean;
   subscriptionUpdating: boolean;
+  bookingUpdating: boolean;
   preboardingData: {
     selectedRole: Role | null;
   };
@@ -114,9 +115,6 @@ export interface UserStateVariables {
   isReviewCreateFormOpen: boolean;
   selectedBookingId: string | null;
   selectedBookingProviderId: string | null;
-  providers: Array<UserViewProviderCardProps> | null;
-  selectedCategories: ServiceCategory[];
-  providerCardsfFlter: ProviderCardsFilters;
 }
 
 // chat slice

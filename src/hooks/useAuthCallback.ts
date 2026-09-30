@@ -28,14 +28,11 @@ export const useAuthCallback = (): UseAuthCallbackReturn => {
 
                 const payload = JSON.parse(decodeURIComponent(rawResponse));
 
-                console.log("payload : ",payload);
-
                 if (!payload.success) {
                     throw new Error(payload.error || 'Authentication was cancelled or failed.');
                 }
 
                 const rawUser = payload.user;
-                console.log("rawUser : ",rawUser);
 
                 if (!rawUser) {
                     throw new Error('User data missing from authentication response.');

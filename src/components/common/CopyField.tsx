@@ -1,15 +1,13 @@
-import { useState } from 'react';
+import { useCopy } from '@/hooks/useCopy';
 import { Check, Copy } from 'lucide-react';
 import { CupyFieldProps } from '@/shared/types/component';
 
-const CopyableId = ({ value, label }: CupyFieldProps) => {
-  const [copied, setCopied] = useState(false);
+const CopyableId = ({ 
+  value, 
+  label 
+}: CupyFieldProps) => {
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(value);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+  const { copied, copy } = useCopy(2000);
 
   return (
     <div className="flex items-center gap-2 group">
@@ -18,7 +16,7 @@ const CopyableId = ({ value, label }: CupyFieldProps) => {
         {value}
       </code>
       <button
-        onClick={handleCopy}
+        onClick={() => copy(value)}
         className="p-1 rounded text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
         title="Copy ID"
       >

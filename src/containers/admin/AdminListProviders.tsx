@@ -1,10 +1,10 @@
 import { User } from '@/shared/types/entity/user';
 import { useEffect, useRef, useState } from 'react';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { useAdminProvider } from '@/hooks/adminHooks/useProvider';
 import { slideIn } from '@/shared/utils/helper/gsapAnimationSlide';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
-import { useAppNavigation } from '@/hooks/useAppNavigation';
 import RejectproviderForm from '@/components/form/Admin/RejectproviderForm';
 import { fetchServiceProvidersForAdmin } from '@/services/apis/providerProfile';
 import { AdminFetchAllProvidersResponse } from '@/shared/types/api/providerProfile';
@@ -23,7 +23,7 @@ const AdminListProviders = () => {
     changeTrustTagProviderId,
   } = useAdminProvider();
 
-  const { handleGetProviderDetailPage } = useAppNavigation();
+  const { toProviderDetailsPage } = useAppNavigation();
 
   const handleProviderRejectClose = () => {
     setRejectProvider(null);
@@ -40,7 +40,7 @@ const AdminListProviders = () => {
     changeBlockStatusProviderId,
     changeProviderSlotflowTrustTag,
     changeTrustTagProviderId,
-    handleGetProviderDetailPage,
+    toProviderDetailsPage,
     handleProviderRejectOpen,
   );
 

@@ -7,13 +7,13 @@ import {
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { useAuth } from '@/hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { redirectPaths } from '@/shared/utils/constants';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import { toggleTheme } from '@/app/store/slices/appSlice';
 import { useSignout } from '@/hooks/systemHooks/useSignout';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { AppDispatch, RootState } from '@/app/store/appStore';
-import { LogOut, Sun, Moon, Settings, CreditCard } from 'lucide-react';
+import { LogOut, Sun, Moon, Settings, CreditCard, User } from 'lucide-react';
 
 interface SidebarDropDownProps {
   isSidebarOpen: boolean;
@@ -21,7 +21,7 @@ interface SidebarDropDownProps {
 
 export const SidebarDropDown = ({ isSidebarOpen }: SidebarDropDownProps) => {
 
-  const navigate = useNavigate();
+  const { goTo } = useAppNavigation();
   const { userSignout } = useSignout();
   const dispatch = useDispatch<AppDispatch>();
   const { isProvider, isAdmin, user } = useAuth();
@@ -101,21 +101,21 @@ export const SidebarDropDown = ({ isSidebarOpen }: SidebarDropDownProps) => {
 
           <DropdownMenuSeparator />
           {!isAdmin && (
-            <DropdownMenuItem onClick={() => navigate(`/settings/account`)}>
-              <CreditCard />
+            <DropdownMenuItem onClick={() => goTo(redirectPaths.ACCOUNT)}>
+              <User />
               <span>Account</span>
             </DropdownMenuItem>
           )}
 
           {isProvider && (
-            <DropdownMenuItem onClick={() => navigate(redirectPaths.UPGRADE)}>
+            <DropdownMenuItem onClick={() => goTo(redirectPaths.UPGRADE)}>
               <CreditCard />
               <span>Upgrade plan</span>
             </DropdownMenuItem>
           )}
 
           {!isAdmin && (
-            <DropdownMenuItem onClick={() => navigate(`/settings`)}>
+            <DropdownMenuItem onClick={() => goTo(redirectPaths.SETTINGS)}>
               <Settings />
               <span>Settings</span>
             </DropdownMenuItem>

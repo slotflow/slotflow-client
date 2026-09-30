@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { useQuery } from '@tanstack/react-query';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import MetricCard from '@/components/common/MetricCard';
 import ChartLineLinear from '@/components/chart/ChartLineLinear';
 import DataFetchingError from '@/components/error/DataFetchingError';

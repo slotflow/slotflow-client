@@ -6,7 +6,7 @@ import {
 import { toast } from 'react-toastify';
 import { RootState } from '@/app/store/appStore';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { EventSocketEnum } from '@/shared/types/socket';
+import { EventSocketEnum } from '@/shared/types/enums';
 import { setStripeData } from '@/app/store/slices/integrationSlice';
 import { SubscriptionActivated } from '@/shared/types/api/subscription';
 import { destroyEventSocket, getEventSocket } from '@/lib/socketService';
@@ -44,7 +44,7 @@ export const connectEventSocket = createAsyncThunk<void, void, { state: RootStat
 
       const isOwner = payload.userId === authUser.uid;
       if (isOwner) {
-        const isExpired = new Date(payload.endDate) < new Date();
+        const isExpired = new Date(payload.currentPeriodEnd) < new Date();
 
         if (isExpired) {
           toast.error('Your subscription has expired.');

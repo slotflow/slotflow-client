@@ -2,13 +2,14 @@ import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { useSubscriptionCallback } from '@/hooks/useSubscriptionCallback';
-import { actionBtnClass, containerVariants } from '@/shared/utils/constants';
+import { containerVariants } from '@/shared/utils/constants/designConstants';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { LoaderCircle, CheckCircle2, LayoutDashboard, XCircle, ShieldCheck, ArrowRight, AlertCircle } from 'lucide-react';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 
 const ProviderSubscriptionCallbackPage = () => {
-
-  const { toDashboard } = useAppNavigation();
+  
+  const { goTo } = useAppNavigation();
   const { status, subscriptionUpdating } = useSubscriptionCallback();
 
   return (
@@ -102,12 +103,12 @@ const ProviderSubscriptionCallbackPage = () => {
                   <Button
                     title="Go to Dashboard"
                     variant="secondary"
-                    onClick={() => toDashboard(true)}
-                    className={`${actionBtnClass} w-full shadow-lg shadow-primary/5 transition-all duration-300 hover:scale-[1.02]`}
+                    onClick={() => goTo(redirectPaths.DASHBOARD)}
+                    className={`w-full shadow-lg shadow-primary/5 transition-all duration-300 hover:scale-[1.02]`}
                   >
-                    <LayoutDashboard className="mr-2 h-5 w-5" />
+                    <LayoutDashboard className="mr-2 size-5" />
                     Go to Dashboard
-                    <ArrowRight className="ml-auto h-4 w-4 opacity-70" />
+                    <ArrowRight className="ml-auto size-4 opacity-70" />
                   </Button>
                 </motion.div>
               ) : (
@@ -139,7 +140,7 @@ const ProviderSubscriptionCallbackPage = () => {
 
                   <Button
                     title="Go to Dashboard"
-                    onClick={() => toDashboard(true)}
+                    onClick={() => goTo(redirectPaths.DASHBOARD)}
                     className="w-full bg-[var(--mainColor)] text-white hover:bg-[var(--mainColorHover)] shadow-lg shadow-[var(--mainColor)]/20 transition-all duration-300 hover:scale-[1.02]"
                   >
                     Go to Dashboard

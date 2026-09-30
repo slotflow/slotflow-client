@@ -54,13 +54,11 @@ export const exportToPDF = async (
       index + 1,
       formattedDate,
       row.paymentGateway ?? 'Not Available',
-      row.initialAmount?.toFixed(2) ?? '0.00',
       row.discountAmount?.toFixed(2) ?? '0.00',
       row.totalAmount?.toFixed(2) ?? '0.00',
     ];
   });
 
-  const grandInitial = data.reduce((sum, r) => sum + (r.initialAmount ?? 0), 0);
   const grandDiscount = data.reduce((sum, r) => sum + (r.discountAmount ?? 0), 0);
   const grandTotal = data.reduce((sum, r) => sum + (r.totalAmount ?? 0), 0);
 
@@ -88,9 +86,6 @@ export const exportToPDF = async (
   doc.setFont('helvetica', 'bold');
   let totalY = finalY + 12;
 
-  doc.text(`Grand Initial Total : rs ${grandInitial.toFixed(2)}`, rightX, totalY, {
-    align: 'right',
-  });
   totalY += 8;
   doc.text(`Grand Discount Total : rs ${grandDiscount.toFixed(2)}`, rightX, totalY, {
     align: 'right',

@@ -1,34 +1,16 @@
-import { ServiceCategory } from '@/shared/types/enums';
 import { UserStateVariables } from '@/shared/types/slice';
-import { ProviderCardsFilters } from '@/shared/types/common';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UserViewProviderCardProps } from '@/shared/types/component';
 
 const initialState: UserStateVariables = {
   isReviewCreateFormOpen: false,
   selectedBookingId: null,
   selectedBookingProviderId: null,
-  providers: null,
-  selectedCategories: [],
-  providerCardsfFlter: {
-    appServiceIds: [] as string[],
-    maxPrice: 0,
-    minPrice: 0,
-    slotflowTrusted: false,
-    categories: [] as ServiceCategory[],
-    location: undefined,
-    skip: 0,
-    limit: 12,
-  },
 };
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    pushServiceCategory: (state, action: PayloadAction<Array<ServiceCategory> | []>) => {
-      state.selectedCategories = action.payload;
-    },
     toggleReviewCreateForm: (
       state,
       action: PayloadAction<{ isOpen: boolean; id: string | null; providerId: string | null }>,
@@ -37,16 +19,12 @@ const userSlice = createSlice({
       state.selectedBookingId = action.payload.id;
       state.selectedBookingProviderId = action.payload.providerId;
     },
-    setProviders: (state, action: PayloadAction<Array<UserViewProviderCardProps>>) => {
-      state.providers = action.payload;
-    },
-    setProviderCardsFilter: (state, action: PayloadAction<ProviderCardsFilters>) => {
-      state.providerCardsfFlter = action.payload;
-    },
   },
 });
 
-export const { toggleReviewCreateForm, setProviders, pushServiceCategory, setProviderCardsFilter } =
+export const {
+  toggleReviewCreateForm,
+} =
   userSlice.actions;
 
 export default userSlice.reducer;

@@ -105,7 +105,7 @@ const MessageInput = ({ setIsTyping, isTyping, setMessageSenderId }: MessageInpu
             />
             <Button
               onClick={removeImage}
-              className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-base-300 flex items-center justify-center cursor-pointer hover:text-red-500"
+              className="absolute -top-1.5 -right-1.5 size-5 rounded-full bg-base-300 flex items-center justify-center cursor-pointer hover:text-red-500"
               type="button"
             >
               <Trash className="size-3" />
@@ -134,14 +134,14 @@ const MessageInput = ({ setIsTyping, isTyping, setMessageSenderId }: MessageInpu
         <button
           type="button"
           className={`flex btn btn-circle btn-sm cursor-pointer
-                     ${imagePreview ? 'text-emerald-500' : 'text-[var(--textTwo)]'}`}
+                     ${imagePreview ? 'text-emerald-500' : 'text-neutral-600'}`}
           onClick={() => fileInputRef.current?.click()}
         >
           <Image size={20} />
         </button>
         <button
           type="submit"
-          className="btn btn-sm text-[var(--textTwo)] cursor-pointer"
+          className="btn btn-sm text-neutral-600 cursor-pointer"
           disabled={!text.trim() && !imagePreview}
         >
           <Send size={22} />

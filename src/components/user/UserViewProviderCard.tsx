@@ -1,7 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { useNavigate } from 'react-router-dom';
 import { ShieldCheck, Star } from 'lucide-react';
-import { cardGradients } from '@/shared/utils/constants';
+import { cardGradients } from '@/shared/utils/constants/designConstants';
 import { Card, CardContent } from '@/components/ui/card';
 import avatar from '../../assets/defaultImages/avatar.png';
 import { UserViewProviderCardProps } from '@/shared/types/component';
@@ -14,7 +14,7 @@ const UserViewProviderCard = ({ provider, serviceDetails }: UserViewProviderCard
 
   return (
     <Card
-      onClick={() => navigate(`/user/providerProfile/${provider?._id}`)}
+      onClick={() => navigate(`/service-providers/${provider?._id}`)}
       className={`text-black cursor-pointer transition-all hover:shadow-xl hover:-translate-y-1 ${gradient} border-0`}
     >
       <CardContent className="p-4 space-y-4">

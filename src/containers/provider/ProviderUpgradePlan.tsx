@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import { BillingCycle } from '@/shared/types/enums';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import PlanCard from '../../components/plan/PlanCard';
 import { providerFetchPlans } from '@/services/apis/plan';
 import { ArrowLeft, Sparkles, ShieldCheck } from 'lucide-react';
@@ -92,13 +92,13 @@ const ProviderUpgradePlan = () => {
             onClick={() => navigate(-1)}
             className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-foreground transition-all duration-200 hover:-translate-x-0.5 active:translate-x-0"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="size-4" />
             <span>Back to Dashboard</span>
           </Button>
 
           <div className="flex flex-wrap items-center justify-center gap-6">
             <div className="flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-emerald-5xl" />
+              <ShieldCheck className="size-4 text-emerald-5xl" />
               <span>Secure Payment Guarantee</span>
             </div>
             <span className="hidden sm:inline text-border">•</span>

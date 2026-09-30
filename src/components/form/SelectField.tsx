@@ -5,10 +5,25 @@ import {
   SelectItem,
   SelectValue,
 } from '@/components/ui/select';
-import { Input } from '../ui/input';
 import FormLabelWithInfo from './FormLabelWithInfo';
-import { SelectFieldProps } from '@/shared/types/component';
-import { FieldValues, Path, PathValue } from 'react-hook-form';
+import { FieldValues, Control, Controller, Path } from 'react-hook-form';
+import { formatString } from '@/shared/utils/helper/formatString';
+
+interface SelectOption<K> {
+  label: string;
+  value: K;
+}
+
+interface SelectFieldProps<T extends FieldValues, K> {
+  id: Path<T>;
+  label: string;
+  options: SelectOption<K>[];
+  placeholder?: string;
+  error?: string;
+  control: Control<T>; // Use control instead of register/setValue
+  required?: boolean;
+  infoText?: string;
+}
 
 const SelectField = <T extends FieldValues, K>({
   id,
@@ -16,67 +31,67 @@ const SelectField = <T extends FieldValues, K>({
   options,
   placeholder = 'Select an option',
   error,
-  register,
-  setValue,
+  control,
   required = false,
-  defaultValue,
   infoText,
 }: SelectFieldProps<T, K>) => {
-  const reg = register(id);
-
-  // FULLY TYPE-SAFE PARSER — NO ANY
-  const parseValue = (val: string): string | number | boolean => {
-    if (val === 'true') return true;
-    if (val === 'false') return false;
-    if (!isNaN(Number(val)) && val.trim() !== '') {
-      return Number(val);
-    }
-    console.log('parsed value : ', val);
-    return val;
-  };
-
+  
   return (
-    <div className="space-y-2">
+   <div className="space-y-2">
       <FormLabelWithInfo label={label} htmlFor={id} infoText={infoText} />
 
-      <Input
-        type="hidden"
-        name={reg.name}
-        ref={reg.ref}
-        defaultValue={defaultValue !== undefined ? String(defaultValue) : undefined}
+      <Controller
+        name={id}
+        control={control}
+        render={({ field }) => {
+          const selectValue =
+            field.value !== undefined && field.value !== null && field.value !== ''
+              ? String(field.value)
+              : undefined;
+
+          return (
+            <Select
+              value={selectValue}
+              onValueChange={(selectedStringVal) => {
+                if (selectedStringVal === undefined || selectedStringVal === null) return;
+
+                // Match exact option value (preserves ENUM, boolean, number types)
+                const matchedOption = options.find(
+                  (opt) => String(opt.value) === selectedStringVal
+                );
+
+                if (matchedOption) {
+                  field.onChange(matchedOption.value);
+                  return;
+                }
+
+                if (selectedStringVal === 'true') field.onChange(true);
+                else if (selectedStringVal === 'false') field.onChange(false);
+                else if (!isNaN(Number(selectedStringVal)) && selectedStringVal.trim() !== '') {
+                  field.onChange(Number(selectedStringVal));
+                } else {
+                  field.onChange(selectedStringVal);
+                }
+              }}
+              required={required}
+            >
+              <SelectTrigger className={`cursor-pointer w-full ${error ? 'border-red-500' : ''}`}>
+                <SelectValue placeholder={placeholder} />
+              </SelectTrigger>
+
+              <SelectContent>
+                {options.map((opt) => (
+                  <SelectItem key={String(opt.value)} value={String(opt.value)} className="cursor-pointer">
+                    {opt.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          );
+        }}
       />
 
-      <Select
-        defaultValue={defaultValue !== undefined ? String(defaultValue) : undefined}
-        onValueChange={(val) => {
-          const parsedValue = parseValue(val);
-          setValue(id as Path<T>, parsedValue as PathValue<T, Path<T>>, {
-            shouldValidate: true,
-            shouldDirty: true,
-            shouldTouch: true,
-          });
-          reg.onChange({
-            target: { name: reg.name, value: parsedValue },
-          });
-        }}
-        required={required}
-      >
-        <SelectTrigger className={`w-full ${error ? 'border-red-500' : ''}`}>
-          <SelectValue placeholder={placeholder} />
-        </SelectTrigger>
-
-        <SelectContent>
-          {options.map((opt) => (
-            <SelectItem key={String(opt.value)} value={String(opt.value)}>
-              {opt.label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-
-      {error && (
-        <p className="text-xs text-red-500">{typeof error === 'string' ? error : error.message}</p>
-      )}
+      {error && <p className="text-xs text-red-500">{error}</p>}
     </div>
   );
 };

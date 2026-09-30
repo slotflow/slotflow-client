@@ -5,10 +5,12 @@ import {
   UpdateAddressResponse,
   FetchMyAddressResponse,
   UserCreateAddressResponse,
+  FetchAddressRequest,
 } from '../../shared/types/api/address';
 import { axiosInstance } from '@/lib/axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ApiBaseResponse } from '../../shared/types/common';
+import { buildQueryParams } from '@/shared/utils/helper/buildQueryParams';
 
 export const fetchMyAddress = async (): Promise<ApiBaseResponse<FetchMyAddressResponse>> => {
   const response = await axiosInstance.get('/addresses/me');
@@ -16,9 +18,10 @@ export const fetchMyAddress = async (): Promise<ApiBaseResponse<FetchMyAddressRe
 };
 
 export const fetchAddressByUserId = async (
-  userId: string,
+  data: FetchAddressRequest,
 ): Promise<ApiBaseResponse<FetchAddressResponse>> => {
-  const response = await axiosInstance.get(`/users/${userId}/address`);
+  const query = buildQueryParams({checkShowStatus: data.checkShowStatus});
+  const response = await axiosInstance.get(`/users/${data.userId}/address?${query}`);
   return response.data;
 };
 

@@ -5,7 +5,7 @@ import {
   serviceDescriptionRegex,
 } from './regex';
 import z from 'zod';
-import { ServiceType, ServiceCategory } from '@/shared/types/enums';
+import { ServiceType, ServiceCategory, Day } from '@/shared/types/enums';
 
 export const providerCreateServiceDetailsZodSchema = z.object({
   _id: z.string(),
@@ -84,7 +84,7 @@ export type ProviderCreateServiceDetailsFormType = z.infer<
 >;
 
 export const providerServiceAvailabilityZodSchema = z.object({
-  day: z.string().min(1, 'Day is required'),
+  day: z.nativeEnum(Day),
   isAvailable: z.boolean(),
   duration: z.number().optional(),
   startTime: z.date().optional(),

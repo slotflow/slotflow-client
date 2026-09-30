@@ -120,7 +120,7 @@ const PlanFeatureValue: React.FC<PlanFeatureValueProps> = ({ available, inDevelo
   if (!available) {
     return (
       <div className="flex justify-center">
-        <MinusIcon className="h-4 w-4 text-muted-foreground/50" />
+        <MinusIcon className="size-4 text-muted-foreground/50" />
       </div>
     );
   }
@@ -128,7 +128,7 @@ const PlanFeatureValue: React.FC<PlanFeatureValueProps> = ({ available, inDevelo
   if (inDevelopment) {
     return (
       <div className="flex flex-col items-center gap-1">
-        <Clock3Icon className="h-4 w-4 text-muted-foreground" />
+        <Clock3Icon className="size-4 text-muted-foreground" />
         <span className="text-xs text-muted-foreground">Coming soon</span>
       </div>
     );
@@ -140,7 +140,7 @@ const PlanFeatureValue: React.FC<PlanFeatureValueProps> = ({ available, inDevelo
 
   return (
     <div className="flex justify-center">
-      <CheckIcon className="h-5 w-5 text-primary" />
+      <CheckIcon className="size-5 text-primary" />
     </div>
   );
 };

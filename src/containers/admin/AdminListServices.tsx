@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import { fetchServices } from '@/services/apis/service';
 import { useAdminService } from '@/hooks/adminHooks/useService';
 import { slideIn } from '@/shared/utils/helper/gsapAnimationSlide';

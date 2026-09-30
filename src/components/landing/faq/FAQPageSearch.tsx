@@ -8,7 +8,7 @@ const FAQPageSearch = ({ onChange, value }: FAQPageSearchProps) => {
       <div className="max-w-7xl mx-auto flex flex-col justify-center items-center">
         <div className="mt-14 w-full max-w-2xl">
           <div className="group relative">
-            <Search className="absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
+            <Search className="absolute left-5 top-1/2 size-5 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
             <Input
               value={value}
               onChange={(e) => onChange(e.target.value)}

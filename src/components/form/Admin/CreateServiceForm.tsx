@@ -8,19 +8,19 @@ import { ServiceCategory } from '@/shared/types/enums';
 import DynamicStringListField from '../DynamicStringListFields';
 import { useAdminService } from '@/hooks/adminHooks/useService';
 import { CreateServiceFormProps } from '@/shared/types/component';
-import { closeBtnClass, serviceCategoryOptions } from '@/shared/utils/constants';
 import { slideOut } from '@/shared/utils/helper/gsapAnimationSlide';
 import { handleFormError } from '@/shared/utils/helper/formErrorCatcher';
 import {
   AdminCreateServiceFormType,
   adminCreateServiceZodSchema,
 } from '@/shared/validators/zod/adminZod';
+import { serviceCategoryOptions } from '@/shared/utils/constants/selectOptionsConstants';
 
 const CreateServiceForm = ({ onClose, formRef }: CreateServiceFormProps) => {
   const { createService } = useAdminService();
 
   const {
-    register,
+    control,
     handleSubmit,
     reset,
     setFocus,
@@ -82,15 +82,15 @@ const CreateServiceForm = ({ onClose, formRef }: CreateServiceFormProps) => {
         </div>
 
         <Button
+          title="close"
           type="button"
-          size='icon'
+          size='sm'
           variant='ghost'
           onClick={handleCloseForm}
           disabled={isSubmitting}
-          className={closeBtnClass}
           aria-label="Close form"
         >
-          <X className="w-5 h-5" />
+          <X className="size-5" />
         </Button>
       </div>
 
@@ -103,9 +103,8 @@ const CreateServiceForm = ({ onClose, formRef }: CreateServiceFormProps) => {
             id="serviceCategory"
             label="Service Category"
             options={serviceCategoryOptions}
-            register={register}
-            setValue={setValue}
-            error={errors.serviceCategory}
+            control={control}
+            error={errors.serviceCategory?.message}
           />
 
           <DynamicStringListField

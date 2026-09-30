@@ -4,19 +4,20 @@ import { appConfig } from '@/config/env';
 import { useForm } from 'react-hook-form';
 import { FormButton } from '../FormButton';
 import { Input } from '@/components/ui/input';
-import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import React, { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch, useSelector } from 'react-redux';
-import { redirectPaths } from '@/shared/utils/constants';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { resendOtp, verifyOtp } from '@/services/apis/auth';
 import { formatTime } from '@/shared/utils/helper/formatTime';
 import { AppDispatch, RootState } from '@/app/store/appStore';
 import { VerifyOtpFormType, verifyOtpZodSchema } from '@/shared/validators/zod/authZod';
 
 const OtpVerificatioForm = () => {
-  const navigate = useNavigate();
+
+  const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
   const { otpTimerIsRunning, forgotPassword, otpExpiresAt } = useSelector(
     (store: RootState) => store.app,
@@ -59,9 +60,9 @@ const OtpVerificatioForm = () => {
       if (res.success) {
         // Navigate immediately for instant UX
         if (forgotPassword) {
-          navigate(redirectPaths.RESET_PASSWORD);
+          goTo(redirectPaths.RESET_PASSWORD);
         } else {
-          navigate(redirectPaths.LOGIN);
+          goTo(redirectPaths.LOGIN);
         }
         // Show toast after navigation (toast uses portal so still visible)
         toast.success(res.message);
@@ -161,10 +162,10 @@ const OtpVerificatioForm = () => {
             />
           </form>
 
-          <p className="mt-6 flex justify-between text-xs md:text-sm/6 text-[var(--textTwo)] px-2">
+          <p className="mt-6 flex justify-between text-xs md:text-sm/6 text-neutral-600 px-2">
             <span
               className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
-              onClick={() => navigate(redirectPaths.LOGIN)}
+              onClick={() => goTo(redirectPaths.LOGIN)}
             >
               Cancel
             </span>
@@ -172,7 +173,7 @@ const OtpVerificatioForm = () => {
             {resentLoading ? (
               <span className="font-semibold text-[var(--mainColor)]">Sending...</span>
             ) : otpTimerIsRunning && timeLeft > 0 ? (
-              <span className="text-center text-xs md:text-sm/6 text-[var(--textTwo)]">
+              <span className="text-center text-xs md:text-sm/6 text-neutral-600">
                 {formatTime(timeLeft)}
               </span>
             ) : (
@@ -189,7 +190,7 @@ const OtpVerificatioForm = () => {
             variant="link"
             className="block text-xs md:text-sm font-medium text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer px-2"
             onClick={() => {
-              navigate('/contact');
+              goTo(redirectPaths.CONTACT);
             }}
           >
             Didn’t receive OTP?

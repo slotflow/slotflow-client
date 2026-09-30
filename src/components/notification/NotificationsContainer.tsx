@@ -9,7 +9,7 @@ import { fetchNotifications } from '@/services/apis/notification';
 import NotificationCardShimmer from '../shimmers/NotificationCardShimmer';
 import { toggleNotificationContainer } from '@/app/store/slices/appSlice';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 
 const NotificationsContainer = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -58,7 +58,7 @@ const NotificationsContainer = () => {
       <SheetContent className="w-[320px] sm:w-[400px] bg-[var(--menuBg)] border-l flex flex-col p-6 shadow-2xl">
         <SheetHeader className="mb-4">
           <SheetTitle className="flex items-center gap-2 text-xl font-bold">
-            <Bell className="w-5 h-5 text-[var(--mainColor)]" />
+            <Bell className="size-5 text-[var(--mainColor)]" />
             Notifications
           </SheetTitle>
         </SheetHeader>

@@ -12,13 +12,13 @@ const FilterCompHeader = ({ title, isOpen, onToggle, Icon }: FilterCompHeaderPro
         title="Toggle Filter"
         type="button"
         variant="outline"
-        size="icon"
+        size="sm"
         className="cursor-pointer size-8"
         onClick={onToggle}
         aria-expanded={isOpen}
         aria-label={`Toggle ${title}`}
       >
-        {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+        {isOpen ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}
       </Button>
     </div>
   );

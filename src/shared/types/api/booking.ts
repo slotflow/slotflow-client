@@ -49,7 +49,9 @@ export type BookAppointmentRequest = {
 };
 
 // response interface of the book an appointment api
-export type BookAppointmentResponse = string;
+export interface BookAppointmentResponse {
+  sessionId: string;
+};
 
 // join video call
 export interface JoinRoomCallbackRequest {

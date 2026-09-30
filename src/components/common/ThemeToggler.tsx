@@ -16,10 +16,11 @@ const ThemeToggler = () => {
 
   return (
     <Button
-      variant='outline'
+      variant='ghost'
       onClick={changeTheme}
       aria-label="Toggle theme"
-      className="ml-3 rounded-full p-2.5 cursor-pointer"
+      className="rounded-full"
+      size='icon'
     >
       <motion.div
         key={themeMode ? 'moon' : 'sun'}

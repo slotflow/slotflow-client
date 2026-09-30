@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import ToggleField from '../ToggleField';
 import { Loader2, X } from 'lucide-react';
 import { FormButton } from '../FormButton';
-import SelectField from '../SelectFieldNew';
+import SelectField from '../SelectField';
 import { Button } from '@/components/ui/button';
 import { PlanName } from '@/shared/types/enums';
 import { useQuery } from '@tanstack/react-query';
@@ -17,7 +17,6 @@ import DynamicStringListField from '../DynamicStringListFields';
 import { slideOut } from '@/shared/utils/helper/gsapAnimationSlide';
 import { planNameOptions } from '@/shared/utils/constants/planConstants';
 import { AdminCreatePlanFormType, adminCreatePlanZodSchema } from '@/shared/validators/zod/adminZod';
-import { closeBtnClass } from '@/shared/utils/constants';
 
 const PlanForm = ({ onClose, formRef, planIdToEdit }: PlanFormProps) => {
   const isEditMode = Boolean(planIdToEdit);
@@ -133,14 +132,13 @@ const PlanForm = ({ onClose, formRef, planIdToEdit }: PlanFormProps) => {
         </div>
         <Button
           type="button"
-          size='icon'
+          size='sm'
           variant='ghost'
           onClick={handleClosePlanForm}
           disabled={isSubmitting}
-          className={closeBtnClass}
           aria-label="Close form"
         >
-          <X className="w-5 h-5" />
+          <X className="size-5" />
         </Button>
       </div>
 

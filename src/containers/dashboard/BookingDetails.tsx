@@ -18,7 +18,7 @@ import { Booking } from '@/shared/types/entity/booking';
 import { Card, CardContent } from '@/components/ui/card';
 import { formatDate } from '@/shared/utils/helper/formatDate';
 import { fetchBookingDetails } from '@/services/apis/booking';
-import { dateFormats, queryKeys } from '@/shared/utils/constants';
+import { dateFormats, queryKeys } from '@/shared/utils/constants/appConstants';
 import DetailsShimmer from '@/components/shimmers/DataFieldShimmer';
 import DataFetchingError from '@/components/error/DataFetchingError';
 

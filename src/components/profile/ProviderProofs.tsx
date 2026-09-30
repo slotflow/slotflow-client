@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import { ImageUpscale, Minimize2 } from 'lucide-react';
 import DataFetchingError from '../error/DataFetchingError';
 import { ProviderProofsProps } from '@/shared/types/component';
@@ -41,17 +41,17 @@ const ProviderProofs = ({ providerId, fetchApiFunction }: ProviderProofsProps) =
           <CardTitle className="text-base font-semibold">Identity Proof</CardTitle>
           <Button
             title={expandIdentity ? 'Minimize' : 'Maximize'}
-            variant="default"
+            variant="secondary"
             size="sm"
             onClick={() => setExpandIdentity(!expandIdentity)}
           >
             {expandIdentity ? (
               <>
-                <Minimize2 className="h-4 w-4 mr-1" /> Minimize
+                <Minimize2 className="size-4 mr-1" /> Minimize
               </>
             ) : (
               <>
-                <ImageUpscale className="h-4 w-4 mr-1" /> Maximize
+                <ImageUpscale className="size-4 mr-1" /> Maximize
               </>
             )}
           </Button>
@@ -74,17 +74,17 @@ const ProviderProofs = ({ providerId, fetchApiFunction }: ProviderProofsProps) =
           <CardTitle className="text-base font-semibold">Service Proof</CardTitle>
           <Button
             title={expandService ? 'Minimize' : 'Maximize'}
-            variant="default"
+            variant="secondary"
             size="sm"
             onClick={() => setExpandService(!expandService)}
           >
             {expandService ? (
               <>
-                <Minimize2 className="h-4 w-4 mr-1" /> Minimize
+                <Minimize2 className="size-4 mr-1" /> Minimize
               </>
             ) : (
               <>
-                <ImageUpscale className="h-4 w-4 mr-1" /> Maximize
+                <ImageUpscale className="size-4 mr-1" /> Maximize
               </>
             )}
           </Button>

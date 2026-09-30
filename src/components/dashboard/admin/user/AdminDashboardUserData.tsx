@@ -11,7 +11,7 @@ import DataAnalysis from '../../DataAnalyisis';
 import DashboardStats from '../../DashboardStats';
 import { DashboardItem } from '@/shared/types/common';
 import { AdminDashboardUserDataProps } from '@/shared/types/component';
-import { aiResponseEntities, queryKeys } from '@/shared/utils/constants';
+import { aiResponseEntities, queryKeys } from '@/shared/utils/constants/appConstants';
 import { userStatsMapForAdmin } from '@/shared/utils/constants/statsConstats';
 import { AdminFetchDashboardUserStatsDataResponse } from '@/shared/types/api/adminDashboard';
 

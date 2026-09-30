@@ -1,5 +1,3 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
 import { 
   Bell, 
   User, 
@@ -10,6 +8,8 @@ import {
   LucideIcon
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { redirectPaths } from "@/shared/utils/constants/routeConstants";
+import { useAppNavigation } from "@/hooks/useAppNavigation";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 
 interface SettingOption {
@@ -26,21 +26,21 @@ const SETTINGS_OPTIONS: SettingOption[] = [
     id: "notifications",
     title: "Notifications",
     description: "Manage alerts, email communications, and push notifications",
-    path: "/settings/notifications",
+    path: redirectPaths.NOTIFICATIONS,
     icon: Bell,
   },
   {
     id: "account",
     title: "Account",
     description: "Update personal details, profile picture, and email settings",
-    path: "/settings/account",
+    path: redirectPaths.ACCOUNT,
     icon: User,
   },
   {
     id: "integrations",
     title: "Integrations",
     description: "Connect third-party tools, webhooks, and API keys",
-    path: "/settings/integrations",
+    path: redirectPaths.INTEGRATIONS,
     icon: Blocks,
     badge: "Connected",
   },
@@ -48,13 +48,14 @@ const SETTINGS_OPTIONS: SettingOption[] = [
     id: "security",
     title: "Security & Privacy",
     description: "Manage passkeys, two-factor auth, and active user sessions",
-    path: "/settings/security",
+    path: redirectPaths.SECURITY,
     icon: ShieldCheck,
   },
 ];
 
 const SettingsMenuPage = () => {
-  const navigate = useNavigate();
+
+  const { goTo } = useAppNavigation();
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors duration-200">
@@ -86,12 +87,12 @@ const SettingsMenuPage = () => {
               return (
                 <button
                   key={option.id}
-                  onClick={() => navigate(option.path)}
+                  onClick={() => goTo(option.path)}
                   className="w-full flex items-center justify-between p-4 sm:p-5 text-left transition-colors duration-200 hover:bg-accent/50 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   <div className="flex items-center space-x-4 min-w-0 pr-4">
                     <div className="p-2.5 rounded-lg bg-muted/80 text-muted-foreground group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-200 shrink-0">
-                      <Icon className="w-5 h-5" />
+                      <Icon className="size-5" />
                     </div>
                     <div className="space-y-0.5 truncate">
                       <div className="flex items-center gap-2">
@@ -110,7 +111,7 @@ const SettingsMenuPage = () => {
                     </div>
                   </div>
 
-                  <ChevronRight className="w-5 h-5 shrink-0 text-muted-foreground/50 group-hover:text-primary group-hover:translate-x-1 transition-all duration-200" />
+                  <ChevronRight className="size-5 shrink-0 text-muted-foreground/50 group-hover:text-primary group-hover:translate-x-1 transition-all duration-200" />
                 </button>
               );
             })}

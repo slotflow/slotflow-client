@@ -1,13 +1,14 @@
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import { fetchPayments } from '@/services/apis/payment';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { FetchPaymentsResponse } from '@/shared/types/api/payment';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
-import { useAppNavigation } from '@/hooks/useAppNavigation';
 import PaymentsTableColumn from '@/components/table/tableColumns/PaymentsTableColumn';
-import { queryKeys } from '@/shared/utils/constants';
 
 const ListPayments = () => {
-  const { handleGetPaymentDetailsPage } = useAppNavigation();
-  const column = PaymentsTableColumn(handleGetPaymentDetailsPage);
+
+  const { toPaymentDetailsPage } = useAppNavigation();
+  const column = PaymentsTableColumn(toPaymentDetailsPage);
 
   return (
     <PaginatedDataTable<FetchPaymentsResponse>

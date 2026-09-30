@@ -7,7 +7,7 @@ import { Booking } from './entity/booking';
 import React, { ChangeEvent } from 'react';
 import { Message } from './entity/message';
 import { Plan } from './entity/planInterface';
-import { dateFormats } from '../utils/constants';
+import { dateFormats } from '../utils/constants/appConstants';
 import { ColumnDef } from '@tanstack/react-table';
 import { RouteNames } from '../utils/constants/routeConstants';
 import { HearAboutUsOptionValue, PlanName, Role, ServiceCategory } from './enums';
@@ -259,11 +259,11 @@ export type SelectOptions = Array<{ label: string; value: string }>;
 
 // Provider cards filters interface
 export interface ProviderCardsFilters {
+  categories: ServiceCategory[];
   appServiceIds: string[];
   minPrice: number;
   maxPrice: number;
   slotflowTrusted: boolean;
-  categories: ServiceCategory[];
   location?: {
     type: string;
     coordinates: [number, number];

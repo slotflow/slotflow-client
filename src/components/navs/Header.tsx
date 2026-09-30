@@ -4,11 +4,12 @@ import { Menu, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import ThemeToggler from '../common/ThemeToggler';
 import { AnimatePresence, motion } from 'framer-motion';
-import { redirectPaths } from '@/shared/utils/constants';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import logo from '../../assets/logos/company/slotflowLogoTransparent.png';
 import { headerLinks } from '@/shared/utils/constants/landingConstants';
 
 const Header = () => {
+  
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 

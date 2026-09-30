@@ -14,7 +14,6 @@ import {
   AdminRejectProviderFormType,
   adminRejectProviderZodSchema,
 } from '@/shared/validators/zod/adminZod';
-import { closeBtnClass } from '@/shared/utils/constants';
 
 const RejectproviderForm = ({ onClose, formRef, rejectProviderData }: RejectproviderFormProps) => {
   const { rejectProvider } = useAdminProvider();
@@ -78,14 +77,13 @@ const RejectproviderForm = ({ onClose, formRef, rejectProviderData }: Rejectprov
 
         <Button
           type="button"
-          size='icon'
+          size='sm'
           variant='ghost'
           onClick={handleCloseForm}
           disabled={isSubmitting}
-          className={closeBtnClass}
           aria-label="Close form"
         >
-          <X className="w-5 h-5" />
+          <X className="size-5" />
         </Button>
       </div>
 

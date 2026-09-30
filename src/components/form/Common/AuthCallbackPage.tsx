@@ -1,13 +1,14 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import { useAuthCallback } from '@/hooks/useAuthCallback';
 import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { authCallbackLoadingSteps } from '@/shared/utils/constants/landingConstants';
 
 export const AuthCallbackPage: React.FC = () => {
 
+  const { goTo } = useAppNavigation();
   const { stepIndex, error } = useAuthCallback();
-  const { toLogin } = useAppNavigation();
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -54,7 +55,7 @@ export const AuthCallbackPage: React.FC = () => {
               <motion.button
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
-                onClick={toLogin}
+                onClick={() => goTo(redirectPaths.LOGIN)}
                 className="cursor-pointer mt-6 w-full rounded-xl bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 dark:from-red-700 dark:to-red-600 dark:hover:from-red-600 dark:hover:to-red-500 px-5 py-3 text-sm font-semibold text-white shadow-md shadow-red-500/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 transition-all duration-200"
               >
                 Return to Login
@@ -113,7 +114,7 @@ export const AuthCallbackPage: React.FC = () => {
                   }}
                 >
                   <svg
-                    className="w-4 h-4"
+                    className="size-4"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"

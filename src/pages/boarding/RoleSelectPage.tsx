@@ -4,18 +4,19 @@ import { motion } from 'framer-motion';
 import { useDispatch } from 'react-redux';
 import { ChevronRight } from 'lucide-react';
 import { Role } from '@/shared/types/enums';
-import { useNavigate } from 'react-router-dom';
 import service from '@/assets/svgs/service.svg';
 import booking from '@/assets/svgs/booking.svg';
 import { Button } from '@/components/ui/button';
 import { AppDispatch } from '@/app/store/appStore';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { setBoardingData } from '@/app/store/slices/authSlice';
-import { defaultBtnClass, redirectPaths } from '@/shared/utils/constants';
 import RoleSelectCard from '../../components/boarding/roleSelect/RoleSelectCard';
 
 const RoleSelectPage = () => {
-  const navigate = useNavigate();
+  
   const dispatch = useDispatch<AppDispatch>();
+  const { goTo } = useAppNavigation();
   const [selectedRole, setSelectedRole] = useState<Role | null>(null);
 
   const handleContinue = () => {
@@ -28,11 +29,11 @@ const RoleSelectPage = () => {
         selectedRole,
       }),
     );
-    navigate(redirectPaths.PRE_BOARDING_HEAR_ABOUT_US);
+    goTo(redirectPaths.PRE_BOARDING_HEAR_ABOUT_US);
   };
 
   return (
-    <div className="relative">
+    <div className="relative ">
       <div className="mx-auto sm:px-6 lg:px-0">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -66,19 +67,19 @@ const RoleSelectPage = () => {
           transition={{
             delay: 0.35,
           }}
-          className="mt-14 flex flex-col items-end gap-5"
+          className="mt-14 flex flex-col items-center md:items-end gap-5"
         >
           <p className="text-sm text-gray-500">
             Your selection helps us personalize your onboarding experience.
           </p>
           <Button
+            variant='default'
             onClick={handleContinue}
             disabled={!selectedRole}
-            variant='default'
-            className={defaultBtnClass}
+            className='w-full md:w-auto'
           >
             Continue
-            <ChevronRight className="ml-1 h-4 w-4" />
+            <ChevronRight className="ml-1 size-4" />
           </Button>
         </motion.div>
       </div>

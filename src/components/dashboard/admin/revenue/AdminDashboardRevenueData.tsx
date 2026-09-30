@@ -6,7 +6,7 @@ import RevenueListCard from './RevenueListCard';
 import DashboardStats from '../../DashboardStats';
 import { DashboardItem } from '@/shared/types/common';
 import { RevenueDataChart } from './RevenueDataChart';
-import { queryKeys, aiResponseEntities } from '@/shared/utils/constants';
+import { queryKeys, aiResponseEntities } from '@/shared/utils/constants/appConstants';
 import { AdminDashboardRevenueDataProps } from '@/shared/types/component';
 import { revenueAndPaymentsStatsMapForAdmin } from '@/shared/utils/constants/statsConstats';
 import { fetchAnalyticsInsight, adminFetchDashboardRevenueStatsData } from '@/services/apis/admin';

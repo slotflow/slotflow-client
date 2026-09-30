@@ -3,11 +3,12 @@ import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
-import { Share2, ShieldCheck } from 'lucide-react';
+import { Check, Share2, ShieldCheck } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { getInitials } from '@/shared/utils/helper/getInitials';
 import { ProviderProfileTopCardProps } from '@/shared/types/component';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useCopy } from '@/hooks/useCopy';
 
 const ProviderProfileTopCard = ({
   isLoading,
@@ -20,6 +21,8 @@ const ProviderProfileTopCard = ({
   isShowPreview = false,
   handleIsShowPreview,
 }: ProviderProfileTopCardProps) => {
+
+  const { copied, copy } = useCopy(2000);
 
   return (
     <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
@@ -74,9 +77,30 @@ const ProviderProfileTopCard = ({
             </div>
           </div>
           <div className="flex flex-col items-end">
-            <Button variant="outline" size="sm" className="cursor-pointer h-9 gap-1.5">
-              <Share2 className="w-4 h-4" />
-              Share Profile
+            <Button
+              variant="outline"
+              size="sm"
+              className={`cursor-pointer h-9 gap-1.5 transition-all duration-200 ${copied
+                ? "bg-emerald-50 border-emerald-500 text-emerald-700 dark:bg-emerald-950/40 dark:border-emerald-500/60 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-950/60"
+                : ""
+                }`}
+              onClick={() => copy({
+                title: 'Service Provider Profile',
+                text: 'Check out this service provider profile!',
+                url: window.location.href,
+              })}
+            >
+              {copied ? (
+                <>
+                  <Check className="size-4 text-emerald-600 dark:text-emerald-400" />
+                  <span>Link copied</span>
+                </>
+              ) : (
+                <>
+                  <Share2 className="size-4" />
+                  <span>Share Profile</span>
+                </>
+              )}
             </Button>
             {(role === Role.PROVIDER && handleIsShowPreview) && (
               <div className="flex items-center space-x-2 mt-2">

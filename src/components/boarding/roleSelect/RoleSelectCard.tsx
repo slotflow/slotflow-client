@@ -18,10 +18,24 @@ const RoleSelectCard = ({
 
   const isSelected = selectedRole === role;
 
-  const features =
-    role === Role.USER
-      ? ['Instant booking', 'AI recommendations', 'Calendar sync']
-      : ['Manage appointments', 'Accept online payments', 'Grow your business'];
+const features =
+  role === Role.USER
+    ? [
+        'Instant online appointment booking',
+        'Google Calendar synchronization',
+        'Real-time chat & built-in video calls',
+        'Multi-channel reminders (In-app, Email & Push)',
+        'AI-powered recommendations',
+      ]
+    : [
+        'Flexible booking limits (Starter to Unlimited)',
+        'Stripe payout integration for online payments',
+        'Advanced reports, insights & AI analytics dashboard',
+        'Enhanced ad visibility & marketing tools',
+        'Multi-channel notifications (In-app, Email, Push & SMS)',
+        'Developer tools & Slot Availability API access',
+        'Custom webhooks & integrations (Notion, WhatsApp)',
+      ];
 
   return (
     <motion.div
@@ -42,7 +56,7 @@ const RoleSelectCard = ({
       }}
       className={`group relative overflow-hidden cursor-pointer rounded-3xl border p-8 min-h-[360px] backdrop-blur-xl transition-all duration-300 bg-white/70 dark:bg-neutral-900/70 ${
         isSelected
-          ? 'border-indigo-500 dark:border-indigo-400 ring-2 ring-indigo-200 dark:ring-indigo-500/30 shadow-[0_25px_80px_rgba(99,102,241,0.20)] bg-white dark:bg-neutral-900'
+          ? 'border-[var(--mainColor)] dark:border-[var(--mainColor)] ring-2 ring-indigo-200 dark:ring-indigo-500/30 shadow-[0_25px_80px_rgba(99,102,241,0.20)] bg-white dark:bg-neutral-900'
           : 'border-gray-200 dark:border-neutral-700 hover:border-indigo-300 dark:hover:border-indigo-500 hover:shadow-[0_25px_70px_rgba(0,0,0,0.08)] dark:hover:shadow-[0_25px_70px_rgba(0,0,0,0.35)]'
       }`}
     >
@@ -60,7 +74,7 @@ const RoleSelectCard = ({
           className="absolute right-5 top-5"
         >
           <div className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-600 text-white shadow-lg">
-            <Check className="h-5 w-5" />
+            <Check className="size-5" />
           </div>
         </motion.div>
       )}
@@ -101,7 +115,7 @@ const RoleSelectCard = ({
                 <Check
                   className={`h-3.5 w-3.5 ${
                     isSelected
-                      ? 'text-indigo-600 dark:text-indigo-400'
+                      ? 'text-[var(--mainColor)] dark:text-indigo-400'
                       : 'text-gray-500 dark:text-neutral-400'
                   }`}
                 />

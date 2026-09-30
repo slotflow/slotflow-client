@@ -5,21 +5,21 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/app/store/appStore';
 import { useBooking } from '@/hooks/useUserBooking';
-import { queryKeys } from '@/shared/utils/constants';
-import { useJVideoCall } from '@/hooks/useJVideoCall';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import { fetchBookings } from '@/services/apis/booking';
 import ConfirmAlert from '@/components/alert/ConfirmAlert';
 import { useAppNavigation } from '@/hooks/useAppNavigation';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
 import BookingsTableColumn from '@/components/table/tableColumns/BookingsTableColumn';
+import { useJVideoCallActions } from '@/hooks/useVideoCallActions';
 
 const ListBookings = () => {
 
   const authUser = useSelector((state: RootState) => state.auth.authUser);
 
   const {
-    handleNavigateToBookingsDetailPage
+    toBookingsDetailsPage
   } = useAppNavigation();
 
   const {
@@ -30,7 +30,7 @@ const ListBookings = () => {
     isCancelling
   } = useBooking();
 
-  const { JoinCallLobby } = useJVideoCall({ initializeMedia: false });
+  const { JoinCallLobby } = useJVideoCallActions();
 
   const handleUserCancelBooking = async (bookingId: string) => {
     toast(
@@ -54,7 +54,7 @@ const ListBookings = () => {
 
   const columns = BookingsTableColumn(
     JoinCallLobby,
-    handleNavigateToBookingsDetailPage,
+    toBookingsDetailsPage,
     authUser.role,
     handleReviewAddFormToggle,
     handleUserCancelBooking,

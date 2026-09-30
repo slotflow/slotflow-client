@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/table';
 import { Briefcase } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import { fetchServiceProvidersForAdmin } from '@/services/apis/providerProfile';
 import RecentActivityTableCard from '@/components/dashboard/RecentActivityTableCard';
 

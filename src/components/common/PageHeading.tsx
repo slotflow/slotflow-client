@@ -19,7 +19,7 @@ const PageHeading = ({ badge, badgeIcon: BadgeIcon, title, description }: PageHe
             variant="secondary"
             className="rounded-full border px-4 py-1.5 text-sm font-medium hover:border-[#635bff]"
           >
-            <BadgeIcon className="mr-2 h-4 w-4 text-primary" />
+            <BadgeIcon className="mr-2 size-4 text-primary" />
             {badge}
           </Badge>
 

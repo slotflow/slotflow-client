@@ -74,18 +74,6 @@ const AdminRevenueTableColumn = (): ColumnDef<AdminFetchRevenueReportRow>[] => [
     },
   },
   {
-    accessorKey: 'initialAmount',
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Amount" />,
-    cell: ({ row }) => {
-      const initAmount = row.original.initialAmount;
-      return (
-        <span className="font-medium text-blue-600 dark:text-blue-400">
-          {formatNumberToPrice(initAmount) || initAmount}
-        </span>
-      );
-    },
-  },
-  {
     accessorKey: 'totalAmount',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Total" />,
     cell: ({ row }) => {

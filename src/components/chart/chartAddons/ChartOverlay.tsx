@@ -1,20 +1,20 @@
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { RootState } from '@/app/store/appStore';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { ChartOverlayProps } from '@/shared/types/component';
-import { actionBtnClass, redirectPaths } from '@/shared/utils/constants';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 
 const ChartOverlay = ({ stringOne, chartTitle }: ChartOverlayProps) => {
-  
+
+  const { goTo } = useAppNavigation();
   const themeMode = useSelector((store: RootState) => store.app.lightTheme);
-  const navigate = useNavigate();
 
   return (
     <div
       className={`absolute inset-0 z-10 flex flex-col items-center justify-center backdrop-blur-xs ${themeMode ? 'bg-white/70' : 'bg-black/70'}`}
     >
-      <div className="text-center">
+      <div className="text-center flex flex-col items-center justify-center">
         <div className="text-xl font-semibold mb-2">{chartTitle + ' '}Chart</div>
         <div className="text-lg font-semibold mb-2">Upgrade Required</div>
         <div className="text-sm text-muted-foreground mb-4">
@@ -22,9 +22,8 @@ const ChartOverlay = ({ stringOne, chartTitle }: ChartOverlayProps) => {
         </div>
         <Button
           title='upgrade'
-          variant='secondary'
-          className={actionBtnClass}
-          onClick={() => navigate(redirectPaths.UPGRADE)}
+          variant='outline'
+          onClick={() => goTo(redirectPaths.UPGRADE)}
         >
           Upgrade Plan
         </Button>

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { PlanName } from '@/shared/types/enums';
 import { RootState } from '@/app/store/appStore';
 import { useQuery } from '@tanstack/react-query';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import { DashboardItem } from '@/shared/types/common';
 import RadialChart from '@/components/chart/RadialChart';
 import { graphView } from '@/shared/utils/helper/graphView';

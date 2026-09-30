@@ -5,15 +5,16 @@ import { appConfig } from '@/config/env';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { FormButton } from '../FormButton';
-import { useNavigate } from 'react-router-dom';
 import { verifyEmail } from '@/services/apis/auth';
 import { AppDispatch } from '@/app/store/appStore';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { redirectPaths } from '@/shared/utils/constants';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { VerifyEmailFormType, verifyEmailZodSchema } from '@/shared/validators/zod/authZod';
 
 const EmailVerificationForm = () => {
-  const navigate = useNavigate();
+
+  const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
 
   const {
@@ -33,7 +34,7 @@ const EmailVerificationForm = () => {
       const res = await dispatch(verifyEmail({ email: data.email })).unwrap();
       if (res.success) {
         // Navigate immediately for instant UX
-        navigate('verify/otp');
+        goTo(redirectPaths.VERIFY_OTP);
         // Show toast after navigation (toast uses portal so still visible)
         toast.success(res.message);
       } else {
@@ -74,10 +75,10 @@ const EmailVerificationForm = () => {
             />
           </form>
 
-          <p className="mt-6 flex justify-between text-xs md:text-sm/6 text-[var(--textTwo)] px-2">
+          <p className="mt-6 flex justify-between text-xs md:text-sm/6 text-neutral-600 px-2">
             <span
               className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
-              onClick={() => navigate(redirectPaths.LOGIN)}
+              onClick={() => goTo(redirectPaths.LOGIN)}
             >
               Cancel
             </span>

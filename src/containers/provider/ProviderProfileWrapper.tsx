@@ -14,7 +14,7 @@ import {
   providerFetchMyProofs,
   providerFetchMyProfileDetails,
 } from '@/services/apis/providerProfile';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 
 const ProviderProfileWrapper = () => {
   const { authUser } = useSelector((state: RootState) => state.auth);

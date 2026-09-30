@@ -19,7 +19,7 @@ import { formatNumberToPrice } from '@/shared/utils/helper/formatNumberToPrice';
 import { formatString } from '@/shared/utils/helper/formatString';
 
 const PaymentsTableColumn = (
-  handleGetPaymentDetailsPage: (paymentId: Payment['_id']) => void,
+  toPaymentDetailsPage: (paymentId: Payment['_id'], replace?: boolean) => void,
 ): ColumnDef<FetchPaymentsResponse>[] => [
   {
     accessorKey: 'slNo',
@@ -83,14 +83,6 @@ const PaymentsTableColumn = (
     },
   },
   {
-    accessorKey: 'paymentMethod',
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Method" />,
-    cell: ({ row }) => {
-      const method = row.original.paymentMethod;
-      return <StatusBadge type="standard" label={method} />;
-    },
-  },
-  {
     accessorKey: 'paymentStatus',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
     cell: ({ row }) => {
@@ -123,13 +115,13 @@ const PaymentsTableColumn = (
           <DropdownMenuTrigger asChild>
             <Button title="Open Menu" variant="ghost" className="h-8 w-8 p-0 cursor-pointer hover:bg-muted">
               <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
+              <MoreHorizontal className="size-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="rounded-xl">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => handleGetPaymentDetailsPage(payment._id)} className="cursor-pointer gap-2">
+            <DropdownMenuItem onClick={() => toPaymentDetailsPage(payment._id)} className="cursor-pointer gap-2">
               <Eye className="w-3.5 h-3.5 text-muted-foreground" />
               Details
             </DropdownMenuItem>

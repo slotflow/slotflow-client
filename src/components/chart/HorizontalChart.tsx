@@ -155,7 +155,7 @@ const HorizontalChart = ({
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 leading-none font-medium">
           Analyze the trending data
-          <TrendingUp className="h-4 w-4" />
+          <TrendingUp className="size-4" />
         </div>
 
         <div className="text-muted-foreground leading-none">Showing stats in bar chart</div>

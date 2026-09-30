@@ -6,7 +6,6 @@ import { AppDispatch, RootState } from '@/app/store/appStore';
 import { toggleLiveChatBubble } from '@/app/store/slices/appSlice';
 import slotflowAiLogoTransparent from '@/assets/logos/slotflowAi/slotfloAiLogoTransparent.png';
 import { Button } from '@/components/ui/button';
-import { closeBtnClass } from '@/shared/utils/constants';
 
 const LiveChatPopup = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -62,9 +61,8 @@ const LiveChatPopup = () => {
               size='icon'
               variant='ghost'
               onClick={() => dispatch(toggleLiveChatBubble())}
-              className={closeBtnClass}
             >
-              <X className="h-5 w-5" />
+              <X className="size-5" />
             </Button>
           </div>
           <div className="relative flex h-[calc(100%-150px)] min-h-0 flex-col overflow-hidden px-6 py-6">

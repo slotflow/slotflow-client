@@ -9,7 +9,7 @@ import {
 import { User as UserIcon } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchUsers } from '@/services/apis/user';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import RecentActivityTableCard from '@/components/dashboard/RecentActivityTableCard';
 
 const UserListCard = () => {

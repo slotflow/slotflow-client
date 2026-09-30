@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button } from '../ui/button';
-import { LoaderCircle } from 'lucide-react';
-import { defaultBtnClass } from '@/shared/utils/constants';
+import { Check, LoaderCircle } from 'lucide-react';
 import { AuthFormsButtonProps } from '@/shared/types/component';
 
 export const FormButton = React.memo(
@@ -12,16 +11,15 @@ export const FormButton = React.memo(
         variant="default"
         type="submit"
         disabled={disabled}
-        className={`${defaultBtnClass} ${className}`}
+        className={`${className}`}
       >
-        {loading ? (
-          <span className="flex items-center gap-2">
-            <LoaderCircle className="animate-spin size-4" />
-            <span>{text}</span>
-          </span>
-        ) : (
-          text
-        )}
+        <span className="flex items-center gap-2">
+          {loading &&
+            <LoaderCircle className="animate-spin  size-4" />
+          }
+          <span>{text}</span>
+        </span>
+
       </Button>
     );
   },

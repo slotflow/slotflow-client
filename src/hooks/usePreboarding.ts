@@ -1,21 +1,21 @@
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
+import { useAppNavigation } from './useAppNavigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { postPreBoarding } from '@/services/apis/user';
-import { redirectPaths } from '@/shared/utils/constants';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import { AppDispatch, RootState } from '@/app/store/appStore';
+import { handleError } from '@/shared/utils/helper/handleError';
 import { updateBoardingStep } from '@/app/store/slices/appSlice';
 import { ApiBaseResponse, ApiError } from '@/shared/types/common';
 import { setAuthUser, setBoardingData } from '@/app/store/slices/authSlice';
-import { handleError } from '@/shared/utils/helper/handleError';
 import { PreBoardingRequest, PreBoardingResponse } from '@/shared/types/api/user';
 import { UsePreBoardingReturn, SubmitPreBoardingHandlerProps } from '@/shared/types/hooks';
 import { AdminVerificationStatus, HearAboutUsOptionValue, Role } from '@/shared/types/enums';
 
 export const usePreBoarding = (): UsePreBoardingReturn => {
 
-  const navigate = useNavigate();
+  const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
   const { authUser, preboardingData } = useSelector((state: RootState) => state.auth);
 
@@ -54,7 +54,7 @@ export const usePreBoarding = (): UsePreBoardingReturn => {
 
           toast.success(res.message);
 
-          navigate(
+          goTo(
             preboardingData.selectedRole === Role.PROVIDER
               ? redirectPaths.ONBOARDING_ADDRESS
               : redirectPaths.SERVICES,
@@ -77,7 +77,7 @@ export const usePreBoarding = (): UsePreBoardingReturn => {
 
   const hearAboutUsHandler = () => {
     dispatch(updateBoardingStep(2));
-    navigate(redirectPaths.PRE_BOARDING_ROLE);
+    goTo(redirectPaths.PRE_BOARDING_ROLE);
   }
 
   return {

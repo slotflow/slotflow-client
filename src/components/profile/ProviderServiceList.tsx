@@ -52,7 +52,7 @@ const ProviderServiceList = ({
       {(showHeading || canUpdate) && (
         <CardHeader className="flex justify-between items-center">
           {showHeading && (
-            <CardTitle className="flex flex-row space-x-2"> <LayoutGrid className="w-4 h-4 text-indigo-500" /> <span>Service</span></CardTitle>
+            <CardTitle className="flex flex-row space-x-2"> <LayoutGrid className="size-4 text-indigo-500" /> <span>Service</span></CardTitle>
           )}
           {canUpdate && (
             <Button

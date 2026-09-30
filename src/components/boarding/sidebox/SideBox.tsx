@@ -7,7 +7,7 @@ const SideBox = ({ pageNumber }: SideBoxProps) => {
   const description = boardingData[pageNumber].description || '';
 
   return (
-    <aside className="hidden lg:flex  bg-[var(--mainColorTwo)] md:h-screen w-full md:w-4/12 p-6 md:p-10 rounded-r-lg shadow-lg flex-col h-full md:sticky md:top-0">
+    <aside className="flex md:h-screen w-full md:w-4/12 p-6 md:p-10 rounded-r-lg shadow-lg flex-col h-full md:sticky md:top-0">
       <div className="flex h-full w-full flex-col gap-6">
         <SideBoxHeader />
         <p className="text-gray-700 text-sm md:text-base leading-relaxed">{description}</p>

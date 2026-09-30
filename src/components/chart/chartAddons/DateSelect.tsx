@@ -5,7 +5,7 @@ import {
   SelectContent,
   SelectTrigger,
 } from '@/components/ui/select';
-import { dateSelectList } from '@/shared/utils/constants';
+import { dateSelectList } from '@/shared/utils/constants/appConstants';
 import { DateSelectProps } from '@/shared/types/component';
 
 const DateSelect = ({ onValueChange, value }: DateSelectProps) => {

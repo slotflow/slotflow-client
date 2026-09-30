@@ -47,35 +47,35 @@ const ContactSection = () => {
 
             <Button className="group h-12 rounded-xl px-8" size="lg">
               Send Message
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
             </Button>
           </form>
         </div>
 
         <div className="space-y-5">
           <InfoCard
-            icon={<Mail className="h-5 w-5 text-primary" />}
+            icon={<Mail className="size-5 text-primary" />}
             title="Email"
             value="support@slotflow.com"
             description="We'll respond within one business day."
           />
 
           <InfoCard
-            icon={<Clock3 className="h-5 w-5 text-primary" />}
+            icon={<Clock3 className="size-5 text-primary" />}
             title="Response Time"
             value="Within 24 Hours"
             description="Monday to Friday"
           />
 
           <InfoCard
-            icon={<MapPin className="h-5 w-5 text-primary" />}
+            icon={<MapPin className="size-5 text-primary" />}
             title="Office"
             value="Kerala, India"
             description="Remote-first team"
           />
 
           <InfoCard
-            icon={<Globe className="h-5 w-5 text-primary" />}
+            icon={<Globe className="size-5 text-primary" />}
             title="Availability"
             value="India"
             description="Serving businesses"

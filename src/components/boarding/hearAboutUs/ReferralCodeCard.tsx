@@ -2,7 +2,6 @@ import { X } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { closeBtnClass } from '@/shared/utils/constants';
 
 interface ReferralCodeCardProps {
   value: string | null;
@@ -35,12 +34,11 @@ const ReferralCodeCard = ({ value, onChange, onClose }: ReferralCodeCardProps) =
             </div>
 
             <Button
-              size="icon"
+              size="sm"
               variant="ghost"
               onClick={onClose}
-              className={closeBtnClass}
             >
-              <X className="h-4 w-4" />
+              <X className="size-4" />
             </Button>
           </div>
 

@@ -118,7 +118,7 @@ const StatsCard = ({
 
               <div className="relative z-30 flex flex-col items-center gap-3">
                 <div className="p-3 bg-background rounded-full shadow-lg border border-border">
-                  <LockIcon className="w-5 h-5 text-primary" />
+                  <LockIcon className="size-5 text-primary" />
                 </div>
 
                 <div className="text-center">

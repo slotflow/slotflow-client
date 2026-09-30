@@ -1,30 +1,43 @@
-import { PaymentFor, PaymentGateway, PaymentMethod, PaymentStatus } from '../enums';
+import { BillingCycle, PaymentFor, PaymentGateway, PaymentStatus } from '../enums';
 
 export interface Payment {
   _id: string;
   idempotencyKey: string;
+  transactionId: string;
+  stripeInvoiceId: string;
+
   paymentStatus: PaymentStatus;
-  paymentMethod: PaymentMethod;
   paymentGateway: PaymentGateway;
   paymentFor: PaymentFor;
-  initialAmount: number;
+
+  slotflowSubscriptionId?: string;
+  slotflowBookingId?: string;
+
+  subtotalAmount: number;
   discountAmount: number;
   totalAmount: number;
+  currency: string;
+  billingCycle?: BillingCycle;
+
   userId?: string;
   providerId?: string;
-  paymentIntentId?: string;
-  transactionId: string;
-  chargeId?: string;
-  stripeCustomerId: string;
+
+  stripeCustomerId?: string;
   stripeSubscriptionId?: string;
-  stripeInvoiceId: string;
-  gatewayFee: number | null;
-  receiptUrl: string | null;
-  receiptNumber: string | null;
-  receiptEmail: string | null;
-  customerEmail: string | null;
-  description?: string;
+
+  gatewayFee?: number;
+  receiptUrl?: string;
+  receiptPdf?: string;
+
+  paymentIntent?: string;
+  sessionId?: string;
+
+  customerEmail: string;
+  customerName: string;
+  description: string;
   refundedAmount?: number;
+
+  paidAt: Date;
   createdAt: Date;
   updatedAt: Date;
 }

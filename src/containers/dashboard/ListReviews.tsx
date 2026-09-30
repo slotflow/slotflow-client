@@ -6,7 +6,7 @@ import { useReview } from '@/hooks/useReview';
 import { Button } from '@/components/ui/button';
 import NoData from '@/components/common/NoData';
 import { RootState } from '@/app/store/appStore';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import { Review } from '@/shared/types/entity/review';
 import { fetchReviews } from '@/services/apis/review';
 import ReviewCard from '@/components/review/ReviewCard';

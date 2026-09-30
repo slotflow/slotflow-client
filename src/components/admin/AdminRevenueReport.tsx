@@ -3,7 +3,7 @@ import { DateRange } from 'react-day-picker';
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import { Calendar } from '@/components/ui/calendar';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import { DataTable } from '@/components/ui/data-table';
 import DashboardDataCard from '../common/DashboardDataCard';
 import { formatDate } from '@/shared/utils/helper/formatDate';

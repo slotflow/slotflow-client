@@ -6,7 +6,6 @@ import { AdminFetchRevenueReportRow } from '../../types/api/payment';
 type ExcelRow = {
   '#': number | string;
   Date: string;
-  'Initial Amount': string;
   Discount: string;
   'Total Amount': string;
   'Payment Gateway': string;
@@ -22,20 +21,17 @@ export const exportToExcel = (
   const formattedData: ExcelRow[] = data.map((row, index) => ({
     '#': index + 1,
     Date: row.createdAt ? formatDate(row.createdAt) : 'Not Available',
-    'Initial Amount': `₹ ${row.initialAmount?.toFixed(2) ?? '0.00'}`,
     Discount: `₹ ${row.discountAmount?.toFixed(2) ?? '0.00'}`,
     'Total Amount': `₹ ${row.totalAmount?.toFixed(2) ?? '0.00'}`,
     'Payment Gateway': row.paymentGateway ?? 'Not Available',
   }));
 
-  const grandInitial = data.reduce((sum, r) => sum + (r.initialAmount ?? 0), 0);
   const grandDiscount = data.reduce((sum, r) => sum + (r.discountAmount ?? 0), 0);
   const grandTotal = data.reduce((sum, r) => sum + (r.totalAmount ?? 0), 0);
 
   formattedData.push({
     '#': '',
     Date: 'Grand Total',
-    'Initial Amount': `₹ ${grandInitial.toFixed(2)}`,
     Discount: `₹ ${grandDiscount.toFixed(2)}`,
     'Total Amount': `₹ ${grandTotal.toFixed(2)}`,
     'Payment Gateway': '',

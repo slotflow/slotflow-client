@@ -5,7 +5,6 @@ import { DataFieldProps } from '@/shared/types/component';
 import DataShimmer from '@/components/shimmers/DataShimmer';
 import { formatDate } from '@/shared/utils/helper/formatDate';
 import { formatDuration } from '@/shared/utils/helper/formatDuration';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 const DataField = ({
   label,
@@ -15,11 +14,8 @@ const DataField = ({
   isBoolean,
   link,
   isPrice,
-  isRadioGroup,
   isTime,
   isDate,
-  selectedRadioValue,
-  onRadioChange,
   tags,
   isImage,
   isLoading = false,
@@ -36,37 +32,10 @@ const DataField = ({
   if (isLoading) {
     return (
       <div className="flex items-center justify-between text-xs p-3 rounded-lg border border-slate-100 dark:border-border/50 bg-slate-50/50 dark:bg-muted/20">
-        <span className="text-slate-500 font-medium flex items-center gap-2">
+        <span className="text-foreground font-medium flex items-center gap-2">
           {Icon && <Icon className="w-3.5 h-3.5 text-slate-400" />} {label}
         </span>
         <DataShimmer w={shimmerWidth} h="h-4" />
-      </div>
-    );
-  }
-
-  if (isRadioGroup && Array.isArray(value)) {
-    return (
-      <div className="flex items-center justify-between text-xs p-3 rounded-lg border border-slate-100 dark:border-border/50 bg-slate-50/50 dark:bg-muted/20">
-        <span className="text-slate-500 font-medium flex items-center gap-2">
-          {Icon && <Icon className="w-3.5 h-3.5 text-slate-400" />} {label}
-        </span>
-        <RadioGroup
-          value={selectedRadioValue}
-          onValueChange={onRadioChange}
-          className="flex gap-3"
-        >
-          {value.map((item) => (
-            <div key={item} className="flex items-center space-x-1.5">
-              <RadioGroupItem value={item} id={item} />
-              <label
-                htmlFor={item}
-                className="text-xs font-medium leading-none text-slate-800 dark:text-slate-200"
-              >
-                {item}
-              </label>
-            </div>
-          ))}
-        </RadioGroup>
       </div>
     );
   }
@@ -153,7 +122,7 @@ const DataField = ({
 
   return (
     <div className="flex items-center justify-between gap-4 text-xs p-3 rounded-lg border border-slate-100 dark:border-border/50 bg-slate-50/50 dark:bg-muted/20">
-      <span className="text-foreground ont-medium flex items-center gap-2 shrink-0">
+      <span className="text-foreground font-medium flex items-center gap-2 shrink-0">
         {Icon && <Icon className="w-3.5 h-3.5 text-foreground shrink-0" />} {label}
       </span>
       <span className="font-medium text-muted-foreground text-right truncate">

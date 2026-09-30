@@ -1,5 +1,6 @@
 import { RootState } from '@/app/store/appStore';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { VideoSocketEnum } from '@/shared/types/enums';
 import { getVideoSocket, destroyVideoSocket } from '@/lib/socketService';
 import { setVideoSocketConnected, setVideoSocketDisconnected } from '@/app/store/slices/videoSlice';
 
@@ -13,16 +14,9 @@ export const connectVideoSocket = createAsyncThunk<void, void, { state: RootStat
 
     const videoSocket = getVideoSocket();
 
-    videoSocket.on('connect', () => {
+    videoSocket.on(VideoSocketEnum.connect, () => {
       dispatch(setVideoSocketConnected({ videoSocketId: videoSocket.id as string }));
     });
-
-    console.log('videoSocket : ', videoSocket);
-
-    // Add events like user joined, provider joined
-    // videoSocket.on("newMessage", (newMessage: Message) => {
-    //     dispatch(addNewMessage(newMessage));
-    // });
   },
 );
 

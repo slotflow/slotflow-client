@@ -1,25 +1,24 @@
+import { Button } from '../ui/button';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
 import { useCallback, useMemo } from 'react';
+import { useBooking } from '@/hooks/useBooking';
 import { RootState } from '@/app/store/appStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card, CardContent } from '@/components/ui/card';
 import { useSubscription } from '@/hooks/useSubscription';
-import { useBookingPayment } from '@/hooks/useBookingPayment';
 import paypalLogo from '../../assets/logos/external/paypal.png';
 import stripeLogo from '../../assets/logos/external/stripe.jpeg';
 import razorpayLogo from '../../assets/logos/external/razorpay.png';
-import { setPaymentSelectionOpen } from '@/app/store/slices/paymentSlice';
+import { setPaymentSelectionClose } from '@/app/store/slices/paymentSlice';
 import { PaymentProcessStatus, PaymentProcessType } from '@/shared/types/enums';
 import { X, ArrowRight, CreditCard, LockKeyhole, LoaderCircle, ShieldCheck } from 'lucide-react';
-import { Button } from '../ui/button';
-import { closeBtnClass } from '@/shared/utils/constants';
 
 const PaymentSelection = () => {
 
   const dispatch = useDispatch();
   const { subscribePlan } = useSubscription();
-  const { bookAppointment } = useBookingPayment();
+  const { bookAppointment } = useBooking();
   const { bookingData, subscriptionData, status, type } = useSelector((state: RootState) => state.payment);
   const isSubscription = type === PaymentProcessType.SUBSCRIPTION;
 
@@ -100,7 +99,38 @@ const PaymentSelection = () => {
         </div>
       )}
 
-      {status !== PaymentProcessStatus.PROCESSING && (
+      {status === PaymentProcessStatus.FAILED && (
+        <div className="absolute inset-0 flex items-center justify-center px-6">
+          <motion.div
+            initial={{ scale: 0.85, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.25 }}
+            className="flex max-w-sm flex-col items-center gap-4 rounded-2xl border border-red-500/20 bg-background/95 px-8 py-8 text-center shadow-2xl backdrop-blur-xl"
+          >
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-red-500/10">
+              <LockKeyhole className="h-7 w-7 text-red-500" />
+            </div>
+
+            <div>
+              <p className="font-semibold text-foreground">Payment failed</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Something went wrong while starting the payment. Please try again.
+              </p>
+            </div>
+
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => dispatch(setPaymentSelectionClose())}
+              className="w-full"
+            >
+              Close
+            </Button>
+          </motion.div>
+        </div>
+      )}
+
+      {status !== PaymentProcessStatus.PROCESSING && status !== PaymentProcessStatus.FAILED && (
         <motion.div
           initial={{ opacity: 0, y: 30, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -114,12 +144,12 @@ const PaymentSelection = () => {
             <div className="relative border-b border-border/60 px-6 pb-5 pt-6">
               <Button
                 type="button"
-                size='icon'
+                size='sm'
                 variant='ghost'
-                onClick={() => dispatch(setPaymentSelectionOpen(false))}
-                className={`absolute right-4 top-4 ${closeBtnClass}`}
+                onClick={() => dispatch(setPaymentSelectionClose())}
+                className={`absolute right-4 top-4`}
               >
-                <X className="h-5 w-5" />
+                <X className="size-5" />
               </Button>
 
               <div className="flex items-start gap-4 pr-10">
@@ -137,7 +167,7 @@ const PaymentSelection = () => {
               </div>
 
               <div className="mt-5 flex items-center gap-2 rounded-xl border border-border/50 bg-muted/40 px-3 py-2.5">
-                <ShieldCheck className="h-4 w-4 text-emerald-500" />
+                <ShieldCheck className="size-4 text-emerald-500" />
 
                 <span className="text-xs font-medium text-muted-foreground">
                   Secure payment • Your payment details are protected
@@ -192,7 +222,7 @@ const PaymentSelection = () => {
                     </div>
 
                     <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-all duration-200">
-                      <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+                      <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
                     </div>
                   </motion.button>
                 ))}

@@ -39,7 +39,7 @@ const RecentActivityTableCard = ({
           disabled={isLoading}
           className="cursor-pointer text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
         >
-          <RefreshCw className={cn('h-4 w-4', isLoading && 'animate-spin')} />
+          <RefreshCw className={cn('size-4', isLoading && 'animate-spin')} />
           Refetch
         </Button>
       </CardHeader>

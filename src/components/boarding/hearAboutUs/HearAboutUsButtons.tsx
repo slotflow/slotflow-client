@@ -1,13 +1,6 @@
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, LoaderCircle } from 'lucide-react';
-import { defaultBtnClass } from '@/shared/utils/constants';
-
-interface HearAboutUsButtonsProps {
-  isSubmitting: boolean;
-  disabled: boolean;
-  onPrevious: () => void;
-  onSubmit: () => void;
-}
+import { Check, ChevronLeft, LoaderCircle } from 'lucide-react';
+import { HearAboutUsButtonsProps } from '@/shared/types/component';
 
 const HearAboutUsButtons = ({
   isSubmitting,
@@ -16,29 +9,33 @@ const HearAboutUsButtons = ({
   onSubmit,
 }: HearAboutUsButtonsProps) => {
   return (
-    <div className="mt-8 flex justify-end gap-2">
+    <div className="mt-8 flex w-full justify-end gap-3">
       <Button
-        variant="outline"
+        variant="secondary"
         onClick={onPrevious}
         disabled={isSubmitting}
+        className="flex-1 sm:flex-none sm:w-auto"
       >
-        <ChevronLeft className="mr-2 h-4 w-4" />
+        <ChevronLeft className="size-4" />
         Previous
       </Button>
 
       <Button
         variant="default"
-        className={defaultBtnClass}
         onClick={onSubmit}
         disabled={disabled}
+        className="flex-1 sm:flex-none sm:w-auto"
       >
         {isSubmitting ? (
           <>
-            <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
+            <LoaderCircle className="size-4 animate-spin" />
             Submitting
           </>
         ) : (
-          'Submit'
+          <>
+            <Check className="size-4" />
+            Submit
+          </>
         )}
       </Button>
     </div>

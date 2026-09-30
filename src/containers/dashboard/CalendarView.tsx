@@ -6,17 +6,18 @@ import { useQuery } from '@tanstack/react-query';
 import { RootState } from '@/app/store/appStore';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import { queryKeys } from '@/shared/utils/constants';
-import FeatureLocked from '@/components/app/FeatureLocked';
 import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { fetchCalendarEvents } from '@/services/apis/google';
+import FeatureOverlay from '@/components/app/FeatureOverlay';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import CalendarShimmer from '@/components/shimmers/CalendarShimmer';
 import DataFetchingError from '@/components/error/DataFetchingError';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import { PlanName, Role, SubscriptionStatus } from '@/shared/types/enums';
 
 const CalendarView = () => {
 
-  const { toIntegrations } = useAppNavigation();
+  const { goTo } = useAppNavigation();
   const { googleCalendar } = useSelector((state: RootState) => state.integration);
   const { authUser } = useSelector((state: RootState) => state.auth);
 
@@ -52,10 +53,14 @@ const CalendarView = () => {
       ) : isError && error ? (
         <DataFetchingError message={error.message || 'Calendar events fetching failed'} />
       ) : !googleCalendar?.isConnected ? (
-        <FeatureLocked
-          message="Connect Google Calendar in Integrations Settings to continue."
-          buttonText="Integrations"
-          onButtonClick={() => toIntegrations(false)}
+        <FeatureOverlay
+          size="lg"
+          borderRadius="rounded-2xl"
+          title="Connect Google Calendar in Integrations Settings to continue."
+          description="Schedule appointments directly within your custom dashboard view."
+          showButton={true}
+          buttonText="Settings"
+          onButtonClick={() => goTo(redirectPaths.INTEGRATIONS)}
           icon={Unplug}
         />
       ) : (

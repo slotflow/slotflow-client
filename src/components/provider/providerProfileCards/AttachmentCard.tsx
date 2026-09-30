@@ -12,7 +12,7 @@ const AttachmentCard = ({ isLoading, isError, data }: AttachmentCardProps) => {
     <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
       <CardHeader>
         <CardTitle className="text-lg font-semibold flex items-center gap-2">
-          <FileText className="w-5 h-5 text-primary" />
+          <FileText className="size-5 text-primary" />
           Attachments & Portfolio
         </CardTitle>
         <CardDescription>Resources, guidelines, and direct project showcase links</CardDescription>

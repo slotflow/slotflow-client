@@ -1,8 +1,10 @@
+import { Day } from "../enums";
+
 // **** Provider service availability interface **** \\
 
 // 1. Provider service availability interface used in the AdminProviderServiceAvailability compoenent
 export interface Availability {
-  day: string;
+  day: Day;
   isAvailable: boolean;
   duration?: number; // changed from string to number
   startTime?: string;

@@ -12,10 +12,9 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { FileUploaderProps } from '@/shared/types/component';
 import { getUploadUrl, uploadToS3 } from '@/services/apis/s3';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
-import { ArrowUp, Check, Info, LoaderCircle, X } from 'lucide-react';
 import noImage from '../../../assets/defaultImages/imagePlaceholder.png';
+import { ArrowUp, Check, Info, LoaderCircle, Trash, Upload, X } from 'lucide-react';
 import { ImageFileFormType, imageFileZodeSchema } from '@/shared/validators/zod/providerZod';
-import { actionBtnClass, closeBtnClass, destructiveBtnClass } from '@/shared/utils/constants';
 
 const FileUploader = ({
   folderName,
@@ -143,7 +142,7 @@ const FileUploader = ({
             />
           ) : (
             <h6 className="flex justify-center">
-              <Check className="mx-2" /> File Uploaded{' '}
+              <Check className="mx-2 size-4" /> File Uploaded{' '}
             </h6>
           )}
 
@@ -161,8 +160,7 @@ const FileUploader = ({
                 <Button
                   title="Remove file"
                   variant="ghost"
-                  size="icon"
-                  className={closeBtnClass}
+                  size="sm"
                   disabled={data.isLoading}
                   onClick={() => {
                     setSelectedImage(null);
@@ -222,22 +220,37 @@ const FileUploader = ({
             <Button
               title="Delete File"
               type="button"
+              size='sm'
               variant="destructive"
-              className={destructiveBtnClass}
               onClick={handleDeleteFile}
             >
+              <Trash className="size-4" />
               Delete File
             </Button>
           ) : (
             proofFile && (
               <Button
                 title="Upload"
+                size='sm'
                 variant="secondary"
                 disabled={isSubmitting || !isValid}
-                className={actionBtnClass}
                 type="submit"
               >
-                {isSubmitting ? 'Uploading' : 'Upload File'}
+                {isSubmitting ?
+                  (
+                    <>
+                      <LoaderCircle className='size-4 animate-spin' />
+                      Uploading...
+                    </>
+                  )
+                  :
+                  (
+                    <>
+                      <Upload className='size-4' />
+                      Upload File
+                    </>
+                  )
+                }
               </Button>
             )
           )}

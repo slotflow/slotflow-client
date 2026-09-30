@@ -6,8 +6,8 @@ import { BookLock, Calendar1, CalendarCheck, Component, CreditCard, Gauge, Hands
 export enum RouteNames {
     DASHBOARD = 'Dashboard',
     SERVICES = 'Services',
-    SERVICE_PROVIDERS = 'Service Providers',
-    SERVICE_PROVIDERS_DETAILS = 'Service Providers Details',
+    SERVICE_PROVIDERS = 'Proffessionals',
+    SERVICE_PROVIDERS_DETAILS = 'Proffessionals Details',
     SUBSCRIPTIONS = 'Subscriptions',
     SUBSCRIPTION_DETAILS = 'Subscription Details',
     BOOKINGS = 'Bookings',
@@ -195,3 +195,44 @@ export const sidebarRoutes: Route[] = [
         ],
     },
 ];
+
+// Redirect paths
+export const redirectPaths = {
+  LOGIN: '/login',
+  REGISTER: '/register',
+  VERIFY_EMAIL: '/verify/email',
+  RESET_PASSWORD: '/reset/password',
+  VERIFY_OTP: '/verify/otp',
+  PRE_BOARDING_ROLE: '/preboarding/role',
+  PRE_BOARDING_HEAR_ABOUT_US: '/preboarding/hear-about-us',
+  ONBOARDING_ADDRESS: '/onboarding/address',
+  ONBOARDING_SERVICE: '/onboarding/service',
+  ONBOARDING_AVAILABILITY: '/onboarding/availability',
+  ONBOARDING_PROOFS: '/onboarding/proofs',
+  ONBOARDING_PENDING: '/onboarding/pending',
+  SERVICES: '/services',
+  DASHBOARD: '/dashboard',
+  SERVICE_PROVIDERS: '/service-providers',
+  SUBSCRIPTIONS: '/subscriptions',
+  PAYMENTS: '/payments',
+  PLANS: '/plans',
+  USERS: '/users',
+
+  CONTACT: '/contact',
+  HELP: '/help',
+  FAQ: '/faq',
+
+  BOOKINGS: '/bookings',
+  SETTINGS: '/settings',
+  UPGRADE: '/upgrade',
+  INTEGRATIONS: '/settings/integrations',
+  NOTIFICATIONS: '/settings/notifications',
+  ACCOUNT: '/settings/account',
+  SECURITY: '/settings/security'
+} as const;
+
+// Standalone routes to hide the sidebars and headers
+export const standaloneRoutes = [redirectPaths.UPGRADE];
+
+// to show user services page filters
+export const filterShowsRoutes = [redirectPaths.SERVICE_PROVIDERS];

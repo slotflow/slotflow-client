@@ -4,13 +4,14 @@ import {
   FetchFunctionBaseQueryParams,
 } from '../../shared/types/common';
 import {
-  CreateServiceRequest,
+  CreateServicesRequest,
   FetchServicesResponse,
   UpdateServiceRequest,
   UpdateServiceResponse,
   AdminChangeServiceBlockStatusRequest,
   FetchServicesByCategoryResponse,
   AdminChangeServiceBlockStatusResponse,
+  CreateSservicesResponse,
 } from '../../shared/types/api/service';
 import { axiosInstance } from '@/lib/axios';
 import { ServiceCategory } from '../../shared/types/enums';
@@ -25,7 +26,7 @@ export const fetchServices: ApiFetchFunction<
   return response.data.data;
 };
 
-export const createService = async (data: CreateServiceRequest): Promise<ApiBaseResponse> => {
+export const createService = async (data: CreateServicesRequest): Promise<ApiBaseResponse<CreateSservicesResponse>> => {
   const response = await axiosInstance.post('/services', data);
   return response.data;
 };

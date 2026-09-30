@@ -1,26 +1,25 @@
 import { toast } from 'react-toastify';
 import DataField from '../app/DataField';
-import { useDispatch } from 'react-redux';
-import { Role } from '@/shared/types/enums';
+import { useDispatch, useSelector } from 'react-redux';
+import { EventSocketEnum, Role } from '@/shared/types/enums';
 import { useEffect, useState } from 'react';
 import { SelectSeparator } from '../ui/select';
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import TimeSlotLegend from '../app/TimeSlotLegend';
-import { AppDispatch } from '@/app/store/appStore';
+import { AppDispatch, RootState } from '@/app/store/appStore';
 import { Calendar } from '@/components/ui/calendar';
 import { getEventSocket } from '@/lib/socketService';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import { AnimatePresence, motion } from 'framer-motion';
 import DataFetchingError from '../error/DataFetchingError';
-import getBooleanStatusComponent from '../app/GetBooleanStatus';
 import { Slot } from '@/shared/types/entity/serviceAvailability';
-import { queryKeys, statsPresents } from '@/shared/utils/constants';
-import { CalendarDays, Clock, Settings2, Timer } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
-import { setBookingPyamentData } from '@/app/store/slices/paymentSlice';
+import { setBookingData } from '@/app/store/slices/paymentSlice';
 import AvailablityFetchingError from '../error/AvailabilityFetchingError';
-import { EventSocketEnum, SlotEngageRequest } from '@/shared/types/socket';
+import { SlotEngageRequest } from '@/shared/types/socket';
 import { ProviderServiceAvailabilityProps } from '@/shared/types/component';
+import { CalendarDays, Clock, Settings2, Timer, CheckCircle2, XCircle } from 'lucide-react';
 import ProviderAvailabilityShimmer from '@/components/shimmers/ProviderAvailabilityShimmer';
 import ProviderServiceAvailabilityForm from '../form/provider/ProviderSerivceAvailabilityForm';
 import {
@@ -35,11 +34,13 @@ const ProviderServiceAvailability = ({
   canUpdate = false,
   showHeading = false,
 }: ProviderServiceAvailabilityProps) => {
+  
   const dispatch = useDispatch<AppDispatch>();
   const [showForm, setShowForm] = useState<boolean>(false);
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [selectedMode, setSelectedMode] = useState<string | null>(null);
   const [engagedSlotIds, setEngagedSlotIds] = useState<Set<string>>(new Set());
+  const bookingData = useSelector((state: RootState) => state.payment?.bookingData);
 
   const eventSocket = getEventSocket();
 
@@ -121,7 +122,7 @@ const ProviderServiceAvailability = ({
     }
 
     dispatch(
-      setBookingPyamentData({
+      setBookingData({
         providerId,
         slotId,
         slot,
@@ -136,7 +137,10 @@ const ProviderServiceAvailability = ({
       {(showHeading || canUpdate) && (
         <CardHeader className="flex justify-between items-center">
           {showHeading && (
-            <CardTitle className="flex flex-row space-x-2"> <CalendarDays className="w-4 h-4 text-indigo-500" /> <span>Service Availability</span></CardTitle>
+            <CardTitle className="flex flex-row space-x-2">
+              <CalendarDays className="size-4 text-[var(--mainColor)]" />
+              <span>Service Availability</span>
+            </CardTitle>
           )}
           {canUpdate && (
             <Button
@@ -183,6 +187,32 @@ const ProviderServiceAvailability = ({
             </div>
           ) : (
             <div className="md:col-span-7 lg:col-span-8 space-y-6">
+              <div
+                className={`flex items-center justify-between p-3.5 rounded-xl border ${data?.isAvailable
+                  ? 'bg-emerald-50/60 border-emerald-200 text-emerald-800 dark:bg-emerald-950/30 dark:border-emerald-800/60 dark:text-emerald-300'
+                  : 'bg-rose-50/60 border-rose-200 text-rose-800 dark:bg-rose-950/30 dark:border-rose-800/60 dark:text-rose-300'
+                  }`}
+              >
+                <div className="flex items-center gap-2.5">
+                  {data?.isAvailable ? (
+                    <CheckCircle2 className="size-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                  ) : (
+                    <XCircle className="size-5 text-rose-600 dark:text-rose-400 shrink-0" />
+                  )}
+                  <span className="text-xs sm:text-sm font-semibold">
+                    {data?.isAvailable ? 'Service is Currently Available' : 'Service is Unavailable'}
+                  </span>
+                </div>
+                <span
+                  className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${data?.isAvailable
+                    ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/60 dark:text-emerald-300'
+                    : 'bg-rose-100 text-rose-700 dark:bg-rose-900/60 dark:text-rose-300'
+                    }`}
+                >
+                  {data?.isAvailable ? 'Active' : 'Inactive'}
+                </span>
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <DataField
                   label="Day"
@@ -190,17 +220,6 @@ const ProviderServiceAvailability = ({
                   Icon={CalendarDays}
                   isLoading={isLoading}
                   shimmerWidth="w-24"
-                />
-
-                <DataField
-                  label="Availability Status"
-                  value={getBooleanStatusComponent(
-                    data?.isAvailable,
-                    statsPresents.availabilityStatus,
-                  )}
-                  Icon={CalendarDays}
-                  isLoading={isLoading}
-                  shimmerWidth="w-20"
                 />
 
                 <DataField
@@ -220,23 +239,12 @@ const ProviderServiceAvailability = ({
                 />
 
                 <DataField
-                  label="Duration"
+                  label="Slot Duration"
                   value={data?.duration}
                   isTime
                   Icon={Timer}
                   isLoading={isLoading}
                   shimmerWidth="w-20"
-                />
-
-                <DataField
-                  label="Select Service Mode"
-                  value={data?.modes}
-                  isRadioGroup
-                  selectedRadioValue={selectedMode}
-                  onRadioChange={(val) => setSelectedMode(val)}
-                  Icon={Settings2}
-                  isLoading={isLoading}
-                  shimmerWidth="w-32"
                 />
               </div>
 
@@ -264,19 +272,61 @@ const ProviderServiceAvailability = ({
                   ]}
                 />
 
+                {data?.modes && data.modes.length > 0 && (
+                  <div className="flex justify-between p-3 bg-slate-50/80 dark:bg-muted/20 border border-slate-200/80 dark:border-border/60 rounded-xl space-y-2">
+                    <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                      <Settings2 className="w-3.5 h-3.5 text-indigo-500" />
+                      <span>Select Service Mode</span>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {data.modes.map((mode: string) => {
+                        const isSelected = selectedMode === mode;
+                        return (
+                          <button
+                            key={mode}
+                            type="button"
+                            onClick={() => {
+                              setSelectedMode(mode);
+                              dispatch(setBookingData(null));
+                            }}
+                            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 cursor-pointer flex items-center gap-2 border ${isSelected
+                              ? 'bg-indigo-50/80 dark:bg-indigo-950/40 border-indigo-500 text-indigo-900 dark:text-indigo-200 ring-2 ring-indigo-500/20'
+                              : 'bg-white dark:bg-muted/40 border-slate-200 dark:border-border text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-muted/60'
+                              }`}
+                          >
+                            <span
+                              className={`w-2 h-2 rounded-full transition-colors ${isSelected ? 'bg-indigo-600 dark:bg-indigo-400' : 'bg-slate-300 dark:bg-slate-600'
+                                }`}
+                            />
+                            {mode}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                   {data?.slots?.length ? (
-                    data?.slots.map((slot: Slot) => {
+                    data.slots.map((slot: Slot) => {
                       const isOccupied = slot.occupied || engagedSlotIds.has(slot._id);
+                      const isAvailable = slot.available && !isOccupied;
+                      const isSelected = bookingData?.slotId === slot._id;
 
                       const getSlotStyles = () => {
-                        if (slot.available && !isOccupied) {
-                          return 'bg-indigo-50/60 hover:bg-indigo-600 border-indigo-200 hover:border-indigo-600 text-indigo-700 hover:text-white dark:bg-indigo-950/30 dark:border-indigo-800/80 dark:text-indigo-300 dark:hover:bg-indigo-600 dark:hover:text-white shadow-2xs';
+                        if (isSelected) {
+                          return 'bg-[var(--mainColor)] border-[var(--mainColor)] text-white dark:bg-[var(--mainColor)] dark:border-[var(--mainColor)] dark:text-white shadow-sm';
                         }
+
+                        if (isAvailable) {
+                          return 'bg-indigo-50 border-indigo-500 text-indigo-700 hover:bg-indigo-600 hover:border-indigo-600 hover:text-white dark:bg-indigo-950/40 dark:border-indigo-400 dark:text-indigo-300 dark:hover:bg-indigo-600 dark:hover:border-indigo-600 dark:hover:text-white cursor-pointer active:scale-95 shadow-2xs';
+                        }
+
                         if (isOccupied) {
-                          return 'bg-amber-50/50 border-amber-200 text-amber-700 dark:bg-amber-950/20 dark:border-amber-900/50 dark:text-amber-400 opacity-90 cursor-not-allowed';
+                          return 'bg-amber-50 border-amber-300 text-amber-700 dark:bg-amber-950/30 dark:border-amber-800 dark:text-amber-400 opacity-80 cursor-not-allowed';
                         }
-                        return 'bg-gray-50 border-gray-200 text-gray-400 dark:bg-gray-900/30 dark:border-gray-800 dark:text-gray-600 cursor-not-allowed';
+
+                        return 'bg-gray-50 border-gray-200 text-gray-400 dark:bg-gray-900/40 dark:border-gray-800 dark:text-gray-600 cursor-not-allowed';
                       };
 
                       const commonClasses = `text-xs font-semibold text-center border rounded-lg py-2.5 px-3 transition-all duration-150 flex items-center justify-center ${getSlotStyles()}`;
@@ -286,13 +336,13 @@ const ProviderServiceAvailability = ({
                           title={slot.time}
                           key={slot._id}
                           variant="outline"
+                          disabled={!isAvailable && !isSelected}
                           onClick={(e) => {
                             e.preventDefault();
                             e.stopPropagation();
-                            handleBookAnAppoint(slot._id, slot.time, slot.available && !isOccupied);
+                            handleBookAnAppoint(slot._id, slot.time, isAvailable);
                           }}
-                          className={`${commonClasses} ${slot.available && !isOccupied ? 'cursor-pointer active:scale-95' : ''
-                            }`}
+                          className={commonClasses}
                         >
                           {slot.time}
                         </Button>
@@ -308,6 +358,7 @@ const ProviderServiceAvailability = ({
                     </p>
                   )}
                 </div>
+
               </div>
             </div>
           )}

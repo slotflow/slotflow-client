@@ -5,11 +5,13 @@ import {
   AdminVerificationStatus,
 } from '@/shared/types/enums';
 import {
-  bookingTypeOptions,
   redirectPaths,
+} from '@/shared/utils/constants/routeConstants';
+import {
+  bookingTypeOptions,
   serviceTypeOptions,
   serviceCategoryOptions,
-} from '@/shared/utils/constants';
+} from '@/shared/utils/constants/selectOptionsConstants';
 import { toast } from 'react-toastify';
 import {
   providerFetchServiceDetails,
@@ -20,13 +22,13 @@ import { appConfig } from '@/config/env';
 import { useForm } from 'react-hook-form';
 import { FormButton } from '../FormButton';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import TagInput from '@/components/form/TagInput';
 import { OptionType } from '@/shared/types/common';
 import FormField from '@/components/form/FormField';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch, useSelector } from 'react-redux';
-import SelectField from '@/components/form/SelectFieldNew';
+import SelectField from '@/components/form/SelectField';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { AppDispatch, RootState } from '@/app/store/appStore';
 import DynamicStringListField from '../DynamicStringListFields';
 import { fetchServicesByCategory } from '@/services/apis/service';
@@ -37,7 +39,7 @@ import {
 } from '@/shared/validators/zod/providerZod';
 
 const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFormProps) => {
-  const navigate = useNavigate();
+  const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
   const [services, setServices] = useState<OptionType<string>[]>([]);
   const { authUser } = useSelector((state: RootState) => state.auth);
@@ -144,14 +146,14 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
         const res = await providerUpdateServiceDetails(payload);
         if (res.success) {
           if (authUser?.onboardingStatus !== OnboardingStatus.APPROVED) {
-            navigate(redirectPaths.PROVIDER_APPROVAL_PENDING);
+            goTo(redirectPaths.ONBOARDING_PENDING);
           }
           toast.success(res.message);
         }
       } else {
         const res = await dispatch(providerCreateServiceDetails(payload)).unwrap();
         if (res.success) {
-          navigate(redirectPaths.ONBOARDING_AVAILABILITY);
+          goTo(redirectPaths.ONBOARDING_AVAILABILITY);
           toast.success(res.message);
         }
       }
@@ -323,6 +325,7 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
                 : 'Submit'}
           title={isUpdating ? 'Update' : 'Submit'}
           disabled={!isValid || isSubmitting || isLoading}
+          className='w-full md:w-auto'
         />
       </div>
     </form>

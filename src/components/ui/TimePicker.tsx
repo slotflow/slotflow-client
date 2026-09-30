@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { dateFormats } from '@/shared/utils/constants';
+import { dateFormats } from '@/shared/utils/constants/appConstants';
 import { formatDate } from '@/shared/utils/helper/formatDate';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -50,7 +50,7 @@ export const TimePicker: React.FC<TimePickerProps> = ({ value, onChange }) => {
             !value && 'text-muted-foreground',
           )}
         >
-          <Clock className="mr-2 h-4 w-4" />
+          <Clock className="mr-2 size-4" />
           {value ? formatDate(value, dateFormats.TIME_12H_LOWER) : <span>hh:mm aa</span>}
         </Button>
       </PopoverTrigger>
@@ -63,7 +63,7 @@ export const TimePicker: React.FC<TimePickerProps> = ({ value, onChange }) => {
                 <Button
                   title="Date"
                   key={hour}
-                  size="icon"
+                  size="sm"
                   variant={value.getHours() % 12 === hour % 12 ? 'default' : 'ghost'}
                   className="sm:w-full shrink-0 aspect-square"
                   onClick={() => handleTimeChange('hour', hour.toString())}
@@ -81,7 +81,7 @@ export const TimePicker: React.FC<TimePickerProps> = ({ value, onChange }) => {
                 <Button
                   title="Date"
                   key={minute}
-                  size="icon"
+                  size="sm"
                   variant={value.getMinutes() === minute ? 'default' : 'ghost'}
                   className="sm:w-full shrink-0 aspect-square"
                   onClick={() => handleTimeChange('minute', minute.toString())}
@@ -99,7 +99,7 @@ export const TimePicker: React.FC<TimePickerProps> = ({ value, onChange }) => {
                 <Button
                   title="Date"
                   key={ampm}
-                  size="icon"
+                  size="sm"
                   variant={
                     (ampm === 'AM' && value.getHours() < 12) ||
                     (ampm === 'PM' && value.getHours() >= 12)

@@ -20,6 +20,9 @@ export interface Booking {
   appointmentMode: string;
   appointmentStatus: AppointmentStatus;
   slotId: string;
+  sessionStartTime: Date;
+  sessionEndTime: Date;
+  sessionDuration: number;
   paymentId: string;
   videoCallRoomId: string;
   onlineTrack: {

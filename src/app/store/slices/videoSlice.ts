@@ -1,5 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+interface RemoteUser {
+  socketId: string;
+  name: string;
+  profileImage?: string;
+}
+
 interface videoSliceInitalState {
   videoSocketId: string | null;
   isConnectedVideoSocket: boolean;

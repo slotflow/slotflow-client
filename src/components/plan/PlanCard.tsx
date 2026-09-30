@@ -3,11 +3,11 @@ import StatusBadge from '../common/StatusBadge';
 import { RootState } from '@/app/store/appStore';
 import { CheckIcon, Flame } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BillingCycle, PlanName } from '@/shared/types/enums';
 import { ProviderPlanCardProps } from '@/shared/types/component';
 import { formatNumberToPrice } from '@/shared/utils/helper/formatNumberToPrice';
+import { BillingCycle, PaymentProcessType, PlanName } from '@/shared/types/enums';
+import { setPaymentSelectionOpen, setSubscriptionData } from '@/app/store/slices/paymentSlice';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card';
-import { setPaymentSelectionOpen, setSubscriptionPaymentData } from '@/app/store/slices/paymentSlice';
 
 const PlanCard = ({
   plan,
@@ -23,12 +23,12 @@ const PlanCard = ({
 
   const handleGoToPayment = () => {
     dispatch(
-      setSubscriptionPaymentData({
+      setSubscriptionData({
         planId: plan._id,
         billingCycle: billingCycle,
       }),
     );
-    dispatch(setPaymentSelectionOpen(true));
+    dispatch(setPaymentSelectionOpen(PaymentProcessType.SUBSCRIPTION));
   };
 
   return (
@@ -68,7 +68,7 @@ const PlanCard = ({
         <ul className="space-y-2.5 text-sm">
           {plan.features.map((feature, i) => (
             <li key={i} className="flex space-x-2">
-              <CheckIcon className="flex-shrink-0 mt-0.5 h-4 w-4 text-primary" />
+              <CheckIcon className="flex-shrink-0 mt-0.5 size-4 text-primary" />
               <span className="text-muted-foreground">{feature}</span>
             </li>
           ))}
@@ -82,6 +82,7 @@ const PlanCard = ({
       {!dummy ? (
         <div className="mt-auto pt-4">
           <Button
+            variant='secondary'
             title="Choose Plan"
             className="w-full cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
             onClick={handleGoToPayment}
@@ -94,7 +95,7 @@ const PlanCard = ({
           <Button
             title="Sign up"
             className="w-full cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
-            variant="default"
+            variant="secondary"
           >
             Sign up
           </Button>

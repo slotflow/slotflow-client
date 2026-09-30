@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/table';
 import { DollarSign } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import { fetchPayments } from '@/services/apis/payment';
 import { formatDate } from '@/shared/utils/helper/formatDate';
 import { formatNumberToPrice } from '@/shared/utils/helper/formatNumberToPrice';

@@ -10,14 +10,14 @@ export interface FetchSubscriptionsQueryParams {
 // response of fetch subscriptions
 export type FetchProviderSubscriptionsResponse = Pick<
   Subscription,
-  '_id' | 'startDate' | 'endDate' | 'subscriptionStatus'
+  '_id' | 'currentPeriodStart' | 'currentPeriodEnd' | 'subscriptionStatus'
 > &
   Pick<Plan, 'planName'>;
 
 // subscription props
 type SubscriptionProps = Pick<
   Subscription,
-  'startDate' | 'endDate' | 'subscriptionStatus' | 'createdAt'
+  'currentPeriodStart' | 'currentPeriodEnd' | 'subscriptionStatus' | 'createdAt' | "cancelAt" | "cancelAtPeriodEnd" | "_id"
 >;
 
 // plan props
@@ -25,15 +25,15 @@ type PlanProps = Pick<Plan, 'planName' | 'adVisibility' | 'maxBookingPerMonth'>;
 
 // response of fetch subscription details
 export interface FetchSubscriptionDetailsResponse extends SubscriptionProps {
-  subscriptionPlanId: PlanProps;
+  subscribedPlanId: PlanProps;
 }
 
 // response of fetch activated subscription
 export interface SubscriptionActivated {
   userId: string;
   subscribedPlan: PlanName;
-  startDate: Date;
-  endDate: Date;
+  currentPeriodStart: Date;
+  currentPeriodEnd: Date;
   subscriptionStatus: SubscriptionStatus;
   hasUsedTrial: boolean;
 }

@@ -118,7 +118,7 @@ const ChatSidebar: React.FC<ChatSideBarProps> = ({ getUsers }) => {
             onClick={() => dispatch(setSelectedUser(user))}
             className={`
                             w-full p-2 flex gap-3 items-center border-b
-                            hover:bg-[var(--boxBorder)] transition-colors
+                            hover:bg-neutral-700 dark:hover:bg-neutral-300  transition-colors
                             ${selectedUser?._id === user._id ? '' : ''}
                             `}
           >

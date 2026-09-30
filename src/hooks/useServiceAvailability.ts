@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { ServiceMode } from '@/shared/types/enums';
-import { dateFormats } from '@/shared/utils/constants';
+import { dateFormats } from '@/shared/utils/constants/appConstants';
 import { addMinutes, isBefore, isEqual } from 'date-fns';
 import { formatDate } from '@/shared/utils/helper/formatDate';
 import { UseAddAvailabilityProps, UseAddAvailabilityReturn } from '@/shared/types/hooks';

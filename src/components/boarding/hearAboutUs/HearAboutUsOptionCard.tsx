@@ -27,7 +27,7 @@ const HearAboutUsOptions = ({ setSelectedOption, selectedOption }: HearAboutUsOp
             />
 
             <div className="relative flex items-center gap-3">
-              <Icon className="h-5 w-5 text-muted-foreground" />
+              <Icon className="size-5 text-muted-foreground" />
               <p className="text-sm font-medium text-foreground">{option.label}</p>
             </div>
           </Card>

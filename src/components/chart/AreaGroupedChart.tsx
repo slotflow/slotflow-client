@@ -39,7 +39,7 @@ const AreaGroupedChart = ({
 
   return (
     <Card className="relative overflow-hidden">
-      {isLocked && minimumPlan && <ChartOverlay stringOne={minimumPlan} chartTitle={title} />}
+      {!isLocked && minimumPlan && <ChartOverlay stringOne={minimumPlan} chartTitle={title} />}
       <ChartHeader
         title={title}
         description={description}

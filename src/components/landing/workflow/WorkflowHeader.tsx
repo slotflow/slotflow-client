@@ -9,7 +9,7 @@ const WorkflowHeader = () => {
         variant="secondary"
         className="rounded-full border px-4 py-1.5 text-sm font-medium hover:border-[#635bff]"
       >
-        <Sparkles className="mr-2 h-4 w-4 text-primary" />
+        <Sparkles className="mr-2 size-4 text-primary" />
         How SlotFlow Works
       </Badge>
       <SplitTextReveal

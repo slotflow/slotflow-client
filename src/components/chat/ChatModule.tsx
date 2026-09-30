@@ -5,11 +5,12 @@ import { socket } from '@/lib/socketService';
 import { useEffect, useRef, useState } from 'react';
 import { getMessages } from '@/services/apis/message';
 import { useDispatch, useSelector } from 'react-redux';
-import { dateFormats } from '@/shared/utils/constants';
+import { ChatSocketEnum } from '@/shared/types/enums';
 import { SocketDataInterface } from '@/shared/types/common';
 import { formatDate } from '@/shared/utils/helper/formatDate';
 import ChatBubbleProfileImage from './ChatBubbleProfileImage';
 import { AppDispatch, RootState } from '@/app/store/appStore';
+import { dateFormats } from '@/shared/utils/constants/appConstants';
 import NoChatSelectedSShimmer from '@/components/shimmers/NoChatSelectedSShimmer';
 import { connectChatSocket, disconnectChatSocket } from '@/services/socket/chatSocketThunk';
 
@@ -44,7 +45,7 @@ const ChatModule = () => {
   useEffect(() => {
     if (!socket || !authUser) return;
 
-    socket.on('typing', (socketData: SocketDataInterface) => {
+    socket.on(ChatSocketEnum.typing, (socketData: SocketDataInterface) => {
       const { fromUserId, toUserId } = socketData;
       if (fromUserId === selectedUser?._id && toUserId === authUser.uid) {
         setMessageSenderId(fromUserId);
@@ -52,7 +53,7 @@ const ChatModule = () => {
       }
     });
 
-    socket.on('stopTyping', (socketData: SocketDataInterface) => {
+    socket.on(ChatSocketEnum.stopTyping, (socketData: SocketDataInterface) => {
       const { fromUserId, toUserId } = socketData;
       if (fromUserId === selectedUser?._id && toUserId === authUser.uid) {
         setIsTyping(false);
@@ -61,8 +62,8 @@ const ChatModule = () => {
     });
 
     return () => {
-      socket?.off('typing');
-      socket?.off('stopTyping');
+      socket?.off(ChatSocketEnum.typing);
+      socket?.off(ChatSocketEnum.stopTyping);
     };
   }, [authUser, selectedUser]);
 

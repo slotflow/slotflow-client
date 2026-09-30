@@ -4,6 +4,46 @@ export enum PermissionStatus {
   DEFAULT = 'default',
 }
 
+export enum FileType {
+  PNG = 'image/png',
+  JPEG = 'image/jpeg',
+  JPG = 'image/jpg',
+}
+
+export enum PeerValues {
+  TRACK = 'track',
+  STABLE = 'stable',
+  NEGOTIATION_NEEDED = 'negotiationneeded',
+}
+
+export enum MediaTrackKind {
+  VIDEO = 'video',
+  AUDIO = 'audio',
+}
+
+export enum ServiceCategory {
+  HEALTHCARE_AND_WELLNESS = 'Healthcare & Wellness',
+  PROFESSIONAL_SERVICES = 'Professional Services',
+  EDUCATION_AND_TRAINING = 'Education & Training',
+  HOME_AND_MAINTENANCE = 'Home & Maintenance',
+  BEAUTY_AND_PERSONAL_CARE = 'Beauty & Personal Care',
+  FITNESS_AND_LIFESTYLE = 'Fitness & Lifestyle',
+  AUTOMOTIVE_SERVICES = 'Automotive Services',
+  EVENTS_AND_CREATIVE_SERVICES = 'Events & Creative Services',
+  TECHNOLOGY_SERVICES = 'Technology Services',
+  REAL_ESTATE_AND_PROPERTY = 'Real Estate & Property',
+  FOOD_AND_CATERING = 'Food & Catering',
+  TRAVEL_AND_HOSPITALITY = 'Travel & Hospitality',
+  FINANCIAL_AND_INSURANCE = 'Financial & Insurance',
+  PETS_AND_ANIMAL_CARE = 'Pets & Animal Care',
+  LEGAL_AND_GOVERNMENT = 'Legal & Government Services',
+  SPIRITUAL_AND_RELIGIOUS = 'Spiritual & Religious Services',
+  CHILDCARE_AND_FAMILY = 'Childcare & Family Services',
+  FASHION_AND_TAILORING = 'Fashion & Tailoring',
+  PHOTOGRAPHY_AND_MEDIA = 'Photography & Media',
+  BUSINESS_AND_MARKETING = 'Business & Marketing',
+}
+
 export enum Platform {
   ANDROID = 'ANDROID',
   IOS = 'IOS',
@@ -26,8 +66,8 @@ export enum AppointmentStatus {
   REJECTED_BY_PROVIDER = 'REJECTED_BY_PROVIDER',
   NOT_ATTENDED = 'NOT_ATTENDED',
   CONFIRMED = 'CONFIRMED',
-  PAYMENT_PENDING = 'PAYMENT_PENDING',
   EXPIRED = 'EXPIRED',
+  PENDING = 'PENDING'
 }
 
 export enum Role {
@@ -36,25 +76,14 @@ export enum Role {
   PROVIDER = 'PROVIDER',
 }
 
-export enum Boolean {
-  TRUE = 'true',
-  FALSE = 'false',
-}
-
-export enum FileType {
-  PNG = 'image/png',
-  JPEG = 'image/jpeg',
-  JPG = 'image/jpg',
-}
-
 export enum Day {
-  SUNDAY = 'Sunday',
-  MONDAY = 'Monday',
-  TUESDAY = 'Tuesday',
-  WEDNESDAY = 'Wednesday',
-  THURSDAY = 'Thursday',
-  FRIDAY = 'Friday',
-  SATURDAY = 'Saturday',
+  SUNDAY = 'SUNDAY',
+  MONDAY = 'MONDAY',
+  TUESDAY = 'TUESDAY',
+  WEDNESDAY = 'WEDNESDAY',
+  THURSDAY = 'THURSDAY',
+  FRIDAY = 'FRIDAY',
+  SATURDAY = 'SATURDAY',
 }
 
 export enum AppConnect {
@@ -93,41 +122,12 @@ export enum PaymentStatus {
   REFUNDED = 'REFUNDED',
 }
 
-export enum PaymentMethod {
-  CARD = 'card',
-  UPI = 'upi',
-  NETBANKING = 'netbanking',
-}
-
 export enum PlanName {
   TRIAL = 'TRIAL',
   STARTER = 'STARTER',
   PROFESSIONAL = 'PROFESSIONAL',
   ENTERPRISE = 'ENTERPRISE',
   NO_SUBSCRIPTION = 'NO_SUBSCRIPTION',
-}
-
-export enum ServiceCategory {
-  HEALTHCARE_AND_WELLNESS = 'Healthcare & Wellness',
-  PROFESSIONAL_SERVICES = 'Professional Services',
-  EDUCATION_AND_TRAINING = 'Education & Training',
-  HOME_AND_MAINTENANCE = 'Home & Maintenance',
-  BEAUTY_AND_PERSONAL_CARE = 'Beauty & Personal Care',
-  FITNESS_AND_LIFESTYLE = 'Fitness & Lifestyle',
-  AUTOMOTIVE_SERVICES = 'Automotive Services',
-  EVENTS_AND_CREATIVE_SERVICES = 'Events & Creative Services',
-  TECHNOLOGY_SERVICES = 'Technology Services',
-  REAL_ESTATE_AND_PROPERTY = 'Real Estate & Property',
-  FOOD_AND_CATERING = 'Food & Catering',
-  TRAVEL_AND_HOSPITALITY = 'Travel & Hospitality',
-  FINANCIAL_AND_INSURANCE = 'Financial & Insurance',
-  PETS_AND_ANIMAL_CARE = 'Pets & Animal Care',
-  LEGAL_AND_GOVERNMENT = 'Legal & Government Services',
-  SPIRITUAL_AND_RELIGIOUS = 'Spiritual & Religious Services',
-  CHILDCARE_AND_FAMILY = 'Childcare & Family Services',
-  FASHION_AND_TAILORING = 'Fashion & Tailoring',
-  PHOTOGRAPHY_AND_MEDIA = 'Photography & Media',
-  BUSINESS_AND_MARKETING = 'Business & Marketing',
 }
 
 export enum ServiceMode {
@@ -142,66 +142,45 @@ export enum ServiceType {
 }
 
 export enum SubscriptionStatus {
-  ACTIVE = 'ACTIVE',
-  EXPIRED = 'EXPIRED',
-  CANCELLED = 'CANCELLED',
-  PENDING = 'PENDING',
-  PAST_DUE = 'PAST_DUE',
-  FAILED = 'FAILED',
-}
-
-export enum VideoCallSocket {
-  roomJoin = 'room:join',
-  userJoined = 'user:joined',
-  userCall = 'user:call',
-  incomingCall = 'incoming:call',
-  callAccepted = 'call:accepted',
-  peerNegotiation = 'peer:nego:needed',
-  peerNegotiationDone = 'peer:nego:done',
-  peerNegotiationFinal = 'peer:nego:final',
-  roomLeave = 'room:leave',
-  userLeft = 'user:left',
-}
-
-export enum PeerValues {
-  TRACK = 'track',
-  STABLE = 'stable',
-  NEGOTIATION_NEEDED = 'negotiationneeded',
-}
-
-export enum MediaTrackKind {
-  VIDEO = 'video',
-  AUDIO = 'audio',
+  ACTIVE = "ACTIVE",
+  CANCELLED = "CANCELLED",
+  TRIALING = "TRIALING",
+  PAST_DUE = "PAST_DUE",
+  UNPAID = "UNPAID",
+  INCOMPLETE = "INCOMPLETE",
+  INCOMPLETE_EXPIRED = "INCOMPLETE_EXPIRED",
+  EXPIRED = "EXPIRED",
+  PAYMENT_FAILED = "PAYMENT_FAILED"
 }
 
 export enum RefundStatus {
-  PENDING = 'PENDING',
-  SUCCESS = 'SUCCEEDED',
-  FAILED = 'FAILED',
+    PENDING = "PENDING",
+    SUCCESS = "SUCCEEDED",
+    FAILED = "FAILED",
 }
 
 export enum RefundReason {
-  DUPLICATE = 'duplicate',
-  FRAUDUKENT = 'fraudulent',
-  REQUESTED_BY_CUSTOMER = 'requested_by_customer',
+    DUPLICATE = "duplicate",
+    FRAUDULENT = "fraudulent",
+    REQUESTED_BY_CUSTOMER = "requested_by_customer"
 }
 
 export enum RefundFor {
-  CANCEL_BOOKING = 'CANCEL_BOOKING',
-  CANCEL_SUBSCRIPTION = 'CANCEL_SUBSCRIPTION',
+    CANCEL_BOOKING = "CANCEL_BOOKING",
+    CANCEL_SUBSCRIPTION = "CANCEL_SUBSCRIPTION",
 }
 
 export enum HearAboutUsOptionValue {
-  GOOGLE = 'google',
-  REFERRAL = 'referral',
-  YOUTUBE = 'youtube',
-  LINKEDIN = 'linkedin',
-  TWITTER = 'twitter',
-  INSTAGRAM = 'instagram',
-  WHATSAPP = 'whatsapp',
-  FACEBOOK = 'facebook',
-  THREADS = 'threads',
-  OTHER = 'other',
+  GOOGLE = 'GOOGLE',
+  REFERRAL = 'REFERRAL',
+  YOUTUBE = 'YOUTUBE',
+  LINKEDIN = 'LINKEDIN',
+  TWITTER = 'TWITTER',
+  INSTAGRAM = 'INSTAGRAM',
+  WHATSAPP = 'WHATSAPP',
+  FACEBOOK = 'FACEBOOK',
+  THREADS = 'THREADS',
+  OTHER = 'OTHER',
 }
 
 export enum OnboardingStatus {
@@ -237,10 +216,10 @@ export enum CreditTransactionStatus {
 }
 
 export enum PaymentProcessStatus {
-  IDLE = 'idle',
-  PROCESSING = 'processing',
-  SUCCESS = 'success',
-  FAILED = 'failed',
+    IDLE = 'IDLE',
+    PROCESSING = 'PROCESSING',
+    SUCCESS = 'SUCCESS',
+    FAILED = 'FAILED',
 }
 
 export enum PaymentProcessType {
@@ -249,14 +228,86 @@ export enum PaymentProcessType {
 }
 
 export enum PaymentAccountStatus {
-  PENDING = 'pending',
-  ACTIVE = 'active',
-  RESTRICTED = 'restricted',
-  REVOKED = 'revoked',
-  NOT_CONNECTED = 'not_connected',
+  PENDING = "PENDING",
+  ACTIVE = "ACTIVE",
+  RESTRICTED = "RESTRICTED",
+  REVOKED = "REVOKED",
+  NOT_CONNECTED = "NOT_CONNECTED",
 }
 
 export enum BillingCycle {
-  MONTHLY = 'monthly',
-  YEARLY = 'yearly',
+  MONTHLY = 'MONTHLY',
+  YEARLY = 'YEARLY',
+}
+
+export enum StripeSyncStatus {
+  PENDING = 'PENDING',
+  SYNCED = 'SYNCED',
+}
+
+export enum EventSocketEnum {
+  // The socket connection is ready.
+  connect = 'connect',
+  // The socket connection has been restored.
+  reconnect = 'reconnect',
+  // The socket connection has ended.
+  disconnect = 'disconnect',
+  // Notify the user that their subscription is active.
+  subscriptionActivated = 'subscription:activated',
+  // Subscribe to updates for a provider.
+  providerJoin = 'provider:join',
+  // Request access to a provider's time slot.
+  slotEngageRequest = 'slot:engage:request',
+  // Notify that the slot request was rejected.
+  slotEngageRejected = 'slot:engage:rejected',
+  // Notify that the slot request was approved.
+  slotEngageApproved = 'slot:engage:approved',
+  // Stop receiving updates for a provider.
+  providerLeave = 'provider:leave',
+  // Notify that a time slot has been locked.
+  slotLocked = 'slot:locked',
+  // Request that a locked slot be released.
+  slotUnlockRequest = 'slot:unlock:request',
+  // Notify that a time slot is available again.
+  slotUnlocked = 'slot:unlocked',
+  // Notify that the provider's Stripe account status changed.
+  stripeAccountStatusUpdated = 'stripeAccountStatusUpdated',
+}
+
+export enum VideoSocketEnum {
+  // Join the active call room.
+  roomJoin = 'room:join',
+  // Watch lobby updates for a call room.
+  roomWatch = 'room:watch',
+  // Stop watching lobby updates for a call room.
+  roomUnwatch = 'room:unwatch',
+  // Receive the current participants in a call room.
+  roomState = 'room:state',
+  // Notify the room that a participant joined.
+  userJoined = 'user:joined',
+  // Send a call offer to another participant.
+  userCall = 'user:call',
+  // Receive a call offer from another participant.
+  incomingCall = 'incoming:call',
+  // Return the answer to a call offer.
+  callAccepted = 'call:accepted',
+  // Send a WebRTC renegotiation offer.
+  peerNegotiation = 'peer:nego:needed',
+  // Return the answer to a renegotiation offer.
+  peerNegotiationDone = 'peer:nego:done',
+  // Receive the final renegotiation answer.
+  peerNegotiationFinal = 'peer:nego:final',
+  // Leave the active call room.
+  roomLeave = 'room:leave',
+  // Notify the room that a participant left.
+  userLeft = 'user:left',
+  // Notify that the video socket connected.
+  connect = 'connect',
+}
+
+export enum ChatSocketEnum {
+  typing = 'typing',
+  stopTyping = 'stopTyping',
+  connect = 'connect',
+  newMessage = 'newMessage',
 }

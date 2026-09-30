@@ -23,14 +23,14 @@ const SideBoxHeader = () => {
         {user && (
           <Button
             title="Logout"
-            variant="outline"
+            variant="default"
             onClick={() => userSignout()}
             disabled={isSigningOut}
           >
             {isSigningOut ? (
-              <LoaderCircle className="animate-spin w-4 h-4" />
+              <LoaderCircle className="animate-spin size-4" />
             ) : (
-              <LogOut className="w-4 h-4" />
+              <LogOut className="size-4" />
             )}
             Logout
           </Button>

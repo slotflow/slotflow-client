@@ -16,7 +16,7 @@ import BarChartHorizontal from '@/components/chart/BarChartHorizontal';
 import LineChartHorizontal from '@/components/chart/LineChartHorizontal';
 import { UseAppointmentsDataChartsProps } from '@/shared/types/component';
 import { adminFetchDashboardBookingChartData } from '@/services/apis/admin';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 
 export const useAppointmentsDataCharts = ({
   dateRange,

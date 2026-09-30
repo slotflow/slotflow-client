@@ -23,16 +23,17 @@ import {
 } from '@/shared/types/api/plan';
 import { Button } from '../../ui/button';
 import { ColumnDef } from '@tanstack/react-table';
+import { StripeSyncStatus } from '@/shared/types/enums';
 import StatusBadge from '@/components/common/StatusBadge';
+import { Plan } from '@/shared/types/entity/planInterface';
 import { DataTableColumnHeader } from '../DataTableColumnHeader';
-import { formatNumberToPrice } from '@/shared/utils/helper/formatNumberToPrice';
-import { Plan, StripeSyncStatus } from '@/shared/types/entity/planInterface';
 import { formatString } from '@/shared/utils/helper/formatString';
+import { formatNumberToPrice } from '@/shared/utils/helper/formatNumberToPrice';
 
 const AdminPlansTableColumns = (
   changePlanBlockStatus: (data: ChangePlanBlockStatusRequest) => void,
   resyncPlanWithStripe: (data: ResyncPlanStripeRequest) => void,
-  handleNavigateToPlanDetailPage: (planId: Plan['_id']) => void,
+  toPlanDetailsPage: (planId: Plan['_id'], replace?: boolean) => void,
   handleOpenPlanEditForm: (planId: string) => void,
   changeBlockStatusPlanId: string | null | undefined,
   resyncingPlanId: string | null | undefined,
@@ -130,7 +131,7 @@ const AdminPlansTableColumns = (
       return syncStatus === StripeSyncStatus.SYNCED ? (
         <StatusBadge type="verified" label="Synced" />
       ) : (
-        <StatusBadge type="pending" />
+        <StatusBadge type="verified" />
       );
     },
   },
@@ -145,7 +146,7 @@ const AdminPlansTableColumns = (
           <DropdownMenuTrigger asChild>
             <Button title="Open Menu" variant="ghost" className="h-8 w-8 p-0 cursor-pointer">
               <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
+              <MoreHorizontal className="size-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -172,7 +173,7 @@ const AdminPlansTableColumns = (
               <Edit className="w-3.5 h-3.5" />
               Edit
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleNavigateToPlanDetailPage(plan._id)}>
+            <DropdownMenuItem onClick={() => toPlanDetailsPage(plan._id)}>
               <ReceiptText className="w-3.5 h-3.5" />
               Details
             </DropdownMenuItem>

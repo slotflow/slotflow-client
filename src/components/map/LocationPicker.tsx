@@ -29,8 +29,6 @@ const LocationPicker = ({ onLocationSelect }: LocationPickerProps) => {
 
     const tileUrl = locationIqConfig.locationIqMapApiStart + locationIqConfig.locationIqMapApi;
 
-    console.log('LocationIQ tile URL:', tileUrl);
-
     L.tileLayer(tileUrl, {
       attribution: locationIqConfig.locationIqAttribution,
     }).addTo(map);

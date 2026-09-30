@@ -1,8 +1,8 @@
 import { Badge } from '@/components/ui/badge';
-import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { redirectPaths } from '@/shared/utils/constants';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import MoveUpward from '@/components/animation/MoveUpward';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { AnimatedTooltip } from '@/components/ui/animated-tooltip';
 import AnimatedCounter from '@/components/animation/AnimatedCounter';
 import SplitTextReveal from '@/components/animation/SplitTextReveal';
@@ -10,7 +10,8 @@ import { heroPeople} from '@/shared/utils/constants/landingConstants';
 import { ArrowRight, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
 
 const LandingHeroContent = () => {
-  const navigate = useNavigate();
+
+  const { goTo } = useAppNavigation();
 
   return (
     <div className="flex flex-col justify-center px-4 md:px-0">
@@ -18,7 +19,7 @@ const LandingHeroContent = () => {
         variant="secondary"
         className="w-fit rounded-full border px-4 py-1.5 text-sm font-medium hover:border-[#635bff]"
       >
-        <Sparkles className="mr-2 h-4 w-4 text-primary" />
+        <Sparkles className="mr-2 size-4 text-primary" />
         Trusted Booking Platform
       </Badge>
 
@@ -53,15 +54,15 @@ const LandingHeroContent = () => {
         <div className="mt-10 flex flex-col gap-4 sm:flex-row">
           <Button
             className="h-10 lg:h-14 rounded-xl px-8 text-base shadow-lg shadow-primary/20"
-            onClick={() => navigate(redirectPaths.LOGIN)}
+            onClick={() => goTo(redirectPaths.LOGIN)}
           >
             Book a Service
-            <ArrowRight className="ml-2 h-5 w-5" />
+            <ArrowRight className="ml-2 size-5" />
           </Button>
           <Button
             variant="outline"
             className="h-10 lg:h-14 rounded-xl px-8 text-base"
-            onClick={() => navigate(redirectPaths.LOGIN)}
+            onClick={() => goTo(redirectPaths.LOGIN)}
           >
             Become a Provider
           </Button>
@@ -83,16 +84,16 @@ const LandingHeroContent = () => {
       <MoveUpward>
         <div className="mt-12 grid gap-6 grid-cols-2 md:grid-col-3">
           <Feature
-            icon={<ShieldCheck className="h-5 w-5" />}
+            icon={<ShieldCheck className="size-5" />}
             title="Verified"
             subtitle="Professionals"
           />
           <Feature
-            icon={<CheckCircle2 className="h-5 w-5" />}
+            icon={<CheckCircle2 className="size-5" />}
             title="Instant"
             subtitle="Confirmation"
           />
-          <Feature icon={<Sparkles className="h-5 w-5" />} title="Secure" subtitle="Payments" />
+          <Feature icon={<Sparkles className="size-5" />} title="Secure" subtitle="Payments" />
         </div>
       </MoveUpward>
       <MoveUpward>

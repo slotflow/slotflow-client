@@ -4,7 +4,6 @@ import { Plus, X } from 'lucide-react';
 import { Label } from '../ui/label';
 import { Button } from '../ui/button';
 import { TagInputProps } from '@/shared/types/component';
-import { actionBtnClass, closeBtnClass } from '@/shared/utils/constants';
 
 const TagInput = ({ value, onChange }: TagInputProps) => {
   const [input, setInput] = useState('');
@@ -37,9 +36,8 @@ const TagInput = ({ value, onChange }: TagInputProps) => {
           type="button"
           variant="secondary"
           onClick={addTag}
-          className={actionBtnClass}
         >
-          <Plus className="w-4 h-4" />
+          <Plus className="size-4" />
         </Button>
       </div>
 
@@ -54,11 +52,10 @@ const TagInput = ({ value, onChange }: TagInputProps) => {
               title="Delete tag"
               type="button"
               variant="ghost"
-              size='icon'
+              size='sm'
               onClick={() => removeTag(tag)}
-              className={closeBtnClass}
             >
-              <X className='w-4 h-4' />
+              <X className='size-4' />
             </Button>
           </span>
         ))}

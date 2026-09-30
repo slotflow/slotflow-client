@@ -16,7 +16,7 @@ import {
   ChangePlanBlockStatusResponse,
 } from '@/shared/types/api/plan';
 import { toast } from 'react-toastify';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import { UseAdminPlanReturn } from '@/shared/types/hooks';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { handleError } from '@/shared/utils/helper/handleError';

@@ -7,18 +7,17 @@ import { useDispatch } from 'react-redux';
 import GoogleButton from '../GoogleButton';
 import { FormButton } from '../FormButton';
 import { signin } from '@/services/apis/auth';
-import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { AppDispatch } from '@/app/store/appStore';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { redirectPaths } from '@/shared/utils/constants';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { setForgotPassword } from '@/app/store/slices/appSlice';
 import { LoginFormType, LoginZodSchema } from '@/shared/validators/zod/authZod';
 
 const LoginForm = () => {
 
-  const navigate = useNavigate();
+  const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
   const { handleAuthLoginNavigation } = useAppNavigation();
 
@@ -86,7 +85,7 @@ const LoginForm = () => {
                 className="px-0 block text-xs md:text-sm font-medium text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
                 onClick={() => {
                   dispatch(setForgotPassword(true));
-                  navigate(redirectPaths.VERIFY_EMAIL);
+                  goTo(redirectPaths.VERIFY_EMAIL);
                 }}
               >
                 Forgot Password ?
@@ -104,7 +103,7 @@ const LoginForm = () => {
 
           <div className="flex items-center my-4">
             <div className="flex-grow border-t"></div>
-            <span className="mx-3 text-sm text-[var(--textTwo)]">OR CONTINUE WITH</span>
+            <span className="mx-3 text-sm text-neutral-600">OR CONTINUE WITH</span>
             <div className="flex-grow border-t"></div>
           </div>
 
@@ -112,11 +111,11 @@ const LoginForm = () => {
             text="Sign up with Google"
           />
 
-          <p className="mt-10 text-center text-sm text-[var(--textOne)] hover:text-[var(--textOneHover)]">
+          <p className="mt-10 text-center text-sm text-neutral-700">
             New to Slotflow ?
             <span
               className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
-              onClick={() => navigate(redirectPaths.REGISTER)}
+              onClick={() => goTo(redirectPaths.REGISTER)}
             >
               {' '}
               Sign Up

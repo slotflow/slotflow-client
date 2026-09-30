@@ -1,13 +1,14 @@
 import {
-  CreateServiceRequest,
+  CreateServicesRequest,
   UpdateServiceRequest,
   FetchServicesResponse,
   UpdateServiceResponse,
   AdminChangeServiceBlockStatusRequest,
   AdminChangeServiceBlockStatusResponse,
+  CreateSservicesResponse,
 } from '@/shared/types/api/service';
 import { toast } from 'react-toastify';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import { UseAdminServiceReturn } from '@/shared/types/hooks';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { handleError } from '@/shared/utils/helper/handleError';
@@ -122,12 +123,48 @@ export const useAdminService = (): UseAdminServiceReturn => {
   });
 
   // Admin creating an app service plan and calls the cache updating function
-  const createServiceMutation = useMutation<ApiBaseResponse, ApiError, CreateServiceRequest>({
-    mutationFn: (data: CreateServiceRequest) => createService(data),
+  const createServiceMutation = useMutation<
+    ApiBaseResponse<CreateSservicesResponse>,
+    ApiError,
+    CreateServicesRequest
+  >({
+    mutationFn: (data: CreateServicesRequest) => createService(data),
     onSuccess: (res) => {
       if (res.success && res.data) {
-        const updatedService = res.data;
-        updateServicesListCache(updatedService);
+        const newServices = res.data;
+
+        const hasCache = queryClient
+          .getQueriesData<ApiPaginatedResponse<FetchServicesResponse>>({
+            queryKey: [queryKeys.APP_SERVICES],
+          })
+          .some(([, data]) => Boolean(data && data.items));
+
+        if (!hasCache) {
+          queryClient.invalidateQueries({ queryKey: [queryKeys.APP_SERVICES] });
+          return;
+        }
+
+        queryClient.setQueriesData<ApiPaginatedResponse<FetchServicesResponse>>(
+          { queryKey: [queryKeys.APP_SERVICES] },
+          (oldData) => {
+            if (!oldData?.items) return oldData;
+
+            const PAGE_SIZE = 14;
+            const updatedTotalCount = (oldData.totalCount ?? 0) + newServices.length;
+            const updatedTotalPages = Math.ceil(updatedTotalCount / PAGE_SIZE);
+            const combinedItems = [...newServices, ...oldData.items].slice(0, PAGE_SIZE);
+
+            return {
+              ...oldData,
+              items: combinedItems,
+              totalCount: updatedTotalCount,
+              currentPage: oldData.currentPage ?? 1,
+              totalPages: updatedTotalPages > 0 ? updatedTotalPages : 1,
+            };
+          },
+        );
+
+
       }
     },
     onError: (error: ApiError) => {

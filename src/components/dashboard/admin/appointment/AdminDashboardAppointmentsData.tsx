@@ -5,11 +5,11 @@ import DataAnalysis from '../../DataAnalyisis';
 import DashboardStats from '../../DashboardStats';
 import { DashboardItem } from '@/shared/types/common';
 import { useAppointmentsDataCharts } from './AppointmentsDataCharts';
-import { queryKeys, aiResponseEntities } from '@/shared/utils/constants';
 import { AdminDashboardAppointmentsDataProps } from '@/shared/types/component';
 import { AppointmentsStatsMapForAdmin } from '@/shared/utils/constants/statsConstats';
 import { AdminFetchDashboardAppointmentStatsDataResponse } from '@/shared/types/api/adminDashboard';
 import { adminFetchDashboardAppointmentStatsData, fetchAnalyticsInsight } from '@/services/apis/admin';
+import { aiResponseEntities, queryKeys } from '@/shared/utils/constants/appConstants';
 
 export default function AdminDashboardAppointmentsData({
   dateRange,

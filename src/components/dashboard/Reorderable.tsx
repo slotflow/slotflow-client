@@ -55,7 +55,7 @@ const Reorderable = ({ initialItems }: ReorderableProps) => {
                       className="absolute top-2 right-2 z-20 p-1.5 rounded-lg bg-background/80 backdrop-blur border border-border/50 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing hover:bg-accent hover:text-foreground"
                       title="Drag to reposition card"
                     >
-                      <GripVertical className="w-4 h-4" />
+                      <GripVertical className="size-4" />
                     </div>
 
                     <div className="h-full w-full flex-1">{item.component}</div>

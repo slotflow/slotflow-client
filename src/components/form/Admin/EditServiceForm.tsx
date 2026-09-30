@@ -3,16 +3,16 @@ import FormField from '../FormField';
 import { toast } from 'react-toastify';
 import ToggleField from '../ToggleField';
 import { FormButton } from '../FormButton';
-import SelectField from '../SelectFieldNew';
+import SelectField from '../SelectField';
 import { Button } from '@/components/ui/button';
 import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ServiceCategory } from '@/shared/types/enums';
 import { useAdminService } from '@/hooks/adminHooks/useService';
 import { EditServiceFormProps } from '@/shared/types/component';
-import { closeBtnClass, serviceCategoryOptions } from '@/shared/utils/constants';
 import { slideOut } from '@/shared/utils/helper/gsapAnimationSlide';
 import { handleFormError } from '@/shared/utils/helper/formErrorCatcher';
+import { serviceCategoryOptions } from '@/shared/utils/constants/selectOptionsConstants';
 import {
   AdminEditServiceFormType,
   adminEditServiceZodSchema,
@@ -91,10 +91,9 @@ const EditServiceForm = ({ onClose, formRef, serviceToEdit }: EditServiceFormPro
           variant='ghost'
           onClick={handleCloseForm}
           disabled={isSubmitting}
-          className={closeBtnClass}
           aria-label="Close form"
         >
-          <X className="w-5 h-5" />
+          <X className="size-5" />
         </Button>
       </div>
 

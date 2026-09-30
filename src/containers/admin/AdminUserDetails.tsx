@@ -11,10 +11,12 @@ import DataShimmer from '@/components/shimmers/DataShimmer';
 import { fetchUserProfileDetails } from '@/services/apis/user';
 import { fetchAddressByUserId } from '@/services/apis/address';
 import TabNavigation from '@/components/common/TabNavigation';
-import { userTabs, queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import AddressListing from '@/components/profile/AddressListing';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import { Ban, Mail, Phone, RotateCw, ArrowLeft, CircleCheck, Clock } from 'lucide-react';
+import { userTabs } from '@/shared/utils/constants/tabConstants';
+import noProfile from '../../assets/defaultImages/avatar.png';
 
 const AdminUserDetails = () => {
   const navigate = useNavigate();
@@ -64,6 +66,8 @@ const AdminUserDetails = () => {
     );
   }
 
+  console.log('rendering');
+
   return (
     <div className="h-full space-y-8 min-h-screen font-sans">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-border pb-6">
@@ -90,12 +94,12 @@ const AdminUserDetails = () => {
               <div className="relative">
                 {user?.profileImage ? (
                   <img
-                    src={user.profileImage}
+                    src={user?.profileImage || noProfile}
                     alt={user?.username || 'User Avatar'}
                     className="w-16 h-16 rounded-full object-cover border-2 border-slate-200 dark:border-border shadow-sm"
                   />
                 ) : (
-                  <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-800 border-2 border-slate-200 dark:border-border flex items-center justify-center text-xl font-bold text-slate-600 dark:text-slate-300 shadow-sm">
+                  <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-gray-700 border-2 border-slate-200 dark:border-border flex items-center justify-center text-xl font-bold text-slate-600 dark:text-slate-300 shadow-sm">
                     {user?.username?.charAt(0)?.toUpperCase() || 'U'}
                   </div>
                 )}
@@ -201,7 +205,7 @@ const AdminUserDetails = () => {
 
           <TabsContent value={userTabs[0].value}>
             <AddressListing
-              fetchApiFunction={() => fetchAddressByUserId(userId)}
+              fetchApiFunction={() => fetchAddressByUserId({userId})}
               queryKey={[queryKeys.ADDRESS]}
               userOrProviderId={userId}
             />

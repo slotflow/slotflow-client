@@ -7,14 +7,15 @@ import { useDispatch } from 'react-redux';
 import GoogleButton from '../GoogleButton';
 import { FormButton } from '../FormButton';
 import { signup } from '@/services/apis/auth';
-import { useNavigate } from 'react-router-dom';
 import { AppDispatch } from '@/app/store/appStore';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { redirectPaths } from '@/shared/utils/constants';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { SignupFormType, signupZodSchema } from '@/shared/validators/zod/authZod';
 
 const SignUpForm = () => {
-  const navigate = useNavigate();
+
+  const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
 
   const {
@@ -37,7 +38,7 @@ const SignUpForm = () => {
     try {
       const res = await dispatch(signup({ ...data })).unwrap();
       if (res.success) {
-        navigate(redirectPaths.VERIFY_OTP);
+        goTo(redirectPaths.VERIFY_OTP);
         toast.success(res.message);
       }
     } catch (error) {
@@ -117,7 +118,7 @@ const SignUpForm = () => {
 
           <div className="flex items-center my-4">
             <div className="flex-grow border-t"></div>
-            <span className="mx-3 text-sm text-[var(--textTwo)]">OR CONTINUE WITH</span>
+            <span className="mx-3 text-sm text-neutral-600">OR CONTINUE WITH</span>
             <div className="flex-grow border-t"></div>
           </div>
 
@@ -126,11 +127,11 @@ const SignUpForm = () => {
           />
 
 
-          <p className="mt-10 text-center text-sm/6 text-[var(--textOne)] hover:text-[var(--textOneHover)]">
+          <p className="mt-10 text-center text-sm/6 text-neutral-700">
             Already a Slotflow member?
             <span
               className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
-              onClick={() => navigate(redirectPaths.LOGIN)}
+              onClick={() => goTo(redirectPaths.LOGIN)}
             >
               {' '}
               Sign In

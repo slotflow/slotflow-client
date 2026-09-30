@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import PieChartRounded from '@/components/chart/PieChartRounded';
 import { SubscriptionDataChartProps } from '@/shared/types/component';
 import { subscriptionChartConfig } from '@/shared/utils/constants/chartConstants';

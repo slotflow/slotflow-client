@@ -24,7 +24,7 @@ import { Check, MoreHorizontal, NotebookPen, ReceiptText, VideoIcon, X } from 'l
 
 const BookingsTableColumn = (
   JoinCallLobby: (data: ValidateRoomIdRequest) => void,
-  handleNavigateToBookingsDetailPage: (appointmentId: Booking['_id']) => void,
+  toBookingsDetailsPage: (appointmentId: Booking['_id'], replace?: boolean) => void,
   role: Role,
   handleReviewAddFormToggle?: (
     e: React.MouseEvent<HTMLDivElement>,
@@ -72,9 +72,11 @@ const BookingsTableColumn = (
           case AppointmentStatus.REJECTED_BY_PROVIDER:
             return <StatusBadge type="blocked" label="Rejected By Provider" />;
           case AppointmentStatus.NOT_ATTENDED:
-            return <StatusBadge type="updating" label="Not Attended" />;
+            return <StatusBadge type="blocked" label="Not Attended" />;
           case AppointmentStatus.COMPLETED:
             return <StatusBadge type="verified" label="Completed 🎉" />;
+          case AppointmentStatus.PENDING:
+            return <StatusBadge type="pending" label="Pending" />;
           default:
             return <StatusBadge type="standard" label={status} />;
         }
@@ -109,7 +111,7 @@ const BookingsTableColumn = (
             <DropdownMenuTrigger asChild>
               <Button title="Open Menu" variant="ghost" className="h-8 w-8 p-0 cursor-pointer hover:bg-muted">
                 <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
+                <MoreHorizontal className="size-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="rounded-xl">
@@ -179,7 +181,7 @@ const BookingsTableColumn = (
                 )}
               <DropdownMenuItem
                 className="flex items-center gap-2 cursor-pointer"
-                onClick={() => handleNavigateToBookingsDetailPage(booking._id)}
+                onClick={() => toBookingsDetailsPage(booking._id)}
               >
                 <ReceiptText className="w-3.5 h-3.5" /> Details
               </DropdownMenuItem>

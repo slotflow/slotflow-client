@@ -3,7 +3,7 @@ import UserInfo from '../../components/settings/account/UserInfo';
 import { Role } from '@/shared/types/enums';
 import ProfileHead from '../../components/settings/account/ProfileHead';
 import { RootState } from '@/app/store/appStore';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import AddressListing from '../../components/profile/AddressListing';
 import { fetchMyAddress } from '@/services/apis/address';
 import ProviderServiceList from '../../components/profile/ProviderServiceList';

@@ -19,7 +19,7 @@ import {
   AdminFetchProviderProfileDetailsResponse,
 } from '@/shared/types/api/providerProfile';
 import { AppDispatch } from '@/app/store/appStore';
-import { queryKeys } from '@/shared/utils/constants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import { UseAdminProviderReturn } from '@/shared/types/hooks';
 import { AdminVerificationStatus } from '@/shared/types/enums';
 import { useMutation, useQueryClient } from '@tanstack/react-query';

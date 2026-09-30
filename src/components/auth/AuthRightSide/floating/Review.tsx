@@ -8,7 +8,7 @@ const ReviewCard = () => {
     <Card className="w-72 rounded-3xl border-border/60 bg-background/80 p-5 shadow-xl backdrop-blur-xl">
       <div className="flex items-start gap-4">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10">
-          <MessageSquareHeart className="h-5 w-5 text-primary" />
+          <MessageSquareHeart className="size-5 text-primary" />
         </div>
         <div className="flex-1 space-y-4">
           <div className="flex items-center justify-between">
@@ -28,15 +28,15 @@ const ReviewCard = () => {
             </p>
           </div>
           <div className="flex items-center gap-1">
-            <Star className="h-5 w-5 fill-primary text-primary" />
-            <Star className="h-5 w-5 fill-primary text-primary" />
-            <Star className="h-5 w-5 fill-primary text-primary" />
-            <Star className="h-5 w-5 fill-primary text-primary" />
-            <Star className="h-5 w-5 text-muted-foreground" />
+            <Star className="size-5 fill-primary text-primary" />
+            <Star className="size-5 fill-primary text-primary" />
+            <Star className="size-5 fill-primary text-primary" />
+            <Star className="size-5 fill-primary text-primary" />
+            <Star className="size-5 text-muted-foreground" />
           </div>
 
           <Button variant="outline" size="sm" className="w-full rounded-xl">
-            <CheckCircle2 className="mr-2 h-4 w-4" />
+            <CheckCircle2 className="size-4" />
             Leave a Review
           </Button>
         </div>
