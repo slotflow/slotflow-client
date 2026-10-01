@@ -1,7 +1,6 @@
 import {
   Role,
   PlanName,
-  ServiceCategory,
   SubscriptionStatus,
   PaymentProcessType,
   PaymentProcessStatus,
@@ -11,14 +10,12 @@ import {
   FaqFields,
   BlogArticle,
   ReviewFields,
-  NotificationType,
   NotificationChannel,
-  ProviderCardsFilters,
   PlanFields,
 } from './common';
 import { User } from './entity/user';
 import { Message } from './entity/message';
-import { UserViewProviderCardProps } from './component';
+import { NotificationType } from './entity/notification';
 import { ProviderProfile } from './entity/providerProfile';
 import { Availability } from './entity/serviceAvailability';
 import { SubscribePlanCheckoutRequest } from './api/subscription';
@@ -34,7 +31,6 @@ export type AuthUser = Pick<
   | 'onboardingStatus'
   | 'onboardingType'
   | 'isBlocked'
-  | 'allowPushNotification'
   | 'referralCode'
 > &
   Pick<
@@ -74,8 +70,9 @@ export interface AuthState {
   eventSocketIsConnected: boolean;
   subscriptionUpdating: boolean;
   bookingUpdating: boolean;
-  preboardingData: {
+  profileSetupData: {
     selectedRole: Role | null;
+    username: string | null;
   };
 }
 
@@ -141,16 +138,17 @@ export interface chatSliceInitalState {
 }
 
 // payment slice initial state
+export interface BookingData {
+  providerId: string;
+  slotId: string;
+  slot: string;
+  date: string;
+  selectedServiceMode: string;
+}
 export interface PaymentSlice {
   type: PaymentProcessType | null;
   isPaymentModalOpen: boolean;
-  bookingData: {
-    providerId: string;
-    slotId: string;
-    slot: string;
-    date: Date;
-    selectedServiceMode: string;
-  } | null;
+  bookingData: BookingData | null;
   subscriptionData: SubscribePlanCheckoutRequest | null;
   status: PaymentProcessStatus;
 }

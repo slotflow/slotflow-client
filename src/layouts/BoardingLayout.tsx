@@ -9,20 +9,25 @@ const BoardingLayout = ({ children, pageNumber, heading, description }: Boarding
   return (
     <div className="md:min-h-screen md:flex justify-center w-full bg-[var(--background)]">
       <SideBox pageNumber={pageNumber} />
+
       <AnimatePresence mode="wait">
         <motion.div
           key={location.pathname}
-          className="w-full md:w-8/12 p-6 md:p-10"
+          className="w-full md:w-8/12 p-6 md:p-10 min-h-full flex flex-col"
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -50 }}
           transition={{ duration: 0.3 }}
         >
-          <div className="space-y-2 text-center md:text-left">
-            <h1 className="text-2xl font-semibold">{heading}</h1>
-            <p className="text-muted-foreground text-sm">{description}</p>
+          {(heading && description) && (
+            <div className="space-y-2 text-center md:text-left">
+              <h1 className="text-xl md:text-2xl font-semibold">{heading}</h1>
+              <p className="text-xs md:text-sm text-muted-foreground">{description}</p>
+            </div>
+          )}
+          <div className="flex-1">
+            {children}
           </div>
-          {children}
         </motion.div>
       </AnimatePresence>
     </div>

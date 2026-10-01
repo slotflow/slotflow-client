@@ -4,47 +4,20 @@ import { RootState } from '@/app/store/appStore';
 import { boardingData } from '@/shared/utils/constants/boardingConstants';
 
 const SideBoxSteps = ({ pageNumber }: { pageNumber: number }) => {
+  
   const boardingSteps = useSelector((state: RootState) => state.app.boardingSteps);
-
   const percentage = ((pageNumber + 1) / boardingSteps) * 100;
-
-  if (pageNumber === 6) {
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, ease: 'easeOut' }}
-        className="space-y-2 text-gray-700"
-      >
-        <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--mainColor)]/10">
-            <svg
-              className="size-4 text-[var(--mainColor)]"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-          </div>
-
-          <h3 className="font-bold">Ready for Review</h3>
-        </div>
-      </motion.div>
-    );
-  }
 
   return (
     <div className="space-y-5">
       <div>
-        <div className="text-gray-700 flex items-center justify-between">
+        <div className="text-muted-foreground flex items-center justify-between">
           <div>
-            <h3 className="font-bold">{boardingData[pageNumber].title}</h3>
+            <h3 className="font-bold">
+              {pageNumber === boardingData.length - 1
+                ? 'Ready for Review'
+                : boardingData[pageNumber].title}
+            </h3>
           </div>
 
           <span className="text-sm font-medium">

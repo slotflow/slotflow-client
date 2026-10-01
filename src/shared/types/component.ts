@@ -8,7 +8,6 @@ import {
   BaseChartData,
   ApiBaseResponse,
   BlogAuthorFields,
-  NotificationType,
   statsMapIntrface,
   NotificationChannel,
   ApiPaginatedResponse,
@@ -18,12 +17,9 @@ import {
 } from './common';
 import {
   UserFetchServiceProvidersResponse,
-  UserFetchMyProfileDetailsResponse,
-  AdminFetchUserProfileDetailsResponse,
 } from './api/user';
 import {
   Control,
-  ErrorOption,
   type Path,
   FieldError,
   UseFormSetValue,
@@ -34,7 +30,6 @@ import {
 import {
   ProviderFetchMyProfileDetailsResponse,
   UserFetchProviderProfileDetailsResponse,
-  AdminFetchProviderProfileDetailsResponse,
 } from './api/providerProfile';
 import { User } from './entity/user';
 import { LucideIcon } from 'lucide-react';
@@ -59,6 +54,7 @@ import { FetchReviewsResponse, ChangeReviewBlockStatusRequest } from './api/revi
 import { Column, ColumnDef, OnChangeFn, PaginationState } from '@tanstack/react-table';
 import { FetchProvidersProofsResponse, UpdateFileDataRequest } from './api/commonApiInterface';
 import { AnalyticsAiResponse } from './api/adminDashboard';
+import { NotificationType } from './entity/notification';
 
 // Provider service availability component props interface
 export interface ProviderServiceAvailabilityProps {
@@ -1078,8 +1074,8 @@ export interface UserProfileTopCardProps {
 export interface BoardingLayoutProps {
   children: React.ReactNode;
   pageNumber: number;
-  heading: string;
-  description: string;
+  heading?: string;
+  description?: string;
 }
 
 // Main Layout props
@@ -1225,15 +1221,6 @@ export interface ComponentSandboxSpec<T = any> {
 }
 export interface SandboxPageProps {
   specs: ComponentSandboxSpec[];
-}
-
-
-//
-export interface HearAboutUsButtonsProps {
-  isSubmitting: boolean;
-  disabled: boolean;
-  onPrevious: () => void;
-  onSubmit: () => void;
 }
 
 //

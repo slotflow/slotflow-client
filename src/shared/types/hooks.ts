@@ -47,7 +47,9 @@ import { BookAppointmentRequest, BookAppointmentResponse, CancelBookingRequest, 
 import { AuthUser } from './slice';
 import { ConnectStripeAccountRequest } from './api/paymentAccount';
 import { VideoRoomParticipant } from './socket';
-import { RefObject } from 'react';
+import { RefObject, SetStateAction } from 'react';
+import { ITimezone, ITimezoneOption } from 'react-timezone-select';
+import { Dispatch} from 'react';
 
 // Admin plan hook return type interface
 export interface UseAdminPlanReturn {
@@ -223,6 +225,13 @@ export interface useVideoCallActionsReturn {
   >;
 }
 
+// UseTimezone return
+export interface UseTimezoneReturn {
+  selectedTimezone: ITimezone;
+  setSelectedTimezone: Dispatch<SetStateAction<ITimezone>>;
+  parsed: ITimezoneOption;
+}
+
 // Review hook return type interface
 export interface useReviewReturn {
   reportReview: UseMutateFunction<
@@ -366,19 +375,18 @@ export interface UseBookingCustomHookReturn {
   isCancelling: boolean;
 }
 
-// preboarding hook return interface
-export interface UsePreBoardingReturn {
-  submitPreBoarding: UseMutateFunction<
+// profile setup hook return interface
+export interface UseProfileSetupReturn {
+  submitPrfoleSetup: UseMutateFunction<
     ApiBaseResponse<PreBoardingResponse>,
     ApiError,
-    SubmitPreBoardingHandlerProps
+    SubmitProfileSetupHandlerProps
   >;
-  isPreboardingSubmitting: boolean;
-  hearAboutUsHandler: () => void;
+  isProfileSetupSubmitting: boolean;
 }
 
-// preboarding hook props
-export interface SubmitPreBoardingHandlerProps {
+// profile setup hook props
+export interface SubmitProfileSetupHandlerProps {
   selectedOption: HearAboutUsOptionValue | null;
   referralCode: string | null;
 }

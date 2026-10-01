@@ -6,11 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useCallback, useEffect, useMemo } from 'react';
 import { getFcmToken } from '@/shared/utils/helper/getToken';
 import { registerDevice } from '@/services/apis/notification';
-import { userSetPushNotification } from '@/services/apis/user';
 import { getDeviceId } from '@/shared/utils/helper/getDeviceId';
 import { PermissionStatus, Platform } from '@/shared/types/enums';
 import { useNotificationPermissionGateReturn } from '@/shared/types/hooks';
-import { updateNotificationPreference } from '@/app/store/slices/authSlice';
 import { handleError } from '@/shared/utils/helper/handleError';
 import { requestNotificationPermission } from '@/shared/utils/helper/requestNotificationPermission';
 
@@ -22,8 +20,7 @@ export const useNotificationPermissionGate = (): useNotificationPermissionGateRe
     if (typeof window === 'undefined' || !('Notification' in window)) return false;
     return (
       Notification.permission === PermissionStatus.DEFAULT &&
-      authUser?.isLoggedIn === true &&
-      authUser?.allowPushNotification == null
+      authUser?.isLoggedIn === true && true // TODO update
     );
   }, [authUser]);
 
@@ -44,23 +41,20 @@ export const useNotificationPermissionGate = (): useNotificationPermissionGateRe
       });
 
       // Step 2: Update Server Preference
-      return await userSetPushNotification(true);
+      // return await userSetPushNotification(true);
     },
     onSuccess: (res) => {
-      dispatch(updateNotificationPreference(res.success));
     },
     onError: (error: ApiError) => {
-      dispatch(updateNotificationPreference(false));
       handleError(error, 'Failed to enable push notifications.');
     },
   });
 
   const disableNotificationMutation = useMutation({
     mutationFn: async () => {
-      return await userSetPushNotification(false);
+      // return await userSetPushNotification(false);
     },
     onSuccess: () => {
-      dispatch(updateNotificationPreference(false));
     },
     onError: (error: ApiError) => {
       if (appConfig.isDevelopment) {

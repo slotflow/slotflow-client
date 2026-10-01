@@ -11,7 +11,7 @@ const initialState: appState = {
   otpTimerIsRunning: false,
   otpExpiresAt: null,
   isLiveChatBubbleOpen: false,
-  boardingSteps: 2,
+  boardingSteps: 3,
 };
 
 const stateSlice = createSlice({

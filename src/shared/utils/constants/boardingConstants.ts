@@ -1,8 +1,10 @@
-import choose from '@/assets/svgs/choose.svg';
 import address from '@/assets/svgs/address.svg';
 import working from '@/assets/svgs/working.svg';
 import fileUpload from '@/assets/svgs/fileUpload.svg';
+import chooseRole from '@/assets/svgs/chooseRole.png';
 import service from '@/assets/svgs/serviceDetails.svg';
+import hearAboutUs from '@/assets/svgs/hearAboutUs.png';
+import typeUsername from '@/assets/svgs/typeUsername.png';
 import availability from '@/assets/svgs/availability.svg';
 import { HearAboutUsOptionValue } from '@/shared/types/enums';
 import { BoardingStep, HearAboutUsOptions, OnboardingStep } from "@/shared/types/common";
@@ -18,14 +20,6 @@ export const onboardingContent: Record<
     description3?: string;
   }
 > = {
-  setupRole: {
-    title: 'Select Your Account Type',
-    description: 'Choose how you will use the platform.',
-  },
-  hearAboutUs: {
-    title: 'Source of Discovery',
-    description: 'Tell us how you found our platform.',
-  },
   address: {
     title: 'Provide Your Address',
     description: 'Enter your location for accurate service matching.',
@@ -52,96 +46,103 @@ export const onboardingContent: Record<
 };
 
 export const onboardingConfig: Record<string, OnboardingStep> = {
-  '/preboarding/role': {
+  '/profile-setup/role': {
     pageNumber: 0,
-    heading: onboardingContent.setupRole.title,
-    description: onboardingContent.setupRole.description,
-    path: '/preboarding/role',
+    path: '/profile-setup/role',
   },
-  '/preboarding/hear-about-us': {
+  '/profile-setup/how-should-we-address-you': {
     pageNumber: 1,
-    heading: onboardingContent.hearAboutUs.title,
-    description: onboardingContent.hearAboutUs.description,
-    path: '/preboarding/hear-about-us',
+    path: '/profile-setup//how-should-we-address-you',
+  },
+  '/profile-setup/hear-about-us': {
+    pageNumber: 2,
+    path: '/profile-setup/hear-about-us',
   },
   '/onboarding/address': {
-    pageNumber: 2,
+    pageNumber: 3,
     heading: onboardingContent.address.title,
     description: onboardingContent.address.description,
     path: '/onboarding/address',
   },
   '/onboarding/service': {
-    pageNumber: 3,
+    pageNumber: 4,
     heading: onboardingContent.serviceDetails.title,
     description: onboardingContent.serviceDetails.description,
     path: '/onboarding/service',
   },
   '/onboarding/availability': {
-    pageNumber: 4,
+    pageNumber: 5,
     heading: onboardingContent.availability.title,
     description: onboardingContent.availability.description,
     path: '/onboarding/availability',
   },
   '/onboarding/proofs': {
-    pageNumber: 5,
+    pageNumber: 6,
     heading: onboardingContent.proofs.title,
     description: onboardingContent.proofs.description,
     path: '/onboarding/proofs',
   },
   '/onboarding/pending': {
-    pageNumber: 6,
+    pageNumber: 7,
     heading: onboardingContent.profileApproval.title,
     description: onboardingContent.profileApproval.description,
     path: '/onboarding/pending',
   },
 };
 
-// boarding data for the preboarding and onboarding pages
+// boarding data for the profile setup and onboarding pages
 export const boardingData: BoardingStep[] = [
   {
     id: 0,
-    title: 'Account Setup',
-    image: choose,
+    title: 'Select Account Type',
+    image: chooseRole,
     description:
-      "Choose how you'd like to use Slotflow. Whether you're booking services or offering them, we'll tailor your experience accordingly.",
+      "Choose how you will use Slotflow. Whether you're booking appointments or managing services, we'll tailor your workspace accordingly.",
   },
   {
     id: 1,
-    title: 'How did you hear about us?',
-    image: choose,
+    title: 'Profile Information',
+    image: typeUsername,
     description:
-      'Help us understand how you discovered Slotflow. Your feedback enables us to improve and reach more users effectively.',
+      'Set your preferred display username so team members and clients can identify and address you across the platform.',
   },
   {
     id: 2,
+    title: 'Source of Discovery',
+    image: hearAboutUs,
+    description:
+      'Let us know how you discovered Slotflow. Your feedback helps us improve our outreach and better serve our community.',
+  },
+  {
+    id: 3,
     title: 'Address',
     image: address,
     description:
       'Provide your business address accurately so customers can discover your services and book appointments with confidence.',
   },
   {
-    id: 3,
+    id: 4,
     title: 'Service Details',
     image: service,
     description:
       "Tell customers about the services you provide, including descriptions, pricing, and any important information they'll need before booking.",
   },
   {
-    id: 4,
+    id: 5,
     title: 'Availability',
     image: availability,
     description:
       'Set your working days and available time slots to ensure customers can book appointments that fit your schedule.',
   },
   {
-    id: 5,
+    id: 6,
     title: 'Upload Proofs',
     image: fileUpload,
     description:
       'Upload the required verification documents. Please ensure they are valid, clearly visible, and meet the specified file requirements.',
   },
   {
-    id: 6,
+    id: 7,
     title: 'Approval',
     image: working,
     description:

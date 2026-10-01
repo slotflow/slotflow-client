@@ -8,11 +8,11 @@ import { Button } from '@/components/ui/button';
 import React, { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch, useSelector } from 'react-redux';
-import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { resendOtp, verifyOtp } from '@/services/apis/auth';
 import { formatTime } from '@/shared/utils/helper/formatTime';
 import { AppDispatch, RootState } from '@/app/store/appStore';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import { VerifyOtpFormType, verifyOtpZodSchema } from '@/shared/validators/zod/authZod';
 
 const OtpVerificatioForm = () => {

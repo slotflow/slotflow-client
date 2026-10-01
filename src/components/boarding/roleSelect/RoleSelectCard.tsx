@@ -52,11 +52,11 @@ const features =
       }}
       onClick={() => {
         onSelect(role);
-        dispatch(updateBoardingStep(role === Role.USER ? 2 : 6));
+        dispatch(updateBoardingStep(role === Role.USER ? 3 : 7));
       }}
-      className={`group relative overflow-hidden cursor-pointer rounded-3xl border p-8 min-h-[360px] backdrop-blur-xl transition-all duration-300 bg-white/70 dark:bg-neutral-900/70 ${
+      className={`group relative overflow-hidden cursor-pointer rounded-3xl border p-8 backdrop-blur-xl transition-all duration-300 bg-white/70 dark:bg-neutral-900/70 ${
         isSelected
-          ? 'border-[var(--mainColor)] dark:border-[var(--mainColor)] ring-2 ring-indigo-200 dark:ring-indigo-500/30 shadow-[0_25px_80px_rgba(99,102,241,0.20)] bg-white dark:bg-neutral-900'
+          ? 'border-[var(--mainColor)] dark:border-[var(--mainColor)] ring-2 ring-indigo-200 dark:ring-indigo-500/30 bg-white dark:bg-neutral-900'
           : 'border-gray-200 dark:border-neutral-700 hover:border-indigo-300 dark:hover:border-indigo-500 hover:shadow-[0_25px_70px_rgba(0,0,0,0.08)] dark:hover:shadow-[0_25px_70px_rgba(0,0,0,0.35)]'
       }`}
     >

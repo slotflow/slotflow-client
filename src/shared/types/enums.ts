@@ -271,7 +271,7 @@ export enum EventSocketEnum {
   // Notify that a time slot is available again.
   slotUnlocked = 'slot:unlocked',
   // Notify that the provider's Stripe account status changed.
-  stripeAccountStatusUpdated = 'stripeAccountStatusUpdated',
+  stripeAccountStatusUpdated = 'stripe:account:status:updated',
 }
 
 export enum VideoSocketEnum {

@@ -1,5 +1,5 @@
-import { PaymentSlice } from '@/shared/types/slice';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { BookingData, PaymentSlice } from '@/shared/types/slice';
 import { BillingCycle, PaymentProcessStatus, PaymentProcessType } from '@/shared/types/enums';
 
 const initialState: PaymentSlice = {
@@ -16,13 +16,7 @@ const paymentSlice = createSlice({
   reducers: {
     setBookingData: (
       state,
-      action: PayloadAction<{
-        providerId: string;
-        slotId: string;
-        slot: string;
-        date: Date;
-        selectedServiceMode: string;
-      } | null>,
+      action: PayloadAction<BookingData | null>,
     ) => {
       state.bookingData = action.payload;
     },

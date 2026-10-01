@@ -3,26 +3,28 @@ import { RootState } from '@/app/store/appStore';
 import { Navigate, useLocation } from 'react-router-dom';
 import { OnboardingStatus, Role } from '@/shared/types/enums';
 import { OnbooardingGuardProps } from '@/shared/types/component';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 
 const OnBoardingGuard = ({ children }: OnbooardingGuardProps) => {
   const location = useLocation();
-  const { authUser: user, preboardingData } = useSelector((store: RootState) => store.auth);
+  const { authUser: user, profileSetupData } = useSelector((store: RootState) => store.auth);
 
   if (!user) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   if (user.role !== Role.ADMIN && user.onboardingStatus === OnboardingStatus.NOT_STARTED) {
-    if (!preboardingData.selectedRole) {
-      if (location.pathname !== '/preboarding/role') {
-        return <Navigate to="/preboarding/role" replace />;
+    if (!profileSetupData || !profileSetupData.selectedRole) {
+      if (location.pathname !== redirectPaths.PROFILE_SETUP_ROLE) {
+        return <Navigate to={redirectPaths.PROFILE_SETUP_ROLE} replace />;
       }
     } else {
       if (
-        location.pathname !== '/preboarding/role' &&
-        location.pathname !== '/preboarding/hear-about-us'
+        location.pathname !== redirectPaths.PROFILE_SETUP_ROLE &&
+        location.pathname !== redirectPaths.PROFILE_SETUP_USERNAME &&
+        location.pathname !== redirectPaths.PROFILE_SETUP_HEAR_ABOUT_US
       ) {
-        return <Navigate to="/preboarding/hear-about-us" replace />;
+        return <Navigate to={redirectPaths.PROFILE_SETUP_USERNAME} replace />;
       }
     }
 

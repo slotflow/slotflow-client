@@ -1,8 +1,16 @@
 import { HearAboutUsOptionValue, OnboardingStatus, Role } from '../enums';
 
+export interface TimeZone {
+    value: string;
+    label: string;
+    offset: number;
+    abbrev: string;
+    altName: string;
+}
+
 export interface User {
   _id: string;
-  username: string;
+  username?: string;
   email: string;
   password?: string;
   role: Role;
@@ -14,10 +22,10 @@ export interface User {
   addressId?: string;
   googleConnected: boolean;
   googleId?: string;
-  allowPushNotification: boolean;
   whereDidHearAboutUs: HearAboutUsOptionValue;
   referralCode?: string;
   referredBy?: string;
+  timeZone: TimeZone | null;
   createdAt: Date;
   updatedAt: Date;
 }

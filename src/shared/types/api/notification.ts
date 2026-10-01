@@ -1,6 +1,6 @@
 import { Platform } from '../enums';
-import { Notification } from '../entity/notification';
-import { NotificationChannel, NotificationType } from '../common';
+import { Notification, NotificationType } from '../entity/notification';
+import { NotificationChannel } from '../common';
 
 // request type of register device api
 export interface RegisterDeviceRequest {

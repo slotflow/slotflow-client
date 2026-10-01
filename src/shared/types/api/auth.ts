@@ -7,7 +7,7 @@ import {
 import { User } from '../entity/user';
 
 // request type of the user or provider sign up api
-export type SignupRequest = Pick<User, 'username' | 'email' | 'password'>;
+export type SignupRequest = Pick<User, 'email' | 'password'>;
 
 // request type of the otp verification api
 export interface VerifyOtpRequest {
@@ -50,8 +50,8 @@ export interface SigninResponse {
     isServiceDetailsVerified: boolean;
     isAvailabilityVerified: boolean;
     isProofsVerified: boolean;
-    allowPushNotification: boolean;
     hasUsedTrial: boolean;
+    timeZone: string;
   };
 }
 

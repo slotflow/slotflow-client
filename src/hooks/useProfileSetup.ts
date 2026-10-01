@@ -2,34 +2,38 @@ import { toast } from 'react-toastify';
 import { useMutation } from '@tanstack/react-query';
 import { useAppNavigation } from './useAppNavigation';
 import { useDispatch, useSelector } from 'react-redux';
-import { postPreBoarding } from '@/services/apis/user';
-import { redirectPaths } from '@/shared/utils/constants/routeConstants';
+import { postProfileSetup } from '@/services/apis/user';
 import { AppDispatch, RootState } from '@/app/store/appStore';
 import { handleError } from '@/shared/utils/helper/handleError';
-import { updateBoardingStep } from '@/app/store/slices/appSlice';
 import { ApiBaseResponse, ApiError } from '@/shared/types/common';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import { setAuthUser, setBoardingData } from '@/app/store/slices/authSlice';
-import { PreBoardingRequest, PreBoardingResponse } from '@/shared/types/api/user';
-import { UsePreBoardingReturn, SubmitPreBoardingHandlerProps } from '@/shared/types/hooks';
+import { updateBoardingStep } from '@/app/store/slices/appSlice';
+import { ProfileSetupRequest, PreBoardingResponse } from '@/shared/types/api/user';
+import { UseProfileSetupReturn, SubmitProfileSetupHandlerProps } from '@/shared/types/hooks';
 import { AdminVerificationStatus, HearAboutUsOptionValue, Role } from '@/shared/types/enums';
 
-export const usePreBoarding = (): UsePreBoardingReturn => {
+export const useProfileSetup = (): UseProfileSetupReturn => {
 
   const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
-  const { authUser, preboardingData } = useSelector((state: RootState) => state.auth);
+  const { authUser, profileSetupData } = useSelector((state: RootState) => state.auth);
 
   const submitPreBoardingMutation = useMutation<
     ApiBaseResponse<PreBoardingResponse>,
     ApiError,
-    SubmitPreBoardingHandlerProps
+    SubmitProfileSetupHandlerProps
   >({
     mutationFn: async ({ selectedOption, referralCode }) => {
-      if (!authUser || !selectedOption || !preboardingData.selectedRole) {
+      if (!authUser
+        || !selectedOption
+        || !profileSetupData.selectedRole
+        || !profileSetupData.username) {
         throw new Error('Details are missing. Please refresh the page.');
       }
-      const payload: PreBoardingRequest = {
-        role: preboardingData.selectedRole,
+      const payload: ProfileSetupRequest = {
+        role: profileSetupData.selectedRole,
+        username: profileSetupData.username,
         whereDidHearAboutUs: selectedOption,
         referralCode:
           selectedOption === HearAboutUsOptionValue.REFERRAL && referralCode
@@ -37,7 +41,7 @@ export const usePreBoarding = (): UsePreBoardingReturn => {
             : undefined,
       };
 
-      return await postPreBoarding(payload);
+      return await postProfileSetup(payload);
     },
     onSuccess: (res) => {
       if (res.success && res.data) {
@@ -54,8 +58,12 @@ export const usePreBoarding = (): UsePreBoardingReturn => {
 
           toast.success(res.message);
 
+          if (profileSetupData.selectedRole === Role.PROVIDER) {
+            dispatch(updateBoardingStep(8));
+          }
+
           goTo(
-            preboardingData.selectedRole === Role.PROVIDER
+            profileSetupData.selectedRole === Role.PROVIDER
               ? redirectPaths.ONBOARDING_ADDRESS
               : redirectPaths.SERVICES,
           );
@@ -75,14 +83,8 @@ export const usePreBoarding = (): UsePreBoardingReturn => {
     },
   })
 
-  const hearAboutUsHandler = () => {
-    dispatch(updateBoardingStep(2));
-    goTo(redirectPaths.PRE_BOARDING_ROLE);
-  }
-
   return {
-    submitPreBoarding: submitPreBoardingMutation.mutate,
-    isPreboardingSubmitting: submitPreBoardingMutation.isPending,
-    hearAboutUsHandler
+    submitPrfoleSetup: submitPreBoardingMutation.mutate,
+    isProfileSetupSubmitting: submitPreBoardingMutation.isPending,
   };
 };

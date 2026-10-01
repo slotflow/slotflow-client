@@ -6,12 +6,12 @@ import { User } from '@/shared/types/entity/user';
 import { AppDispatch } from '@/app/store/appStore';
 import { Booking } from '@/shared/types/entity/booking';
 import { Payment } from '@/shared/types/entity/payment';
-import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import { Plan } from '@/shared/types/entity/planInterface';
 import { OnboardingStatus, Role } from '@/shared/types/enums';
 import { useAppNavigationReturn } from '@/shared/types/hooks';
 import { updateBoardingStep } from '@/app/store/slices/appSlice';
 import { Subscription } from '@/shared/types/entity/subscription';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 
 export const useAppNavigation = (): useAppNavigationReturn => {
 
@@ -28,7 +28,7 @@ export const useAppNavigation = (): useAppNavigationReturn => {
     }
 
     if (user.onboardingStatus === OnboardingStatus.NOT_STARTED) {
-      navigate(redirectPaths.PRE_BOARDING_ROLE, { replace: true });
+      navigate(redirectPaths.PROFILE_SETUP_ROLE, { replace: true });
       return;
     }
 
@@ -37,7 +37,7 @@ export const useAppNavigation = (): useAppNavigationReturn => {
       user.onboardingStatus === OnboardingStatus.IN_PROGRESS &&
       user.onboardingType === Role.PROVIDER
     ) {
-      dispatch(updateBoardingStep(6));
+      dispatch(updateBoardingStep(8));
       if (!user.isAddressAdded && !user.isAddressVerified) {
         navigate(redirectPaths.ONBOARDING_ADDRESS, { replace: true });
       } else if (!user.isServiceDetailsAdded && !user.isServiceDetailsVerified) {

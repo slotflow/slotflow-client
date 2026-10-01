@@ -500,8 +500,8 @@ export interface ContactSupportOptions {
 // borading steps interface
 export interface OnboardingStep {
   pageNumber: number;
-  heading: string;
-  description: string;
+  heading?: string;
+  description?: string;
   path: string;
 }
 
@@ -520,12 +520,6 @@ export interface AppRouteHandle {
 
 //
 export type NotificationChannel = 'email' | 'push' | 'in_app';
-
-//
-export type NotificationType =
-  | 'account_activity'
-  | 'system_updates'
-  | 'promotional_updates';
 
 // cms plan fields
 export interface PlanFields {

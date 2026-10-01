@@ -1,6 +1,6 @@
+import { NotificationType } from '@/shared/types/entity/notification';
 import {
   DayMapInterface,
-  NotificationType,
   NotificationChannel,
   dataSelectListItemInterface,
 } from '../../types/common';

@@ -10,7 +10,7 @@ import TimeSlotLegend from '../app/TimeSlotLegend';
 import { AppDispatch, RootState } from '@/app/store/appStore';
 import { Calendar } from '@/components/ui/calendar';
 import { getEventSocket } from '@/lib/socketService';
-import { queryKeys } from '@/shared/utils/constants/appConstants';
+import { dateFormats, queryKeys } from '@/shared/utils/constants/appConstants';
 import { AnimatePresence, motion } from 'framer-motion';
 import DataFetchingError from '../error/DataFetchingError';
 import { Slot } from '@/shared/types/entity/serviceAvailability';
@@ -27,6 +27,7 @@ import {
   fetchMyServiceAvailability,
   fetchServiceAvailabilityByProviderId,
 } from '@/services/apis/serviceAvailability';
+import { formatDate } from '@/shared/utils/helper/formatDate';
 
 const ProviderServiceAvailability = ({
   providerId,
@@ -121,12 +122,14 @@ const ProviderServiceAvailability = ({
       return;
     }
 
+    const dateString = formatDate(date, dateFormats.ISO_DATE)
+
     dispatch(
       setBookingData({
         providerId,
         slotId,
         slot,
-        date,
+        date: dateString,
         selectedServiceMode: selectedMode,
       }),
     );

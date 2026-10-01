@@ -1,16 +1,16 @@
 import { Users } from 'lucide-react';
+import { Button } from '../ui/button';
 import { socket } from '@/lib/socketService';
 import { useQuery } from '@tanstack/react-query';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useDispatch, useSelector } from 'react-redux';
+import { fetchUsersForChat } from '@/services/apis/user';
 import DataFetchingError from '../error/DataFetchingError';
 import { AppDispatch, RootState } from '@/app/store/appStore';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import ChatSidebarShimmer from '@/components/shimmers/ChatSidebarShimmer';
-import { FetchUsersForChatSidebarResponse } from '@/shared/types/api/user';
+import { ChatListUserProps, setLatMessageProps } from '@/shared/types/common';
 import { setLastMessage, setOnlineUsers, setSelectedUser } from '@/app/store/slices/chatSlice';
-import { ApiBaseResponse, ChatListUserProps, setLatMessageProps } from '@/shared/types/common';
-import { Button } from '../ui/button';
 
 const formatDate = (date: string) => {
   const now = new Date();
@@ -33,11 +33,8 @@ const formatDate = (date: string) => {
   }
 };
 
-interface ChatSideBarProps {
-  getUsers: () => Promise<ApiBaseResponse<FetchUsersForChatSidebarResponse>>;
-}
+const ChatSidebar = () => {
 
-const ChatSidebar: React.FC<ChatSideBarProps> = ({ getUsers }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { selectedUser, lastMessages, onlineUsers } = useSelector((store: RootState) => store.chat);
   const getLastMessage = (userId: string): { message: string; date: string } | null => {
@@ -46,7 +43,7 @@ const ChatSidebar: React.FC<ChatSideBarProps> = ({ getUsers }) => {
 
   const { data, isLoading, isError, error } = useQuery({
     queryFn: async () => {
-      const res = await getUsers();
+      const res = await fetchUsersForChat();
       return res.data;
     },
     queryKey: ['chatUsers'],
@@ -94,9 +91,9 @@ const ChatSidebar: React.FC<ChatSideBarProps> = ({ getUsers }) => {
 
   return (
     <aside
-      className={`h-full w-full md:w-4/12 flex flex-col transition-all duration-200 sticky border-r-2 ${selectedUser ? 'hidden md:block' : 'block'}`}
+      className={`h-full w-full md:w-4/12 space-y-2 flex flex-col transition-all duration-200 sticky ${selectedUser ? 'hidden md:block' : 'block'}`}
     >
-      <div className="w-full p-3 md:p-5 border-b">
+      <div className="w-full p-3 md:p-5 bg-neutral-200 dark:bg-neutral-800 rounded-md">
         <div className="lg:flex items-center gap-3">
           <Users className="size-6" />
           <label className="cursor-pointer flex items-center gap-2">
@@ -111,16 +108,13 @@ const ChatSidebar: React.FC<ChatSideBarProps> = ({ getUsers }) => {
         </div>
       </div>
 
-      <div className="overflow-y-auto w-full flex-1">
+      <div className="overflow-y-auto w-full flex-1 bg-neutral-200 dark:bg-neutral-800 rounded-md">
         {filteredUsers?.map((user: ChatListUserProps) => (
           <Button
+            variant='outline'
             key={user._id}
             onClick={() => dispatch(setSelectedUser(user))}
-            className={`
-                            w-full p-2 flex gap-3 items-center border-b
-                            hover:bg-neutral-700 dark:hover:bg-neutral-300  transition-colors
-                            ${selectedUser?._id === user._id ? '' : ''}
-                            `}
+            className={`w-full p-2 flex gap-3 items-center border-b ${selectedUser?._id === user._id ? '' : ''}`}
           >
             <div className="relative w-fit">
               <img

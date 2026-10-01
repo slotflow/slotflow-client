@@ -2,7 +2,7 @@ import { lazy } from "react";
 import RoleLayout from "./RoleLayout";
 import { Role } from "@/shared/types/enums";
 import { ProtectedRoute } from "./ProtectedRoutes";
-import { createBrowserRouter, Outlet } from "react-router-dom";
+import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
 import { RouteNames } from "@/shared/utils/constants/routeConstants";
 
 import AuthLayout from "@/layouts/AuthLayout";
@@ -31,6 +31,7 @@ const ResetPasswordForm = lazy(() => import("@/components/form/Common/ResetPassw
 const OtpVerificatioForm = lazy(() => import("@/components/form/Common/OtpVerificatioForm"));
 
 const RoleSelectPage = lazy(() => import("@/pages/boarding/RoleSelectPage"));
+const UserNamePage = lazy(() => import("@/pages/boarding/UserNamePage"));
 const HearAboutUsPage = lazy(() => import("@/pages/boarding/HearAboutUsPage"));
 const ProviderCreateAddressPage = lazy(() => import("@/pages/boarding/ProviderCreateAddressPage"));
 const ProviderCreateServiceDetailsPage = lazy(() => import("@/pages/boarding/ProviderCreateServiceDetailsPage"));
@@ -142,9 +143,11 @@ export const appRouter = createBrowserRouter([
         ),
         children: [
             {
-                path: '/preboarding',
+                path: '/profile-setup',
                 children: [
+                    { index: true, element: <Navigate to="role" replace /> },
                     { path: 'role', element: <RoleSelectPage /> },
+                    { path: 'how-should-we-address-you', element: <UserNamePage /> },
                     { path: 'hear-about-us', element: <HearAboutUsPage /> },
                 ],
             },

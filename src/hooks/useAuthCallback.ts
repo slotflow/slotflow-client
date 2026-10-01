@@ -61,7 +61,6 @@ export const useAuthCallback = (): UseAuthCallbackReturn => {
                     providerSubscription: rawUser.providerSubscription,
                     verificationRejectionReason: rawUser.verificationRejectionReason,
                     adminVerificationStatus: rawUser.adminVerificationStatus,
-                    allowPushNotification: rawUser.allowPushNotification,
                     hasUsedTrial: rawUser.hasUsedTrial
                 };
                 dispatch(setAuthUser(authUser));

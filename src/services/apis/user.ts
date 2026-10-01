@@ -4,7 +4,7 @@ import {
   FetchFunctionBaseQueryParams,
 } from '../../shared/types/common';
 import {
-  PreBoardingRequest,
+  ProfileSetupRequest,
   PreBoardingResponse,
   UpdatePasswordRequest,
   UserUpdateUserInfoRequest,
@@ -22,11 +22,11 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { buildQueryParams } from '../../shared/utils/helper/buildQueryParams';
 import { FetchUsersForChatSidebarResponse } from '../../shared/types/api/user';
 
-// user preboarding
-export const postPreBoarding = async (
-  payload: PreBoardingRequest,
+// user profile setup
+export const postProfileSetup = async (
+  payload: ProfileSetupRequest,
 ): Promise<ApiBaseResponse<PreBoardingResponse>> => {
-  const response = await axiosInstance.patch('/users/me/preboarding', payload);
+  const response = await axiosInstance.patch('/users/me/profile-setup', payload);
   return response.data;
 };
 
@@ -55,14 +55,6 @@ export const userUpdateInfo = createAsyncThunk<
   const response = await axiosInstance.patch('/users/me', data);
   return response.data;
 });
-
-// user set push notification
-export const userSetPushNotification = async (data: boolean): Promise<ApiBaseResponse> => {
-  const response = await axiosInstance.patch('/users/me/notification-settings', {
-    allowPushNotification: data,
-  });
-  return response.data;
-};
 
 // admin fetching users
 export const fetchUsers: ApiFetchFunction<

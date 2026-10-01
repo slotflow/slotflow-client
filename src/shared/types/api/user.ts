@@ -3,9 +3,10 @@ import { ProviderCardsFilters } from '../common';
 import { ProviderProfile } from '../entity/providerProfile';
 import { HearAboutUsOptionValue, Role, PaymentAccountStatus } from '../enums';
 
-// request type for the user preboarding api
-export type PreBoardingRequest = {
+// request type for the user profile setup api
+export type ProfileSetupRequest = {
   role: Role;
+  username: string;
   whereDidHearAboutUs: HearAboutUsOptionValue;
   referralCode?: string;
 };

@@ -44,7 +44,7 @@ export interface ValidateRoomIdRequest {
 export type BookAppointmentRequest = {
   providerId: User['_id'];
   slotId: string;
-  date: Date;
+  date: string;
   selectedServiceMode: string;
 };
 

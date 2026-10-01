@@ -21,8 +21,9 @@ const initialState: AuthState = {
   eventSocketIsConnected: false,
   subscriptionUpdating: false,
   bookingUpdating: false,
-  preboardingData: {
+  profileSetupData: {
     selectedRole: null,
+    username: null,
   },
 };
 
@@ -56,11 +57,6 @@ const authSlice = createSlice({
         state.authUser.adminVerificationStatus = action.payload;
       }
     },
-    updateNotificationPreference: (state, action: PayloadAction<boolean>) => {
-      if (state.authUser) {
-        state.authUser.allowPushNotification = action.payload;
-      }
-    },
     setEventSocketConnected: (state, action: PayloadAction<{ socketId: string }>) => {
       state.eventSocketId = action.payload.socketId;
       state.eventSocketIsConnected = true;
@@ -84,8 +80,8 @@ const authSlice = createSlice({
     setBookingUpdating: (state, action: PayloadAction<boolean>) => {
       state.bookingUpdating = action.payload;
     },
-    setBoardingData: (state, action: PayloadAction<Partial<AuthState['preboardingData']>>) => {
-      state.preboardingData = { ...state.preboardingData, ...action.payload };
+    setBoardingData: (state, action: PayloadAction<Partial<AuthState['profileSetupData']>>) => {
+      state.profileSetupData = { ...state.profileSetupData, ...action.payload };
     },
   },
   extraReducers: (builder) => {
@@ -179,7 +175,6 @@ export const {
   setEventSocketConnected,
   setAdminVerificationState,
   setEventSocketDisconnected,
-  updateNotificationPreference,
 } = authSlice.actions;
 
 export default authSlice.reducer;

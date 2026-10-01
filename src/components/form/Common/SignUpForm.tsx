@@ -7,16 +7,20 @@ import { useDispatch } from 'react-redux';
 import GoogleButton from '../GoogleButton';
 import { FormButton } from '../FormButton';
 import { signup } from '@/services/apis/auth';
+import { useTimezone } from '@/hooks/useTimezone';
 import { AppDispatch } from '@/app/store/appStore';
+import TimezoneSelect from 'react-timezone-select';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import { useAppNavigation } from '@/hooks/useAppNavigation';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import { SignupFormType, signupZodSchema } from '@/shared/validators/zod/authZod';
 
 const SignUpForm = () => {
 
   const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
+
+  const { parsed, selectedTimezone, setSelectedTimezone } = useTimezone();
 
   const {
     register,
@@ -27,16 +31,18 @@ const SignUpForm = () => {
     resolver: zodResolver(signupZodSchema),
     mode: 'onChange',
     defaultValues: {
-      username: '',
       email: '',
       password: '',
       confirmPassword: '',
+      timeZone: parsed
     },
   });
 
   const onSubmit = async (data: SignupFormType) => {
     try {
-      const res = await dispatch(signup({ ...data })).unwrap();
+      const res = await dispatch(signup({
+        ...data,
+      })).unwrap();
       if (res.success) {
         goTo(redirectPaths.VERIFY_OTP);
         toast.success(res.message);
@@ -60,16 +66,6 @@ const SignUpForm = () => {
           />
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
             <fieldset disabled={isSubmitting} className="space-y-3">
-              <FormField<SignupFormType>
-                label="Username"
-                id="username"
-                placeholder="Enter username"
-                type="text"
-                required={true}
-                register={register}
-                error={errors.username?.message}
-              />
-
               <FormField<SignupFormType>
                 label="Email"
                 id="email"
@@ -112,6 +108,11 @@ const SignUpForm = () => {
                 disabled={isSubmitting || !isValid}
                 title="Sign up"
                 className='w-full'
+              />
+              <TimezoneSelect
+                value={selectedTimezone}
+                onChange={setSelectedTimezone}
+                className="hidden"
               />
             </fieldset>
           </form>
