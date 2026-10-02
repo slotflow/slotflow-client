@@ -3,16 +3,16 @@ import { DateRange } from 'react-day-picker';
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import { Calendar } from '@/components/ui/calendar';
-import { queryKeys } from '@/shared/utils/constants/appConstants';
 import { DataTable } from '@/components/ui/data-table';
 import DashboardDataCard from '../common/DashboardDataCard';
 import { formatDate } from '@/shared/utils/helper/formatDate';
 import TableShimmer from '@/components/shimmers/TableShimmer';
 import { OnChangeFn, PaginationState } from '@tanstack/react-table';
+import DataFetchingError from '@/components/error/DataFetchingError';
 import { fetchRevenueReportForAdmin } from '@/services/apis/payment';
 import { handleExportPDF } from '@/shared/utils/helper/pdfGenerator';
-import DataFetchingError from '@/components/error/DataFetchingError';
 import { handleExportExcel } from '@/shared/utils/helper/excelGenerator.ts';
+import { dateFormats, queryKeys } from '@/shared/utils/constants/appConstants';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import AdminRevenueTableColumn from '@/components/table/tableColumns/AdminRevenueTableColumn';
 import { Calendar as CalendarIcon, FileSpreadsheet, NotebookText, RotateCcw, TrendingUp, Tag, Wallet } from 'lucide-react';
@@ -32,8 +32,8 @@ const AdminRevenueReport = () => {
   const { data, isLoading, isError, error, refetch, isFetching } = useQuery({
     queryFn: () =>
       fetchRevenueReportForAdmin({
-        startDate: dateRange?.from ?? new Date(new Date().setDate(new Date().getDate() - 30)),
-        endDate: dateRange?.to ?? new Date(),
+        startDate:  formatDate(dateRange?.from ?? new Date(new Date().setDate(new Date().getDate() - 30)), dateFormats.ISO_DATE),
+        endDate: formatDate(dateRange?.to ?? new Date(), dateFormats.ISO_DATE),
         page: pagination.pageIndex + 1,
         limit: pagination.pageSize,
       }),

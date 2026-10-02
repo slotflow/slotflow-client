@@ -4,8 +4,8 @@ import { Referral } from '../entity/referral';
 import { MiniCardData } from './commonApiInterface';
 
 export interface FetchReferralDetailsRequest {
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
 }
 export interface MainChartData extends BaseChartData {
   totalReferrals: number;

@@ -6,8 +6,8 @@ import { CreditTransactionSource, CreditTransactionStatus, CreditTransactionType
 
 //
 export interface FetchCreditAccountDetailsRequest {
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
 }
 export interface MainChartData extends BaseChartData {
   totalCredits: number;

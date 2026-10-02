@@ -1,6 +1,7 @@
 import { User } from '../entity/user';
 import { ProviderProfile } from '../entity/providerProfile';
 import { StatMetric } from '../common';
+import { PlanName } from '../enums';
 
 // Fetch self profile details ( by provider )
 export type ProviderFetchMyProfileDetailsResponse = Pick<
@@ -23,8 +24,8 @@ export type ProviderSubmitDetailsResponse = Pick<ProviderProfile, 'adminVerifica
 
 // Fetch dashboard stats data ( by provider )
 export interface ProviderFetchDashboardStatsDataRequest {
-  startDate?: Date;
-  endDate?: Date;
+  startDate?: string;
+  endDate?: string;
 }
 
 // Fetch dashboard stats data ( by provider )
@@ -39,8 +40,8 @@ export interface ProviderFetchDashboardBookingStatsDataResponse extends Record<s
 
 // Fetch dashboard revenue stats data ( by provider )
 export interface ProviderFetchDashboardRevenueStatsDataRequest {
-  startDate?: Date;
-  endDate?: Date;
+  startDate?: string;
+  endDate?: string;
 }
 
 // Fetch dashboard revenue stats data ( by provider )
@@ -52,6 +53,11 @@ export interface ProviderFetchDashboardRevenueStatsDataResponse extends Record<s
 }
 
 // Fetch dashboard graph data ( by provider )
+export interface ProviderDashboardGraphRequest {
+  subscription?: PlanName;
+  startDate?: string;
+  endDate?: string;
+}
 export interface ProviderDashboardGraphResponse {
   appointmentsOvertimeChartData: Array<{
     date: string;

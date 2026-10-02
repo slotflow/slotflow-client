@@ -1,11 +1,10 @@
 import { Role } from '../enums';
 import { StatMetric } from '../common';
-import { DateRange } from 'react-day-picker';
 
 // request type of the admin fetch dashboard stats data
-export interface AdminStatsDataRequest extends Record<string, Date | undefined> {
-  startDate?: Date;
-  endDate?: Date;
+export interface AdminStatsDataRequest {
+  startDate?: string;
+  endDate?: string;
 }
 
 // response type of admin fetch dashboard user stats data
@@ -70,7 +69,8 @@ export interface AdminFetchDashboardAppointmentStatsDataResponse extends Record<
 
 // analytics ai
 export interface AnalyticsAiRequest {
-  dateRange: DateRange;
+  startDate?: string;
+  endDate?: string;
   entity: string;
 }
 export interface AnalyticsAiResponse {
@@ -79,8 +79,8 @@ export interface AnalyticsAiResponse {
 
 // admin dashboard user chart data
 export type AdminDashboardUserChartDataRequest = {
-  startDate?: Date;
-  endDate?: Date;
+  startDate?: string;
+  endDate?: string;
   role: Role;
 };
 export interface AdminDashboardUserChartDataResponse extends Record<

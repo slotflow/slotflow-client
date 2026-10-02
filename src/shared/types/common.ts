@@ -579,6 +579,12 @@ export interface TabItem {
 }
 
 //
+export interface DateRangeStrings {
+  startDate?: string;
+  endDate?: string;
+}
+
+//
 export interface TabNavigationProps {
   isAdmin?: boolean;
   tab: string;

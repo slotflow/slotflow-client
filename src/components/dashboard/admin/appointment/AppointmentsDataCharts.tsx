@@ -12,15 +12,16 @@ import RadialChart from '@/components/chart/RadialChart';
 import BarChartStacked from '@/components/chart/BarChartStacked';
 import PieChartRounded from '@/components/chart/PieChartRounded';
 import BarChartVertical from '@/components/chart/BarChartVertical';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import BarChartHorizontal from '@/components/chart/BarChartHorizontal';
 import LineChartHorizontal from '@/components/chart/LineChartHorizontal';
 import { UseAppointmentsDataChartsProps } from '@/shared/types/component';
 import { adminFetchDashboardBookingChartData } from '@/services/apis/admin';
-import { queryKeys } from '@/shared/utils/constants/appConstants';
 
 export const useAppointmentsDataCharts = ({
   dateRange,
 }: UseAppointmentsDataChartsProps): DashboardItem[] => {
+
   const {
     data: dashboardGraphData,
     isLoading,
@@ -28,13 +29,10 @@ export const useAppointmentsDataCharts = ({
   } = useQuery({
     queryKey: [queryKeys.DASHBOARD_APPOINTMENTS_CHART, dateRange],
     queryFn: async () => {
-      const res = await adminFetchDashboardBookingChartData({
-        startDate: dateRange.from,
-        endDate: dateRange.to,
-      });
+      const res = await adminFetchDashboardBookingChartData(dateRange);
       return res.data;
     },
-    enabled: Boolean(dateRange.from && dateRange.to),
+    enabled: Boolean(dateRange.endDate && dateRange.startDate),
   });
 
   const graphData = dashboardGraphData ?? {

@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux';
 import { PlanName } from '@/shared/types/enums';
 import { RootState } from '@/app/store/appStore';
 import { useQuery } from '@tanstack/react-query';
-import { queryKeys } from '@/shared/utils/constants/appConstants';
 import { DashboardItem } from '@/shared/types/common';
 import RadialChart from '@/components/chart/RadialChart';
 import { graphView } from '@/shared/utils/helper/graphView';
 import PieChartRounded from '@/components/chart/PieChartRounded';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import BarChartVertical from '@/components/chart/BarChartVertical';
 import AreaGroupedChart from '@/components/chart/AreaGroupedChart';
 import ChartLineMultiple from '@/components/chart/ChatLineMultiple';
@@ -20,6 +20,7 @@ import { usersRetensionChartConfig, appointmentModeChartConfig, appointmentsOver
 export const useProviderDashboardCharts = ({
   dateRange,
 }: ProviderDashboardGraphsProps): DashboardItem[] => {
+
   const user = useSelector((store: RootState) => store.auth.authUser);
 
   const subscriptionPlan = useMemo(() => {
@@ -34,7 +35,10 @@ export const useProviderDashboardCharts = ({
   } = useQuery({
     queryKey: [queryKeys.DASHBOARD_GRAPH, subscriptionPlan, dateRange],
     queryFn: async () => {
-      const res = await providerFetchDashboardGraphData(subscriptionPlan, dateRange);
+      const res = await providerFetchDashboardGraphData({
+        subscription: subscriptionPlan,
+        ...dateRange,
+      });
       return res.data;
     },
     enabled: subscriptionPlan !== PlanName.NO_SUBSCRIPTION,

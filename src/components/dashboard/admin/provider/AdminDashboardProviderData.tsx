@@ -6,13 +6,15 @@ import ProviderListCard from './ProviderListCard';
 import DashboardStats from '../../DashboardStats';
 import ProviderDataChart from './ProviderDataChart';
 import { DashboardItem } from '@/shared/types/common';
-import { aiResponseEntities, queryKeys } from '@/shared/utils/constants/appConstants';
+import { formatDate } from '@/shared/utils/helper/formatDate';
 import { AdminDashboardProviderDataProps } from '@/shared/types/component';
 import { providerStatsMapForAdmin } from '@/shared/utils/constants/statsConstats';
 import { AdminFetchDashboardProviderStatsDataResponse } from '@/shared/types/api/adminDashboard';
+import { aiResponseEntities, dateFormats, queryKeys } from '@/shared/utils/constants/appConstants';
 import { fetchAnalyticsInsight, adminFetchDashboardProviderStatsData } from '@/services/apis/admin';
 
 export default function AdminDashboardProviderData({ dateRange }: AdminDashboardProviderDataProps) {
+
   const initialItems: DashboardItem[] = [
     {
       id: 'stats-card',
@@ -20,10 +22,7 @@ export default function AdminDashboardProviderData({ dateRange }: AdminDashboard
       component: (
         <DashboardStats<AdminFetchDashboardProviderStatsDataResponse>
           queryFunction={() =>
-            adminFetchDashboardProviderStatsData({
-              startDate: dateRange?.from,
-              endDate: dateRange?.to,
-            })
+            adminFetchDashboardProviderStatsData(dateRange)
           }
           queryKey={[queryKeys.DASHBOARD_PROVIDERS_STATS]}
           statsMap={providerStatsMapForAdmin}
@@ -43,7 +42,10 @@ export default function AdminDashboardProviderData({ dateRange }: AdminDashboard
           badgeIcon={Briefcase}
           title="Provider Performance & Growth"
           fetchFn={() =>
-            fetchAnalyticsInsight({ dateRange, entity: aiResponseEntities.PROVIDER })
+            fetchAnalyticsInsight({
+              ...dateRange,
+              entity: aiResponseEntities.PROVIDER
+            })
           }
           queryKey={queryKeys.PROVIDER_ENGAGEMENT_AI_RES}
         />

@@ -1,20 +1,24 @@
 import dayjs from 'dayjs';
 import { useQuery } from '@tanstack/react-query';
-import { queryKeys } from '@/shared/utils/constants/appConstants';
 import MetricCard from '@/components/common/MetricCard';
+import { formatDate } from '@/shared/utils/helper/formatDate';
 import ChartLineLinear from '@/components/chart/ChartLineLinear';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import { Wallet, TrendingUp, TrendingDown, Info } from 'lucide-react';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
 import { FetchCreditTransactionsResponse } from '@/shared/types/api/credit';
+import { dateFormats, queryKeys } from '@/shared/utils/constants/appConstants';
 import { creditAccountChartConfig } from '@/shared/utils/constants/chartConstants';
 import { fetchCreditAccountDetails, fetchCreditTransactions } from '@/services/apis/credit';
 import CreditTransactionTableColumn from '@/components/table/tableColumns/CreditTransactionTableColumn';
 
+// TODO add daterage selector
 const CreditDashboard = () => {
+
   const column = CreditTransactionTableColumn();
-  const endDate = dayjs().toDate();
-  const startDate = dayjs().subtract(1, 'month').toDate();
+  
+  const startDate = formatDate(dayjs().subtract(1, 'month').toDate(), dateFormats.ISO_DATE);
+  const endDate = formatDate(dayjs().toDate(), dateFormats.ISO_DATE);
 
   const { data, isLoading, error, isError } = useQuery({
     queryKey: [queryKeys.CREDIT_DETAILS],
@@ -72,7 +76,7 @@ const CreditDashboard = () => {
             percentage={data?.spentCredits?.percentage}
             days={data?.spentCredits?.days}
             chartData={data?.spentCredits?.chartData ?? []}
-           bgColour="bg-gradient-to-r from-violet-500 to-indigo-400"
+            bgColour="bg-gradient-to-r from-violet-500 to-indigo-400"
           />
         </div>
         <div>
@@ -98,8 +102,8 @@ const CreditDashboard = () => {
           fetchApiFunction={(params) =>
             fetchCreditTransactions({
               ...params,
-              startDate: new Date().toISOString(),
-              endDate: new Date().toISOString(),
+              startDate,
+              endDate,
             })
           }
           columnsCount={5}

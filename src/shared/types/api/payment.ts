@@ -26,8 +26,8 @@ export type FetchPaymentsResponse = Pick<
 
 // request type of admin fetch revenue report api
 export interface AdmminFetchRevenueReportRequest extends FetchFunctionBaseQueryParams {
-  startDate?: Date;
-  endDate?: Date;
+  startDate?: string;
+  endDate?: string;
 }
 
 // response type of admin fetch revenue report api row

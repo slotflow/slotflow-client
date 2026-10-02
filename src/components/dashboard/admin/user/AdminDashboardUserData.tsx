@@ -10,12 +10,14 @@ import { Role } from '@/shared/types/enums';
 import DataAnalysis from '../../DataAnalyisis';
 import DashboardStats from '../../DashboardStats';
 import { DashboardItem } from '@/shared/types/common';
+import { formatDate } from '@/shared/utils/helper/formatDate';
 import { AdminDashboardUserDataProps } from '@/shared/types/component';
-import { aiResponseEntities, queryKeys } from '@/shared/utils/constants/appConstants';
 import { userStatsMapForAdmin } from '@/shared/utils/constants/statsConstats';
 import { AdminFetchDashboardUserStatsDataResponse } from '@/shared/types/api/adminDashboard';
+import { aiResponseEntities, dateFormats, queryKeys } from '@/shared/utils/constants/appConstants';
 
 export default function AdminDashboardUserData({ dateRange }: AdminDashboardUserDataProps) {
+
   const initialItems: DashboardItem[] = [
     {
       id: 'stats-card',
@@ -23,10 +25,7 @@ export default function AdminDashboardUserData({ dateRange }: AdminDashboardUser
       component: (
         <DashboardStats<AdminFetchDashboardUserStatsDataResponse>
           queryFunction={() =>
-            adminFetchDashboardUserStatsData({
-              startDate: dateRange?.from,
-              endDate: dateRange?.to,
-            })
+            adminFetchDashboardUserStatsData(dateRange)
           }
           queryKey={[queryKeys.DASHBOARD_USERS_STATS, dateRange?.toString()]}
           statsMap={userStatsMapForAdmin}
@@ -45,7 +44,10 @@ export default function AdminDashboardUserData({ dateRange }: AdminDashboardUser
           badgeIcon={Users}
           title="User Engagement & Retention"
           fetchFn={() =>
-            fetchAnalyticsInsight({ dateRange, entity: aiResponseEntities.USER })
+            fetchAnalyticsInsight({
+              ...dateRange,
+              entity: aiResponseEntities.USER
+            })
           }
           queryKey={queryKeys.USER_ENGAGEMENT_AI_RES}
         />

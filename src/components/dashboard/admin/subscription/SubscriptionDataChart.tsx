@@ -1,18 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
-import { queryKeys } from '@/shared/utils/constants/appConstants';
 import PieChartRounded from '@/components/chart/PieChartRounded';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import { SubscriptionDataChartProps } from '@/shared/types/component';
-import { subscriptionChartConfig } from '@/shared/utils/constants/chartConstants';
 import { adminFetchDashboardSubscriptionChartData } from '@/services/apis/admin';
+import { subscriptionChartConfig } from '@/shared/utils/constants/chartConstants';
 
 const SubscriptionDataChart = ({ dateRange }: SubscriptionDataChartProps) => {
+
   const { data, isLoading, isError } = useQuery({
     queryKey: [queryKeys.DASHBOARD_SUBSCRPITION_CHART, dateRange],
-    queryFn: () =>
-      adminFetchDashboardSubscriptionChartData({
-        startDate: dateRange.from,
-        endDate: dateRange.to,
-      }),
+    queryFn: () => adminFetchDashboardSubscriptionChartData(dateRange),
   });
 
   const chartData = data?.data || [];

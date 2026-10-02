@@ -1,19 +1,22 @@
 import dayjs from 'dayjs';
 import { Users } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-import { queryKeys } from '@/shared/utils/constants/appConstants';
 import MetricCard from '@/components/common/MetricCard';
+import { formatDate } from '@/shared/utils/helper/formatDate';
 import ChartLineLinear from '@/components/chart/ChartLineLinear';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import PaginatedDataTable from '@/components/table/PaginatedDataTable';
+import { dateFormats, queryKeys } from '@/shared/utils/constants/appConstants';
 import { referralChartConfig } from '@/shared/utils/constants/chartConstants';
 import { fetchReferralDetails, fetchReferrals } from '@/services/apis/referral';
 import ReferralTableColumn from '@/components/table/tableColumns/ReferralTableColumn';
 
+// TODO add daterange selector
 const ReferralDashboard = () => {
+
   const column = ReferralTableColumn();
-  const endDate = dayjs().toDate();
-  const startDate = dayjs().subtract(1, 'month').toDate();
+  const startDate = formatDate(dayjs().subtract(1, 'month').toDate(), dateFormats.ISO_DATE);
+  const endDate = formatDate(dayjs().toDate(), dateFormats.ISO_DATE);
 
   const { data, isLoading, error, isError } = useQuery({
     queryKey: [queryKeys.REFERRAL_DETAILS],

@@ -14,6 +14,7 @@ import {
   FetchFunctionBaseQueryParams,
   StatMetric,
   DashboardItem,
+  DateRangeStrings,
 } from './common';
 import {
   UserFetchServiceProvidersResponse,
@@ -391,12 +392,12 @@ export interface MessageInputProps {
 
 // Provider dashboard graphs component props interface
 export interface ProviderDashboardGraphsProps {
-  dateRange: DateRange;
+  dateRange: DateRangeStrings;
 }
 
 // Provider dashboard stats component props interface
 export interface ProviderDashboardStatsProps {
-  dateRange: DateRange;
+  dateRange: DateRangeStrings;
 }
 
 // Dashboard data card component props interface
@@ -421,7 +422,7 @@ export interface DashboardStatsProps<T extends Record<string, StatMetric | undef
   shimmerCount: number;
   heading?: string;
   role: string;
-  dependencies: DateRange;
+  dependencies: DateRange | DateRangeStrings;
 }
 
 // Dashboard card one component props interface
@@ -1136,27 +1137,27 @@ export interface DataShimmerProps {
 
 //
 export interface AdminDashboardUserDataProps {
-  dateRange: DateRange;
+  dateRange: DateRangeStrings;
 }
 
 //
 export interface AdminDashboardProviderDataProps {
-  dateRange: DateRange;
+ dateRange: DateRangeStrings;
 }
 
 //
 export interface AdminDashboardAppointmentsDataProps {
-  dateRange: DateRange;
+  dateRange: DateRangeStrings;
 }
 
 //
 export interface AdminDashboardSubscriptionDataProps {
-  dateRange: DateRange;
+  dateRange: DateRangeStrings;
 }
 
 //
 export interface AdminDashboardRevenueDataProps {
-  dateRange: DateRange;
+  dateRange: DateRangeStrings;
 }
 
 //
@@ -1175,26 +1176,26 @@ export interface DataAnalysisProps {
 
 //
 export interface UserDataChartProps {
-  dateRange: DateRange;
+  dateRange: DateRangeStrings;
 }
 
 export interface ProviderDataChartProps {
-  dateRange: DateRange;
+  dateRange: DateRangeStrings;
 }
 
 //
 export interface RevenueDataChartProps {
-  dateRange: DateRange;
+  dateRange: DateRangeStrings;
 }
 
 //
 export interface UseAppointmentsDataChartsProps {
-  dateRange: DateRange;
+  dateRange: DateRangeStrings;
 }
 
 //
 export interface SubscriptionDataChartProps {
-  dateRange: DateRange;
+  dateRange: DateRangeStrings;
 }
 
 //

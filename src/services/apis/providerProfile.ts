@@ -24,6 +24,7 @@ import {
   AdminChangeProviderTrustTagResponse,
   AdminChangeProviderBlockStatusResponse,
   AdminRejectProviderResponse,
+  ProviderDashboardGraphRequest,
 } from '../../shared/types/api/providerProfile';
 import {
   UpdateFileDataRequest,
@@ -105,15 +106,9 @@ export const providerFetchDashboardRevenueStatsData = async (
 };
 
 // provider fetch dashboard graph data
-export const providerFetchDashboardGraphData = async (
-  subscription?: PlanName,
-  dateRange?: DateRange,
-): Promise<ApiBaseResponse<ProviderDashboardGraphResponse>> => {
+export const providerFetchDashboardGraphData = async (payload: ProviderDashboardGraphRequest): Promise<ApiBaseResponse<ProviderDashboardGraphResponse>> => {
   const response = await axiosInstance.get(`/provider-dashboard/graph`, {
-    params: {
-      subscription,
-      ...(dateRange ? { start: dateRange.from, end: dateRange.to } : {}),
-    },
+    params: payload,
   });
   return response.data;
 };

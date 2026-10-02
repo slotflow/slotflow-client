@@ -1,18 +1,21 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { DateRange } from 'react-day-picker';
-import { TabItem } from '@/shared/types/common';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import DateFilter from '@/components/filters/DateFilter';
 import TabNavigation from '@/components/common/TabNavigation';
+import { formatDate } from '@/shared/utils/helper/formatDate';
+import { DateRangeStrings, TabItem } from '@/shared/types/common';
 import AdminDashboardUserData from './user/AdminDashboardUserData';
+import { dateFormats } from '@/shared/utils/constants/appConstants';
+import { adminDashboardTabs } from '@/shared/utils/constants/tabConstants';
 import AdminDashboardRevenueData from './revenue/AdminDashboardRevenueData';
 import AdminDashboardProviderData from './provider/AdminDashboardProviderData';
 import AdminDashboardAppointmentsData from './appointment/AdminDashboardAppointmentsData';
 import AdminDashboardSubscriptionData from './subscription/AdminDashboardSubscriptionData';
-import { adminDashboardTabs } from '@/shared/utils/constants/tabConstants';
 
 const AdminDashboard = () => {
   const [selectedTab, setSelectedTab] = useState<TabItem['value']>(adminDashboardTabs[0].value);
+
   const [dateRange, setDateRange] = useState<DateRange>(() => {
     const today = new Date();
     const oneMonthAgo = new Date(today);
@@ -23,6 +26,11 @@ const AdminDashboard = () => {
       to: today,
     };
   });
+
+  const formateddateRange: DateRangeStrings = useMemo(() => ({
+    startDate: formatDate(dateRange?.from, dateFormats.ISO_DATE),
+    endDate: formatDate(dateRange?.to, dateFormats.ISO_DATE)
+  }), [dateRange?.from, dateRange?.to]);
 
   return (
     <div className="w-full">
@@ -39,23 +47,23 @@ const AdminDashboard = () => {
 
       <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
         <TabsContent value={adminDashboardTabs[0].value}>
-          <AdminDashboardUserData dateRange={dateRange} />
+          <AdminDashboardUserData dateRange={formateddateRange} />
         </TabsContent>
 
         <TabsContent value={adminDashboardTabs[1].value}>
-          <AdminDashboardProviderData dateRange={dateRange} />
+          <AdminDashboardProviderData dateRange={formateddateRange} />
         </TabsContent>
 
         <TabsContent value={adminDashboardTabs[2].value}>
-          <AdminDashboardSubscriptionData dateRange={dateRange} />
+          <AdminDashboardSubscriptionData dateRange={formateddateRange} />
         </TabsContent>
 
         <TabsContent value={adminDashboardTabs[3].value}>
-          <AdminDashboardRevenueData dateRange={dateRange} />
+          <AdminDashboardRevenueData dateRange={formateddateRange} />
         </TabsContent>
 
         <TabsContent value={adminDashboardTabs[4].value}>
-          <AdminDashboardAppointmentsData dateRange={dateRange} />
+          <AdminDashboardAppointmentsData dateRange={formateddateRange} />
         </TabsContent>
       </Tabs>
     </div>

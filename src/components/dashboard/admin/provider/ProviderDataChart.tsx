@@ -1,18 +1,18 @@
 import { Role } from '@/shared/types/enums';
 import { useQuery } from '@tanstack/react-query';
-import { queryKeys } from '@/shared/utils/constants/appConstants';
 import { fetchRoleBasedChartData } from '@/services/apis/admin';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import { ProviderDataChartProps } from '@/shared/types/component';
 import BarChartHorizontal from '@/components/chart/BarChartHorizontal';
 import { providersRetensionChartConfig } from '@/shared/utils/constants/chartConstants';
 
 const ProviderDataChart = ({ dateRange }: ProviderDataChartProps) => {
+
   const { data, isLoading, isError } = useQuery({
     queryKey: [queryKeys.DASHBOARD_PROVIDERS_CHART, dateRange],
     queryFn: () =>
       fetchRoleBasedChartData({
-        startDate: dateRange.from,
-        endDate: dateRange.to,
+        ...dateRange,
         role: Role.PROVIDER,
       }),
   });
