@@ -44,6 +44,7 @@ import {
   fetchProviderDetailsForAdmin,
 } from '@/services/apis/providerProfile';
 import { queryKeys } from '@/shared/utils/constants/appConstants';
+import ProfileImage from '@/components/profile/ProfileImage';
 
 const AdminProviderDetails = () => {
   const navigate = useNavigate();
@@ -125,17 +126,13 @@ const AdminProviderDetails = () => {
                 <DataShimmer w="w-16" h="h-16" className="rounded-full" />
               ) : (
                 <div className="relative">
-                  {provider?.profileImage ? (
-                    <img
-                      src={provider.profileImage}
-                      alt={provider?.username || 'Provider Avatar'}
-                      className="w-16 h-16 rounded-full object-cover border-2 border-slate-200 dark:border-border shadow-sm"
-                    />
-                  ) : (
-                    <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-800 border-2 border-slate-200 dark:border-border flex items-center justify-center text-xl font-bold text-slate-600 dark:text-slate-300 shadow-sm">
-                      {provider?.username?.charAt(0)?.toUpperCase() || 'P'}
-                    </div>
-                  )}
+                  <ProfileImage
+                    name={provider?.username || 'Provider'}
+                    profileImage={provider?.profileImage}
+                    size="size-16"
+                    rounded="full"
+                    className="border-2 border-slate-200 dark:border-border shadow-sm"
+                  />
                   {provider?.trustedBySlotflow && (
                     <div
                       className="absolute -bottom-1 -right-1 bg-amber-500 text-white p-1 rounded-full border-2 border-white dark:border-slate-900"
@@ -260,11 +257,10 @@ const AdminProviderDetails = () => {
                   isBlocked: !(provider?.isBlocked ?? false),
                 })
               }
-              className={`inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border shadow-sm transition-all cursor-pointer ${
-                provider?.isBlocked
+              className={`inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border shadow-sm transition-all cursor-pointer ${provider?.isBlocked
                   ? 'bg-emerald-600 hover:bg-emerald-700 text-white border-transparent'
                   : 'bg-white dark:bg-muted/20 text-rose-600 border-slate-200 dark:border-border hover:bg-rose-50 dark:hover:bg-rose-950/30'
-              }`}
+                }`}
             >
               {provider?.isBlocked ? (
                 <CircleCheck className="w-3.5 h-3.5" />
@@ -282,11 +278,10 @@ const AdminProviderDetails = () => {
                   trustedBySlotflow: !(provider?.trustedBySlotflow ?? false),
                 })
               }
-              className={`inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border shadow-sm transition-all cursor-pointer ${
-                provider?.trustedBySlotflow
+              className={`inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border shadow-sm transition-all cursor-pointer ${provider?.trustedBySlotflow
                   ? 'bg-amber-600 hover:bg-amber-700 text-white border-transparent'
                   : 'bg-white dark:bg-muted/20 text-amber-600 border-slate-200 dark:border-border hover:bg-amber-50 dark:hover:bg-amber-950/30'
-              }`}
+                }`}
             >
               {provider?.trustedBySlotflow ? (
                 <ShieldAlert className="w-3.5 h-3.5" />

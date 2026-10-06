@@ -5,10 +5,9 @@ import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
 import { Check, Share2, ShieldCheck } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-import { getInitials } from '@/shared/utils/helper/getInitials';
 import { ProviderProfileTopCardProps } from '@/shared/types/component';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useCopy } from '@/hooks/useCopy';
+import ProfileImage from '@/components/profile/ProfileImage';
 
 const ProviderProfileTopCard = ({
   isLoading,
@@ -30,20 +29,15 @@ const ProviderProfileTopCard = ({
       <CardContent className="-mt-16 px-6 pb-6 relative z-10">
         <div className="flex flex-col md:flex-row items-center md:items-end justify-between gap-6 text-center md:text-left">
           <div className="flex flex-col md:flex-row items-center md:items-end gap-5">
-            <Avatar className="w-28 h-28 border-4 border-background shadow-md">
-              {isLoading ? (
-                <AvatarFallback className="shimmer"></AvatarFallback>
-              ) : isError ? (
-                <AvatarImage src={image || ''} />
-              ) : (
-                <>
-                  <AvatarImage src={image || ''} />
-                  <AvatarFallback className="bg-muted text-primary text-2xl font-bold">
-                    {getInitials(name || '')}
-                  </AvatarFallback>
-                </>
-              )}
-            </Avatar>
+            <ProfileImage
+              name={name || 'Provider'}
+              profileImage={image}
+              size="size-28"
+              textSize="text-2xl"
+              rounded="full"
+              isLoading={isLoading}
+              className="border-4 border-background shadow-md"
+            />
             <div className="space-y-2 pb-1 flex flex-col items-center md:items-start">
               <div className="flex flex-col sm:flex-row items-center gap-2">
                 <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground">

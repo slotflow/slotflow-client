@@ -23,8 +23,6 @@ const PricingPage = () => {
   const loading = planData?.loading;
   const error = planData?.error;
 
-  console.log('plans : ', plans);
-
   return (
     <main className="w-full">
       <SectionHeading

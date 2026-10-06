@@ -1,21 +1,19 @@
 import ChatHeader from './ChatHeader';
-import { Ellipsis } from 'lucide-react';
 import MessageInput from './MessageInput';
-import { socket } from '@/lib/socketService';
+import { chatSocket } from '@/lib/socketService';
+import ProfileImage from '../profile/ProfileImage';
 import { useEffect, useRef, useState } from 'react';
 import { getMessages } from '@/services/apis/message';
-import { useDispatch, useSelector } from 'react-redux';
 import { ChatSocketEnum } from '@/shared/types/enums';
+import { useDispatch, useSelector } from 'react-redux';
 import { SocketDataInterface } from '@/shared/types/common';
 import { formatDate } from '@/shared/utils/helper/formatDate';
-import ChatBubbleProfileImage from './ChatBubbleProfileImage';
 import { AppDispatch, RootState } from '@/app/store/appStore';
 import { dateFormats } from '@/shared/utils/constants/appConstants';
 import NoChatSelectedSShimmer from '@/components/shimmers/NoChatSelectedSShimmer';
-import { connectChatSocket, disconnectChatSocket } from '@/services/socket/chatSocketThunk';
 
 const ChatModule = () => {
-  
+
   const dispatch = useDispatch<AppDispatch>();
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [messageSenderId, setMessageSenderId] = useState<string | null>(null);
@@ -27,13 +25,7 @@ const ChatModule = () => {
 
   useEffect(() => {
     if (!selectedUser || !authUser) return;
-
-    dispatch(connectChatSocket());
     dispatch(getMessages({ selectedUserId: selectedUser._id }));
-
-    return () => {
-      dispatch(disconnectChatSocket());
-    };
   }, [dispatch, selectedUser, authUser]);
 
   useEffect(() => {
@@ -43,9 +35,9 @@ const ChatModule = () => {
   }, [messages, isTyping]);
 
   useEffect(() => {
-    if (!socket || !authUser) return;
+    if (!chatSocket || !authUser) return;
 
-    socket.on(ChatSocketEnum.typing, (socketData: SocketDataInterface) => {
+    chatSocket.on(ChatSocketEnum.typing, (socketData: SocketDataInterface) => {
       const { fromUserId, toUserId } = socketData;
       if (fromUserId === selectedUser?._id && toUserId === authUser.uid) {
         setMessageSenderId(fromUserId);
@@ -53,7 +45,7 @@ const ChatModule = () => {
       }
     });
 
-    socket.on(ChatSocketEnum.stopTyping, (socketData: SocketDataInterface) => {
+    chatSocket.on(ChatSocketEnum.stopTyping, (socketData: SocketDataInterface) => {
       const { fromUserId, toUserId } = socketData;
       if (fromUserId === selectedUser?._id && toUserId === authUser.uid) {
         setIsTyping(false);
@@ -62,15 +54,15 @@ const ChatModule = () => {
     });
 
     return () => {
-      socket?.off(ChatSocketEnum.typing);
-      socket?.off(ChatSocketEnum.stopTyping);
+      chatSocket?.off(ChatSocketEnum.typing);
+      chatSocket?.off(ChatSocketEnum.stopTyping);
     };
   }, [authUser, selectedUser]);
 
   if (!selectedUser) return <NoChatSelectedSShimmer className="w-9/12" />;
 
   return (
-    <div className="w-full md:w-8/12 flex flex-col overflow-auto border-r  mt-5 md:mt-0 boder-2">
+    <div className="w-full md:w-8/12 flex flex-col overflow-auto mt-5 md:mt-0 bg-neutral-200 dark:bg-neutral-900 rounded-md">
       <ChatHeader />
       {isMessagesLoading ? (
         <NoChatSelectedSShimmer className="w-full" />
@@ -83,13 +75,17 @@ const ChatModule = () => {
               ref={messageEndRef}
             >
               {message.senderId !== authUser?.uid && (
-                <ChatBubbleProfileImage
-                  profileImage={selectedUser.profileImage || '/user_avatar.jpg'}
+                <ProfileImage
+                  name={selectedUser.username ?? ''}
+                  profileImage={selectedUser.profileImage}
+                  size="size-6 md:size-8"
+                  rounded="full"
+                  className="border"
                 />
               )}
 
               <div
-                className={`flex flex-col rounded-md bg-[var(--menuItemHoverBg)] px-4 py-1 max-w-8/12 ${message.senderId !== authUser?.uid ? 'ml-3' : 'mr-3'}`}
+                className={`flex flex-col rounded-md bg-neutral-300 dark:bg-neutral-700 px-4 py-1 max-w-8/12 ${message.senderId !== authUser?.uid ? 'ml-3' : 'mr-3'}`}
               >
                 {message.image && (
                   <img
@@ -105,8 +101,12 @@ const ChatModule = () => {
               </div>
 
               {message.senderId === authUser?.uid && (
-                <ChatBubbleProfileImage
-                  profileImage={authUser?.profileImage || '/user_avatar.jpg'}
+                <ProfileImage
+                  name={authUser.username ?? ''}
+                  profileImage={authUser.profileImage}
+                  size="size-6 md:size-8"
+                  rounded="full"
+                  className="border"
                 />
               )}
             </div>
@@ -116,10 +116,13 @@ const ChatModule = () => {
 
       {isTyping && authUser?.uid !== messageSenderId && (
         <div className="px-4 pb-2 flex">
-          <div className="justify-start rounded-md bg-[var(--menuItemHoverBg)] px-4 py-2">
-            <div className="chat-bubble flex rounded-md justify-center items-center">
-              <p className="text-[13px] md:text-[15px]">Typing</p>
-              <Ellipsis className="animate-ping" />
+          <div className="rounded-2xl rounded-bl-md bg-[var(--menuItemHoverBg)] px-4 py-3 shadow-sm">
+            <div className="flex items-center gap-1">
+              <span className="text-xs text-muted-foreground mr-1">Typing</span>
+
+              <span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce [animation-delay:-0.3s]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce [animation-delay:-0.15s]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce" />
             </div>
           </div>
         </div>

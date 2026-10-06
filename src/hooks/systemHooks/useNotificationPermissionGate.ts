@@ -2,25 +2,25 @@ import { appConfig } from '@/config/env';
 import { RootState } from '@/app/store/appStore';
 import { ApiError } from '@/shared/types/common';
 import { useMutation } from '@tanstack/react-query';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useCallback, useEffect, useMemo } from 'react';
 import { getFcmToken } from '@/shared/utils/helper/getToken';
 import { registerDevice } from '@/services/apis/notification';
 import { getDeviceId } from '@/shared/utils/helper/getDeviceId';
+import { handleError } from '@/shared/utils/helper/handleError';
 import { PermissionStatus, Platform } from '@/shared/types/enums';
 import { useNotificationPermissionGateReturn } from '@/shared/types/hooks';
-import { handleError } from '@/shared/utils/helper/handleError';
 import { requestNotificationPermission } from '@/shared/utils/helper/requestNotificationPermission';
 
 export const useNotificationPermissionGate = (): useNotificationPermissionGateReturn => {
-  const dispatch = useDispatch();
+
   const authUser = useSelector((state: RootState) => state.auth.authUser);
 
   const shouldAskPermission = useMemo(() => {
     if (typeof window === 'undefined' || !('Notification' in window)) return false;
     return (
       Notification.permission === PermissionStatus.DEFAULT &&
-      authUser?.isLoggedIn === true && true // TODO update
+      authUser?.isLoggedIn === true
     );
   }, [authUser]);
 
@@ -44,6 +44,9 @@ export const useNotificationPermissionGate = (): useNotificationPermissionGateRe
       // return await userSetPushNotification(true);
     },
     onSuccess: (res) => {
+      if(appConfig.isDevelopment) {
+        console.log("res : ",res);
+      }
     },
     onError: (error: ApiError) => {
       handleError(error, 'Failed to enable push notifications.');
@@ -73,7 +76,7 @@ export const useNotificationPermissionGate = (): useNotificationPermissionGateRe
     ) {
       disableNotificationMutation.mutate();
     }
-  }, [authUser?.isLoggedIn]);
+  }, [authUser?.isLoggedIn, disableNotificationMutation]);
 
   const askPermission = useCallback(async () => {
     if (!shouldAskPermission) return;

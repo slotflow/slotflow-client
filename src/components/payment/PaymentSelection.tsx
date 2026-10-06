@@ -17,18 +17,14 @@ import { X, ArrowRight, CreditCard, LockKeyhole, LoaderCircle, ShieldCheck } fro
 const PaymentSelection = () => {
 
   const dispatch = useDispatch();
-  const { subscribePlan } = useSubscription();
   const { bookAppointment } = useBooking();
-  const { bookingData, subscriptionData, status, type } = useSelector((state: RootState) => state.payment);
+  const { subscribePlan } = useSubscription();
+  const { subscriptionData, status, type } = useSelector((state: RootState) => state.payment);
   const isSubscription = type === PaymentProcessType.SUBSCRIPTION;
 
   const makeStripePayment = useCallback(() => {
     if (type === PaymentProcessType.BOOKING) {
-      if (!bookingData) {
-        toast.error('Booking details are missing.');
-        return;
-      }
-      bookAppointment(bookingData);
+      bookAppointment();
     } else if (type === PaymentProcessType.SUBSCRIPTION) {
       if (!subscriptionData) {
         toast.error('Subscription details are missing.');
@@ -36,7 +32,7 @@ const PaymentSelection = () => {
       }
       subscribePlan(subscriptionData);
     }
-  }, [bookingData, subscriptionData, type, bookAppointment, subscribePlan]);
+  }, [subscriptionData, type, bookAppointment, subscribePlan]);
 
   const paymentGateways = useMemo(() => {
     const gateways = [
@@ -73,7 +69,7 @@ const PaymentSelection = () => {
     }
 
     return gateways;
-  }, [type, makeStripePayment]);
+  }, [type, makeStripePayment, isSubscription, type]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 backdrop-blur-md">

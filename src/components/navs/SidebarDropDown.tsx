@@ -14,6 +14,7 @@ import { useSignout } from '@/hooks/systemHooks/useSignout';
 import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { AppDispatch, RootState } from '@/app/store/appStore';
 import { LogOut, Sun, Moon, Settings, CreditCard, User } from 'lucide-react';
+import ProfileImage from '../profile/ProfileImage';
 
 interface SidebarDropDownProps {
   isSidebarOpen: boolean;
@@ -44,19 +45,12 @@ export const SidebarDropDown = ({ isSidebarOpen }: SidebarDropDownProps) => {
             type="button"
             className="flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left transition-colors hover:bg-[var(--sidebar-accent)] outline-none"
           >
-            <div className="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-primary text-primary-foreground">
-              {user.profileImage ? (
-                <img
-                  src={user.profileImage}
-                  alt={user.username ?? 'Profile'}
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                <span className="text-sm font-semibold">
-                  {user.username?.charAt(0).toUpperCase() ?? 'U'}
-                </span>
-              )}
-            </div>
+            <ProfileImage
+              name={user.username ?? ''}
+              profileImage={user.profileImage}
+              size="size-9"
+              rounded="md"
+            />
 
             {isSidebarOpen && (
               <>

@@ -34,7 +34,6 @@ export const createPlan = async (
   formData: CreatePlanRequest,
 ): Promise<ApiBaseResponse<CreatePlanResponse>> => {
   const response = await axiosInstance.post('/plans', formData);
-  console.log('response : ', response);
   return response.data;
 };
 

@@ -8,26 +8,44 @@ import { EventSocketEnum } from "@/shared/types/enums";
 import { UseBookingReturn } from "@/shared/types/hooks";
 import { bookAnAppointment } from "@/services/apis/booking";
 import { PaymentProcessStatus } from "@/shared/types/enums";
+import { useParams, useSearchParams } from "react-router-dom";
 import { ApiBaseResponse, ApiError } from "@/shared/types/common";
-import { BookAppointmentRequest, BookAppointmentResponse } from "@/shared/types/api/booking";
-import { setBookingData, setPaymentProcessStatus, setPaymentSelectionClose } from "@/app/store/slices/paymentSlice";
+import { BookAppointmentResponse } from "@/shared/types/api/booking";
+import { setPaymentProcessStatus, setPaymentSelectionClose } from "@/app/store/slices/paymentSlice";
 
 export const useBooking = (): UseBookingReturn => {
 
     const eventSocket = getEventSocket();
     const dispatch = useDispatch<AppDispatch>();
 
+    const [searchParams, setSearchParams] = useSearchParams();
+    const { providerId } = useParams<{ providerId: string }>();
+
+    const date = searchParams.get('date');
+    const slotId = searchParams.get('slot');
+    const mode = searchParams.get('mode');
+
+    const handleBookingSuccess = () => {
+        setSearchParams((prev) => {
+            const newParams = new URLSearchParams(prev);
+            newParams.delete('date');
+            newParams.delete('slot');
+            newParams.delete('time');
+            newParams.delete('mode');
+            return newParams;
+        });
+    };
+
     const bookAnAppointmentMutation = useMutation<
         ApiBaseResponse<BookAppointmentResponse>,
-        ApiError,
-        BookAppointmentRequest
+        ApiError
     >({
-        mutationFn: (data: BookAppointmentRequest) => {
+        mutationFn: () => {
             if (
-                !data?.slotId ||
-                !data?.providerId ||
-                !data?.selectedServiceMode ||
-                !data?.date
+                !slotId ||
+                !providerId ||
+                !mode ||
+                !date
             ) {
                 dispatch(setPaymentProcessStatus(PaymentProcessStatus.FAILED));
                 throw new Error("Incomplete booking details.");
@@ -36,14 +54,19 @@ export const useBooking = (): UseBookingReturn => {
             return new Promise((resolve, reject) => {
                 dispatch(setPaymentProcessStatus(PaymentProcessStatus.PROCESSING));
                 eventSocket.emit(EventSocketEnum.slotEngageRequest, {
-                    providerId: data.providerId,
-                    date: data.date,
-                    slotId: data.slotId,
+                    providerId,
+                    date,
+                    slotId,
                 });
 
                 eventSocket.once(EventSocketEnum.slotEngageApproved, async () => {
                     try {
-                        const response = await bookAnAppointment(data);
+                        const response = await bookAnAppointment({
+                            date,
+                            providerId,
+                            selectedServiceMode: mode,
+                            slotId
+                        });
                         resolve(response);
                     } catch (error) {
                         reject(error);
@@ -74,12 +97,11 @@ export const useBooking = (): UseBookingReturn => {
 
         },
         onError: (error: ApiError | Error) => {
-            const variables: BookAppointmentRequest | undefined = bookAnAppointmentMutation.variables;
-            if (variables?.providerId && variables?.date && variables?.slotId) {
+            if (providerId && date && slotId) {
                 eventSocket.emit(EventSocketEnum.slotUnlockRequest, {
-                    providerId: variables.providerId,
-                    date: variables.date,
-                    slotId: variables.slotId,
+                    providerId,
+                    date,
+                    slotId,
                 });
             }
             toast.error(error.message || "Booking payment failed");
@@ -87,11 +109,12 @@ export const useBooking = (): UseBookingReturn => {
         },
         onSettled: () => {
             dispatch(setPaymentSelectionClose());
-            dispatch(setBookingData(null));
+            handleBookingSuccess();
         },
     });
 
     return {
         bookAppointment: bookAnAppointmentMutation.mutate,
+        handleBookingSuccess
     };
 };

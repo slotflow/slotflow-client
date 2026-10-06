@@ -309,5 +309,7 @@ export enum ChatSocketEnum {
   typing = 'typing',
   stopTyping = 'stopTyping',
   connect = 'connect',
+  disconnect = 'disconnect',
   newMessage = 'newMessage',
+  getOnlineUsers = 'getOnlineUsers',
 }

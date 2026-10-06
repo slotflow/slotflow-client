@@ -122,6 +122,12 @@ const FileUploader = ({
         console.error('Deletion error:', error);
       }
       toast.error('Deletion failed! Please try again.');
+      dispatch(
+      setStateFunction({
+        file: null,
+        isLoading: false,
+      }),
+    );
     }
   };
 
@@ -139,6 +145,7 @@ const FileUploader = ({
               id="file"
               accept="image/png, image/jpeg"
               onChange={handleFileChange}
+              className="cursor-pointer"
             />
           ) : (
             <h6 className="flex justify-center">

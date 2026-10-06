@@ -41,24 +41,34 @@ const RoleSelectPage = () => {
           duration: 0.5,
           delay: 0.15,
         }}
-        className="mt-14 grid grid-cols-1 gap-8 lg:grid-cols-2"
+        className="w-full flex flex-col items-center text-center space-y-4 sm:space-y-6"
       >
-        <RoleSelectCard
-          role={Role.USER}
-          icon={booking}
-          title="Book Appointments"
-          description="Discover trusted professionals and schedule appointments effortlessly."
-          selectedRole={selectedRole}
-          onSelect={setSelectedRole}
-        />
-        <RoleSelectCard
-          role={Role.PROVIDER}
-          icon={service}
-          title="Provide Services"
-          description="Manage bookings, accept payments, and grow your business with SlotFlow."
-          selectedRole={selectedRole}
-          onSelect={setSelectedRole}
-        />
+        <div className="space-y-1 sm:space-y-1.5 px-2">
+          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
+            How should we address you?
+          </h2>
+          <p className="text-xs sm:text-sm text-muted-foreground">
+            Set your preferred username for your account profile.
+          </p>
+        </div>
+        <div className="mt-14 grid grid-cols-1 gap-8 lg:grid-cols-2">
+          <RoleSelectCard
+            role={Role.USER}
+            icon={booking}
+            title="Book Appointments"
+            description="Discover trusted professionals and schedule appointments effortlessly."
+            selectedRole={selectedRole}
+            onSelect={setSelectedRole}
+          />
+          <RoleSelectCard
+            role={Role.PROVIDER}
+            icon={service}
+            title="Provide Services"
+            description="Manage bookings, accept payments, and grow your business with SlotFlow."
+            selectedRole={selectedRole}
+            onSelect={setSelectedRole}
+          />
+        </div>
       </motion.div>
       <motion.div
         initial={{ opacity: 0 }}

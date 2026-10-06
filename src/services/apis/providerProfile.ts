@@ -4,7 +4,6 @@ import {
   FetchFunctionBaseQueryParams,
 } from '../../shared/types/common';
 import { axiosInstance } from '@/lib/axios';
-import { DateRange } from 'react-day-picker';
 import {
   AdminRejectProviderRequest,
   ProviderSubmitDetailsResponse,
@@ -30,7 +29,6 @@ import {
   UpdateFileDataRequest,
   FetchProvidersProofsResponse,
 } from '../../shared/types/api/commonApiInterface';
-import { PlanName } from '../../shared/types/enums';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { buildQueryParams } from '../../shared/utils/helper/buildQueryParams';
 

@@ -22,6 +22,24 @@ import { JoinRoomCallbackRequest, JoinRoomCallbackResponse } from '@/shared/type
 import { getVideoSocket } from '@/lib/socketService';
 import { VideoRoomParticipant, VideoRoomStatePayload } from '@/shared/types/socket';
 
+interface Window {
+  webkitAudioContext?: typeof AudioContext;
+}
+
+interface NetworkInformation {
+  downlink?: number;
+  effectiveType?: '2g' | '3g' | '4g' | 'slow-2g';
+  rtt?: number;
+  saveData?: boolean;
+  type?: string;
+}
+
+interface Navigator {
+  connection?: NetworkInformation;
+  mozConnection?: NetworkInformation;
+  webkitConnection?: NetworkInformation;
+}
+
 export const useJVideoCallLobby = (): useVideoCallLobbyReturn => {
 
   const { roomId } = useParams();
@@ -221,7 +239,7 @@ export const useJVideoCallLobby = (): useVideoCallLobbyReturn => {
     if (!audioTrack) return;
 
     try {
-      const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+      const AudioCtx = window.AudioContext || (window as Window).webkitAudioContext;
       const audioCtx = new AudioCtx();
       const analyser = audioCtx.createAnalyser();
       analyser.fftSize = 32;
@@ -267,9 +285,9 @@ export const useJVideoCallLobby = (): useVideoCallLobbyReturn => {
         return;
       }
       const navConn =
-        (navigator as any).connection ||
-        (navigator as any).mozConnection ||
-        (navigator as any).webkitConnection;
+        (navigator as Navigator).connection ||
+        (navigator as Navigator).mozConnection ||
+        (navigator as Navigator).webkitConnection;
       if (navConn) {
         const rtt = navConn.rtt || 50;
         if (rtt < 100) setNetworkStatus({ label: 'Excellent', color: 'text-emerald-500' });

@@ -1,23 +1,28 @@
-// SandboxPage.tsx
 import { useState } from 'react';
 import { SandboxPageProps } from '@/shared/types/component';
 
+type ComponentPropsMap = Record<string, unknown>;
+
 export const SandboxPage = ({ 
   specs,
- }: SandboxPageProps) => {
+}: SandboxPageProps) => {
   const [selectedId, setSelectedId] = useState<string>(specs[0]?.id || '');
   
   const activeSpec = specs.find((s) => s.id === selectedId) || specs[0];
-  const [currentProps, setCurrentProps] = useState(activeSpec?.defaultProps || {});
+  const [currentProps, setCurrentProps] = useState<ComponentPropsMap>(
+    (activeSpec?.defaultProps as ComponentPropsMap) || {}
+  );
 
   const handleSelectChange = (id: string) => {
     setSelectedId(id);
     const newSpec = specs.find((s) => s.id === id);
-    if (newSpec) setCurrentProps(newSpec.defaultProps);
+    if (newSpec) {
+      setCurrentProps((newSpec.defaultProps as ComponentPropsMap) || {});
+    }
   };
 
-  const handlePropChange = (key: string, value: any) => {
-    setCurrentProps((prev: any) => ({ ...prev, [key]: value }));
+  const handlePropChange = (key: string, value: unknown) => {
+    setCurrentProps((prev) => ({ ...prev, [key]: value }));
   };
 
   if (!activeSpec) return <div>No components registered.</div>;
@@ -59,7 +64,7 @@ export const SandboxPage = ({
                 {control?.type === 'text' && (
                   <input
                     type="text"
-                    value={currentProps[propKey] ?? ''}
+                    value={String(currentProps[propKey] ?? '')}
                     onChange={(e) => handlePropChange(propKey, e.target.value)}
                     className="p-1.5 border rounded bg-slate-50 dark:bg-zinc-800 border-slate-300 dark:border-zinc-700"
                   />
@@ -67,14 +72,14 @@ export const SandboxPage = ({
                 {control?.type === 'boolean' && (
                   <input
                     type="checkbox"
-                    checked={!!currentProps[propKey]}
+                    checked={Boolean(currentProps[propKey])}
                     onChange={(e) => handlePropChange(propKey, e.target.checked)}
                     className="size-4"
                   />
                 )}
                 {control?.type === 'select' && (
                   <select
-                    value={currentProps[propKey]}
+                    value={String(currentProps[propKey] ?? '')}
                     onChange={(e) => handlePropChange(propKey, e.target.value)}
                     className="p-1.5 border rounded bg-slate-50 dark:bg-zinc-800 border-slate-300 dark:border-zinc-700"
                   >
@@ -93,7 +98,7 @@ export const SandboxPage = ({
         </div>
 
         <div className="lg:col-span-2 p-6 border rounded-lg bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-800 flex items-center justify-center min-h-[300px]">
-          <TargetComponent {...currentProps} />
+          <TargetComponent {...(currentProps as Record<string, unknown>)} />
         </div>
       </div>
     </div>

@@ -1,5 +1,4 @@
 import { useDispatch } from 'react-redux';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useSearchParams } from 'react-router-dom';
 import { AppDispatch } from '@/app/store/appStore';
@@ -10,7 +9,7 @@ import { toggleFilterSideBar } from '@/app/store/slices/appSlice';
 import { queryKeys } from '@/shared/utils/constants/appConstants';
 import { UserViewProviderCardProps } from '@/shared/types/component';
 import DataFetchingError from '@/components/error/DataFetchingError';
-import { Filter, LoaderCircle, Search, SearchIcon, Sparkles } from 'lucide-react';
+import { Filter, LoaderCircle, SearchIcon, Sparkles } from 'lucide-react';
 import UserViewProviderCard from '@/components/user/UserViewProviderCard';
 import { UserFetchServiceProvidersResponse } from '@/shared/types/api/user';
 import { fetchServiceProvidersForUser } from '@/services/apis/providerService';

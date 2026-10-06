@@ -8,7 +8,6 @@ import {
   Calendar,
   Landmark,
   BadgeCheck,
-  CreditCard,
   IndianRupee,
 } from 'lucide-react';
 import { useParams } from 'react-router-dom';

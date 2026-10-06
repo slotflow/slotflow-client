@@ -86,7 +86,7 @@ const ReviewCard = ({
               variant="destructive"
               size="sm"
               className="cursor-pointer bg-[var(--background)] border"
-              onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+              onClick={() =>
                 handleDeleteReview(review._id)
               }
             >
@@ -100,7 +100,7 @@ const ReviewCard = ({
               variant="default"
               size="sm"
               className="cursor-pointer"
-              onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+              onClick={() =>
                 handleReportReview(review._id)
               }
             >
@@ -129,7 +129,7 @@ const ReviewCard = ({
               variant="secondary"
               size="sm"
               className="cursor-pointer"
-              onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+              onClick={() =>
                 handleChangeReviewBlockStatus({
                   reviewId: review._id,
                   isBlocked: review.isBlocked,

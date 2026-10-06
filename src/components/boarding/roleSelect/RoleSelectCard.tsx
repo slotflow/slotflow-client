@@ -52,7 +52,7 @@ const features =
       }}
       onClick={() => {
         onSelect(role);
-        dispatch(updateBoardingStep(role === Role.USER ? 3 : 7));
+        dispatch(updateBoardingStep(role === Role.USER ? 3 : 8));
       }}
       className={`group relative overflow-hidden cursor-pointer rounded-3xl border p-8 backdrop-blur-xl transition-all duration-300 bg-white/70 dark:bg-neutral-900/70 ${
         isSelected

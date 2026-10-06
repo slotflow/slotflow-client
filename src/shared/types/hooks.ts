@@ -402,9 +402,10 @@ export interface UseSubscriptionHookReturn {
 
 // booking payment hook
 export interface UseBookingReturn {
+  handleBookingSuccess: () => void;
   bookAppointment: UseMutateFunction<
     ApiBaseResponse<BookAppointmentResponse>,
     ApiError,
-    BookAppointmentRequest
+    void
   >;
 }

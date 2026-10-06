@@ -11,12 +11,13 @@ import DataShimmer from '@/components/shimmers/DataShimmer';
 import { fetchUserProfileDetails } from '@/services/apis/user';
 import { fetchAddressByUserId } from '@/services/apis/address';
 import TabNavigation from '@/components/common/TabNavigation';
-import { queryKeys } from '@/shared/utils/constants/appConstants';
+import ProfileImage from '@/components/profile/ProfileImage';
+import noProfile from '../../assets/defaultImages/avatar.png';
 import AddressListing from '@/components/profile/AddressListing';
+import { userTabs } from '@/shared/utils/constants/tabConstants';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import { Ban, Mail, Phone, RotateCw, ArrowLeft, CircleCheck, Clock } from 'lucide-react';
-import { userTabs } from '@/shared/utils/constants/tabConstants';
-import noProfile from '../../assets/defaultImages/avatar.png';
 
 const AdminUserDetails = () => {
   const navigate = useNavigate();
@@ -66,8 +67,6 @@ const AdminUserDetails = () => {
     );
   }
 
-  console.log('rendering');
-
   return (
     <div className="h-full space-y-8 min-h-screen font-sans">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-border pb-6">
@@ -88,23 +87,15 @@ const AdminUserDetails = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            {isLoading ? (
-              <DataShimmer w="w-16" h="h-16" className="rounded-full" />
-            ) : (
-              <div className="relative">
-                {user?.profileImage ? (
-                  <img
-                    src={user?.profileImage || noProfile}
-                    alt={user?.username || 'User Avatar'}
-                    className="w-16 h-16 rounded-full object-cover border-2 border-slate-200 dark:border-border shadow-sm"
-                  />
-                ) : (
-                  <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-gray-700 border-2 border-slate-200 dark:border-border flex items-center justify-center text-xl font-bold text-slate-600 dark:text-slate-300 shadow-sm">
-                    {user?.username?.charAt(0)?.toUpperCase() || 'U'}
-                  </div>
-                )}
-              </div>
-            )}
+
+            <ProfileImage
+              name={user?.username || 'User'}
+              profileImage={user?.profileImage || noProfile}
+              size="size-16"
+              rounded="full"
+              className="border-2 border-slate-200 dark:border-border shadow-sm"
+              isLoading={isLoading}
+            />
 
             <div className="space-y-1">
               <div className="flex items-center gap-3 flex-wrap">
@@ -178,11 +169,10 @@ const AdminUserDetails = () => {
                 isBlocked: !(user?.isBlocked ?? false),
               })
             }
-            className={`inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border shadow-sm transition-all cursor-pointer ${
-              user?.isBlocked
+            className={`inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border shadow-sm transition-all cursor-pointer ${user?.isBlocked
                 ? 'bg-emerald-600 hover:bg-emerald-700 text-white border-transparent'
                 : 'bg-white dark:bg-muted/20 text-rose-600 border-slate-200 dark:border-border hover:bg-rose-50 dark:hover:bg-rose-950/30'
-            }`}
+              }`}
           >
             {user?.isBlocked ? (
               <CircleCheck className="w-3.5 h-3.5" />
@@ -205,7 +195,7 @@ const AdminUserDetails = () => {
 
           <TabsContent value={userTabs[0].value}>
             <AddressListing
-              fetchApiFunction={() => fetchAddressByUserId({userId})}
+              fetchApiFunction={() => fetchAddressByUserId({ userId })}
               queryKey={[queryKeys.ADDRESS]}
               userOrProviderId={userId}
             />

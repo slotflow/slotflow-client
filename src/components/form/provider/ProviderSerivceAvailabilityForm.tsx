@@ -40,7 +40,7 @@ const ProviderServiceAvailabilityForm = ({
     handleSubmit,
     reset,
     getValues,
-    formState: { isSubmitting, isValid, isLoading, errors },
+    formState: { isSubmitting, isValid, isLoading },
   } = useForm<ProviderServiceAvailabilityFormType>({
     resolver: zodResolver(providerServiceAvailabilityZodSchema),
     mode: 'onChange',

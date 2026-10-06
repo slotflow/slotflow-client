@@ -1,6 +1,6 @@
 import L from 'leaflet';
 import { useEffect, useRef } from 'react';
-import { locationIqConfig } from '@/config/env';
+import { appConfig, locationIqConfig } from '@/config/env';
 import { LocationPickerProps } from '@/shared/types/component';
 
 const LocationPicker = ({ onLocationSelect }: LocationPickerProps) => {
@@ -9,19 +9,20 @@ const LocationPicker = ({ onLocationSelect }: LocationPickerProps) => {
   const markerRef = useRef<L.Marker | null>(null);
 
   useEffect(() => {
-    console.log('LocationPicker useEffect');
 
     if (!mapRef.current) {
-      console.log('mapRef is null');
+      if(appConfig.isDevelopment) {
+        console.log('mapRef is null');
+      }
       return;
     }
 
     if (mapInstance.current) {
+       if(appConfig.isDevelopment) {
       console.log('map already exists');
+       }
       return;
     }
-
-    console.log('Initializing map');
 
     const map = L.map(mapRef.current).setView([20.5937, 78.9629], 5);
 
@@ -67,7 +68,9 @@ const LocationPicker = ({ onLocationSelect }: LocationPickerProps) => {
           address: data.address || data.display_name,
         });
       } catch (error) {
-        console.error('Failed to reverse geocode location:', error);
+        if(appConfig.isDevelopment) {
+          console.error('Failed to reverse geocode location:', error);
+        }
       }
     };
 

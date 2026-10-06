@@ -3,7 +3,7 @@ import ChatModule from '@/components/chat/ChatModule';
 
 const ChatWindow = () => {
   return (
-    <div className="flex overflow-y-scroll no-scrollbar h-full">
+    <div className="w-full flex overflow-y-scroll no-scrollbar h-full space-x-2">
       <ChatSidebar />
       <ChatModule />
     </div>

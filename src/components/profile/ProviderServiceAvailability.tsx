@@ -1,33 +1,33 @@
 import { toast } from 'react-toastify';
 import DataField from '../app/DataField';
-import { useDispatch, useSelector } from 'react-redux';
-import { EventSocketEnum, Role } from '@/shared/types/enums';
 import { useEffect, useState } from 'react';
-import { SelectSeparator } from '../ui/select';
-import { Button } from '@/components/ui/button';
-import { useQuery } from '@tanstack/react-query';
-import TimeSlotLegend from '../app/TimeSlotLegend';
-import { AppDispatch, RootState } from '@/app/store/appStore';
-import { Calendar } from '@/components/ui/calendar';
-import { getEventSocket } from '@/lib/socketService';
-import { dateFormats, queryKeys } from '@/shared/utils/constants/appConstants';
-import { AnimatePresence, motion } from 'framer-motion';
-import DataFetchingError from '../error/DataFetchingError';
-import { Slot } from '@/shared/types/entity/serviceAvailability';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
-import { setBookingData } from '@/app/store/slices/paymentSlice';
-import AvailablityFetchingError from '../error/AvailabilityFetchingError';
-import { SlotEngageRequest } from '@/shared/types/socket';
-import { ProviderServiceAvailabilityProps } from '@/shared/types/component';
-import { CalendarDays, Clock, Settings2, Timer, CheckCircle2, XCircle } from 'lucide-react';
-import ProviderAvailabilityShimmer from '@/components/shimmers/ProviderAvailabilityShimmer';
-import ProviderServiceAvailabilityForm from '../form/provider/ProviderSerivceAvailabilityForm';
 import {
   fetchEngagedSlots,
   fetchMyServiceAvailability,
   fetchServiceAvailabilityByProviderId,
 } from '@/services/apis/serviceAvailability';
+import { SelectSeparator } from '../ui/select';
+import { Button } from '@/components/ui/button';
+import { useQuery } from '@tanstack/react-query';
+import TimeSlotLegend from '../app/TimeSlotLegend';
+import { useSearchParams } from 'react-router-dom';
+import { Calendar } from '@/components/ui/calendar';
+import { getEventSocket } from '@/lib/socketService';
+import { AnimatePresence, motion } from 'framer-motion';
+import { SlotEngageRequest } from '@/shared/types/socket';
+import DataFetchingError from '../error/DataFetchingError';
+import { EventSocketEnum, Role } from '@/shared/types/enums';
 import { formatDate } from '@/shared/utils/helper/formatDate';
+import { Slot } from '@/shared/types/entity/serviceAvailability';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import AvailablityFetchingError from '../error/AvailabilityFetchingError';
+import { ProviderServiceAvailabilityProps } from '@/shared/types/component';
+import { dateFormats, queryKeys } from '@/shared/utils/constants/appConstants';
+import ProviderAvailabilityShimmer from '@/components/shimmers/ProviderAvailabilityShimmer';
+import { CalendarDays, Clock, Settings2, Timer, CheckCircle2, XCircle } from 'lucide-react';
+import ProviderServiceAvailabilityForm from '../form/provider/ProviderSerivceAvailabilityForm';
+import { parseDateParam } from '@/shared/utils/helper/parseDateParams';
+import { useAuth } from '@/hooks/useAuth';
 
 const ProviderServiceAvailability = ({
   providerId,
@@ -35,25 +35,57 @@ const ProviderServiceAvailability = ({
   canUpdate = false,
   showHeading = false,
 }: ProviderServiceAvailabilityProps) => {
-  
-  const dispatch = useDispatch<AppDispatch>();
+
+  const { user } = useAuth();
   const [showForm, setShowForm] = useState<boolean>(false);
-  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [searchParams, setSearchParams] = useSearchParams();
+  const dateParam = searchParams.get('date');
+  const modeParam = searchParams.get('mode');
+  const [date, setDate] = useState<Date | undefined>(
+    () => parseDateParam(dateParam, user?.timeZone?.value as string) ?? new Date(),
+  );
   const [selectedMode, setSelectedMode] = useState<string | null>(null);
   const [engagedSlotIds, setEngagedSlotIds] = useState<Set<string>>(new Set());
-  const bookingData = useSelector((state: RootState) => state.payment?.bookingData);
 
   const eventSocket = getEventSocket();
+
+  const selectedSlotId = searchParams.get('slot');
+
+  useEffect(() => {
+    const parsedDate = parseDateParam(dateParam, user?.timeZone?.value as string);
+    if (parsedDate) {
+      setDate(parsedDate);
+      return;
+    }
+
+    const defaultDate = new Date();
+    setDate(defaultDate);
+    const formattedDefaultDate = formatDate(defaultDate, dateFormats.ISO_DATE);
+
+    setSearchParams((prev) => {
+      const newParams = new URLSearchParams(prev);
+      if (dateParam) {
+        newParams.delete('slot');
+        newParams.delete('slotId');
+        newParams.delete('time');
+      }
+      newParams.set('date', formattedDefaultDate);
+      return newParams;
+    });
+  }, [dateParam, setSearchParams]);
 
   const { data, isLoading, isError, error } = useQuery({
     queryFn: async () => {
       if (!date) throw new Error('Missing date');
       if (role === Role.USER || role === Role.ADMIN) {
         if (!providerId) throw new Error('Missing provider Id');
-        const res = await fetchServiceAvailabilityByProviderId({ date, providerId });
+        const res = await fetchServiceAvailabilityByProviderId({
+          date: formatDate(date, dateFormats.ISO_DATE),
+          providerId
+        });
         return res.data;
       } else if (role === Role.PROVIDER) {
-        const res = await fetchMyServiceAvailability(date);
+        const res = await fetchMyServiceAvailability(formatDate(date, dateFormats.ISO_DATE));
         return res.data;
       }
     },
@@ -74,11 +106,27 @@ const ProviderServiceAvailability = ({
   }, [providerId, date]);
 
   useEffect(() => {
-    if (!data || !date || date === null || !data.modes) {
+    if (!data?.modes?.length) {
+      setSelectedMode(null);
       return;
     }
-    setSelectedMode(data?.modes[0]);
-  }, [data, date]);
+
+    const nextMode = modeParam && data.modes.includes(modeParam)
+      ? modeParam
+      : data.modes[0];
+    setSelectedMode(nextMode);
+
+    if (modeParam !== nextMode) {
+      setSearchParams((prev) => {
+        const newParams = new URLSearchParams(prev);
+        newParams.set('mode', nextMode);
+        newParams.delete('slot');
+        newParams.delete('slotId');
+        newParams.delete('time');
+        return newParams;
+      });
+    }
+  }, [data?.modes, modeParam, setSearchParams]);
 
   useEffect(() => {
     eventSocket.emit(EventSocketEnum.providerJoin, { providerId });
@@ -112,7 +160,34 @@ const ProviderServiceAvailability = ({
     };
   }, [eventSocket, providerId, date]);
 
-  const handleBookAnAppoint = (slotId: string, slot: string, availability: boolean) => {
+  const handleDateChange = (newDate: Date | undefined) => {
+    setDate(newDate);
+
+    if (newDate) {
+      const formattedDate = formatDate(newDate, dateFormats.ISO_DATE);
+      setSearchParams((prev) => {
+        const newParams = new URLSearchParams(prev);
+        newParams.set('date', formattedDate);
+        newParams.delete('slot');
+        newParams.delete('slotId');
+        newParams.delete('time');
+        newParams.delete('mode');
+        return newParams;
+      });
+    } else {
+      setSearchParams((prev) => {
+        const newParams = new URLSearchParams(prev);
+        newParams.delete('date');
+        newParams.delete('slot');
+        newParams.delete('slotId');
+        newParams.delete('time');
+        newParams.delete('mode');
+        return newParams;
+      });
+    }
+  };
+
+  const handleBookAnAppoint = (slotId: string, time: string, availability: boolean) => {
     if (!availability) {
       toast.info('Slot is unavailable.');
       return;
@@ -122,17 +197,16 @@ const ProviderServiceAvailability = ({
       return;
     }
 
-    const dateString = formatDate(date, dateFormats.ISO_DATE)
+    setSearchParams((prev) => {
+      const newParams = new URLSearchParams(prev);
+      newParams.set('date', formatDate(date, dateFormats.ISO_DATE));
+      newParams.set('slot', slotId);
+      newParams.delete('slotId');
+      newParams.set('time', time);
+      newParams.set('mode', selectedMode);
+      return newParams;
+    });
 
-    dispatch(
-      setBookingData({
-        providerId,
-        slotId,
-        slot,
-        date: dateString,
-        selectedServiceMode: selectedMode,
-      }),
-    );
   };
 
   return (
@@ -167,7 +241,7 @@ const ProviderServiceAvailability = ({
             <Calendar
               mode="single"
               selected={date}
-              onSelect={setDate}
+              onSelect={handleDateChange}
               className="rounded-xl border dark:border-border p-3 shadow-xs h-fit"
             />
           </div>
@@ -290,7 +364,14 @@ const ProviderServiceAvailability = ({
                             type="button"
                             onClick={() => {
                               setSelectedMode(mode);
-                              dispatch(setBookingData(null));
+                              setSearchParams((prev) => {
+                                const newParams = new URLSearchParams(prev);
+                                newParams.set('mode', mode);
+                                newParams.delete('slot');
+                                newParams.delete('slotId');
+                                newParams.delete('time');
+                                return newParams;
+                              });
                             }}
                             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 cursor-pointer flex items-center gap-2 border ${isSelected
                               ? 'bg-indigo-50/80 dark:bg-indigo-950/40 border-indigo-500 text-indigo-900 dark:text-indigo-200 ring-2 ring-indigo-500/20'
@@ -314,7 +395,7 @@ const ProviderServiceAvailability = ({
                     data.slots.map((slot: Slot) => {
                       const isOccupied = slot.occupied || engagedSlotIds.has(slot._id);
                       const isAvailable = slot.available && !isOccupied;
-                      const isSelected = bookingData?.slotId === slot._id;
+                      const isSelected = selectedSlotId === slot._id;
 
                       const getSlotStyles = () => {
                         if (isSelected) {

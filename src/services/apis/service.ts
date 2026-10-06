@@ -41,7 +41,6 @@ export const updateService = async (
 export const changeServiceBlockStatus = async (
   data: AdminChangeServiceBlockStatusRequest,
 ): Promise<ApiBaseResponse<AdminChangeServiceBlockStatusResponse>> => {
-  console.log('blocking');
   const response = await axiosInstance.patch(`/services/${data.serviceId}/block`, data);
   return response.data;
 };

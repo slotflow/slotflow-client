@@ -46,6 +46,7 @@ export type AuthUser = Pick<
   > & {
     role: Role;
     uid: string;
+    timeZone: string;
     isLoggedIn?: boolean;
     isAddressAdded?: boolean;
     isServiceDetailsAdded?: boolean;
@@ -129,7 +130,7 @@ export type SelectedUser = Pick<User, '_id' | 'username' | 'profileImage'>;
 // chat slice initial state
 export interface chatSliceInitalState {
   onlineUsers: string[] | null;
-  lastMessages: LastMessages;
+  lastMessages: LastMessages | null;
   selectedUser: SelectedUser | null;
   socketId: string | null;
   isConnected: boolean;
@@ -138,17 +139,9 @@ export interface chatSliceInitalState {
 }
 
 // payment slice initial state
-export interface BookingData {
-  providerId: string;
-  slotId: string;
-  slot: string;
-  date: string;
-  selectedServiceMode: string;
-}
 export interface PaymentSlice {
   type: PaymentProcessType | null;
   isPaymentModalOpen: boolean;
-  bookingData: BookingData | null;
   subscriptionData: SubscribePlanCheckoutRequest | null;
   status: PaymentProcessStatus;
 }

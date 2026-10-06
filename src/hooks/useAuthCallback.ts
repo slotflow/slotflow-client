@@ -1,3 +1,4 @@
+import { appConfig } from "@/config/env";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { AuthUser } from "@/shared/types/slice";
@@ -61,19 +62,23 @@ export const useAuthCallback = (): UseAuthCallbackReturn => {
                     providerSubscription: rawUser.providerSubscription,
                     verificationRejectionReason: rawUser.verificationRejectionReason,
                     adminVerificationStatus: rawUser.adminVerificationStatus,
-                    hasUsedTrial: rawUser.hasUsedTrial
+                    hasUsedTrial: rawUser.hasUsedTrial,
+                    timeZone: rawUser.timeZone,
                 };
                 dispatch(setAuthUser(authUser));
                 window.history.replaceState({}, document.title, window.location.pathname);
                 handleAuthLoginNavigation(rawUser);
 
-            } catch (err: any) {
-                setError(err.message || 'An unexpected authentication error occurred.');
+            } catch (error) {
+                if(appConfig.isDevelopment) {
+                    console.log("authentication error : ",error);
+                }
+                setError('An unexpected authentication error occurred.');
             }
         };
 
         handleAuthCallback();
-    }, [searchParams, navigate]);
+    }, [searchParams, navigate, dispatch]);
 
     useEffect(() => {
         if (error) return;

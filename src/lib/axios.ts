@@ -6,11 +6,6 @@ export const axiosInstance = axios.create({
   withCredentials: true,
 });
 
-export const chatAxiosInstance = axios.create({
-  baseURL: `${serviceConfig.apiGatewayUrl}${appConfig.version}`,
-  withCredentials: true,
-});
-
 export const contentfulAxiosInstance = axios.create({
   baseURL: `${contentfulConfig.url}${contentfulConfig.spaceId}${contentfulConfig.urlEnd}${contentfulConfig.environment}`,
   headers: {

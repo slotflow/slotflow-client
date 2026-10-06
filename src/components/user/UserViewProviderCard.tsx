@@ -1,10 +1,11 @@
 import { Badge } from '@/components/ui/badge';
 import { useNavigate } from 'react-router-dom';
 import { ShieldCheck, Star } from 'lucide-react';
-import { cardGradients } from '@/shared/utils/constants/designConstants';
+import ProfileImage from '../profile/ProfileImage';
 import { Card, CardContent } from '@/components/ui/card';
 import avatar from '../../assets/defaultImages/avatar.png';
 import { UserViewProviderCardProps } from '@/shared/types/component';
+import { cardGradients } from '@/shared/utils/constants/designConstants';
 import { formatNumberToPrice } from '@/shared/utils/helper/formatNumberToPrice';
 
 const UserViewProviderCard = ({ provider, serviceDetails }: UserViewProviderCardProps) => {
@@ -25,11 +26,14 @@ const UserViewProviderCard = ({ provider, serviceDetails }: UserViewProviderCard
             <Badge className="mt-1 text-xs capitalize">{serviceDetails?.service}</Badge>
           </div>
 
-          <img
-            src={provider?.profileImage || avatar}
-            alt={provider?.username}
-            className="w-16 h-16 rounded-xl object-cover border shadow-sm"
+          <ProfileImage
+            name={provider?.username || "Provider"}
+            profileImage={provider?.profileImage || avatar}
+            size="size-16"
+            rounded="xl"
+            className="shadow-sm"
           />
+
         </div>
 
         <div className="space-y-1">

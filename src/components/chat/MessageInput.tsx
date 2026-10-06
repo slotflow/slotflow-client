@@ -1,14 +1,15 @@
+import { Button } from '../ui/button';
 import { toast } from 'react-toastify';
-import { socket } from '@/lib/socketService';
+import { chatSocket } from '@/lib/socketService';
 import React, { useRef, useState } from 'react';
 import { Image, Send, Trash } from 'lucide-react';
 import { sendMessage } from '@/services/apis/message';
 import { useDispatch, useSelector } from 'react-redux';
 import { MessageInputProps } from '@/shared/types/component';
 import { AppDispatch, RootState } from '@/app/store/appStore';
-import { Button } from '../ui/button';
 
 const MessageInput = ({ setIsTyping, isTyping, setMessageSenderId }: MessageInputProps) => {
+  
   const dispatch = useDispatch<AppDispatch>();
   const [text, setText] = useState<string>('');
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -70,9 +71,9 @@ const MessageInput = ({ setIsTyping, isTyping, setMessageSenderId }: MessageInpu
 
     if (!isTyping) {
       setIsTyping(true);
-      if (socket) {
+      if (chatSocket) {
         setMessageSenderId(authUser.uid ?? null);
-        socket.emit('typing', {
+        chatSocket.emit('typing', {
           fromUserId: authUser.uid,
           toUserId: selectedUser?._id,
         });
@@ -83,9 +84,9 @@ const MessageInput = ({ setIsTyping, isTyping, setMessageSenderId }: MessageInpu
 
     typingTimeoutRef.current = setTimeout(() => {
       setIsTyping(false);
-      if (socket) {
+      if (chatSocket) {
         setMessageSenderId(authUser.uid ?? null);
-        socket.emit('stopTyping', {
+        chatSocket.emit('stopTyping', {
           fromUserId: authUser.uid,
           toUserId: selectedUser._id,
         });
@@ -118,8 +119,8 @@ const MessageInput = ({ setIsTyping, isTyping, setMessageSenderId }: MessageInpu
         <div className="flex-1 flex gap-2">
           <input
             type="text"
-            className="w-full h-10 border rounded-lg"
-            placeholder=" Message"
+            className="w-full h-10 border border-input bg-background px-3 text-sm rounded-lg outline-none focus:border-primary transition-colors placeholder:text-muted-foreground"
+            placeholder="Message"
             value={text}
             onChange={handleTyping}
           />

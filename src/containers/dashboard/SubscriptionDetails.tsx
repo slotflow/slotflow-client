@@ -17,7 +17,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { queryKeys } from '@/shared/utils/constants/appConstants';
 import DataField from '@/components/app/DataField';
 import StatusBadge from '@/components/common/StatusBadge';
-import CopyableId from '@/components/common/CopyField';
 import DataShimmer from '@/components/shimmers/DataShimmer';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import DashboardDataCard from '@/components/common/DashboardDataCard';

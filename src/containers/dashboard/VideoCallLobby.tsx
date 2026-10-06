@@ -6,7 +6,6 @@ import {
   Sparkles,
   ShieldCheck,
   Wifi,
-  Settings,
   Users,
   Copy,
   Check,
@@ -18,6 +17,7 @@ import { useCopy } from '@/hooks/useCopy';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useJVideoCallLobby } from '@/hooks/useJVideoCallLobby';
+import ProfileImage from '@/components/profile/ProfileImage';
 
 const VideoCallLobby = () => {
 
@@ -212,12 +212,13 @@ const VideoCallLobby = () => {
                   roomUsers.map(({ id, user }) => {
                     const name = user?.name || 'Participant';
                     return (
-                      <img
+                      <ProfileImage
                         key={id}
-                        className="inline-block h-8 w-8 rounded-full ring-2 ring-background object-cover"
-                        src={user?.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}`}
-                        alt={name}
-                        title={name}
+                        name={name}
+                        profileImage={user?.profileImage}
+                        size="size-8"
+                        rounded="full"
+                        className="ring-2 ring-background inline-block"
                       />
                     );
                   })

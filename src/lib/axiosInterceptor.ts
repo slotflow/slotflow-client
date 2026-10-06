@@ -2,6 +2,7 @@ import { toast } from 'react-toastify';
 import { axiosInstance } from './axios';
 import { appStore } from '@/app/store/appStore';
 import { setAuthUser } from '@/app/store/slices/authSlice';
+import { appConfig } from '@/config/env';
 
 export const setupAxiosInterceptors = () => {
   axiosInstance.interceptors.response.use(
@@ -10,11 +11,13 @@ export const setupAxiosInterceptors = () => {
     },
     (error) => {
       const status = error.response?.status;
-      console.log('status : ', status);
       const message = error.response?.data?.message || 'Unexpected Error';
       if (!error.response) {
         toast.error('Unable to connect to the server. Please try again.');
-        console.log('error : ', error);
+        if(appConfig.isDevelopment) {
+          console.log('status : ', status);
+          console.log('error : ', error);
+        }
         return Promise.reject(error);
       }
 

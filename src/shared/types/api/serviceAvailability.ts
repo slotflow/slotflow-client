@@ -4,7 +4,7 @@ import { Availability, AvailabilityForResponse } from '../entity/serviceAvailabi
 // request type of admin fetch provider service availability api
 export type FetchServiceAvailabilityRequest = {
   providerId: string;
-  date: Date;
+  date: string;
 };
 
 // response type of the admin fetch provider service availability api

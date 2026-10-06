@@ -11,8 +11,9 @@ import { Card, CardContent } from '@/components/ui/card';
 import { getUploadUrl, uploadToS3 } from '@/services/apis/s3';
 import { userUpdateProfileImage } from '@/services/apis/user';
 import { AppDispatch, RootState } from '@/app/store/appStore';
-import { LoaderCircle, Pen, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Pen, Sparkles, CheckCircle2 } from 'lucide-react';
 import { UserUpdateProfileImageResponse } from '@/shared/types/api/user';
+import ProfileImage from '@/components/profile/ProfileImage';
 
 const ProfileHead = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -63,22 +64,14 @@ const ProfileHead = () => {
             <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-600 opacity-20 group-hover:opacity-60 blur-md transition duration-300" />
 
             <div className="relative h-28 w-28 sm:h-32 sm:w-32 rounded-2xl overflow-hidden border-2 border-background shadow-md">
-              <img
-                src={selectedImage || authUser?.profileImage || avatar}
-                alt="Profile"
-                className={`h-full w-full object-cover transition-transform duration-300 group-hover:scale-105 ${
-                  profileImageUpdating ? 'opacity-40 filter blur-xs' : ''
-                }`}
+              <ProfileImage
+                name={authUser?.username || ''}
+                profileImage={selectedImage || authUser?.profileImage || avatar}
+                size="size-full"
+                rounded="xl"
+                isUpdating={profileImageUpdating}
+                imgClassName="group-hover:scale-105"
               />
-
-              {profileImageUpdating && (
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 backdrop-blur-xs text-white">
-                  <LoaderCircle className="w-7 h-7 animate-spin text-indigo-400 mb-1" />
-                  <span className="text-[10px] font-medium tracking-wider uppercase text-slate-200">
-                    Updating
-                  </span>
-                </div>
-              )}
 
               {!profileImageUpdating && (
                 <Label

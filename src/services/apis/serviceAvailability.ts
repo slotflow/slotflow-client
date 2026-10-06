@@ -27,10 +27,10 @@ export const createServiceAvailabilities = createAsyncThunk<
 });
 
 export const fetchMyServiceAvailability = async (
-  date: Date,
+  date: string,
 ): Promise<ApiBaseResponse<FetchServiceAvailabilityResponse>> => {
   const response = await axiosInstance.get(`/service-availabilities/me`, {
-    params: { date: date.toISOString() },
+    params: { date },
   });
   return response.data;
 };
@@ -40,7 +40,7 @@ export const fetchServiceAvailabilityByProviderId = async ({
   providerId,
 }: FetchServiceAvailabilityRequest): Promise<ApiBaseResponse<FetchServiceAvailabilityResponse>> => {
   const response = await axiosInstance.get(`/providers/${providerId}/service-availability`, {
-    params: { date: date.toISOString() },
+    params: { date },
   });
   return response.data;
 };

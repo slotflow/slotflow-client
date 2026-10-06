@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '../ui/button';
-import { Check, LoaderCircle } from 'lucide-react';
+import { LoaderCircle } from 'lucide-react';
 import { AuthFormsButtonProps } from '@/shared/types/component';
 
 export const FormButton = React.memo(

@@ -4,10 +4,11 @@ import { Suspense, useEffect, useMemo } from 'react';
 import InfoHeader from '@/components/navs/InfoHeader';
 import { useDispatch, useSelector } from 'react-redux';
 import { MainLayoutProps } from '@/shared/types/component';
-import { standaloneRoutes } from '@/shared/utils/constants/routeConstants';
 import { AppDispatch, RootState } from '@/app/store/appStore';
-import LoadingFallbackPage from '../pages/fallbacks/LoadingFallbackPage';
+import { connectChatSocket } from '@/services/socket/chatSocketThunk';
 import { connectEventSocket } from '@/services/socket/eventSocketThunk';
+import LoadingFallbackPage from '../pages/fallbacks/LoadingFallbackPage';
+import { standaloneRoutes } from '@/shared/utils/constants/routeConstants';
 import { useNotificationPermissionGate } from '@/hooks/systemHooks/useNotificationPermissionGate';
 
 const MainLayout = ({ routes, filteredRoutes, children, rightSidebar }: MainLayoutProps) => {
@@ -22,6 +23,7 @@ const MainLayout = ({ routes, filteredRoutes, children, rightSidebar }: MainLayo
   useEffect(() => {
     if (authUser) {
       dispatch(connectEventSocket());
+      dispatch(connectChatSocket());
     }
   }, [authUser, dispatch]);
 

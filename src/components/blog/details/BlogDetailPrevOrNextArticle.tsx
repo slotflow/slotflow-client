@@ -6,8 +6,7 @@ const BlogDetailPrevOrNextArticle = ({
   nextArticle,
   prevArticle,
 }: BlogDetailPrevOrNextArticleProps) => {
-  console.log('prevArticleId : ', prevArticle?.id);
-  console.log('nextArticleId : ', nextArticle?.id);
+
   return (
     <section id="prev-or-next" className="mt-32 pt-16 w-full">
       <div className="max-w-7xl mx-auto grid gap-6 md:grid-cols-2">

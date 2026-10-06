@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import { useBooking } from './useBooking';
 import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCallback, useEffect, useRef } from 'react';
@@ -8,14 +9,16 @@ import { checkBookingConfirmed } from '@/services/apis/booking';
 import { handleError } from '@/shared/utils/helper/handleError';
 import { UseBookingCallbackReturn } from '@/shared/types/hooks';
 import { setBookingUpdating } from '@/app/store/slices/authSlice';
-import { setBookingData, setPaymentProcessStatus } from '@/app/store/slices/paymentSlice';
+import { setPaymentProcessStatus } from '@/app/store/slices/paymentSlice';
 
 export const useBookingCallback = (): UseBookingCallbackReturn => {
+
   const [searchParams] = useSearchParams();
   const statusParam = searchParams.get('status');
   const status = statusParam === 'success';
 
   const dispatch = useDispatch<AppDispatch>();
+  const { handleBookingSuccess } = useBooking();
   const { bookingUpdating } = useSelector((state: RootState) => state.auth);
 
   const isFetched = useRef(false);
@@ -31,7 +34,7 @@ export const useBookingCallback = (): UseBookingCallbackReturn => {
       if (response.data) {
         toast.success('Your booking has been confirmed');
         dispatch(setPaymentProcessStatus(PaymentProcessStatus.SUCCESS));
-        dispatch(setBookingData(null));
+        handleBookingSuccess();
         isFetched.current = true;
 
         dispatch(setBookingUpdating(false));

@@ -1,11 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { BookingData, PaymentSlice } from '@/shared/types/slice';
+import { PaymentSlice } from '@/shared/types/slice';
 import { BillingCycle, PaymentProcessStatus, PaymentProcessType } from '@/shared/types/enums';
 
 const initialState: PaymentSlice = {
   type: null,
   isPaymentModalOpen: false,
-  bookingData: null,
   subscriptionData: null,
   status: PaymentProcessStatus.IDLE,
 };
@@ -14,11 +13,8 @@ const paymentSlice = createSlice({
   name: 'payment',
   initialState,
   reducers: {
-    setBookingData: (
-      state,
-      action: PayloadAction<BookingData | null>,
-    ) => {
-      state.bookingData = action.payload;
+    setPaymentProcessStatus: (state, action: PayloadAction<PaymentProcessStatus>) => {
+      state.status = action.payload;
     },
     setPaymentSelectionOpen: (state, action: PayloadAction<PaymentProcessType>) => {
       state.type = action.payload;
@@ -29,9 +25,6 @@ const paymentSlice = createSlice({
       state.type = null;
       state.isPaymentModalOpen = false;
       state.status = PaymentProcessStatus.IDLE;
-    },
-    setPaymentProcessStatus: (state, action: PayloadAction<PaymentProcessStatus>) => {
-      state.status = action.payload;
     },
     setSubscriptionData: (
       state,
@@ -47,7 +40,6 @@ const paymentSlice = createSlice({
 });
 
 export const {
-  setBookingData,
   setPaymentSelectionOpen,
   setPaymentSelectionClose,
   setPaymentProcessStatus,

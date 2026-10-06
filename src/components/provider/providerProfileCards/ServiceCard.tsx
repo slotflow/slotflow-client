@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { ServiceCardProps } from '@/shared/types/component';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import DataFieldShimmer from '@/components/shimmers/DataFieldShimmer';
+import { formatString } from '@/shared/utils/helper/formatString';
 
 const ServiceCard = ({
   isLoading,
@@ -45,7 +46,7 @@ const ServiceCard = ({
               )}
               {!isShowPreview && !isUserLookingProvider && (
                 <>
-                  <DataField label="Type" value={data?.serviceType} Icon={Layers} />
+                  <DataField label="Service Type" value={formatString(data?.serviceType)} Icon={Layers} />
                   {data?.tags && data.tags.length > 0 && (
                     <div className="flex flex-wrap items-center gap-1.5">
                       {data.tags.map((tag: string, index: number) => (

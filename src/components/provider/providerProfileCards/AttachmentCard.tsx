@@ -1,4 +1,3 @@
-import IconText from '@/components/app/IconText';
 import DataField from '@/components/app/DataField';
 import { FileText, ChevronRight } from 'lucide-react';
 import { AttachmentCardProps } from '@/shared/types/component';

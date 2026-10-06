@@ -25,22 +25,18 @@ export const connectEventSocket = createAsyncThunk<void, void, { state: RootStat
     socket.removeAllListeners();
 
     socket.on(EventSocketEnum.connect, () => {
-      console.log('Event socket connected:', socket.id);
       dispatch(setEventSocketConnected({ socketId: socket.id! }));
     });
 
     socket.io.on(EventSocketEnum.reconnect, () => {
-      console.log('Event socket reconnected:', socket.id);
       dispatch(setEventSocketConnected({ socketId: socket.id! }));
     });
 
     socket.on(EventSocketEnum.disconnect, (reason) => {
-      console.log('Event socket disconnected:', reason);
       dispatch(setEventSocketDisconnected());
     });
 
     socket.on(EventSocketEnum.subscriptionActivated, (payload: SubscriptionActivated) => {
-      console.log('Subscription activated:', payload);
 
       const isOwner = payload.userId === authUser.uid;
       if (isOwner) {
@@ -59,7 +55,6 @@ export const connectEventSocket = createAsyncThunk<void, void, { state: RootStat
     socket.on(
       EventSocketEnum.stripeAccountStatusUpdated,
       (payload: StripeAccountStatusUpdatedPayload) => {
-        console.log('Stripe account status updated:', payload);
 
         const isOwner = payload.userId === authUser.uid;
 

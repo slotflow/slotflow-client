@@ -7,7 +7,6 @@ import {
 } from '@/components/ui/select';
 import FormLabelWithInfo from './FormLabelWithInfo';
 import { FieldValues, Control, Controller, Path } from 'react-hook-form';
-import { formatString } from '@/shared/utils/helper/formatString';
 
 interface SelectOption<K> {
   label: string;

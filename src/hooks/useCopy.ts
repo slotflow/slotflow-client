@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import { CopyInput, UseCopyReturn } from "@/shared/types/hooks";
+import { appConfig } from "@/config/env";
 
 export const useCopy = (timeout: number = 2000): UseCopyReturn => {
 
@@ -23,7 +24,9 @@ export const useCopy = (timeout: number = 2000): UseCopyReturn => {
             const textToCopy = typeof input === "string" ? input : input.url;
 
             if (!navigator?.clipboard) {
-                console.warn("Clipboard functionality is not supported by this browser.");
+                if(appConfig.isDevelopment) {
+                    console.warn("Clipboard functionality is not supported by this browser.");
+                }
                 return false;
             }
 
@@ -33,7 +36,9 @@ export const useCopy = (timeout: number = 2000): UseCopyReturn => {
                 setTimeout(() => setCopied(false), timeout);
                 return true;
             } catch (error) {
-                console.error("Failed to copy to clipboard:", error);
+                if(appConfig) {
+                    console.error("Failed to copy to clipboard:", error);
+                }
                 setCopied(false);
                 return false;
             }

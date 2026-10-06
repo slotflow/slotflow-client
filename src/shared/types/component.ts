@@ -42,7 +42,7 @@ import { ChartConfig } from '@/components/ui/chart';
 import * as RPNInput from 'react-phone-number-input';
 import { FetchServicesResponse } from './api/service';
 import { Location } from '@/shared/types/entity/address';
-import { Dispatch, ReactNode, SetStateAction } from 'react';
+import { ComponentType, Dispatch, ReactNode, SetStateAction } from 'react';
 import { Availability } from './entity/serviceAvailability';
 import { RouteNames } from '../utils/constants/routeConstants';
 import { BillingCycle, Day, PlanName, Role, ServiceMode } from './enums';
@@ -56,6 +56,7 @@ import { Column, ColumnDef, OnChangeFn, PaginationState } from '@tanstack/react-
 import { FetchProvidersProofsResponse, UpdateFileDataRequest } from './api/commonApiInterface';
 import { AnalyticsAiResponse } from './api/adminDashboard';
 import { NotificationType } from './entity/notification';
+import { roundedClasses, sizeClasses } from '../utils/constants/styleConstants';
 
 // Provider service availability component props interface
 export interface ProviderServiceAvailabilityProps {
@@ -1065,12 +1066,6 @@ export interface FAQSectionProps {
   rows: number;
 }
 
-// User Profile Top Card props
-export interface UserProfileTopCardProps {
-  name: string;
-  image: string;
-}
-
 // Boarding Layout props
 export interface BoardingLayoutProps {
   children: React.ReactNode;
@@ -1142,7 +1137,7 @@ export interface AdminDashboardUserDataProps {
 
 //
 export interface AdminDashboardProviderDataProps {
- dateRange: DateRangeStrings;
+  dateRange: DateRangeStrings;
 }
 
 //
@@ -1207,10 +1202,10 @@ export interface ProviderSubscriptionInfoProps {
 }
 
 // Sandbox interface
-export interface ComponentSandboxSpec<T = any> {
+export interface ComponentSandboxSpec<T extends Record<string, unknown> = Record<string, unknown>> {
   id: string;
   name: string;
-  component: React.ComponentType<T>;
+  component: ComponentType<T>;
   defaultProps: T;
   controls?: {
     [K in keyof T]?: {
@@ -1229,4 +1224,21 @@ export interface EnhancedSavedAvailabilitiesProps {
   availabilities: Availability[] | null;
   removeAvailability: (day: Day) => void;
   onCopyLastAvailability?: (targetDay: Day, lastAvailability: Availability) => void;
+}
+
+//
+export type PredefinedSize = keyof typeof sizeClasses;
+export type RoundedOption = keyof typeof roundedClasses;
+
+export interface ProfileImageProps {
+  name: string;
+  profileImage?: string | null;
+  size?: PredefinedSize | (string & {});
+  rounded?: RoundedOption;
+  textSize?: string;
+  isLoading?: boolean;
+  isUpdating?: boolean;
+  updatingText?: string;
+  className?: string;
+  imgClassName?: string;
 }

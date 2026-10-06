@@ -12,6 +12,8 @@ const IntegrationsSettingsPage = () => {
   const authUser = useSelector((state: RootState) => state.auth.authUser);
   const { googleCalendar, stripe } = useSelector((state: RootState) => state.integration);
 
+  if(!authUser) return null;
+
   const listData = [
     {
       image: googleCalendarLogo,
@@ -33,7 +35,7 @@ const IntegrationsSettingsPage = () => {
         'Connect your Stripe account to securely manage payments, payouts, and transaction tracking.',
       title: 'Connect Stripe',
       text: 'Connect',
-      action: () => connectStripe({ email: authUser?.email! }),
+      action: () => connectStripe({ email: authUser.email }),
       show: authUser?.role !== Role.PROVIDER,
       connectionStatus: stripe.status === PaymentAccountStatus.ACTIVE,
       connectionText: stripe.status === PaymentAccountStatus.ACTIVE

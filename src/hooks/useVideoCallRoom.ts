@@ -175,7 +175,7 @@ export const useVideoCallRoom = (): UseVideoCallRoomReturn => {
             videoSocket?.emit(VideoSocketEnum.roomLeave, { roomId });
             dispatch(disconnectVideoSocket());
         };
-    }, [roomId, user?.email, dispatch, user?.uid, user?.username]);
+    }, [roomId, user?.email, dispatch, user?.uid, user?.username, user?.profileImage]);
 
     // Timer Tick Mechanism
     useEffect(() => {

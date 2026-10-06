@@ -2,8 +2,8 @@ import { lazy } from "react";
 import RoleLayout from "./RoleLayout";
 import { Role } from "@/shared/types/enums";
 import { ProtectedRoute } from "./ProtectedRoutes";
-import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
 import { RouteNames } from "@/shared/utils/constants/routeConstants";
+import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
 
 import AuthLayout from "@/layouts/AuthLayout";
 import OnBoardingGuard from "./OnBoardingGuard";
