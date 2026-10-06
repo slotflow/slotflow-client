@@ -608,3 +608,13 @@ export interface DashboardItem {
 //
 export type DateInput = Date | string | number | null | undefined;
 export type DateFormatPattern = typeof dateFormats[keyof typeof dateFormats] | (string & {});
+
+// Settings menu interface
+export interface SettingsMenu {
+  id: string;
+  title: string;
+  description: string;
+  path: string;
+  icon: LucideIcon;
+  badge?: string;
+}

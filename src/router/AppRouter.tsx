@@ -430,17 +430,17 @@ export const appRouter = createBrowserRouter([
                     {
                         index: true,
                         element: <SettingsMenuPage />,
-                        handle: { title: RouteNames.SETTINGS },
-                    },
-                    {
-                        path: 'notifications',
-                        element: <NotificationSettingsPage />,
-                        handle: { title: RouteNames.NOTIFICATIONS },
+                        handle: { title: 'Menu' },
                     },
                     {
                         path: 'account',
                         element: <AccountSettingsPage />,
                         handle: { title: RouteNames.ACCOUNT },
+                    },
+                    {
+                        path: 'notifications',
+                        element: <NotificationSettingsPage />,
+                        handle: { title: RouteNames.NOTIFICATIONS },
                     },
                     {
                         path: 'integrations',
@@ -468,7 +468,7 @@ export const appRouter = createBrowserRouter([
     },
 
     // Test sandbox routes
-     {
+    {
         path: 'test-sandbox',
         element: (
             <ProtectedRoute allowedRoles={[Role.ADMIN]}>

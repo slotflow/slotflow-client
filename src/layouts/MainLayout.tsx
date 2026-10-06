@@ -36,7 +36,7 @@ const MainLayout = ({ routes, filteredRoutes, children, rightSidebar }: MainLayo
       {!isStandalonePage && (
         <Sidebar routes={routes} filteredRoutes={filteredRoutes} />
       )}
-      <div className={`flex-1 flex flex-col ${isSidebarOpen ? 'w-[82%]' : 'w-[95%]'}`}>
+      <div className={`flex-1 flex flex-col ${isSidebarOpen ? 'w-[85%]' : 'w-[95%]'}`}>
         {!isStandalonePage && <InfoHeader />}
         <div className="flex-1 overflow-y-auto no-scrollbar p-4 relative">
           <Suspense fallback={<LoadingFallbackPage />}>{children}</Suspense>

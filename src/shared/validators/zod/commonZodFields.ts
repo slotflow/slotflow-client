@@ -97,6 +97,13 @@ export type CreateAddressFormType = z.infer<typeof createAddressZodSchema>;
 export const userInfoZodSchema = z.object({
   username: z.string().min(1, 'Username is required'),
   phone: z.string().min(1, 'Phone number is required'),
+  timeZone: z.object({
+    value: z.string(),
+    label: z.string(),
+    offset: z.number(),
+    abbrev: z.string(),
+    altName: z.string(),
+  }).optional(),
 });
 
 export type UserInfoFormType = z.infer<typeof userInfoZodSchema>;

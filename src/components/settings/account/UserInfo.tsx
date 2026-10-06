@@ -6,7 +6,7 @@ import DataField from '@/components/app/DataField';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SelectSeparator } from '@/components/ui/select';
 import StatusBadge from '@/components/common/StatusBadge';
-import { Mail, Phone, ShieldUser, User } from 'lucide-react';
+import { Globe, Mail, Phone, ShieldUser, User } from 'lucide-react';
 import UpdateUserInfoForm from '@/components/form/Common/UpdateUserInfoForm';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -41,6 +41,11 @@ const UserInfo = () => {
             type={authUser?.isBlocked ? 'blocked' : "active"}
           />}
           Icon={ShieldUser}
+        />
+        <DataField
+          label="time zone"
+          value={authUser?.timeZone}
+          Icon={Globe}
         />
       </CardContent>
       <AnimatePresence initial={false}>

@@ -554,6 +554,11 @@ export interface UpdateUserInfoFormProps {
   onClose: () => void;
 }
 
+// user update timezone props interface
+export interface UpdateTimezoneFormProps {
+    onClose: () => void;
+}
+
 // integration card props interface
 export interface IntegrationCardProps {
   image: string;

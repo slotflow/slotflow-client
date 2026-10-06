@@ -1,6 +1,6 @@
 import { Role } from "@/shared/types/enums";
-import { Route } from "@/shared/types/common";
-import { BookLock, Calendar1, CalendarCheck, Component, CreditCard, Gauge, Handshake, LayoutDashboard, LayoutGrid, LockIcon, Mail, MessageSquare, Rows2, Settings, Shield, Star, TestTube, User, UserPlus, Users, Wallet2Icon } from "lucide-react";
+import { Route, SettingsMenu } from "@/shared/types/common";
+import { Bell, Blocks, BookLock, Calendar1, CalendarCheck, Component, CreditCard, Gauge, Handshake, LayoutDashboard, LayoutGrid, LockIcon, Mail, MessageSquare, Rows2, Settings, Shield, ShieldCheck, Star, TestTube, User, UserPlus, Users, Wallet2Icon } from "lucide-react";
 
 // Route names record
 export enum RouteNames {
@@ -149,12 +149,6 @@ export const sidebarRoutes: Route[] = [
         roles: [Role.USER, Role.PROVIDER],
         subroutes: [
             {
-                path: 'notifications',
-                name: RouteNames.NOTIFICATIONS,
-                icon: Mail,
-                roles: [Role.USER, Role.PROVIDER],
-            },
-            {
                 path: 'account',
                 name: RouteNames.ACCOUNT,
                 icon: Shield,
@@ -164,6 +158,12 @@ export const sidebarRoutes: Route[] = [
                 path: 'integrations',
                 name: RouteNames.INTEGRATIONS,
                 icon: CreditCard,
+                roles: [Role.USER, Role.PROVIDER],
+            },
+            {
+                path: 'notifications',
+                name: RouteNames.NOTIFICATIONS,
+                icon: Mail,
                 roles: [Role.USER, Role.PROVIDER],
             },
             {
@@ -237,3 +237,36 @@ export const standaloneRoutes = [redirectPaths.UPGRADE];
 
 // to show user services page filters
 export const filterShowsRoutes = [redirectPaths.SERVICE_PROVIDERS];
+
+// Setting menu
+export const settingsMenu: SettingsMenu[] = [
+    {
+      id: "account",
+      title: "Account",
+      description: "Update personal details, profile picture, and email settings",
+      path: redirectPaths.ACCOUNT,
+      icon: User,
+    },
+  {
+    id: "notifications",
+    title: "Notifications",
+    description: "Manage alerts, email communications, and push notifications",
+    path: redirectPaths.NOTIFICATIONS,
+    icon: Bell,
+  },
+  {
+    id: "integrations",
+    title: "Integrations",
+    description: "Connect third-party tools, webhooks, and API keys",
+    path: redirectPaths.INTEGRATIONS,
+    icon: Blocks,
+    badge: "Connected",
+  },
+  {
+    id: "security",
+    title: "Security & Privacy",
+    description: "Manage passkeys, two-factor auth, and active user sessions",
+    path: redirectPaths.SECURITY,
+    icon: ShieldCheck,
+  },
+];

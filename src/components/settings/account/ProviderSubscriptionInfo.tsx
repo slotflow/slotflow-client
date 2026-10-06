@@ -4,7 +4,7 @@ import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { formatDate } from '@/shared/utils/helper/formatDate';
 import { formatString } from '@/shared/utils/helper/formatString';
-import { CreditCard, Calendar, Activity, Zap } from 'lucide-react';
+import { CreditCard, Calendar, Activity, Zap, Globe } from 'lucide-react';
 import { ProviderSubscriptionInfoProps } from '@/shared/types/component';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
