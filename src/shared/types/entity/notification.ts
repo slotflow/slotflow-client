@@ -1,8 +1,5 @@
-export type NotificationType =
-  | 'account_activity'
-  | 'system_updates'
-  | 'promotional_updates';
-  
+import { NotificationType } from "../enums";
+
 export interface Notification {
   _id: string;
   userId: string;

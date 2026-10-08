@@ -1,7 +1,5 @@
-import { NotificationType } from '@/shared/types/entity/notification';
 import {
   DayMapInterface,
-  NotificationChannel,
   dataSelectListItemInterface,
 } from '../../types/common';
 
@@ -28,18 +26,6 @@ export const dateSelectList: dataSelectListItemInterface[] = [
   { value: '365d', content: 'Last year' },
 ];
 
-export const notificationChannel = {
-  EMAIL: 'email',
-  PUSH: 'push',
-  IN_APP: 'in_app',
-} as const satisfies Record<string, NotificationChannel>;
-
-export const notificationType = {
-  ACCOUNT_ACTIVITY: 'account_activity',
-  SYSTEM_UPDATES: 'system_updates',
-  PROMOTIONAL_UPDATES: 'promotional_updates',
-} as const satisfies Record<string, NotificationType>;
-
 //
 export const queryKeys = {
   PLANS: 'plans',
@@ -61,6 +47,7 @@ export const queryKeys = {
   PLAN_DETAILS: 'plan-details',
   REFERRAL_DETAILS: 'referral-details',
   CREDIT_DETAILS: 'credit-details',
+  NOTIFICATION_PREF: 'notification-preference',
 
   USER_ENGAGEMENT_AI_RES: 'user-engagement-ai-res',
   PROVIDER_ENGAGEMENT_AI_RES: 'provider-engagement-ai-res',
@@ -130,3 +117,6 @@ export const DEFAULT_ITEMS = [
     'Electrician near me',
     'Beauty & Spa',
 ];
+
+// local storage
+export const dismissKey: string = 'slotflow_hide_notification_banner';

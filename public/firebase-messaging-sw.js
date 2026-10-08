@@ -16,5 +16,17 @@ firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
-  console.log('received background message : ', payload);
+  const notificationTitle =
+    payload.notification?.title || 'SlotFlow';
+
+  const notificationOptions = {
+    body: payload.notification?.body || '',
+    icon: '/logo.png',
+    data: payload.data || {},
+  };
+
+  self.registration.showNotification(
+    notificationTitle,
+    notificationOptions
+  );
 });

@@ -9,7 +9,6 @@ import {
   ApiBaseResponse,
   BlogAuthorFields,
   statsMapIntrface,
-  NotificationChannel,
   ApiPaginatedResponse,
   FetchFunctionBaseQueryParams,
   StatMetric,
@@ -42,21 +41,20 @@ import { ChartConfig } from '@/components/ui/chart';
 import * as RPNInput from 'react-phone-number-input';
 import { FetchServicesResponse } from './api/service';
 import { Location } from '@/shared/types/entity/address';
-import { ComponentType, Dispatch, ReactNode, SetStateAction } from 'react';
+import { AnalyticsAiResponse } from './api/adminDashboard';
 import { Availability } from './entity/serviceAvailability';
 import { RouteNames } from '../utils/constants/routeConstants';
-import { BillingCycle, Day, PlanName, Role, ServiceMode } from './enums';
 import { FetchProviderServiceResponse } from './api/providerService';
+import { BillingCycle, Day, NotificationChannel, NotificationType, PlanName, Role, ServiceMode } from './enums';
+import { ComponentType, Dispatch, ReactNode, SetStateAction } from 'react';
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 import { FetchAddressResponse, FetchMyAddressResponse } from './api/address';
 import { FetchPaymentsQueryParams, FetchPaymentsResponse } from './api/payment';
+import { roundedClasses, sizeClasses } from '../utils/constants/styleConstants';
 import { ProviderServiceAvailabilityFormType } from '../validators/zod/providerZod';
 import { FetchReviewsResponse, ChangeReviewBlockStatusRequest } from './api/review';
 import { Column, ColumnDef, OnChangeFn, PaginationState } from '@tanstack/react-table';
 import { FetchProvidersProofsResponse, UpdateFileDataRequest } from './api/commonApiInterface';
-import { AnalyticsAiResponse } from './api/adminDashboard';
-import { NotificationType } from './entity/notification';
-import { roundedClasses, sizeClasses } from '../utils/constants/styleConstants';
 
 // Provider service availability component props interface
 export interface ProviderServiceAvailabilityProps {
@@ -1119,6 +1117,7 @@ export interface NotificationItemProps {
   channel: NotificationChannel;
   type: NotificationType;
   checked: boolean;
+  isLoading: boolean;
   onChange: (channel: NotificationChannel, type: NotificationType, enabled: boolean) => void;
 }
 

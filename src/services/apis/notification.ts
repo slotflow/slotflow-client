@@ -5,6 +5,8 @@ import {
   FetchNotificationsQueryParams,
   UpdateNotificationPreferenceRequest,
   UpdateNotificationPreferenceResponse,
+  FetchMyNotificationPreferenceResponse,
+  UpdatePushNotificationPreferenceRequest,
 } from '../../shared/types/api/notification';
 import { buildQueryParams } from '../../shared/utils/helper/buildQueryParams';
 import { ApiBaseResponse, ApiFetchFunction } from '../../shared/types/common';
@@ -29,3 +31,13 @@ export const handleNotificationChange = async (
   const response = await axiosInstance.patch('/notifications/preferences', data);
   return response.data;
 };
+
+export const fetchMyNotificationPreference = async(): Promise<FetchMyNotificationPreferenceResponse> => {
+  const response = await axiosInstance.get(`/notifications/preferences`);
+  return response.data;
+}
+
+export const updatePushNotificationPreference = async(payload: UpdatePushNotificationPreferenceRequest): Promise<ApiBaseResponse> => {
+  const response = await axiosInstance.patch('/notifications/preferences/push', payload);
+  return response.data;
+}

@@ -7,8 +7,8 @@ import { Booking } from './entity/booking';
 import React, { ChangeEvent } from 'react';
 import { Message } from './entity/message';
 import { Plan } from './entity/planInterface';
-import { dateFormats } from '../utils/constants/appConstants';
 import { ColumnDef } from '@tanstack/react-table';
+import { dateFormats } from '../utils/constants/appConstants';
 import { RouteNames } from '../utils/constants/routeConstants';
 import { HearAboutUsOptionValue, PlanName, Role, ServiceCategory } from './enums';
 
@@ -517,9 +517,6 @@ export interface BoardingStep {
 export interface AppRouteHandle {
   title?: string;
 }
-
-//
-export type NotificationChannel = 'email' | 'push' | 'in_app';
 
 // cms plan fields
 export interface PlanFields {

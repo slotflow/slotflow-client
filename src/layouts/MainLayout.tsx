@@ -10,6 +10,7 @@ import { connectEventSocket } from '@/services/socket/eventSocketThunk';
 import LoadingFallbackPage from '../pages/fallbacks/LoadingFallbackPage';
 import { standaloneRoutes } from '@/shared/utils/constants/routeConstants';
 import { useNotificationPermissionGate } from '@/hooks/systemHooks/useNotificationPermissionGate';
+import { NotificationPermissionBanner } from '@/components/notification/NotificationPermissionBanner';
 
 const MainLayout = ({ routes, filteredRoutes, children, rightSidebar }: MainLayoutProps) => {
 
@@ -18,7 +19,7 @@ const MainLayout = ({ routes, filteredRoutes, children, rightSidebar }: MainLayo
   const { isSidebarOpen } = useSelector((store: RootState) => store.app);
   const authUser = useSelector((state: RootState) => state.auth.authUser);
 
-  useNotificationPermissionGate();
+  const { showBanner, handleAllow, handleDismiss, isPending } = useNotificationPermissionGate();
 
   useEffect(() => {
     if (authUser) {
@@ -39,7 +40,18 @@ const MainLayout = ({ routes, filteredRoutes, children, rightSidebar }: MainLayo
       <div className={`flex-1 flex flex-col ${isSidebarOpen ? 'w-[85%]' : 'w-[95%]'}`}>
         {!isStandalonePage && <InfoHeader />}
         <div className="flex-1 overflow-y-auto no-scrollbar p-4 relative">
-          <Suspense fallback={<LoadingFallbackPage />}>{children}</Suspense>
+          <Suspense fallback={<LoadingFallbackPage />}>{
+            <>
+              {children}
+              {showBanner && (
+                <NotificationPermissionBanner
+                  onAllow={handleAllow}
+                  onDismiss={handleDismiss}
+                  isLoading={isPending}
+                />
+              )}
+            </>
+          }</Suspense>
         </div>
       </div>
       {rightSidebar}

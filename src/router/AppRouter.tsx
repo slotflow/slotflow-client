@@ -66,8 +66,8 @@ const VideoCallLobbyPage = lazy(() => import("@/pages/dashboard/VideoCallLobbyPa
 const VideoCallRoomPage = lazy(() => import("@/pages/dashboard/VideoCallRoomPage"));
 const SettingsPage = lazy(() => import("@/pages/dashboard/SettingsPage"));
 const SettingsMenuPage = lazy(() => import("@/pages/dashboard/SettingsMenuPage"));
-const NotificationSettingsPage = lazy(() => import("@/pages/dashboard/NotificationSettingsPage"));
 const AccountSettingsPage = lazy(() => import("@/pages/dashboard/AccountSettingsPage"));
+const NotificationSettingsPage = lazy(() => import("@/pages/dashboard/NotificationSettingsPage"));
 const IntegrationsSettingsPage = lazy(() => import("@/pages/dashboard/IntegrationsSettingsPage"));
 const SecuritySettingsPage = lazy(() => import("@/components/settings/SecuritySettingsPage"));
 const SandboxPage = lazy(() => import("@/pages/dashboard/SandboxPage"));

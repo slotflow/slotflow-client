@@ -8,14 +8,12 @@ import {
 } from './enums';
 import {
   FaqFields,
+  PlanFields,
   BlogArticle,
   ReviewFields,
-  NotificationChannel,
-  PlanFields,
 } from './common';
 import { User } from './entity/user';
 import { Message } from './entity/message';
-import { NotificationType } from './entity/notification';
 import { ProviderProfile } from './entity/providerProfile';
 import { Availability } from './entity/serviceAvailability';
 import { SubscribePlanCheckoutRequest } from './api/subscription';
@@ -144,17 +142,6 @@ export interface PaymentSlice {
   isPaymentModalOpen: boolean;
   subscriptionData: SubscribePlanCheckoutRequest | null;
   status: PaymentProcessStatus;
-}
-
-//
-export interface NotificationPreference {
-  channel: NotificationChannel;
-  preferences: Partial<Record<NotificationType, boolean>>;
-}
-
-//
-export interface NotificationSlice {
-  preferences: NotificationPreference[];
 }
 
 //

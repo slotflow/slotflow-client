@@ -8,6 +8,7 @@ const NotificationSettingsItem = ({
   channel,
   type,
   checked,
+  isLoading,
   onChange,
 }: NotificationItemProps) => {
   return (
@@ -19,7 +20,12 @@ const NotificationSettingsItem = ({
             {description}
           </CardDescription>
         </div>
-        <Switch className="cursor-pointer" checked={checked} onCheckedChange={(enabled) => onChange(channel, type, enabled)} />
+        <Switch
+          className={`cursor-pointer ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          checked={checked}
+          disabled={isLoading}
+          onCheckedChange={(enabled) => onChange(channel, type, enabled)}
+        />
       </CardHeader>
     </Card>
   );

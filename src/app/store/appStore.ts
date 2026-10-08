@@ -7,11 +7,10 @@ import videoReducer from './slices/videoSlice';
 import paymentReducer from './slices/paymentSlice';
 import localStorage from 'redux-persist/lib/storage';
 import providerReducer from './slices/providerSlice';
-import { storeConstants } from '@/shared/utils/constants/storeConstants';
 import integrationReducer from './slices/integrationSlice';
-import notificationReducer from './slices/notificationSlice';
 import { persistReducer, persistStore } from 'redux-persist';
 import { setupAxiosInterceptors } from '@/lib/axiosInterceptor';
+import { storeConstants } from '@/shared/utils/constants/storeConstants';
 import { combineReducers, configureStore, type Action } from '@reduxjs/toolkit';
 
 const persistConfig = {
@@ -28,7 +27,6 @@ const rootReducers = {
   video: videoReducer,
   integration: integrationReducer,
   payment: paymentReducer,
-  notification: notificationReducer,
   cms: cmsReducer,
 };
 
