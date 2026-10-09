@@ -11,14 +11,16 @@ import UpdateUserInfoForm from '@/components/form/Common/UpdateUserInfoForm';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const UserInfo = () => {
-
   const authUser = useSelector((store: RootState) => store.auth.authUser);
   const [showForm, setShowForm] = useState<boolean>(false);
 
   return (
     <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
       <CardHeader className="flex justify-between items-center">
-        <CardTitle className="flex flex-row space-x-2"> <User className="size-4 text-indigo-500" /> <span>Profile Info</span></CardTitle>
+        <CardTitle className="flex flex-row space-x-2">
+          {' '}
+          <User className="size-4 text-indigo-500" /> <span>Profile Info</span>
+        </CardTitle>
         <Button
           title="Update Password"
           variant={showForm ? 'destructive' : 'secondary'}
@@ -37,16 +39,10 @@ const UserInfo = () => {
         <DataField label="Email" value={authUser?.email} Icon={Mail} />
         <DataField
           label="Account Status"
-          value={<StatusBadge
-            type={authUser?.isBlocked ? 'blocked' : "active"}
-          />}
+          value={<StatusBadge type={authUser?.isBlocked ? 'blocked' : 'active'} />}
           Icon={ShieldUser}
         />
-        <DataField
-          label="time zone"
-          value={authUser?.timeZone}
-          Icon={Globe}
-        />
+        <DataField label="time zone" value={authUser?.timeZone} Icon={Globe} />
       </CardContent>
       <AnimatePresence initial={false}>
         {showForm && (

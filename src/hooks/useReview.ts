@@ -5,7 +5,14 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { handleError } from '@/shared/utils/helper/handleError';
 import { ApiBaseResponse, ApiError, ApiPaginatedResponse } from '@/shared/types/common';
 import { deleteReview, reportReview, changeReviewBlockStatus } from '@/services/apis/review';
-import { FetchReviewsResponse, ReportReviewRequest, ReportReviewResponse, ChangeReviewBlockStatusRequest, ChangeReviewBlockStatusResponse, DeleteReviewRequest } from '@/shared/types/api/review';
+import {
+  FetchReviewsResponse,
+  ReportReviewRequest,
+  ReportReviewResponse,
+  ChangeReviewBlockStatusRequest,
+  ChangeReviewBlockStatusResponse,
+  DeleteReviewRequest,
+} from '@/shared/types/api/review';
 
 export const useReview = (): useReviewReturn => {
   const queryClient = useQueryClient();
@@ -36,13 +43,13 @@ export const useReview = (): useReviewReturn => {
               items: oldData.items.map((review) =>
                 review._id === _id
                   ? {
-                    ...review,
-                    reported: reported,
-                  }
-                  : review
+                      ...review,
+                      reported: reported,
+                    }
+                  : review,
               ),
             };
-          }
+          },
         );
       } else {
         toast.error(res.message || 'Could not report review, please try again.');
@@ -51,7 +58,7 @@ export const useReview = (): useReviewReturn => {
     onError: (error: ApiError) => {
       handleError(error, 'Failed to report review.');
     },
-  })
+  });
 
   const changeReviewBlockStatusMutation = useMutation<
     ApiBaseResponse<ChangeReviewBlockStatusResponse>,
@@ -79,13 +86,13 @@ export const useReview = (): useReviewReturn => {
               items: oldData.items.map((review) =>
                 review._id === _id
                   ? {
-                    ...review,
-                    isBlocked: isBlocked,
-                  }
-                  : review
+                      ...review,
+                      isBlocked: isBlocked,
+                    }
+                  : review,
               ),
             };
-          }
+          },
         );
       } else {
         toast.error(res.message || 'Could not change review block status.');
@@ -96,11 +103,7 @@ export const useReview = (): useReviewReturn => {
     },
   });
 
-  const deleteReviewMutation = useMutation<
-    ApiBaseResponse,
-    ApiError,
-    DeleteReviewRequest
-  >({
+  const deleteReviewMutation = useMutation<ApiBaseResponse, ApiError, DeleteReviewRequest>({
     mutationFn: async ({ reviewId }: DeleteReviewRequest) => {
       if (!reviewId) {
         throw new Error('Invalid review ID.');
@@ -118,11 +121,9 @@ export const useReview = (): useReviewReturn => {
 
             return {
               ...oldData,
-              items: oldData.items.filter(
-                (review) => review._id !== variables.reviewId
-              ),
+              items: oldData.items.filter((review) => review._id !== variables.reviewId),
             };
-          }
+          },
         );
       } else {
         toast.error(res.message || 'Could not delete review, please try again.');
@@ -131,7 +132,6 @@ export const useReview = (): useReviewReturn => {
     onError: (error: ApiError) => {
       handleError(error, 'Failed to delete review.');
     },
-
   });
 
   return {
@@ -140,6 +140,6 @@ export const useReview = (): useReviewReturn => {
     changeReviewBlockStatus: changeReviewBlockStatusMutation.mutate,
     isChangingBlockStatus: changeReviewBlockStatusMutation.isPending,
     deleteReview: deleteReviewMutation.mutate,
-    isDeleting: deleteReviewMutation.isPending
+    isDeleting: deleteReviewMutation.isPending,
   };
 };

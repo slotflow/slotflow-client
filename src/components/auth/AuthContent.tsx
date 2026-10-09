@@ -7,7 +7,7 @@ const AuthContent = ({ children }: { children: ReactNode }) => {
 
   return (
     <section className="relative flex flex-1 items-center justify-center overflow-hidden w-full">
-     <motion.div
+      <motion.div
         key={location.pathname}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

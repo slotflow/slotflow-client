@@ -21,7 +21,14 @@ import ReviewCardsShimmer from '@/components/shimmers/ReviewCardsShimmer';
 const ListReviews = ({ isPage = true, providerId, userId }: ReviewsPageProps) => {
   const limit = 10;
   const { authUser } = useSelector((state: RootState) => state.auth);
-  const { reportReview, changeReviewBlockStatus, deleteReview, isDeleting, isChangingBlockStatus, isChangingReportStatus } = useReview();
+  const {
+    reportReview,
+    changeReviewBlockStatus,
+    deleteReview,
+    isDeleting,
+    isChangingBlockStatus,
+    isChangingReportStatus,
+  } = useReview();
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError } =
     useInfiniteQuery<ApiPaginatedResponse<FetchReviewsResponse>>({
@@ -70,7 +77,9 @@ const ListReviews = ({ isPage = true, providerId, userId }: ReviewsPageProps) =>
               role={authUser?.role as Role}
               handleDeleteReview={() => handleDeleteReview(review._id)}
               handleReportReview={() => reportReview({ reviewId: review._id })}
-              handleChangeReviewBlockStatus={() => changeReviewBlockStatus({ reviewId: review._id, isBlocked: review.isBlocked })}
+              handleChangeReviewBlockStatus={() =>
+                changeReviewBlockStatus({ reviewId: review._id, isBlocked: review.isBlocked })
+              }
               isChangingBlockStatus={isChangingBlockStatus}
               isChangingReportStatus={isChangingReportStatus}
             />

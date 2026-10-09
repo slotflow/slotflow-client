@@ -14,7 +14,6 @@ import { UseProfileSetupReturn, SubmitProfileSetupHandlerProps } from '@/shared/
 import { AdminVerificationStatus, HearAboutUsOptionValue, Role } from '@/shared/types/enums';
 
 export const useProfileSetup = (): UseProfileSetupReturn => {
-
   const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
   const { authUser, profileSetupData } = useSelector((state: RootState) => state.auth);
@@ -25,10 +24,12 @@ export const useProfileSetup = (): UseProfileSetupReturn => {
     SubmitProfileSetupHandlerProps
   >({
     mutationFn: async ({ selectedOption, referralCode }) => {
-      if (!authUser
-        || !selectedOption
-        || !profileSetupData.selectedRole
-        || !profileSetupData.username) {
+      if (
+        !authUser ||
+        !selectedOption ||
+        !profileSetupData.selectedRole ||
+        !profileSetupData.username
+      ) {
         throw new Error('Details are missing. Please refresh the page.');
       }
       const payload: ProfileSetupRequest = {
@@ -81,7 +82,7 @@ export const useProfileSetup = (): UseProfileSetupReturn => {
     onError: (error: ApiError) => {
       handleError(error, 'Something went wrong. Please try again.');
     },
-  })
+  });
 
   return {
     submitPrfoleSetup: submitPreBoardingMutation.mutate,

@@ -1,23 +1,19 @@
-import { lazy, Suspense } from "react";
-import { useAuth } from "@/hooks/useAuth";
-import LoadingFallbackPage from "../fallbacks/LoadingFallbackPage";
+import { lazy, Suspense } from 'react';
+import { useAuth } from '@/hooks/useAuth';
+import LoadingFallbackPage from '../fallbacks/LoadingFallbackPage';
 
-const Error404Page = lazy(() => import("../fallbacks/Error404Page"));
-const AdminPlanDetails = lazy(() => import("../../containers/admin/AdminPlanDetails"));
+const Error404Page = lazy(() => import('../fallbacks/Error404Page'));
+const AdminPlanDetails = lazy(() => import('../../containers/admin/AdminPlanDetails'));
 
 const PlanDetailsPage = () => {
-    const { isAdmin } = useAuth();
+  const { isAdmin } = useAuth();
 
-    const renderRoleDashboard = () => {
-        if (isAdmin) return <AdminPlanDetails />;
-        return <Error404Page />
-    }
+  const renderRoleDashboard = () => {
+    if (isAdmin) return <AdminPlanDetails />;
+    return <Error404Page />;
+  };
 
-    return (
-        <Suspense fallback={<LoadingFallbackPage />}>
-            {renderRoleDashboard()}
-        </Suspense>
-    );
+  return <Suspense fallback={<LoadingFallbackPage />}>{renderRoleDashboard()}</Suspense>;
 };
 
 export default PlanDetailsPage;

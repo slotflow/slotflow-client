@@ -30,7 +30,8 @@ export interface UserUpdateProfileImageRequest {
 export type UserUpdateProfileImageResponse = User['profileImage'];
 
 // request type of the user update userInfo api
-export type UserUpdateUserInfoRequest = Pick<User, 'username' | 'phone'> & Partial<Pick<User, 'timeZone'>>;
+export type UserUpdateUserInfoRequest = Pick<User, 'username' | 'phone'> &
+  Partial<Pick<User, 'timeZone'>>;
 // response type of the user update userInfo api
 export type UserUpdateUserInfoResponse = UserUpdateUserInfoRequest;
 

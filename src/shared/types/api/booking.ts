@@ -51,7 +51,7 @@ export type BookAppointmentRequest = {
 // response interface of the book an appointment api
 export interface BookAppointmentResponse {
   sessionId: string;
-};
+}
 
 // join video call
 export interface JoinRoomCallbackRequest {
@@ -65,17 +65,15 @@ export interface JoinRoomCallbackResponse {
   videoCallRoomId: Booking['videoCallRoomId'];
 }
 
-
 // provider change booking appointment status
 export interface ChangeAppointmentStatusRequest {
   appointmentId: Booking['_id'];
   appointmentStatus: Booking['appointmentStatus'];
 }
-export type ChangeAppointmentStatusResponse = Pick<Booking, "_id" | "appointmentStatus">;
-
+export type ChangeAppointmentStatusResponse = Pick<Booking, '_id' | 'appointmentStatus'>;
 
 // cancel booking
 export interface CancelBookingRequest {
-  bookingId: Booking["_id"];
+  bookingId: Booking['_id'];
 }
-export type CancelBookingResponse = Pick<Booking, "_id" | "appointmentStatus">
+export type CancelBookingResponse = Pick<Booking, '_id' | 'appointmentStatus'>;

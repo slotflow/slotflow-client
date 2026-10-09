@@ -9,7 +9,6 @@ const AdminUserOrProviderPayments = ({
   providerId,
   fetchFunction,
 }: AdminUserOrProviderPaymentsProps) => {
-  
   const { toPaymentDetailsPage } = useAppNavigation();
   const column = PaymentsTableColumn(toPaymentDetailsPage);
 

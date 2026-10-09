@@ -58,7 +58,9 @@ export const checkBookingConfirmed = async (): Promise<ApiBaseResponse<boolean>>
 };
 
 // cancel booking
-export const cancelBooking = async (payload: CancelBookingRequest): Promise<ApiBaseResponse<CancelBookingResponse>> => {
+export const cancelBooking = async (
+  payload: CancelBookingRequest,
+): Promise<ApiBaseResponse<CancelBookingResponse>> => {
   const response = await axiosInstance.patch(`/bookings/${payload.bookingId}/cancel`);
   return response.data;
 };
@@ -76,7 +78,12 @@ export const joinOrLeft = async (
 };
 
 // change appointment status
-export const changeAppointmentStatus = async (payload: ChangeAppointmentStatusRequest): Promise<ApiBaseResponse<ChangeAppointmentStatusResponse>> => {
-  const response = await axiosInstance.patch(`/bookings/${payload.appointmentId}/change-status`, payload);
+export const changeAppointmentStatus = async (
+  payload: ChangeAppointmentStatusRequest,
+): Promise<ApiBaseResponse<ChangeAppointmentStatusResponse>> => {
+  const response = await axiosInstance.patch(
+    `/bookings/${payload.appointmentId}/change-status`,
+    payload,
+  );
   return response.data;
 };

@@ -60,16 +60,17 @@ const UserProviderDetails = () => {
       address={
         <AddressListing
           userOrProviderId={providerId}
-          fetchApiFunction={() => fetchAddressByUserId({
-            userId: providerId
-          })}
+          fetchApiFunction={() =>
+            fetchAddressByUserId({
+              userId: providerId,
+            })
+          }
           queryKey={[queryKeys.ADDRESS]}
           isUserLookingProvider
           hideAddress
         />
       }
       availability={<ProviderServiceAvailability role={Role.USER} providerId={providerId} />}
-
     />
   );
 };

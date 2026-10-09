@@ -13,7 +13,6 @@ const CreateServiceAvailabilityFooter = ({
   isLoading,
   isAvailable,
 }: CreateServiceAvailabilityFooterProps) => {
-
   return (
     <div className="flex flex-col gap-4">
       <div className="mt-10">
@@ -30,12 +29,10 @@ const CreateServiceAvailabilityFooter = ({
             variant="secondary"
             disabled={isSubmitting}
             onClick={onAddAvailability}
-            className='w-full md:w-auto'
+            className="w-full md:w-auto"
           >
-            <Plus className='size-4' />
-            <span>
-              Add Availability
-            </span>
+            <Plus className="size-4" />
+            <span>Add Availability</span>
           </Button>
         </div>
       )}
@@ -55,7 +52,7 @@ const CreateServiceAvailabilityFooter = ({
             }
             title={isUpdating ? 'Update' : 'Submit'}
             disabled={!isValid || isSubmitting || isLoading}
-            className='w-full md:w-auto'
+            className="w-full md:w-auto"
           />
         </div>
       )}

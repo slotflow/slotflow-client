@@ -84,8 +84,8 @@ const CreateServiceForm = ({ onClose, formRef }: CreateServiceFormProps) => {
         <Button
           title="close"
           type="button"
-          size='sm'
-          variant='ghost'
+          size="sm"
+          variant="ghost"
           onClick={handleCloseForm}
           disabled={isSubmitting}
           aria-label="Close form"

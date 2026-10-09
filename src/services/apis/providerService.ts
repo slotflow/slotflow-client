@@ -43,9 +43,11 @@ export const fetchProviderServiceByProviderId = async (
 // user fetch service providers
 export const fetchServiceProvidersForUser = async (
   data: UserFetchServiceProvidersRequest,
+  signal?: AbortSignal,
 ): Promise<ApiBaseResponse<Array<UserFetchServiceProvidersResponse>>> => {
   const response = await axiosInstance.get(`/provider-services`, {
     params: { ...data },
+    signal,
   });
   return response.data;
 };

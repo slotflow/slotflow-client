@@ -15,7 +15,6 @@ import { PaymentProcessStatus, PaymentProcessType } from '@/shared/types/enums';
 import { X, ArrowRight, CreditCard, LockKeyhole, LoaderCircle, ShieldCheck } from 'lucide-react';
 
 const PaymentSelection = () => {
-
   const dispatch = useDispatch();
   const { bookAppointment } = useBooking();
   const { subscribePlan } = useSubscription();
@@ -69,7 +68,7 @@ const PaymentSelection = () => {
     }
 
     return gateways;
-  }, [type, makeStripePayment, isSubscription, type]);
+  }, [makeStripePayment, isSubscription]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 backdrop-blur-md">
@@ -140,8 +139,8 @@ const PaymentSelection = () => {
             <div className="relative border-b border-border/60 px-6 pb-5 pt-6">
               <Button
                 type="button"
-                size='sm'
-                variant='ghost'
+                size="sm"
+                variant="ghost"
                 onClick={() => dispatch(setPaymentSelectionClose())}
                 className={`absolute right-4 top-4`}
               >
@@ -157,7 +156,9 @@ const PaymentSelection = () => {
                   <h2 className="text-xl font-bold tracking-tight">Complete Payment</h2>
 
                   <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                    {!isSubscription ? 'Choose your preferred payment method to continue securely.' : 'Secure payment through stripe'}
+                    {!isSubscription
+                      ? 'Choose your preferred payment method to continue securely.'
+                      : 'Secure payment through stripe'}
                   </p>
                 </div>
               </div>

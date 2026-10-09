@@ -44,7 +44,9 @@ const HearAboutUsOptions = ({ setSelectedOption, selectedOption }: HearAboutUsOp
                   </div>
                   <span
                     className={`text-sm font-medium truncate ${
-                      isSelected ? 'text-foreground font-semibold' : 'text-muted-foreground group-hover:text-foreground'
+                      isSelected
+                        ? 'text-foreground font-semibold'
+                        : 'text-muted-foreground group-hover:text-foreground'
                     }`}
                   >
                     {option.label}

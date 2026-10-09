@@ -6,7 +6,6 @@ import { adminFetchDashboardSubscriptionChartData } from '@/services/apis/admin'
 import { subscriptionChartConfig } from '@/shared/utils/constants/chartConstants';
 
 const SubscriptionDataChart = ({ dateRange }: SubscriptionDataChartProps) => {
-
   const { data, isLoading, isError } = useQuery({
     queryKey: [queryKeys.DASHBOARD_SUBSCRPITION_CHART, dateRange],
     queryFn: () => adminFetchDashboardSubscriptionChartData(dateRange),

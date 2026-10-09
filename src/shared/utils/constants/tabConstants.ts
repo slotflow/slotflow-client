@@ -1,4 +1,4 @@
-import { TabItem } from "@/shared/types/common";
+import { TabItem } from '@/shared/types/common';
 
 // Tabs for provider profile showing in admin side and provider side
 export const providerTabs: TabItem[] = [

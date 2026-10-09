@@ -3,14 +3,12 @@ import { SandboxPageProps } from '@/shared/types/component';
 
 type ComponentPropsMap = Record<string, unknown>;
 
-export const SandboxPage = ({ 
-  specs,
-}: SandboxPageProps) => {
+export const SandboxPage = ({ specs }: SandboxPageProps) => {
   const [selectedId, setSelectedId] = useState<string>(specs[0]?.id || '');
-  
+
   const activeSpec = specs.find((s) => s.id === selectedId) || specs[0];
   const [currentProps, setCurrentProps] = useState<ComponentPropsMap>(
-    (activeSpec?.defaultProps as ComponentPropsMap) || {}
+    (activeSpec?.defaultProps as ComponentPropsMap) || {},
   );
 
   const handleSelectChange = (id: string) => {
@@ -93,7 +91,9 @@ export const SandboxPage = ({
               </div>
             ))
           ) : (
-            <p className="text-xs text-slate-400">No manipulation controls configured for this component.</p>
+            <p className="text-xs text-slate-400">
+              No manipulation controls configured for this component.
+            </p>
           )}
         </div>
 

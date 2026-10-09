@@ -4,7 +4,6 @@ import { RootState } from '@/app/store/appStore';
 import { boardingData } from '@/shared/utils/constants/boardingConstants';
 
 const SideBoxSteps = ({ pageNumber }: { pageNumber: number }) => {
-  
   const boardingSteps = useSelector((state: RootState) => state.app.boardingSteps);
   const percentage = ((pageNumber + 1) / boardingSteps) * 100;
 

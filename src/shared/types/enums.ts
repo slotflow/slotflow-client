@@ -67,7 +67,7 @@ export enum AppointmentStatus {
   NOT_ATTENDED = 'NOT_ATTENDED',
   CONFIRMED = 'CONFIRMED',
   EXPIRED = 'EXPIRED',
-  PENDING = 'PENDING'
+  PENDING = 'PENDING',
 }
 
 export enum Role {
@@ -142,32 +142,32 @@ export enum ServiceType {
 }
 
 export enum SubscriptionStatus {
-  ACTIVE = "ACTIVE",
-  CANCELLED = "CANCELLED",
-  TRIALING = "TRIALING",
-  PAST_DUE = "PAST_DUE",
-  UNPAID = "UNPAID",
-  INCOMPLETE = "INCOMPLETE",
-  INCOMPLETE_EXPIRED = "INCOMPLETE_EXPIRED",
-  EXPIRED = "EXPIRED",
-  PAYMENT_FAILED = "PAYMENT_FAILED"
+  ACTIVE = 'ACTIVE',
+  CANCELLED = 'CANCELLED',
+  TRIALING = 'TRIALING',
+  PAST_DUE = 'PAST_DUE',
+  UNPAID = 'UNPAID',
+  INCOMPLETE = 'INCOMPLETE',
+  INCOMPLETE_EXPIRED = 'INCOMPLETE_EXPIRED',
+  EXPIRED = 'EXPIRED',
+  PAYMENT_FAILED = 'PAYMENT_FAILED',
 }
 
 export enum RefundStatus {
-    PENDING = "PENDING",
-    SUCCESS = "SUCCEEDED",
-    FAILED = "FAILED",
+  PENDING = 'PENDING',
+  SUCCESS = 'SUCCEEDED',
+  FAILED = 'FAILED',
 }
 
 export enum RefundReason {
-    DUPLICATE = "duplicate",
-    FRAUDULENT = "fraudulent",
-    REQUESTED_BY_CUSTOMER = "requested_by_customer"
+  DUPLICATE = 'duplicate',
+  FRAUDULENT = 'fraudulent',
+  REQUESTED_BY_CUSTOMER = 'requested_by_customer',
 }
 
 export enum RefundFor {
-    CANCEL_BOOKING = "CANCEL_BOOKING",
-    CANCEL_SUBSCRIPTION = "CANCEL_SUBSCRIPTION",
+  CANCEL_BOOKING = 'CANCEL_BOOKING',
+  CANCEL_SUBSCRIPTION = 'CANCEL_SUBSCRIPTION',
 }
 
 export enum HearAboutUsOptionValue {
@@ -216,10 +216,10 @@ export enum CreditTransactionStatus {
 }
 
 export enum PaymentProcessStatus {
-    IDLE = 'IDLE',
-    PROCESSING = 'PROCESSING',
-    SUCCESS = 'SUCCESS',
-    FAILED = 'FAILED',
+  IDLE = 'IDLE',
+  PROCESSING = 'PROCESSING',
+  SUCCESS = 'SUCCESS',
+  FAILED = 'FAILED',
 }
 
 export enum PaymentProcessType {
@@ -228,11 +228,11 @@ export enum PaymentProcessType {
 }
 
 export enum PaymentAccountStatus {
-  PENDING = "PENDING",
-  ACTIVE = "ACTIVE",
-  RESTRICTED = "RESTRICTED",
-  REVOKED = "REVOKED",
-  NOT_CONNECTED = "NOT_CONNECTED",
+  PENDING = 'PENDING',
+  ACTIVE = 'ACTIVE',
+  RESTRICTED = 'RESTRICTED',
+  REVOKED = 'REVOKED',
+  NOT_CONNECTED = 'NOT_CONNECTED',
 }
 
 export enum BillingCycle {

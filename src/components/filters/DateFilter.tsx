@@ -36,7 +36,8 @@ const DateFilter = ({
 
               {dateRange?.from && dateRange?.to ? (
                 <span className="text-foreground">
-                  {formatDate(dateRange.from, dateFormats.RANGE_MONTH_DAY)} - {formatDate(dateRange.to, dateFormats.RANGE_FULL)}
+                  {formatDate(dateRange.from, dateFormats.RANGE_MONTH_DAY)} -{' '}
+                  {formatDate(dateRange.to, dateFormats.RANGE_FULL)}
                 </span>
               ) : (
                 <span className="text-muted-foreground">Pick a custom range</span>

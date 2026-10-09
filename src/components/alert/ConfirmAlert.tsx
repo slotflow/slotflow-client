@@ -10,7 +10,6 @@ const ConfirmAlert = ({
   btnTitle,
   btnText,
 }: ConfirmDeleteProps) => {
-
   const handleDelete = () => {
     deleteHandler({
       onSuccess: () => {

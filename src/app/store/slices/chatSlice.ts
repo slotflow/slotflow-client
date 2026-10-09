@@ -18,8 +18,7 @@ const updateLastMessage = (
   state.lastMessages[userId] = { message, date };
 };
 
-const getMessagePreview = (message: Message) =>
-  message.text || (message.image ? 'Image' : '');
+const getMessagePreview = (message: Message) => message.text || (message.image ? 'Image' : '');
 
 const initialState: chatSliceInitalState = {
   onlineUsers: null,

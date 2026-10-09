@@ -16,12 +16,7 @@ export interface FetchPaymentsQueryParams {
 // response type of fetch payments api
 export type FetchPaymentsResponse = Pick<
   Payment,
-  | '_id'
-  | 'createdAt'
-  | 'totalAmount'
-  | 'paymentFor'
-  | 'paymentStatus'
-  | 'discountAmount'
+  '_id' | 'createdAt' | 'totalAmount' | 'paymentFor' | 'paymentStatus' | 'discountAmount'
 >;
 
 // request type of admin fetch revenue report api
@@ -33,11 +28,7 @@ export interface AdmminFetchRevenueReportRequest extends FetchFunctionBaseQueryP
 // response type of admin fetch revenue report api row
 export type AdminFetchRevenueReportRow = Pick<
   Payment,
-  | 'createdAt' 
-  | 'discountAmount' 
-  | 'totalAmount' 
-  | 'paymentGateway' 
-  | 'paymentFor'
+  'createdAt' | 'discountAmount' | 'totalAmount' | 'paymentGateway' | 'paymentFor'
 >;
 
 // response type of admin fetch revenue report api

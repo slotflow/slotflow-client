@@ -1,12 +1,11 @@
 import jsPDF from 'jspdf';
+import React from 'react';
 import { AxiosError } from 'axios';
 import { User } from './entity/user';
 import { Review } from './entity/review';
 import { LucideIcon } from 'lucide-react';
 import { Booking } from './entity/booking';
-import React, { ChangeEvent } from 'react';
 import { Message } from './entity/message';
-import { Plan } from './entity/planInterface';
 import { ColumnDef } from '@tanstack/react-table';
 import { dateFormats } from '../utils/constants/appConstants';
 import { RouteNames } from '../utils/constants/routeConstants';
@@ -57,14 +56,6 @@ export interface HeaderCompoenentNavsProps {
   current: boolean;
 }
 
-// Common Forms Input handle change function type
-export type HandleChangeFunction = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
-export type HandleFeatureChangeFunction = (e: ChangeEvent<HTMLInputElement>, index: number) => void;
-
-// Section one interface
-// Role section Button function interface
-export type HandleRoleSelectionFunction = (url: string) => void;
-
 // Common Table compoenent
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface PaginatedDataTableProps<T, Q extends object = {}> {
@@ -104,13 +95,6 @@ export type TimeRange = '7d' | '14d' | '30d' | '45d' | '60d' | '90d' | '180d' | 
 export interface dataSelectListItemInterface {
   value: string;
   content: string;
-}
-
-// AppointmentOverTimeInterface
-export interface AppointmentOverTimeInterface {
-  completed: number;
-  missed: number;
-  cancelled: number;
 }
 
 // Chat Common Interface Base Type
@@ -153,29 +137,6 @@ export interface PlanFeatureLimit {
   starter?: string;
   professional?: string;
   enterprise?: string;
-}
-
-// Plan list type interface
-export type PlanListType = Array<
-  Pick<Plan, '_id' | 'planName' | 'monthlyPrice' | 'yearlyPrice' | 'description' | 'features'>
->;
-
-// Provider approval message interface
-export interface ProviderApprovalMessageInterface {
-  heading: string;
-  message1: string;
-  message2: string;
-  footerNote: string;
-}
-
-// Feature Content interface
-export interface FeatureContentInterface {
-  title: string;
-  description: string;
-  image: string;
-  logo?: string;
-  icon?: LucideIcon;
-  islogo: boolean;
 }
 
 // Stats map interface
@@ -246,17 +207,6 @@ export interface GoogleCalendarEvent extends Partial<Booking> {
   };
 }
 
-// Common tab interface
-export interface CommonTabInterface {
-  value: string;
-  label: string;
-  icon?: LucideIcon;
-  role?: Role[];
-}
-
-// Select options interface
-export type SelectOptions = Array<{ label: string; value: string }>;
-
 // Provider cards filters interface
 export interface ProviderCardsFilters {
   categories: ServiceCategory[];
@@ -272,28 +222,11 @@ export interface ProviderCardsFilters {
   limit: number;
 }
 
-// Contact item interface
-export interface ContactItem {
-  icon: LucideIcon;
-  label: string;
-  value: string;
-  href?: string;
-}
-
-// admin reject provider modal state
-export interface AdminRejectProviderModalState {
-  modalState: boolean;
-  providerId: User['_id'] | null;
-}
-
 // Chat Data interface
 export interface SocketDataInterface {
   fromUserId: Message['senderId'];
   toUserId: Message['receiverId'];
 }
-
-// set last message interface
-export type setLatMessageProps = Pick<Message, 'senderId' | 'text' | 'createdAt'>;
 
 // Chat list user interface
 export type ChatListUserProps =
@@ -305,12 +238,6 @@ export type OptionType<K> = {
   value: K;
 };
 
-// Map dot lit locations coordinates interface
-export interface MapDotLitLocationsCoordinates {
-  start: { lat: number; lng: number };
-  end: { lat: number; lng: number };
-}
-
 // Review form values interface
 export type ReviewFormValues = Pick<Review, 'reviewText' | 'rating'>;
 
@@ -319,16 +246,6 @@ export type HearAboutUsOptions = {
   label: string;
   value: HearAboutUsOptionValue;
   icon: React.ComponentType<{ className?: string }>;
-};
-
-// Status preset interface
-export type StatusPreset = {
-  trueText: string;
-  falseText: string;
-  trueClass: string;
-  falseClass: string;
-  trueIcon?: LucideIcon;
-  falseIcon?: LucideIcon;
 };
 
 // Contentful review data interface
@@ -440,12 +357,6 @@ export interface BlogArticle {
   quote: string;
   conclusion: string;
 }
-
-// Contentfull Authors fields data interface
-export type AuthorFields = BlogAuthorFields;
-
-// Contentfull Category fields data interface
-export type CategoryFields = BlogCategoryFields;
 
 // Landing page integrations section data interface
 export interface LandingPageIntegrations {
@@ -604,7 +515,7 @@ export interface DashboardItem {
 
 //
 export type DateInput = Date | string | number | null | undefined;
-export type DateFormatPattern = typeof dateFormats[keyof typeof dateFormats] | (string & {});
+export type DateFormatPattern = (typeof dateFormats)[keyof typeof dateFormats] | (string & {});
 
 // Settings menu interface
 export interface SettingsMenu {

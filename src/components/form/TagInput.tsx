@@ -31,12 +31,7 @@ const TagInput = ({ value, onChange }: TagInputProps) => {
           onChange={(e) => setInput(e.target.value)}
           className="border rounded-md px-3 py-2 w-full text-sm"
         />
-        <Button
-          title="Create Tag"
-          type="button"
-          variant="secondary"
-          onClick={addTag}
-        >
+        <Button title="Create Tag" type="button" variant="secondary" onClick={addTag}>
           <Plus className="size-4" />
         </Button>
       </div>
@@ -52,10 +47,10 @@ const TagInput = ({ value, onChange }: TagInputProps) => {
               title="Delete tag"
               type="button"
               variant="ghost"
-              size='sm'
+              size="sm"
               onClick={() => removeTag(tag)}
             >
-              <X className='size-4' />
+              <X className="size-4" />
             </Button>
           </span>
         ))}

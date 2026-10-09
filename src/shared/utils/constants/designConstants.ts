@@ -1,4 +1,4 @@
-import { Variants } from "framer-motion";
+import { Variants } from 'framer-motion';
 
 // User dashboard providers list card gradients
 export const cardGradients: string[] = [

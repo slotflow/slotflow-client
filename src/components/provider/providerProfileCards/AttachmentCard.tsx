@@ -6,7 +6,6 @@ import DataFieldShimmer from '@/components/shimmers/DataFieldShimmer';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const AttachmentCard = ({ isLoading, isError, data }: AttachmentCardProps) => {
-
   return (
     <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
       <CardHeader>
@@ -24,21 +23,16 @@ const AttachmentCard = ({ isLoading, isError, data }: AttachmentCardProps) => {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {/* {data.portfolioUrl && ( */}
-              <DataField
-                label="Portfolio Link"
-                value={data?.portfolioUrl}
-                Icon={ChevronRight}
-                link
-              />
+            <DataField label="Portfolio Link" value={data?.portfolioUrl} Icon={ChevronRight} link />
             {/* )} */}
 
             {/* {data.demoVideoUrl && ( */}
-              <DataField
-                label="Demo video Link"
-                value={data?.demoVideoUrl}
-                Icon={ChevronRight}
-                link
-              />
+            <DataField
+              label="Demo video Link"
+              value={data?.demoVideoUrl}
+              Icon={ChevronRight}
+              link
+            />
             {/* )} */}
           </div>
         )}

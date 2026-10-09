@@ -14,7 +14,6 @@ const ServiceCard = ({
   isUserLookingProvider = false,
   isShowPreview = false,
 }: ServiceCardProps) => {
-
   return (
     <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
       <CardContent>
@@ -40,13 +39,18 @@ const ServiceCard = ({
                     This provider offers group sessions, accommodating a maximum of{' '}
                     <strong className="font-semibold text-indigo-950 dark:text-indigo-100">
                       {data.maxParticipants} participants
-                    </strong>.
+                    </strong>
+                    .
                   </span>
                 </div>
               )}
               {!isShowPreview && !isUserLookingProvider && (
                 <>
-                  <DataField label="Service Type" value={formatString(data?.serviceType)} Icon={Layers} />
+                  <DataField
+                    label="Service Type"
+                    value={formatString(data?.serviceType)}
+                    Icon={Layers}
+                  />
                   {data?.tags && data.tags.length > 0 && (
                     <div className="flex flex-wrap items-center gap-1.5">
                       {data.tags.map((tag: string, index: number) => (

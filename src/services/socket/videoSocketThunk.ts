@@ -7,7 +7,6 @@ import { setVideoSocketConnected, setVideoSocketDisconnected } from '@/app/store
 export const connectVideoSocket = createAsyncThunk<void, void, { state: RootState }>(
   'video/connectSocket',
   async (_, { getState, dispatch }) => {
-
     const authUser = getState().auth.authUser;
     if (!authUser) return;
 

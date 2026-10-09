@@ -1,6 +1,6 @@
-import { OptionType, PlanFeatureInterface } from "@/shared/types/common";
-import { RouteNames } from "./routeConstants";
-import { PlanName } from "@/shared/types/enums";
+import { OptionType, PlanFeatureInterface } from '@/shared/types/common';
+import { RouteNames } from './routeConstants';
+import { PlanName } from '@/shared/types/enums';
 
 // Access Control For Provider
 export const planAccessMap: Record<PlanName, RouteNames[]> = {

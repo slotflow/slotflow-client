@@ -42,9 +42,7 @@ const CreditTransactionTableColumn = (): ColumnDef<FetchCreditTransactionsRespon
       return (
         <span
           className={`font-semibold ${
-            isCredit
-              ? 'text-emerald-600 dark:text-emerald-400'
-              : 'text-rose-600 dark:text-rose-400'
+            isCredit ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'
           }`}
         >
           {isCredit ? `+${credits}` : `-${credits}`}
@@ -57,11 +55,7 @@ const CreditTransactionTableColumn = (): ColumnDef<FetchCreditTransactionsRespon
     header: ({ column }) => <DataTableColumnHeader column={column} title="Balance" />,
     cell: ({ row }) => {
       const balanceAfter = row.original.balanceAfter;
-      return (
-        <span className="font-medium text-slate-700 dark:text-slate-300">
-          {balanceAfter}
-        </span>
-      );
+      return <span className="font-medium text-slate-700 dark:text-slate-300">{balanceAfter}</span>;
     },
   },
   {

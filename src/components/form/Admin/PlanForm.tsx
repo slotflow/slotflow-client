@@ -16,7 +16,10 @@ import { adminFetchPlanDetails } from '@/services/apis/plan';
 import DynamicStringListField from '../DynamicStringListFields';
 import { slideOut } from '@/shared/utils/helper/gsapAnimationSlide';
 import { planNameOptions } from '@/shared/utils/constants/planConstants';
-import { AdminCreatePlanFormType, adminCreatePlanZodSchema } from '@/shared/validators/zod/adminZod';
+import {
+  AdminCreatePlanFormType,
+  adminCreatePlanZodSchema,
+} from '@/shared/validators/zod/adminZod';
 
 const PlanForm = ({ onClose, formRef, planIdToEdit }: PlanFormProps) => {
   const isEditMode = Boolean(planIdToEdit);
@@ -44,16 +47,16 @@ const PlanForm = ({ onClose, formRef, planIdToEdit }: PlanFormProps) => {
     defaultValues: isEditMode
       ? undefined
       : {
-        planName: PlanName.STARTER,
-        description: '',
-        monthlyPrice: 0,
-        yearlyPrice: 0,
-        features: [''],
-        maxBookingPerMonth: 0,
-        adVisibility: false,
-        hasTrial: false,
-        trialDays: 14,
-      },
+          planName: PlanName.STARTER,
+          description: '',
+          monthlyPrice: 0,
+          yearlyPrice: 0,
+          features: [''],
+          maxBookingPerMonth: 0,
+          adVisibility: false,
+          hasTrial: false,
+          trialDays: 14,
+        },
   });
 
   useEffect(() => {
@@ -132,8 +135,8 @@ const PlanForm = ({ onClose, formRef, planIdToEdit }: PlanFormProps) => {
         </div>
         <Button
           type="button"
-          size='sm'
-          variant='ghost'
+          size="sm"
+          variant="ghost"
           onClick={handleClosePlanForm}
           disabled={isSubmitting}
           aria-label="Close form"

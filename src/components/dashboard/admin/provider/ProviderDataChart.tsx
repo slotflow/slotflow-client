@@ -7,7 +7,6 @@ import BarChartHorizontal from '@/components/chart/BarChartHorizontal';
 import { providersRetensionChartConfig } from '@/shared/utils/constants/chartConstants';
 
 const ProviderDataChart = ({ dateRange }: ProviderDataChartProps) => {
-
   const { data, isLoading, isError } = useQuery({
     queryKey: [queryKeys.DASHBOARD_PROVIDERS_CHART, dateRange],
     queryFn: () =>

@@ -1,11 +1,11 @@
-import { ComponentSandboxSpec } from "@/shared/types/component";
-import DashboardDataCard from "@/components/common/DashboardDataCard";
+import { ComponentSandboxSpec } from '@/shared/types/component';
+import DashboardDataCard from '@/components/common/DashboardDataCard';
 
 export const sandboxRegistry: ComponentSandboxSpec[] = [
   {
     id: 'dashboard-card',
     name: 'Dashboard Data Card',
-    component: DashboardDataCard,
+    component: DashboardDataCard as unknown as ComponentSandboxSpec['component'],
     defaultProps: {
       title: 'Total Revenue',
       value: '$45,231.89',

@@ -13,16 +13,11 @@ import { disconnectChatSocket } from '@/services/socket/chatSocketThunk';
 import { disconnectEventSocket } from '@/services/socket/eventSocketThunk';
 
 export const useSignout = (): useSignoutReturn => {
-
   const { goTo } = useAppNavigation();
   const queryClient = useQueryClient();
   const dispatch = useDispatch<AppDispatch>();
 
-  const signoutMutation = useMutation<
-    ApiBaseResponse,
-    ApiError,
-    void
-  >({
+  const signoutMutation = useMutation<ApiBaseResponse, ApiError, void>({
     mutationFn: signout,
     onSuccess: async (res) => {
       if (res.success) {

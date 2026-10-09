@@ -22,9 +22,6 @@ const userSlice = createSlice({
   },
 });
 
-export const {
-  toggleReviewCreateForm,
-} =
-  userSlice.actions;
+export const { toggleReviewCreateForm } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -19,15 +19,13 @@ const BoardingLayout = ({ children, pageNumber, heading, description }: Boarding
           exit={{ opacity: 0, x: -50 }}
           transition={{ duration: 0.3 }}
         >
-          {(heading && description) && (
+          {heading && description && (
             <div className="space-y-2 text-center md:text-left">
               <h1 className="text-xl md:text-2xl font-semibold">{heading}</h1>
               <p className="text-xs md:text-sm text-muted-foreground">{description}</p>
             </div>
           )}
-          <div className="flex-1">
-            {children}
-          </div>
+          <div className="flex-1">{children}</div>
         </motion.div>
       </AnimatePresence>
     </div>

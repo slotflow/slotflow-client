@@ -4,19 +4,18 @@ import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { useBookingCallback } from '@/hooks/useBookingCallback';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { containerVariants } from '@/shared/utils/constants/designConstants';
-import { 
-  LoaderCircle, 
-  CheckCircle2, 
-  Calendar, 
-  XCircle, 
-  ShieldCheck, 
-  ArrowRight, 
-  AlertCircle 
+import {
+  LoaderCircle,
+  CheckCircle2,
+  Calendar,
+  XCircle,
+  ShieldCheck,
+  ArrowRight,
+  AlertCircle,
 } from 'lucide-react';
 import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 
 const UserBookingCallbackPage = () => {
-  
   const { goTo } = useAppNavigation();
   const { status, bookingUpdating } = useBookingCallback();
 
@@ -102,11 +101,10 @@ const UserBookingCallbackPage = () => {
                     <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-semibold">
                       <ShieldCheck className="h-3.5 w-3.5" /> Confirmed
                     </div>
-                    <h3 className="text-xl font-bold text-foreground">
-                      Slot Secured!
-                    </h3>
+                    <h3 className="text-xl font-bold text-foreground">Slot Secured!</h3>
                     <p className="text-sm text-muted-foreground">
-                      Your booking details are stored and ready. You can review your scheduled appointments at any time.
+                      Your booking details are stored and ready. You can review your scheduled
+                      appointments at any time.
                     </p>
                   </div>
 
@@ -141,11 +139,10 @@ const UserBookingCallbackPage = () => {
                     <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-destructive/10 text-destructive text-xs font-semibold">
                       <AlertCircle className="h-3.5 w-3.5" /> Action Required
                     </div>
-                    <h3 className="text-xl font-bold text-foreground">
-                      Payment Failed
-                    </h3>
+                    <h3 className="text-xl font-bold text-foreground">Payment Failed</h3>
                     <p className="text-sm text-muted-foreground">
-                      We couldn't process your payment for this booking slot. Please review your bookings and try reserving again.
+                      We couldn't process your payment for this booking slot. Please review your
+                      bookings and try reserving again.
                     </p>
                   </div>
 

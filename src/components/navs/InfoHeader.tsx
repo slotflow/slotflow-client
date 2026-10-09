@@ -39,7 +39,9 @@ const InfoHeader = () => {
       </div>
 
       <div className="flex items-center justify-center w-full">
-        <h1 className="text-sm md:text-base text-primary/50 font-semibold tracking-tight">{pageTitle}</h1>
+        <h1 className="text-sm md:text-base text-primary/50 font-semibold tracking-tight">
+          {pageTitle}
+        </h1>
       </div>
 
       <div className="flex items-center justify-end gap-3 md:gap-5 w-full">

@@ -1,7 +1,10 @@
-import { AdminVerificationStatus } from "@/shared/types/enums";
-import { VerificationStatusConfig } from "@/shared/types/common";
+import { AdminVerificationStatus } from '@/shared/types/enums';
+import { VerificationStatusConfig } from '@/shared/types/common';
 
-export const adminVerificationStatusConfig: Record<AdminVerificationStatus, VerificationStatusConfig> = {
+export const adminVerificationStatusConfig: Record<
+  AdminVerificationStatus,
+  VerificationStatusConfig
+> = {
   [AdminVerificationStatus.REQUESTED]: {
     type: 'pending',
     label: 'Requested',

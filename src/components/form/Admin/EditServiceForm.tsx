@@ -87,8 +87,8 @@ const EditServiceForm = ({ onClose, formRef, serviceToEdit }: EditServiceFormPro
         </div>
         <Button
           type="button"
-          size='icon'
-          variant='ghost'
+          size="icon"
+          variant="ghost"
           onClick={handleCloseForm}
           disabled={isSubmitting}
           aria-label="Close form"

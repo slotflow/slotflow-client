@@ -117,14 +117,8 @@ export function DataTable<TData, TValue>({
               </Button>
             )}
             <DropdownMenuTrigger asChild>
-              <Button
-                title="Columns"
-                variant="secondary"
-                size="sm"
-                >
-                <Columns
-                  className={`w-3.5 h-3.5 text-slate-500 ${isFetching && 'animate-spin'}`}
-                />
+              <Button title="Columns" variant="secondary" size="sm">
+                <Columns className={`w-3.5 h-3.5 text-slate-500 ${isFetching && 'animate-spin'}`} />
                 Columns
               </Button>
             </DropdownMenuTrigger>
@@ -216,9 +210,7 @@ export function DataTable<TData, TValue>({
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            <ChevronLeft
-              className={`w-3.5 h-3.5 text-slate-500 ${isFetching && 'animate-spin'}`}
-            />
+            <ChevronLeft className={`w-3.5 h-3.5 text-slate-500 ${isFetching && 'animate-spin'}`} />
             Previous
           </Button>
           <Button

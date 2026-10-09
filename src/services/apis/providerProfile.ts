@@ -104,7 +104,9 @@ export const providerFetchDashboardRevenueStatsData = async (
 };
 
 // provider fetch dashboard graph data
-export const providerFetchDashboardGraphData = async (payload: ProviderDashboardGraphRequest): Promise<ApiBaseResponse<ProviderDashboardGraphResponse>> => {
+export const providerFetchDashboardGraphData = async (
+  payload: ProviderDashboardGraphRequest,
+): Promise<ApiBaseResponse<ProviderDashboardGraphResponse>> => {
   const response = await axiosInstance.get(`/provider-dashboard/graph`, {
     params: payload,
   });
@@ -134,7 +136,7 @@ export const fetchServiceProvidersForAdmin: ApiFetchFunction<
 };
 
 // admin approve provider
-export const  adminApproveProvider = async (
+export const adminApproveProvider = async (
   data: AdminApproveProviderRequest,
 ): Promise<ApiBaseResponse<AdminApproveProviderResponse>> => {
   const response = await axiosInstance.patch(`/providers/${data.providerId}/approve`);

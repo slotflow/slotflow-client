@@ -16,7 +16,6 @@ import { setForgotPassword } from '@/app/store/slices/appSlice';
 import { LoginFormType, LoginZodSchema } from '@/shared/validators/zod/authZod';
 
 const LoginForm = () => {
-
   const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
   const { handleAuthLoginNavigation } = useAppNavigation();
@@ -96,7 +95,7 @@ const LoginForm = () => {
                 loading={isSubmitting}
                 disabled={isSubmitting || !isValid}
                 title="Sign In"
-                className='w-full'
+                className="w-full"
               />
             </fieldset>
           </form>
@@ -107,9 +106,7 @@ const LoginForm = () => {
             <div className="flex-grow border-t"></div>
           </div>
 
-          <GoogleButton
-            text="Sign up with Google"
-          />
+          <GoogleButton text="Sign up with Google" />
 
           <p className="mt-10 text-center text-sm text-neutral-700">
             New to Slotflow ?

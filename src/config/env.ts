@@ -19,7 +19,6 @@ export const firebaseCloudMessageConfig = {
 
 export const stripeConfig = {
   stripePublishableKey: import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY,
-  stripeSecretKey: import.meta.env.VITE_STRIPE_SECRET_KEY,
 };
 
 export const serviceConfig = {
@@ -39,8 +38,9 @@ export const locationIqConfig = {
 };
 
 export const grafanaConfig = {
-  grafanaUrl: import.meta.env.VITE_GRAFANA_URL,
-  grafanaUrlDev: import.meta.env.VITE_GRAFANA_URL_DEV,
+  grafanaUrl: appConfig.isDevelopment
+    ? import.meta.env.VITE_GRAFANA_URL_DEV
+    : import.meta.env.VITE_GRAFANA_URL,
 };
 
 export const contentfulConfig = {

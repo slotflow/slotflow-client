@@ -1,12 +1,4 @@
-import {
-  ShieldAlert,
-  KeyRound,
-  Globe,
-  Laptop,
-  CheckCircle2,
-  XCircle,
-  Clock,
-} from 'lucide-react';
+import { ShieldAlert, KeyRound, Globe, Laptop, CheckCircle2, XCircle, Clock } from 'lucide-react';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -164,7 +156,7 @@ const SecurityLog = () => {
             <SelectSeparator />
             <CardContent className="p-5 pt-4 space-y-3 relative min-h-[300px]">
               <FeatureOverlay
-                size='sm'
+                size="sm"
                 isBlur
                 isDevMode
                 title="Security Audit Logs Coming Soon"
@@ -182,9 +174,7 @@ const SecurityLog = () => {
 
                     <div className="space-y-0.5">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <h4 className="text-xs font-semibold text-foreground">
-                          {log.description}
-                        </h4>
+                        <h4 className="text-xs font-semibold text-foreground">{log.description}</h4>
                         {getStatusBadge(log.status)}
                       </div>
 

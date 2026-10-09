@@ -51,9 +51,9 @@ export const useAdminService = (): UseAdminServiceReturn => {
               items: oldData.items.map((service) =>
                 service._id === serviceData.serviceId
                   ? {
-                    ...service,
-                    isBlocked: res.data?.isBlocked ?? serviceData.isBlocked,
-                  }
+                      ...service,
+                      isBlocked: res.data?.isBlocked ?? serviceData.isBlocked,
+                    }
                   : service,
               ),
             };
@@ -163,8 +163,6 @@ export const useAdminService = (): UseAdminServiceReturn => {
             };
           },
         );
-
-
       }
     },
     onError: (error: ApiError) => {

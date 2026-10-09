@@ -257,10 +257,11 @@ const AdminProviderDetails = () => {
                   isBlocked: !(provider?.isBlocked ?? false),
                 })
               }
-              className={`inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border shadow-sm transition-all cursor-pointer ${provider?.isBlocked
+              className={`inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border shadow-sm transition-all cursor-pointer ${
+                provider?.isBlocked
                   ? 'bg-emerald-600 hover:bg-emerald-700 text-white border-transparent'
                   : 'bg-white dark:bg-muted/20 text-rose-600 border-slate-200 dark:border-border hover:bg-rose-50 dark:hover:bg-rose-950/30'
-                }`}
+              }`}
             >
               {provider?.isBlocked ? (
                 <CircleCheck className="w-3.5 h-3.5" />
@@ -278,10 +279,11 @@ const AdminProviderDetails = () => {
                   trustedBySlotflow: !(provider?.trustedBySlotflow ?? false),
                 })
               }
-              className={`inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border shadow-sm transition-all cursor-pointer ${provider?.trustedBySlotflow
+              className={`inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border shadow-sm transition-all cursor-pointer ${
+                provider?.trustedBySlotflow
                   ? 'bg-amber-600 hover:bg-amber-700 text-white border-transparent'
                   : 'bg-white dark:bg-muted/20 text-amber-600 border-slate-200 dark:border-border hover:bg-amber-50 dark:hover:bg-amber-950/30'
-                }`}
+              }`}
             >
               {provider?.trustedBySlotflow ? (
                 <ShieldAlert className="w-3.5 h-3.5" />

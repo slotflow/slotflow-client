@@ -87,7 +87,6 @@ const AdminUserDetails = () => {
           </div>
 
           <div className="flex items-center gap-4">
-
             <ProfileImage
               name={user?.username || 'User'}
               profileImage={user?.profileImage || noProfile}
@@ -169,10 +168,11 @@ const AdminUserDetails = () => {
                 isBlocked: !(user?.isBlocked ?? false),
               })
             }
-            className={`inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border shadow-sm transition-all cursor-pointer ${user?.isBlocked
+            className={`inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border shadow-sm transition-all cursor-pointer ${
+              user?.isBlocked
                 ? 'bg-emerald-600 hover:bg-emerald-700 text-white border-transparent'
                 : 'bg-white dark:bg-muted/20 text-rose-600 border-slate-200 dark:border-border hover:bg-rose-50 dark:hover:bg-rose-950/30'
-              }`}
+            }`}
           >
             {user?.isBlocked ? (
               <CircleCheck className="w-3.5 h-3.5" />

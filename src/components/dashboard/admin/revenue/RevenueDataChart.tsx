@@ -6,11 +6,9 @@ import { adminFetchDashboardRevenueChartData } from '@/services/apis/admin';
 import { revenueChartConfig } from '@/shared/utils/constants/chartConstants';
 
 export const RevenueDataChart = ({ dateRange }: RevenueDataChartProps) => {
-
   const { data, isLoading, isError } = useQuery({
     queryKey: [queryKeys.DASHBOARD_REVENUE_CHART, dateRange],
-    queryFn: () =>
-      adminFetchDashboardRevenueChartData(dateRange),
+    queryFn: () => adminFetchDashboardRevenueChartData(dateRange),
   });
 
   const chartData = data?.data || [];

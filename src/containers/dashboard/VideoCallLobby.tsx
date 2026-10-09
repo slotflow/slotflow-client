@@ -11,7 +11,7 @@ import {
   Check,
   ArrowRight,
   Info,
-  LoaderCircle
+  LoaderCircle,
 } from 'lucide-react';
 import { useCopy } from '@/hooks/useCopy';
 import { Button } from '@/components/ui/button';
@@ -20,7 +20,6 @@ import { useJVideoCallLobby } from '@/hooks/useJVideoCallLobby';
 import ProfileImage from '@/components/profile/ProfileImage';
 
 const VideoCallLobby = () => {
-
   const { copied, copy } = useCopy();
   const {
     roomId,
@@ -34,7 +33,8 @@ const VideoCallLobby = () => {
     toggleCamera,
     toggleMic,
     handleJoin,
-    isJoiningVideoCall, } = useJVideoCallLobby();
+    isJoiningVideoCall,
+  } = useJVideoCallLobby();
 
   const roomUserNames = roomUsers.map(({ user }) => user?.name || 'Participant');
 
@@ -56,15 +56,20 @@ const VideoCallLobby = () => {
                 autoPlay
                 muted
                 playsInline
-                className={`w-full h-full object-cover rounded-md scale-x-[-1] transition-opacity duration-500 ${isCameraOn ? 'opacity-100' : 'opacity-0'
-                  }`}
+                className={`w-full h-full object-cover rounded-md scale-x-[-1] transition-opacity duration-500 ${
+                  isCameraOn ? 'opacity-100' : 'opacity-0'
+                }`}
               />
 
               <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-20 pointer-events-none">
                 <div className="flex items-center gap-2">
                   <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-background/60 backdrop-blur-md border border-border/40 text-xs font-medium shadow-sm">
-                    <span className={`w-2 h-2 rounded-full ${isCameraOn ? 'bg-emerald-500 animate-pulse' : 'bg-muted-foreground'}`} />
-                    <span className="text-muted-foreground">{isCameraOn ? videoQuality : 'Camera Off'}</span>
+                    <span
+                      className={`w-2 h-2 rounded-full ${isCameraOn ? 'bg-emerald-500 animate-pulse' : 'bg-muted-foreground'}`}
+                    />
+                    <span className="text-muted-foreground">
+                      {isCameraOn ? videoQuality : 'Camera Off'}
+                    </span>
                   </div>
 
                   <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-background/60 backdrop-blur-md border border-border/40 text-xs font-medium shadow-sm">
@@ -106,7 +111,9 @@ const VideoCallLobby = () => {
                       </span>
                     </div>
 
-                    <p className="text-lg font-semibold tracking-tight text-foreground/90">Camera turned off</p>
+                    <p className="text-lg font-semibold tracking-tight text-foreground/90">
+                      Camera turned off
+                    </p>
                     <p className="text-sm text-muted-foreground mt-1 max-w-xs">
                       Toggle video below to preview your camera stream before entering.
                     </p>
@@ -142,7 +149,7 @@ const VideoCallLobby = () => {
               title={isCameraOn ? 'Turn Video Off' : 'Turn Video On'}
               onClick={toggleCamera}
               variant={isCameraOn ? 'secondary' : 'destructive'}
-              size='icon'
+              size="icon"
             >
               {isCameraOn ? (
                 <Video className="size-5 text-foreground transition-transform group-hover:scale-110" />
@@ -155,7 +162,7 @@ const VideoCallLobby = () => {
               title={isMicOn ? 'Mute Microphone' : 'Unmute Microphone'}
               onClick={toggleMic}
               variant={isMicOn ? 'secondary' : 'destructive'}
-              size='icon'
+              size="icon"
             >
               {isMicOn ? (
                 <Mic className="size-5 text-foreground transition-transform group-hover:scale-110" />
@@ -195,13 +202,26 @@ const VideoCallLobby = () => {
                     <Info className="w-4 h-4 text-primary" />
                   </div>
                   <div className="flex flex-col truncate">
-                    <span className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground">Room ID</span>
-                    <span className="text-xs font-mono font-medium truncate text-foreground">{roomId}</span>
+                    <span className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground">
+                      Room ID
+                    </span>
+                    <span className="text-xs font-mono font-medium truncate text-foreground">
+                      {roomId}
+                    </span>
                   </div>
                 </div>
 
-                <Button onClick={() => copy(roomId)} variant="outline" size="icon" className="cursor-pointer">
-                  {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+                <Button
+                  onClick={() => copy(roomId)}
+                  variant="outline"
+                  size="icon"
+                  className="cursor-pointer"
+                >
+                  {copied ? (
+                    <Check className="w-3.5 h-3.5 text-emerald-500" />
+                  ) : (
+                    <Copy className="w-3.5 h-3.5" />
+                  )}
                 </Button>
               </div>
             )}
@@ -240,10 +260,10 @@ const VideoCallLobby = () => {
 
             <Button
               title="Join Now"
-              variant='default'
+              variant="default"
               onClick={handleJoin}
               disabled={isJoiningVideoCall}
-              className='w-full'
+              className="w-full"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
               <span className="flex items-center justify-center gap-2">

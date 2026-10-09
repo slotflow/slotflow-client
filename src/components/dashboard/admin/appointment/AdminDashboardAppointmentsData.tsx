@@ -9,12 +9,14 @@ import { AdminDashboardAppointmentsDataProps } from '@/shared/types/component';
 import { AppointmentsStatsMapForAdmin } from '@/shared/utils/constants/statsConstats';
 import { aiResponseEntities, queryKeys } from '@/shared/utils/constants/appConstants';
 import { AdminFetchDashboardAppointmentStatsDataResponse } from '@/shared/types/api/adminDashboard';
-import { adminFetchDashboardAppointmentStatsData, fetchAnalyticsInsight } from '@/services/apis/admin';
+import {
+  adminFetchDashboardAppointmentStatsData,
+  fetchAnalyticsInsight,
+} from '@/services/apis/admin';
 
 export default function AdminDashboardAppointmentsData({
   dateRange,
 }: AdminDashboardAppointmentsDataProps) {
-
   const charts = useAppointmentsDataCharts({ dateRange });
 
   const initialItems: DashboardItem[] = [
@@ -23,9 +25,7 @@ export default function AdminDashboardAppointmentsData({
       colSpan: 'col-span-12 lg:col-span-6',
       component: (
         <DashboardStats<AdminFetchDashboardAppointmentStatsDataResponse>
-          queryFunction={() =>
-            adminFetchDashboardAppointmentStatsData(dateRange)
-          }
+          queryFunction={() => adminFetchDashboardAppointmentStatsData(dateRange)}
           queryKey={[queryKeys.DASHBOARD_APPOINTMENTS_STATS]}
           statsMap={AppointmentsStatsMapForAdmin}
           dependencies={dateRange}
@@ -45,7 +45,7 @@ export default function AdminDashboardAppointmentsData({
           fetchFn={() =>
             fetchAnalyticsInsight({
               ...dateRange,
-              entity: aiResponseEntities.APPOINTMENTS
+              entity: aiResponseEntities.APPOINTMENTS,
             })
           }
           queryKey={queryKeys.APPOINTMENT_AI_RES}

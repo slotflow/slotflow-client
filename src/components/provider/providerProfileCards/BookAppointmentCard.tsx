@@ -10,7 +10,6 @@ import { BookAppointmentCardProps } from '@/shared/types/component';
 import { setPaymentSelectionOpen } from '@/app/store/slices/paymentSlice';
 
 const BookAppointmentCard = ({ isLoading, isError, data }: BookAppointmentCardProps) => {
-
   const dispatch = useDispatch<AppDispatch>();
   const [searchParams] = useSearchParams();
 
@@ -44,7 +43,7 @@ const BookAppointmentCard = ({ isLoading, isError, data }: BookAppointmentCardPr
         </div>
         <p className="text-xs text-muted-foreground mt-2">All inclusive consultation fee</p>
       </div>
-      {(date && mode && time) && (
+      {date && mode && time && (
         <div className="mx-6 mt-4 overflow-hidden rounded-xl border bg-card/50 p-4 shadow-sm backdrop-blur-sm space-y-3">
           <div className="flex items-center justify-between pb-1 border-b border-border/60">
             <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
@@ -58,16 +57,12 @@ const BookAppointmentCard = ({ isLoading, isError, data }: BookAppointmentCardPr
           <div className="space-y-2 pt-1">
             <div className="flex items-center justify-between text-sm">
               <span className="text-muted-foreground font-normal">Date</span>
-              <span className="font-semibold text-foreground tracking-tight">
-                {date}
-              </span>
+              <span className="font-semibold text-foreground tracking-tight">{date}</span>
             </div>
 
             <div className="flex items-center justify-between text-sm">
               <span className="text-muted-foreground font-normal">Time</span>
-              <span className="font-semibold text-foreground tracking-tight">
-                {time}
-              </span>
+              <span className="font-semibold text-foreground tracking-tight">{time}</span>
             </div>
           </div>
         </div>
@@ -76,7 +71,7 @@ const BookAppointmentCard = ({ isLoading, isError, data }: BookAppointmentCardPr
         <Button
           title="Book appointment"
           variant="default"
-          className='w-full'
+          className="w-full"
           disabled={isLoading || isError || !data}
           onClick={handleBookAppointment}
         >

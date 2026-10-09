@@ -16,7 +16,6 @@ import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import { VerifyOtpFormType, verifyOtpZodSchema } from '@/shared/validators/zod/authZod';
 
 const OtpVerificatioForm = () => {
-
   const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
   const { otpTimerIsRunning, forgotPassword, otpExpiresAt } = useSelector(
@@ -129,10 +128,7 @@ const OtpVerificatioForm = () => {
                     }}
                     onPaste={(e) => {
                       e.preventDefault();
-                      const paste = e.clipboardData
-                        .getData('text')
-                        .replace(/\D/g, '')
-                        .slice(0, 6);
+                      const paste = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
                       const otpArray = otpValue.split('');
                       for (let j = 0; j < paste.length; j++) {
                         otpArray[j] = paste[j];
@@ -158,7 +154,7 @@ const OtpVerificatioForm = () => {
               loading={isSubmitting}
               disabled={isSubmitting || !isValid}
               title="Verify Otp"
-              className='w-full'
+              className="w-full"
             />
           </form>
 

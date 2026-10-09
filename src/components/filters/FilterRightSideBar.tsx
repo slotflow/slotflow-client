@@ -66,13 +66,17 @@ const FilterRightSideBar = () => {
       minPrice: minPriceParam ? Number(minPriceParam) : 0,
       maxPrice: maxPriceParam ? Number(maxPriceParam) : 30000,
       slotflowTrusted: trustedParam === 'true',
-      location: latParam && lonParam ? { type: 'Point', coordinates: [Number(lonParam), Number(latParam)] } : undefined,
+      location:
+        latParam && lonParam
+          ? { type: 'Point', coordinates: [Number(lonParam), Number(latParam)] }
+          : undefined,
     });
   }, [isFilterSideBarOpen, searchParams]);
 
   const { data, isLoading } = useQuery({
-    queryFn: async () => {
-      const res = await fetchServicesByCategory(filters.categories);
+    queryFn: async ({ signal }) => {
+      const res = await fetchServicesByCategory(filters.categories, signal);
+
       return res.data;
     },
     queryKey: [queryKeys.APP_SERVICES, filters.categories],
@@ -319,7 +323,7 @@ const FilterRightSideBar = () => {
         <div className="flex space-x-2 border-t bg-[var(--menuBg)] p-3 sticky bottom-0">
           <Button
             variant="secondary"
-            size='sm'
+            size="sm"
             title="Clear"
             onClick={handleClearFilter}
             className="w-1/2"
@@ -328,7 +332,7 @@ const FilterRightSideBar = () => {
           </Button>
           <Button
             variant="secondary"
-            size='sm'
+            size="sm"
             title="Apply"
             onClick={handleApplyFilter}
             className="w-1/2"

@@ -20,7 +20,7 @@ export const fetchMyAddress = async (): Promise<ApiBaseResponse<FetchMyAddressRe
 export const fetchAddressByUserId = async (
   data: FetchAddressRequest,
 ): Promise<ApiBaseResponse<FetchAddressResponse>> => {
-  const query = buildQueryParams({checkShowStatus: data.checkShowStatus});
+  const query = buildQueryParams({ checkShowStatus: data.checkShowStatus });
   const response = await axiosInstance.get(`/users/${data.userId}/address?${query}`);
   return response.data;
 };

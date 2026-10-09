@@ -12,7 +12,6 @@ import { dismissKey } from '@/shared/utils/constants/appConstants';
 import { registerDevice, updatePushNotificationPreference } from '@/services/apis/notification';
 
 export const useNotificationPermissionGate = () => {
-  
   const authUser = useSelector((state: RootState) => state.auth.authUser);
   const [showBanner, setShowBanner] = useState<boolean>(false);
 
@@ -31,17 +30,12 @@ export const useNotificationPermissionGate = () => {
   // Enable Push Mutation
   const enableNotificationMutation = useMutation({
     mutationFn: async () => {
-      console.log("enabling push notification")
       const deviceId = getDeviceId();
       const fcmToken = await getFcmToken();
 
-      console.log("deviceId : ",deviceId);
-      console.log("fcmToken : ",fcmToken);
-      
       if (!deviceId || !fcmToken) {
         throw new Error('Device or FCM token generation failed.');
       }
-
 
       await registerDevice({
         deviceId,
@@ -63,7 +57,6 @@ export const useNotificationPermissionGate = () => {
   // 3Disable Push Mutation Triggered if permission is denied
   const disableNotificationMutation = useMutation({
     mutationFn: async () => {
-      console.log("Disabling push notification")
       return await updatePushNotificationPreference({ pushNotification: false });
     },
     onSuccess: () => {
@@ -87,7 +80,7 @@ export const useNotificationPermissionGate = () => {
     ) {
       disableNotificationMutation.mutate();
     }
-  }, [authUser?.isLoggedIn]);
+  }, [authUser?.isLoggedIn, disableNotificationMutation]);
 
   // 5. Action: User clicks "Enable" on Custom UI
   const handleAllow = useCallback(async () => {
@@ -115,9 +108,4 @@ export const useNotificationPermissionGate = () => {
     handleDismiss,
     isPending: enableNotificationMutation.isPending || disableNotificationMutation.isPending,
   };
-};
-
-export const requestNotificationPermission = async (): Promise<NotificationPermission> => {
-  if (!('Notification' in window)) return 'denied';
-  return await Notification.requestPermission();
 };

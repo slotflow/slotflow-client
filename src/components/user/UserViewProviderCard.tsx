@@ -27,13 +27,12 @@ const UserViewProviderCard = ({ provider, serviceDetails }: UserViewProviderCard
           </div>
 
           <ProfileImage
-            name={provider?.username || "Provider"}
+            name={provider?.username || 'Provider'}
             profileImage={provider?.profileImage || avatar}
             size="size-16"
             rounded="xl"
             className="shadow-sm"
           />
-
         </div>
 
         <div className="space-y-1">

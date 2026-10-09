@@ -38,7 +38,10 @@ const UserListProvidersCards = () => {
       minPrice: minPrice ? Number(minPrice) : undefined,
       maxPrice: maxPrice ? Number(maxPrice) : undefined,
       slotflowTrusted: trusted === 'true',
-      location: lat && lon ? { type: 'Point', coordinates: [Number(lon), Number(lat)] as [number, number] } : undefined,
+      location:
+        lat && lon
+          ? { type: 'Point', coordinates: [Number(lon), Number(lat)] as [number, number] }
+          : undefined,
       search: searchQuery || undefined,
     };
   }, [searchParams]);
@@ -47,12 +50,15 @@ const UserListProvidersCards = () => {
     useInfiniteQuery({
       // Key includes queryFilters so query automatically re-runs when URL params update
       queryKey: [queryKeys.PROVIDERS, queryFilters],
-      queryFn: async ({ pageParam = 0 }) => {
-        const res = await fetchServiceProvidersForUser({
-          ...queryFilters,
-          skip: pageParam,
-          limit: 12,
-        });
+      queryFn: async ({ pageParam = 0, signal }) => {
+        const res = await fetchServiceProvidersForUser(
+          {
+            ...queryFilters,
+            skip: pageParam,
+            limit: 12,
+          },
+          signal,
+        );
         return res.data;
       },
       initialPageParam: 0,
@@ -61,6 +67,13 @@ const UserListProvidersCards = () => {
       },
     });
 
+  const handleClearSearch = () => {
+    setSearch('');
+
+    const newParams = new URLSearchParams(searchParams);
+    newParams.delete('q');
+    setSearchParams(newParams);
+  };
 
   const handleSearchSubmit = () => {
     const newParams = new URLSearchParams(searchParams);
@@ -158,10 +171,7 @@ const UserListProvidersCards = () => {
         <div className="flex flex-col space-y-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 3xl:grid-cols-4 gap-3">
             {providers.map((provider, index) => (
-              <div
-                key={index}
-                className="group transition-all duration-300 hover:-translate-y-1"
-              >
+              <div key={index} className="group transition-all duration-300 hover:-translate-y-1">
                 <UserViewProviderCard {...provider} />
               </div>
             ))}
@@ -185,12 +195,13 @@ const UserListProvidersCards = () => {
             No service providers found
           </h3>
           <p className="text-sm text-muted-foreground mt-1 max-w-sm">
-            We couldn't find any experts matching your search criteria. Try adjusting your search term or clearing filters.
+            We couldn't find any experts matching your search criteria. Try adjusting your search
+            term or clearing filters.
           </p>
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setSearch('')}
+            onClick={handleClearSearch}
             className="mt-5 rounded-xl border-border/60"
           >
             Clear Search

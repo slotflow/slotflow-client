@@ -22,7 +22,7 @@ const ProviderProfileWrapper = () => {
 
   const handleIsShowPreview = () => {
     setIsShowPreview(!isShowPreview);
-  }
+  };
 
   const {
     data: providerService,
@@ -52,7 +52,7 @@ const ProviderProfileWrapper = () => {
 
   return (
     <ProviderProfile
-      username={authUser.username}
+      username={authUser.username ?? ''}
       profileImage={authUser.profileImage || ''}
       service={{
         isLoading: providerServiceLoading,
@@ -65,20 +65,15 @@ const ProviderProfileWrapper = () => {
         data: providerProfile,
       }}
       role={authUser.role}
-      address={<AddressListing
-        fetchApiFunction={fetchMyAddress}
-        queryKey={[queryKeys.ADDRESS]}
-        isShowPreview={isShowPreview}
-      />
+      address={
+        <AddressListing
+          fetchApiFunction={fetchMyAddress}
+          queryKey={[queryKeys.ADDRESS]}
+          isShowPreview={isShowPreview}
+        />
       }
-      availability={<ProviderServiceAvailability
-        role={Role.PROVIDER}
-      />
-      }
-      proofs={<ProviderProofs
-        fetchApiFunction={providerFetchMyProofs}
-      />
-      }
+      availability={<ProviderServiceAvailability role={Role.PROVIDER} />}
+      proofs={<ProviderProofs fetchApiFunction={providerFetchMyProofs} />}
       isShowPreview={isShowPreview}
       handleIsShowPreview={handleIsShowPreview}
     />

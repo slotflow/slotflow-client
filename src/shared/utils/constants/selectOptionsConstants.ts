@@ -1,5 +1,5 @@
-import { OptionType } from "@/shared/types/common";
-import { Day, ServiceCategory, ServiceType } from "@/shared/types/enums";
+import { OptionType } from '@/shared/types/common';
+import { Day, ServiceCategory, ServiceType } from '@/shared/types/enums';
 
 // Service type options
 export const serviceTypeOptions: OptionType<ServiceType>[] = [

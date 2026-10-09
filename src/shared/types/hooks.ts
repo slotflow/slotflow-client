@@ -31,25 +31,40 @@ import {
   AdminChangeProviderBlockStatusRequest,
   AdminChangeProviderBlockStatusResponse,
 } from './api/providerProfile';
+import { Dispatch } from 'react';
+import { AuthUser } from './slice';
 import { User } from './entity/user';
 import { Payment } from './entity/payment';
 import { Booking } from './entity/booking';
 import { Plan } from './entity/planInterface';
+import { VideoRoomParticipant } from './socket';
+import { RefObject, SetStateAction } from 'react';
 import { ApiBaseResponse, ApiError } from './common';
 import { Subscription } from './entity/subscription';
 import { Availability } from './entity/serviceAvailability';
-import { Day, HearAboutUsOptionValue, Role, ServiceMode } from './enums';
+import { ConnectStripeAccountRequest } from './api/paymentAccount';
+import { ITimezone, ITimezoneOption } from 'react-timezone-select';
 import { UseFormGetValues, UseFormSetValue } from 'react-hook-form';
+import { Day, HearAboutUsOptionValue, Role, ServiceMode } from './enums';
 import { UseMutateAsyncFunction, UseMutateFunction } from '@tanstack/react-query';
 import { SubscribePlanCheckoutResponse, SubscribePlanCheckoutRequest } from './api/subscription';
-import { ReportReviewRequest, ReportReviewResponse, ChangeReviewBlockStatusRequest, ChangeReviewBlockStatusResponse, DeleteReviewRequest } from './api/review';
-import { BookAppointmentRequest, BookAppointmentResponse, CancelBookingRequest, CancelBookingResponse, ChangeAppointmentStatusRequest, ChangeAppointmentStatusResponse, JoinRoomCallbackRequest, JoinRoomCallbackResponse, ValidateRoomIdRequest } from './api/booking';
-import { AuthUser } from './slice';
-import { ConnectStripeAccountRequest } from './api/paymentAccount';
-import { VideoRoomParticipant } from './socket';
-import { RefObject, SetStateAction } from 'react';
-import { ITimezone, ITimezoneOption } from 'react-timezone-select';
-import { Dispatch} from 'react';
+import {
+  ReportReviewRequest,
+  ReportReviewResponse,
+  ChangeReviewBlockStatusRequest,
+  ChangeReviewBlockStatusResponse,
+  DeleteReviewRequest,
+} from './api/review';
+import {
+  BookAppointmentResponse,
+  CancelBookingRequest,
+  CancelBookingResponse,
+  ChangeAppointmentStatusRequest,
+  ChangeAppointmentStatusResponse,
+  JoinRoomCallbackRequest,
+  JoinRoomCallbackResponse,
+  ValidateRoomIdRequest,
+} from './api/booking';
 
 // Admin plan hook return type interface
 export interface UseAdminPlanReturn {
@@ -158,18 +173,9 @@ export interface useModalAnimationReturn {
   closeModal: () => void;
 }
 
-// Notification permission gate hook return type interface
-export interface useNotificationPermissionGateReturn {
-  askPermission: () => void;
-}
-
 // Signout hook return type interface
 export interface useSignoutReturn {
-  userSignout: UseMutateFunction<
-    ApiBaseResponse,
-    ApiError,
-    void
-  >;
+  userSignout: UseMutateFunction<ApiBaseResponse, ApiError, void>;
   isSigningOut: boolean;
 }
 
@@ -218,11 +224,7 @@ export interface UseVideoCallRoomReturn {
 
 // Video call lobby actions hook return type interface
 export interface useVideoCallActionsReturn {
-  JoinCallLobby: UseMutateFunction<
-    ApiBaseResponse,
-    ApiError,
-    ValidateRoomIdRequest
-  >;
+  JoinCallLobby: UseMutateFunction<ApiBaseResponse, ApiError, ValidateRoomIdRequest>;
 }
 
 // UseTimezone return
@@ -248,11 +250,7 @@ export interface useReviewReturn {
   >;
   isChangingBlockStatus: boolean;
 
-  deleteReview: UseMutateFunction<
-    ApiBaseResponse,
-    ApiError,
-    DeleteReviewRequest
-  >;
+  deleteReview: UseMutateFunction<ApiBaseResponse, ApiError, DeleteReviewRequest>;
   isDeleting: boolean;
 }
 
@@ -288,10 +286,10 @@ export interface UseIntegrationReturn {
 export type CopyInput =
   | string
   | {
-    title: string;
-    text: string;
-    url: string;
-  };
+      title: string;
+      text: string;
+      url: string;
+    };
 export interface UseCopyReturn {
   copied: boolean;
   copy: (text: CopyInput) => Promise<boolean>;
@@ -403,9 +401,5 @@ export interface UseSubscriptionHookReturn {
 // booking payment hook
 export interface UseBookingReturn {
   handleBookingSuccess: () => void;
-  bookAppointment: UseMutateFunction<
-    ApiBaseResponse<BookAppointmentResponse>,
-    ApiError,
-    void
-  >;
+  bookAppointment: UseMutateFunction<ApiBaseResponse<BookAppointmentResponse>, ApiError, void>;
 }

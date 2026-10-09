@@ -1,56 +1,106 @@
-import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { appConfig } from '@/config/env';
+import { useDispatch } from 'react-redux';
+import { useAuth } from '@/hooks/useAuth';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '@/app/store/appStore';
+import { useEffect, useRef, useState } from 'react';
 import avatar from '@/assets/defaultImages/avatar.png';
-import { ApiBaseResponse } from '@/shared/types/common';
 import { Card, CardContent } from '@/components/ui/card';
+import { Pen, Sparkles, CheckCircle2 } from 'lucide-react';
+import { setAuthUser } from '@/app/store/slices/authSlice';
+import ProfileImage from '@/components/profile/ProfileImage';
 import { getUploadUrl, uploadToS3 } from '@/services/apis/s3';
 import { userUpdateProfileImage } from '@/services/apis/user';
-import { AppDispatch, RootState } from '@/app/store/appStore';
-import { Pen, Sparkles, CheckCircle2 } from 'lucide-react';
-import { UserUpdateProfileImageResponse } from '@/shared/types/api/user';
-import ProfileImage from '@/components/profile/ProfileImage';
+import { allowedFileTypes, maxFileSize } from '@/shared/utils/constants/appConstants';
 
 const ProfileHead = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const authUser = useSelector((store: RootState) => store.auth.authUser);
-  const [profileImageUpdating, setProfileImageUpdating] = useState<boolean>(false);
+  const previewUrlRef = useRef<string | null>(null);
+  const { user } = useAuth();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [profileImageUpdating, setProfileImageUpdating] = useState<boolean>(false);
+
+  const clearPreview = () => {
+    if (previewUrlRef.current) {
+      URL.revokeObjectURL(previewUrlRef.current);
+      previewUrlRef.current = null;
+    }
+
+    setSelectedImage(null);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (previewUrlRef.current) {
+        URL.revokeObjectURL(previewUrlRef.current);
+      }
+    };
+  }, []);
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file: File | undefined = e.target.files?.[0];
-    if (!file) return;
+    const input = e.currentTarget;
+    const file = input.files?.[0];
+
+    if (!file || !user) return;
+
+    input.value = '';
+
+    if (!allowedFileTypes.includes(file.type as (typeof allowedFileTypes)[number])) {
+      toast.error('Only PNG, JPEG and WEBP images are allowed.');
+      return;
+    }
+
+    if (file.size === 0) {
+      toast.error('The selected image is empty.');
+      return;
+    }
+
+    if (file.size > maxFileSize) {
+      toast.error('Profile images must not exceed 2 MiB.');
+      return;
+    }
+
+    clearPreview();
 
     const imageUrl = URL.createObjectURL(file);
+    previewUrlRef.current = imageUrl;
     setSelectedImage(imageUrl);
-
-    const formData = new FormData();
-    formData.append('profileImage', file);
     setProfileImageUpdating(true);
 
     try {
-      const res = await getUploadUrl({ file: file, folder: 'profiles' });
-      if (!res.data) {
+      const uploadRes = await getUploadUrl({
+        file,
+        folder: 'profiles',
+      });
+
+      if (!uploadRes.data) {
         throw new Error('Failed to get upload URL');
       }
-      const { uploadUrl, key } = res.data;
+
+      const { uploadUrl, key } = uploadRes.data;
+
       await uploadToS3(file, uploadUrl);
-      await dispatch(userUpdateProfileImage({ s3FileKey: key }))
-        .unwrap()
-        .then((res: ApiBaseResponse<UserUpdateProfileImageResponse>) => {
-          toast.success(res.message);
-        })
-        .catch((error) => {
-          if (appConfig.isDevelopment) console.error('Profile Image Upload error : ', error);
-        });
+
+      const result = await userUpdateProfileImage({ s3FileKey: key });
+      dispatch(
+        setAuthUser({
+          ...user,
+          profileImage: result.data,
+        }),
+      );
+      toast.success(result.message);
+
+      clearPreview();
     } catch (error) {
-      if (appConfig.isDevelopment) console.error('Error getting upload URL : ', error);
+      if (appConfig.isDevelopment) {
+        console.error('Profile image upload failed:', error);
+      }
+
+      clearPreview();
       toast.error('Failed to upload image. Please try again.');
-      return;
     } finally {
       setProfileImageUpdating(false);
     }
@@ -65,8 +115,8 @@ const ProfileHead = () => {
 
             <div className="relative h-28 w-28 sm:h-32 sm:w-32 rounded-2xl overflow-hidden border-2 border-background shadow-md">
               <ProfileImage
-                name={authUser?.username || ''}
-                profileImage={selectedImage || authUser?.profileImage || avatar}
+                name={user?.username || ''}
+                profileImage={selectedImage || user?.profileImage || avatar}
                 size="size-full"
                 rounded="xl"
                 isUpdating={profileImageUpdating}
@@ -96,7 +146,7 @@ const ProfileHead = () => {
               type="file"
               id="avatar-upload"
               className="hidden"
-              accept="image/*"
+              accept="image/png,image/jpeg"
               onChange={handleImageUpload}
               disabled={profileImageUpdating}
             />
@@ -105,10 +155,13 @@ const ProfileHead = () => {
           <div className="flex flex-col items-center sm:items-start text-center sm:text-left space-y-2">
             <div className="flex items-center gap-2 flex-wrap justify-center sm:justify-start">
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
-                {authUser?.username || 'User Profile'}
+                {user?.username || 'User Profile'}
               </h1>
-              {authUser?.email && (
-                <Badge variant="secondary" className="gap-1 font-medium bg-indigo-50 text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-300 border-indigo-200/50 dark:border-indigo-800/50">
+              {user?.email && (
+                <Badge
+                  variant="secondary"
+                  className="gap-1 font-medium bg-indigo-50 text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-300 border-indigo-200/50 dark:border-indigo-800/50"
+                >
                   <CheckCircle2 className="w-3 h-3 text-indigo-500" /> Verified
                 </Badge>
               )}

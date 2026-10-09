@@ -9,18 +9,17 @@ const LocationPicker = ({ onLocationSelect }: LocationPickerProps) => {
   const markerRef = useRef<L.Marker | null>(null);
 
   useEffect(() => {
-
     if (!mapRef.current) {
-      if(appConfig.isDevelopment) {
+      if (appConfig.isDevelopment) {
         console.log('mapRef is null');
       }
       return;
     }
 
     if (mapInstance.current) {
-       if(appConfig.isDevelopment) {
-      console.log('map already exists');
-       }
+      if (appConfig.isDevelopment) {
+        console.log('map already exists');
+      }
       return;
     }
 
@@ -68,7 +67,7 @@ const LocationPicker = ({ onLocationSelect }: LocationPickerProps) => {
           address: data.address || data.display_name,
         });
       } catch (error) {
-        if(appConfig.isDevelopment) {
+        if (appConfig.isDevelopment) {
           console.error('Failed to reverse geocode location:', error);
         }
       }

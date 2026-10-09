@@ -3,10 +3,12 @@ import { queryKeys } from '@/shared/utils/constants/appConstants';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import { NotificationChannel, NotificationType } from '@/shared/types/enums';
 import NotificationSettingsItem from '../../components/notification/NotificationSettingsItem';
-import { fetchMyNotificationPreference, handleNotificationChange } from '@/services/apis/notification';
+import {
+  fetchMyNotificationPreference,
+  handleNotificationChange,
+} from '@/services/apis/notification';
 
 const NotificationSettingsPage = () => {
-
   const handleNotificationToggle = async (
     channel: NotificationChannel,
     type: NotificationType,
@@ -23,27 +25,22 @@ const NotificationSettingsPage = () => {
     }
   };
 
-  const {
-    data,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
+  const { data, isLoading, isError, error } = useQuery({
     queryKey: [queryKeys.NOTIFICATION_PREF],
     queryFn: fetchMyNotificationPreference,
   });
 
   if (isError && error) {
-    return < DataFetchingError message={error.message || "Notification preference fetching error"} />
+    return (
+      <DataFetchingError message={error.message || 'Notification preference fetching error'} />
+    );
   }
 
   return (
     <div className="max-w-5xl mx-auto space-y-6 py-2">
       <div className="space-y-3">
         <div className="space-y-1">
-          <h2 className="text-xl font-bold tracking-tight text-foreground">
-            Email Notifications
-          </h2>
+          <h2 className="text-xl font-bold tracking-tight text-foreground">Email Notifications</h2>
           <p className="text-sm text-muted-foreground">
             Choose which notifications you want to receive by email.
           </p>
@@ -80,9 +77,7 @@ const NotificationSettingsPage = () => {
       </div>
       <div className="space-y-3">
         <div className="space-y-1">
-          <h2 className="text-xl font-bold tracking-tight text-foreground">
-            Push Notifications
-          </h2>
+          <h2 className="text-xl font-bold tracking-tight text-foreground">Push Notifications</h2>
           <p className="text-sm text-muted-foreground">
             Manage notifications sent directly to your mobile or web browser.
           </p>
@@ -119,9 +114,7 @@ const NotificationSettingsPage = () => {
       </div>
       <div className="space-y-3">
         <div className="space-y-1">
-          <h2 className="text-xl font-bold tracking-tight text-foreground">
-            In-app notifications
-          </h2>
+          <h2 className="text-xl font-bold tracking-tight text-foreground">In-app notifications</h2>
           <p className="text-sm text-muted-foreground">
             Choose which notifications appear inside SlotFlow.
           </p>
@@ -159,9 +152,7 @@ const NotificationSettingsPage = () => {
 
       <div className="space-y-3">
         <div className="space-y-1">
-          <h2 className="text-xl font-bold tracking-tight text-foreground">
-            SMS notifications
-          </h2>
+          <h2 className="text-xl font-bold tracking-tight text-foreground">SMS notifications</h2>
           <p className="text-sm text-muted-foreground">
             Choose which notifications appear inside SlotFlow.
           </p>

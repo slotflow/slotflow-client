@@ -25,11 +25,7 @@ const IntegrationCard = ({
       <div className="w-full flex flex-col sm:flex-row sm:items-center justify-between p-3.5 sm:p-4 gap-4">
         <div className="flex items-center gap-3.5 min-w-0 flex-1">
           <div className="relative p-2 rounded-lg border border-slate-100 dark:border-border/60 bg-slate-50/50 dark:bg-muted/20 shrink-0">
-            <img
-              src={image}
-              alt={heading}
-              className="size-7 object-contain rounded-sm"
-            />
+            <img src={image} alt={heading} className="size-7 object-contain rounded-sm" />
           </div>
 
           <div className="min-w-0 flex-1 space-y-0.5">
@@ -55,9 +51,7 @@ const IntegrationCard = ({
               </Badge>
             </div>
 
-            <p className="text-xs text-muted-foreground truncate max-w-xl">
-              {description}
-            </p>
+            <p className="text-xs text-muted-foreground truncate max-w-xl">{description}</p>
           </div>
         </div>
 
@@ -73,7 +67,7 @@ const IntegrationCard = ({
                 <Button
                   disabled
                   size="sm"
-                  variant='secondary'
+                  variant="secondary"
                   className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border border-slate-200 dark:border-border bg-white dark:bg-muted/20 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-muted/30 shadow-sm transition-all cursor-pointer disabled:opacity-50"
                 >
                   <Loader2 className="size-3 animate-spin" />
@@ -84,7 +78,7 @@ const IntegrationCard = ({
                   title={title}
                   size="sm"
                   onClick={(e) => action(e)}
-                  variant='secondary'
+                  variant="secondary"
                   className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border border-slate-200 dark:border-border bg-white dark:bg-muted/20 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-muted/30 shadow-sm transition-all cursor-pointer disabled:opacity-50"
                 >
                   <span>{text}</span>

@@ -9,7 +9,6 @@ import logo from '../../assets/logos/company/slotflowLogoTransparent.png';
 import { headerLinks } from '@/shared/utils/constants/landingConstants';
 
 const Header = () => {
-  
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 

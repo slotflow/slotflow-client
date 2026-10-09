@@ -23,7 +23,6 @@ export const useSubscriptionCallback = () => {
   const isFetched = useRef(false);
 
   const retryTimerRef = useRef<number | null>(null);
-  const loadingTimerRef = useRef<number | null>(null);
 
   const fetchSubscription = useCallback(async () => {
     try {
@@ -45,7 +44,7 @@ export const useSubscriptionCallback = () => {
       attempts.current++;
 
       if (attempts.current < maxRetries) {
-        retryTimerRef.current = setTimeout(fetchSubscription, 10000);
+        retryTimerRef.current = window.setTimeout(fetchSubscription, 10000);
       } else {
         toast.error('Subscription activation delayed. Please check your account status later.');
         dispatch(setSubscriptionUpdating(false));
@@ -60,20 +59,17 @@ export const useSubscriptionCallback = () => {
     if (!status || !authUser || isFetched.current) return;
 
     attempts.current = 0;
-
     dispatch(setSubscriptionUpdating(true));
 
-    retryTimerRef.current = setTimeout(fetchSubscription, 10000);
+    retryTimerRef.current = window.setTimeout(fetchSubscription, 10000);
 
     return () => {
-      if (retryTimerRef.current) {
-        clearTimeout(retryTimerRef.current);
-      }
-      if (loadingTimerRef.current) {
-        clearTimeout(loadingTimerRef.current);
+      if (retryTimerRef.current !== null) {
+        window.clearTimeout(retryTimerRef.current);
+        retryTimerRef.current = null;
       }
     };
-  }, [authUser, status, fetchSubscription, dispatch]);
+  }, [status, authUser, fetchSubscription, dispatch]);
 
   return {
     status,

@@ -36,7 +36,9 @@ const PaymentsTableColumn = (
     cell: ({ row }) => {
       const createdAt = row.getValue('createdAt') as Date;
       const formattedDate = formatDate(createdAt);
-      return <span className="font-medium text-slate-700 dark:text-slate-300">{formattedDate}</span>;
+      return (
+        <span className="font-medium text-slate-700 dark:text-slate-300">{formattedDate}</span>
+      );
     },
   },
   {
@@ -113,7 +115,11 @@ const PaymentsTableColumn = (
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button title="Open Menu" variant="ghost" className="h-8 w-8 p-0 cursor-pointer hover:bg-muted">
+            <Button
+              title="Open Menu"
+              variant="ghost"
+              className="h-8 w-8 p-0 cursor-pointer hover:bg-muted"
+            >
               <span className="sr-only">Open menu</span>
               <MoreHorizontal className="size-4" />
             </Button>
@@ -121,7 +127,10 @@ const PaymentsTableColumn = (
           <DropdownMenuContent align="end" className="rounded-xl">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => toPaymentDetailsPage(payment._id)} className="cursor-pointer gap-2">
+            <DropdownMenuItem
+              onClick={() => toPaymentDetailsPage(payment._id)}
+              className="cursor-pointer gap-2"
+            >
               <Eye className="w-3.5 h-3.5 text-muted-foreground" />
               Details
             </DropdownMenuItem>

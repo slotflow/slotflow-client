@@ -7,7 +7,6 @@ import BarChartHorizontal from '@/components/chart/BarChartHorizontal';
 import { usersRetensionChartConfig } from '@/shared/utils/constants/chartConstants';
 
 const UserDataChart = ({ dateRange }: UserDataChartProps) => {
-
   const { data, isLoading, isError } = useQuery({
     queryKey: [queryKeys.DASHBOARD_USERS_CHART, dateRange],
     queryFn: () =>

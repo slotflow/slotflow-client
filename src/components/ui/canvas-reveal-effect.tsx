@@ -211,7 +211,7 @@ const ShaderMaterial = ({
           };
           break;
         default:
-          if(appConfig.isDevelopment) {
+          if (appConfig.isDevelopment) {
             console.error(`Invalid uniform type for '${uniformName}'.`);
           }
           break;

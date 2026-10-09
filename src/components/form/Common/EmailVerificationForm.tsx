@@ -13,7 +13,6 @@ import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { VerifyEmailFormType, verifyEmailZodSchema } from '@/shared/validators/zod/authZod';
 
 const EmailVerificationForm = () => {
-
   const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
 
@@ -71,7 +70,7 @@ const EmailVerificationForm = () => {
               loading={isSubmitting}
               disabled={isSubmitting || !isValid}
               title="Verify Email"
-              className='w-full'
+              className="w-full"
             />
           </form>
 

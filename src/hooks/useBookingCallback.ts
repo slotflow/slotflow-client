@@ -12,7 +12,6 @@ import { setBookingUpdating } from '@/app/store/slices/authSlice';
 import { setPaymentProcessStatus } from '@/app/store/slices/paymentSlice';
 
 export const useBookingCallback = (): UseBookingCallbackReturn => {
-
   const [searchParams] = useSearchParams();
   const statusParam = searchParams.get('status');
   const status = statusParam === 'success';
@@ -24,9 +23,8 @@ export const useBookingCallback = (): UseBookingCallbackReturn => {
   const isFetched = useRef(false);
   const maxRetries = 5;
   const attempts = useRef(0);
-  
+
   const retryTimerRef = useRef<number | null>(null);
-  const loadingTimerRef = useRef<number | null>(null);
 
   const checkRecentBooking = useCallback(async () => {
     try {
@@ -44,7 +42,7 @@ export const useBookingCallback = (): UseBookingCallbackReturn => {
       attempts.current++;
 
       if (attempts.current < maxRetries) {
-        retryTimerRef.current = setTimeout(checkRecentBooking, 10000);
+        retryTimerRef.current = window.setTimeout(checkRecentBooking, 10000);
       } else {
         toast.error('Booking confirmation delayed. Please check your bookings page.');
         dispatch(setBookingUpdating(false));
@@ -53,23 +51,20 @@ export const useBookingCallback = (): UseBookingCallbackReturn => {
       handleError(error, 'Could not load booking status, please refresh the page.');
       dispatch(setBookingUpdating(false));
     }
-  }, [dispatch]);
+  }, [dispatch, handleBookingSuccess]);
 
   useEffect(() => {
     if (!status || isFetched.current) return;
 
     attempts.current = 0;
-    
     dispatch(setBookingUpdating(true));
 
-    retryTimerRef.current = setTimeout(checkRecentBooking, 10000);
+    retryTimerRef.current = window.setTimeout(checkRecentBooking, 10000);
 
     return () => {
-      if (retryTimerRef.current) {
-        clearTimeout(retryTimerRef.current);
-      }
-      if (loadingTimerRef.current) {
-        clearTimeout(loadingTimerRef.current);
+      if (retryTimerRef.current !== null) {
+        window.clearTimeout(retryTimerRef.current);
+        retryTimerRef.current = null;
       }
     };
   }, [status, checkRecentBooking, dispatch]);

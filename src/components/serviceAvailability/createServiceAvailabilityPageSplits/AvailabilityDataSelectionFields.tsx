@@ -2,7 +2,11 @@ import SelectField from '../../form/SelectField';
 import { Day, ServiceMode } from '@/shared/types/enums';
 import { AvailabilityDataSelectionFieldsProps } from '@/shared/types/component';
 import { ProviderServiceAvailabilityFormType } from '@/shared/validators/zod/providerZod';
-import { daysOfWeekOptions, isAvailableOptions, serviceDurationsOptions } from '@/shared/utils/constants/selectOptionsConstants';
+import {
+  daysOfWeekOptions,
+  isAvailableOptions,
+  serviceDurationsOptions,
+} from '@/shared/utils/constants/selectOptionsConstants';
 
 const AvailabilityDataSelectionFields = ({
   isModeSelected,
@@ -45,10 +49,11 @@ const AvailabilityDataSelectionFields = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <button
               type="button"
-              className={`cursor-pointer w-full text-xs font-medium text-center border rounded-md py-2.5 transition-all duration-200 ${isModeSelected(ServiceMode.ONLINE)
+              className={`cursor-pointer w-full text-xs font-medium text-center border rounded-md py-2.5 transition-all duration-200 ${
+                isModeSelected(ServiceMode.ONLINE)
                   ? 'bg-primary text-primary-foreground border-primary shadow-sm'
                   : 'border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground'
-                }`}
+              }`}
               onClick={() => toggleMode(ServiceMode.ONLINE)}
             >
               Online
@@ -56,10 +61,11 @@ const AvailabilityDataSelectionFields = ({
 
             <button
               type="button"
-              className={`cursor-pointer w-full text-xs font-medium text-center border rounded-md py-2.5 transition-all duration-200 ${isModeSelected(ServiceMode.OFFLINE)
+              className={`cursor-pointer w-full text-xs font-medium text-center border rounded-md py-2.5 transition-all duration-200 ${
+                isModeSelected(ServiceMode.OFFLINE)
                   ? 'bg-primary text-primary-foreground border-primary shadow-sm'
                   : 'border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground'
-                }`}
+              }`}
               onClick={() => toggleMode(ServiceMode.OFFLINE)}
             >
               Offline

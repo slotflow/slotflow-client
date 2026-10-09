@@ -18,24 +18,24 @@ const RoleSelectCard = ({
 
   const isSelected = selectedRole === role;
 
-const features =
-  role === Role.USER
-    ? [
-        'Instant online appointment booking',
-        'Google Calendar synchronization',
-        'Real-time chat & built-in video calls',
-        'Multi-channel reminders (In-app, Email & Push)',
-        'AI-powered recommendations',
-      ]
-    : [
-        'Flexible booking limits (Starter to Unlimited)',
-        'Stripe payout integration for online payments',
-        'Advanced reports, insights & AI analytics dashboard',
-        'Enhanced ad visibility & marketing tools',
-        'Multi-channel notifications (In-app, Email, Push & SMS)',
-        'Developer tools & Slot Availability API access',
-        'Custom webhooks & integrations (Notion, WhatsApp)',
-      ];
+  const features =
+    role === Role.USER
+      ? [
+          'Instant online appointment booking',
+          'Google Calendar synchronization',
+          'Real-time chat & built-in video calls',
+          'Multi-channel reminders (In-app, Email & Push)',
+          'AI-powered recommendations',
+        ]
+      : [
+          'Flexible booking limits (Starter to Unlimited)',
+          'Stripe payout integration for online payments',
+          'Advanced reports, insights & AI analytics dashboard',
+          'Enhanced ad visibility & marketing tools',
+          'Multi-channel notifications (In-app, Email, Push & SMS)',
+          'Developer tools & Slot Availability API access',
+          'Custom webhooks & integrations (Notion, WhatsApp)',
+        ];
 
   return (
     <motion.div

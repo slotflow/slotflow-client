@@ -30,14 +30,18 @@ export const deleteReview = async (payload: DeleteReviewRequest): Promise<ApiBas
   return response.data;
 };
 
-export const changeReviewBlockStatus = async (payload: ChangeReviewBlockStatusRequest): Promise<ApiBaseResponse<ChangeReviewBlockStatusResponse>> => {
+export const changeReviewBlockStatus = async (
+  payload: ChangeReviewBlockStatusRequest,
+): Promise<ApiBaseResponse<ChangeReviewBlockStatusResponse>> => {
   const response = await axiosInstance.patch(`reviews/${payload.reviewId}`, {
     isBlocked: payload.isBlocked,
   });
   return response.data;
 };
 
-export const reportReview = async (payload: ReportReviewRequest): Promise<ApiBaseResponse<ReportReviewResponse>> => {
+export const reportReview = async (
+  payload: ReportReviewRequest,
+): Promise<ApiBaseResponse<ReportReviewResponse>> => {
   const response = await axiosInstance.patch(`/reviews/${payload.reviewId}/report`);
   return response.data;
 };

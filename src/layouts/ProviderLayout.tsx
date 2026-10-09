@@ -12,8 +12,7 @@ import { getRoutesByRole } from '@/shared/utils/helper/getRouteByRole';
 import NotificationsContainer from '@/components/notification/NotificationsContainer';
 
 const ProviderLayout = () => {
-  
-  const { goTo } = useAppNavigation(); 
+  const { goTo } = useAppNavigation();
   const pathname = useLocation().pathname;
   const authUser = useSelector((store: RootState) => store.auth.authUser);
   const { isPaymentModalOpen, subscriptionData } = useSelector((store: RootState) => store.payment);
@@ -32,22 +31,22 @@ const ProviderLayout = () => {
       goTo(redirectPaths.ONBOARDING_ADDRESS);
       return;
     }
-    
+
     if (!authUser.isServiceDetailsAdded && !authUser.isServiceDetailsVerified) {
       goTo(redirectPaths.ONBOARDING_SERVICE);
       return;
     }
-    
+
     if (!authUser.isServiceAvailabilityAdded && !authUser.isAvailabilityVerified) {
       goTo(redirectPaths.ONBOARDING_AVAILABILITY);
       return;
     }
-    
+
     if (!authUser.isProofSubmitted && !authUser.isProofsVerified) {
       goTo(redirectPaths.ONBOARDING_PROOFS);
       return;
     }
-    
+
     if (!authUser.isAdminVerified) {
       goTo(redirectPaths.ONBOARDING_PENDING);
       return;

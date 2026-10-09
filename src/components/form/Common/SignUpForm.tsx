@@ -16,7 +16,6 @@ import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import { SignupFormType, signupZodSchema } from '@/shared/validators/zod/authZod';
 
 const SignUpForm = () => {
-
   const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
 
@@ -34,15 +33,17 @@ const SignUpForm = () => {
       email: '',
       password: '',
       confirmPassword: '',
-      timeZone: parsed
+      timeZone: parsed,
     },
   });
 
   const onSubmit = async (data: SignupFormType) => {
     try {
-      const res = await dispatch(signup({
-        ...data,
-      })).unwrap();
+      const res = await dispatch(
+        signup({
+          ...data,
+        }),
+      ).unwrap();
       if (res.success) {
         goTo(redirectPaths.VERIFY_OTP);
         toast.success(res.message);
@@ -107,7 +108,7 @@ const SignUpForm = () => {
                 loading={isSubmitting}
                 disabled={isSubmitting || !isValid}
                 title="Sign up"
-                className='w-full'
+                className="w-full"
               />
               <TimezoneSelect
                 value={selectedTimezone}
@@ -123,10 +124,7 @@ const SignUpForm = () => {
             <div className="flex-grow border-t"></div>
           </div>
 
-          <GoogleButton
-            text='Sign in with Google'
-          />
-
+          <GoogleButton text="Sign in with Google" />
 
           <p className="mt-10 text-center text-sm/6 text-neutral-700">
             Already a Slotflow member?

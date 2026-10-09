@@ -6,6 +6,7 @@ import {
 } from './regex';
 import z from 'zod';
 import { ServiceType, ServiceCategory, Day } from '@/shared/types/enums';
+import { allowedFileTypes, maxFileSize } from '@/shared/utils/constants/appConstants';
 
 export const providerCreateServiceDetailsZodSchema = z.object({
   _id: z.string(),
@@ -108,13 +109,12 @@ export type ProviderServiceAvailabilityFormType = z.infer<
 
 export const imageFileZodeSchema = z.object({
   file: z
-    .instanceof(File || undefined)
-    .refine((file) => !!file, 'Identity proof is required')
+    .instanceof(File, { message: 'Please select a file.' })
     .refine(
-      (file) => ['image/png', 'image/jpeg', 'image/jpg'].includes(file?.type),
-      'Only PNG, JPG, or JPEG files are allowed',
+      (file) => allowedFileTypes.includes(file.type),
+      'Only PNG, JPEG, WEBP images are allowed.',
     )
-    .refine((file) => file?.size <= 2 * 1024 * 1024, 'File must be less than 2MB'),
+    .refine((file) => file.size <= maxFileSize, 'File size must not exceed 2 MiB.'),
 });
 
 export type ImageFileFormType = z.infer<typeof imageFileZodeSchema>;

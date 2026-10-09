@@ -17,9 +17,7 @@ const UserSelectService = () => {
 
   const handleCategoryToggle = (category: ServiceCategory) => {
     setSelectedCategories((prev) =>
-      prev.includes(category)
-        ? prev.filter((item) => item !== category)
-        : [...prev, category]
+      prev.includes(category) ? prev.filter((item) => item !== category) : [...prev, category],
     );
   };
 
@@ -33,7 +31,7 @@ const UserSelectService = () => {
   };
 
   const filteredCategories = Object.values(ServiceCategory).filter((category) =>
-    category.toLowerCase().includes(search.trim().toLowerCase())
+    category.toLowerCase().includes(search.trim().toLowerCase()),
   );
 
   return (
@@ -42,7 +40,10 @@ const UserSelectService = () => {
         <MoveUpward>
           <div className="mx-auto flex w-full max-w-2xl flex-col items-center space-y-6 pt-8 pb-4 text-center">
             <div className="space-y-2">
-              <Badge variant="outline" className="px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase border-primary/20 bg-primary/5 text-primary">
+              <Badge
+                variant="outline"
+                className="px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase border-primary/20 bg-primary/5 text-primary"
+              >
                 Select Categories
               </Badge>
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight bg-gradient-to-r from-foreground via-foreground/90 to-foreground/60 bg-clip-text text-transparent">
@@ -89,7 +90,7 @@ const UserSelectService = () => {
                   'group relative flex flex-col items-center justify-center w-full cursor-pointer rounded-2xl border p-4 min-h-18 text-center transition-all duration-200 select-none',
                   isSelected
                     ? 'border-primary bg-primary/10 shadow-md ring-2 ring-primary/20'
-                    : 'border-border/60 bg-background/60 hover:bg-background hover:border-primary/40 hover:shadow-sm'
+                    : 'border-border/60 bg-background/60 hover:bg-background hover:border-primary/40 hover:shadow-sm',
                 )}
               >
                 <div
@@ -97,16 +98,18 @@ const UserSelectService = () => {
                     'absolute top-3 right-3 flex size-5 items-center justify-center rounded-full border transition-all',
                     isSelected
                       ? 'border-primary bg-primary text-primary-foreground scale-100'
-                      : 'border-border/60 opacity-0 group-hover:opacity-100 scale-90'
+                      : 'border-border/60 opacity-0 group-hover:opacity-100 scale-90',
                   )}
                 >
                   <Check className="size-3 stroke-[3]" />
                 </div>
 
-                <h3 className={cn(
-                  'text-sm font-semibold transition-colors',
-                  isSelected ? 'text-primary' : 'text-foreground'
-                )}>
+                <h3
+                  className={cn(
+                    'text-sm font-semibold transition-colors',
+                    isSelected ? 'text-primary' : 'text-foreground',
+                  )}
+                >
                   {category}
                 </h3>
               </motion.button>
@@ -144,7 +147,7 @@ const UserSelectService = () => {
             >
               Skip
             </Button>
-            
+
             <Button
               size="sm"
               onClick={handleNext}

@@ -33,7 +33,6 @@ const AddressListing = ({
   isShowPreview = false,
   hideAddress = false,
 }: UserOrProviderAddressDetailsProps) => {
-
   const [showForm, setShowForm] = useState<boolean>(false);
 
   const { data, isLoading, isError, error } = useQuery({
@@ -53,33 +52,37 @@ const AddressListing = ({
       {hideAddress ? (
         <FeatureOverlay
           isBlur
-          size='md'
+          size="md"
           icon={MapPin}
           isDevMode={false}
           title="Address Protected"
           description="For privacy and security, the exact location is hidden until your appointment is confirmed. We will send you the full address once confirmed."
-          borderRadius='rounded-xl'
+          borderRadius="rounded-xl"
         />
       ) : (
-        showHeading || canUpdate) && (
-        <CardHeader className="flex justify-between items-center">
-          {showHeading && (
-            <CardTitle className="flex flex-row space-x-2"> <Map className="size-4 text-indigo-500" /> <span>Address</span></CardTitle>
-          )}
-          {canUpdate && (
-            <Button
-              title="Update Password"
-              variant={showForm ? 'destructive' : 'secondary'}
-              className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border border-slate-200 dark:border-border bg-white dark:bg-muted/20 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-muted/30 shadow-sm transition-all cursor-pointer disabled:opacity-50"
-              onClick={(e) => {
-                e.preventDefault();
-                setShowForm(!showForm);
-              }}
-            >
-              {showForm ? 'Cancel' : 'Update'}
-            </Button>
-          )}
-        </CardHeader>
+        (showHeading || canUpdate) && (
+          <CardHeader className="flex justify-between items-center">
+            {showHeading && (
+              <CardTitle className="flex flex-row space-x-2">
+                {' '}
+                <Map className="size-4 text-indigo-500" /> <span>Address</span>
+              </CardTitle>
+            )}
+            {canUpdate && (
+              <Button
+                title="Update Password"
+                variant={showForm ? 'destructive' : 'secondary'}
+                className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-medium rounded-lg border border-slate-200 dark:border-border bg-white dark:bg-muted/20 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-muted/30 shadow-sm transition-all cursor-pointer disabled:opacity-50"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowForm(!showForm);
+                }}
+              >
+                {showForm ? 'Cancel' : 'Update'}
+              </Button>
+            )}
+          </CardHeader>
+        )
       )}
       {(!isShowPreview || isUserLookingProvider) && (
         <>
@@ -168,7 +171,10 @@ const AddressListing = ({
                   </div>
                 ) : (
                   data?.location?.coordinates && (
-                    <MapPreview lat={data.location.coordinates[1]} lon={data.location.coordinates[0]} />
+                    <MapPreview
+                      lat={data.location.coordinates[1]}
+                      lon={data.location.coordinates[0]}
+                    />
                   )
                 )}
               </div>

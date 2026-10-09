@@ -12,7 +12,6 @@ import { providerFetchServiceDetails } from '@/services/apis/providerService';
 import ProviderServiceAvailability from '../../components/profile/ProviderServiceAvailability';
 
 const AccountSettingsPage = () => {
-  
   const authUser = useSelector((state: RootState) => state.auth.authUser);
 
   return (
@@ -41,11 +40,7 @@ const AccountSettingsPage = () => {
             canUpdate
             showHeading
           />
-          <ProviderServiceAvailability
-            role={Role.PROVIDER}
-            canUpdate
-            showHeading
-          />
+          <ProviderServiceAvailability role={Role.PROVIDER} canUpdate showHeading />
         </>
       )}
     </div>

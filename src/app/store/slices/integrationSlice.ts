@@ -1,5 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CommonIntegrationData, IntegrationSliceState, SetAllIntegrationsPayload, StripeIntegrationData } from '@/shared/types/slice';
+import {
+  CommonIntegrationData,
+  IntegrationSliceState,
+  SetAllIntegrationsPayload,
+  StripeIntegrationData,
+} from '@/shared/types/slice';
 
 const initialState: IntegrationSliceState = {
   googleCalendar: {
@@ -9,7 +14,7 @@ const initialState: IntegrationSliceState = {
   stripe: {
     isConnecting: false,
     status: null,
-  }
+  },
 };
 
 const integrationSlice = createSlice({

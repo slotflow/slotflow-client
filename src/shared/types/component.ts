@@ -15,9 +15,7 @@ import {
   DashboardItem,
   DateRangeStrings,
 } from './common';
-import {
-  UserFetchServiceProvidersResponse,
-} from './api/user';
+import { UserFetchServiceProvidersResponse } from './api/user';
 import {
   Control,
   type Path,
@@ -45,7 +43,15 @@ import { AnalyticsAiResponse } from './api/adminDashboard';
 import { Availability } from './entity/serviceAvailability';
 import { RouteNames } from '../utils/constants/routeConstants';
 import { FetchProviderServiceResponse } from './api/providerService';
-import { BillingCycle, Day, NotificationChannel, NotificationType, PlanName, Role, ServiceMode } from './enums';
+import {
+  BillingCycle,
+  Day,
+  NotificationChannel,
+  NotificationType,
+  PlanName,
+  Role,
+  ServiceMode,
+} from './enums';
 import { ComponentType, Dispatch, ReactNode, SetStateAction } from 'react';
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 import { FetchAddressResponse, FetchMyAddressResponse } from './api/address';
@@ -278,12 +284,10 @@ export interface FormFieldProps<T extends FieldValues> {
   register: UseFormRegister<T>;
   registerOptions?: RegisterOptions<T, Path<T>>;
   showTogglePassword?: boolean;
-  onFileSelect?: (url: string) => void;
   rows?: number;
   defaultValue?: string | number | boolean | string[] | FileList;
   readOnly?: boolean;
   required?: boolean;
-  accept?: string;
   infoText?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -291,6 +295,7 @@ export interface FormFieldProps<T extends FieldValues> {
 // FileUploader Props Interface
 export interface FileUploaderProps {
   folderName: string;
+  fieldName: string;
   uploadFunction: (data: UpdateFileDataRequest) => Promise<ApiBaseResponse<string>>;
   message?: string;
   setStateFunction: (data: Partial<SetProofDataProps>) => PayloadAction<Partial<SetProofDataProps>>;
@@ -377,11 +382,6 @@ export interface PieChartRoundedProps {
   onReload?: () => void;
 }
 
-// Chat bubble profile image component props interface
-export interface ChatBubbleProfileImageProps {
-  profileImage: User['profileImage'];
-}
-
 // Message input component props interface
 export interface MessageInputProps {
   setIsTyping(data: boolean): void;
@@ -391,11 +391,6 @@ export interface MessageInputProps {
 
 // Provider dashboard graphs component props interface
 export interface ProviderDashboardGraphsProps {
-  dateRange: DateRangeStrings;
-}
-
-// Provider dashboard stats component props interface
-export interface ProviderDashboardStatsProps {
   dateRange: DateRangeStrings;
 }
 
@@ -554,7 +549,7 @@ export interface UpdateUserInfoFormProps {
 
 // user update timezone props interface
 export interface UpdateTimezoneFormProps {
-    onClose: () => void;
+  onClose: () => void;
 }
 
 // integration card props interface
@@ -590,11 +585,6 @@ export interface LocationPickerProps {
 export interface MapPreviewProps {
   lat: number;
   lon: number;
-}
-
-// Footer component props interface
-export interface FooterProps {
-  className?: string;
 }
 
 // Nav compoenents interfaces
@@ -669,13 +659,6 @@ export interface ReviewCardProps {
   isChangingReportStatus: boolean;
   handleChangeReviewBlockStatus: (data: ChangeReviewBlockStatusRequest) => void;
   isChangingBlockStatus: boolean;
-}
-
-// ReviewStatus component props interface
-export interface ReviewStatusProps {
-  status: string;
-  icon: LucideIcon;
-  isNot?: boolean;
 }
 
 // ReviewUserProfile component props interface
@@ -844,12 +827,6 @@ export interface SplitTextRevealProps {
   rotationX?: number;
   y?: number;
   once?: boolean;
-}
-
-// Icon text props
-export interface IconTextProps {
-  text: string;
-  className?: string;
 }
 
 // Blog detail article props
@@ -1061,7 +1038,8 @@ export interface TOCProps {
 // Service Availabilities props
 export interface SavedAvailabilitiesProps {
   availabilities: Availability[] | null;
-  removeAvailability: (day: string) => void;
+  removeAvailability: (day: Day) => void;
+  onCopyLastAvailability?: (targetDay: Day, lastAvailability: Availability) => void;
 }
 
 // FAQ Shimmer props
@@ -1221,13 +1199,6 @@ export interface ComponentSandboxSpec<T extends Record<string, unknown> = Record
 }
 export interface SandboxPageProps {
   specs: ComponentSandboxSpec[];
-}
-
-//
-export interface EnhancedSavedAvailabilitiesProps {
-  availabilities: Availability[] | null;
-  removeAvailability: (day: Day) => void;
-  onCopyLastAvailability?: (targetDay: Day, lastAvailability: Availability) => void;
 }
 
 //

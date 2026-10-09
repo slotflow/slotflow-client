@@ -15,7 +15,6 @@ const BlogHero = ({
   categoriesCount,
   featuredArticle,
 }: BlogHeroProps) => {
-
   const { goTo } = useAppNavigation();
   const featuredTitle = featuredArticle?.heroTitle ?? 'Explore our latest insights';
   const featuredDescription =

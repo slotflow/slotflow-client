@@ -1,18 +1,13 @@
-import {
-  ChevronRight,
-} from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { useAppNavigation } from "@/hooks/useAppNavigation";
-import { settingsMenu } from "@/shared/utils/constants/routeConstants";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { ChevronRight } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
+import { settingsMenu } from '@/shared/utils/constants/routeConstants';
 
 const SettingsMenuPage = () => {
-
   const { goTo } = useAppNavigation();
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors duration-200">
-
       <div className="p-0 divide-y divide-border/40">
         {settingsMenu.map((option) => {
           const Icon = option.icon;
@@ -33,14 +28,15 @@ const SettingsMenuPage = () => {
                       {option.title}
                     </span>
                     {option.badge && (
-                      <Badge variant="secondary" className="text-[10px] h-4 px-1.5 py-0 font-medium">
+                      <Badge
+                        variant="secondary"
+                        className="text-[10px] h-4 px-1.5 py-0 font-medium"
+                      >
                         {option.badge}
                       </Badge>
                     )}
                   </div>
-                  <p className="text-xs text-muted-foreground truncate">
-                    {option.description}
-                  </p>
+                  <p className="text-xs text-muted-foreground truncate">{option.description}</p>
                 </div>
               </div>
 
@@ -51,6 +47,6 @@ const SettingsMenuPage = () => {
       </div>
     </div>
   );
-}
+};
 
 export default SettingsMenuPage;

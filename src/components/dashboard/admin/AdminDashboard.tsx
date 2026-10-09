@@ -27,10 +27,13 @@ const AdminDashboard = () => {
     };
   });
 
-  const formateddateRange: DateRangeStrings = useMemo(() => ({
-    startDate: formatDate(dateRange?.from, dateFormats.ISO_DATE),
-    endDate: formatDate(dateRange?.to, dateFormats.ISO_DATE)
-  }), [dateRange?.from, dateRange?.to]);
+  const formateddateRange: DateRangeStrings = useMemo(
+    () => ({
+      startDate: formatDate(dateRange?.from, dateFormats.ISO_DATE),
+      endDate: formatDate(dateRange?.to, dateFormats.ISO_DATE),
+    }),
+    [dateRange?.from, dateRange?.to],
+  );
 
   return (
     <div className="w-full">

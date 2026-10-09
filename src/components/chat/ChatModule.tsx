@@ -13,7 +13,6 @@ import { dateFormats } from '@/shared/utils/constants/appConstants';
 import NoChatSelectedSShimmer from '@/components/shimmers/NoChatSelectedSShimmer';
 
 const ChatModule = () => {
-
   const dispatch = useDispatch<AppDispatch>();
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [messageSenderId, setMessageSenderId] = useState<string | null>(null);

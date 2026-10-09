@@ -18,7 +18,6 @@ const DataAnalysis = ({
 
   return (
     <div className="relative group overflow-hidden rounded-2xl border border-indigo-500/30 bg-gradient-to-br from-indigo-500/10 via-indigo-500/5 to-indigo-500/10 dark:from-indigo-950/50 dark:via-indigo-900/20 dark:to-zinc-950/80 text-foreground p-6 shadow-lg shadow-indigo-500/5 hover:shadow-xl hover:shadow-indigo-500/10 hover:border-indigo-400/50 transition-all duration-300 flex flex-col justify-between h-full min-h-[180px]">
-      
       <div className="absolute top-0 right-0 -mr-12 -mt-12 w-44 h-44 rounded-full bg-indigo-500/20 dark:bg-indigo-500/25 blur-3xl pointer-events-none group-hover:bg-indigo-400/30 transition-all duration-500" />
       <div className="absolute bottom-0 left-0 -ml-12 -mb-12 w-36 h-36 rounded-full bg-indigo-400/10 dark:bg-indigo-400/15 blur-2xl pointer-events-none" />
 

@@ -6,11 +6,10 @@ import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { AnimatedTooltip } from '@/components/ui/animated-tooltip';
 import AnimatedCounter from '@/components/animation/AnimatedCounter';
 import SplitTextReveal from '@/components/animation/SplitTextReveal';
-import { heroPeople} from '@/shared/utils/constants/landingConstants';
+import { heroPeople } from '@/shared/utils/constants/landingConstants';
 import { ArrowRight, CheckCircle2, ShieldCheck, Sparkles } from 'lucide-react';
 
 const LandingHeroContent = () => {
-
   const { goTo } = useAppNavigation();
 
   return (

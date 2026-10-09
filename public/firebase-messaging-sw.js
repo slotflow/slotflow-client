@@ -16,8 +16,7 @@ firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
-  const notificationTitle =
-    payload.notification?.title || 'SlotFlow';
+  const notificationTitle = payload.notification?.title || 'SlotFlow';
 
   const notificationOptions = {
     body: payload.notification?.body || '',
@@ -25,8 +24,5 @@ messaging.onBackgroundMessage((payload) => {
     data: payload.data || {},
   };
 
-  self.registration.showNotification(
-    notificationTitle,
-    notificationOptions
-  );
+  self.registration.showNotification(notificationTitle, notificationOptions);
 });

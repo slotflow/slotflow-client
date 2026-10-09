@@ -11,8 +11,9 @@ export interface CreateServicesRequest {
   serviceCategory: Service['serviceCategory'];
   serviceNames: string[];
 }
-export type CreateSservicesResponse = Array<Pick<Service, "_id" | "serviceName" | "serviceCategory" | "isBlocked">>;
-
+export type CreateSservicesResponse = Array<
+  Pick<Service, '_id' | 'serviceName' | 'serviceCategory' | 'isBlocked'>
+>;
 
 // Change app service block status request and response
 export type AdminChangeServiceBlockStatusRequest = {

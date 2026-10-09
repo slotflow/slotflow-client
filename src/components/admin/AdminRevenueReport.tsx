@@ -15,7 +15,15 @@ import { handleExportExcel } from '@/shared/utils/helper/excelGenerator.ts';
 import { dateFormats, queryKeys } from '@/shared/utils/constants/appConstants';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import AdminRevenueTableColumn from '@/components/table/tableColumns/AdminRevenueTableColumn';
-import { Calendar as CalendarIcon, FileSpreadsheet, NotebookText, RotateCcw, TrendingUp, Tag, Wallet } from 'lucide-react';
+import {
+  Calendar as CalendarIcon,
+  FileSpreadsheet,
+  NotebookText,
+  RotateCcw,
+  TrendingUp,
+  Tag,
+  Wallet,
+} from 'lucide-react';
 
 const AdminRevenueReport = () => {
   const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
@@ -32,7 +40,10 @@ const AdminRevenueReport = () => {
   const { data, isLoading, isError, error, refetch, isFetching } = useQuery({
     queryFn: () =>
       fetchRevenueReportForAdmin({
-        startDate:  formatDate(dateRange?.from ?? new Date(new Date().setDate(new Date().getDate() - 30)), dateFormats.ISO_DATE),
+        startDate: formatDate(
+          dateRange?.from ?? new Date(new Date().setDate(new Date().getDate() - 30)),
+          dateFormats.ISO_DATE,
+        ),
         endDate: formatDate(dateRange?.to ?? new Date(), dateFormats.ISO_DATE),
         page: pagination.pageIndex + 1,
         limit: pagination.pageSize,
@@ -78,7 +89,10 @@ const AdminRevenueReport = () => {
                 )}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0 rounded-2xl shadow-xl border-border/60" align="end">
+            <PopoverContent
+              className="w-auto p-0 rounded-2xl shadow-xl border-border/60"
+              align="end"
+            >
               <Calendar
                 mode="range"
                 selected={dateRange}
@@ -158,7 +172,7 @@ const AdminRevenueReport = () => {
 
             <DashboardDataCard
               icon={TrendingUp}
-              label='Grand Total Revenue'
+              label="Grand Total Revenue"
               isLoading={isLoading}
               price
               value={data.items.grandTotal.toFixed(2)}

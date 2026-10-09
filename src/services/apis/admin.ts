@@ -39,7 +39,9 @@ export const adminFetchDashboardSubscriptionStatsData = async (
   payload: AdminStatsDataRequest,
 ): Promise<ApiBaseResponse<AdminFetchDashboardSubscriptionStatsDataResponse>> => {
   const query = buildQueryParams(payload);
-  const response = await axiosInstance.get(`/admin-dashboard/analytics/subscriptions-stats?${query}`);
+  const response = await axiosInstance.get(
+    `/admin-dashboard/analytics/subscriptions-stats?${query}`,
+  );
   return response.data;
 };
 

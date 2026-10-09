@@ -27,17 +27,15 @@ export interface ChangeReviewBlockStatusRequest {
   reviewId: Review['_id'];
   isBlocked: Review['isBlocked'];
 }
-export type ChangeReviewBlockStatusResponse = Pick<Review, "_id" | "isBlocked">; 
-
+export type ChangeReviewBlockStatusResponse = Pick<Review, '_id' | 'isBlocked'>;
 
 // report review
 export interface ReportReviewRequest {
   reviewId: Review['_id'];
 }
-export type ReportReviewResponse = Pick<Review, "_id" | "reported">; 
-
+export type ReportReviewResponse = Pick<Review, '_id' | 'reported'>;
 
 // delete review
 export interface DeleteReviewRequest {
-  reviewId: Review["_id"];
+  reviewId: Review['_id'];
 }

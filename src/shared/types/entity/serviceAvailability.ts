@@ -1,4 +1,4 @@
-import { Day } from "../enums";
+import { Day } from '../enums';
 
 // **** Provider service availability interface **** \\
 

@@ -9,7 +9,7 @@ import {
   Users,
   Settings,
   User,
-  Loader2
+  Loader2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -173,8 +173,8 @@ const VideoCallRoom = () => {
               title={isCameraOn ? 'Turn Video Off' : 'Turn Video On'}
               onClick={toggleCamera}
               variant={isCameraOn ? 'secondary' : 'destructive'}
-              size='icon'
-              >
+              size="icon"
+            >
               {isCameraOn ? (
                 <Video className="size-5 text-foreground transition-transform group-hover:scale-110" />
               ) : (
@@ -186,8 +186,8 @@ const VideoCallRoom = () => {
               title={isMicOn ? 'Mute Microphone' : 'Unmute Microphone'}
               onClick={toggleMic}
               variant={isMicOn ? 'secondary' : 'destructive'}
-              size='icon'
-              >
+              size="icon"
+            >
               {isMicOn ? (
                 <Mic className="size-5 text-foreground transition-transform group-hover:scale-110" />
               ) : (
@@ -195,19 +195,11 @@ const VideoCallRoom = () => {
               )}
             </Button>
 
-            <Button
-              title="Audio and Video Settings"
-              variant="outline"
-              size='icon'
-            >
+            <Button title="Audio and Video Settings" variant="outline" size="icon">
               <Settings className="size-5" />
             </Button>
 
-            <Button
-              title="End Call"
-              onClick={handleEndCall}
-              variant="destructive"
-            >
+            <Button title="End Call" onClick={handleEndCall} variant="destructive">
               <PhoneOff className="size-5" />
               <span>Leave</span>
             </Button>

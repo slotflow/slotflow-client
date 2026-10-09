@@ -88,8 +88,8 @@ html {
   --background: #ffffff;
   --menuBg: #f2f2f2;
   --menuItemHoverBg: #e6e6e6;
-  
- /*by shadcn*/
+
+  /*by shadcn*/
   --spotlight-color: #ffffff;
 
   --chart-1: oklch(0.646 0.222 41.116);

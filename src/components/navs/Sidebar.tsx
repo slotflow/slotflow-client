@@ -16,13 +16,9 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
   const [expandedRoutes, setExpandedRoutes] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const isSidebarOpen: boolean = useSelector(
-    (store: RootState) => store.app.isSidebarOpen,
-  );
+  const isSidebarOpen: boolean = useSelector((store: RootState) => store.app.isSidebarOpen);
 
-  const user: Partial<AuthUser> | null = useSelector(
-    (store: RootState) => store.auth?.authUser,
-  );
+  const user: Partial<AuthUser> | null = useSelector((store: RootState) => store.auth?.authUser);
 
   const searchedRoutes = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
@@ -61,16 +57,11 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
         const fullParentPath = `/${route.path}`;
 
         const hasActiveSubroute = route.subroutes.some(
-          (sub) =>
-            location.pathname === `${fullParentPath}/${sub.path}`,
+          (sub) => location.pathname === `${fullParentPath}/${sub.path}`,
         );
 
         if (hasActiveSubroute) {
-          setExpandedRoutes((prev) =>
-            prev.includes(route.path)
-              ? prev
-              : [...prev, route.path],
-          );
+          setExpandedRoutes((prev) => (prev.includes(route.path) ? prev : [...prev, route.path]));
         }
       }
     });
@@ -83,22 +74,16 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
 
     const routesToExpand = routes
       .filter((route) =>
-        route.subroutes?.some((subRoute) =>
-          subRoute.name.toLowerCase().includes(query),
-        ),
+        route.subroutes?.some((subRoute) => subRoute.name.toLowerCase().includes(query)),
       )
       .map((route) => route.path);
 
-    setExpandedRoutes((prev) => [
-      ...new Set([...prev, ...routesToExpand]),
-    ]);
+    setExpandedRoutes((prev) => [...new Set([...prev, ...routesToExpand])]);
   }, [searchQuery, routes]);
 
   const toggleRoute = (path: string) => {
     setExpandedRoutes((prev) =>
-      prev.includes(path)
-        ? prev.filter((item) => item !== path)
-        : [...prev, path],
+      prev.includes(path) ? prev.filter((item) => item !== path) : [...prev, path],
     );
   };
 
@@ -110,16 +95,10 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
     >
       <div
         className={`flex items-center px-4 md:px-6 py-4 ${
-          isSidebarOpen
-            ? 'px-6'
-            : 'px-0 justify-center'
+          isSidebarOpen ? 'px-6' : 'px-0 justify-center'
         } transition-all duration-300`}
       >
-        <img
-          src={logo}
-          className="size-6 object-contain shrink-0"
-          alt="SlotFlow Logo"
-        />
+        <img src={logo} className="size-6 object-contain shrink-0" alt="SlotFlow Logo" />
 
         {isSidebarOpen && (
           <div className="flex flex-col ml-3 overflow-hidden">
@@ -146,9 +125,7 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
       )}
 
       <div
-        className={`flex-1 overflow-y-auto no-scrollbar ${
-          isSidebarOpen ? 'px-4' : 'px-2'
-        } pb-4`}
+        className={`flex-1 overflow-y-auto no-scrollbar ${isSidebarOpen ? 'px-4' : 'px-2'} pb-4`}
       >
         <nav className="flex flex-col mt-2">
           {searchedRoutes.map((route) => {
@@ -156,9 +133,7 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
 
             const isLocked =
               isProvider && filteredRoutes
-                ? !filteredRoutes.some(
-                    (froute) => froute.name === route.name,
-                  )
+                ? !filteredRoutes.some((froute) => froute.name === route.name)
                 : false;
 
             const fullPath = `/${route.path}`;
@@ -166,19 +141,13 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
             const hasSubroutes = subRoutes.length > 0;
             const isExpanded = expandedRoutes.includes(route.path);
 
-            const isDirectlyActive =
-              location.pathname === fullPath;
+            const isDirectlyActive = location.pathname === fullPath;
 
             const isSubrouteActive = hasSubroutes
-              ? subRoutes.some(
-                  (sub) =>
-                    location.pathname ===
-                    `${fullPath}/${sub.path}`,
-                )
+              ? subRoutes.some((sub) => location.pathname === `${fullPath}/${sub.path}`)
               : false;
 
-            const isParentActive =
-              isDirectlyActive || isSubrouteActive;
+            const isParentActive = isDirectlyActive || isSubrouteActive;
 
             return (
               <div key={fullPath}>
@@ -194,10 +163,7 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
                     onClick={() => toggleRoute(route.path)}
                   />
                 ) : !isLocked ? (
-                  <NavLink
-                    to={fullPath}
-                    className="block outline-none"
-                  >
+                  <NavLink to={fullPath} className="block outline-none">
                     {({ isActive }) => (
                       <SingleTab
                         icon={route.icon}
@@ -217,44 +183,36 @@ const Sidebar = ({ routes, filteredRoutes }: SideBarProps) => {
                   />
                 )}
 
-                {hasSubroutes &&
-                  isExpanded &&
-                  isSidebarOpen && (
-                    <div className="border-l border-border pl-2">
-                      {subRoutes.map((subRoute) => {
-                        const subPath = `${fullPath}/${subRoute.path}`;
+                {hasSubroutes && isExpanded && isSidebarOpen && (
+                  <div className="border-l border-border pl-2">
+                    {subRoutes.map((subRoute) => {
+                      const subPath = `${fullPath}/${subRoute.path}`;
 
-                        return (
-                          <NavLink
-                            key={subPath}
-                            to={subPath}
-                            className="block outline-none"
-                          >
-                            {({ isActive }) => (
-                              <SingleTab
-                                icon={subRoute.icon}
-                                text={subRoute.name}
-                                isSidebarOpen={isSidebarOpen}
-                                active={isActive}
-                                className="my-0.5"
-                              />
-                            )}
-                          </NavLink>
-                        );
-                      })}
-                    </div>
-                  )}
+                      return (
+                        <NavLink key={subPath} to={subPath} className="block outline-none">
+                          {({ isActive }) => (
+                            <SingleTab
+                              icon={subRoute.icon}
+                              text={subRoute.name}
+                              isSidebarOpen={isSidebarOpen}
+                              active={isActive}
+                              className="my-0.5"
+                            />
+                          )}
+                        </NavLink>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             );
           })}
 
-          {isSidebarOpen &&
-            searchQuery.trim() &&
-            searchedRoutes.length === 0 && (
-              <div className="px-3 py-6 text-center text-sm text-muted-foreground">
-                No menu items found
-              </div>
-            )}
+          {isSidebarOpen && searchQuery.trim() && searchedRoutes.length === 0 && (
+            <div className="px-3 py-6 text-center text-sm text-muted-foreground">
+              No menu items found
+            </div>
+          )}
         </nav>
       </div>
 

@@ -4,7 +4,6 @@ import { strongPasswordRegex, usernameRegex } from './regex';
 // Signup Schema
 export const signupZodSchema = z
   .object({
-
     email: z.string().email('Invalid email'),
 
     password: z
@@ -84,7 +83,6 @@ export const verifyEmailZodSchema = z.object({
 });
 
 export type VerifyEmailFormType = z.infer<typeof verifyEmailZodSchema>;
-
 
 export const usernameSchema = z.object({
   username: z

@@ -13,7 +13,6 @@ import ReferralTableColumn from '@/components/table/tableColumns/ReferralTableCo
 
 // TODO add daterange selector
 const ReferralDashboard = () => {
-
   const column = ReferralTableColumn();
   const startDate = formatDate(dayjs().subtract(1, 'month').toDate(), dateFormats.ISO_DATE);
   const endDate = formatDate(dayjs().toDate(), dateFormats.ISO_DATE);

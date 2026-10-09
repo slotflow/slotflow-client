@@ -17,7 +17,13 @@ export type FetchProviderSubscriptionsResponse = Pick<
 // subscription props
 type SubscriptionProps = Pick<
   Subscription,
-  'currentPeriodStart' | 'currentPeriodEnd' | 'subscriptionStatus' | 'createdAt' | "cancelAt" | "cancelAtPeriodEnd" | "_id"
+  | 'currentPeriodStart'
+  | 'currentPeriodEnd'
+  | 'subscriptionStatus'
+  | 'createdAt'
+  | 'cancelAt'
+  | 'cancelAtPeriodEnd'
+  | '_id'
 >;
 
 // plan props

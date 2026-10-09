@@ -18,16 +18,13 @@ import { subscriptionStatsMapForAdmin } from '@/shared/utils/constants/statsCons
 export default function AdminDashboardSubscriptionData({
   dateRange,
 }: AdminDashboardSubscriptionDataProps) {
-
   const initialItems: DashboardItem[] = [
     {
       id: 'stats-card',
       colSpan: 'col-span-12 lg:col-span-6',
       component: (
         <DashboardStats<AdminFetchDashboardSubscriptionStatsDataResponse>
-          queryFunction={() =>
-            adminFetchDashboardSubscriptionStatsData(dateRange)
-          }
+          queryFunction={() => adminFetchDashboardSubscriptionStatsData(dateRange)}
           queryKey={[queryKeys.DASHBOARD_SUBSCRIPTION_STATS]}
           statsMap={subscriptionStatsMapForAdmin}
           dependencies={dateRange}
@@ -47,7 +44,7 @@ export default function AdminDashboardSubscriptionData({
           fetchFn={() =>
             fetchAnalyticsInsight({
               ...dateRange,
-              entity: aiResponseEntities.SUBSCRIPTION
+              entity: aiResponseEntities.SUBSCRIPTION,
             })
           }
           queryKey={queryKeys.SUBSCRIPTION_USAGE_AI_RES}

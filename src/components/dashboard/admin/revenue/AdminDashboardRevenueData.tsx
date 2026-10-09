@@ -13,16 +13,13 @@ import { fetchAnalyticsInsight, adminFetchDashboardRevenueStatsData } from '@/se
 import { AdminFetchDashboardRevenueAndPaymentsStatsDataResponse } from '@/shared/types/api/adminDashboard';
 
 export default function AdminDashboardRevenueData({ dateRange }: AdminDashboardRevenueDataProps) {
-
   const initialItems: DashboardItem[] = [
     {
       id: 'stats-card',
       colSpan: 'col-span-12 lg:col-span-6',
       component: (
         <DashboardStats<AdminFetchDashboardRevenueAndPaymentsStatsDataResponse>
-          queryFunction={() =>
-            adminFetchDashboardRevenueStatsData(dateRange)
-          }
+          queryFunction={() => adminFetchDashboardRevenueStatsData(dateRange)}
           queryKey={[queryKeys.DASHBOARD_REVENUE_STATS]}
           dependencies={dateRange}
           statsMap={revenueAndPaymentsStatsMapForAdmin}
@@ -42,7 +39,7 @@ export default function AdminDashboardRevenueData({ dateRange }: AdminDashboardR
           fetchFn={() =>
             fetchAnalyticsInsight({
               ...dateRange,
-              entity: aiResponseEntities.REVENUE
+              entity: aiResponseEntities.REVENUE,
             })
           }
           queryKey={queryKeys.REVENUE_STATS_AI_RES}

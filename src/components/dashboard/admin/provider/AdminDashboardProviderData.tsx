@@ -13,16 +13,13 @@ import { aiResponseEntities, queryKeys } from '@/shared/utils/constants/appConst
 import { fetchAnalyticsInsight, adminFetchDashboardProviderStatsData } from '@/services/apis/admin';
 
 export default function AdminDashboardProviderData({ dateRange }: AdminDashboardProviderDataProps) {
-
   const initialItems: DashboardItem[] = [
     {
       id: 'stats-card',
       colSpan: 'col-span-12 lg:col-span-6',
       component: (
         <DashboardStats<AdminFetchDashboardProviderStatsDataResponse>
-          queryFunction={() =>
-            adminFetchDashboardProviderStatsData(dateRange)
-          }
+          queryFunction={() => adminFetchDashboardProviderStatsData(dateRange)}
           queryKey={[queryKeys.DASHBOARD_PROVIDERS_STATS]}
           statsMap={providerStatsMapForAdmin}
           dependencies={dateRange}
@@ -43,7 +40,7 @@ export default function AdminDashboardProviderData({ dateRange }: AdminDashboard
           fetchFn={() =>
             fetchAnalyticsInsight({
               ...dateRange,
-              entity: aiResponseEntities.PROVIDER
+              entity: aiResponseEntities.PROVIDER,
             })
           }
           queryKey={queryKeys.PROVIDER_ENGAGEMENT_AI_RES}

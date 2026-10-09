@@ -1,6 +1,4 @@
-import {
-  FetchBookingsResponse,
-} from '@/shared/types/api/booking';
+import { FetchBookingsResponse } from '@/shared/types/api/booking';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/app/store/appStore';
@@ -15,19 +13,16 @@ import BookingsTableColumn from '@/components/table/tableColumns/BookingsTableCo
 import { useJVideoCallActions } from '@/hooks/useVideoCallActions';
 
 const ListBookings = () => {
-
   const authUser = useSelector((state: RootState) => state.auth.authUser);
 
-  const {
-    toBookingsDetailsPage
-  } = useAppNavigation();
+  const { toBookingsDetailsPage } = useAppNavigation();
 
   const {
     handleReviewAddFormToggle,
     changeAppointmentStatus,
     statusChangingAppointmentId,
     cancelBooking,
-    isCancelling
+    isCancelling,
   } = useBooking();
 
   const { JoinCallLobby } = useJVideoCallActions();
@@ -59,7 +54,7 @@ const ListBookings = () => {
     handleReviewAddFormToggle,
     handleUserCancelBooking,
     changeAppointmentStatus,
-    statusChangingAppointmentId
+    statusChangingAppointmentId,
   );
 
   return (

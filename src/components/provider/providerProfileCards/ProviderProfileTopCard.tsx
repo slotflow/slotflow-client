@@ -20,7 +20,6 @@ const ProviderProfileTopCard = ({
   isShowPreview = false,
   handleIsShowPreview,
 }: ProviderProfileTopCardProps) => {
-
   const { copied, copy } = useCopy(2000);
 
   return (
@@ -74,15 +73,18 @@ const ProviderProfileTopCard = ({
             <Button
               variant="outline"
               size="sm"
-              className={`cursor-pointer h-9 gap-1.5 transition-all duration-200 ${copied
-                ? "bg-emerald-50 border-emerald-500 text-emerald-700 dark:bg-emerald-950/40 dark:border-emerald-500/60 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-950/60"
-                : ""
-                }`}
-              onClick={() => copy({
-                title: 'Service Provider Profile',
-                text: 'Check out this service provider profile!',
-                url: window.location.href,
-              })}
+              className={`cursor-pointer h-9 gap-1.5 transition-all duration-200 ${
+                copied
+                  ? 'bg-emerald-50 border-emerald-500 text-emerald-700 dark:bg-emerald-950/40 dark:border-emerald-500/60 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-950/60'
+                  : ''
+              }`}
+              onClick={() =>
+                copy({
+                  title: 'Service Provider Profile',
+                  text: 'Check out this service provider profile!',
+                  url: window.location.href,
+                })
+              }
             >
               {copied ? (
                 <>
@@ -96,7 +98,7 @@ const ProviderProfileTopCard = ({
                 </>
               )}
             </Button>
-            {(role === Role.PROVIDER && handleIsShowPreview) && (
+            {role === Role.PROVIDER && handleIsShowPreview && (
               <div className="flex items-center space-x-2 mt-2">
                 <Label htmlFor="airplane-mode">See how your profile looks to customers</Label>
                 <Switch

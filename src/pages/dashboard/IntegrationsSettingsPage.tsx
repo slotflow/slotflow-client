@@ -7,12 +7,11 @@ import { Role, PaymentAccountStatus } from '@/shared/types/enums';
 import googleCalendarLogo from '../../assets/logos/external/googleCalendar.png';
 
 const IntegrationsSettingsPage = () => {
-
   const { connectStripe, connectGoogleCalendar } = useIntegration();
   const authUser = useSelector((state: RootState) => state.auth.authUser);
   const { googleCalendar, stripe } = useSelector((state: RootState) => state.integration);
 
-  if(!authUser) return null;
+  if (!authUser) return null;
 
   const listData = [
     {
@@ -38,13 +37,14 @@ const IntegrationsSettingsPage = () => {
       action: () => connectStripe({ email: authUser.email }),
       show: authUser?.role !== Role.PROVIDER,
       connectionStatus: stripe.status === PaymentAccountStatus.ACTIVE,
-      connectionText: stripe.status === PaymentAccountStatus.ACTIVE
-        ? 'Connected'
-        : stripe.status === PaymentAccountStatus.RESTRICTED
-          ? 'Restricted'
-          : stripe.status === PaymentAccountStatus.PENDING
-            ? 'Pending'
-            : 'Not Connected',
+      connectionText:
+        stripe.status === PaymentAccountStatus.ACTIVE
+          ? 'Connected'
+          : stripe.status === PaymentAccountStatus.RESTRICTED
+            ? 'Restricted'
+            : stripe.status === PaymentAccountStatus.PENDING
+              ? 'Pending'
+              : 'Not Connected',
       isLoading: stripe.isConnecting,
     },
   ];

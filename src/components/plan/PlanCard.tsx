@@ -15,7 +15,6 @@ const PlanCard = ({
   popular,
   billingCycle = BillingCycle.MONTHLY,
 }: ProviderPlanCardProps) => {
-
   const dispatch = useDispatch();
   const hasUsedTrial = useSelector((state: RootState) => state.auth.authUser?.hasUsedTrial);
 
@@ -49,9 +48,7 @@ const PlanCard = ({
           )}
         </div>
 
-        <CardTitle className="mb-3 text-lg lg:text-xl text-center">
-          {plan.planName}
-        </CardTitle>
+        <CardTitle className="mb-3 text-lg lg:text-xl text-center">{plan.planName}</CardTitle>
 
         <span className="font-bold text-5xl text-center">
           {billingCycle === BillingCycle.MONTHLY
@@ -82,7 +79,7 @@ const PlanCard = ({
       {!dummy ? (
         <div className="mt-auto pt-4">
           <Button
-            variant='secondary'
+            variant="secondary"
             title="Choose Plan"
             className="w-full cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
             onClick={handleGoToPayment}

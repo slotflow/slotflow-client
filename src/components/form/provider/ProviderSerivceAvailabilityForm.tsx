@@ -141,7 +141,7 @@ const ProviderServiceAvailabilityForm = ({
         goTo(
           authUser?.isServiceAvailabilityAdded
             ? redirectPaths.ONBOARDING_PENDING
-            : redirectPaths.ONBOARDING_PROOFS
+            : redirectPaths.ONBOARDING_PROOFS,
         );
       }
     } catch (error) {
@@ -168,8 +168,8 @@ const ProviderServiceAvailabilityForm = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-        {heading && <h4 className="text-xl lg:text-2xl font-semibold text-start">{heading}</h4>}
-   
+      {heading && <h4 className="text-xl lg:text-2xl font-semibold text-start">{heading}</h4>}
+
       <div className="flex w-full flex-col space-y-6">
         <div className="space-y-4 w-full pt-4">
           <AvailabilityDataSelectionFields

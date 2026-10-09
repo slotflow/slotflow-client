@@ -14,12 +14,9 @@ export const FormButton = React.memo(
         className={`${className}`}
       >
         <span className="flex items-center gap-2">
-          {loading &&
-            <LoaderCircle className="animate-spin  size-4" />
-          }
+          {loading && <LoaderCircle className="animate-spin  size-4" />}
           <span>{text}</span>
         </span>
-
       </Button>
     );
   },

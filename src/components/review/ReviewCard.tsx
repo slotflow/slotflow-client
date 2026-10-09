@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button } from '../ui/button';
 import { Role } from '@/shared/types/enums';
 import StatusBadge from '../common/StatusBadge';
@@ -15,7 +14,7 @@ const ReviewCard = ({
   handleReportReview,
   handleChangeReviewBlockStatus,
   isChangingBlockStatus,
-  isChangingReportStatus
+  isChangingReportStatus,
 }: ReviewCardProps) => {
   return (
     <Card className="border rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-200">
@@ -86,9 +85,7 @@ const ReviewCard = ({
               variant="destructive"
               size="sm"
               className="cursor-pointer bg-[var(--background)] border"
-              onClick={() =>
-                handleDeleteReview(review._id)
-              }
+              onClick={() => handleDeleteReview(review._id)}
             >
               <Trash className="w-3.5 h-3.5 mr-1 text-red-500" /> Delete
             </Button>
@@ -100,9 +97,7 @@ const ReviewCard = ({
               variant="default"
               size="sm"
               className="cursor-pointer"
-              onClick={() =>
-                handleReportReview(review._id)
-              }
+              onClick={() => handleReportReview(review._id)}
             >
               {isChangingReportStatus ? (
                 <>

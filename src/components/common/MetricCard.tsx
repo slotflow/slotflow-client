@@ -44,9 +44,7 @@ const MetricCard = ({
         </span>
         <div
           className={`p-2 rounded-xl transition-colors ${
-            bgColour
-              ? 'bg-white/10 text-white'
-              : 'bg-muted/60 text-muted-foreground'
+            bgColour ? 'bg-white/10 text-white' : 'bg-muted/60 text-muted-foreground'
           }`}
         >
           <Icon className="size-4" />
@@ -111,8 +109,8 @@ const MetricCard = ({
                           ? 'bg-white/20 text-white'
                           : 'bg-red-500/30 text-white'
                         : isPositive
-                        ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
-                        : 'bg-destructive/10 text-destructive'
+                          ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                          : 'bg-destructive/10 text-destructive'
                     }`}
                   >
                     {isPositive ? (

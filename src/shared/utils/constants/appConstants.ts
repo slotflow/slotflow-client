@@ -1,19 +1,8 @@
-import {
-  DayMapInterface,
-  dataSelectListItemInterface,
-} from '../../types/common';
+import { dataSelectListItemInterface } from '../../types/common';
 
-
-// Provider service availability component day map
-export const dayMap: DayMapInterface = {
-  Sun: { day: 'Sunday', tab: 0 },
-  Mon: { day: 'Monday', tab: 1 },
-  Tue: { day: 'Tuesday', tab: 2 },
-  Wed: { day: 'Wednesday', tab: 3 },
-  Thu: { day: 'Thursday', tab: 4 },
-  Fri: { day: 'Friday', tab: 5 },
-  Sat: { day: 'Saturday', tab: 6 },
-};
+// Image files constants
+export const maxFileSize: number = 2 * 1024 * 1024; // 2 MiB
+export const allowedFileTypes: string[] = ['image/png', 'image/jpeg', 'image/webp'];
 
 // ChartHeader date selector data
 export const dateSelectList: dataSelectListItemInterface[] = [
@@ -97,25 +86,25 @@ export const aiResponseEntities = {
 
 //
 export const dateFormats = {
-  SHORT: 'dd MMM yyyy',                 // 16 Sep 2026
-  FULL: 'dd MMMM yyyy',                  // 16 September 2026
-  WITH_TIME: 'dd MMM yyyy, hh:mm a',        // 16 Sep 2026, 02:55 PM
+  SHORT: 'dd MMM yyyy', // 16 Sep 2026
+  FULL: 'dd MMMM yyyy', // 16 September 2026
+  WITH_TIME: 'dd MMM yyyy, hh:mm a', // 16 Sep 2026, 02:55 PM
   WITH_FULL_TIME: 'MM/dd/yyyy, hh:mm:ss a', // 09/16/2026, 02:55:16 PM (Replaces toLocaleString)
-  ISO_DATE: 'yyyy-MM-dd',                // 2026-09-16
-  TIME_12H: 'hh:mm a',                   // 02:55 PM
-  TIME_12H_LOWER: 'hh:mm aa',             // 02:55 pm
-  TIME_24H: 'HH:mm',                     // 14:55
-  RANGE_MONTH_DAY: 'LLL dd',             // Sep 16
-  RANGE_FULL: 'LLL dd, yyyy',            // Sep 16, 2026
+  ISO_DATE: 'yyyy-MM-dd', // 2026-09-16
+  TIME_12H: 'hh:mm a', // 02:55 PM
+  TIME_12H_LOWER: 'hh:mm aa', // 02:55 pm
+  TIME_24H: 'HH:mm', // 14:55
+  RANGE_MONTH_DAY: 'LLL dd', // Sep 16
+  RANGE_FULL: 'LLL dd, yyyy', // Sep 16, 2026
 } as const;
 
 //
 export const DEFAULT_ITEMS = [
-    'AC Repairing',
-    'Home Cleaning',
-    'Plumbing Services',
-    'Electrician near me',
-    'Beauty & Spa',
+  'AC Repairing',
+  'Home Cleaning',
+  'Plumbing Services',
+  'Electrician near me',
+  'Beauty & Spa',
 ];
 
 // local storage

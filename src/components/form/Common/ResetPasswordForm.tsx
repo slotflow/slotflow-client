@@ -14,7 +14,6 @@ import { setForgotPassword } from '@/app/store/slices/appSlice';
 import { ResetPasswordFormType, resetPasswordZodSchema } from '@/shared/validators/zod/authZod';
 
 const ResetPasswordForm = () => {
-
   const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
 
@@ -58,10 +57,7 @@ const ResetPasswordForm = () => {
     <div className="flex min-h-screen flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:px-8 bg-slate-50/50 dark:bg-zinc-950">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="backdrop-blur-xl border border-slate-200/80 dark:border-zinc-800 shadow-xl shadow-slate-200/50 dark:shadow-none rounded-2xl p-6 sm:p-8">
-          <FormHeading
-            title="Reset your password"
-            description="Enter new password."
-          />
+          <FormHeading title="Reset your password" description="Enter new password." />
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
             <FormField<ResetPasswordFormType>
               label="Password"
@@ -83,9 +79,7 @@ const ResetPasswordForm = () => {
               register={register}
               error={
                 errors.confirmPassword?.message ??
-                (watch('confirmPassword') !== passwordValue
-                  ? 'Passwords do not match'
-                  : undefined)
+                (watch('confirmPassword') !== passwordValue ? 'Passwords do not match' : undefined)
               }
             />
 
@@ -94,7 +88,7 @@ const ResetPasswordForm = () => {
               loading={isSubmitting}
               disabled={isSubmitting || !isValid}
               title="Update"
-              className='w-full'
+              className="w-full"
             />
           </form>
 

@@ -14,9 +14,8 @@ import CreditTransactionTableColumn from '@/components/table/tableColumns/Credit
 
 // TODO add daterage selector
 const CreditDashboard = () => {
-
   const column = CreditTransactionTableColumn();
-  
+
   const startDate = formatDate(dayjs().subtract(1, 'month').toDate(), dateFormats.ISO_DATE);
   const endDate = formatDate(dayjs().toDate(), dateFormats.ISO_DATE);
 

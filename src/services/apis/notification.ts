@@ -32,12 +32,15 @@ export const handleNotificationChange = async (
   return response.data;
 };
 
-export const fetchMyNotificationPreference = async(): Promise<FetchMyNotificationPreferenceResponse> => {
-  const response = await axiosInstance.get(`/notifications/preferences`);
-  return response.data;
-}
+export const fetchMyNotificationPreference =
+  async (): Promise<FetchMyNotificationPreferenceResponse> => {
+    const response = await axiosInstance.get(`/notifications/preferences`);
+    return response.data;
+  };
 
-export const updatePushNotificationPreference = async(payload: UpdatePushNotificationPreferenceRequest): Promise<ApiBaseResponse> => {
+export const updatePushNotificationPreference = async (
+  payload: UpdatePushNotificationPreferenceRequest,
+): Promise<ApiBaseResponse> => {
   const response = await axiosInstance.patch('/notifications/preferences/push', payload);
   return response.data;
-}
+};

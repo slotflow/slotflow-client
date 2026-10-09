@@ -1,5 +1,6 @@
 import { toast } from 'react-toastify';
 import DataField from '../app/DataField';
+import { useAuth } from '@/hooks/useAuth';
 import { useEffect, useState } from 'react';
 import {
   fetchEngagedSlots,
@@ -20,14 +21,13 @@ import { EventSocketEnum, Role } from '@/shared/types/enums';
 import { formatDate } from '@/shared/utils/helper/formatDate';
 import { Slot } from '@/shared/types/entity/serviceAvailability';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { parseDateParam } from '@/shared/utils/helper/parseDateParams';
 import AvailablityFetchingError from '../error/AvailabilityFetchingError';
 import { ProviderServiceAvailabilityProps } from '@/shared/types/component';
 import { dateFormats, queryKeys } from '@/shared/utils/constants/appConstants';
 import ProviderAvailabilityShimmer from '@/components/shimmers/ProviderAvailabilityShimmer';
 import { CalendarDays, Clock, Settings2, Timer, CheckCircle2, XCircle } from 'lucide-react';
 import ProviderServiceAvailabilityForm from '../form/provider/ProviderSerivceAvailabilityForm';
-import { parseDateParam } from '@/shared/utils/helper/parseDateParams';
-import { useAuth } from '@/hooks/useAuth';
 
 const ProviderServiceAvailability = ({
   providerId,
@@ -35,14 +35,13 @@ const ProviderServiceAvailability = ({
   canUpdate = false,
   showHeading = false,
 }: ProviderServiceAvailabilityProps) => {
-
   const { user } = useAuth();
   const [showForm, setShowForm] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const dateParam = searchParams.get('date');
   const modeParam = searchParams.get('mode');
   const [date, setDate] = useState<Date | undefined>(
-    () => parseDateParam(dateParam, user?.timeZone?.value as string) ?? new Date(),
+    () => parseDateParam(dateParam, user?.timeZone as string) ?? new Date(),
   );
   const [selectedMode, setSelectedMode] = useState<string | null>(null);
   const [engagedSlotIds, setEngagedSlotIds] = useState<Set<string>>(new Set());
@@ -52,7 +51,7 @@ const ProviderServiceAvailability = ({
   const selectedSlotId = searchParams.get('slot');
 
   useEffect(() => {
-    const parsedDate = parseDateParam(dateParam, user?.timeZone?.value as string);
+    const parsedDate = parseDateParam(dateParam, user?.timeZone as string);
     if (parsedDate) {
       setDate(parsedDate);
       return;
@@ -72,7 +71,7 @@ const ProviderServiceAvailability = ({
       newParams.set('date', formattedDefaultDate);
       return newParams;
     });
-  }, [dateParam, setSearchParams]);
+  }, [dateParam, setSearchParams, user?.timeZone]);
 
   const { data, isLoading, isError, error } = useQuery({
     queryFn: async () => {
@@ -81,7 +80,7 @@ const ProviderServiceAvailability = ({
         if (!providerId) throw new Error('Missing provider Id');
         const res = await fetchServiceAvailabilityByProviderId({
           date: formatDate(date, dateFormats.ISO_DATE),
-          providerId
+          providerId,
         });
         return res.data;
       } else if (role === Role.PROVIDER) {
@@ -111,9 +110,7 @@ const ProviderServiceAvailability = ({
       return;
     }
 
-    const nextMode = modeParam && data.modes.includes(modeParam)
-      ? modeParam
-      : data.modes[0];
+    const nextMode = modeParam && data.modes.includes(modeParam) ? modeParam : data.modes[0];
     setSelectedMode(nextMode);
 
     if (modeParam !== nextMode) {
@@ -206,7 +203,6 @@ const ProviderServiceAvailability = ({
       newParams.set('mode', selectedMode);
       return newParams;
     });
-
   };
 
   return (
@@ -265,10 +261,11 @@ const ProviderServiceAvailability = ({
           ) : (
             <div className="md:col-span-7 lg:col-span-8 space-y-6">
               <div
-                className={`flex items-center justify-between p-3.5 rounded-xl border ${data?.isAvailable
-                  ? 'bg-emerald-50/60 border-emerald-200 text-emerald-800 dark:bg-emerald-950/30 dark:border-emerald-800/60 dark:text-emerald-300'
-                  : 'bg-rose-50/60 border-rose-200 text-rose-800 dark:bg-rose-950/30 dark:border-rose-800/60 dark:text-rose-300'
-                  }`}
+                className={`flex items-center justify-between p-3.5 rounded-xl border ${
+                  data?.isAvailable
+                    ? 'bg-emerald-50/60 border-emerald-200 text-emerald-800 dark:bg-emerald-950/30 dark:border-emerald-800/60 dark:text-emerald-300'
+                    : 'bg-rose-50/60 border-rose-200 text-rose-800 dark:bg-rose-950/30 dark:border-rose-800/60 dark:text-rose-300'
+                }`}
               >
                 <div className="flex items-center gap-2.5">
                   {data?.isAvailable ? (
@@ -277,14 +274,17 @@ const ProviderServiceAvailability = ({
                     <XCircle className="size-5 text-rose-600 dark:text-rose-400 shrink-0" />
                   )}
                   <span className="text-xs sm:text-sm font-semibold">
-                    {data?.isAvailable ? 'Service is Currently Available' : 'Service is Unavailable'}
+                    {data?.isAvailable
+                      ? 'Service is Currently Available'
+                      : 'Service is Unavailable'}
                   </span>
                 </div>
                 <span
-                  className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${data?.isAvailable
-                    ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/60 dark:text-emerald-300'
-                    : 'bg-rose-100 text-rose-700 dark:bg-rose-900/60 dark:text-rose-300'
-                    }`}
+                  className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
+                    data?.isAvailable
+                      ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/60 dark:text-emerald-300'
+                      : 'bg-rose-100 text-rose-700 dark:bg-rose-900/60 dark:text-rose-300'
+                  }`}
                 >
                   {data?.isAvailable ? 'Active' : 'Inactive'}
                 </span>
@@ -373,14 +373,18 @@ const ProviderServiceAvailability = ({
                                 return newParams;
                               });
                             }}
-                            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 cursor-pointer flex items-center gap-2 border ${isSelected
-                              ? 'bg-indigo-50/80 dark:bg-indigo-950/40 border-indigo-500 text-indigo-900 dark:text-indigo-200 ring-2 ring-indigo-500/20'
-                              : 'bg-white dark:bg-muted/40 border-slate-200 dark:border-border text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-muted/60'
-                              }`}
+                            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 cursor-pointer flex items-center gap-2 border ${
+                              isSelected
+                                ? 'bg-indigo-50/80 dark:bg-indigo-950/40 border-indigo-500 text-indigo-900 dark:text-indigo-200 ring-2 ring-indigo-500/20'
+                                : 'bg-white dark:bg-muted/40 border-slate-200 dark:border-border text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-muted/60'
+                            }`}
                           >
                             <span
-                              className={`w-2 h-2 rounded-full transition-colors ${isSelected ? 'bg-indigo-600 dark:bg-indigo-400' : 'bg-slate-300 dark:bg-slate-600'
-                                }`}
+                              className={`w-2 h-2 rounded-full transition-colors ${
+                                isSelected
+                                  ? 'bg-indigo-600 dark:bg-indigo-400'
+                                  : 'bg-slate-300 dark:bg-slate-600'
+                              }`}
                             />
                             {mode}
                           </button>
@@ -442,7 +446,6 @@ const ProviderServiceAvailability = ({
                     </p>
                   )}
                 </div>
-
               </div>
             </div>
           )}

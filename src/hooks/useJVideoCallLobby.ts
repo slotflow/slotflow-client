@@ -41,7 +41,6 @@ interface Navigator {
 }
 
 export const useJVideoCallLobby = (): useVideoCallLobbyReturn => {
-
   const { roomId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
@@ -63,7 +62,7 @@ export const useJVideoCallLobby = (): useVideoCallLobbyReturn => {
 
   const { authUser } = useSelector((state: RootState) => state.auth);
   const { isCameraOn, isMicOn, isVideoCallTimerRunning, videoCallRemainingTime } = useSelector(
-    (state: RootState) => state.video
+    (state: RootState) => state.video,
   );
 
   // Join Room Mutation
@@ -93,7 +92,7 @@ export const useJVideoCallLobby = (): useVideoCallLobbyReturn => {
           startVideoCallTimer({
             remainingTime,
             roomId: videoCallRoomId,
-          })
+          }),
         );
         toast.success(res.message || 'Welcome to meet');
         navigate(`/video-call-room/${videoCallRoomId}`);
@@ -255,7 +254,7 @@ export const useJVideoCallLobby = (): useVideoCallLobbyReturn => {
       const updateAudioVisualizer = () => {
         analyser.getByteFrequencyData(dataArray);
         const sliced = Array.from(dataArray.slice(0, 6)).map((val) =>
-          Math.max(12, Math.min(100, Math.floor((val / 255) * 100)))
+          Math.max(12, Math.min(100, Math.floor((val / 255) * 100))),
         );
         setAudioLevels(sliced);
         animFrameRef.current = requestAnimationFrame(updateAudioVisualizer);

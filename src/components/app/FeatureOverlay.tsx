@@ -1,6 +1,6 @@
-import { Badge } from "../ui/badge";
-import { Button } from "../ui/button";
-import { LucideIcon, Sparkles } from "lucide-react";
+import { Badge } from '../ui/badge';
+import { Button } from '../ui/button';
+import { LucideIcon, Sparkles } from 'lucide-react';
 
 export type FeatureOverlaySize = 'sm' | 'md' | 'lg';
 
@@ -68,13 +68,14 @@ const FeatureOverlay = ({
 
   return (
     <div
-      className={`absolute h-full w-full inset-0 z-50 flex flex-col items-center justify-center text-center shadow-sm transition-colors ${borderRadius} ${isBlur
-          ? 'backdrop-blur-md bg-background/60 dark:bg-background/60'
-          : ''
-        } ${className}`}
+      className={`absolute h-full w-full inset-0 z-50 flex flex-col items-center justify-center text-center shadow-sm transition-colors ${borderRadius} ${
+        isBlur ? 'backdrop-blur-md bg-background/60 dark:bg-background/60' : ''
+      } ${className}`}
     >
       <div className={`flex flex-col items-center ${config.maxContentWidth} ${config.spaceY}`}>
-        <div className={`${config.iconWrapperPadding} rounded-full bg-primary/15 dark:bg-primary/20 border border-primary/30 text-primary shadow-sm`}>
+        <div
+          className={`${config.iconWrapperPadding} rounded-full bg-primary/15 dark:bg-primary/20 border border-primary/30 text-primary shadow-sm`}
+        >
           <Icon className={`${config.iconSize} animate-pulse`} />
         </div>
 
@@ -91,7 +92,9 @@ const FeatureOverlay = ({
           {title}
         </h3>
 
-        <p className={`text-muted-foreground dark:text-neutral-400 font-medium ${config.descriptionText}`}>
+        <p
+          className={`text-muted-foreground dark:text-neutral-400 font-medium ${config.descriptionText}`}
+        >
           {description}
         </p>
 

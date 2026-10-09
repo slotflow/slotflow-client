@@ -54,10 +54,12 @@ const UpdateUserInfoForm = ({ onClose }: UpdateUserInfoFormProps) => {
     }
 
     try {
-      const res = await dispatch(userUpdateInfo({
-        ...data,
-        ...(data.timeZone ? { timeZone: data.timeZone } : {}),
-      })).unwrap();
+      const res = await dispatch(
+        userUpdateInfo({
+          ...data,
+          ...(data.timeZone ? { timeZone: data.timeZone } : {}),
+        }),
+      ).unwrap();
       if (res.success) {
         toast.success(res.message || 'Info updated successfully');
         onClose();
@@ -90,9 +92,7 @@ const UpdateUserInfoForm = ({ onClose }: UpdateUserInfoFormProps) => {
         rules={{ required: true }}
         render={({ field }) => (
           <div className="space-y-2">
-            <label className="block text-xs md:text-sm font-medium">
-              Phone
-            </label>
+            <label className="block text-xs md:text-sm font-medium">Phone</label>
             <PhoneInput
               value={field.value}
               onChange={(value) => {
@@ -125,17 +125,16 @@ const UpdateUserInfoForm = ({ onClose }: UpdateUserInfoFormProps) => {
               unstyled
               classNames={{
                 control: (state) =>
-                  `h-9 min-h-9 w-full rounded-md border bg-transparent px-3 py-0 shadow-xs transition-[color,box-shadow] outline-none md:text-sm ${state.isFocused
-                    ? 'border-[var(--mainColor)]'
-                    : 'border-input'
+                  `h-9 min-h-9 w-full rounded-md border bg-transparent px-3 py-0 shadow-xs transition-[color,box-shadow] outline-none md:text-sm ${
+                    state.isFocused ? 'border-[var(--mainColor)]' : 'border-input'
                   }`,
                 valueContainer: () => 'px-0 py-0',
-                menu: () => 'mt-2 rounded-md border bg-popover text-popover-foreground shadow-md z-50',
+                menu: () =>
+                  'mt-2 rounded-md border bg-popover text-popover-foreground shadow-md z-50',
                 menuList: () => 'max-h-48 overflow-y-auto py-1',
                 option: (state) =>
-                  `cursor-pointer px-3 py-2 text-sm transition-colors ${state.isFocused
-                    ? 'bg-accent text-accent-foreground'
-                    : 'hover:bg-accent/50'
+                  `cursor-pointer px-3 py-2 text-sm transition-colors ${
+                    state.isFocused ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/50'
                   }`,
                 singleValue: () => 'text-foreground font-medium',
                 placeholder: () => 'text-muted-foreground',
@@ -153,7 +152,7 @@ const UpdateUserInfoForm = ({ onClose }: UpdateUserInfoFormProps) => {
         <FormButton
           loading={isSubmitting}
           text={isSubmitting ? 'Updating' : 'Update'}
-          title='Update user info'
+          title="Update user info"
           disabled={isSubmitting || !isValid}
         />
       </div>

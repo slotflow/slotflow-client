@@ -39,13 +39,12 @@ export const userFetchMyProfileDetails = async (): Promise<
 };
 
 // user update profile image
-export const userUpdateProfileImage = createAsyncThunk<
-  ApiBaseResponse<UserUpdateProfileImageResponse>,
-  UserUpdateProfileImageRequest
->('/user/updateProfileImage', async (data: UserUpdateProfileImageRequest) => {
-  const response = await axiosInstance.patch('/users/me/image', data);
+export const userUpdateProfileImage = async (
+  payload: UserUpdateProfileImageRequest,
+): Promise<ApiBaseResponse<UserUpdateProfileImageResponse>> => {
+  const response = await axiosInstance.patch('/users/me/image', payload);
   return response.data;
-});
+};
 
 // user update info
 export const userUpdateInfo = createAsyncThunk<

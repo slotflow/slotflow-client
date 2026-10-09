@@ -6,9 +6,8 @@ import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { blogCTAItems } from '@/shared/utils/constants/landingConstants';
 
 const BlogCTA = () => {
-
   const { goTo } = useAppNavigation();
-  
+
   return (
     <section id="cta" className="px-6 pb-24">
       <div className="mx-auto max-w-7xl relative overflow-hidden rounded-[40px] border bg-gradient-to-br from-primary/10 via-background to-primary/5">

@@ -1,11 +1,11 @@
-import { SubscriptionStatus } from "../enums";
+import { SubscriptionStatus } from '../enums';
 
 // Provider subscription interface
 export interface Subscription {
   _id: string;
   providerId: string;
   subscriptionStatus: SubscriptionStatus;
-  subscribedPlanId: string,
+  subscribedPlanId: string;
   currentPeriodStart: Date | null;
   currentPeriodEnd: Date | null;
   cancelAtPeriodEnd: boolean | null;

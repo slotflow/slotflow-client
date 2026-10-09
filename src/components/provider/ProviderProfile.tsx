@@ -21,9 +21,8 @@ const ProviderProfile = ({
   service,
   profile,
   isShowPreview,
-  handleIsShowPreview
+  handleIsShowPreview,
 }: ProviderProfileProps) => {
-
   return (
     <div className="w-full">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">

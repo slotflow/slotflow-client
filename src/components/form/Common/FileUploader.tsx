@@ -3,7 +3,7 @@ import { appConfig } from '@/config/env';
 import { useDispatch } from 'react-redux';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import AlertBox from '@/components/alert/AlertBox';
 import { AppDispatch } from '@/app/store/appStore';
@@ -15,9 +15,11 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import noImage from '../../../assets/defaultImages/imagePlaceholder.png';
 import { ArrowUp, Check, Info, LoaderCircle, Trash, Upload, X } from 'lucide-react';
 import { ImageFileFormType, imageFileZodeSchema } from '@/shared/validators/zod/providerZod';
+import { allowedFileTypes, maxFileSize } from '@/shared/utils/constants/appConstants';
 
 const FileUploader = ({
   folderName,
+  fieldName,
   uploadFunction,
   message,
   setStateFunction,
@@ -42,11 +44,38 @@ const FileUploader = ({
     },
   });
 
+  useEffect(() => {
+    return () => {
+      if (selectedImage) {
+        URL.revokeObjectURL(selectedImage);
+      }
+    };
+  }, [selectedImage]);
+
   const proofFile = watch('file');
 
   // handle file input change
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+
+    if (!file) return;
+
+    if (!allowedFileTypes.includes(file.type)) {
+      toast.error('Only PNG, JPEG and WEBP images are allowed.');
+      reset();
+      setSelectedImage(null);
+      e.target.value = '';
+      return;
+    }
+
+    if (file.size > maxFileSize) {
+      toast.error('File size must not exceed 2 MiB.');
+      reset();
+      setSelectedImage(null);
+      e.target.value = '';
+      return;
+    }
+
     if (file) {
       setSelectedImage(URL.createObjectURL(file));
       setValue('file', file, { shouldValidate: true });
@@ -71,7 +100,7 @@ const FileUploader = ({
       }
       const { uploadUrl, key } = uploadRes.data;
       await uploadToS3(file, uploadUrl);
-      const res = await uploadFunction({ field: 'identityProof', s3FileKey: key });
+      const res = await uploadFunction({ field: fieldName, s3FileKey: key });
       if (!res.data) {
         throw new Error('Failed to update proof with uploaded file');
       }
@@ -90,6 +119,11 @@ const FileUploader = ({
         console.error('Upload error:', error);
       }
       toast.error('Upload failed! Please try again.');
+      dispatch(
+        setStateFunction({
+          isLoading: false,
+        }),
+      );
     }
   };
 
@@ -123,11 +157,11 @@ const FileUploader = ({
       }
       toast.error('Deletion failed! Please try again.');
       dispatch(
-      setStateFunction({
-        file: null,
-        isLoading: false,
-      }),
-    );
+        setStateFunction({
+          file: null,
+          isLoading: false,
+        }),
+      );
     }
   };
 
@@ -135,9 +169,7 @@ const FileUploader = ({
     <form onSubmit={handleSubmit(onSubmit)}>
       <Card className="rounded-2xl shadow-md">
         <CardContent className="p-6 space-y-4">
-          <Label className="text-sm font-medium">
-            {title}
-          </Label>
+          <Label className="text-sm font-medium">{title}</Label>
           {!data.file ? (
             <Input
               ref={fileInputRef}
@@ -227,7 +259,7 @@ const FileUploader = ({
             <Button
               title="Delete File"
               type="button"
-              size='sm'
+              size="sm"
               variant="destructive"
               onClick={handleDeleteFile}
             >
@@ -238,26 +270,22 @@ const FileUploader = ({
             proofFile && (
               <Button
                 title="Upload"
-                size='sm'
+                size="sm"
                 variant="secondary"
                 disabled={isSubmitting || !isValid}
                 type="submit"
               >
-                {isSubmitting ?
-                  (
-                    <>
-                      <LoaderCircle className='size-4 animate-spin' />
-                      Uploading...
-                    </>
-                  )
-                  :
-                  (
-                    <>
-                      <Upload className='size-4' />
-                      Upload File
-                    </>
-                  )
-                }
+                {isSubmitting ? (
+                  <>
+                    <LoaderCircle className="size-4 animate-spin" />
+                    Uploading...
+                  </>
+                ) : (
+                  <>
+                    <Upload className="size-4" />
+                    Upload File
+                  </>
+                )}
               </Button>
             )
           )}

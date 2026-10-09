@@ -1,6 +1,4 @@
-import {
-  blockBackStatuses,
-} from '@/shared/utils/constants/statusConstants';
+import { blockBackStatuses } from '@/shared/utils/constants/statusConstants';
 import { toast } from 'react-toastify';
 import { appConfig } from '@/config/env';
 import { useEffect, useState } from 'react';
@@ -18,7 +16,6 @@ import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import { adminVerificationStatusConfig } from '@/shared/utils/constants/statusConstants';
 
 const ProviderApprovalPendingPage = () => {
-
   const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
   const authUser: AuthUser | null = useSelector((state: RootState) => state.auth.authUser);
@@ -92,7 +89,10 @@ const ProviderApprovalPendingPage = () => {
           <div>
             <p className="text-sm text-muted-foreground">Overall Status</p>
             <p className="text-lg font-semibold">
-              {adminVerificationStatusConfig[adminStatus ?? AdminVerificationStatus.NOT_REQUESTED].desc}
+              {
+                adminVerificationStatusConfig[adminStatus ?? AdminVerificationStatus.NOT_REQUESTED]
+                  .desc
+              }
             </p>
           </div>
 
@@ -156,40 +156,40 @@ const ProviderApprovalPendingPage = () => {
 
       {(adminStatus === AdminVerificationStatus.NOT_REQUESTED ||
         adminStatus === AdminVerificationStatus.REJECTED) && (
-          <Card className="mt-2">
-            <CardContent className="p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-              <p className="text-sm text-muted-foreground max-w-md">
-                {onboardingContent.profileApproval.description2}
-              </p>
+        <Card className="mt-2">
+          <CardContent className="p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <p className="text-sm text-muted-foreground max-w-md">
+              {onboardingContent.profileApproval.description2}
+            </p>
 
-              <Button
-                onClick={handleSubmit}
-                disabled={isSubmitting}
-                variant="default"
-                className="w-full md:w-auto"
-              >
-                {isSubmitting ? (
-                  <>
-                    <LoaderCircle className="animate-spin size-4" />
-                    {adminStatus === AdminVerificationStatus.REJECTED
-                      ? 'Resubmitting...'
-                      : 'Submitting...'}
-                  </>
-                ) : adminStatus === AdminVerificationStatus.REJECTED ? (
-                  <>
-                    <Check className="size-4" />
-                    Resubmit for Review
-                  </>
-                ) : (
-                  <>
-                    <Check className="size-4" />
-                    Submit for Review
-                  </>
-                )}
-              </Button>
-            </CardContent>
-          </Card>
-        )}
+            <Button
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+              variant="default"
+              className="w-full md:w-auto"
+            >
+              {isSubmitting ? (
+                <>
+                  <LoaderCircle className="animate-spin size-4" />
+                  {adminStatus === AdminVerificationStatus.REJECTED
+                    ? 'Resubmitting...'
+                    : 'Submitting...'}
+                </>
+              ) : adminStatus === AdminVerificationStatus.REJECTED ? (
+                <>
+                  <Check className="size-4" />
+                  Resubmit for Review
+                </>
+              ) : (
+                <>
+                  <Check className="size-4" />
+                  Submit for Review
+                </>
+              )}
+            </Button>
+          </CardContent>
+        </Card>
+      )}
 
       {isBackBlocked && (
         <div className="text-center text-sm text-muted-foreground mt-2">

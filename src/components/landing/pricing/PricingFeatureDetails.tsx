@@ -13,8 +13,6 @@ import { formatNumberToPrice } from '@/shared/utils/helper/formatNumberToPrice';
 import { PLAN_TIERS, planFeatures } from '@/shared/utils/constants/planConstants';
 import { PlanFeatureValueProps, PricingFeatureDetailsProps } from '@/shared/types/component';
 
-export type PlanTier = (typeof PLAN_TIERS)[number];
-
 const PricingFeatureDetails = ({
   billingCycle = BillingCycle.MONTHLY,
   plans,

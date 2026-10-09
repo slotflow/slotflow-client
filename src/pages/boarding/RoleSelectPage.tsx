@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { motion } from 'framer-motion';
-import { useDispatch, } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { ChevronRight } from 'lucide-react';
 import { Role } from '@/shared/types/enums';
 import service from '@/assets/svgs/service.svg';
@@ -14,7 +14,6 @@ import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import RoleSelectCard from '../../components/boarding/roleSelect/RoleSelectCard';
 
 const RoleSelectPage = () => {
-
   const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
   const [selectedRole, setSelectedRole] = useState<Role | null>(null);
@@ -82,10 +81,10 @@ const RoleSelectPage = () => {
           Your selection helps us personalize your onboarding experience.
         </p>
         <Button
-          variant='default'
+          variant="default"
           onClick={handleContinue}
           disabled={!selectedRole}
-          className='w-full md:w-auto'
+          className="w-full md:w-auto"
         >
           Continue
           <ChevronRight className="ml-1 size-4" />

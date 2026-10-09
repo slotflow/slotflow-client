@@ -7,7 +7,6 @@ import { toggleLiveChatBubble } from '@/app/store/slices/appSlice';
 import { contactSupportOptions } from '@/shared/utils/constants/landingConstants';
 
 const ContactSupportSection = () => {
-
   const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
 

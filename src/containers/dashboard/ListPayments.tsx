@@ -6,7 +6,6 @@ import PaginatedDataTable from '@/components/table/PaginatedDataTable';
 import PaymentsTableColumn from '@/components/table/tableColumns/PaymentsTableColumn';
 
 const ListPayments = () => {
-
   const { toPaymentDetailsPage } = useAppNavigation();
   const column = PaymentsTableColumn(toPaymentDetailsPage);
 

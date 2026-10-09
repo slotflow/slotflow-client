@@ -15,7 +15,8 @@ const SecuritySettingsPage = () => {
             Authentication & Access
           </h2>
           <p className="text-sm text-muted-foreground">
-            Manage your credentials, multi-factor authentication, social sign-ins, and active device sessions.
+            Manage your credentials, multi-factor authentication, social sign-ins, and active device
+            sessions.
           </p>
         </div>
         <UpdatePassword />
@@ -39,11 +40,10 @@ const SecuritySettingsPage = () => {
 
       <div className="space-y-3 pt-2">
         <div className="space-y-1">
-          <h2 className="text-xl font-bold tracking-tight text-foreground">
-            Data & Privacy
-          </h2>
+          <h2 className="text-xl font-bold tracking-tight text-foreground">Data & Privacy</h2>
           <p className="text-sm text-muted-foreground">
-            Export your personal account data archive or manage account deactivation and deletion options.
+            Export your personal account data archive or manage account deactivation and deletion
+            options.
           </p>
         </div>
         <DataPrivacy />

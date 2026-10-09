@@ -41,7 +41,7 @@ const CustomizationCard = () => {
           <Button
             title="Customize profile"
             variant="secondary"
-            className='w-full'
+            className="w-full"
             onClick={handleProfileCustomization}
           >
             Customize Profile
@@ -50,7 +50,7 @@ const CustomizationCard = () => {
           <Button
             title="Upgrade Plan"
             variant="secondary"
-            className='w-full'
+            className="w-full"
             onClick={handleUpgradePlan}
           >
             Upgrade Plan

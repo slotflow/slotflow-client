@@ -4,9 +4,7 @@ import {
   OnboardingStatus,
   AdminVerificationStatus,
 } from '@/shared/types/enums';
-import {
-  redirectPaths,
-} from '@/shared/utils/constants/routeConstants';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import {
   bookingTypeOptions,
   serviceTypeOptions,
@@ -269,7 +267,6 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
           />
         </div>
         <div className="space-y-4 w-full space-x-2 md:pt-6">
-
           <SelectField<ProviderCreateServiceDetailsFormType, boolean>
             id="isGroupService"
             label="Booking Type"
@@ -316,16 +313,18 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
       <div className="flex justify-center md:justify-end mt-6">
         <FormButton
           loading={isSubmitting}
-          text={isUpdating && isSubmitting
-            ? 'Updating...'
-            : isSubmitting
-              ? 'Submitting...'
-              : isUpdating
-                ? 'Update'
-                : 'Submit'}
+          text={
+            isUpdating && isSubmitting
+              ? 'Updating...'
+              : isSubmitting
+                ? 'Submitting...'
+                : isUpdating
+                  ? 'Update'
+                  : 'Submit'
+          }
           title={isUpdating ? 'Update' : 'Submit'}
           disabled={!isValid || isSubmitting || isLoading}
-          className='w-full md:w-auto'
+          className="w-full md:w-auto"
         />
       </div>
     </form>

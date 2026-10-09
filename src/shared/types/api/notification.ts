@@ -32,8 +32,11 @@ export interface UpdateNotificationPreferenceResponse {
 }
 
 // Get notification preference
-export type FetchMyNotificationPreferenceResponse = Pick<NotificationPreference, "promotionalUpdates" | "systemUpdates" | "accountActivity">;
+export type FetchMyNotificationPreferenceResponse = Pick<
+  NotificationPreference,
+  'promotionalUpdates' | 'systemUpdates' | 'accountActivity'
+>;
 
 export interface UpdatePushNotificationPreferenceRequest {
   pushNotification: boolean;
-} 
+}

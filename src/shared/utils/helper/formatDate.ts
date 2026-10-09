@@ -5,7 +5,7 @@ import { DateFormatPattern, DateInput } from '@/shared/types/common';
 // Formats dates safely with fallback to 'N/A' on null or invalid values.
 export const formatDate = (
   date: DateInput,
-  pattern: DateFormatPattern = dateFormats.SHORT
+  pattern: DateFormatPattern = dateFormats.SHORT,
 ): string => {
   if (!date) return 'Not Available';
 

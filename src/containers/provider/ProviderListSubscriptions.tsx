@@ -9,7 +9,6 @@ import PaginatedDataTable from '../../components/table/PaginatedDataTable';
 import ProvidersSubscriptionsTableColumns from '../../components/table/tableColumns/ProviderSubscriptionsTableColumn';
 
 const ProviderListSubscriptions = () => {
-
   const { toSubscriptionDetailsPage } = useAppNavigation();
 
   const column = ProvidersSubscriptionsTableColumns(toSubscriptionDetailsPage);

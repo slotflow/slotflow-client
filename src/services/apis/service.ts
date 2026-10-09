@@ -26,7 +26,9 @@ export const fetchServices: ApiFetchFunction<
   return response.data.data;
 };
 
-export const createService = async (data: CreateServicesRequest): Promise<ApiBaseResponse<CreateSservicesResponse>> => {
+export const createService = async (
+  data: CreateServicesRequest,
+): Promise<ApiBaseResponse<CreateSservicesResponse>> => {
   const response = await axiosInstance.post('/services', data);
   return response.data;
 };
@@ -47,11 +49,13 @@ export const changeServiceBlockStatus = async (
 
 export const fetchServicesByCategory = async (
   categories: ServiceCategory[],
+  signal?: AbortSignal,
 ): Promise<ApiBaseResponse<Array<FetchServicesByCategoryResponse>>> => {
   const response = await axiosInstance.get(`/services`, {
     params: {
       serviceCategory: categories,
     },
+    signal,
   });
   return response.data;
 };

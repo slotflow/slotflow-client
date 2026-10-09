@@ -6,12 +6,7 @@ import {
   PaymentProcessStatus,
   PaymentAccountStatus,
 } from './enums';
-import {
-  FaqFields,
-  PlanFields,
-  BlogArticle,
-  ReviewFields,
-} from './common';
+import { FaqFields, PlanFields, BlogArticle, ReviewFields } from './common';
 import { User } from './entity/user';
 import { Message } from './entity/message';
 import { ProviderProfile } from './entity/providerProfile';
@@ -188,6 +183,6 @@ export interface SetAllIntegrationsPayload {
   stripe?: Partial<StripeIntegrationData>;
 }
 export interface IntegrationSliceState {
-  googleCalendar: CommonIntegrationData,
-  stripe: StripeIntegrationData
+  googleCalendar: CommonIntegrationData;
+  stripe: StripeIntegrationData;
 }

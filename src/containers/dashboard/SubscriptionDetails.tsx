@@ -101,11 +101,7 @@ const SubscriptionDetails = () => {
 
             <div className="flex items-center gap-3">
               <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
-                {isLoading ? (
-                  <DataShimmer w="w-48" h="h-8" />
-                ) : (
-                  `Subscription Details`
-                )}
+                {isLoading ? <DataShimmer w="w-48" h="h-8" /> : `Subscription Details`}
               </h1>
 
               {isLoading ? (
@@ -113,7 +109,11 @@ const SubscriptionDetails = () => {
               ) : (
                 <StatusBadge
                   type={getSubscriptionStatusType(data?.subscriptionStatus)}
-                  label={data?.subscriptionStatus ? String(data.subscriptionStatus).toUpperCase() : 'UNKNOWN'}
+                  label={
+                    data?.subscriptionStatus
+                      ? String(data.subscriptionStatus).toUpperCase()
+                      : 'UNKNOWN'
+                  }
                 />
               )}
             </div>

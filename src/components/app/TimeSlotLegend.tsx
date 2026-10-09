@@ -19,7 +19,7 @@ const TimeSlotLegend = ({
           <Button
             key={item.label}
             title={item.label}
-            size='lg'
+            size="lg"
             variant="outline"
             className={`xs:text-xs text-sm font-semibold border-1 rounded-md py-3 px-4 cursor-default ${item.className}`}
           >

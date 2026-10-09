@@ -5,7 +5,6 @@ import { useAppNavigation } from '@/hooks/useAppNavigation';
 import SplitTextReveal from '@/components/animation/SplitTextReveal';
 
 const ContactCTA = () => {
-
   const { goTo } = useAppNavigation();
 
   return (

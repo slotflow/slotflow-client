@@ -1,9 +1,4 @@
-import {
-  Role,
-  PlanName,
-  OnboardingStatus,
-  AdminVerificationStatus,
-} from '../enums';
+import { Role, PlanName, OnboardingStatus, AdminVerificationStatus } from '../enums';
 import { User } from '../entity/user';
 
 // request type of the user or provider sign up api

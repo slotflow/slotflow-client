@@ -4,8 +4,39 @@ import stripeLogo from '@/assets/logos/external/stripe.jpeg';
 import whatsappLogo from '@/assets/logos/external/whatsapp.png';
 import googleMapsLogo from '@/assets/logos/external/googleMap.png';
 import googleCalendarLogo from '@/assets/logos/external/googleCalendar.png';
-import { BlogCTAItems, BookingSteps, BookingStepsHeroPeople, CompanyValues, ContactSupportOptions, HeaderCompoenentNavsProps, LandingPageIntegrations } from "@/shared/types/common";
-import { BadgeCheck, Ban, BookOpen, CalendarClock, CircleCheckBig, CircleHelp, Cookie, CreditCard, Facebook, FileText, Github, Instagram, Linkedin, MessageCircle, RotateCcw, Search, Shield, ShieldCheck, Sparkles, Twitter, UserPlus, Zap } from "lucide-react";
+import {
+  BlogCTAItems,
+  BookingSteps,
+  BookingStepsHeroPeople,
+  CompanyValues,
+  ContactSupportOptions,
+  HeaderCompoenentNavsProps,
+  LandingPageIntegrations,
+} from '@/shared/types/common';
+import {
+  BadgeCheck,
+  Ban,
+  BookOpen,
+  CalendarClock,
+  CircleCheckBig,
+  CircleHelp,
+  Cookie,
+  CreditCard,
+  Facebook,
+  FileText,
+  Github,
+  Instagram,
+  Linkedin,
+  MessageCircle,
+  RotateCcw,
+  Search,
+  Shield,
+  ShieldCheck,
+  Sparkles,
+  Twitter,
+  UserPlus,
+  Zap,
+} from 'lucide-react';
 
 // Header Navigation Array
 export const headerLinks: HeaderCompoenentNavsProps[] = [
@@ -316,5 +347,5 @@ export const authCallbackLoadingSteps: string[] = [
   'Verifying authentication details...',
   'Creating a space for you...',
   'Finalizing your secure session...',
-  'Redirecting you shortly...'
+  'Redirecting you shortly...',
 ];

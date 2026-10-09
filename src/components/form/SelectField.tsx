@@ -34,9 +34,8 @@ const SelectField = <T extends FieldValues, K>({
   required = false,
   infoText,
 }: SelectFieldProps<T, K>) => {
-  
   return (
-   <div className="space-y-2">
+    <div className="space-y-2">
       <FormLabelWithInfo label={label} htmlFor={id} infoText={infoText} />
 
       <Controller
@@ -56,7 +55,7 @@ const SelectField = <T extends FieldValues, K>({
 
                 // Match exact option value (preserves ENUM, boolean, number types)
                 const matchedOption = options.find(
-                  (opt) => String(opt.value) === selectedStringVal
+                  (opt) => String(opt.value) === selectedStringVal,
                 );
 
                 if (matchedOption) {
@@ -80,7 +79,11 @@ const SelectField = <T extends FieldValues, K>({
 
               <SelectContent>
                 {options.map((opt) => (
-                  <SelectItem key={String(opt.value)} value={String(opt.value)} className="cursor-pointer">
+                  <SelectItem
+                    key={String(opt.value)}
+                    value={String(opt.value)}
+                    className="cursor-pointer"
+                  >
                     {opt.label}
                   </SelectItem>
                 ))}

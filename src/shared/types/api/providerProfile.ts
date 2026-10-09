@@ -29,7 +29,10 @@ export interface ProviderFetchDashboardStatsDataRequest {
 }
 
 // Fetch dashboard stats data ( by provider )
-export interface ProviderFetchDashboardBookingStatsDataResponse extends Record<string, StatMetric | undefined> {
+export interface ProviderFetchDashboardBookingStatsDataResponse extends Record<
+  string,
+  StatMetric | undefined
+> {
   totalAppointments: StatMetric;
   completedAppointments: StatMetric;
   missedAppointments: StatMetric;
@@ -45,7 +48,10 @@ export interface ProviderFetchDashboardRevenueStatsDataRequest {
 }
 
 // Fetch dashboard revenue stats data ( by provider )
-export interface ProviderFetchDashboardRevenueStatsDataResponse extends Record<string, StatMetric | undefined> {
+export interface ProviderFetchDashboardRevenueStatsDataResponse extends Record<
+  string,
+  StatMetric | undefined
+> {
   totalSubscriptionPaidAmount: StatMetric;
   totalEarnings: StatMetric;
   totalPayoutsMade: StatMetric;

@@ -7,8 +7,19 @@ import hearAboutUs from '@/assets/svgs/hearAboutUs.png';
 import typeUsername from '@/assets/svgs/typeUsername.png';
 import availability from '@/assets/svgs/availability.svg';
 import { HearAboutUsOptionValue } from '@/shared/types/enums';
-import { BoardingStep, HearAboutUsOptions, OnboardingStep } from "@/shared/types/common";
-import { AtSign, Facebook, HelpCircle, Instagram, Linkedin, MessageCircle, Search, Twitter, Users, Youtube } from 'lucide-react';
+import { BoardingStep, HearAboutUsOptions, OnboardingStep } from '@/shared/types/common';
+import {
+  AtSign,
+  Facebook,
+  HelpCircle,
+  Instagram,
+  Linkedin,
+  MessageCircle,
+  Search,
+  Twitter,
+  Users,
+  Youtube,
+} from 'lucide-react';
 
 // Onboarding titles
 export const onboardingContent: Record<

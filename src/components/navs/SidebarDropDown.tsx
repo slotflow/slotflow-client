@@ -21,7 +21,6 @@ interface SidebarDropDownProps {
 }
 
 export const SidebarDropDown = ({ isSidebarOpen }: SidebarDropDownProps) => {
-
   const { goTo } = useAppNavigation();
   const { userSignout } = useSignout();
   const dispatch = useDispatch<AppDispatch>();
@@ -122,7 +121,10 @@ export const SidebarDropDown = ({ isSidebarOpen }: SidebarDropDownProps) => {
 
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem onClick={() => userSignout()} className="text-red-500 focus:text-red-500">
+          <DropdownMenuItem
+            onClick={() => userSignout()}
+            className="text-red-500 focus:text-red-500"
+          >
             <LogOut />
             <span>Logout</span>
           </DropdownMenuItem>

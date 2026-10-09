@@ -44,7 +44,7 @@ const DataField = ({
   let displayValue: React.ReactNode;
 
   if (value === null || value === undefined || (typeof value === 'string' && !value.trim())) {
-    displayValue = 'Not Available'
+    displayValue = 'Not Available';
   } else if (isBoolean) {
     displayValue = value ? (
       <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
@@ -64,8 +64,8 @@ const DataField = ({
           {value}
         </code>
         <Button
-          size='icon'
-          variant='ghost'
+          size="icon"
+          variant="ghost"
           onClick={handleCopy}
           className="p-1 rounded text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer shrink-0"
           title="Copy ID"
@@ -125,9 +125,7 @@ const DataField = ({
       <span className="text-foreground font-medium flex items-center gap-2 shrink-0">
         {Icon && <Icon className="w-3.5 h-3.5 text-foreground shrink-0" />} {label}
       </span>
-      <span className="font-medium text-muted-foreground text-right truncate">
-        {displayValue}
-      </span>
+      <span className="font-medium text-muted-foreground text-right truncate">{displayValue}</span>
     </div>
   );
 };

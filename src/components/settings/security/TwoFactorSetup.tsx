@@ -42,23 +42,28 @@ const TwoFactorSetup = () => {
       <CardHeader className="flex flex-row justify-between items-center space-y-0 p-3">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-base font-semibold">Two-Factor Authentication (2FA)</CardTitle>
+            <CardTitle className="text-base font-semibold">
+              Two-Factor Authentication (2FA)
+            </CardTitle>
             <Badge
               variant={is2FAEnabled ? 'secondary' : 'outline'}
-              className={`px-2 py-0.5 text-[10px] font-medium rounded-full flex items-center gap-1 ${is2FAEnabled
+              className={`px-2 py-0.5 text-[10px] font-medium rounded-full flex items-center gap-1 ${
+                is2FAEnabled
                   ? 'bg-emerald-50 text-emerald-700 border-emerald-200/60 dark:bg-emerald-950/40 dark:text-emerald-400 dark:border-emerald-800/40'
                   : 'text-muted-foreground border-slate-200 dark:border-border'
-                }`}
+              }`}
             >
               <span
-                className={`size-1.5 rounded-full ${is2FAEnabled ? 'bg-emerald-500 animate-pulse' : 'bg-slate-400'
-                  }`}
+                className={`size-1.5 rounded-full ${
+                  is2FAEnabled ? 'bg-emerald-500 animate-pulse' : 'bg-slate-400'
+                }`}
               />
               {is2FAEnabled ? 'Enabled' : 'Disabled'}
             </Badge>
           </div>
           <CardDescription className="text-xs text-muted-foreground">
-            Add an extra layer of security to your account using an authenticator app (Google Authenticator, Authy, or 1Password).
+            Add an extra layer of security to your account using an authenticator app (Google
+            Authenticator, Authy, or 1Password).
           </CardDescription>
         </div>
 
@@ -88,7 +93,7 @@ const TwoFactorSetup = () => {
             <SelectSeparator />
             <CardContent className="p-5 pt-4 space-y-5 relative min-h-[300px]">
               <FeatureOverlay
-                size='md'
+                size="md"
                 isBlur
                 isDevMode
                 title="2FA Authentication Coming Soon"
@@ -101,7 +106,9 @@ const TwoFactorSetup = () => {
                       <div className="size-32 bg-slate-100 dark:bg-muted flex items-center justify-center rounded-md border border-dashed border-slate-300 dark:border-border mb-2">
                         <Smartphone className="size-8 text-muted-foreground" />
                       </div>
-                      <span className="text-[11px] text-muted-foreground">Scan with Google Authenticator or Authy</span>
+                      <span className="text-[11px] text-muted-foreground">
+                        Scan with Google Authenticator or Authy
+                      </span>
                     </div>
 
                     <div className="flex flex-col justify-center space-y-3">
@@ -125,7 +132,11 @@ const TwoFactorSetup = () => {
                           onClick={handleCopySecret}
                           className="h-8 px-2.5 text-xs gap-1"
                         >
-                          {copied ? <Check className="size-3.5 text-emerald-500" /> : <Copy className="size-3.5" />}
+                          {copied ? (
+                            <Check className="size-3.5 text-emerald-500" />
+                          ) : (
+                            <Copy className="size-3.5" />
+                          )}
                           <span>{copied ? 'Copied' : 'Copy'}</span>
                         </Button>
                       </div>
@@ -168,7 +179,9 @@ const TwoFactorSetup = () => {
                       <ShieldCheck className="size-5" />
                     </div>
                     <div>
-                      <h4 className="text-xs font-semibold text-foreground">Two-Factor Authentication is Active</h4>
+                      <h4 className="text-xs font-semibold text-foreground">
+                        Two-Factor Authentication is Active
+                      </h4>
                       <p className="text-[11px] text-muted-foreground">
                         Your account is currently protected with TOTP authenticator security.
                       </p>

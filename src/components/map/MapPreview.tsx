@@ -38,17 +38,12 @@ const MapPreview = ({ lat, lon }: MapPreviewProps) => {
         style={{
           height: '280px',
           width: '100%',
-          zIndex: "inherit"
+          zIndex: 'inherit',
         }}
       />
 
       <div className="flex justify-start mt-4">
-        <Button
-          title="Open in Google Maps"
-          variant="secondary"
-          asChild
-          className="cursor-pinter"
-        >
+        <Button title="Open in Google Maps" variant="secondary" asChild className="cursor-pinter">
           <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">
             <img src={googleMap} className="size-4 object-contain" />
             Open in Google Maps

@@ -26,7 +26,6 @@ import {
 } from '@/shared/validators/zod/commonZodFields';
 
 const AddressForm = ({ isUpdating = false, heading }: AddressFormProps) => {
-
   const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
   const { authUser } = useSelector((state: RootState) => state.auth);
@@ -164,9 +163,7 @@ const AddressForm = ({ isUpdating = false, heading }: AddressFormProps) => {
             rules={{ required: true }}
             render={({ field }) => (
               <div className="space-y-2">
-                <label className="block text-xs md:text-sm font-medium">
-                  Phone
-                </label>
+                <label className="block text-xs md:text-sm font-medium">Phone</label>
                 <PhoneInput
                   value={field.value}
                   onChange={(value) => {
@@ -261,11 +258,11 @@ const AddressForm = ({ isUpdating = false, heading }: AddressFormProps) => {
             <LocationPicker onLocationSelect={handleLocationSelect} />
             <AlertBox
               icon={Info}
-              heading='Select Your Exact Location'
-              message='Use the map to select your exact location.  
+              heading="Select Your Exact Location"
+              message="Use the map to select your exact location.  
 Click on the map to drop a marker at your address.  
 This helps us provide accurate location based services and ensures more precise search results.  
-Your selected location will also be used to automatically fill address details wherever possible.'
+Your selected location will also be used to automatically fill address details wherever possible."
             />
           </div>
         </div>
@@ -274,16 +271,18 @@ Your selected location will also be used to automatically fill address details w
       <div className="flex justify-center md:justify-end mt-4 md:mt-6">
         <FormButton
           loading={isSubmitting}
-          text={isUpdating && isSubmitting
-            ? 'Updating...'
-            : isSubmitting
-              ? 'Submitting...'
-              : isUpdating
-                ? 'Update'
-                : 'Submit'}
+          text={
+            isUpdating && isSubmitting
+              ? 'Updating...'
+              : isSubmitting
+                ? 'Submitting...'
+                : isUpdating
+                  ? 'Update'
+                  : 'Submit'
+          }
           title={isUpdating ? 'Update' : 'Submit'}
           disabled={!isValid || isSubmitting || isLoading}
-          className='w-full md:w-auto'
+          className="w-full md:w-auto"
         />
       </div>
     </form>

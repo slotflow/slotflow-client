@@ -15,12 +15,18 @@ import BarChartHorizontal from '@/components/chart/BarChartHorizontal';
 import { ProviderDashboardGraphsProps } from '@/shared/types/component';
 import LineChartHorizontal from '@/components/chart/LineChartHorizontal';
 import { providerFetchDashboardGraphData } from '@/services/apis/providerProfile';
-import { usersRetensionChartConfig, appointmentModeChartConfig, appointmentsOvertimeChartConfig, completionChartConfig, peakBookingHoursChartConfig, topBookingDaysChartConfig } from '@/shared/utils/constants/chartConstants';
+import {
+  usersRetensionChartConfig,
+  appointmentModeChartConfig,
+  appointmentsOvertimeChartConfig,
+  completionChartConfig,
+  peakBookingHoursChartConfig,
+  topBookingDaysChartConfig,
+} from '@/shared/utils/constants/chartConstants';
 
 export const useProviderDashboardCharts = ({
   dateRange,
 }: ProviderDashboardGraphsProps): DashboardItem[] => {
-
   const user = useSelector((store: RootState) => store.auth.authUser);
 
   const subscriptionPlan = useMemo(() => {
@@ -67,7 +73,7 @@ export const useProviderDashboardCharts = ({
           dataKeyThree="cancelled"
           chartConfig={appointmentsOvertimeChartConfig}
           isLocked={!graphView(subscriptionPlan, 'AppointmentsOverTime')}
-          minimumPlan={PlanName.TRIAL}
+          minimumPlan={PlanName.STARTER}
           isLoading={isLoading}
           isError={isError}
         />

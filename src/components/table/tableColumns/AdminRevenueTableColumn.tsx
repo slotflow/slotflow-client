@@ -22,7 +22,9 @@ const AdminRevenueTableColumn = (): ColumnDef<AdminFetchRevenueReportRow>[] => [
     cell: ({ row }) => {
       const createdAt = row.getValue('createdAt') as Date;
       const formattedDate = formatDate(createdAt);
-      return <span className="font-medium text-slate-700 dark:text-slate-300">{formattedDate}</span>;
+      return (
+        <span className="font-medium text-slate-700 dark:text-slate-300">{formattedDate}</span>
+      );
     },
   },
   {

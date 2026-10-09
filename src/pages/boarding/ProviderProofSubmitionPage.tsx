@@ -20,7 +20,6 @@ import FileUploader from '@/components/form/Common/FileUploader';
 import { setIsProofSubmitted } from '@/app/store/slices/authSlice';
 
 const ProviderProofSubmissionPage = () => {
-
   const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
   const { authUser } = useSelector((state: RootState) => state.auth);
@@ -72,6 +71,7 @@ const ProviderProofSubmissionPage = () => {
       <div className="space-y-4 w-full space-x-2 pt-6">
         <FileUploader
           folderName="provider-proof"
+          fieldName="identityProof"
           uploadFunction={providerUpdateIdentityProof}
           message="Please upload a valid identity document issued in your country. Make sure the document is clear and readable for verification."
           setStateFunction={setProviderIdentityProofs}
@@ -81,6 +81,7 @@ const ProviderProofSubmissionPage = () => {
         />
         <FileUploader
           folderName="provider-proof"
+          fieldName="serviceProof"
           uploadFunction={providerUpdateProofServiceProof}
           message="If you are offering a service, upload a valid certification or an experience document that verifies your professional qualifications."
           setStateFunction={setProviderServiceProofs}
@@ -95,7 +96,7 @@ const ProviderProofSubmissionPage = () => {
             variant="default"
             onClick={handleNextutton}
             type="button"
-            className='w-full md:w-auto'
+            className="w-full md:w-auto"
             disabled={isSubmitting || !identityProof.file || !serviceProof.file}
           >
             {isSubmitting ? (

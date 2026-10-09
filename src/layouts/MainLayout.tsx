@@ -13,7 +13,6 @@ import { useNotificationPermissionGate } from '@/hooks/systemHooks/useNotificati
 import { NotificationPermissionBanner } from '@/components/notification/NotificationPermissionBanner';
 
 const MainLayout = ({ routes, filteredRoutes, children, rightSidebar }: MainLayoutProps) => {
-
   const location = useLocation();
   const dispatch = useDispatch<AppDispatch>();
   const { isSidebarOpen } = useSelector((store: RootState) => store.app);
@@ -34,24 +33,24 @@ const MainLayout = ({ routes, filteredRoutes, children, rightSidebar }: MainLayo
 
   return (
     <div className="flex h-screen bg-background transition-all duration-300">
-      {!isStandalonePage && (
-        <Sidebar routes={routes} filteredRoutes={filteredRoutes} />
-      )}
+      {!isStandalonePage && <Sidebar routes={routes} filteredRoutes={filteredRoutes} />}
       <div className={`flex-1 flex flex-col ${isSidebarOpen ? 'w-[85%]' : 'w-[95%]'}`}>
         {!isStandalonePage && <InfoHeader />}
         <div className="flex-1 overflow-y-auto no-scrollbar p-4 relative">
-          <Suspense fallback={<LoadingFallbackPage />}>{
-            <>
-              {children}
-              {showBanner && (
-                <NotificationPermissionBanner
-                  onAllow={handleAllow}
-                  onDismiss={handleDismiss}
-                  isLoading={isPending}
-                />
-              )}
-            </>
-          }</Suspense>
+          <Suspense fallback={<LoadingFallbackPage />}>
+            {
+              <>
+                {children}
+                {showBanner && (
+                  <NotificationPermissionBanner
+                    onAllow={handleAllow}
+                    onDismiss={handleDismiss}
+                    isLoading={isPending}
+                  />
+                )}
+              </>
+            }
+          </Suspense>
         </div>
       </div>
       {rightSidebar}

@@ -3,7 +3,7 @@ import { Day } from '@/shared/types/enums';
 import { Copy, Trash, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { formatString } from '@/shared/utils/helper/formatString';
-import { EnhancedSavedAvailabilitiesProps } from '@/shared/types/component';
+import { SavedAvailabilitiesProps } from '@/shared/types/component';
 
 const ALL_DAYS_ORDER = [
   Day.SUNDAY,
@@ -18,9 +18,8 @@ const ALL_DAYS_ORDER = [
 const SavedAvailabilities = ({
   availabilities,
   removeAvailability,
-  onCopyLastAvailability
-}: EnhancedSavedAvailabilitiesProps) => {
-
+  onCopyLastAvailability,
+}: SavedAvailabilitiesProps) => {
   const [dismissedForDay, setDismissedForDay] = useState<Day | null>(null);
 
   if (!availabilities || availabilities.length === 0) {
@@ -31,10 +30,7 @@ const SavedAvailabilities = ({
   const savedDaysSet = new Set(availabilities.map((a) => a.day));
   const nextUnassignedDay = ALL_DAYS_ORDER.find((d) => !savedDaysSet.has(d));
   const isBannerVisible: boolean | undefined =
-    nextUnassignedDay &&
-    lastAdded &&
-    onCopyLastAvailability &&
-    dismissedForDay !== lastAdded.day;
+    nextUnassignedDay && lastAdded && onCopyLastAvailability && dismissedForDay !== lastAdded.day;
 
   return (
     <div className="space-y-4 mt-10">
@@ -49,11 +45,11 @@ const SavedAvailabilities = ({
             </p>
           </div>
           <div className="flex items-center gap-2">
-            {(onCopyLastAvailability && nextUnassignedDay) && (
+            {onCopyLastAvailability && nextUnassignedDay && (
               <Button
                 type="button"
                 variant="ghost"
-                size='sm'
+                size="sm"
                 onClick={() => onCopyLastAvailability(nextUnassignedDay, lastAdded)}
               >
                 <Copy className="size-4" />
@@ -63,8 +59,8 @@ const SavedAvailabilities = ({
 
             <Button
               type="button"
-              variant='ghost'
-              size='sm'
+              variant="ghost"
+              size="sm"
               aria-label="Dismiss copy banner"
               onClick={() => setDismissedForDay(lastAdded.day)}
             >
@@ -84,7 +80,8 @@ const SavedAvailabilities = ({
           >
             {availability.isAvailable ? (
               <li className="flex-1 p-2 border border-gray-300 rounded-md text-sm truncate">
-                {formatString(availability.day)} - {availability.startTime} to {availability.endTime}
+                {formatString(availability.day)} - {availability.startTime} to{' '}
+                {availability.endTime}
               </li>
             ) : (
               <li className="flex-1 p-2 border border-gray-300 rounded-md text-sm truncate">
@@ -94,7 +91,7 @@ const SavedAvailabilities = ({
             <Button
               title="Delete availability"
               variant="destructive"
-              size='icon'
+              size="icon"
               type="button"
               onClick={() => removeAvailability(availability.day)}
             >

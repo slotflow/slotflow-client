@@ -16,18 +16,26 @@ import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import { PlanName, Role, SubscriptionStatus } from '@/shared/types/enums';
 
 const CalendarView = () => {
-
   const { goTo } = useAppNavigation();
   const { googleCalendar } = useSelector((state: RootState) => state.integration);
   const { authUser } = useSelector((state: RootState) => state.auth);
 
   const canUseCalendar = useMemo(() => {
     let subscription: PlanName = PlanName.NO_SUBSCRIPTION;
-    if (authUser && authUser.subscriptionStatus === SubscriptionStatus.ACTIVE && authUser.providerSubscription) {
+    if (
+      authUser &&
+      authUser.subscriptionStatus === SubscriptionStatus.ACTIVE &&
+      authUser.providerSubscription
+    ) {
       subscription = authUser.providerSubscription;
     }
     if (authUser?.role === Role.PROVIDER) {
-      return [PlanName.TRIAL, PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE].includes(subscription);
+      return [
+        PlanName.TRIAL,
+        PlanName.STARTER,
+        PlanName.PROFESSIONAL,
+        PlanName.ENTERPRISE,
+      ].includes(subscription);
     }
     return true;
   }, [authUser]);

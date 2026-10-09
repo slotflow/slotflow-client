@@ -1,4 +1,4 @@
-import { stripeConfig } from "@/config/env";
-import { loadStripe } from "@stripe/stripe-js";
+import { stripeConfig } from '@/config/env';
+import { loadStripe } from '@stripe/stripe-js';
 
-export const stripeClient = await loadStripe(stripeConfig.stripePublishableKey);
+export const stripeClientPromise = loadStripe(stripeConfig.stripePublishableKey);

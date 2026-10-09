@@ -6,7 +6,6 @@ import { ChartOverlayProps } from '@/shared/types/component';
 import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 
 const ChartOverlay = ({ stringOne, chartTitle }: ChartOverlayProps) => {
-
   const { goTo } = useAppNavigation();
   const themeMode = useSelector((store: RootState) => store.app.lightTheme);
 
@@ -20,11 +19,7 @@ const ChartOverlay = ({ stringOne, chartTitle }: ChartOverlayProps) => {
         <div className="text-sm text-muted-foreground mb-4">
           This chart is available on {stringOne} plan and above
         </div>
-        <Button
-          title='upgrade'
-          variant='outline'
-          onClick={() => goTo(redirectPaths.UPGRADE)}
-        >
+        <Button title="upgrade" variant="outline" onClick={() => goTo(redirectPaths.UPGRADE)}>
           Upgrade Plan
         </Button>
       </div>

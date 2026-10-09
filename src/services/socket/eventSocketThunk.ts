@@ -15,7 +15,6 @@ import { StripeAccountStatusUpdatedPayload } from '@/shared/types/api/user';
 export const connectEventSocket = createAsyncThunk<void, void, { state: RootState }>(
   'event/connectSocket',
   async (_, { getState, dispatch }) => {
-
     const { authUser } = getState().auth;
     const { stripe } = getState().integration;
 
@@ -32,12 +31,11 @@ export const connectEventSocket = createAsyncThunk<void, void, { state: RootStat
       dispatch(setEventSocketConnected({ socketId: socket.id! }));
     });
 
-    socket.on(EventSocketEnum.disconnect, (reason) => {
+    socket.on(EventSocketEnum.disconnect, () => {
       dispatch(setEventSocketDisconnected());
     });
 
     socket.on(EventSocketEnum.subscriptionActivated, (payload: SubscriptionActivated) => {
-
       const isOwner = payload.userId === authUser.uid;
       if (isOwner) {
         const isExpired = new Date(payload.currentPeriodEnd) < new Date();
@@ -55,16 +53,17 @@ export const connectEventSocket = createAsyncThunk<void, void, { state: RootStat
     socket.on(
       EventSocketEnum.stripeAccountStatusUpdated,
       (payload: StripeAccountStatusUpdatedPayload) => {
-
         const isOwner = payload.userId === authUser.uid;
 
         if (isOwner) {
           if (stripe.status !== payload.stripeAccountStatus) {
             toast.success('Stripe account status updated!');
-            dispatch(setStripeData({
-              isConnecting: false,
-              status: payload.stripeAccountStatus
-            }));
+            dispatch(
+              setStripeData({
+                isConnecting: false,
+                status: payload.stripeAccountStatus,
+              }),
+            );
           } else {
             toast.info('Stripe account status updated!');
           }

@@ -57,11 +57,7 @@ const LiveChatPopup = () => {
               </div>
             </div>
 
-            <Button
-              size='icon'
-              variant='ghost'
-              onClick={() => dispatch(toggleLiveChatBubble())}
-            >
+            <Button size="icon" variant="ghost" onClick={() => dispatch(toggleLiveChatBubble())}>
               <X className="size-5" />
             </Button>
           </div>

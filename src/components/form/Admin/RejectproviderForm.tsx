@@ -77,8 +77,8 @@ const RejectproviderForm = ({ onClose, formRef, rejectProviderData }: Rejectprov
 
         <Button
           type="button"
-          size='sm'
-          variant='ghost'
+          size="sm"
+          variant="ghost"
           onClick={handleCloseForm}
           disabled={isSubmitting}
           aria-label="Close form"

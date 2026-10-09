@@ -12,7 +12,6 @@ import FilterRightSideBar from '@/components/filters/FilterRightSideBar';
 import NotificationsContainer from '@/components/notification/NotificationsContainer';
 
 const UserLayout = () => {
-  
   const location = useLocation();
   const user = useSelector((store: RootState) => store.auth.authUser);
   const isReviewCreateFormOpen = useSelector(
@@ -21,15 +20,12 @@ const UserLayout = () => {
   const isPaymentModalOpen = useSelector((store: RootState) => store.payment.isPaymentModalOpen);
   const userRoutes = getRoutesByRole(Role.USER);
 
-   const canShowFilter = useMemo(() => {
-      return filterShowsRoutes.some((route) => location.pathname.startsWith(route));
-    }, [location.pathname]);
+  const canShowFilter = useMemo(() => {
+    return filterShowsRoutes.some((route) => location.pathname.startsWith(route));
+  }, [location.pathname]);
 
   return (
-    <MainLayout
-      routes={userRoutes}
-      rightSidebar={canShowFilter && <FilterRightSideBar />}
-    >
+    <MainLayout routes={userRoutes} rightSidebar={canShowFilter && <FilterRightSideBar />}>
       <Outlet />
       {isReviewCreateFormOpen && <ReviewForm />}
       {isPaymentModalOpen && user?.role === Role.USER && <PaymentSelection />}

@@ -7,11 +7,7 @@ import { appConfig, serviceConfig } from '@/config/env';
 import { GoogleButtonProps } from '@/shared/types/component';
 import { handleError } from '@/shared/utils/helper/handleError';
 
-const GoogleButton = ({
-  text,
-  className = 'w-full',
-}: GoogleButtonProps) => {
-
+const GoogleButton = ({ text, className = 'w-full' }: GoogleButtonProps) => {
   const [isGoogleLoginLoading, setIsGoogleLoginLoading] = useState<boolean>(false);
   const { parsed, selectedTimezone, setSelectedTimezone } = useTimezone();
 
@@ -60,11 +56,7 @@ const GoogleButton = ({
         )}
         {text}
       </Button>
-      <TimezoneSelect
-        value={selectedTimezone}
-        onChange={setSelectedTimezone}
-        className="hidden"
-      />
+      <TimezoneSelect value={selectedTimezone} onChange={setSelectedTimezone} className="hidden" />
     </>
   );
 };

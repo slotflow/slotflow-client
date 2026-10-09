@@ -12,7 +12,6 @@ import BillingCycleToggle from '../../components/plan/BillingCycleToggle';
 import ProviderPlanCardShimmer from '../../components/shimmers/ProviderPlanCardShimmer';
 
 const ProviderUpgradePlan = () => {
-
   const navigate = useNavigate();
   const [billingCycle, setBillingCycle] = useState<BillingCycle>(BillingCycle.MONTHLY);
 
@@ -68,11 +67,7 @@ const ProviderUpgradePlan = () => {
               {data.map((plan) => {
                 return (
                   <div key={plan._id} className="flex">
-                    <PlanCard
-                      plan={plan}
-                      dummy={false}
-                      billingCycle={billingCycle}
-                    />
+                    <PlanCard plan={plan} dummy={false} billingCycle={billingCycle} />
                   </div>
                 );
               })}
@@ -88,7 +83,7 @@ const ProviderUpgradePlan = () => {
       <footer className="max-w-7xl w-full mx-auto pt-16 pb-6 mt-auto">
         <div className="border-t border-border pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-muted-foreground">
           <Button
-            variant='link'
+            variant="link"
             onClick={() => navigate(-1)}
             className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-foreground transition-all duration-200 hover:-translate-x-0.5 active:translate-x-0"
           >

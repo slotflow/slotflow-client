@@ -83,10 +83,10 @@ const UpdatePasswordForm = ({ onClose }: UpdatePasswordFormProps) => {
         error={errors.confirmPassword?.message}
       />
       <div className="flex space-y-2 justify-end">
-        <FormButton 
+        <FormButton
           loading={isSubmitting}
           text={isSubmitting ? 'Updating' : 'Update'}
-          title='Update password'
+          title="Update password"
           disabled={isSubmitting || !isValid}
         />
       </div>

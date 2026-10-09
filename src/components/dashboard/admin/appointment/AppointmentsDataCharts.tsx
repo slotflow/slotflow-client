@@ -21,7 +21,6 @@ import { adminFetchDashboardBookingChartData } from '@/services/apis/admin';
 export const useAppointmentsDataCharts = ({
   dateRange,
 }: UseAppointmentsDataChartsProps): DashboardItem[] => {
-
   const {
     data: dashboardGraphData,
     isLoading,

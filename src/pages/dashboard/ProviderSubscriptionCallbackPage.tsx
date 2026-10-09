@@ -4,11 +4,18 @@ import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { useSubscriptionCallback } from '@/hooks/useSubscriptionCallback';
 import { containerVariants } from '@/shared/utils/constants/designConstants';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { LoaderCircle, CheckCircle2, LayoutDashboard, XCircle, ShieldCheck, ArrowRight, AlertCircle } from 'lucide-react';
+import {
+  LoaderCircle,
+  CheckCircle2,
+  LayoutDashboard,
+  XCircle,
+  ShieldCheck,
+  ArrowRight,
+  AlertCircle,
+} from 'lucide-react';
 import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 
 const ProviderSubscriptionCallbackPage = () => {
-  
   const { goTo } = useAppNavigation();
   const { status, subscriptionUpdating } = useSubscriptionCallback();
 
@@ -92,9 +99,7 @@ const ProviderSubscriptionCallbackPage = () => {
                     <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-semibold">
                       <ShieldCheck className="h-3.5 w-3.5" /> Confirmed
                     </div>
-                    <h3 className="text-xl font-bold text-foreground">
-                      Subscription Activated!
-                    </h3>
+                    <h3 className="text-xl font-bold text-foreground">Subscription Activated!</h3>
                     <p className="text-sm text-muted-foreground">
                       Your provider account has been upgraded. You now have full access to features.
                     </p>
@@ -130,11 +135,10 @@ const ProviderSubscriptionCallbackPage = () => {
                     <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-destructive/10 text-destructive text-xs font-semibold">
                       <AlertCircle className="h-3.5 w-3.5" /> Action Required
                     </div>
-                    <h3 className="text-xl font-bold text-foreground">
-                      Payment Failed
-                    </h3>
+                    <h3 className="text-xl font-bold text-foreground">Payment Failed</h3>
                     <p className="text-sm text-muted-foreground">
-                      We couldn't process your subscription setup. Please try again or return to the main dashboard.
+                      We couldn't process your subscription setup. Please try again or return to the
+                      main dashboard.
                     </p>
                   </div>
 

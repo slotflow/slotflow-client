@@ -6,7 +6,6 @@ import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { authCallbackLoadingSteps } from '@/shared/utils/constants/landingConstants';
 
 export const AuthCallbackPage: React.FC = () => {
-
   const { goTo } = useAppNavigation();
   const { stepIndex, error } = useAuthCallback();
 

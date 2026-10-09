@@ -1,11 +1,11 @@
 import { HearAboutUsOptionValue, OnboardingStatus, Role } from '../enums';
 
 export interface TimeZone {
-    value: string;
-    label: string;
-    offset: number;
-    abbrev: string;
-    altName: string;
+  value: string;
+  label: string;
+  offset: number;
+  abbrev: string;
+  altName: string;
 }
 
 export interface User {

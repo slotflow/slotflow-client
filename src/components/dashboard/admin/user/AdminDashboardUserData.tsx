@@ -1,7 +1,4 @@
-import {
-  fetchAnalyticsInsight,
-  adminFetchDashboardUserStatsData,
-} from '@/services/apis/admin';
+import { fetchAnalyticsInsight, adminFetchDashboardUserStatsData } from '@/services/apis/admin';
 import { Users } from 'lucide-react';
 import UserListCard from './UserListCard';
 import Reorderable from '../../Reorderable';
@@ -16,16 +13,13 @@ import { aiResponseEntities, queryKeys } from '@/shared/utils/constants/appConst
 import { AdminFetchDashboardUserStatsDataResponse } from '@/shared/types/api/adminDashboard';
 
 export default function AdminDashboardUserData({ dateRange }: AdminDashboardUserDataProps) {
-
   const initialItems: DashboardItem[] = [
     {
       id: 'stats-card',
       colSpan: 'col-span-12 lg:col-span-6',
       component: (
         <DashboardStats<AdminFetchDashboardUserStatsDataResponse>
-          queryFunction={() =>
-            adminFetchDashboardUserStatsData(dateRange)
-          }
+          queryFunction={() => adminFetchDashboardUserStatsData(dateRange)}
           queryKey={[queryKeys.DASHBOARD_USERS_STATS, dateRange?.toString()]}
           statsMap={userStatsMapForAdmin}
           dependencies={dateRange}
@@ -45,7 +39,7 @@ export default function AdminDashboardUserData({ dateRange }: AdminDashboardUser
           fetchFn={() =>
             fetchAnalyticsInsight({
               ...dateRange,
-              entity: aiResponseEntities.USER
+              entity: aiResponseEntities.USER,
             })
           }
           queryKey={queryKeys.USER_ENGAGEMENT_AI_RES}

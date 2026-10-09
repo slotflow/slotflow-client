@@ -29,7 +29,6 @@ import { Plan } from '@/shared/types/entity/planInterface';
 import { StripeSyncStatus } from '@/shared/types/enums';
 
 const AdminPlanDetails = () => {
-  
   const navigate = useNavigate();
   const { planId } = useParams<{ planId: Plan['_id'] }>();
 

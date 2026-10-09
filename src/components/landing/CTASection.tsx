@@ -6,7 +6,6 @@ import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
 
 const CTASection = () => {
-  
   const { goTo } = useAppNavigation();
 
   return (

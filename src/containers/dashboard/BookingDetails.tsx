@@ -116,7 +116,11 @@ const BookingDetails = () => {
                     <DataField
                       key={index}
                       label={track.appointmentStatus}
-                      value={track.time ? formatDate(track.time, dateFormats.WITH_TIME) : 'No time recorded'}
+                      value={
+                        track.time
+                          ? formatDate(track.time, dateFormats.WITH_TIME)
+                          : 'No time recorded'
+                      }
                       Icon={Info}
                     />
                   );

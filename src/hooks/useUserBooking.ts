@@ -8,7 +8,13 @@ import { toggleReviewCreateForm } from '@/app/store/slices/userSlice';
 import { handleError } from '@/shared/utils/helper/handleError';
 import { cancelBooking, changeAppointmentStatus } from '@/services/apis/booking';
 import { ApiBaseResponse, ApiError, ApiPaginatedResponse } from '@/shared/types/common';
-import { CancelBookingRequest, CancelBookingResponse, ChangeAppointmentStatusRequest, ChangeAppointmentStatusResponse, FetchBookingsResponse } from '@/shared/types/api/booking';
+import {
+  CancelBookingRequest,
+  CancelBookingResponse,
+  ChangeAppointmentStatusRequest,
+  ChangeAppointmentStatusResponse,
+  FetchBookingsResponse,
+} from '@/shared/types/api/booking';
 
 export const useBooking = (): UseBookingCustomHookReturn => {
   const queryClient = useQueryClient();
@@ -55,13 +61,13 @@ export const useBooking = (): UseBookingCustomHookReturn => {
               items: oldData.items.map((booking) =>
                 booking._id === _id
                   ? {
-                    ...booking,
-                    appointmentStatus: appointmentStatus,
-                  }
-                  : booking
+                      ...booking,
+                      appointmentStatus: appointmentStatus,
+                    }
+                  : booking,
               ),
             };
-          }
+          },
         );
       } else {
         toast.error(res.message || 'Could not change status, please try again');
@@ -98,13 +104,13 @@ export const useBooking = (): UseBookingCustomHookReturn => {
               items: oldData.items.map((booking) =>
                 booking._id === _id
                   ? {
-                    ...booking,
-                    appointmentStatus: appointmentStatus,
-                  }
-                  : booking
+                      ...booking,
+                      appointmentStatus: appointmentStatus,
+                    }
+                  : booking,
               ),
             };
-          }
+          },
         );
       } else {
         toast.error(res.message || 'Could not cancel booking, please try again.');
@@ -113,12 +119,14 @@ export const useBooking = (): UseBookingCustomHookReturn => {
     onError: (error: ApiError) => {
       handleError(error, 'Failed to cancel booking.');
     },
-  })
+  });
 
   return {
     handleReviewAddFormToggle,
     changeAppointmentStatus: changeAppointmentStatusMutation.mutate,
-    statusChangingAppointmentId: changeAppointmentStatusMutation.isPending ? changeAppointmentStatusMutation.variables.appointmentId : null,
+    statusChangingAppointmentId: changeAppointmentStatusMutation.isPending
+      ? changeAppointmentStatusMutation.variables.appointmentId
+      : null,
     cancelBooking: cancelBookingMutation.mutate,
     isCancelling: cancelBookingMutation.isPending,
   };

@@ -9,12 +9,14 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: 'flex items-center justify-center gap-2 bg-[var(--mainColor)] text-primary-foreground shadow-xs hover:bg-[var(--mainColorHover)] dark:text-primary',
+        default:
+          'flex items-center justify-center gap-2 bg-[var(--mainColor)] text-primary-foreground shadow-xs hover:bg-[var(--mainColorHover)] dark:text-primary',
         destructive:
           'flex items-center justify-center gap-2 bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40',
         outline:
           'border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground',
-        secondary: 'flex items-center justify-center gap-2 bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80',
+        secondary:
+          'flex items-center justify-center gap-2 bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
       },

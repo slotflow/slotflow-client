@@ -14,7 +14,6 @@ import { Check, ChevronLeft, User, AlertCircle, CheckCircle2 } from 'lucide-reac
 import { UsernameFormData, usernameSchema } from '@/shared/validators/zod/authZod';
 
 export const UserNamePage = () => {
-
   const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
 
@@ -34,7 +33,7 @@ export const UserNamePage = () => {
     dispatch(
       setBoardingData({
         username: data.username,
-      })
+      }),
     );
     goTo(redirectPaths.PROFILE_SETUP_HEAR_ABOUT_US);
   };
@@ -61,11 +60,7 @@ export const UserNamePage = () => {
           className="w-full flex flex-col items-center text-center space-y-4 sm:space-y-6"
         >
           <div className="flex items-center justify-center">
-             <img 
-                src={usernameSvg}
-                alt="svg"
-                className="size-52" 
-                />
+            <img src={usernameSvg} alt="svg" className="size-52" />
           </div>
 
           <div className="space-y-1 sm:space-y-1.5 px-2">
@@ -91,8 +86,8 @@ export const UserNamePage = () => {
                   errors.username
                     ? 'border-destructive focus:border-destructive focus:ring-1 focus:ring-destructive'
                     : isValid
-                    ? 'border-emerald-500/80 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500'
-                    : 'border-input focus:border-primary focus:ring-1 focus:ring-primary'
+                      ? 'border-emerald-500/80 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500'
+                      : 'border-input focus:border-primary focus:ring-1 focus:ring-primary'
                 }`}
               />
 

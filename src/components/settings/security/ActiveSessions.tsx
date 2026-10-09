@@ -117,7 +117,7 @@ const ActiveSessions = () => {
             <SelectSeparator />
             <CardContent className="p-5 pt-4 space-y-4 relative min-h-[300px]">
               <FeatureOverlay
-                size='md'
+                size="md"
                 isBlur
                 isDevMode
                 title="Session Management Coming Soon"
@@ -127,10 +127,11 @@ const ActiveSessions = () => {
                 {sessions.map((session) => (
                   <div
                     key={session.id}
-                    className={`flex flex-col sm:flex-row sm:items-center justify-between p-3.5 rounded-xl border transition-all gap-3 ${session.isCurrent
-                      ? 'border-emerald-200/80 dark:border-emerald-900/50 bg-emerald-50/20 dark:bg-emerald-950/10'
-                      : 'border-slate-100 dark:border-border/60 bg-slate-50/50 dark:bg-muted/20'
-                      }`}
+                    className={`flex flex-col sm:flex-row sm:items-center justify-between p-3.5 rounded-xl border transition-all gap-3 ${
+                      session.isCurrent
+                        ? 'border-emerald-200/80 dark:border-emerald-900/50 bg-emerald-50/20 dark:bg-emerald-950/10'
+                        : 'border-slate-100 dark:border-border/60 bg-slate-50/50 dark:bg-muted/20'
+                    }`}
                   >
                     <div className="flex items-start gap-3">
                       <div className="p-2 rounded-lg border border-slate-200 dark:border-border bg-white dark:bg-background shrink-0 mt-0.5 sm:mt-0">

@@ -52,7 +52,7 @@ const LinkedSocialAccounts = () => {
           };
         }
         return provider;
-      })
+      }),
     );
   };
 
@@ -102,7 +102,7 @@ const LinkedSocialAccounts = () => {
             <SelectSeparator />
             <CardContent className="p-5 pt-4 space-y-3 relative min-h-[300px]">
               <FeatureOverlay
-                size='md'
+                size="md"
                 isBlur
                 isDevMode
                 title="Social SSO Connections Coming Soon"
@@ -124,9 +124,7 @@ const LinkedSocialAccounts = () => {
 
                     <div className="space-y-0.5">
                       <div className="flex items-center gap-2">
-                        <h4 className="text-xs font-semibold text-foreground">
-                          {provider.name}
-                        </h4>
+                        <h4 className="text-xs font-semibold text-foreground">{provider.name}</h4>
                         {provider.connected && (
                           <span className="inline-flex items-center gap-1 text-[10px] font-medium text-emerald-600 dark:text-emerald-400">
                             <ShieldCheck className="size-3" /> Connected
@@ -146,10 +144,11 @@ const LinkedSocialAccounts = () => {
                     variant={provider.connected ? 'outline' : 'default'}
                     size="sm"
                     onClick={() => handleToggleConnection(provider.id)}
-                    className={`h-8 text-xs gap-1.5 ${provider.connected
+                    className={`h-8 text-xs gap-1.5 ${
+                      provider.connected
                         ? 'border-slate-200 dark:border-border text-slate-700 dark:text-slate-200 hover:bg-red-50 dark:hover:bg-red-950/30 hover:text-red-600 hover:border-red-200'
                         : ''
-                      }`}
+                    }`}
                   >
                     {provider.connected ? (
                       <>

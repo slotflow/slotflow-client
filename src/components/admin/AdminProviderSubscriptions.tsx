@@ -11,7 +11,6 @@ import {
 } from '@/shared/types/api/subscription';
 
 const AdminProviderSubscriptions = memo(({ providerId }: AdminFetchProviderSubscriptionsProps) => {
-  
   const { toSubscriptionDetailsPage } = useAppNavigation();
 
   const column = ProvidersSubscriptionsTableColumns(toSubscriptionDetailsPage);

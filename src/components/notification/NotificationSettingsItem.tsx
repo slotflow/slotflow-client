@@ -16,9 +16,7 @@ const NotificationSettingsItem = ({
       <CardHeader className="flex flex-row justify-between items-center space-y-0 p-3">
         <div className="space-y-1">
           <CardTitle className="text-base font-semibold">{title}</CardTitle>
-          <CardDescription className="text-xs text-muted-foreground">
-            {description}
-          </CardDescription>
+          <CardDescription className="text-xs text-muted-foreground">{description}</CardDescription>
         </div>
         <Switch
           className={`cursor-pointer ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}

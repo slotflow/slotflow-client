@@ -1,8 +1,4 @@
-import {
-  Calendar,
-  ReceiptText,
-  MoreHorizontal,
-} from 'lucide-react';
+import { Calendar, ReceiptText, MoreHorizontal } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuItem,
@@ -101,7 +97,11 @@ const ProvidersSubscriptionsTableColumns = (
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button title="Open Menu" variant="ghost" className="h-8 w-8 p-0 cursor-pointer hover:bg-muted">
+            <Button
+              title="Open Menu"
+              variant="ghost"
+              className="h-8 w-8 p-0 cursor-pointer hover:bg-muted"
+            >
               <span className="sr-only">Open menu</span>
               <MoreHorizontal className="size-4" />
             </Button>

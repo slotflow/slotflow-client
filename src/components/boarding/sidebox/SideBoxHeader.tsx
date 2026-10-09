@@ -6,7 +6,6 @@ import ThemeToggler from '@/components/common/ThemeToggler';
 import { useSignout } from '@/hooks/systemHooks/useSignout';
 
 const SideBoxHeader = () => {
-
   const { userSignout, isSigningOut } = useSignout();
   const user = useSelector((store: RootState) => store.auth.authUser);
 

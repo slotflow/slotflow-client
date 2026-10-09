@@ -1,48 +1,73 @@
-import { PlanName } from "@/shared/types/enums";
-import { StatsMapForAdminInterface, statsMapIntrface } from "@/shared/types/common";
-import { ProviderFetchDashboardBookingStatsDataResponse } from "@/shared/types/api/providerProfile";
-import { BadgeCheck, Ban, Banknote, CalendarCheck, CheckCircle, Clock, CreditCard, Gem, Hourglass, Layers, LayoutGrid, Receipt, Rocket, RotateCcw, ShieldCheck, ThumbsDown, UserCheck, UserPlus, Users, UserX, Verified, Wallet, XCircle } from "lucide-react";
+import { PlanName } from '@/shared/types/enums';
+import { StatsMapForAdminInterface, statsMapIntrface } from '@/shared/types/common';
+import { ProviderFetchDashboardBookingStatsDataResponse } from '@/shared/types/api/providerProfile';
+import {
+  BadgeCheck,
+  Ban,
+  Banknote,
+  CalendarCheck,
+  CheckCircle,
+  Clock,
+  CreditCard,
+  Gem,
+  Hourglass,
+  Layers,
+  LayoutGrid,
+  Receipt,
+  Rocket,
+  RotateCcw,
+  ShieldCheck,
+  ThumbsDown,
+  UserCheck,
+  UserPlus,
+  Users,
+  UserX,
+  Verified,
+  Wallet,
+  XCircle,
+} from 'lucide-react';
 
 // Provider Dashboard Stats Cards Data
-export const statsMapForProvider: Array<statsMapIntrface<ProviderFetchDashboardBookingStatsDataResponse>> =
-  [
-    {
-      title: 'Total Appointments',
-      key: 'totalAppointments',
-      icon: CalendarCheck,
-      plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
-    },
-    {
-      title: 'Today’s Appointments',
-      key: 'todaysAppointments',
-      icon: Clock,
-      plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
-    },
-    {
-      title: 'Completed Appointments',
-      key: 'completedAppointments',
-      icon: CheckCircle,
-      plans: [PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
-    },
-    {
-      title: 'Missed Appointments',
-      key: 'missedAppointments',
-      icon: XCircle,
-      plans: [PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
-    },
-    {
-      title: 'Cancelled by User',
-      key: 'cancelledAppointmentsByUser',
-      icon: Ban,
-      plans: [PlanName.ENTERPRISE],
-    },
-    {
-      title: 'Rejected by Provider',
-      key: 'rejectedAppointmentsByProvider',
-      icon: ThumbsDown,
-      plans: [PlanName.ENTERPRISE],
-    },
-  ];
+export const statsMapForProvider: Array<
+  statsMapIntrface<ProviderFetchDashboardBookingStatsDataResponse>
+> = [
+  {
+    title: 'Total Appointments',
+    key: 'totalAppointments',
+    icon: CalendarCheck,
+    plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
+  },
+  {
+    title: 'Today’s Appointments',
+    key: 'todaysAppointments',
+    icon: Clock,
+    plans: [PlanName.STARTER, PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
+  },
+  {
+    title: 'Completed Appointments',
+    key: 'completedAppointments',
+    icon: CheckCircle,
+    plans: [PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
+  },
+  {
+    title: 'Missed Appointments',
+    key: 'missedAppointments',
+    icon: XCircle,
+    plans: [PlanName.PROFESSIONAL, PlanName.ENTERPRISE],
+  },
+  {
+    title: 'Cancelled by User',
+    key: 'cancelledAppointmentsByUser',
+    icon: Ban,
+    plans: [PlanName.ENTERPRISE],
+  },
+  {
+    title: 'Rejected by Provider',
+    key: 'rejectedAppointmentsByProvider',
+    icon: ThumbsDown,
+    plans: [PlanName.ENTERPRISE],
+  },
+];
 
 // Revenue status map for provider
 export const revenueStatsMapForProvider = [

@@ -2,11 +2,7 @@ import { useCopy } from '@/hooks/useCopy';
 import { Check, Copy } from 'lucide-react';
 import { CupyFieldProps } from '@/shared/types/component';
 
-const CopyableId = ({ 
-  value, 
-  label 
-}: CupyFieldProps) => {
-
+const CopyableId = ({ value, label }: CupyFieldProps) => {
   const { copied, copy } = useCopy(2000);
 
   return (

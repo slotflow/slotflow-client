@@ -32,11 +32,7 @@ const ChatHeader = () => {
             </p>
           </div>
         </div>
-        <Button
-          size="sm"
-          variant="ghost"
-          onClick={handleCloseChat}
-        >
+        <Button size="sm" variant="ghost" onClick={handleCloseChat}>
           <X className="size-4" />
         </Button>
       </div>
