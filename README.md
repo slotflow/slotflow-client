@@ -660,14 +660,12 @@ All SlotFlow backend and infrastructure services are maintained within the SlotF
 
 ## License
 
-## License
-
 **Proprietary — All Rights Reserved**
 
 Copyright © 2026 SlotFlow.
 
 The SlotFlow source code and associated assets are proprietary and confidential
-property of SlotFlow Technologies Private Limited.
+property of SlotFlow.
 
 No permission is granted to any person or organization to:
 
