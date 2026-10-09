@@ -539,13 +539,20 @@ slotflow-client/
 │
 ├── public/
 ├── src/
+│   ├── app/
+│   ├── assets/
+│   ├── config/
+│   ├── containers/
 │   ├── components/
 │   ├── pages/
 │   ├── layouts/
 │   ├── hooks/
+│   ├── lib/
+│   ├── md/
 │   ├── services/
-│   ├── store/
-│   ├── routes/
+│   ├── shared/
+│   ├── test/
+│   ├── router/
 │   ├── utils/
 │   └── ...
 │
@@ -657,7 +664,7 @@ All SlotFlow backend and infrastructure services are maintained within the SlotF
 
 **Proprietary — All Rights Reserved**
 
-Copyright © 2026 SlotFlow Technologies Private Limited.
+Copyright © 2026 SlotFlow.
 
 The SlotFlow source code and associated assets are proprietary and confidential
 property of SlotFlow Technologies Private Limited.
