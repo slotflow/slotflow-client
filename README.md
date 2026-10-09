@@ -680,7 +680,7 @@ Viewing the source code on GitHub does not grant any license or rights to use,
 modify, distribute, or commercialize the software.
 
 Any use beyond viewing the repository requires prior written permission from
-SlotFlow Technologies Private Limited.
+SlotFlow.
 
 All rights reserved.
 
