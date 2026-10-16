@@ -1,6 +1,6 @@
 import gsap from 'gsap';
 import { useEffect, useRef } from 'react';
-import { AnimatedCounterProps } from '@/shared/interface/componentInterface';
+import { AnimatedCounterProps } from '@/shared/types/component';
 
 const AnimatedCounter = ({
   from = 0,

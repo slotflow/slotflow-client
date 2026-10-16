@@ -23,21 +23,21 @@ const PaymentPreview = () => {
       <div className="mt-6 space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <CreditCard className="h-4 w-4 text-primary" />
+            <CreditCard className="size-4 text-primary" />
             <span className="text-sm">Visa •••• 2481</span>
           </div>
           <span className="text-sm text-muted-foreground">Card</span>
         </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Receipt className="h-4 w-4 text-primary" />
+            <Receipt className="size-4 text-primary" />
             <span className="text-sm">Booking Fee</span>
           </div>
           <span className="text-sm font-medium">₹799</span>
         </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <ShieldCheck className="h-4 w-4 text-primary" />
+            <ShieldCheck className="size-4 text-primary" />
             <span className="text-sm">Secure Transaction</span>
           </div>
           <span className="text-xs rounded-full bg-primary/10 px-2 py-1 text-primary">

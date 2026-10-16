@@ -95,7 +95,7 @@ const CountryDropdownComponent = (
       <PopoverTrigger ref={ref} className={triggerClasses} disabled={disabled} {...props}>
         {selectedCountry ? (
           <div className="flex items-center flex-grow w-0 gap-2 overflow-hidden">
-            <div className="inline-flex items-center justify-center w-5 h-5 shrink-0 overflow-hidden rounded-full">
+            <div className="inline-flex items-center justify-center size-5 shrink-0 overflow-hidden rounded-full">
               <CircleFlag countryCode={selectedCountry.alpha2.toLowerCase()} height={20} />
             </div>
             {slim === false && (
@@ -132,7 +132,7 @@ const CountryDropdownComponent = (
                     onSelect={() => handleSelect(option)}
                   >
                     <div className="flex flex-grow w-0 space-x-2 overflow-hidden">
-                      <div className="inline-flex items-center justify-center w-5 h-5 shrink-0 overflow-hidden rounded-full">
+                      <div className="inline-flex items-center justify-center size-5 shrink-0 overflow-hidden rounded-full">
                         <CircleFlag countryCode={option.alpha2.toLowerCase()} height={20} />
                       </div>
                       <span className="overflow-hidden text-ellipsis whitespace-nowrap">
@@ -141,7 +141,7 @@ const CountryDropdownComponent = (
                     </div>
                     <CheckIcon
                       className={cn(
-                        'ml-auto h-4 w-4 shrink-0',
+                        'ml-auto size-4 shrink-0',
                         option.name === selectedCountry?.name ? 'opacity-100' : 'opacity-0',
                       )}
                     />

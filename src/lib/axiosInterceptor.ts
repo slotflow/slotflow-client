@@ -1,57 +1,202 @@
+import axios from 'axios';
 import { toast } from 'react-toastify';
-import { axiosInstance } from './axios';
-import { appStore } from '@/shared/redux/appStore';
-import { setAuthUser } from '@/shared/redux/slices/authSlice';
+import type { AxiosError } from 'axios';
+import { axiosInstance } from '@/lib/axios';
+import { appConfig, serviceConfig } from '@/config/env';
+import { BackendApiErrorResponse } from '@/shared/types/common';
+
+declare module 'axios' {
+  interface AxiosRequestConfig {
+    skipErrorToast?: boolean;
+    skipAuthRefresh?: boolean;
+    _retry?: boolean;
+  }
+}
+
+const baseURL = `${serviceConfig.apiGatewayUrl}${appConfig.version}`;
+
+const refreshClient = axios.create({
+  baseURL,
+  withCredentials: true,
+  timeout: 10000,
+});
+
+let refreshPromise: Promise<void> | null = null;
+let sessionExpired = false;
+let sessionGeneration = 0;
+let onAuthExpired: (() => void) | null = null;
+let responseInterceptorId: number | null = null;
+
+export const setAuthExpiredHandler = (handler: (() => void) | null) => {
+  onAuthExpired = handler;
+};
+
+export const resetAuthSession = () => {
+  sessionGeneration += 1;
+  sessionExpired = false;
+  refreshPromise = null;
+};
+
+export const refreshAccessToken = (): Promise<void> => {
+  if (!refreshPromise) {
+    const requestPromise = refreshClient.post('/auth/refresh').then(() => undefined);
+    const trackedPromise: Promise<void> = requestPromise.finally(() => {
+      if (refreshPromise === trackedPromise) {
+        refreshPromise = null;
+      }
+    });
+    refreshPromise = trackedPromise;
+  }
+
+  return refreshPromise;
+};
+
+const publicAuthRoutes = [
+  '/auth/signin',
+  '/auth/signup',
+  '/auth/verify-otp',
+  '/auth/resendOtp',
+  '/auth/verify-email',
+  '/auth/verify-reset-otp',
+  '/auth/password',
+  '/auth/refresh',
+  '/auth/signout',
+  '/auth/google',
+];
+
+const isPublicAuthRoute = (url: string): boolean => {
+  const path = new URL(url, baseURL).pathname;
+
+  return publicAuthRoutes.some((route) => path === route || path.endsWith(route));
+};
+
+const getErrorMessage = (error: AxiosError<BackendApiErrorResponse>): string => {
+  const status = error.response?.status;
+  const message = error.response?.data?.message;
+
+  if (!error.response) {
+    return error.code === 'ECONNABORTED'
+      ? 'Request timed out. Please try again.'
+      : 'Unable to connect to the server.';
+  }
+
+  switch (status) {
+    case 400:
+      return message ?? 'Invalid request.';
+
+    case 401:
+      return message ?? 'Unauthorized request.';
+
+    case 403:
+      return message ?? 'Access denied.';
+
+    case 404:
+      return message ?? 'Requested resource not found.';
+
+    case 429:
+      return 'Too many requests. Please try again later.';
+
+    case 500:
+      return 'Internal server error. Please try again later.';
+
+    case 502:
+      return 'Bad gateway. Please try again later.';
+
+    case 503:
+      return 'Service temporarily unavailable.';
+
+    case 504:
+      return 'The server took too long to respond.';
+
+    default:
+      return message ?? 'Something went wrong.';
+  }
+};
+
+const notifySessionExpired = () => {
+  if (sessionExpired) return;
+
+  sessionExpired = true;
+
+  onAuthExpired?.();
+
+  toast.error('Your session has expired. Please log in again.', { toastId: 'session-expired' });
+};
 
 export const setupAxiosInterceptors = () => {
-  axiosInstance.interceptors.response.use(
-    (response) => {
-      return response;
-    },
-    (error) => {
-      const status = error.response?.status;
-      const message = error.response?.data?.message || 'Unexpected Error';
-      if (!error.response) {
-        toast.error('Unable to connect to the server. Please try again.');
-        console.log('error : ', error);
+  if (responseInterceptorId !== null) return;
+
+  responseInterceptorId = axiosInstance.interceptors.response.use(
+    (response) => response,
+
+    async (error: unknown) => {
+      if (!axios.isAxiosError<BackendApiErrorResponse>(error)) {
         return Promise.reject(error);
       }
 
-      switch (status) {
-        case 400:
-          toast.error(message || 'Invalid request.');
-          break;
+      if (axios.isCancel(error)) {
+        return Promise.reject(error);
+      }
 
-        case 401:
-          appStore.dispatch(setAuthUser(null));
-          toast.error(message || 'Session expired. Please log in again.');
-          break;
+      const config = error.config;
 
-        case 403:
-          appStore.dispatch(setAuthUser(null));
-          toast.error(message || 'Your account has been blocked.');
-          break;
+      if (!config) {
+        toast.error(getErrorMessage(error));
+        return Promise.reject(error);
+      }
 
-        case 404:
-          toast.error(message || 'Requested resource not found.');
-          break;
+      const url = config.url ?? '';
+      const isPublicRoute = isPublicAuthRoute(url);
 
-        case 500:
-          toast.error('Internal server error. Please try again later.');
-          break;
-        case 502:
-          toast.error('Bad gateway. Please try again later.');
-          break;
-        case 503:
-          toast.error('Service is temporarily unavailable. Please try again later.');
-          break;
-        case 504:
-          toast.error('The server took too long to respond. Please try again.');
-          break;
+      const shouldRefresh =
+        error.response?.status === 401 &&
+        !config._retry &&
+        !config.skipAuthRefresh &&
+        !isPublicRoute &&
+        !sessionExpired;
 
-        default:
-          toast.error(message || 'Unexpected error occurred.');
-          break;
+      if (shouldRefresh) {
+        config._retry = true;
+        const requestSessionGeneration = sessionGeneration;
+
+        try {
+          await refreshAccessToken();
+
+          if (requestSessionGeneration !== sessionGeneration) {
+            return axiosInstance(config);
+          }
+
+          if (sessionExpired) {
+            return Promise.reject(error);
+          }
+
+          return axiosInstance(config);
+        } catch (refreshError) {
+          if (requestSessionGeneration !== sessionGeneration) {
+            return axiosInstance(config);
+          }
+
+          if (axios.isCancel(refreshError)) {
+            return Promise.reject(refreshError);
+          }
+
+          if (axios.isAxiosError(refreshError) && refreshError.response?.status === 401) {
+            notifySessionExpired();
+            return Promise.reject(error);
+          }
+
+          if (!config.skipErrorToast) {
+            toast.error('Unable to restore your session. Please try again.', {
+              toastId: 'session-refresh-failed',
+            });
+          }
+
+          return Promise.reject(refreshError);
+        }
+      }
+
+      if (!config.skipErrorToast && !sessionExpired) {
+        toast.error(getErrorMessage(error));
       }
 
       return Promise.reject(error);

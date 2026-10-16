@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
-import { TOCHeadingProps, TOCProps } from '@/shared/interface/componentInterface';
+import { TOCHeadingProps, TOCProps } from '@/shared/types/component';
 
 const flattenHeadings = (items: TOCHeadingProps[]): TOCHeadingProps[] =>
   items.flatMap((item) => [item, ...(item.children ? flattenHeadings(item.children) : [])]);

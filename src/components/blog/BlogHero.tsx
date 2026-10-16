@@ -1,13 +1,13 @@
-import { BookOpen, ArrowRight, CalendarDays } from 'lucide-react';
 import { Card } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import { formateDate } from '@/shared/helper/formatter';
+import { BlogHeroProps } from '@/shared/types/component';
 import SplitTextReveal from '../animation/SplitTextReveal';
 import AnimatedCounter from '../animation/AnimatedCounter';
-import { BlogHeroProps } from '@/shared/interface/componentInterface';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
+import { formatDate } from '@/shared/utils/helper/formatDate';
+import { BookOpen, ArrowRight, CalendarDays } from 'lucide-react';
 
 const BlogHero = ({
   articlesCount,
@@ -15,7 +15,7 @@ const BlogHero = ({
   categoriesCount,
   featuredArticle,
 }: BlogHeroProps) => {
-  const navigate = useNavigate();
+  const { goTo } = useAppNavigation();
   const featuredTitle = featuredArticle?.heroTitle ?? 'Explore our latest insights';
   const featuredDescription =
     featuredArticle?.heroDescription ??
@@ -99,11 +99,11 @@ const BlogHero = ({
                 <p className="text-muted-foreground leading-7">{featuredDescription}</p>
                 <div className="flex items-center gap-6 text-sm text-muted-foreground">
                   <div className="flex items-center gap-2">
-                    <CalendarDays className="h-4 w-4" />
-                    {formateDate(featuredDate)}
+                    <CalendarDays className="size-4" />
+                    {formatDate(featuredDate)}
                   </div>
                   <div className="flex items-center gap-2">
-                    <BookOpen className="h-4 w-4" />
+                    <BookOpen className="size-4" />
                     {featuredReadTime}
                   </div>
                 </div>
@@ -111,12 +111,12 @@ const BlogHero = ({
                   className="rounded-full"
                   onClick={() => {
                     if (featuredArticle?.id) {
-                      navigate(`/blog/${featuredArticle.id}`);
+                      goTo(`/blog/${featuredArticle.id}`);
                     }
                   }}
                 >
                   Read Article
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <ArrowRight className="ml-2 size-4" />
                 </Button>
               </div>
             </Card>

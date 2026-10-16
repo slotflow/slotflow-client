@@ -1,0 +1,54 @@
+import { Role, PlanName, OnboardingStatus, AdminVerificationStatus } from '../enums';
+import { User } from '../entity/user';
+
+// request type of the user or provider sign up api
+export type SignupRequest = Pick<User, 'email' | 'password'>;
+
+// request type of the otp verification api
+export interface VerifyOtpRequest {
+  otp: string;
+}
+
+// request type of the verify email api
+export interface VerifyEmailRequest {
+  email: string;
+}
+
+// request type of user or provider or admin sign in api
+export interface SigninRequest {
+  email: string;
+  password: string;
+}
+
+// response interface of user or provider or admin sign in api
+export interface SigninResponse {
+  user: {
+    uid: string;
+    username: string;
+    phone: string;
+    profileImage: string;
+    email: string;
+    role: Role;
+    onboardingType: Role | null;
+    onboardingStatus: OnboardingStatus;
+    isBlocked: boolean;
+    isLoggedIn: boolean;
+    isAddressAdded: boolean;
+    isServiceDetailsAdded: boolean;
+    isServiceAvailabilityAdded: boolean;
+    isAdminVerified: boolean;
+    providerSubscription?: PlanName;
+    isProofSubmitted: { identityProof: boolean; serviceProof: boolean };
+    verificationRejectionReason?: string;
+    adminVerificationStatus: AdminVerificationStatus;
+    isAddressVerified: boolean;
+    isServiceDetailsVerified: boolean;
+    isAvailabilityVerified: boolean;
+    isProofsVerified: boolean;
+    hasUsedTrial: boolean;
+    timeZone: string;
+  };
+}
+
+//  request type of update password api
+export type ResetPasswordRequest = Pick<User, 'password'>;

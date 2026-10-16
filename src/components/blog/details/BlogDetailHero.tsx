@@ -2,9 +2,9 @@ import { motion } from 'framer-motion';
 import { Badge } from '../../ui/badge';
 import { Separator } from '../../ui/separator';
 import { CalendarDays, Clock3 } from 'lucide-react';
-import { formateDate } from '@/shared/helper/formatter';
+import { formatDate } from '@/shared/utils/helper/formatDate';
+import { BlogDetailHeroProps } from '@/shared/types/component';
 import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar';
-import { BlogDetailHeroProps } from '@/shared/interface/componentInterface';
 
 const BlogDetailHero = ({
   author,
@@ -56,12 +56,12 @@ const BlogDetailHero = ({
             </div>
             <Separator orientation="vertical" className="hidden h-10 bg-white/20 lg:block" />
             <div className="flex items-center gap-3 dark:text-white/80 text-black/80">
-              <CalendarDays className="h-5 w-5" />
-              <span>{formateDate(new Date(createdAt))}</span>
+              <CalendarDays className="size-5" />
+              <span>{formatDate(createdAt)}</span>
             </div>
             <Separator orientation="vertical" className="hidden h-10 bg-white/20 lg:block" />
             <div className="flex items-center gap-3 dark:text-white/80 text-black/80">
-              <Clock3 className="h-5 w-5" />
+              <Clock3 className="size-5" />
               <span>{readTime}</span>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import {
   DropdownMenu,
-  DropdownMenuContent,
   DropdownMenuTrigger,
+  DropdownMenuContent,
   DropdownMenuCheckboxItem,
 } from './dropdown-menu';
 import {
@@ -20,8 +20,8 @@ import {
 import * as React from 'react';
 import { Input } from './input';
 import { Button } from './button';
-import { defaultButtonClassName } from '@/shared/utils/constants';
-import { DataTableProps } from '@/shared/interface/componentInterface';
+import { DataTableProps } from '@/shared/types/component';
+import { ChevronLeft, ChevronRight, Columns, RotateCw } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './table';
 
 export function DataTable<TData, TValue>({
@@ -31,6 +31,8 @@ export function DataTable<TData, TValue>({
   onPaginationChange,
   pagination: controlledPagination,
   actionButtons,
+  isFetching,
+  refetch,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
@@ -78,8 +80,8 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div>
-      <div className="flex items-center py-4">
+    <>
+      <div className="flex items-center py-2">
         <Input
           placeholder="Filter values"
           value={globalFilter}
@@ -87,20 +89,36 @@ export function DataTable<TData, TValue>({
           className="max-w-sm"
         />
         <DropdownMenu>
-          <div className="ml-auto space-x-2">
+          <div className="ml-auto space-x-2 flex">
             {actionButtons?.map((btn) => (
               <Button
                 key={btn.actionLabel}
                 title={btn?.actionLabel}
-                variant="default"
-                className="cursor-pointer hover:bg-(--mainColor) hover:text-white transition-colors border-(--mainColor)"
+                variant="secondary"
+                size="sm"
                 onClick={btn?.onActionClick}
               >
                 {btn?.actionLabel}
               </Button>
             ))}
+            {refetch && (
+              <Button
+                key="refetch"
+                disabled={isFetching}
+                title="refetch"
+                variant="secondary"
+                size="sm"
+                onClick={() => refetch()}
+              >
+                <RotateCw
+                  className={`w-3.5 h-3.5 text-slate-500 ${isFetching && 'animate-spin'}`}
+                />
+                Refetch
+              </Button>
+            )}
             <DropdownMenuTrigger asChild>
-              <Button title="Columns" variant="secondary" className={defaultButtonClassName}>
+              <Button title="Columns" variant="secondary" size="sm">
+                <Columns className={`w-3.5 h-3.5 text-slate-500 ${isFetching && 'animate-spin'}`} />
                 Columns
               </Button>
             </DropdownMenuTrigger>
@@ -125,7 +143,7 @@ export function DataTable<TData, TValue>({
         </DropdownMenu>
       </div>
 
-      <div className="rounded-md border">
+      <div className="rounded-md border mt-2">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -188,25 +206,27 @@ export function DataTable<TData, TValue>({
           <Button
             title="Previous"
             variant="secondary"
-            className={defaultButtonClassName}
             size="sm"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
+            <ChevronLeft className={`w-3.5 h-3.5 text-slate-500 ${isFetching && 'animate-spin'}`} />
             Previous
           </Button>
           <Button
             title="Next"
             variant="secondary"
-            className={defaultButtonClassName}
             size="sm"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
             Next
+            <ChevronRight
+              className={`w-3.5 h-3.5 text-slate-500 ${isFetching && 'animate-spin'}`}
+            />
           </Button>
         </div>
       </div>
-    </div>
+    </>
   );
 }

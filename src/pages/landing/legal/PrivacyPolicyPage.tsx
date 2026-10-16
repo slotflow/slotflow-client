@@ -4,7 +4,7 @@ import TOC from '@/components/scroll/TOC';
 import ReactMarkdown from 'react-markdown';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import markdown from '@/md/legal/privacy-policy/common.md?raw';
-import { extractHeadings } from '@/shared/helper/extractTocHeadings';
+import { extractHeadings } from '@/shared/utils/helper/extractTocHeadings';
 
 const PrivacyPolicyPage = () => {
   const headings = extractHeadings(markdown);

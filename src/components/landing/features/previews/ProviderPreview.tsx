@@ -14,10 +14,10 @@ const ProviderPreview = () => {
         <div className="flex-1">
           <div className="flex items-center gap-2">
             <p className="font-medium">Software Services</p>
-            <BadgeCheck className="h-4 w-4 text-[#635ffb]" />
+            <BadgeCheck className="size-4 text-[#635ffb]" />
           </div>
           <div className="mt-1 flex items-center gap-1">
-            <Star className="h-4 w-4 fill-current text-primary" />
+            <Star className="size-4 fill-current text-primary" />
             <span className="text-xs">4.9 (220 Reviews)</span>
           </div>
         </div>

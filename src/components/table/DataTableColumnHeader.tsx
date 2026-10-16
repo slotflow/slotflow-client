@@ -1,14 +1,14 @@
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { ArrowDown, ArrowUp, ChevronsUpDown, EyeOff } from 'lucide-react';
 import {
   DropdownMenu,
-  DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
+  DropdownMenuContent,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
-import { DataTableColumnHeaderProps } from '@/shared/interface/componentInterface';
+import { Button } from '@/components/ui/button';
+import { DataTableColumnHeaderProps } from '@/shared/types/component';
+import { ArrowDown, ArrowUp, ChevronsUpDown, EyeOff } from 'lucide-react';
 
 export function DataTableColumnHeader<TData, TValue>({
   column,

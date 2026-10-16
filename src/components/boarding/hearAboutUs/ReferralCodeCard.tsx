@@ -33,13 +33,8 @@ const ReferralCodeCard = ({ value, onChange, onClose }: ReferralCodeCardProps) =
               </p>
             </div>
 
-            <Button
-              size="icon"
-              variant="ghost"
-              onClick={onClose}
-              className="h-9 w-9 rounded-xl text-muted-foreground transition-colors hover:bg-red-100 hover:text-red-600 dark:hover:bg-red-500/10 dark:hover:text-red-400"
-            >
-              <X className="h-4 w-4" />
+            <Button size="sm" variant="ghost" onClick={onClose}>
+              <X className="size-4" />
             </Button>
           </div>
 

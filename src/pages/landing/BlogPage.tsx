@@ -1,53 +1,43 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { appConfig } from '@/config/env';
 import BlogCTA from '@/components/blog/BlogCTA';
-import LoadingFallback from '../common/LoadingFallback';
 import BlogHero from '@/components/blog/BlogHero';
 import { useDispatch, useSelector } from 'react-redux';
+import LoadingFallbackPage from '../fallbacks/LoadingFallbackPage';
 import MoveUpward from '@/components/animation/MoveUpward';
 import BlogNewsletter from '@/components/blog/BlogNewsletter';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import { AppDispatch, RootState } from '@/app/store/appStore';
 import BlogEditorsPicks from '@/components/blog/BlogEditorsPicks';
-import { getArticles, getCategories } from '@/shared/apis/contentful';
 import BlogLatestInsights from '@/components/blog/BlogLatestInsights';
+import { getArticles, getCategories } from '@/services/apis/contentful';
 import BlogFeaturedArticles from '@/components/blog/BlogFeaturedArticles';
-import { setArticleCategories, setArticles } from '@/shared/redux/slices/appSlice';
 
 const BlogPage = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const [loading, setLoading] = useState(true);
-  const { articles, articleCategories } = useSelector((state: RootState) => state.app);
+  const blogData = useSelector((state: RootState) => state.cms.blogData);
 
   useEffect(() => {
-    if (articles.length && articleCategories.length) {
-      setLoading(false);
-      return;
-    }
-
     const fetchData = async () => {
       try {
-        const [articles, categories] = await Promise.all([getArticles(), getCategories()]);
-
-        console.log('articles : ', articles);
-        console.log('categories : ', categories);
-
-        if (!articles.length && !categories.length) {
-          return;
-        }
-
-        dispatch(setArticles(articles));
-        dispatch(setArticleCategories(categories));
+        await Promise.all([dispatch(getArticles()).unwrap(), dispatch(getCategories()).unwrap()]);
       } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
+        if (appConfig.isDevelopment) {
+          console.error('Failed to load blog data:', err);
+        }
       }
     };
 
     fetchData();
-  }, [articleCategories.length, dispatch, articles.length]);
+  }, [dispatch]);
 
-  if (loading) {
-    return <LoadingFallback />;
+  const articles = blogData?.articles ?? [];
+  const articleCategories = blogData?.articleCategories ?? [];
+  const loadingArticles = blogData?.loadingArticles ?? true;
+  const loadingCategories = blogData?.loadingCategories ?? true;
+  const isLoading = loadingArticles || loadingCategories || !blogData;
+
+  if (isLoading) {
+    return <LoadingFallbackPage />;
   }
 
   return (

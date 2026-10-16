@@ -1,49 +1,64 @@
-import { Button } from '../../ui/button';
-import { MoreHorizontal } from 'lucide-react';
-import { ColumnDef } from '@tanstack/react-table';
-import { DataTableColumnHeader } from '../DataTableColumnHeader';
-import {
-  ChangeServiceBlockStatusRequest,
-  FetchServicesResponse,
-} from '@/shared/interface/api/service';
 import {
   DropdownMenu,
-  DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuSeparator,
 } from '../../ui/dropdown-menu';
+import { Button } from '../../ui/button';
+import { ColumnDef } from '@tanstack/react-table';
+import StatusBadge from '@/components/common/StatusBadge';
+import { DataTableColumnHeader } from '../DataTableColumnHeader';
+import { Ban, CircleCheck, Edit, MoreHorizontal } from 'lucide-react';
+import {
+  FetchServicesResponse,
+  AdminChangeServiceBlockStatusRequest,
+} from '@/shared/types/api/service';
 
 const AdminAppServicesTableColumns = (
-  handleAdminChangeServiceStatus: (data: ChangeServiceBlockStatusRequest) => void,
+  changeServiceBlockStatus: (data: AdminChangeServiceBlockStatusRequest) => void,
+  handleOpenServiceEditForm: (service: FetchServicesResponse) => void,
+  changeBlockStatusServiceId: string | null,
 ): ColumnDef<FetchServicesResponse>[] => [
   {
-    accessorKey: '_id',
-    header: 'id',
-    cell: ({ row }) => {
-      const id = row.original._id;
-      return <span>{id.toString().slice(-4)}</span>;
-    },
+    accessorKey: 'slNo',
+    header: 'Sl No',
+    cell: ({ row }) => (
+      <span className="font-mono text-xs text-slate-500 font-medium">
+        {String(row.index + 1).padStart(2, '0')}
+      </span>
+    ),
   },
   {
     accessorKey: 'serviceName',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
+    cell: ({ row }) => (
+      <span className="font-semibold text-slate-900 dark:text-slate-100">
+        {row.original.serviceName}
+      </span>
+    ),
   },
   {
     accessorKey: 'serviceCategory',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Category" />,
+    cell: ({ row }) => {
+      const category = row.original.serviceCategory;
+      return <StatusBadge type="normal" label={category} />;
+    },
   },
   {
     accessorKey: 'isBlocked',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
     cell: ({ row }) => {
       const isBlocked = row.original.isBlocked;
-      if (!isBlocked) {
-        return <span className="text-green-500 font-semibold">Active</span>;
-      } else {
-        return <span className="text-red-500 font-semibold">Blocked</span>;
+      const isThisRowUpdating = changeBlockStatusServiceId === row.original._id;
+
+      if (isThisRowUpdating) {
+        return <StatusBadge type="updating" />;
       }
+
+      return !isBlocked ? <StatusBadge type="active" /> : <StatusBadge type="blocked" />;
     },
   },
   {
@@ -57,7 +72,7 @@ const AdminAppServicesTableColumns = (
           <DropdownMenuTrigger asChild>
             <Button title="Open Menu" variant="ghost" className="h-8 w-8 p-0 cursor-pointer">
               <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
+              <MoreHorizontal className="size-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -65,15 +80,24 @@ const AdminAppServicesTableColumns = (
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() =>
-                handleAdminChangeServiceStatus({
-                  isBlocked: service.isBlocked,
+                changeServiceBlockStatus({
+                  isBlocked: !service.isBlocked,
                   serviceId: service._id,
                 })
               }
             >
+              {service.isBlocked ? (
+                <CircleCheck className="w-3.5 h-3.5" />
+              ) : (
+                <Ban className="w-3.5 h-3.5" />
+              )}
               {service.isBlocked ? 'Unblock' : 'Block'}
             </DropdownMenuItem>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
+
+            <DropdownMenuItem onClick={() => handleOpenServiceEditForm(service)}>
+              <Edit className="w-3.5 h-3.5" />
+              Edit
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

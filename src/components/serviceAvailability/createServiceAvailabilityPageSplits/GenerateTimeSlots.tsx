@@ -1,6 +1,6 @@
 import { Checkbox } from '../../ui/checkbox';
 import { Controller } from 'react-hook-form';
-import { GenerateTimeSlotsProps } from '@/shared/interface/componentInterface';
+import { GenerateTimeSlotsProps } from '@/shared/types/component';
 
 const GenerateTimeSlots = ({
   timeSlots,

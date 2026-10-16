@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
 import { X } from 'lucide-react';
+import { useEffect } from 'react';
+import { Button } from '@/components/ui/button';
 import { useDispatch, useSelector } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
-import { toggleLiveChatBubble } from '@/shared/redux/slices/appSlice';
+import { AppDispatch, RootState } from '@/app/store/appStore';
+import { toggleLiveChatBubble } from '@/app/store/slices/appSlice';
 import slotflowAiLogoTransparent from '@/assets/logos/slotflowAi/slotfloAiLogoTransparent.png';
 
 const LiveChatPopup = () => {
@@ -56,12 +57,9 @@ const LiveChatPopup = () => {
               </div>
             </div>
 
-            <button
-              onClick={() => dispatch(toggleLiveChatBubble())}
-              className="rounded-xl p-2 transition hover:bg-muted"
-            >
-              <X className="h-5 w-5" />
-            </button>
+            <Button size="icon" variant="ghost" onClick={() => dispatch(toggleLiveChatBubble())}>
+              <X className="size-5" />
+            </Button>
           </div>
           <div className="relative flex h-[calc(100%-150px)] min-h-0 flex-col overflow-hidden px-6 py-6">
             <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain pr-1 no-scrollbar">

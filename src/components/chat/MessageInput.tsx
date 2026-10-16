@@ -1,65 +1,128 @@
+import { Button } from '../ui/button';
 import { toast } from 'react-toastify';
-import { socket } from '@/lib/socketService';
-import React, { useRef, useState } from 'react';
+import { appConfig } from '@/config/env';
+import { chatSocket } from '@/lib/socketService';
 import { Image, Send, Trash } from 'lucide-react';
-import { sendMessage } from '@/shared/apis/message';
+import { sendMessage } from '@/services/apis/message';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
-import { MessageInputProps } from '@/shared/interface/componentInterface';
+import React, { useEffect, useRef, useState } from 'react';
+import { MessageInputProps } from '@/shared/types/component';
+import { AppDispatch, RootState } from '@/app/store/appStore';
+import { allowedFileTypes, maxFileSize } from '@/shared/utils/constants/appConstants';
 
 const MessageInput = ({ setIsTyping, isTyping, setMessageSenderId }: MessageInputProps) => {
   const dispatch = useDispatch<AppDispatch>();
   const [text, setText] = useState<string>('');
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [isSending, setIsSending] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const { selectedUser } = useSelector((store: RootState) => store.chat);
   const { authUser } = useSelector((store: RootState) => store.auth);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const { selectedUser } = useSelector((store: RootState) => store.chat);
 
   const [file, setFile] = useState<File | null>(null);
   const typingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  useEffect(() => {
+    if (typingTimeoutRef.current) {
+      clearTimeout(typingTimeoutRef.current);
+      typingTimeoutRef.current = null;
+    }
 
-    if (!file.type.startsWith('image/')) {
-      toast.error('Please select an image file');
+    setIsTyping(false);
+
+    return () => {
+      if (typingTimeoutRef.current) {
+        clearTimeout(typingTimeoutRef.current);
+        typingTimeoutRef.current = null;
+      }
+    };
+  }, [selectedUser?._id, setIsTyping]);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.currentTarget;
+    const selectedFile = input.files?.[0];
+
+    input.value = '';
+
+    if (!selectedFile) return;
+
+    setFile(null);
+    setImagePreview(null);
+
+    if (!allowedFileTypes.includes(selectedFile.type as (typeof allowedFileTypes)[number])) {
+      toast.error('Only PNG, JPEG, and WebP images are allowed.');
       return;
     }
 
-    setFile(file);
+    if (selectedFile.size === 0) {
+      toast.error('The selected image is empty.');
+      return;
+    }
+
+    if (selectedFile.size > maxFileSize) {
+      toast.error('Chat images must not exceed 5 MiB.');
+      return;
+    }
 
     const reader = new FileReader();
-    reader.onloadend = () => {
-      setImagePreview(reader.result as string);
+
+    reader.onload = () => {
+      if (typeof reader.result === 'string') {
+        setFile(selectedFile);
+        setImagePreview(reader.result);
+      }
     };
-    reader.readAsDataURL(file);
+
+    reader.onerror = () => {
+      toast.error('Unable to read the selected image.');
+    };
+
+    reader.readAsDataURL(selectedFile);
   };
 
   const removeImage = (): void => {
     setImagePreview(null);
     setFile(null);
-    if (fileInputRef.current) fileInputRef.current.value = '';
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   };
 
   const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!text.trim() && !imagePreview) return;
+
+    if (isSending || (!text.trim() && !file)) return;
+    if (!selectedUser) return;
 
     const formData = new FormData();
+
     if (file) {
       formData.append('messageImage', file);
     }
+
     formData.append('text', text.trim());
 
+    setIsSending(true);
+
     try {
-      if (!selectedUser) return;
-      dispatch(sendMessage({ selectedUserId: selectedUser?._id, messageData: formData }));
+      await dispatch(
+        sendMessage({
+          selectedUserId: selectedUser._id,
+          messageData: formData,
+        }),
+      ).unwrap();
+
       setText('');
-      setImagePreview(null);
-      setFile(null);
-    } catch {
-      toast.error('failed to send message.');
+      removeImage();
+    } catch (error) {
+      if (appConfig.isDevelopment) {
+        console.error('Failed to send message:', error);
+      }
+
+      toast.error('Failed to send message. Please try again.');
+    } finally {
+      setIsSending(false);
     }
   };
 
@@ -69,9 +132,9 @@ const MessageInput = ({ setIsTyping, isTyping, setMessageSenderId }: MessageInpu
 
     if (!isTyping) {
       setIsTyping(true);
-      if (socket) {
+      if (chatSocket) {
         setMessageSenderId(authUser.uid ?? null);
-        socket.emit('typing', {
+        chatSocket.emit('typing', {
           fromUserId: authUser.uid,
           toUserId: selectedUser?._id,
         });
@@ -82,9 +145,9 @@ const MessageInput = ({ setIsTyping, isTyping, setMessageSenderId }: MessageInpu
 
     typingTimeoutRef.current = setTimeout(() => {
       setIsTyping(false);
-      if (socket) {
+      if (chatSocket) {
         setMessageSenderId(authUser.uid ?? null);
-        socket.emit('stopTyping', {
+        chatSocket.emit('stopTyping', {
           fromUserId: authUser.uid,
           toUserId: selectedUser._id,
         });
@@ -102,13 +165,13 @@ const MessageInput = ({ setIsTyping, isTyping, setMessageSenderId }: MessageInpu
               alt="Preview"
               className="w-20 h-20 object-cover rounded-lg border border-zinc-700"
             />
-            <button
+            <Button
               onClick={removeImage}
-              className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-base-300 flex items-center justify-center cursor-pointer hover:text-red-500"
+              className="absolute -top-1.5 -right-1.5 size-5 rounded-full bg-base-300 flex items-center justify-center cursor-pointer hover:text-red-500"
               type="button"
             >
               <Trash className="size-3" />
-            </button>
+            </Button>
           </div>
         </div>
       )}
@@ -117,14 +180,15 @@ const MessageInput = ({ setIsTyping, isTyping, setMessageSenderId }: MessageInpu
         <div className="flex-1 flex gap-2">
           <input
             type="text"
-            className="w-full h-10 border rounded-lg"
-            placeholder=" Message"
+            className="w-full h-10 border border-input bg-background px-3 text-sm rounded-lg outline-none focus:border-primary transition-colors placeholder:text-muted-foreground"
+            placeholder="Message"
             value={text}
             onChange={handleTyping}
+            disabled={isSending}
           />
           <input
             type="file"
-            accept="image/*"
+            accept="image/png,image/jpeg,image/webp"
             className="hidden"
             ref={fileInputRef}
             onChange={handleImageChange}
@@ -133,15 +197,15 @@ const MessageInput = ({ setIsTyping, isTyping, setMessageSenderId }: MessageInpu
         <button
           type="button"
           className={`flex btn btn-circle btn-sm cursor-pointer
-                     ${imagePreview ? 'text-emerald-500' : 'text-[var(--textTwo)]'}`}
+                     ${imagePreview ? 'text-emerald-500' : 'text-neutral-600'}`}
           onClick={() => fileInputRef.current?.click()}
         >
           <Image size={20} />
         </button>
         <button
           type="submit"
-          className="btn btn-sm text-[var(--textTwo)] cursor-pointer"
-          disabled={!text.trim() && !imagePreview}
+          className="btn btn-sm text-neutral-600 cursor-pointer"
+          disabled={isSending || (!text.trim() && !file)}
         >
           <Send size={22} />
         </button>

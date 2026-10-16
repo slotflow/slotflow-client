@@ -3,14 +3,16 @@ import { Outlet } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Header from '@/components/navs/Header';
 import Footer from '@/components/navs/FooterBar';
-import { AppDispatch } from '@/shared/redux/appStore';
+import { AppDispatch } from '@/app/store/appStore';
 import ReadingProgress from '@/components/scroll/ReadingProgress';
-import { toggleLiveChatBubble } from '@/shared/redux/slices/appSlice';
+import { toggleLiveChatBubble } from '@/app/store/slices/appSlice';
 import LiveChatPopup from '@/components/landing/liveChat/LiveChatPopup';
 import LiveChatBubble from '@/components/landing/liveChat/LiveChatBubble';
+import { setupAuthInterceptor } from '@/services/apis/setupAuthInterceptor';
 
 const LandingLayout = () => {
   const dispatch = useDispatch<AppDispatch>();
+  setupAuthInterceptor();
 
   return (
     <ReactLenis root>

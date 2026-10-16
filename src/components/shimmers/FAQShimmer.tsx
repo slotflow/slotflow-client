@@ -1,4 +1,4 @@
-import { FAQSectionProps } from '@/shared/interface/componentInterface';
+import { FAQSectionProps } from '@/shared/types/component';
 
 const FAQShimmer = ({ rows }: FAQSectionProps) => {
   return (

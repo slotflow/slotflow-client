@@ -1,6 +1,6 @@
 import { Controller } from 'react-hook-form';
 import { TimePicker } from '@/components/ui/TimePicker';
-import { TimeFieldProps } from '@/shared/interface/componentInterface';
+import { TimeFieldProps } from '@/shared/types/component';
 
 const TimeField = ({ label, name, control }: TimeFieldProps) => {
   return (

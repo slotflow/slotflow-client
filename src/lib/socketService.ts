@@ -1,25 +1,25 @@
 import { io, Socket } from 'socket.io-client';
 
-export let socket: Socket | null = null;
+export let chatSocket: Socket | null = null;
 export let videoSocket: Socket | null = null;
 export let eventSocket: Socket | null = null;
 
 export const getChatSocket = () => {
-  if (!socket) {
-    socket = io(`http://localhost:3000/chat`, {
+  if (!chatSocket) {
+    chatSocket = io(`http://localhost:3000/chat`, {
       path: '/socket.io',
       withCredentials: true,
-      autoConnect: true,
+      autoConnect: false,
       transports: ['websocket'],
     });
   }
-  return socket;
+  return chatSocket;
 };
 
 export const distroyChatSocket = () => {
-  if (socket?.connected) {
-    socket.disconnect();
-    socket = null;
+  if (chatSocket) {
+    chatSocket.disconnect();
+    chatSocket = null;
   }
 };
 

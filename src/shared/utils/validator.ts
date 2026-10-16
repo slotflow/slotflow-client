@@ -1,6 +1,6 @@
 import {
-  validateEmail,
   validateOtp,
+  validateEmail,
   validatePassword,
   validateUsername,
 } from '@codebymk/validator';

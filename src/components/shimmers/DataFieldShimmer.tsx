@@ -1,4 +1,4 @@
-import { ProfileDetailsShimmerProps } from '@/shared/interface/shimmerInterface';
+import { ProfileDetailsShimmerProps } from '@/shared/types/shimmer';
 
 const DataFieldShimmer = ({ row }: ProfileDetailsShimmerProps) => {
   return (

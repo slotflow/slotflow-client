@@ -1,126 +1,98 @@
-import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
-import { toast } from 'react-toastify';
-import { CheckIcon } from 'lucide-react';
-import { useDispatch } from 'react-redux';
-import { useForm } from 'react-hook-form';
-import SelectField from '../form/SelectField';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { planDurations } from '@/shared/utils/constants';
-import { formatNumberToPrice } from '@/shared/helper/formatter';
-import { PlanName, SubscriptionValidity } from '@/shared/interface/enums';
-import { ProviderPlanCardProps } from '@/shared/interface/componentInterface';
-import { PlanDurationFormType, planDurationZodSchema } from '@/shared/zod/providerZod';
+import StatusBadge from '../common/StatusBadge';
+import { RootState } from '@/app/store/appStore';
+import { CheckIcon, Flame } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ProviderPlanCardProps } from '@/shared/types/component';
+import { formatNumberToPrice } from '@/shared/utils/helper/formatNumberToPrice';
+import { BillingCycle, PaymentProcessType, PlanName } from '@/shared/types/enums';
+import { setPaymentSelectionOpen, setSubscriptionData } from '@/app/store/slices/paymentSlice';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card';
-import {
-  setPaymentSelectionOpen,
-  setSubscriptionPaymentData,
-} from '@/shared/redux/slices/paymentSlice';
 
 const PlanCard = ({
   plan,
-  isTrial,
   dummy,
   popular,
-  billingCycle = 'monthly',
+  billingCycle = BillingCycle.MONTHLY,
 }: ProviderPlanCardProps) => {
   const dispatch = useDispatch();
+  const hasUsedTrial = useSelector((state: RootState) => state.auth.authUser?.hasUsedTrial);
 
-  // yearly pricing is controlled with 11 months and 1 month is free
-  const yearlyPrice = plan.price > 0 ? plan.price * 11 : plan.price;
+  const isPopular = popular || plan.planName === PlanName.PROFESSIONAL;
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<PlanDurationFormType>({
-    resolver: zodResolver(planDurationZodSchema),
-    defaultValues: {
-      planDuration: SubscriptionValidity.SEVEN_DAYS,
-    },
-  });
-
-  const handleGoToPayment = handleSubmit((data) => {
-    if (
-      plan.planName !== PlanName.TRIAL &&
-      (!data.planDuration || data.planDuration === SubscriptionValidity.SEVEN_DAYS)
-    ) {
-      toast.warning('Please select a plan duration');
-      return;
-    }
-
+  const handleGoToPayment = () => {
     dispatch(
-      setSubscriptionPaymentData({
-        isTrialPlan: Boolean(isTrial),
-        planDuration: data.planDuration,
+      setSubscriptionData({
         planId: plan._id,
+        billingCycle: billingCycle,
       }),
     );
-    dispatch(setPaymentSelectionOpen(true));
-  });
+    dispatch(setPaymentSelectionOpen(PaymentProcessType.SUBSCRIPTION));
+  };
 
   return (
     <Card
       key={plan._id}
-      className={`p-4 rounded-2xl shadow-sm flex flex-col hover:border-[var(--mainColor)] ${
-        popular ? 'border-primary' : ''
+      className={`p-4 rounded-2xl h-full shadow-sm flex flex-col relative hover:border-[var(--mainColor)] ${
+        isPopular ? 'border-1 border-[var(--mainColor)]' : ''
       }`}
     >
-      <CardHeader>
-        {popular && <Badge className="uppercase w-max self-center mb-3">Most popular</Badge>}
-        <CardTitle className="mb-3 text-lg lg:text-xl rounded-4xl p-1 text-center">
-          {plan.planName}
-        </CardTitle>
+      <CardHeader className="pb-0 flex flex-col items-center">
+        <div className="h-6 mb-2 flex items-center justify-center">
+          {isPopular && (
+            <StatusBadge
+              type="verified"
+              icon={<Flame className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />}
+              label="Popular"
+            />
+          )}
+        </div>
+
+        <CardTitle className="mb-3 text-lg lg:text-xl text-center">{plan.planName}</CardTitle>
+
         <span className="font-bold text-5xl text-center">
-          {billingCycle === 'monthly'
-            ? plan.price === 0
+          {billingCycle === BillingCycle.MONTHLY
+            ? plan.monthlyPrice === 0
               ? 'FREE'
-              : formatNumberToPrice(plan.price, 0)
-            : yearlyPrice === 0
+              : formatNumberToPrice(plan.monthlyPrice, 0)
+            : plan.yearlyPrice === 0
               ? 'FREE'
-              : formatNumberToPrice(yearlyPrice, 0)}
+              : formatNumberToPrice(plan.yearlyPrice, 0)}
         </span>
       </CardHeader>
 
-      <CardDescription className="text-center">{plan.description}</CardDescription>
-
-      <CardContent className="flex-1">
-        <ul className="mt-7 space-y-2.5 text-sm">
+      <CardContent className="flex-1 pt-4">
+        <ul className="space-y-2.5 text-sm">
           {plan.features.map((feature, i) => (
             <li key={i} className="flex space-x-2">
-              <CheckIcon className="flex-shrink-0 mt-0.5 h-4 w-4" />
+              <CheckIcon className="flex-shrink-0 mt-0.5 size-4 text-primary" />
               <span className="text-muted-foreground">{feature}</span>
             </li>
           ))}
         </ul>
       </CardContent>
 
-      {!isTrial && (
-        <SelectField<PlanDurationFormType, number>
-          id="planDuration"
-          label="Select Plan Duration"
-          options={planDurations}
-          register={register}
-          error={errors.planDuration}
-        />
-      )}
+      <CardDescription className="text-center px-6 min-h-[3rem] flex items-center justify-center">
+        {plan.description}
+      </CardDescription>
 
       {!dummy ? (
-        <div className="mt-auto">
+        <div className="mt-auto pt-4">
           <Button
+            variant="secondary"
             title="Choose Plan"
             className="w-full cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
             onClick={handleGoToPayment}
           >
-            Choose Plan
+            {plan.planName === PlanName.PROFESSIONAL && !hasUsedTrial ? 'Start Trial' : 'Upgrade'}
           </Button>
         </div>
       ) : (
-        <CardFooter>
+        <CardFooter className="pt-4">
           <Button
             title="Sign up"
             className="w-full cursor-pointer hover:bg-[var(--mainColor)] hover:text-white transition-colors border-[var(--mainColor)]"
-            variant="default"
+            variant="secondary"
           >
             Sign up
           </Button>

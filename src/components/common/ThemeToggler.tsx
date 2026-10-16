@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
 import { Moon, Sun } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleTheme } from '@/shared/redux/slices/appSlice';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import { toggleTheme } from '@/app/store/slices/appSlice';
+import { AppDispatch, RootState } from '@/app/store/appStore';
+import { Button } from '../ui/button';
 
 const ThemeToggler = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -14,10 +15,12 @@ const ThemeToggler = () => {
   };
 
   return (
-    <button
+    <Button
+      variant="ghost"
       onClick={changeTheme}
       aria-label="Toggle theme"
-      className="ml-3 rounded-full p-2 transition-colors cursor-pointer"
+      className="rounded-full"
+      size="icon"
     >
       <motion.div
         key={themeMode ? 'moon' : 'sun'}
@@ -30,7 +33,7 @@ const ThemeToggler = () => {
       >
         {themeMode ? <Moon size={20} /> : <Sun size={20} />}
       </motion.div>
-    </button>
+    </Button>
   );
 };
 

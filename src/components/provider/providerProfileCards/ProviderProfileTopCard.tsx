@@ -1,16 +1,13 @@
+import { Role } from '@/shared/types/enums';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
-import { Role } from '@/shared/interface/enums';
-import { Share2, ShieldCheck } from 'lucide-react';
-import { useDispatch, useSelector } from 'react-redux';
+import { Check, Share2, ShieldCheck } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-import { getInitials } from '@/shared/helper/getInitials';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
-import { setIsShowPreview } from '@/shared/redux/slices/providerSlice';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { ProviderProfileTopCardProps } from '@/shared/interface/componentInterface';
+import { ProviderProfileTopCardProps } from '@/shared/types/component';
+import { useCopy } from '@/hooks/useCopy';
+import ProfileImage from '@/components/profile/ProfileImage';
 
 const ProviderProfileTopCard = ({
   isLoading,
@@ -20,30 +17,26 @@ const ProviderProfileTopCard = ({
   categoryName,
   trusted,
   role,
+  isShowPreview = false,
+  handleIsShowPreview,
 }: ProviderProfileTopCardProps) => {
-  const dispatch = useDispatch<AppDispatch>();
-  const isShowPreview = useSelector((state: RootState) => state.provider.isShowPreview);
+  const { copied, copy } = useCopy(2000);
 
   return (
-    <Card className="overflow-hidden border shadow-sm rounded-xl">
+    <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
       <div className="h-32 bg-muted/50 relative" />
       <CardContent className="-mt-16 px-6 pb-6 relative z-10">
         <div className="flex flex-col md:flex-row items-center md:items-end justify-between gap-6 text-center md:text-left">
           <div className="flex flex-col md:flex-row items-center md:items-end gap-5">
-            <Avatar className="w-28 h-28 border-4 border-background shadow-md">
-              {isLoading ? (
-                <AvatarFallback className="shimmer"></AvatarFallback>
-              ) : isError ? (
-                <AvatarImage src={image || ''} />
-              ) : (
-                <>
-                  <AvatarImage src={image || ''} />
-                  <AvatarFallback className="bg-muted text-primary text-2xl font-bold">
-                    {getInitials(name || '')}
-                  </AvatarFallback>
-                </>
-              )}
-            </Avatar>
+            <ProfileImage
+              name={name || 'Provider'}
+              profileImage={image}
+              size="size-28"
+              textSize="text-2xl"
+              rounded="full"
+              isLoading={isLoading}
+              className="border-4 border-background shadow-md"
+            />
             <div className="space-y-2 pb-1 flex flex-col items-center md:items-start">
               <div className="flex flex-col sm:flex-row items-center gap-2">
                 <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground">
@@ -77,17 +70,42 @@ const ProviderProfileTopCard = ({
             </div>
           </div>
           <div className="flex flex-col items-end">
-            <Button variant="outline" size="sm" className="h-9 gap-1.5">
-              <Share2 className="w-4 h-4" />
-              Share Profile
+            <Button
+              variant="outline"
+              size="sm"
+              className={`cursor-pointer h-9 gap-1.5 transition-all duration-200 ${
+                copied
+                  ? 'bg-emerald-50 border-emerald-500 text-emerald-700 dark:bg-emerald-950/40 dark:border-emerald-500/60 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-950/60'
+                  : ''
+              }`}
+              onClick={() =>
+                copy({
+                  title: 'Service Provider Profile',
+                  text: 'Check out this service provider profile!',
+                  url: window.location.href,
+                })
+              }
+            >
+              {copied ? (
+                <>
+                  <Check className="size-4 text-emerald-600 dark:text-emerald-400" />
+                  <span>Link copied</span>
+                </>
+              ) : (
+                <>
+                  <Share2 className="size-4" />
+                  <span>Share Profile</span>
+                </>
+              )}
             </Button>
-            {role === Role.PROVIDER && (
+            {role === Role.PROVIDER && handleIsShowPreview && (
               <div className="flex items-center space-x-2 mt-2">
                 <Label htmlFor="airplane-mode">See how your profile looks to customers</Label>
                 <Switch
                   id="preview-mode"
                   checked={isShowPreview}
-                  onCheckedChange={() => dispatch(setIsShowPreview())}
+                  className="cursor-pointer"
+                  onCheckedChange={() => handleIsShowPreview()}
                 />
               </div>
             )}

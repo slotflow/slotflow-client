@@ -1,23 +1,24 @@
 import { memo } from 'react';
-import CommonTable from '../table/CommonTable';
-import { fetchSubscriptions } from '@/shared/apis/subscription';
-import { useRoleBasedNavigation } from '@/hooks/useRoleBasedNavigation';
-import { AdminFetchProviderSubscriptionsProps } from '@/shared/interface/componentInterface';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
+import PaginatedDataTable from '../table/PaginatedDataTable';
+import { fetchSubscriptions } from '@/services/apis/subscription';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
+import { AdminFetchProviderSubscriptionsProps } from '@/shared/types/component';
 import ProvidersSubscriptionsTableColumns from '../table/tableColumns/ProviderSubscriptionsTableColumn';
 import {
-  FetchProviderSubscriptionsResponse,
   FetchSubscriptionsQueryParams,
-} from '@/shared/interface/api/subscription';
+  FetchProviderSubscriptionsResponse,
+} from '@/shared/types/api/subscription';
 
 const AdminProviderSubscriptions = memo(({ providerId }: AdminFetchProviderSubscriptionsProps) => {
-  const { handleAdminGetProviderDetailPage } = useRoleBasedNavigation();
+  const { toSubscriptionDetailsPage } = useAppNavigation();
 
-  const column = ProvidersSubscriptionsTableColumns(handleAdminGetProviderDetailPage);
+  const column = ProvidersSubscriptionsTableColumns(toSubscriptionDetailsPage);
 
   return (
-    <CommonTable<FetchProviderSubscriptionsResponse, FetchSubscriptionsQueryParams>
+    <PaginatedDataTable<FetchProviderSubscriptionsResponse, FetchSubscriptionsQueryParams>
       fetchApiFunction={fetchSubscriptions}
-      queryKey="providerSubscription"
+      queryKey={[queryKeys.SUBSCRIPTION]}
       column={column}
       columnsCount={7}
       queryParams={{ providerId }}

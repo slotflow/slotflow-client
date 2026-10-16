@@ -2,9 +2,8 @@ import { Edit } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { Button } from '@/components/ui/button';
-import { PlanName } from '@/shared/interface/enums';
-import { RootState } from '@/shared/redux/appStore';
-import { defaultButtonClassName } from '@/shared/utils/constants';
+import { PlanName } from '@/shared/types/enums';
+import { RootState } from '@/app/store/appStore';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const CustomizationCard = () => {
@@ -23,10 +22,10 @@ const CustomizationCard = () => {
   };
 
   return (
-    <Card className="border shadow-sm rounded-xl">
+    <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
       <CardHeader>
         <CardTitle className="text-lg font-semibold flex items-center gap-2">
-          <Edit className="w-5 h-5 text-primary" />
+          <Edit className="size-5 text-primary" />
           {isPremium ? 'Customize Your Profile' : 'Unlock Profile Customization'}
         </CardTitle>
 
@@ -40,16 +39,18 @@ const CustomizationCard = () => {
       <CardContent>
         {isPremium ? (
           <Button
-            variant="default"
-            className={defaultButtonClassName + ' w-full'}
+            title="Customize profile"
+            variant="secondary"
+            className="w-full"
             onClick={handleProfileCustomization}
           >
             Customize Profile
           </Button>
         ) : (
           <Button
-            variant="default"
-            className={defaultButtonClassName + ' w-full'}
+            title="Upgrade Plan"
+            variant="secondary"
+            className="w-full"
             onClick={handleUpgradePlan}
           >
             Upgrade Plan

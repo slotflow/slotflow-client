@@ -2,7 +2,7 @@ import { Card } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { Link, useNavigate } from 'react-router-dom';
-import { BlogEditorsPicksProps } from '@/shared/interface/componentInterface';
+import { BlogEditorsPicksProps } from '@/shared/types/component';
 
 const BlogEditorsPicks = ({ handPickedArticles }: BlogEditorsPicksProps) => {
   const navigate = useNavigate();

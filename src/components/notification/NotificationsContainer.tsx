@@ -4,11 +4,12 @@ import NotificationCard from './NotificationCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import DataFetchingError from '../error/DataFetchingError';
-import { fetchNotifications } from '@/shared/apis/notification';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
+import { AppDispatch, RootState } from '@/app/store/appStore';
+import { fetchNotifications } from '@/services/apis/notification';
 import NotificationCardShimmer from '../shimmers/NotificationCardShimmer';
-import { toggleNotificationContainer } from '@/shared/redux/slices/appSlice';
+import { toggleNotificationContainer } from '@/app/store/slices/appSlice';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { queryKeys } from '@/shared/utils/constants/appConstants';
 
 const NotificationsContainer = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -23,7 +24,7 @@ const NotificationsContainer = () => {
     hasNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: ['notifications'],
+    queryKey: [queryKeys.NOTIFICATIONS],
     queryFn: ({ pageParam = 1 }) => fetchNotifications({ page: pageParam, limit: 10 }),
     getNextPageParam: (lastPage) => {
       if (
@@ -57,7 +58,7 @@ const NotificationsContainer = () => {
       <SheetContent className="w-[320px] sm:w-[400px] bg-[var(--menuBg)] border-l flex flex-col p-6 shadow-2xl">
         <SheetHeader className="mb-4">
           <SheetTitle className="flex items-center gap-2 text-xl font-bold">
-            <Bell className="w-5 h-5 text-[var(--mainColor)]" />
+            <Bell className="size-5 text-[var(--mainColor)]" />
             Notifications
           </SheetTitle>
         </SheetHeader>

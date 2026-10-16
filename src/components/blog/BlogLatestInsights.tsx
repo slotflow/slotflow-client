@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { formateDate } from '@/shared/helper/formatter';
-import { BlogLatestInsightsProps } from '@/shared/interface/componentInterface';
+import { formatDate } from '@/shared/utils/helper/formatDate';
+import { BlogLatestInsightsProps } from '@/shared/types/component';
 
 const BlogLatestInsights = ({ articles }: BlogLatestInsightsProps) => {
   const [showFull, setShowFull] = useState<boolean>(false);
@@ -69,7 +69,7 @@ const BlogLatestInsights = ({ articles }: BlogLatestInsightsProps) => {
                       <h4 className="text-sm font-semibold">{article.author?.author}</h4>
 
                       <p className="text-xs text-muted-foreground">
-                        {formateDate(new Date(article.createdAt))}
+                        {formatDate(article.createdAt)}
                       </p>
                     </div>
                   </div>

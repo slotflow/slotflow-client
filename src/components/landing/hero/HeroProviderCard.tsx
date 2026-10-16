@@ -1,5 +1,5 @@
 import { Clock3, MapPin, Star } from 'lucide-react';
-import { ProviderCardProps } from '@/shared/interface/componentInterface';
+import { ProviderCardProps } from '@/shared/types/component';
 
 const HeroProviderCard = ({ name, category, rating, location, time }: ProviderCardProps) => {
   return (
@@ -52,7 +52,7 @@ const HeroProviderCard = ({ name, category, rating, location, time }: ProviderCa
         </div>
 
         <div className="flex items-start gap-1">
-          <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+          <Star className="size-4 fill-yellow-400 text-yellow-400" />
 
           <span className="text-sm font-semibold">{rating}</span>
         </div>

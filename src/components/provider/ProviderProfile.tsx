@@ -1,14 +1,12 @@
 import { Star } from 'lucide-react';
-import { useSelector } from 'react-redux';
-import { Role } from '@/shared/interface/enums';
-import { RootState } from '@/shared/redux/appStore';
+import { Role } from '@/shared/types/enums';
 import ServiceCard from './providerProfileCards/ServiceCard';
+import { ProviderProfileProps } from '@/shared/types/component';
 import ExperienceCard from './providerProfileCards/ExperienceCard';
 import AttachmentCard from './providerProfileCards/AttachmentCard';
 import RequirementsCard from './providerProfileCards/RequirementsCard';
 import CustomizationCard from './providerProfileCards/CustomizationCard';
 import BookAppointmentCard from './providerProfileCards/BookAppointmentCard';
-import { ProviderProfileProps } from '@/shared/interface/componentInterface';
 import ProviderProfileTopCardProps from './providerProfileCards/ProviderProfileTopCard';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 
@@ -22,13 +20,13 @@ const ProviderProfile = ({
   proofs,
   service,
   profile,
+  isShowPreview,
+  handleIsShowPreview,
 }: ProviderProfileProps) => {
-  const isShowPreview = useSelector((state: RootState) => state.provider.isShowPreview);
-
   return (
-    <div className="w-full p-4">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 space-y-6">
+    <div className="w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
+        <div className="lg:col-span-2 space-y-2">
           <ProviderProfileTopCardProps
             isLoading={profile.isLoading ?? false}
             isError={profile.isError ?? false}
@@ -37,6 +35,8 @@ const ProviderProfile = ({
             categoryName={service.data?.serviceId.serviceName || ''}
             trusted={profile.data?.trustedBySlotflow || false}
             role={role}
+            isShowPreview={isShowPreview}
+            handleIsShowPreview={handleIsShowPreview}
           />
 
           <ServiceCard
@@ -65,10 +65,10 @@ const ProviderProfile = ({
 
           {!isShowPreview && proofs}
 
-          <Card className="border shadow-sm rounded-xl">
+          <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
             <CardHeader className="border-b pb-4">
               <CardTitle className="text-lg font-semibold flex items-center gap-2">
-                <Star className="w-5 h-5 text-primary" />
+                <Star className="size-5 text-primary" />
                 Reviews
               </CardTitle>
               <CardDescription>What clients says about Franklin Shawn</CardDescription>
@@ -79,7 +79,7 @@ const ProviderProfile = ({
           </Card>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-2">
           <BookAppointmentCard
             isLoading={service.isLoading}
             isError={service.isError}

@@ -20,7 +20,7 @@ const LiveChatBubble = ({ onClick }: LiveChatBubbleProps) => {
           whileHover={{ opacity: 1, x: 0 }}
           className="absolute right-20 top-1/2 hidden -translate-y-1/2 rounded-full border bg-background/80 px-4 py-2 text-sm font-medium shadow-xl backdrop-blur-xl lg:flex items-center"
         >
-          <img src={slotflowAiLogo} alt="Slotflow AI Logo" className="mr-2 h-4 w-4 shrink-0" />
+          <img src={slotflowAiLogo} alt="Slotflow AI Logo" className="mr-2 size-4 shrink-0" />
           <span className="whitespace-nowrap">Ask Slotflow AI</span>
         </motion.div>
         <div className="absolute inset-0 rounded-full bg-primary/20 blur-2xl transition-all duration-500 group-hover:scale-150" />

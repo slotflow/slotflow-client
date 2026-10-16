@@ -1,30 +1,21 @@
-import { useSelector } from 'react-redux';
 import NoData from '@/components/common/NoData';
+import { Hash, Layers, Info } from 'lucide-react';
 import DataField from '@/components/app/DataField';
-import { RootState } from '@/shared/redux/appStore';
-import { ServiceMode } from '@/shared/interface/enums';
+import { Card, CardContent } from '@/components/ui/card';
+import { ServiceCardProps } from '@/shared/types/component';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import DataFieldShimmer from '@/components/shimmers/DataFieldShimmer';
-import { ServiceCardProps } from '@/shared/interface/componentInterface';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Briefcase, Hash, Layers, MonitorSmartphone, UserPlus, Users } from 'lucide-react';
+import { formatString } from '@/shared/utils/helper/formatString';
 
 const ServiceCard = ({
   isLoading,
   isError,
   data,
   isUserLookingProvider = false,
+  isShowPreview = false,
 }: ServiceCardProps) => {
-  const isShowPreview = useSelector((state: RootState) => state.provider.isShowPreview);
-
   return (
-    <Card>
-      <CardHeader className="border-b pb-4 flex items-center justify-between">
-        <CardTitle className="text-lg font-semibold flex items-center gap-2">
-          <Briefcase className="w-5 h-5 text-primary" />
-          Service Details
-        </CardTitle>
-      </CardHeader>
+    <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
       <CardContent>
         {isLoading ? (
           <DataFieldShimmer row={5} />
@@ -41,28 +32,38 @@ const ServiceCard = ({
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4 mt-4">
-              <DataField
-                label="Group Service"
-                value={data?.isGroupService}
-                isBoolean
-                Icon={Users}
-              />
-              <DataField
-                label="Maximum Participants"
-                value={data?.maxParticipants}
-                Icon={UserPlus}
-              />
-              <DataField
-                label={data?.serviceMode === ServiceMode.BOTH ? 'Modes' : 'Mode'}
-                value={
-                  data?.serviceMode === ServiceMode.BOTH ? 'Online & Offline' : data?.serviceMode
-                }
-                Icon={MonitorSmartphone}
-              />
+              {data?.isGroupService && data?.maxParticipants && (
+                <div className="flex items-center gap-2.5 p-3 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/30 border border-indigo-200/70 dark:border-indigo-800/50 text-indigo-900 dark:text-indigo-200 text-xs font-medium">
+                  <Info className="size-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
+                  <span>
+                    This provider offers group sessions, accommodating a maximum of{' '}
+                    <strong className="font-semibold text-indigo-950 dark:text-indigo-100">
+                      {data.maxParticipants} participants
+                    </strong>
+                    .
+                  </span>
+                </div>
+              )}
               {!isShowPreview && !isUserLookingProvider && (
                 <>
-                  <DataField label="Type" value={data?.serviceType} Icon={Layers} />
-                  <DataField label="Tags" value={data?.tags} tags Icon={Hash} />
+                  <DataField
+                    label="Service Type"
+                    value={formatString(data?.serviceType)}
+                    Icon={Layers}
+                  />
+                  {data?.tags && data.tags.length > 0 && (
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      {data.tags.map((tag: string, index: number) => (
+                        <span
+                          key={index}
+                          className="inline-flex items-center gap-1 rounded-md border border-border bg-muted/50 px-2 py-0.5 text-xs font-medium text-muted-foreground"
+                        >
+                          <Hash className="size-3 text-muted-foreground" />
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </>
               )}
             </div>

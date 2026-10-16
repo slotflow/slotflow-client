@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { MoveUpwardProps } from '@/shared/interface/componentInterface';
+import { MoveUpwardProps } from '@/shared/types/component';
 
 const MoveUpward = ({ children }: MoveUpwardProps) => {
   return (

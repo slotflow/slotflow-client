@@ -4,8 +4,8 @@ import { Eye, EyeOff } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { type FieldValues } from 'react-hook-form';
 import FormLabelWithInfo from './FormLabelWithInfo';
+import { FormFieldProps } from '@/shared/types/component';
 import { CustomValidator } from '@/shared/utils/validator';
-import { FormFieldProps } from '@/shared/interface/componentInterface';
 
 const FormField = <T extends FieldValues>({
   id,
@@ -17,12 +17,10 @@ const FormField = <T extends FieldValues>({
   register,
   registerOptions,
   showTogglePassword = false,
-  onFileSelect,
   rows = 3,
   defaultValue,
   readOnly,
   required = false,
-  accept = 'image/png, image/jpeg',
   infoText,
   onChange,
 }: FormFieldProps<T>) => {
@@ -45,27 +43,12 @@ const FormField = <T extends FieldValues>({
         : 'password'
       : type;
 
+  const registration = register(id, registerOptions);
+
   return (
     <div className="space-y-2">
       <FormLabelWithInfo label={label} htmlFor={id} infoText={infoText} />
-      {type === 'file' ? (
-        <Input
-          id={id}
-          type="file"
-          accept={accept}
-          required={required}
-          {...register(id, registerOptions)}
-          onChange={(e) => {
-            const file: File | undefined = (e.target as HTMLInputElement).files?.[0];
-            if (file && onFileSelect) {
-              const imageUrl = URL.createObjectURL(file);
-              onFileSelect(imageUrl);
-            }
-            registerOptions?.onChange?.(e);
-          }}
-          className={`${error ? 'border-destructive' : ''}`}
-        />
-      ) : type === 'text' || type === 'password' || type === 'number' || type === 'email' ? (
+      {type === 'text' || type === 'password' || type === 'number' || type === 'email' ? (
         <div className="relative">
           <Input
             id={id}
@@ -120,12 +103,12 @@ const FormField = <T extends FieldValues>({
             rows={rows}
             readOnly={readOnly}
             placeholder={placeholder}
-            {...register(id, registerOptions)}
+            {...registration}
             className={`${error ? 'border-destructive' : ''}`}
           />
         )
       )}
-      {error && <p className="text-[var(--error-color)] text-xs px-2 line-clamp-4">{error}</p>}
+      {error && <p className="text-red-600 text-xs font-semibold px-2 line-clamp-4">{error}</p>}
     </div>
   );
 };

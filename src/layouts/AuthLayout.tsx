@@ -1,28 +1,32 @@
 import { Sparkle } from 'lucide-react';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Role } from '@/shared/interface/enums';
-import { RootState } from '@/shared/redux/appStore';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Role } from '@/shared/types/enums';
+import { RootState } from '@/app/store/appStore';
+import { Outlet, useLocation } from 'react-router-dom';
 import AuthContent from '@/components/auth/AuthContent';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 import SectionHeading from '@/components/common/SectionHeading';
 import FloatingCards from '@/components/auth/AuthRightSide/FloatingCards';
 
-const AuthLayout: React.FC = () => {
-  const navigate = useNavigate();
+const AuthLayout = () => {
+  const { goTo } = useAppNavigation();
+  const location = useLocation();
   const authUser = useSelector((state: RootState) => state.auth.authUser);
 
   useEffect(() => {
     if (authUser?.isLoggedIn) {
-      if (authUser.role === Role.ADMIN) {
-        navigate('/admin/dashboard');
-      } else if (authUser.role === Role.USER) {
-        navigate('/user/dashboard');
-      } else if (authUser.role === Role.PROVIDER) {
-        navigate('/provider/dashboard');
+      if (
+        (authUser.role === Role.ADMIN || authUser.role === Role.PROVIDER) &&
+        location.pathname !== '/dashboard'
+      ) {
+        goTo(redirectPaths.DASHBOARD);
+      } else if (authUser.role === Role.USER && location.pathname !== '/services') {
+        goTo(redirectPaths.SERVICES);
       }
     }
-  }, [authUser, navigate]);
+  }, [authUser, location.pathname, goTo]);
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-background">

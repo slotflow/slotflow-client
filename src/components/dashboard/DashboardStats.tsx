@@ -1,14 +1,15 @@
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { PlanName } from '@/shared/types/enums';
 import { useQuery } from '@tanstack/react-query';
-import { RootState } from '@/shared/redux/appStore';
-import { PlanName } from '@/shared/interface/enums';
+import { RootState } from '@/app/store/appStore';
+import { StatMetric } from '@/shared/types/common';
 import StatsCard from '@/components/dashboard/StatsCard';
 import DataFetchingError from '../error/DataFetchingError';
-import { DashboardStatsProps } from '@/shared/interface/componentInterface';
+import { DashboardStatsProps } from '@/shared/types/component';
 import DashboardStatsShimmer from '@/components/shimmers/DashboardStatsShimmer';
 
-const DashboardStats = <T extends Record<string, number>>({
+const DashboardStats = <T extends Record<string, StatMetric | undefined>>({
   queryFunction,
   queryKey,
   statsMap,
@@ -32,13 +33,9 @@ const DashboardStats = <T extends Record<string, number>>({
   } = useQuery({
     queryKey: [queryKey, dependencies],
     queryFn: queryFunction,
-    staleTime: 1 * 60 * 1000,
-    refetchOnWindowFocus: false,
   });
 
   const dashboardStatsData = dashboardStats?.data;
-
-  console.log('dashboardStats : ', dashboardStats);
 
   return (
     <div>
@@ -48,18 +45,23 @@ const DashboardStats = <T extends Record<string, number>>({
       ) : isNumericDataError && numericDataError ? (
         <DataFetchingError message={'Data fetching failed'} />
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-2">
           {statsMap.length > 0
-            ? statsMap.map(({ title, key, icon, price, plans }) => (
-                <StatsCard
-                  key={key as string}
-                  title={title}
-                  value={dashboardStatsData?.[key] ?? 0}
-                  icon={icon}
-                  price={price}
-                  isShow={role === 'PROVIDER' ? plans?.includes(subscriptionPlan) : true}
-                />
-              ))
+            ? statsMap.map(({ title, key, icon, price, plans }) => {
+                const metric = dashboardStatsData?.[key as keyof T];
+
+                return (
+                  <StatsCard
+                    key={key as string}
+                    title={title}
+                    value={metric?.value ?? 0}
+                    trend={metric?.trend ?? '0'}
+                    icon={icon}
+                    price={price}
+                    isShow={role === 'PROVIDER' ? plans?.includes(subscriptionPlan) : true}
+                  />
+                );
+              })
             : null}
         </div>
       )}

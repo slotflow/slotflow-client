@@ -1,11 +1,12 @@
 import { Card } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
-import { useNavigate } from 'react-router-dom';
-import { blogCTAItems, redirectPaths } from '@/shared/utils/constants';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
+import { blogCTAItems } from '@/shared/utils/constants/landingConstants';
 
 const BlogCTA = () => {
-  const navigate = useNavigate();
+  const { goTo } = useAppNavigation();
 
   return (
     <section id="cta" className="px-6 pb-24">
@@ -23,7 +24,7 @@ const BlogCTA = () => {
               calendars, and deliver a better customer experience.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
-              <Button size="lg" onClick={() => navigate(redirectPaths.REGISTER)}>
+              <Button size="lg" onClick={() => goTo(redirectPaths.REGISTER)}>
                 Start for Free
               </Button>
             </div>

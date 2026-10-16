@@ -1,0 +1,98 @@
+import z from 'zod';
+import { PlanName, ServiceCategory } from '@/shared/types/enums';
+import { descriptionRegex, appServiceNameRegex, verificationRejectionReasonRegex } from './regex';
+
+// Admin Create Plan Schema
+export const adminCreatePlanZodSchema = z.object({
+  planName: z.nativeEnum(PlanName),
+  description: z
+    .string()
+    .min(10, 'Description must be at least 10 characters')
+    .max(200, 'Description cannot exceed 200 characters')
+    .regex(descriptionRegex, 'Invalid description. Contains unsupported characters.'),
+  monthlyPrice: z
+    .number()
+    .min(0, 'Plan monthly price must be at least 0')
+    .max(100000, 'Plan mothly price must be at most 100000'),
+  yearlyPrice: z
+    .number()
+    .min(0, 'Plan yearly price must be at least 0')
+    .max(100000, 'Plan yearly price must be at most 100000'),
+  features: z
+    .array(
+      z
+        .string()
+        .trim()
+        .min(1, 'Feature must be at least 1 character')
+        .max(50, 'Feature cannot exceed 50 characters'),
+    )
+    .min(5, 'At least five feature is required')
+    .max(15, 'Maximum ten features allowed'),
+  maxBookingPerMonth: z
+    .number({
+      invalid_type_error: 'Maximum booking must be a number',
+    })
+    .min(0, 'Max booking cannot be negative')
+    .max(10000, 'Max booking cannot exceed 10000'),
+  adVisibility: z.boolean({
+    invalid_type_error: 'Ad visibility must be true or false',
+  }),
+  hasTrial: z.boolean().default(false),
+  trialDays: z
+    .number()
+    .min(0, 'Trial days cannot be negative')
+    .max(30, 'Trial days cannot exceed 30')
+    .default(0),
+});
+
+export type AdminCreatePlanFormType = z.infer<typeof adminCreatePlanZodSchema>;
+
+// Admin Create Service Schema
+export const adminCreateServiceZodSchema = z.object({
+  serviceNames: z
+    .array(
+      z
+        .string()
+        .trim()
+        .min(4, 'Service name must be at least 4 characters')
+        .max(50, 'Service name cannot exceed 50 characters')
+        .regex(appServiceNameRegex, 'Service name can only contain letters, numbers, and spaces'),
+    )
+    .min(1, 'At least one service name is required'),
+
+  serviceCategory: z.nativeEnum(ServiceCategory),
+});
+
+export type AdminCreateServiceFormType = z.infer<typeof adminCreateServiceZodSchema>;
+
+// Admin Edit Service Schema
+export const adminEditServiceZodSchema = z.object({
+  serviceName: z
+    .string()
+    .trim()
+    .min(4, 'Service name must be at least 4 characters')
+    .max(50, 'Service name cannot exceed 50 characters')
+    .regex(appServiceNameRegex, 'Service name can only contain letters, numbers, and spaces'),
+  serviceCategory: z.nativeEnum(ServiceCategory),
+  isBlocked: z.boolean(),
+});
+
+export type AdminEditServiceFormType = z.infer<typeof adminEditServiceZodSchema>;
+
+// Admin Create Service Schema
+export const adminRejectProviderZodSchema = z.object({
+  verificationRejectionReason: z
+    .string()
+    .min(5, 'Rejection reason must be at least 5 characters long')
+    .max(500, 'Rejection reason must not exceed 500 characters')
+    .regex(
+      verificationRejectionReasonRegex,
+      'Rejection reason may include letters, numbers, spaces, and common symbols',
+    ),
+  isAddressVerified: z.boolean(),
+  isServiceDetailsVerified: z.boolean(),
+  isAvailabilityVerified: z.boolean(),
+  isProofsVerified: z.boolean(),
+});
+
+export type AdminRejectProviderFormType = z.infer<typeof adminRejectProviderZodSchema>;

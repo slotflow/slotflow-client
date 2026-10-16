@@ -1,11 +1,13 @@
+import { useMemo } from 'react';
 import MainLayout from './MainLayout';
 import { useSelector } from 'react-redux';
-import { Role } from '@/shared/interface/enums';
-import { RootState } from '@/shared/redux/appStore';
-import { userRoutes } from '@/shared/utils/constants';
+import { Role } from '@/shared/types/enums';
+import { RootState } from '@/app/store/appStore';
 import ReviewForm from '@/components/user/ReviewForm';
 import { Outlet, useLocation } from 'react-router-dom';
+import { filterShowsRoutes } from '@/shared/utils/constants/routeConstants';
 import PaymentSelection from '@/components/payment/PaymentSelection';
+import { getRoutesByRole } from '@/shared/utils/helper/getRouteByRole';
 import FilterRightSideBar from '@/components/filters/FilterRightSideBar';
 import NotificationsContainer from '@/components/notification/NotificationsContainer';
 
@@ -15,18 +17,18 @@ const UserLayout = () => {
   const isReviewCreateFormOpen = useSelector(
     (store: RootState) => store.user.isReviewCreateFormOpen,
   );
-  const isPaymentSelectionOpen = useSelector((store: RootState) => store.payment.isOpen);
+  const isPaymentModalOpen = useSelector((store: RootState) => store.payment.isPaymentModalOpen);
+  const userRoutes = getRoutesByRole(Role.USER);
+
+  const canShowFilter = useMemo(() => {
+    return filterShowsRoutes.some((route) => location.pathname.startsWith(route));
+  }, [location.pathname]);
 
   return (
-    <MainLayout
-      routes={userRoutes}
-      profileImage={user?.profileImage}
-      username={user?.username}
-      rightSidebar={location.pathname === '/user/dashboard' ? <FilterRightSideBar /> : null}
-    >
+    <MainLayout routes={userRoutes} rightSidebar={canShowFilter && <FilterRightSideBar />}>
       <Outlet />
       {isReviewCreateFormOpen && <ReviewForm />}
-      {isPaymentSelectionOpen && user?.role === Role.USER && <PaymentSelection />}
+      {isPaymentModalOpen && user?.role === Role.USER && <PaymentSelection />}
       <NotificationsContainer />
     </MainLayout>
   );

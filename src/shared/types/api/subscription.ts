@@ -1,0 +1,57 @@
+import { Plan } from '../entity/planInterface';
+import { Subscription } from '../entity/subscription';
+import { BillingCycle, PlanName, SubscriptionStatus } from '../enums';
+
+// query params of fetch subscription
+export interface FetchSubscriptionsQueryParams {
+  providerId?: string;
+}
+
+// response of fetch subscriptions
+export type FetchProviderSubscriptionsResponse = Pick<
+  Subscription,
+  '_id' | 'currentPeriodStart' | 'currentPeriodEnd' | 'subscriptionStatus'
+> &
+  Pick<Plan, 'planName'>;
+
+// subscription props
+type SubscriptionProps = Pick<
+  Subscription,
+  | 'currentPeriodStart'
+  | 'currentPeriodEnd'
+  | 'subscriptionStatus'
+  | 'createdAt'
+  | 'cancelAt'
+  | 'cancelAtPeriodEnd'
+  | '_id'
+>;
+
+// plan props
+type PlanProps = Pick<Plan, 'planName' | 'adVisibility' | 'maxBookingPerMonth'>;
+
+// response of fetch subscription details
+export interface FetchSubscriptionDetailsResponse extends SubscriptionProps {
+  subscribedPlanId: PlanProps;
+}
+
+// response of fetch activated subscription
+export interface SubscriptionActivated {
+  userId: string;
+  subscribedPlan: PlanName;
+  currentPeriodStart: Date;
+  currentPeriodEnd: Date;
+  subscriptionStatus: SubscriptionStatus;
+  hasUsedTrial: boolean;
+}
+
+// response of fetch my subscription
+export type FetchMySubscriptionResponse = SubscriptionActivated;
+
+// request of checkout for subscribe plan
+export interface SubscribePlanCheckoutRequest {
+  planId: Plan['_id'];
+  billingCycle: BillingCycle;
+}
+export interface SubscribePlanCheckoutResponse {
+  sessionId: string;
+}

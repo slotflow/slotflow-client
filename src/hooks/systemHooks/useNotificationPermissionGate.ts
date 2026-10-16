@@ -1,96 +1,111 @@
-import { appConfig } from '@/shared/config/env';
-import { RootState } from '@/shared/redux/appStore';
-import { getFcmToken } from '@/shared/helper/getToken';
-import { useDispatch, useSelector } from 'react-redux';
-import { useCallback, useEffect, useMemo } from 'react';
-import { getDeviceId } from '@/shared/helper/getDeviceId';
-import { registerDevice } from '@/shared/apis/notification';
-import { userSetPushNotification } from '@/shared/apis/user';
-import { PermissionStatus, Platform } from '@/shared/interface/enums';
-import { updateNotificationPreference } from '@/shared/redux/slices/authSlice';
-import { useNotificationPermissionGateReturn } from '@/shared/interface/hooksInterface';
-import { requestNotificationPermission } from '@/shared/helper/requestNotificationPermission';
+import { appConfig } from '@/config/env';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/app/store/appStore';
+import { ApiError } from '@/shared/types/common';
+import { useMutation } from '@tanstack/react-query';
+import { useCallback, useEffect, useState } from 'react';
+import { getFcmToken } from '@/shared/utils/helper/getToken';
+import { getDeviceId } from '@/shared/utils/helper/getDeviceId';
+import { handleError } from '@/shared/utils/helper/handleError';
+import { PermissionStatus, Platform } from '@/shared/types/enums';
+import { dismissKey } from '@/shared/utils/constants/appConstants';
+import { registerDevice, updatePushNotificationPreference } from '@/services/apis/notification';
 
-export const useNotificationPermissionGate = (): useNotificationPermissionGateReturn => {
-  const dispatch = useDispatch();
+export const useNotificationPermissionGate = () => {
   const authUser = useSelector((state: RootState) => state.auth.authUser);
+  const [showBanner, setShowBanner] = useState<boolean>(false);
 
-  const shouldAskPermission = useMemo(() => {
-    if (typeof window === 'undefined') return false;
-    if (!('Notification' in window)) return false;
-
-    return (
-      Notification.permission === PermissionStatus.DEFAULT &&
-      authUser?.isLoggedIn === true &&
-      authUser?.allowPushNotification == null
-    );
-  }, [authUser]);
-
+  // Check if we should display the custom banner on mount
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    if (!('Notification' in window)) return;
-    if (!authUser?.isLoggedIn) return;
+    if (typeof window === 'undefined' || !('Notification' in window)) return;
 
-    if (Notification.permission === PermissionStatus.DENIED) {
-      const updateServer = async () => {
-        try {
-          const res = await userSetPushNotification(false);
-          if (res.success) {
-            dispatch(updateNotificationPreference(true));
-          } else {
-            dispatch(updateNotificationPreference(false));
-          }
-        } catch (error) {
-          if (appConfig.isDevelopment) {
-            console.error('Failed to update push notification preference', error);
-          }
-        }
-      };
+    const isDismissed = localStorage.getItem(dismissKey) === 'true';
+    const isDefaultPermission = Notification.permission === PermissionStatus.DEFAULT;
 
-      updateServer();
+    if (authUser?.isLoggedIn && isDefaultPermission && !isDismissed) {
+      setShowBanner(true);
     }
-  }, [authUser, dispatch]);
+  }, [authUser?.isLoggedIn]);
 
-  const askPermission = useCallback(async () => {
-    if (!shouldAskPermission) return;
-
-    const permission = await requestNotificationPermission();
-
-    if (permission === PermissionStatus.GRANTED) {
+  // Enable Push Mutation
+  const enableNotificationMutation = useMutation({
+    mutationFn: async () => {
       const deviceId = getDeviceId();
-      if (appConfig.isDevelopment) {
-        console.log('deviceId : ', deviceId);
-      }
       const fcmToken = await getFcmToken();
-      if (appConfig.isDevelopment) {
-        console.log('fcmToken : ', fcmToken);
-      }
 
-      if (!deviceId || !fcmToken) return;
+      if (!deviceId || !fcmToken) {
+        throw new Error('Device or FCM token generation failed.');
+      }
 
       await registerDevice({
         deviceId,
         fcmToken,
         platform: Platform.WEB,
       });
-
-      const res = await userSetPushNotification(true);
-      if (res.success) {
-        dispatch(updateNotificationPreference(true));
-      } else {
-        dispatch(updateNotificationPreference(false));
+    },
+    onSuccess: (res) => {
+      setShowBanner(false);
+      if (appConfig.isDevelopment) {
+        console.log('Device registered for push notifications:', res);
       }
-      return;
-    }
+    },
+    onError: (error: ApiError) => {
+      handleError(error, 'Failed to enable push notifications.');
+    },
+  });
 
-    if (permission === PermissionStatus.DENIED) {
-      dispatch(updateNotificationPreference(false));
-    }
-  }, [shouldAskPermission, dispatch]);
+  // 3Disable Push Mutation Triggered if permission is denied
+  const disableNotificationMutation = useMutation({
+    mutationFn: async () => {
+      return await updatePushNotificationPreference({ pushNotification: false });
+    },
+    onSuccess: () => {
+      setShowBanner(false);
+    },
+    onError: (error: ApiError) => {
+      if (appConfig.isDevelopment) {
+        console.error('Failed to update push notification preference', error);
+      }
+    },
+  });
 
+  // Sync backend preference if browser permission is already denied on load
   useEffect(() => {
-    askPermission();
-  }, [askPermission]);
+    if (typeof window === 'undefined' || !('Notification' in window)) return;
 
-  return { askPermission };
+    if (
+      authUser?.isLoggedIn &&
+      Notification.permission === PermissionStatus.DENIED &&
+      !disableNotificationMutation.isPending
+    ) {
+      disableNotificationMutation.mutate();
+    }
+  }, [authUser?.isLoggedIn, disableNotificationMutation]);
+
+  // 5. Action: User clicks "Enable" on Custom UI
+  const handleAllow = useCallback(async () => {
+    if (!('Notification' in window)) return;
+
+    const permission = await Notification.requestPermission();
+
+    if (permission === PermissionStatus.GRANTED) {
+      enableNotificationMutation.mutate();
+    } else if (permission === PermissionStatus.DENIED) {
+      disableNotificationMutation.mutate();
+    } else {
+      setShowBanner(false);
+    }
+  }, [enableNotificationMutation, disableNotificationMutation]);
+
+  const handleDismiss = useCallback(() => {
+    setShowBanner(false);
+    localStorage.setItem(dismissKey, 'true');
+  }, []);
+
+  return {
+    showBanner,
+    handleAllow,
+    handleDismiss,
+    isPending: enableNotificationMutation.isPending || disableNotificationMutation.isPending,
+  };
 };

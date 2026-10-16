@@ -1,10 +1,11 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { format } from 'date-fns';
 import { Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { dateFormats } from '@/shared/utils/constants/appConstants';
+import { formatDate } from '@/shared/utils/helper/formatDate';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 interface TimePickerProps {
   value: Date;
@@ -49,21 +50,20 @@ export const TimePicker: React.FC<TimePickerProps> = ({ value, onChange }) => {
             !value && 'text-muted-foreground',
           )}
         >
-          <Clock className="mr-2 h-4 w-4" />
-          {value ? format(value, 'hh:mm aa') : <span>hh:mm aa</span>}
+          <Clock className="mr-2 size-4" />
+          {value ? formatDate(value, dateFormats.TIME_12H_LOWER) : <span>hh:mm aa</span>}
         </Button>
       </PopoverTrigger>
 
       <PopoverContent className="w-auto p-0">
         <div className="flex flex-col sm:flex-row sm:h-[300px] divide-y sm:divide-y-0 sm:divide-x">
-          {/* Hour Picker */}
           <ScrollArea className="w-64 sm:w-auto">
             <div className="flex sm:flex-col p-2">
               {hours.map((hour) => (
                 <Button
                   title="Date"
                   key={hour}
-                  size="icon"
+                  size="sm"
                   variant={value.getHours() % 12 === hour % 12 ? 'default' : 'ghost'}
                   className="sm:w-full shrink-0 aspect-square"
                   onClick={() => handleTimeChange('hour', hour.toString())}
@@ -75,14 +75,13 @@ export const TimePicker: React.FC<TimePickerProps> = ({ value, onChange }) => {
             <ScrollBar orientation="horizontal" className="sm:hidden" />
           </ScrollArea>
 
-          {/* Minute Picker */}
           <ScrollArea className="w-64 sm:w-auto">
             <div className="flex sm:flex-col p-2">
               {minutes.map((minute) => (
                 <Button
                   title="Date"
                   key={minute}
-                  size="icon"
+                  size="sm"
                   variant={value.getMinutes() === minute ? 'default' : 'ghost'}
                   className="sm:w-full shrink-0 aspect-square"
                   onClick={() => handleTimeChange('minute', minute.toString())}
@@ -94,14 +93,13 @@ export const TimePicker: React.FC<TimePickerProps> = ({ value, onChange }) => {
             <ScrollBar orientation="horizontal" className="sm:hidden" />
           </ScrollArea>
 
-          {/* AM/PM Picker */}
           <ScrollArea>
             <div className="flex sm:flex-col p-2">
               {['AM', 'PM'].map((ampm) => (
                 <Button
                   title="Date"
                   key={ampm}
-                  size="icon"
+                  size="sm"
                   variant={
                     (ampm === 'AM' && value.getHours() < 12) ||
                     (ampm === 'PM' && value.getHours() >= 12)

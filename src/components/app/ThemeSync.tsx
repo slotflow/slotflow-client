@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/shared/redux/appStore';
+import { RootState } from '@/app/store/appStore';
 
 const ThemeSync = () => {
   const lightTheme = useSelector((state: RootState) => state.app.lightTheme);

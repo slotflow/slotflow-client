@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { WorkflowStepProps } from '@/shared/interface/componentInterface';
+import { WorkflowStepProps } from '@/shared/types/component';
 
 const WorkflowStep = ({
   number,

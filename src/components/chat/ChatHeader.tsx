@@ -1,47 +1,29 @@
 import { X } from 'lucide-react';
-import { useEffect } from 'react';
+import { Button } from '../ui/button';
+import ProfileImage from '../profile/ProfileImage';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
-import { setLastMessage, setSelectedUser } from '@/shared/redux/slices/chatSlice';
+import { AppDispatch, RootState } from '@/app/store/appStore';
+import { setSelectedUser } from '@/app/store/slices/chatSlice';
 
 const ChatHeader = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { selectedUser, messages, onlineUsers } = useSelector((store: RootState) => store.chat);
-  const { authUser } = useSelector((store: RootState) => store.auth);
+  const { selectedUser, onlineUsers } = useSelector((store: RootState) => store.chat);
 
   const handleCloseChat = () => {
-    const lastMessage = messages?.[messages.length - 1] ?? '';
-    const checkUserId = (userOneId: string, userTwoId: string) => {
-      const currentUserId = authUser?.uid;
-      if (currentUserId === userOneId) {
-        return userTwoId;
-      } else {
-        return userOneId;
-      }
-    };
-
-    if (lastMessage) {
-      const userId = checkUserId(lastMessage?.senderId, lastMessage?.receiverId);
-      if (userId)
-        setLastMessage({ userId, message: lastMessage?.text, date: lastMessage?.createdAt });
-    }
     dispatch(setSelectedUser(null));
   };
-
-  useEffect(() => {}, [selectedUser]);
 
   return (
     <div className="p-2 md:p-3 border-b border-base-300 shadow-md">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="avatar">
-            <div className="size-8 md:size-10 rounded-full relative">
-              <img
-                src={selectedUser?.profileImage || '/user_avatar.jpg'}
-                alt={selectedUser?.username}
-                className="size-8 md:size-10 rounded-full"
-              />
-            </div>
+            <ProfileImage
+              name={selectedUser?.username || ''}
+              profileImage={selectedUser?.profileImage || '/user_avatar.jpg'}
+              size="size-8 md:size-10"
+              rounded="full"
+            />
           </div>
           <div>
             <h3 className="text-sm font-medium">{selectedUser?.username}</h3>
@@ -50,9 +32,9 @@ const ChatHeader = () => {
             </p>
           </div>
         </div>
-        <button onClick={handleCloseChat} className="cursor-pointer">
-          <X />
-        </button>
+        <Button size="sm" variant="ghost" onClick={handleCloseChat}>
+          <X className="size-4" />
+        </Button>
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import MoveUpward from '../animation/MoveUpward';
 import SplitTextReveal from '../animation/SplitTextReveal';
 import IntegrationCard from './integration/IntegrationCard';
-import { landingPageIntegrations } from '@/shared/utils/constants';
+import { landingPageIntegrations } from '@/shared/utils/constants/landingConstants';
 
 const IntegrationsSection = () => {
   return (
@@ -17,7 +17,7 @@ const IntegrationsSection = () => {
                 variant="secondary"
                 className="rounded-full border px-4 py-1.5 text-sm font-medium hover:border-[#635bff]"
               >
-                <Sparkles className="mr-2 h-4 w-4 text-primary" />
+                <Sparkles className="mr-2 size-4 text-primary" />
                 Seamless Integrations
               </Badge>
               <SplitTextReveal

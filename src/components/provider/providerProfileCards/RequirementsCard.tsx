@@ -1,16 +1,16 @@
 import NoData from '@/components/common/NoData';
 import { Info, CheckCircle } from 'lucide-react';
+import { RequirementsCardProps } from '@/shared/types/component';
 import DataFetchingError from '@/components/error/DataFetchingError';
 import DataFieldShimmer from '@/components/shimmers/DataFieldShimmer';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { RequirementsCardProps } from '@/shared/interface/componentInterface';
 
 const RequirementsCard = ({ isLoading, isError, data }: RequirementsCardProps) => {
   return (
-    <Card className="border shadow-sm rounded-xl">
+    <Card className="rounded-xl border border-slate-200 dark:border-border bg-white dark:bg-muted/10 shadow-sm">
       <CardHeader>
         <CardTitle className="text-lg font-semibold flex items-center gap-2">
-          <Info className="w-5 h-5 text-primary" />
+          <Info className="size-5 text-primary" />
           Requirements for Booking
         </CardTitle>
         <CardDescription>To ensure a productive meeting, customers must prepare</CardDescription>
@@ -27,7 +27,7 @@ const RequirementsCard = ({ isLoading, isError, data }: RequirementsCardProps) =
             <ul className="space-y-2">
               {data.map((req, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-sm text-muted-foreground">
-                  <CheckCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                  <CheckCircle className="size-4 text-primary shrink-0 mt-0.5" />
                   {req}
                 </li>
               ))}

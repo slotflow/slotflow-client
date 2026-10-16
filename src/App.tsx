@@ -4,8 +4,8 @@ import AppContent from './AppContent';
 import { Provider } from 'react-redux';
 import { toast } from 'react-toastify';
 import { PersistGate } from 'redux-persist/integration/react';
-import { appStore, persistAppStore } from './shared/redux/appStore';
-import { onMessageListener } from './shared/helper/onMessageListener';
+import { appStore, persistAppStore } from './app/store/appStore';
+import { onMessageListener } from './shared/utils/helper/onMessageListener';
 
 function App() {
   useEffect(() => {

@@ -1,47 +1,43 @@
-import { toast } from 'react-toastify';
-import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
-import { LoaderCircle } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { appConfig } from '@/shared/config/env';
-import TagInput from '@/components/form/TagInput';
-import FormField from '@/components/form/FormField';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useDispatch, useSelector } from 'react-redux';
-import SelectField from '@/components/form/SelectField';
-import DynamicStringListField from '../DynamicStringListFields';
-import { fetchServicesByCategory } from '@/shared/apis/service';
-import { OptionType } from '@/shared/interface/commonInterface';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
-import { ProviderServiceFormProps } from '@/shared/interface/componentInterface';
-import {
-  providerCreateServiceDetailsZodSchema,
-  ProviderCreateServiceDetailsFormType,
-} from '@/shared/zod/providerZod';
-import {
-  groupOptions,
-  redirectPaths,
-  serviceModeOptions,
-  serviceTypeOptions,
-  serviceCategoryOptions,
-  defaultButtonClassName,
-} from '@/shared/utils/constants';
 import {
   ServiceType,
-  ServiceMode,
   ServiceCategory,
   OnboardingStatus,
   AdminVerificationStatus,
-} from '@/shared/interface/enums';
+} from '@/shared/types/enums';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
+import {
+  bookingTypeOptions,
+  serviceTypeOptions,
+  serviceCategoryOptions,
+} from '@/shared/utils/constants/selectOptionsConstants';
+import { toast } from 'react-toastify';
 import {
   providerFetchServiceDetails,
   providerUpdateServiceDetails,
   providerCreateServiceDetails,
-} from '@/shared/apis/providerService';
+} from '@/services/apis/providerService';
+import { appConfig } from '@/config/env';
+import { useForm } from 'react-hook-form';
+import { FormButton } from '../FormButton';
+import { useEffect, useState } from 'react';
+import TagInput from '@/components/form/TagInput';
+import { OptionType } from '@/shared/types/common';
+import FormField from '@/components/form/FormField';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useDispatch, useSelector } from 'react-redux';
+import SelectField from '@/components/form/SelectField';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
+import { AppDispatch, RootState } from '@/app/store/appStore';
+import DynamicStringListField from '../DynamicStringListFields';
+import { fetchServicesByCategory } from '@/services/apis/service';
+import { ProviderServiceFormProps } from '@/shared/types/component';
+import {
+  ProviderCreateServiceDetailsFormType,
+  providerCreateServiceDetailsZodSchema,
+} from '@/shared/validators/zod/providerZod';
 
 const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFormProps) => {
-  const navigate = useNavigate();
+  const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
   const [services, setServices] = useState<OptionType<string>[]>([]);
   const { authUser } = useSelector((state: RootState) => state.auth);
@@ -52,6 +48,7 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
     setValue,
     watch,
     reset,
+    control,
     formState: { errors, isValid, isSubmitting, isLoading },
   } = useForm<ProviderCreateServiceDetailsFormType>({
     resolver: zodResolver(providerCreateServiceDetailsZodSchema),
@@ -67,7 +64,6 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
       serviceExperience: '',
       requirements: [''],
       serviceType: undefined,
-      serviceMode: undefined,
       tags: [],
       videoUrl: '',
       portfolioUrl: '',
@@ -79,6 +75,7 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
   const tags = watch('tags');
   const serviceCategory = watch('serviceCategory');
   const requirements = watch('requirements') || [];
+  const isGroupService = watch('isGroupService');
 
   useEffect(() => {
     if (!serviceCategory || serviceCategory.length === 0) {
@@ -124,7 +121,6 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
         serviceDescription: result.serviceDescription,
         serviceExperienceYears: result.serviceExperienceYears,
         serviceExperience: result.serviceExperience,
-        serviceMode: result.serviceMode,
         serviceName: result.serviceName,
         servicePrice: result.servicePrice,
         serviceType: result.serviceType,
@@ -148,14 +144,14 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
         const res = await providerUpdateServiceDetails(payload);
         if (res.success) {
           if (authUser?.onboardingStatus !== OnboardingStatus.APPROVED) {
-            navigate(redirectPaths.PROVIDER_APPROVAL_PENDING);
+            goTo(redirectPaths.ONBOARDING_PENDING);
           }
           toast.success(res.message);
         }
       } else {
         const res = await dispatch(providerCreateServiceDetails(payload)).unwrap();
         if (res.success) {
-          navigate(redirectPaths.ONBOARDING_AVAILABILITY);
+          goTo(redirectPaths.ONBOARDING_AVAILABILITY);
           toast.success(res.message);
         }
       }
@@ -175,8 +171,8 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
             id="serviceCategory"
             label="Category"
             options={serviceCategoryOptions}
-            register={register}
-            error={errors.serviceCategory}
+            control={control}
+            error={errors.serviceCategory?.message}
             required
           />
 
@@ -184,8 +180,8 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
             id="serviceId"
             label="Service"
             options={services}
-            register={register}
-            error={errors.serviceId}
+            control={control}
+            error={errors.serviceId?.message}
             required
           />
 
@@ -242,23 +238,14 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
 
           <SelectField<ProviderCreateServiceDetailsFormType, ServiceType>
             id="serviceType"
-            label="Type"
+            label="Service Type"
             options={serviceTypeOptions}
-            register={register}
-            error={errors.serviceType}
+            control={control}
+            error={errors.serviceType?.message}
             required
+            infoText="Is your service a recurring service model or not?"
           />
 
-          <SelectField<ProviderCreateServiceDetailsFormType, ServiceMode>
-            id="serviceMode"
-            label="Mode"
-            options={serviceModeOptions}
-            register={register}
-            error={errors.serviceMode}
-            required
-          />
-        </div>
-        <div className="space-y-4 w-full space-x-2 md:pt-6">
           <DynamicStringListField
             label="Requirements"
             placeholder="Enter Requirement"
@@ -278,39 +265,43 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
               });
             }}
           />
-
-          <FormField<ProviderCreateServiceDetailsFormType>
-            label="Maximum Participants"
-            id="maxParticipants"
-            type="number"
-            placeholder="1"
-            register={register}
-            error={errors.maxParticipants?.message}
-            required
-          />
-
+        </div>
+        <div className="space-y-4 w-full space-x-2 md:pt-6">
           <SelectField<ProviderCreateServiceDetailsFormType, boolean>
             id="isGroupService"
-            label="Is this a group service?"
-            options={groupOptions}
-            register={register}
-            error={errors.isGroupService}
+            label="Booking Type"
+            options={bookingTypeOptions}
+            control={control}
+            error={errors.isGroupService?.message}
             required
+            infoText="Is this service intended for individual clients or groups?"
           />
 
+          {isGroupService && (
+            <FormField<ProviderCreateServiceDetailsFormType>
+              label="Maximum Participants"
+              id="maxParticipants"
+              type="number"
+              placeholder="2"
+              register={register}
+              error={errors.maxParticipants?.message}
+              required
+            />
+          )}
+
           <FormField<ProviderCreateServiceDetailsFormType>
-            label="Demo Video Url"
+            label="Demo Video Link"
             id="videoUrl"
-            placeholder="https://"
+            placeholder="Enter your demo video link"
             type="text"
             register={register}
             error={errors.videoUrl?.message}
           />
 
           <FormField<ProviderCreateServiceDetailsFormType>
-            label="Portfolio Url"
+            label="Portfolio Link"
             id="portfolioUrl"
-            placeholder="https://"
+            placeholder="Enter your portfolio link"
             type="text"
             register={register}
             error={errors.portfolioUrl?.message}
@@ -320,24 +311,21 @@ const ProviderServiceForm = ({ isUpdating = false, heading }: ProviderServiceFor
         </div>
       </div>
       <div className="flex justify-center md:justify-end mt-6">
-        <Button
-          title={authUser?.isServiceDetailsAdded ? 'Update' : 'Submit'}
-          type="submit"
-          variant="default"
+        <FormButton
+          loading={isSubmitting}
+          text={
+            isUpdating && isSubmitting
+              ? 'Updating...'
+              : isSubmitting
+                ? 'Submitting...'
+                : isUpdating
+                  ? 'Update'
+                  : 'Submit'
+          }
+          title={isUpdating ? 'Update' : 'Submit'}
           disabled={!isValid || isSubmitting || isLoading}
-          className={defaultButtonClassName}
-        >
-          {isSubmitting ? (
-            <>
-              <LoaderCircle className="animate-spin size-4 mr-2" />
-              {isUpdating && isSubmitting ? 'Updating' : 'Submitting'}
-            </>
-          ) : isUpdating ? (
-            'Update'
-          ) : (
-            'Submit'
-          )}
-        </Button>
+          className="w-full md:w-auto"
+        />
       </div>
     </form>
   );

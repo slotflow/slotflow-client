@@ -1,8 +1,8 @@
 import { Building2 } from 'lucide-react';
-import { companyValues } from '@/shared/utils/constants';
 import { CardSpotlight } from '@/components/ui/card-spotlight';
 import SectionHeading from '@/components/common/SectionHeading';
 import AnimatedCounter from '@/components/animation/AnimatedCounter';
+import { companyValues } from '@/shared/utils/constants/landingConstants';
 
 const AboutPage = () => {
   return (

@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { FeatureCardProps } from '@/shared/interface/componentInterface';
+import { FeatureCardProps } from '@/shared/types/component';
 
 const FeatureCard = ({ title, description, className, children }: FeatureCardProps) => {
   return (

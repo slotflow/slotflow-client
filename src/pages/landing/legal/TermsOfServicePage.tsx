@@ -4,10 +4,10 @@ import rehypeSlug from 'rehype-slug';
 import TOC from '@/components/scroll/TOC';
 import ReactMarkdown from 'react-markdown';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import userMarkdown from '@/md/legal/terms-of-service/user.md?raw';
-import { extractHeadings } from '@/shared/helper/extractTocHeadings';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import commonMarkdown from '@/md/legal/terms-of-service/common.md?raw';
+import { extractHeadings } from '@/shared/utils/helper/extractTocHeadings';
 import providerMarkdown from '@/md/legal/terms-of-service/provider.md?raw';
 
 const TermsOfServicePage = () => {

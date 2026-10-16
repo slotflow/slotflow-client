@@ -1,0 +1,204 @@
+import { toast } from 'react-toastify';
+import FormHeading from '../FormHeading';
+import { appConfig } from '@/config/env';
+import { useForm } from 'react-hook-form';
+import { FormButton } from '../FormButton';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import React, { useEffect, useState } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useDispatch, useSelector } from 'react-redux';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
+import { resendOtp, verifyOtp, verifyResetOtp } from '@/services/apis/auth';
+import { formatTime } from '@/shared/utils/helper/formatTime';
+import { AppDispatch, RootState } from '@/app/store/appStore';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
+import { VerifyOtpFormType, verifyOtpZodSchema } from '@/shared/validators/zod/authZod';
+import { ApiBaseResponse } from '@/shared/types/common';
+
+const OtpVerificatioForm = () => {
+  const { goTo } = useAppNavigation();
+  const dispatch = useDispatch<AppDispatch>();
+  const { otpTimerIsRunning, forgotPassword, otpExpiresAt } = useSelector(
+    (store: RootState) => store.app,
+  );
+
+  const [resentLoading, setResendLoading] = useState<boolean>(false);
+  const [timeLeft, setTimeLeft] = useState<number>(0);
+
+  const {
+    handleSubmit,
+    watch,
+    register,
+    setValue,
+    formState: { errors, isSubmitting, isValid },
+  } = useForm<VerifyOtpFormType>({
+    resolver: zodResolver(verifyOtpZodSchema),
+    mode: 'onChange',
+    defaultValues: {
+      otp: '',
+    },
+  });
+
+  const otpValue = watch('otp');
+
+  useEffect(() => {
+    if (!otpExpiresAt) return;
+
+    const interval = setInterval(() => {
+      const remaining = Math.max(Math.floor((otpExpiresAt - Date.now()) / 1000), 0);
+
+      setTimeLeft(remaining);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [otpExpiresAt]);
+
+  const onSubmit = async (data: VerifyOtpFormType) => {
+    try {
+      let res: ApiBaseResponse<null>;
+      if (forgotPassword) {
+        res = await dispatch(verifyResetOtp({ otp: data.otp })).unwrap();
+      } else {
+        res = await dispatch(verifyOtp({ otp: data.otp })).unwrap();
+      }
+      if (res.success) {
+        if (forgotPassword) {
+          goTo(redirectPaths.RESET_PASSWORD);
+        } else {
+          goTo(redirectPaths.LOGIN);
+        }
+        toast.success(res.message);
+      }
+    } catch (error) {
+      if (appConfig.isDevelopment) {
+        console.log('An error occurred during OTP verification ', error);
+      }
+    }
+  };
+
+  const handleResendOtp = async () => {
+    setResendLoading(true);
+    try {
+      const res = await dispatch(resendOtp()).unwrap();
+      if (res.success) toast.success(res.message);
+    } catch {
+      if (appConfig.isDevelopment) {
+        console.log('An error occurred while resending OTP.');
+      }
+    } finally {
+      setResendLoading(false);
+    }
+  };
+
+  return (
+    <div className="flex min-h-screen flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:px-8 bg-slate-50/50 dark:bg-zinc-950">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="backdrop-blur-xl border border-slate-200/80 dark:border-zinc-800 shadow-xl shadow-slate-200/50 dark:shadow-none rounded-2xl p-6 sm:p-8">
+          <FormHeading
+            title="Enter verification code"
+            description="We sent a 6-digit security code to your email. Enter the code below to confirm your identity."
+          />
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <div className="flex justify-between gap-2">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <React.Fragment key={i}>
+                  <input type="hidden" {...register('otp')} />
+                  <Input
+                    type="text"
+                    maxLength={1}
+                    className="w-12 h-12 text-center text-lg font-medium"
+                    value={otpValue[i] || ''}
+                    onChange={(e) => {
+                      const val = e.target.value.replace(/\D/, '');
+
+                      const otpArray = otpValue.padEnd(6, ' ').split('');
+                      otpArray[i] = val;
+
+                      const newOtp = otpArray.join('').replace(/ /g, '');
+                      setValue('otp', newOtp, { shouldValidate: true });
+
+                      if (val && i < 5) {
+                        document.getElementById(`otp-${i + 1}`)?.focus();
+                      }
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Backspace') {
+                        if (!otpValue[i] && i > 0) {
+                          const prevInput = document.getElementById(`otp-${i - 1}`);
+                          prevInput?.focus();
+                        }
+                      }
+                    }}
+                    onPaste={(e) => {
+                      e.preventDefault();
+                      const paste = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
+                      const otpArray = otpValue.split('');
+                      for (let j = 0; j < paste.length; j++) {
+                        otpArray[j] = paste[j];
+                        const input = document.getElementById(`otp-${j}`);
+                        if (input && input instanceof HTMLInputElement) {
+                          input.value = paste[j];
+                        }
+                      }
+                      setValue('otp', otpArray.join(''));
+                      const nextEmptyIndex = paste.length < 6 ? paste.length : 5;
+                      const nextInput = document.getElementById(`otp-${nextEmptyIndex}`);
+                      nextInput?.focus();
+                    }}
+                    id={`otp-${i}`}
+                  />
+                </React.Fragment>
+              ))}
+            </div>
+            {errors.otp && <p className="text-red-500 text-sm">{errors.otp.message}</p>}
+
+            <FormButton
+              text={isSubmitting ? 'Verifying' : 'Verify'}
+              loading={isSubmitting}
+              disabled={isSubmitting || !isValid}
+              title="Verify Otp"
+              className="w-full"
+            />
+          </form>
+
+          <p className="mt-6 flex justify-between text-xs md:text-sm/6 text-neutral-600 px-2">
+            <span
+              className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
+              onClick={() => goTo(redirectPaths.LOGIN)}
+            >
+              Cancel
+            </span>
+
+            {resentLoading ? (
+              <span className="font-semibold text-[var(--mainColor)]">Sending...</span>
+            ) : otpTimerIsRunning && timeLeft > 0 ? (
+              <span className="text-center text-xs md:text-sm/6 text-neutral-600">
+                {formatTime(timeLeft)}
+              </span>
+            ) : (
+              <span
+                className="font-semibold text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer"
+                onClick={handleResendOtp}
+              >
+                Resend OTP
+              </span>
+            )}
+          </p>
+          <Button
+            title="otp not recieved"
+            variant="link"
+            className="block text-xs md:text-sm font-medium text-[var(--mainColor)] hover:text-[var(--mainColorHover)] cursor-pointer px-2"
+            onClick={() => {
+              goTo(redirectPaths.CONTACT);
+            }}
+          >
+            Didn’t receive OTP?
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default OtpVerificatioForm;

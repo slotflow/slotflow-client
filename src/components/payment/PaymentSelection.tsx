@@ -1,207 +1,236 @@
-import { useCallback } from 'react';
-import { toast } from 'react-toastify';
+import { Button } from '../ui/button';
 import { motion } from 'framer-motion';
-import { LoaderCircle, X } from 'lucide-react';
-import { loadStripe } from '@stripe/stripe-js';
-import { stripeConfig } from '@/shared/config/env';
-import { RootState } from '@/shared/redux/appStore';
-import { getEventSocket } from '@/lib/socketService';
+import { toast } from 'react-toastify';
+import { useCallback, useMemo } from 'react';
+import { useBooking } from '@/hooks/useBooking';
+import { RootState } from '@/app/store/appStore';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card, CardContent } from '@/components/ui/card';
-import { bookAnAppointment } from '@/shared/apis/booking';
+import { useSubscription } from '@/hooks/useSubscription';
 import paypalLogo from '../../assets/logos/external/paypal.png';
 import stripeLogo from '../../assets/logos/external/stripe.jpeg';
 import razorpayLogo from '../../assets/logos/external/razorpay.png';
-import { EventSocketEnum } from '@/shared/interface/socket.interface';
-import { checkoutForSubscribePlan } from '@/shared/apis/subscription';
-import { setSubscriptionUpdating } from '@/shared/redux/slices/authSlice';
-import { PaymentProcessStatus, PaymentProcessType } from '@/shared/interface/enums';
-import {
-  setPaymentProcessStatus,
-  setPaymentSelectionOpen,
-} from '@/shared/redux/slices/paymentSlice';
+import { setPaymentSelectionClose } from '@/app/store/slices/paymentSlice';
+import { PaymentProcessStatus, PaymentProcessType } from '@/shared/types/enums';
+import { X, ArrowRight, CreditCard, LockKeyhole, LoaderCircle, ShieldCheck } from 'lucide-react';
 
 const PaymentSelection = () => {
   const dispatch = useDispatch();
-  const eventSocket = getEventSocket();
-  const { bookingData, subscriptionData, status, type } = useSelector(
-    (state: RootState) => state.payment,
-  );
+  const { bookAppointment } = useBooking();
+  const { subscribePlan } = useSubscription();
+  const { subscriptionData, status, type } = useSelector((state: RootState) => state.payment);
+  const isSubscription = type === PaymentProcessType.SUBSCRIPTION;
 
-  const makeStripePayment = useCallback(async () => {
-    const stripePublishKey = stripeConfig.stripePublishableKey;
-
-    if (!stripePublishKey) {
-      toast.error('Stripe key is missing!');
-      return;
-    }
-
-    const stripe = await loadStripe(stripePublishKey);
-
-    if (!stripe) {
-      toast.error('Stripe failed to load!');
-      return;
-    }
-
-    try {
-      if (type === PaymentProcessType.BOOKING) {
-        if (
-          !bookingData?.slotId ||
-          !bookingData?.providerId ||
-          !bookingData?.selectedServiceMode ||
-          !bookingData?.date
-        ) {
-          toast.error('Incomplete booking details.');
-          return;
-        }
-
-        eventSocket.emit(EventSocketEnum.slotEngageRequest, {
-          providerId: bookingData.providerId,
-          date: bookingData.date,
-          slotId: bookingData.slotId,
-        });
-
-        eventSocket.once(EventSocketEnum.slotEngageApproved, async () => {
-          try {
-            const response = await bookAnAppointment(bookingData);
-            const sessionId = response.data;
-
-            if (!sessionId) {
-              toast.error('Failed to create checkout session.');
-              dispatch(setPaymentProcessStatus(PaymentProcessStatus.FAILED));
-              return;
-            }
-
-            dispatch(setPaymentProcessStatus(PaymentProcessStatus.PROCESSING));
-            stripe.redirectToCheckout({ sessionId });
-          } catch {
-            toast.error('Booking payment failed');
-            dispatch(setPaymentProcessStatus(PaymentProcessStatus.FAILED));
-            eventSocket.emit(EventSocketEnum.slotUnlockRequest, {
-              providerId: bookingData.providerId,
-              date: bookingData.date,
-              slotId: bookingData.slotId,
-            });
-          }
-        });
-
-        eventSocket.once(EventSocketEnum.slotEngageRejected, () => {
-          toast.error('Slot already engaged by another user');
-        });
-
+  const makeStripePayment = useCallback(() => {
+    if (type === PaymentProcessType.BOOKING) {
+      bookAppointment();
+    } else if (type === PaymentProcessType.SUBSCRIPTION) {
+      if (!subscriptionData) {
+        toast.error('Subscription details are missing.');
         return;
       }
-
-      if (type === PaymentProcessType.SUBSCRIPTION) {
-        if (!subscriptionData?.planId || !subscriptionData?.planDuration) {
-          toast.error('Subscription details missing');
-          dispatch(setPaymentProcessStatus(PaymentProcessStatus.FAILED));
-          return;
-        }
-        try {
-          const response = await checkoutForSubscribePlan(subscriptionData);
-          const sessionId = response.data;
-
-          if (!sessionId) {
-            toast.error('Failed to create checkout session.');
-            dispatch(setPaymentProcessStatus(PaymentProcessStatus.FAILED));
-            return;
-          }
-
-          dispatch(setSubscriptionUpdating(true));
-          dispatch(setPaymentProcessStatus(PaymentProcessStatus.PROCESSING));
-          stripe.redirectToCheckout({ sessionId });
-        } catch {
-          toast.error('Subscription payment failed.');
-          dispatch(setPaymentProcessStatus(PaymentProcessStatus.FAILED));
-        }
-      }
-    } catch {
-      toast.error('Something went wrong during payment.');
-      dispatch(setPaymentProcessStatus(PaymentProcessStatus.FAILED));
-    } finally {
-      dispatch(setPaymentSelectionOpen(false));
+      subscribePlan(subscriptionData);
     }
-  }, [bookingData, subscriptionData, type, dispatch, eventSocket]);
+  }, [subscriptionData, type, bookAppointment, subscribePlan]);
 
-  const paymentGateways = [
-    {
-      name: 'Stripe',
-      img: stripeLogo,
-      text: <h6 className="font-bold italic text-[#635bff]">Stripe</h6>,
-      onClick: makeStripePayment,
-    },
-    {
-      name: 'PayPal',
-      img: paypalLogo,
-      text: (
-        <h6 className="font-bold italic space-x-1">
-          <span className="text-[#002991]">Pay</span>
-          <span className="text-[#60cdff]">Pal</span>
-        </h6>
-      ),
-      onClick: makeStripePayment,
-    },
-    {
-      name: 'Razorpay',
-      img: razorpayLogo,
-      text: <h6 className="font-bold italic text-[#072654]">Razorpay</h6>,
-      onClick: makeStripePayment,
-    },
-  ];
+  const paymentGateways = useMemo(() => {
+    const gateways = [
+      {
+        id: 'stripe',
+        name: 'Stripe',
+        img: stripeLogo,
+        text: <h6 className="font-bold italic text-[#635bff]">Stripe</h6>,
+        onClick: makeStripePayment,
+      },
+      {
+        id: 'paypal',
+        name: 'PayPal',
+        img: paypalLogo,
+        text: (
+          <h6 className="font-bold italic space-x-1">
+            <span className="text-[#002991]">Pay</span>
+            <span className="text-[#60cdff]">Pal</span>
+          </h6>
+        ),
+        onClick: makeStripePayment,
+      },
+      {
+        id: 'razorpay',
+        name: 'Razorpay',
+        img: razorpayLogo,
+        text: <h6 className="font-bold italic text-[#072654]">Razorpay</h6>,
+        onClick: makeStripePayment,
+      },
+    ];
+
+    if (isSubscription) {
+      return gateways.filter((gateway) => gateway.id === 'stripe');
+    }
+
+    return gateways;
+  }, [makeStripePayment, isSubscription]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 backdrop-blur-md">
       {status === PaymentProcessStatus.PROCESSING && (
         <div className="absolute inset-0 flex items-center justify-center">
           <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
+            initial={{ scale: 0.85, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="flex flex-col items-center gap-3"
+            transition={{ duration: 0.25 }}
+            className="flex flex-col items-center gap-4 rounded-2xl border border-white/10 bg-background/95 px-10 py-8 shadow-2xl backdrop-blur-xl"
           >
-            <LoaderCircle className="w-10 h-10 animate-spin text-white" />
-            <p className="text-white text-sm">Redirecting to payment...</p>
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
+              <LoaderCircle className="h-7 w-7 animate-spin text-primary" />
+            </div>
+
+            <div className="text-center">
+              <p className="font-semibold text-foreground">Redirecting to payment</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Please wait while we securely connect you...
+              </p>
+            </div>
           </motion.div>
         </div>
       )}
-      {status !== PaymentProcessStatus.PROCESSING && (
-        <motion.div
-          initial={{ opacity: 0, y: 40, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.25 }}
-          className="w-full max-w-md"
-        >
-          <Card className="rounded-2xl shadow-xl border bg-[var(--background)]">
-            <div className="flex justify-between items-center p-4 border-b">
-              <h2 className="text-lg font-semibold">Complete Payment</h2>
-              <X
-                className="cursor-pointer opacity-70 hover:opacity-100"
-                onClick={() => dispatch(setPaymentSelectionOpen(false))}
-              />
+
+      {status === PaymentProcessStatus.FAILED && (
+        <div className="absolute inset-0 flex items-center justify-center px-6">
+          <motion.div
+            initial={{ scale: 0.85, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.25 }}
+            className="flex max-w-sm flex-col items-center gap-4 rounded-2xl border border-red-500/20 bg-background/95 px-8 py-8 text-center shadow-2xl backdrop-blur-xl"
+          >
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-red-500/10">
+              <LockKeyhole className="h-7 w-7 text-red-500" />
             </div>
-            <CardContent className="p-5 space-y-5">
+
+            <div>
+              <p className="font-semibold text-foreground">Payment failed</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Something went wrong while starting the payment. Please try again.
+              </p>
+            </div>
+
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => dispatch(setPaymentSelectionClose())}
+              className="w-full"
+            >
+              Close
+            </Button>
+          </motion.div>
+        </div>
+      )}
+
+      {status !== PaymentProcessStatus.PROCESSING && status !== PaymentProcessStatus.FAILED && (
+        <motion.div
+          initial={{ opacity: 0, y: 30, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{
+            duration: 0.3,
+            ease: 'easeOut',
+          }}
+          className="w-full max-w-lg"
+        >
+          <Card className="overflow-hidden rounded-3xl border border-border/60 bg-[var(--background)] shadow-2xl">
+            <div className="relative border-b border-border/60 px-6 pb-5 pt-6">
+              <Button
+                type="button"
+                size="sm"
+                variant="ghost"
+                onClick={() => dispatch(setPaymentSelectionClose())}
+                className={`absolute right-4 top-4`}
+              >
+                <X className="size-5" />
+              </Button>
+
+              <div className="flex items-start gap-4 pr-10">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10">
+                  <CreditCard className="h-6 w-6 text-primary" />
+                </div>
+
+                <div>
+                  <h2 className="text-xl font-bold tracking-tight">Complete Payment</h2>
+
+                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                    {!isSubscription
+                      ? 'Choose your preferred payment method to continue securely.'
+                      : 'Secure payment through stripe'}
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-5 flex items-center gap-2 rounded-xl border border-border/50 bg-muted/40 px-3 py-2.5">
+                <ShieldCheck className="size-4 text-emerald-500" />
+
+                <span className="text-xs font-medium text-muted-foreground">
+                  Secure payment • Your payment details are protected
+                </span>
+              </div>
+            </div>
+
+            <CardContent className="space-y-5 p-6">
+              {!isSubscription && (
+                <div>
+                  <h3 className="text-sm font-semibold text-foreground">Select payment method</h3>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    Select one of the available payment providers below.
+                  </p>
+                </div>
+              )}
+
               <div className="space-y-3">
-                {paymentGateways.map((gateway, index) => (
+                {paymentGateways.map((gateway) => (
                   <motion.button
-                    key={index}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.97 }}
+                    key={gateway.id}
+                    whileHover={{
+                      scale: 1.015,
+                      y: -1,
+                    }}
+                    whileTap={{
+                      scale: 0.985,
+                    }}
                     onClick={gateway.onClick}
-                    className="w-full flex items-center gap-4 p-4 rounded-xl border bg-[var(--menuBg)] hover:bg-[var(--menuItemHoverBg)] transition-all"
+                    className="cursor-pointer group relative flex w-full items-center gap-4 overflow-hidden rounded-2xl border border-border/70 bg-[var(--menuBg)] p-4 text-left transition-all duration-200 hover:border-primary/40 hover:bg-[var(--menuItemHoverBg)] hover:shadow-md"
                   >
-                    <img
-                      src={gateway.img}
-                      alt={gateway.name}
-                      className="w-10 h-10 rounded-md object-cover"
-                    />
-                    <div className="flex flex-col items-start">
-                      {gateway.text}
-                      <span className="text-xs text-muted-foreground">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl border shadow-sm">
+                      <img
+                        src={gateway.img}
+                        alt={gateway.name}
+                        className="h-9 w-9 rounded-md object-contain"
+                      />
+                    </div>
+
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2">
+                        {gateway.text}
+
+                        <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium text-muted-foreground">
+                          Secure
+                        </span>
+                      </div>
+
+                      <span className="mt-1 block text-xs text-muted-foreground">
                         Secure payment via {gateway.name}
                       </span>
                     </div>
+
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-all duration-200">
+                      <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+                    </div>
                   </motion.button>
                 ))}
+              </div>
+
+              <div className="flex items-center justify-center gap-2 pt-1 text-center">
+                <LockKeyhole className="h-3.5 w-3.5 text-muted-foreground" />
+
+                <p className="text-xs text-muted-foreground">
+                  Payments are processed securely by our payment partners
+                </p>
               </div>
             </CardContent>
           </Card>

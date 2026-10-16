@@ -1,13 +1,11 @@
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '../../ui/card';
-import { BlogDetailPrevOrNextArticleProps } from '@/shared/interface/componentInterface';
+import { BlogDetailPrevOrNextArticleProps } from '@/shared/types/component';
 
 const BlogDetailPrevOrNextArticle = ({
   nextArticle,
   prevArticle,
 }: BlogDetailPrevOrNextArticleProps) => {
-  console.log('prevArticleId : ', prevArticle?.id);
-  console.log('nextArticleId : ', nextArticle?.id);
   return (
     <section id="prev-or-next" className="mt-32 pt-16 w-full">
       <div className="max-w-7xl mx-auto grid gap-6 md:grid-cols-2">

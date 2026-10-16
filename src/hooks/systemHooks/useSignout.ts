@@ -1,33 +1,44 @@
+import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import { signout } from '@/shared/apis/auth';
-import { appConfig } from '@/shared/config/env';
-import { useQueryClient } from '@tanstack/react-query';
-import { useSignoutReturn } from '@/shared/interface/hooksInterface';
-import { AppDispatch, persistAppStore } from '@/shared/redux/appStore';
-import { disconnectEventSocket } from '@/shared/socket/eventSocketThunk';
+import { signout } from '@/services/apis/auth';
+import { useAppNavigation } from '../useAppNavigation';
+import { useSignoutReturn } from '@/shared/types/hooks';
+import { setAuthUser } from '@/app/store/slices/authSlice';
+import { handleError } from '@/shared/utils/helper/handleError';
+import { ApiBaseResponse, ApiError } from '@/shared/types/common';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { AppDispatch, persistAppStore } from '@/app/store/appStore';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
+import { disconnectChatSocket } from '@/services/socket/chatSocketThunk';
+import { disconnectEventSocket } from '@/services/socket/eventSocketThunk';
 
 export const useSignout = (): useSignoutReturn => {
-  const dispatch = useDispatch<AppDispatch>();
+  const { goTo } = useAppNavigation();
   const queryClient = useQueryClient();
+  const dispatch = useDispatch<AppDispatch>();
 
-  const signoutHandler = async () => {
-    try {
-      const res = await dispatch(signout()).unwrap();
+  const signoutMutation = useMutation<ApiBaseResponse, ApiError, void>({
+    mutationFn: signout,
+    onSuccess: async (res) => {
       if (res.success) {
         dispatch(disconnectEventSocket());
+        dispatch(disconnectChatSocket());
         dispatch({ type: 'RESET_STATE' });
+        dispatch(setAuthUser(null));
         await persistAppStore.purge();
         queryClient.clear();
         queryClient.cancelQueries();
+        toast.success(res.message);
+        goTo(redirectPaths.LOGIN);
       }
-      return res;
-    } catch (error) {
-      if (appConfig.isDevelopment) {
-        console.log('Error in signout: ', error);
-      }
-      return { success: false, message: 'Signout failed' };
-    }
-  };
+    },
+    onError: (error) => {
+      handleError(error, 'Signout failed.');
+    },
+  });
 
-  return { signoutHandler };
+  return {
+    userSignout: signoutMutation.mutate,
+    isSigningOut: signoutMutation.isPending,
+  };
 };

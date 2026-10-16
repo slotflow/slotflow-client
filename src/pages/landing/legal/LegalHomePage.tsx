@@ -1,9 +1,9 @@
-import { ArrowRight, Scale } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { footerLinks } from '@/shared/utils/constants';
+import { ArrowRight, Scale } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import SectionHeading from '@/components/common/SectionHeading';
+import { footerLinks } from '@/shared/utils/constants/landingConstants';
 
 const LegalHomePage = () => {
   return (
@@ -34,10 +34,10 @@ const LegalHomePage = () => {
               <CardContent className="p-6">
                 <div className="flex items-start justify-between">
                   <div className="rounded-lg border p-3">
-                    <Icon className="h-5 w-5" />
+                    <Icon className="size-5" />
                   </div>
 
-                  <ArrowRight className="h-5 w-5 text-muted-foreground transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="size-5 text-muted-foreground transition-transform group-hover:translate-x-1" />
                 </div>
                 <h2 className="mt-6 text-xl font-semibold">{page.name}</h2>
                 <p className="mt-2 text-sm leading-6 text-muted-foreground">{page.description}</p>

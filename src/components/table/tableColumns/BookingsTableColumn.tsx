@@ -1,29 +1,30 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { ColumnDef } from '@tanstack/react-table';
-import { checkJoin } from '@/shared/helper/checkJoin';
-import { formateDate } from '@/shared/helper/formatter';
-import { DataTableColumnHeader } from '../DataTableColumnHeader';
-import { AppointmentStatus, Role } from '@/shared/interface/enums';
-import { Booking } from '@/shared/interface/entityInterface/bookingInterface';
-import { Check, MoreHorizontal, NotebookPen, ReceiptText, VideoIcon, X } from 'lucide-react';
 import {
-  changeAppointmentStatusRequest,
+  ValidateRoomIdRequest,
   FetchBookingsResponse,
-  ValidateRoomId,
-} from '@/shared/interface/api/booking';
+  ChangeAppointmentStatusRequest,
+} from '@/shared/types/api/booking';
 import {
   DropdownMenu,
-  DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
+  DropdownMenuContent,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
+import { ColumnDef } from '@tanstack/react-table';
+import { Booking } from '@/shared/types/entity/booking';
+import StatusBadge from '@/components/common/StatusBadge';
+import { checkJoin } from '@/shared/utils/helper/checkJoin';
+import { formatDate } from '@/shared/utils/helper/formatDate';
+import { AppointmentStatus, Role } from '@/shared/types/enums';
+import { DataTableColumnHeader } from '../DataTableColumnHeader';
+import { Check, MoreHorizontal, NotebookPen, ReceiptText, VideoIcon, X } from 'lucide-react';
 
 const BookingsTableColumn = (
-  handleJoinCall: (data: ValidateRoomId) => void,
-  handleNavigateToBookingsDetailPage: (appointmentId: Booking['_id']) => void,
+  JoinCallLobby: (data: ValidateRoomIdRequest) => void,
+  toBookingsDetailsPage: (appointmentId: Booking['_id'], replace?: boolean) => void,
   role: Role,
   handleReviewAddFormToggle?: (
     e: React.MouseEvent<HTMLDivElement>,
@@ -31,15 +32,27 @@ const BookingsTableColumn = (
     providerId: string,
   ) => void,
   handleUserCancelBooking?: (bookingId: Booking['_id']) => void,
-  handleChangeAppointmentStatus?: (data: changeAppointmentStatusRequest) => void,
+  changeAppointmentStatus?: (data: ChangeAppointmentStatusRequest) => void,
+  statusChangingAppointmentId?: string | null,
 ): ColumnDef<FetchBookingsResponse>[] => [
+  {
+    accessorKey: 'slNo',
+    header: 'Sl No',
+    cell: ({ row }) => (
+      <span className="font-mono text-xs text-muted-foreground font-medium">
+        {String(row.index + 1).padStart(2, '0')}
+      </span>
+    ),
+  },
   {
     accessorKey: 'appointmentDate',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Date" />,
     cell: ({ row }) => {
       const createdAt = row.getValue('appointmentDate') as Date;
-      const formattedDate = formateDate(createdAt);
-      return <span>{formattedDate}</span>;
+      const formattedDate = formatDate(createdAt);
+      return (
+        <span className="font-medium text-slate-700 dark:text-slate-300">{formattedDate}</span>
+      );
     },
   },
   {
@@ -47,35 +60,47 @@ const BookingsTableColumn = (
     header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
     cell: ({ row }) => {
       const status = row.original.appointmentStatus;
+      const isThisRowUpdating = statusChangingAppointmentId === row.original._id;
+      if (isThisRowUpdating) {
+        return <StatusBadge type="updating" label="Updating" />;
+      }
       switch (status) {
         case AppointmentStatus.BOOKED:
-          return <span className="text-yellow-500 font-semibold">Pending Confirmation</span>;
+          return <StatusBadge type="pending" label="Pending Confirmation" />;
         case AppointmentStatus.CANCELLED:
-          return <span className="text-red-500 font-semibold">Cancelled</span>;
+          return <StatusBadge type="blocked" label="Cancelled" />;
         case AppointmentStatus.CONFIRMED:
-          return <span className="text-green-500 font-semibold">Confirmed</span>;
+          return <StatusBadge type="active" label="Confirmed" />;
         case AppointmentStatus.REJECTED_BY_PROVIDER:
-          return <span className="text-red-500 font-semibold">Rejected By Provider</span>;
+          return <StatusBadge type="blocked" label="Rejected By Provider" />;
         case AppointmentStatus.NOT_ATTENDED:
-          return <span className="text-orange-500 font-semibold">Not Attended</span>;
+          return <StatusBadge type="blocked" label="Not Attended" />;
         case AppointmentStatus.COMPLETED:
-          return <span className="text-indigo-500 font-semibold">Completed 🎉</span>;
+          return <StatusBadge type="verified" label="Completed 🎉" />;
+        case AppointmentStatus.PENDING:
+          return <StatusBadge type="pending" label="Pending" />;
         default:
-          return <span>{status}</span>;
+          return <StatusBadge type="standard" label={status} />;
       }
     },
   },
   {
     accessorKey: 'appointmentTime',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Slot" />,
+    cell: ({ row }) => {
+      const slot = row.getValue('appointmentTime') as string;
+      return <StatusBadge type="standard" label={slot} />;
+    },
   },
   {
     accessorKey: 'createdAt',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Paid on" />,
     cell: ({ row }) => {
       const createdAt = row.getValue('createdAt') as Date;
-      const formattedDate = formateDate(createdAt);
-      return <span>{formattedDate}</span>;
+      const formattedDate = formatDate(createdAt);
+      return (
+        <span className="font-medium text-slate-700 dark:text-slate-300">{formattedDate}</span>
+      );
     },
   },
   {
@@ -88,50 +113,54 @@ const BookingsTableColumn = (
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button title="Open Menu" variant="ghost" className="h-8 w-8 p-0 cursor-pointer">
+            <Button
+              title="Open Menu"
+              variant="ghost"
+              className="h-8 w-8 p-0 cursor-pointer hover:bg-muted"
+            >
               <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
+              <MoreHorizontal className="size-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent align="end" className="rounded-xl">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
             {booking.appointmentStatus === AppointmentStatus.CONFIRMED && canJoin && (
               <DropdownMenuItem
                 onClick={() =>
-                  handleJoinCall({ appointmentId: booking._id, roomId: booking.videoCallRoomId })
+                  JoinCallLobby({ appointmentId: booking._id, roomId: booking.videoCallRoomId })
                 }
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 cursor-pointer"
               >
-                <VideoIcon /> Join
+                <VideoIcon className="w-3.5 h-3.5" /> Join
               </DropdownMenuItem>
             )}
             {role === Role.PROVIDER &&
-              handleChangeAppointmentStatus &&
+              changeAppointmentStatus &&
               booking.appointmentStatus === AppointmentStatus.BOOKED && (
                 <>
                   <DropdownMenuItem
                     onClick={() =>
-                      handleChangeAppointmentStatus({
+                      changeAppointmentStatus({
                         appointmentId: booking._id,
                         appointmentStatus: AppointmentStatus.CONFIRMED,
                       })
                     }
-                    className="flex items-center gap-2"
+                    className="flex items-center gap-2 cursor-pointer"
                   >
-                    {<Check className="w-4 h-4" />}
+                    <Check className="w-3.5 h-3.5" />
                     <span>Confirm</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() =>
-                      handleChangeAppointmentStatus({
+                      changeAppointmentStatus({
                         appointmentId: booking._id,
                         appointmentStatus: AppointmentStatus.REJECTED_BY_PROVIDER,
                       })
                     }
-                    className="flex items-center gap-2"
+                    className="flex items-center gap-2 cursor-pointer text-destructive focus:text-destructive"
                   >
-                    {<X className="w-4 h-4" />}
+                    <X className="w-3.5 h-3.5" />
                     <span>Reject</span>
                   </DropdownMenuItem>
                 </>
@@ -139,8 +168,11 @@ const BookingsTableColumn = (
             {role === Role.USER &&
               handleUserCancelBooking &&
               booking.appointmentStatus === AppointmentStatus.BOOKED && (
-                <DropdownMenuItem onClick={() => handleUserCancelBooking(booking._id)}>
-                  Cancel
+                <DropdownMenuItem
+                  onClick={() => handleUserCancelBooking(booking._id)}
+                  className="flex items-center gap-2 cursor-pointer text-destructive focus:text-destructive"
+                >
+                  <X className="w-3.5 h-3.5" /> Cancel
                 </DropdownMenuItem>
               )}
             {role === Role.USER &&
@@ -150,16 +182,16 @@ const BookingsTableColumn = (
                   onClick={(e: React.MouseEvent<HTMLDivElement>) =>
                     handleReviewAddFormToggle(e, booking._id, booking.serviceProviderId)
                   }
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-2 cursor-pointer"
                 >
-                  <NotebookPen /> Add Review
+                  <NotebookPen className="w-3.5 h-3.5" /> Add Review
                 </DropdownMenuItem>
               )}
             <DropdownMenuItem
-              className="flex items-center gap-2"
-              onClick={() => handleNavigateToBookingsDetailPage(booking._id)}
+              className="flex items-center gap-2 cursor-pointer"
+              onClick={() => toBookingsDetailsPage(booking._id)}
             >
-              <ReceiptText /> Details
+              <ReceiptText className="w-3.5 h-3.5" /> Details
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

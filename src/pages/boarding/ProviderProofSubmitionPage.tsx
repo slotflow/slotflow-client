@@ -1,26 +1,26 @@
-import { LoaderCircle } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '@/shared/redux/appStore';
-import FileUploader from '@/components/form/CommonForms/FileUploader';
-import { setIsProofSubmitted } from '@/shared/redux/slices/authSlice';
-import { defaultButtonClassName, redirectPaths } from '@/shared/utils/constants';
 import {
-  setProviderIdentityProofs,
   setProviderServiceProofs,
-} from '@/shared/redux/slices/providerSlice';
+  setProviderIdentityProofs,
+} from '@/app/store/slices/providerSlice';
 import {
-  providerDeleteIdentityProof,
-  providerDeleteServiceProof,
   providerFetchMyProofs,
+  providerDeleteServiceProof,
+  providerDeleteIdentityProof,
   providerUpdateIdentityProof,
   providerUpdateProofServiceProof,
-} from '@/shared/apis/providerProfile';
+} from '@/services/apis/providerProfile';
+import { Button } from '@/components/ui/button';
+import { Check, LoaderCircle } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
+import { AppDispatch, RootState } from '@/app/store/appStore';
+import FileUploader from '@/components/form/Common/FileUploader';
+import { setIsProofSubmitted } from '@/app/store/slices/authSlice';
 
 const ProviderProofSubmissionPage = () => {
-  const navigate = useNavigate();
+  const { goTo } = useAppNavigation();
   const dispatch = useDispatch<AppDispatch>();
   const { authUser } = useSelector((state: RootState) => state.auth);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -62,7 +62,7 @@ const ProviderProofSubmissionPage = () => {
     e.preventDefault();
     dispatch(setIsProofSubmitted());
     await delay(1000);
-    navigate(redirectPaths.ONBOARDING_PENDING);
+    goTo(redirectPaths.ONBOARDING_PENDING);
     setIsSubmitting(false);
   };
 
@@ -71,6 +71,7 @@ const ProviderProofSubmissionPage = () => {
       <div className="space-y-4 w-full space-x-2 pt-6">
         <FileUploader
           folderName="provider-proof"
+          fieldName="identityProof"
           uploadFunction={providerUpdateIdentityProof}
           message="Please upload a valid identity document issued in your country. Make sure the document is clear and readable for verification."
           setStateFunction={setProviderIdentityProofs}
@@ -80,6 +81,7 @@ const ProviderProofSubmissionPage = () => {
         />
         <FileUploader
           folderName="provider-proof"
+          fieldName="serviceProof"
           uploadFunction={providerUpdateProofServiceProof}
           message="If you are offering a service, upload a valid certification or an experience document that verifies your professional qualifications."
           setStateFunction={setProviderServiceProofs}
@@ -93,20 +95,26 @@ const ProviderProofSubmissionPage = () => {
             title="Submit proofs"
             variant="default"
             onClick={handleNextutton}
-            className={defaultButtonClassName}
             type="button"
+            className="w-full md:w-auto"
             disabled={isSubmitting || !identityProof.file || !serviceProof.file}
           >
             {isSubmitting ? (
               <>
-                <LoaderCircle className="animate-spin size-4 mr-2" />
+                <LoaderCircle className="animate-spin size-4" />
                 {authUser?.isProofSubmitted && isSubmitting ? 'Updating' : 'Submitting'}
               </>
             ) : authUser?.isProofSubmitted?.identityProof &&
               authUser?.isProofSubmitted?.serviceProof ? (
-              'Update'
+              <>
+                <Check className="size-4" />
+                Update
+              </>
             ) : (
-              'Submit'
+              <>
+                <Check className="size-4" />
+                Submit
+              </>
             )}
           </Button>
         </div>

@@ -1,11 +1,12 @@
 import { Badge } from '@/components/ui/badge';
 import { useNavigate } from 'react-router-dom';
 import { ShieldCheck, Star } from 'lucide-react';
-import { cardGradients } from '@/shared/utils/constants';
+import ProfileImage from '../profile/ProfileImage';
 import { Card, CardContent } from '@/components/ui/card';
 import avatar from '../../assets/defaultImages/avatar.png';
-import { formatNumberToPrice } from '@/shared/helper/formatter';
-import { UserViewProviderCardProps } from '@/shared/interface/componentInterface';
+import { UserViewProviderCardProps } from '@/shared/types/component';
+import { cardGradients } from '@/shared/utils/constants/designConstants';
+import { formatNumberToPrice } from '@/shared/utils/helper/formatNumberToPrice';
 
 const UserViewProviderCard = ({ provider, serviceDetails }: UserViewProviderCardProps) => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const UserViewProviderCard = ({ provider, serviceDetails }: UserViewProviderCard
 
   return (
     <Card
-      onClick={() => navigate(`/user/providerProfile/${provider?._id}`)}
+      onClick={() => navigate(`/service-providers/${provider?._id}`)}
       className={`text-black cursor-pointer transition-all hover:shadow-xl hover:-translate-y-1 ${gradient} border-0`}
     >
       <CardContent className="p-4 space-y-4">
@@ -25,10 +26,12 @@ const UserViewProviderCard = ({ provider, serviceDetails }: UserViewProviderCard
             <Badge className="mt-1 text-xs capitalize">{serviceDetails?.service}</Badge>
           </div>
 
-          <img
-            src={provider?.profileImage || avatar}
-            alt={provider?.username}
-            className="w-16 h-16 rounded-xl object-cover border shadow-sm"
+          <ProfileImage
+            name={provider?.username || 'Provider'}
+            profileImage={provider?.profileImage || avatar}
+            size="size-16"
+            rounded="xl"
+            className="shadow-sm"
           />
         </div>
 

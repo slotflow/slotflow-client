@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { FloatingProps } from '@/shared/interface/componentInterface';
+import { FloatingProps } from '@/shared/types/component';
 
 const Floating = ({ children, className }: FloatingProps) => {
   return (

@@ -7,7 +7,7 @@ const PaymentCard = () => {
     <Card className="w-72 rounded-3xl border-border/60 bg-background/80 p-5 shadow-xl backdrop-blur-xl">
       <div className="flex items-start gap-4">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-green-500/10">
-          <CreditCard className="h-5 w-5 text-green-600 dark:text-green-400" />
+          <CreditCard className="size-5 text-green-600 dark:text-green-400" />
         </div>
         <div className="flex-1 space-y-3">
           <div className="flex items-center justify-between">
@@ -27,13 +27,13 @@ const PaymentCard = () => {
           </div>
 
           <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
-            <ShieldCheck className="h-4 w-4" />
+            <ShieldCheck className="size-4" />
 
             <span>Secure transaction completed</span>
           </div>
 
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <CheckCircle2 className="h-4 w-4" />
+            <CheckCircle2 className="size-4" />
 
             <span>Receipt available in your bookings.</span>
           </div>
