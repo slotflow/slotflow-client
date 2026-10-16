@@ -10,9 +10,9 @@ import { signin } from '@/services/apis/auth';
 import { Button } from '@/components/ui/button';
 import { AppDispatch } from '@/app/store/appStore';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { setForgotPassword } from '@/app/store/slices/appSlice';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import { LoginFormType, LoginZodSchema } from '@/shared/validators/zod/authZod';
 
 const LoginForm = () => {

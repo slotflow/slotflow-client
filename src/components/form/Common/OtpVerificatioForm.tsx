@@ -9,11 +9,12 @@ import React, { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAppNavigation } from '@/hooks/useAppNavigation';
-import { resendOtp, verifyOtp } from '@/services/apis/auth';
+import { resendOtp, verifyOtp, verifyResetOtp } from '@/services/apis/auth';
 import { formatTime } from '@/shared/utils/helper/formatTime';
 import { AppDispatch, RootState } from '@/app/store/appStore';
 import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import { VerifyOtpFormType, verifyOtpZodSchema } from '@/shared/validators/zod/authZod';
+import { ApiBaseResponse } from '@/shared/types/common';
 
 const OtpVerificatioForm = () => {
   const { goTo } = useAppNavigation();
@@ -55,15 +56,18 @@ const OtpVerificatioForm = () => {
 
   const onSubmit = async (data: VerifyOtpFormType) => {
     try {
-      const res = await dispatch(verifyOtp({ otp: data.otp })).unwrap();
+      let res: ApiBaseResponse<null>;
+      if (forgotPassword) {
+        res = await dispatch(verifyResetOtp({ otp: data.otp })).unwrap();
+      } else {
+        res = await dispatch(verifyOtp({ otp: data.otp })).unwrap();
+      }
       if (res.success) {
-        // Navigate immediately for instant UX
         if (forgotPassword) {
           goTo(redirectPaths.RESET_PASSWORD);
         } else {
           goTo(redirectPaths.LOGIN);
         }
-        // Show toast after navigation (toast uses portal so still visible)
         toast.success(res.message);
       }
     } catch (error) {

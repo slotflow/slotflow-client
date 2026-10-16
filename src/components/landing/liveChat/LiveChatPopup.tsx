@@ -1,11 +1,11 @@
 import { X } from 'lucide-react';
 import { useEffect } from 'react';
+import { Button } from '@/components/ui/button';
 import { useDispatch, useSelector } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
 import { AppDispatch, RootState } from '@/app/store/appStore';
 import { toggleLiveChatBubble } from '@/app/store/slices/appSlice';
 import slotflowAiLogoTransparent from '@/assets/logos/slotflowAi/slotfloAiLogoTransparent.png';
-import { Button } from '@/components/ui/button';
 
 const LiveChatPopup = () => {
   const dispatch = useDispatch<AppDispatch>();

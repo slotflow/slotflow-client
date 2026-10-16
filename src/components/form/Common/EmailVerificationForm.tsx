@@ -8,8 +8,8 @@ import { FormButton } from '../FormButton';
 import { verifyEmail } from '@/services/apis/auth';
 import { AppDispatch } from '@/app/store/appStore';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import { useAppNavigation } from '@/hooks/useAppNavigation';
+import { redirectPaths } from '@/shared/utils/constants/routeConstants';
 import { VerifyEmailFormType, verifyEmailZodSchema } from '@/shared/validators/zod/authZod';
 
 const EmailVerificationForm = () => {
@@ -32,9 +32,7 @@ const EmailVerificationForm = () => {
     try {
       const res = await dispatch(verifyEmail({ email: data.email })).unwrap();
       if (res.success) {
-        // Navigate immediately for instant UX
         goTo(redirectPaths.VERIFY_OTP);
-        // Show toast after navigation (toast uses portal so still visible)
         toast.success(res.message);
       } else {
         toast.error(res.message);

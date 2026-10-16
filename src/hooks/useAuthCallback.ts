@@ -5,6 +5,7 @@ import { AuthUser } from '@/shared/types/slice';
 import { AppDispatch } from '@/app/store/appStore';
 import { useAppNavigation } from './useAppNavigation';
 import { setAuthUser } from '@/app/store/slices/authSlice';
+import { resetAuthSession } from '@/lib/axiosInterceptor';
 import { UseAuthCallbackReturn } from '@/shared/types/hooks';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { authCallbackLoadingSteps } from '@/shared/utils/constants/landingConstants';
@@ -37,6 +38,8 @@ export const useAuthCallback = (): UseAuthCallbackReturn => {
         if (!rawUser) {
           throw new Error('User data missing from authentication response.');
         }
+
+        resetAuthSession();
 
         const authUser: AuthUser = {
           uid: rawUser._id,

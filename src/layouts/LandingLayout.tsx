@@ -8,9 +8,11 @@ import ReadingProgress from '@/components/scroll/ReadingProgress';
 import { toggleLiveChatBubble } from '@/app/store/slices/appSlice';
 import LiveChatPopup from '@/components/landing/liveChat/LiveChatPopup';
 import LiveChatBubble from '@/components/landing/liveChat/LiveChatBubble';
+import { setupAuthInterceptor } from '@/services/apis/setupAuthInterceptor';
 
 const LandingLayout = () => {
   const dispatch = useDispatch<AppDispatch>();
+  setupAuthInterceptor();
 
   return (
     <ReactLenis root>

@@ -1,6 +1,6 @@
 import { appState } from '@/shared/types/slice';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { resendOtp, signup, verifyEmail, verifyOtp } from '@/services/apis/auth';
+import { resendOtp, signup, verifyEmail, verifyOtp, verifyResetOtp } from '@/services/apis/auth';
 
 const initialState: appState = {
   lightTheme: true,
@@ -83,6 +83,13 @@ const stateSlice = createSlice({
       .addCase(verifyEmail.rejected, (state) => {
         state.otpTimerIsRunning = false;
       });
+    builder
+      .addCase(verifyResetOtp.pending, () => {})
+      .addCase(verifyResetOtp.fulfilled, (state) => {
+        state.otpExpiresAt = 0;
+        state.otpTimerIsRunning = false;
+      })
+      .addCase(verifyResetOtp.rejected, () => {});
   },
 });
 
